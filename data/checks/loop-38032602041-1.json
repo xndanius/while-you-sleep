@@ -1,0 +1,38 @@
+{
+  "runId": "loop-38032602041-1",
+  "draftSha256": "ede9bd51086e859e80fff9bbddf38768f3232eb2b6fffcaf940ab2aaa9dadcff",
+  "sourceSnapshotSha256": "95d7ee1f2e0c49d009eb244d26da0168075720a6c10aa273e177b1b7945d3ef6",
+  "checks": [
+    {
+      "postId": "93af802c8b9985db56447d4d",
+      "pass": true,
+      "reasons": [],
+      "claimChecks": [
+        {
+          "claim": "Paganel defines a migration's source, destination, transformations, and validation rules in one declarative file.",
+          "supported": true,
+          "sourceId": "6c9caf2b870ea3f3262d3263",
+          "evidenceQuote": "You specify where the data comes from and where it's going, and the rest goes in the same file: joins, filters, computed fields, and validation rules."
+        },
+        {
+          "claim": "Paganel uses a migration receipt with row hashes and a root hash, and can later verify destination data against it.",
+          "supported": true,
+          "sourceId": "6c9caf2b870ea3f3262d3263",
+          "evidenceQuote": "After the run, it uses them to spit out a 32-byte root hash for the table. Together with the row hashes, this gives you a complete 'migration receipt.'"
+        },
+        {
+          "claim": "Paganel's verification can identify rows when the destination does not match the receipt.",
+          "supported": true,
+          "sourceId": "6c9caf2b870ea3f3262d3263",
+          "evidenceQuote": "When the root doesn't match, you know something changed, and then verify goes through the row hashes and tells you which rows it was."
+        },
+        {
+          "claim": "The maker says Paganel currently natively supports MySQL and PostgreSQL.",
+          "supported": true,
+          "sourceId": "6c9caf2b870ea3f3262d3263",
+          "evidenceQuote": "Limited databases: Right now, it only natively supports MySQL and PostgreSQL."
+        }
+      ]
+    }
+  ]
+}
