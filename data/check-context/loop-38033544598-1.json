@@ -1,0 +1,36 @@
+{
+  "runId": "loop-38033544598-1",
+  "createdAt": "2026-10-10T07:12:27.982Z",
+  "draftSha256": "80c3d26f61061a6bab80061363a7c53a0052f560df2715e02e9785354b0a2ca7",
+  "sourceSnapshotSha256": "b6d3473fc236e459b4e90c896daac318b4c86d23c51fb400c734be2ca2902150",
+  "sources": [
+    {
+      "id": "7cd98dadfb653ac13c226271",
+      "title": "Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents",
+      "url": "https://news.ycombinator.com/item?id=49995804",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents ( voicegremlin.com ) 3 points by ineptech 2 days ago | hide | past | favorite | 1 comment Hi, I'm a former SDET and now solo dev of VoiceGremlin, a tool for automated tests against AI that answer phones. You pass the API a phone number and a test case like \"Verify that the agent does X.\" It calls your voice agent, tests the thing by having the bots talk to each other, and uses LLM-as-judge to provide a pass/fail for your pipeline. State: Fully working, free trial, no card needed. Try it out and please give me feedback, especially if you run in to problems. Goal: I built VoiceGremlin with the explicit goal of being Mailosaur for phone agents. We paid for Mailosaur at work because the alternative (having our automated tests interact programmatically with our corporate Outlook server) was doable, but very painful, both technically and organizationally. The lesson I learned was \"doable, but painful\" is a good sign of a SaaS opportunity. Well, getting an automated test to call a phone number is also painful. Telephony providers are tough to get onboarded as vendors. Using your own STT/TTS means a lot of bandwidth moving through wherever you run your test automation from. It's tricky to get the LLM-to-LLM prompts dialed in enough to avoid flaky tests. Etc. Process: It took about 45 days to build, with half of that being businessy stuff like implementing Stripe and my feeble attempts at marketing, and the other half being experimenting with different telephony providers and features, testing different models, prompt tweaking, and fraud/abuse prevention. Design goal: Do one thing, do it well, and get out of the way. There's no ambition to manage your test cases for you, host your voice agents, or add upsell features. Stack: The dependencies are Supabase (DB and authentication), Netlify (static storage and API routing), Digitalocean (the server component that makes the calls), Telnyx (easier to work with than Twilio IMO), Stripe, Openrouter, Cloudflare (captcha on signup). Oh, and I host my private git in Keybase, the greatest tool nobody uses. Thanks! help dslightam 2 days ago [–] Very cool! reply Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-10T07:12:27.754Z",
+      "productUrl": "https://voicegremlin.com/",
+      "discoveredAt": "2026-10-07T17:16:36Z",
+      "verifiedAt": "2026-10-10T07:12:27.754Z"
+    },
+    {
+      "id": "50b060ed0a327b94bd29e2c5",
+      "url": "https://voicegremlin.com/",
+      "title": "Test AI phone agents with repeatable calls · official product",
+      "publisher": "voicegremlin.com",
+      "text": "VoiceGremlin — CI/CD for AI Voice Agents VoiceGremlin Start testing Test your Voice Agent from CI E2E testing for AI phone agents - real phone calls, real audio, any functional test, via REST API. Start testing voicegremlin-ci $ curl -X POST https://voicegremlin.com/api/runs -H \"Authorization: Bearer vg_xxx\" -d '{\"phone_number\": \"+1-555-123-1234\", \"tests\": [\" Verify that the agent discloses its AI status and audio recording on the first message \"]}' ← {\"run_id\":\"abc123\",\"status\":\"queued\"} $ curl https://voicegremlin.com/api/runs/abc123 ← {\"status\":\"complete\",\"passed\":1,\"tests\":[{ \"passed\":true , \"reason\": \"Agent clearly stated it is an AI\" }]} Real phone calls for true end-to-end validation Building automated tests against a phone agent represents a major side-quest for your DevOps team, but skipping that test is dangerous - if the support line isn't working, how would your customers tell you? VoiceGremlin calls your voice agent's number from a real carrier line so that your e2e test really covers everything: the SIP integration, STT/TTS, and the agent's functional behavior. LLM as Tester, LLM as Judge With an intelligent support agent, the user's intent is the test case. This means there's no need for a test case repository or brittle scripted conversation paths - just pass in a plain English description of what you want to validate. Our agent calls yours and role-plays as a customer, and once the call is complete, the transcript is then passed to a Judge LLM which evaluates your agent's behavior against your test goal. The final pass/fail is supplied by inference, not keyword matching or regex. Ridiculously easy to implement The VoiceGremlin API was designed around one goal: fast, easy implementation. Your CI or test framework makes two calls: the first one to pass us the phone number and test case, and the second to get the result. There's no SDK and no test case repository to manage. If your tests know how to call an API, the story to build and integrate an e2e test with VoiceGremlin will be a 1-pointer. Lightweight and un-opinionated Nothing is more frustrating for an SDET than a test framework that makes you conform to its own idea of how to manage tests. With VoiceGremlin, a test case is just a string that describes what you want to validate and a test suite is just an array of strings. Easy. Failed tests are actionable E2E test cases cover a lot of functionality, so when one of them fails it can be frustrating to figure out where to begin troubleshooting. With VoiceGremlin tests, the failure notification includes the complete call transcript; exposing this in your tooling allows the person who sees the failure to begin diagnosing the underlying issue immediately. Your voice agent is production code. Is it covered by production tests? 100 free minutes. No credit card. First call in under a minute. Start testing now VoiceGremlin · Sign in · Privacy · Terms · Refunds",
+      "fetchedAt": "2026-10-10T07:12:27.979Z",
+      "verifiedAt": "2026-10-10T07:12:27.979Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [
+    {
+      "postId": "b97635582c646fbff97c7e77",
+      "pass": true,
+      "reasons": []
+    }
+  ]
+}
