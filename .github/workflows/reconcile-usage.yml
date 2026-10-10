@@ -1,0 +1,79 @@
+name: Reconcile completed Codex usage
+on:
+  workflow_run:
+    workflows: [Codex autonomous loop, Improve one rule with blind held-out trials]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Completed main loop or improvement workflow run ID
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  reconcile:
+    if: github.repository == 'xndanius/while-you-sleep' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN_ID: ${{ github.event.workflow_run.id || inputs.source_run_id }}
+    outputs:
+      changed: ${{ steps.reconcile.outputs.changed }}
+    steps:
+      # Never check out the triggering run's code or download its model artifacts.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Validate source and collect completed model counters in RAM
+        id: reconcile
+        run: node scripts/reconcile-usage.mjs "$SOURCE_RUN_ID"
+      - name: Update daily estimate from one effective record per run
+        if: steps.reconcile.outputs.changed == 'true'
+        run: node scripts/update-cost-readme.mjs
+      - name: Commit the immutable correction and updated summary
+        id: push
+        if: steps.reconcile.outputs.changed == 'true'
+        env:
+          SOURCE_RECORD_ID: ${{ steps.reconcile.outputs.run_id }}
+        run: |
+          git config user.name 'While You Sleep loop'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "data/usage/$SOURCE_RECORD_ID-reconciled.json" README.md
+          git commit -m "usage: $SOURCE_RECORD_ID · reconcile terminal CLI counters"
+          gh auth setup-git
+          pushed=false
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then pushed=true; break; fi
+            git pull --rebase origin main
+          done
+          if [ "$pushed" != true ]; then exit 1; fi
+  pages:
+    needs: reconcile
+    if: needs.reconcile.result == 'success' && needs.reconcile.outputs.changed == 'true'
+    uses: ./.github/workflows/pages.yml
+    with:
+      # A later loop may commit while this deploy waits for the Pages lock.
+      # Build latest trusted main so reconciliation cannot restore an old feed.
+      ref: main
+      artifact_name: github-pages-usage
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

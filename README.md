@@ -45,6 +45,8 @@ GitHub-hosted standard runners and Pages are available for public repositories w
 
 Model standard rates verified 10 Oct 2026: GPT-6 Luna US$0.10/M input, $0.01/M cached input, $0.125/M cache write and $0.50/M output for prompts up to 272K tokens ([official pricing](https://developers.openai.com/api/docs/pricing)). Target model budget under $0.50/day; actual costs depend on runner token usage and the OpenAI invoice. Missing usage is not recorded as zero. Postiz costs US$29/month when Danielius starts the subscription; GoatCounter reasonable public use is free. No subscription or payment has been made by this build.
 
+Completed model workflows automatically reconcile incomplete counters from their terminal job logs. Original usage records stay immutable; the feed and table use one verified effective record per run, so a correction does not count the run twice. Retrieval failures keep usage unknown. [Reconciliation and calculation](docs/COSTS.md#completed-run-reconciliation).
+
 <!-- MODEL_COSTS_START -->
 
 | Vilnius date | Cloud runs | Estimated USD | Coverage |

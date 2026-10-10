@@ -4,10 +4,12 @@ import { ROOT, records, readJSON, writeJSON, safeError } from '../lib/storage.mj
 import { INITIAL_RULES, schedule } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
 import { measuredPublication } from '../lib/publication-status.mjs';
+import { effectiveUsageRecords } from '../lib/usage.mjs';
 
 const xml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 try{
-  const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,usageRecords]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage'].map(records));
+  const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,rawUsageRecords]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage'].map(records));
+  const usageRecords=effectiveUsageRecords(rawUsageRecords);
   const usageByRun=new Map(usageRecords.map(record=>[record.runId,record]));
   const runs=rawRuns.map(run=>({...run,usage:usageByRun.get(run.id)||run.usage}));
   const versions=rawVersions.map(version=>({...version,usage:usageByRun.get(version.id)||version.usage}));
@@ -23,7 +25,7 @@ try{
   const healthMap=new Map();
   for(const snapshot of sortedResearch)for(const health of snapshot.health||[])if(!healthMap.has(health.name))healthMap.set(health.name,health);
   const candidates=(await records('candidates')).reduce((n,r)=>n+(r.candidates?.length||0),0);
-  const measuredCost=usageRecords.map(r=>r.costUsd).filter(v=>typeof v==='number'&&Number.isFinite(v));
+  const measuredCost=usageRecords.map(r=>r.costUsd).filter(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
   const modelRunCount=runs.length+improvementRuns.length;
   const stats={published:posts.length,candidates,rejected:rejections.length,views:metrics.site?.views??null,saves:metrics.site?.saves??null,totalCostUsd:measuredCost.length?measuredCost.reduce((a,b)=>a+b,0):null,costStatus:measuredCost.length===modelRunCount&&modelRunCount?'recorded_token_estimate':'invoice_or_usage_not_connected'};
   const status={state:posts.length?'running':'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected'};

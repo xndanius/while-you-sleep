@@ -6,6 +6,8 @@ The official pinned [Codex action execution code](https://github.com/openai/code
 
 The parser requires the action's `Running: ... codex exec ... --json` marker, a started thread, a started turn, and a valid top-level completion. It ignores `item.completed` contents, including tool or agent text that contains a fake usage event. Multiple CLI invocations, invalid numeric counts, missing completion, and failed turns are unavailable. Logs are held only in bounded memory; neither transcripts, error bodies, signed download URLs, nor credentials enter the committed record.
 
+Recent GitHub CLI versions refuse log responses containing terminal escape sequences unless [`gh api --allow-escape-sequences`](https://cli.github.com/manual/gh_api) is set. The helper sets that flag only for validated job-log endpoints, captures the response in bounded RAM and removes terminal formatting before parsing. It never prints the raw response.
+
 Only these exact GitHub job names are read:
 
 | Workflow kind | Model jobs |
@@ -60,5 +62,19 @@ steps:
 For the improvement job, pass `improve` instead of `loop`. `GITHUB_REPOSITORY`, `GITHUB_RUN_ID` and `GITHUB_RUN_ATTEMPT` are provided by GitHub. The helper uses `gh api` GET requests only, with a fixed GitHub hostname and validated jobs/log endpoints. No token appears in command arguments or printed output.
 
 Include the exact current `data/usage/<runId>.json` in the trusted commit allowlist. Generate the public machine and feed data by joining usage records to matching `runId`/`id`; keep the original run/version records immutable. Daily estimates should sum complete model usage records by `localDate` in Europe/Vilnius. If any model run has incomplete coverage or unknown pricing, show the daily total as unavailable and any reported subtotal as partial. Research and measurement jobs do not execute models and should not be counted as missing model usage.
+
+## Completed-run reconciliation
+
+`reconcile-usage.yml` runs after either model workflow completes. It can also be dispatched with a completed source run ID:
+
+```sh
+gh workflow run reconcile-usage.yml --repo xndanius/while-you-sleep --ref main -f source_run_id=38032271902
+```
+
+The fresh runner checks out trusted `main`, downloads no model artifacts, and receives no OpenAI key. Authoritative GitHub metadata must identify this exact repository, a completed `main` run, a valid commit SHA, the loop or improvement workflow path, and a schedule or manual event. It reads the source attempt's model logs only when its initial usage record is incomplete. Known skipped-job proofs may be preserved from the trusted initial collector; a present API job still overrides them.
+
+If all required counters become available, it adds immutable `data/usage/<runId>-reconciled.json`, with `supersedes` and the SHA-256 of the unchanged original. The correction retains the original Vilnius record date. The builder and README select exactly one effective record per run: the valid complete correction replaces the incomplete original for totals, without deleting history or counting the run twice. Already complete initial records are left alone. If retrieval or parsing is still incomplete, no correction is written and the initial unknown remains; a later manual retry is possible. Unknown model pricing still remains unknown.
+
+The commit job shares the record concurrency lock, retries a rebased push up to three times and invokes Pages explicitly after writing a correction. Public data therefore reflects the corrected counters even though a GitHub-token commit does not trigger a normal push workflow.
 
 The configured target is under $0.50/day. The collector observes and reports usage; it does not itself enforce an OpenAI account spending limit or promise that target. Budget controls can consume these records without treating an unavailable total as zero.
