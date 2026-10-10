@@ -1,0 +1,85 @@
+{
+  "runId": "improve-38034683223-1",
+  "trialId": "317a53a7eda3b10c87e894e8",
+  "posts": [
+    {
+      "id": "67b4eb84efc9233de02b5806",
+      "candidateId": "67b4eb84efc9233de02b5806",
+      "title": "A game whose bots evolve between rounds",
+      "promise": "See how a small game experiment combines play, scoring and bot evolution.",
+      "whatItIs": "Aim and Shoot is a browser game experiment where neural-network-controlled bots compete against a player. When bots die, the game scores their performance and breeds higher-scoring bots into later generations. Its 2026 update says Claude Code helped fix and extend the game, including keeping a shared bot population on a server. A beginner-sized adaptation could be a toy game with simple bots and a visible score-and-evolve cycle; that student version is hypothetical.",
+      "whoPays": "No paying customer is established by this source. A hypothetical student version could be a learning project for people curious about game AI, with no assumed revenue.",
+      "loop": [
+        "The player moves and shoots at bots; the round produces hits, misses and damage.",
+        "Each bot's game logic controls its actions; the round produces behavior and a survival result.",
+        "The scoring logic evaluates bot results; it produces fitness scores using shots, hits, friendly fire, self-harm and movement.",
+        "The evolution logic selects and combines higher-scoring bots; it produces a new generation.",
+        "In the described shared mode, the browser reports round results to the server; the server scores and breeds the population for later play."
+      ],
+      "evidence": "The attached repository page describes Aim and Shoot as a neuroevolution game experiment and explains its round scoring and breeding. Its 2026 update says Claude Code was used to fix and extend it, and describes server-held shared evolution with browser-reported round results and a local fallback when the server is unreachable.",
+      "uncertainty": "The source is the project repository description, not an independent evaluation. It does not establish revenue or demand. Automation covers game actions, scoring and breeding as described; a human still needs to design and review the rules, debug the game, and judge whether changes make play fair or fun. The student's smaller adaptation is hypothetical.",
+      "first24Hours": [
+        "Read the repository README and write down the round inputs and scoring factors it describes.",
+        "Sketch a tiny arena game with one bot, one player action and a visible score.",
+        "Define a simple, inspectable rule for producing the next bot after a round; label it as a prototype assumption."
+      ],
+      "sourceIds": [
+        "67b4eb84efc9233de02b5806"
+      ],
+      "productUrl": "https://github.com/victorqribeiro/aimAndShoot"
+    },
+    {
+      "id": "01a2369311f0fe78c2131ab8",
+      "candidateId": "01a2369311f0fe78c2131ab8",
+      "title": "Turn an AI design chat into an editable 3D home",
+      "promise": "Use an AI conversation to make a structured home design Arcadium can open and edit.",
+      "whatItIs": "Arcadium's page describes a workflow where a person gives a capable AI text, photos or a floor plan, then brings back a JSON or ZIP scene file. Arcadium converts supported walls, doors and windows in the browser and opens them in its 3D viewer; users can sign in to edit or save. A hypothetical student-sized version could handle one room and a small set of structural objects, but that adaptation is not established by the source.",
+      "whoPays": "The source shows Arcadium account sign-up and login for saving or editing but does not establish who pays or the pricing. A hypothetical student version might be aimed at people planning a room; willingness to pay is unproven.",
+      "loop": [
+        "The user describes a home or supplies references to an AI; the input becomes a design brief.",
+        "The AI interprets the brief and references, asking about important missing details; the output is a proposed layout and dimensions distinguished as known or estimated.",
+        "The AI returns a structured JSON or ZIP scene; the output is a file describing the design.",
+        "The user drops the file onto Arcadium's page; the browser converts supported walls, doors and windows into an editable 3D view.",
+        "The user checks the structure and makes changes, then chooses Edit or Share to sign in and save the project to their workspace."
+      ],
+      "evidence": "The attached Arcadium page says users can ask ChatGPT, Claude, Gemini or another capable AI to create a design and return JSON or ZIP. It describes browser-side conversion of supported walls, doors and windows, local preview without login, and sign-in to save through Edit or Share. It also says the workflow starts with structure and scale, with furnishings added only when chosen.",
+      "uncertainty": "These are product-page statements, not independent verification. The AI may misread references or estimate geometry; dimensions, wall connections and openings need human checking, and the page directs users to distinguish known measurements from estimates. The source only claims browser conversion for supported objects, not flawless plans. The student adaptation and potential customers are hypothetical.",
+      "first24Hours": [
+        "Read the Arcadium page and list the stated file handoff and supported structural objects.",
+        "Choose a single-room example and write down which dimensions would be known versus estimates.",
+        "Sketch a minimal prototype that turns a checked text brief into a small structured room description; mark all generated geometry for human review."
+      ],
+      "sourceIds": [
+        "01a2369311f0fe78c2131ab8"
+      ],
+      "productUrl": "https://arcadium3d.com/create-with-ai"
+    },
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "candidateId": "e20bcacf021524725d3fc275",
+      "title": "Build AI workflows with review steps",
+      "promise": "Connect AI steps to app workflows while keeping approval and inspection in the process.",
+      "whatItIs": "n8n presents workflow automation that connects apps, logic and AI. Its page describes an AI Workflow Builder that can plan, build, run and fix a workflow from a plain-language request; the resulting workflow can be inspected in the canvas and execution logs, with approval for high-impact actions. A beginner's small version could route a sample request through an AI step and a human approval before a mock action; this adaptation is hypothetical.",
+      "whoPays": "The page includes a Get Started option and a 14-day free trial, but does not establish which customer segments pay or their actual usage. A hypothetical student project might be for a small team handling routine requests; customer demand is unverified.",
+      "loop": [
+        "A user describes an automation in plain language; the request becomes workflow requirements.",
+        "The AI Workflow Builder plans and builds a workflow in the project; the output is a normal n8n workflow.",
+        "The workflow connects an AI step with explicit logic and app integrations; the output is a routed result or proposed action.",
+        "A human reviews high-impact actions at an approval point; the output is approval, rejection or a request for changes.",
+        "The user runs the workflow and inspects execution logs; the output is a trace of the prompt, response and next steps for debugging."
+      ],
+      "evidence": "The attached n8n page describes integrations, combining AI agents with explicit logic and human approvals, and an AI Workflow Builder that plans, builds, runs and fixes workflows from plain language. It says workflows are inspectable in the canvas and execution logs and can require approval for high-impact actions. It also describes inspecting prompts, model responses and subsequent actions.",
+      "uncertainty": "This is n8n's own product page and its claims are not independently verified here. AI-generated workflow steps and responses can be wrong; the source itself describes human approval, input boundaries, validation, monitoring and execution inspection. A person must decide which actions are safe to automate and review results. The small student build and proposed customer are hypothetical.",
+      "first24Hours": [
+        "Choose one harmless sample request, such as sorting a made-up support message into a category.",
+        "Draw a workflow with an input, one AI classification step, a rule check and a human approval before any action.",
+        "List the outputs and errors a person would inspect in a run log before considering automation useful."
+      ],
+      "sourceIds": [
+        "e20bcacf021524725d3fc275"
+      ],
+      "productUrl": "https://n8n.io/ai"
+    }
+  ],
+  "refusals": []
+}

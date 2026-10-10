@@ -1,0 +1,88 @@
+{
+  "runId": "improve-38034683223-1",
+  "trialId": "7cc3c0021a6bc5be5ef3f7cb",
+  "posts": [
+    {
+      "id": "67b4eb84efc9233de02b5806",
+      "candidateId": "67b4eb84efc9233de02b5806",
+      "title": "A game where bots evolve between rounds",
+      "promise": "Build a small arena game that scores bot behavior and carries better bots forward.",
+      "whatItIs": "Aim and Shoot is a browser game experiment whose bots use neural networks and evolve through a genetic algorithm. Its 2026 update describes a shared server population that persists across players' rounds. A beginner adaptation could be a tiny arena game with simple bots, recorded scores, and a human-run evolution step; that student version is a hypothesis, not a feature of the existing game.",
+      "whoPays": "Hypothesis: an indie game player might pay for a polished game or optional content. The source does not establish a paying customer or revenue.",
+      "loop": [
+        "Start a short arena round with several bots controlled by neural networks.",
+        "Record each bot's shots, hits, damage, and movement as the game runs.",
+        "When the round ends, calculate a fitness score from those recorded behaviors.",
+        "Select higher-scoring bots and combine or mutate their networks to make the next generation.",
+        "Keep the strongest bot and let players try the next round against the updated group.",
+        "Review scores and gameplay to catch scoring bugs or undesirable bot behavior before continuing evolution."
+      ],
+      "evidence": "The attached GitHub README describes Aim and Shoot as a neuroevolution game experiment. It says bots use neural networks, a genetic algorithm scores behavior and breeds generations, and the 2026 update added a shared server population that evolves across players. It also describes a local evolution fallback when the server is unreachable.",
+      "uncertainty": "The source documents this game's mechanics, not demand, earnings, or performance for a student remake. Scoring and breeding can be automated from game events; a person still needs to test whether the score rewards useful play, inspect bugs, and decide whether evolved behavior is acceptable. The described server population depends on server availability; the game has a local fallback.",
+      "first24Hours": [
+        "Sketch one arena, one player action, and two simple bot behaviors on paper.",
+        "Make a small playable round that records each bot's shots and hits.",
+        "Manually rank the bots after a round and write down what a useful score should reward."
+      ],
+      "sourceIds": [
+        "67b4eb84efc9233de02b5806"
+      ],
+      "productUrl": "https://github.com/victorqribeiro/aimAndShoot"
+    },
+    {
+      "id": "01a2369311f0fe78c2131ab8",
+      "candidateId": "01a2369311f0fe78c2131ab8",
+      "title": "Turn an AI house plan into an editable 3D scene",
+      "promise": "Use an AI conversation for a draft, then inspect and edit the design in a browser.",
+      "whatItIs": "Arcadium's page describes a workflow where a person gives a capable AI text, photos, or a floor plan, gets back a structured scene file, and opens supported walls, doors, and windows in Arcadium's browser viewer. A small student adaptation could guide a user through one room and help package a scene file for import; that adaptation is hypothetical. The AI produces the design description, while Arcadium provides the viewing and editing environment.",
+      "whoPays": "Hypothesis: a homeowner or home-design hobbyist might pay for help preparing or revising a room plan. The attached source does not establish that customer or willingness to pay.",
+      "loop": [
+        "Ask the user for a room description and any available plan, photos, and measurements.",
+        "Have the AI draft a layout, keeping supplied measurements separate from estimates and asking about important gaps.",
+        "Create the structured scene file for the supported design elements.",
+        "Have the user bring the JSON or ZIP to Arcadium's page and preview it in the browser.",
+        "Let the user adjust the structure in the editor and compare it with the reference plan.",
+        "Ask the user to check dimensions, openings, and layout before relying on or sharing the result."
+      ],
+      "evidence": "The attached Arcadium page says users can prompt ChatGPT, Claude, Gemini, or another capable AI, then import its JSON or ZIP into Arcadium. It describes browser-based preview and editing, local conversion of supported walls, doors, and windows, and a process that distinguishes known measurements from estimates. It says preview does not require login; saving through Edit or Share requires signing in if needed.",
+      "uncertainty": "The page describes an AI-assisted workflow, not proof that generated dimensions or photo interpretations are accurate. File preparation and preview can be automated, but a person must resolve missing or conflicting dimensions and inspect the scene against its references. The source says supported structure opens in the viewer; it does not support a claim that every object or design can be imported.",
+      "first24Hours": [
+        "Choose one room and write a short brief with one known measurement and one preference.",
+        "Use the page's supplied instructions with an AI conversation to draft a simple scene file.",
+        "Import the file in Arcadium and compare the preview with the brief, noting any mismatch."
+      ],
+      "sourceIds": [
+        "01a2369311f0fe78c2131ab8"
+      ],
+      "productUrl": "https://arcadium3d.com/create-with-ai"
+    },
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "candidateId": "e20bcacf021524725d3fc275",
+      "title": "Add human checks to an AI support workflow",
+      "promise": "Route routine questions automatically while sending uncertain replies to a person.",
+      "whatItIs": "n8n is workflow automation software that connects apps and combines AI steps with explicit logic and human approvals. Its page describes support as one use case for AI workflows, including retrieval-augmented generation (RAG), a method for searching supplied documents to ground an answer. A small student adaptation could answer questions from a limited set of approved help documents and queue drafts for review; this is a hypothesis, not an n8n feature claim.",
+      "whoPays": "Hypothesis: a small organization with a shared support inbox might pay for setup or maintenance. The source does not establish a customer or sales result for this proposed workflow.",
+      "loop": [
+        "Watch a test inbox or form for a new support question.",
+        "Search only the approved help documents for relevant passages.",
+        "Draft a response using those passages and label cases with no clear support.",
+        "Send clear, low-impact drafts to a human approval queue rather than directly to the customer.",
+        "Let a person edit, approve, or reject each draft before it is sent.",
+        "Log the question, source passages, draft, and reviewer decision so errors can be inspected."
+      ],
+      "evidence": "The attached n8n page describes workflows that combine integrations, AI agents, and human approvals. It names using RAG to answer from internal PDFs as a support use case and says users can inspect workflow execution logs, including prompts and model responses. The proposed inbox workflow and customer are student hypotheses, not documented outcomes.",
+      "uncertainty": "The source describes platform capabilities and examples, not measured accuracy or a guarantee that answers will be correct. Searching documents, drafting, routing, and logging can be automated; a person must check whether the sources actually support each answer and approve replies. Limit an initial version to test data and require review before any external message is sent.",
+      "first24Hours": [
+        "Pick a narrow support topic and collect a few approved, non-sensitive help documents.",
+        "Draw a workflow that searches those documents and sends every draft to a human review queue.",
+        "Try several sample questions, including one the documents cannot answer, and inspect the results."
+      ],
+      "sourceIds": [
+        "e20bcacf021524725d3fc275"
+      ],
+      "productUrl": "https://n8n.io/ai"
+    }
+  ],
+  "refusals": []
+}
