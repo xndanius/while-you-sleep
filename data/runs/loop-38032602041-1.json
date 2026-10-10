@@ -1,0 +1,192 @@
+{
+  "id": "loop-38032602041-1",
+  "type": "loop",
+  "status": "rejected",
+  "startedAt": "2026-10-10T06:55:25.575Z",
+  "finishedAt": "2026-10-10T06:59:03.402Z",
+  "candidatesFound": 9,
+  "picked": 1,
+  "rejected": [
+    {
+      "title": "VendIQ – AI agent for vendor follow-ups and ops automation",
+      "productUrl": "https://vendiq.rishailabs.com/",
+      "reason": "Snapshot has only a title and product URL, without evidence of a concrete workflow."
+    },
+    {
+      "title": "Self-bench – benchmark coding agents on real-world software",
+      "productUrl": "https://github.com/mupt-ai/self-bench",
+      "reason": "Setup is comparatively involved and its generated evaluations require human approval; student feasibility is weaker than the selected bounded migration prototype."
+    },
+    {
+      "title": "Cold-email filtering script for Gmail",
+      "productUrl": "https://github.com/christianmat/cold-email-killer",
+      "reason": "Maker's effectiveness figure is not independently established, and false positives could hide wanted mail."
+    },
+    {
+      "title": "Hedwig – open-source campaign management",
+      "productUrl": "https://flyhedwig.com",
+      "reason": "The described outbound cold-email campaign workflow is a less suitable and more abuse-prone subject than Paganel's local data verification workflow."
+    },
+    {
+      "title": "CircleIt – route visual feedback to a coding agent",
+      "productUrl": "https://circleit.ai",
+      "reason": "Duplicate of an existing published post."
+    },
+    {
+      "title": "Velu – check documentation for AI agents",
+      "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+      "reason": "Duplicate of an existing published post."
+    },
+    {
+      "title": "Kenerate – workspace for image, video and music models",
+      "productUrl": "https://kenerateai.app/",
+      "reason": "Only a name and URL are provided; the snapshot does not establish the product workflow."
+    },
+    {
+      "title": "Memdebug – inspect and undo agent memory changes",
+      "productUrl": "https://github.com/juraj-jumic/memdebug",
+      "reason": "Only a title and URL are provided; the snapshot does not establish implementation details."
+    },
+    {
+      "postId": "93af802c8b9985db56447d4d",
+      "title": "Move data and verify the result with a receipt",
+      "reason": "Checker evidence quote is missing or is not present in the fetched source."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-10T06:55:25.575Z",
+      "message": "Fetched 132 live source records; 4 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-10T06:58:10.428Z",
+      "message": "Codex CLI wrote 1 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "rejected",
+      "at": "2026-10-10T06:58:10.428Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Repair review: the checker approved the Paganel post with no rejection reasons, so the approved post is preserved unchanged; prior candidate decisions are retained."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032602041",
+  "version": "rules-8918d4f67df5",
+  "rulesSha256": "8918d4f67df520463c45d170efe6937be5d759839edbc5d5d8c516f96d8c00b3",
+  "rulesCommit": "63e9d35d0c809c865126b8fc72c94f87520f77e8",
+  "usage": {
+    "id": "loop-38032602041-1",
+    "type": "usage",
+    "runId": "loop-38032602041-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-10T06:58:58.737Z",
+    "localDate": "2026-10-10",
+    "githubRunId": "38032602041",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032602041/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "unknown",
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "cacheWriteInputTokens": null,
+    "outputTokens": null,
+    "reasoningOutputTokens": null,
+    "costUsd": null,
+    "observedCounts": {
+      "inputTokens": null,
+      "cachedInputTokens": null,
+      "cacheWriteInputTokens": null,
+      "outputTokens": null,
+      "reasoningOutputTokens": null,
+      "costUsd": null
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 0,
+      "notRunModelJobs": 0,
+      "unknownModelJobs": 4
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [],
+    "pricingStatus": "estimate_unavailable_or_incomplete",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 114156495644,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032602041/job/114156495644",
+        "status": "unknown",
+        "reason": "job_log_unavailable",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "success"
+      },
+      {
+        "name": "checker",
+        "jobId": 114156686897,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032602041/job/114156686897",
+        "status": "unknown",
+        "reason": "job_log_unavailable",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "success"
+      },
+      {
+        "name": "repair",
+        "jobId": 114156793487,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032602041/job/114156793487",
+        "status": "unknown",
+        "reason": "job_log_unavailable",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "success"
+      },
+      {
+        "name": "final_check",
+        "jobId": 114156939562,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032602041/job/114156939562",
+        "status": "unknown",
+        "reason": "job_log_unavailable",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "success"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "95d7ee1f2e0c49d009eb244d26da0168075720a6c10aa273e177b1b7945d3ef6"
+}
