@@ -2,6 +2,9 @@ name: Publish checked social posts
 
 on:
   workflow_call:
+    secrets:
+      POSTIZ_API_KEY:
+        required: false
   workflow_dispatch:
   schedule:
     - cron: '0 8 * * 1'

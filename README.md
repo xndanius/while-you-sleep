@@ -53,6 +53,6 @@ No model usage is recorded yet.
 
 The [W3 backup workflow](docs/BACKUP.md) records the real public machine and GitHub history on Monday, 12 October at 19:30 Vilnius, after its unattended-run and accepted-improvement gates pass.
 
-Hosted checks on 10 Oct 2026: [Pages deployment](https://github.com/xndanius/while-you-sleep/actions/runs/38030166542), [133-source research and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030175806), and [measurement and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030178078) completed successfully on GitHub runners. All six cron/deployment workflows are active. No model request or social post has been made yet.
+Hosted checks on 10 Oct 2026: [Pages deployment](https://github.com/xndanius/while-you-sleep/actions/runs/38030166542), [133-source research and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030175806), and [measurement and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030178078) completed successfully on GitHub runners. All core cron/deployment workflows and the Monday backup are active. No model request or social post has been made yet.
 
 W1 is not achieved until a GitHub-hosted run has generated, independently checked and committed three posts, Pages displays them and the enabled cron workflows are verified. Verification will be recorded here after the run.
