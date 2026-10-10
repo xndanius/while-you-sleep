@@ -50,8 +50,8 @@
 
   function renderStatus() {
     const status = data.status || {};
-    $('machine-state').textContent = status.state ? stateLabel(status.state) : 'Record connected';
     const verified = Boolean(data.schedule?.verifiedHostedRunAt || status.lastHostedRunUrl);
+    $('machine-state').textContent = status.state === 'awaiting_first_cloud_run' && verified ? 'Awaiting the first publication' : status.state ? stateLabel(status.state) : 'Record connected';
     $('machine-signal').className = `signal-dot${stateClass(status.state) === 'bad' ? ' error' : verified ? ' live' : ''}`;
     $('last-research').textContent = formatDate(status.lastResearchAt);
     $('last-published').textContent = formatDate(status.lastPublishedAt);

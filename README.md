@@ -45,4 +45,6 @@ GitHub-hosted standard runners and Pages are available for public repositories w
 
 Model standard rates verified 10 Oct 2026: GPT-6 Luna US$0.10/M input, $0.01/M cached input, $0.125/M cache write and $0.50/M output for prompts up to 272K tokens ([official pricing](https://developers.openai.com/api/docs/pricing)). Target model budget under $0.50/day; actual costs depend on runner token usage and the OpenAI invoice. Missing usage is not recorded as zero. Postiz costs US$29/month when Danielius starts the subscription; GoatCounter reasonable public use is free. No subscription or payment has been made by this build.
 
-W1 is not achieved until a GitHub-hosted run has generated, independently checked and committed three posts, Pages displays them and the enabled cron workflows are verified. Verification will be recorded in this README after the run.
+Hosted checks on 10 Oct 2026: [Pages deployment](https://github.com/xndanius/while-you-sleep/actions/runs/38030166542), [133-source research and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030175806), and [measurement and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030178078) completed successfully on GitHub runners. All six cron/deployment workflows are active. No model request or social post has been made yet.
+
+W1 is not achieved until a GitHub-hosted run has generated, independently checked and committed three posts, Pages displays them and the enabled cron workflows are verified. Verification will be recorded here after the run.

@@ -3,6 +3,7 @@ import path from 'node:path';
 import { ROOT, records, readJSON, writeJSON, safeError } from '../lib/storage.mjs';
 import { INITIAL_RULES, schedule } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
+import { measuredPublication } from '../lib/publication-status.mjs';
 
 const xml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 try{
@@ -27,7 +28,7 @@ try{
   const platformNames=['x','instagram','linkedin'];
   const platforms=platformNames.map(platform=>{
     const receipt=publications.slice().sort((a,b)=>(b.publishedAt||b.submittedAt||'').localeCompare(a.publishedAt||a.submittedAt||'')).find(r=>r.platform===platform||r.results?.[platform]||r.social?.[platform]);
-    const result=receipt?.results?.[platform]||receipt?.social?.[platform]||receipt;
+    const result=measuredPublication(receipt,receipt?.results?.[platform]||receipt?.social?.[platform]||receipt,platform,metrics);
     return {name:platform==='x'?'X':platform==='instagram'?'Instagram':'LinkedIn',id:platform,status:result?.status||'pending_setup',provider:result?.provider||'Postiz Cloud',lastPublishedAt:result?.publishedAt||null,message:result?.message||'Danielius needs to connect this account through the publishing service.'};
   });
   const versionHistory=versions.length?versions.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')):[{id:INITIAL_RULES.id,createdAt:INITIAL_RULES.createdAt,status:'adopted',reason:INITIAL_RULES.reason,change:'Initial evidence-first writing and picking rules',baselineScore:null,challengerScore:null}];

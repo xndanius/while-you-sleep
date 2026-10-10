@@ -132,7 +132,7 @@
       posts = nextPosts;
       renderSchedule(data.schedule);
       const hostedVerified = Boolean(data.schedule?.verifiedHostedRunAt || data.status?.lastHostedRunUrl);
-      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? 'Waiting for the first run' : hostedVerified ? 'Runs in GitHub Actions' : 'Feed connected';
+      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? hostedVerified ? 'Waiting for the first idea' : 'Waiting for the first run' : hostedVerified ? 'Runs in GitHub Actions' : 'Feed connected';
       $('feed-signal').className = `signal-dot${data.status?.state === 'awaiting_first_cloud_run' ? '' : ' live'}`;
       $('feed-notice').classList.remove('visible');
       $('feed-notice').textContent = '';
