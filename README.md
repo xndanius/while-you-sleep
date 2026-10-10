@@ -49,7 +49,7 @@ Model standard rates verified 10 Oct 2026: GPT-6 Luna US$0.10/M input, $0.01/M c
 
 | Vilnius date | Cloud runs | Estimated USD | Coverage |
 | --- | ---: | ---: | --- |
-| 2026-10-10 | 1 | Unknown | Missing or partial counters |
+| 2026-10-10 | 2 | Unknown | Missing or partial counters |
 
 Standard-rate token estimates, not invoices. Unreported billing adjustments remain unknown. [Calculation and rates](docs/COSTS.md).
 
