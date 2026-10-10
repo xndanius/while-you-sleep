@@ -37,7 +37,7 @@ Build outside iCloud: `~/Developer/while-you-sleep`.
 - `npm run build`
 - `npm run dev`
 
-There are no hand-written seed posts. `data/posts/` starts empty; the cloud loop creates the first posts. Research snapshots, draft/check hashes, rejected candidates, exact claim checks, publication records and rules history form the audit trail. The UI displays only posts that pass content-integrity checks.
+There are no hand-written seed posts. `data/posts/` started empty; the cloud loop generated, independently checked and committed the first three posts. Research snapshots, draft/check hashes, rejected candidates, exact claim checks, publication records and rules history form the audit trail. The UI displays only posts that pass content-integrity checks.
 
 ## Cost
 
@@ -59,6 +59,6 @@ Standard-rate token estimates, not invoices. Unreported billing adjustments rema
 
 The [W3 backup workflow](docs/BACKUP.md) records the real public machine and GitHub history on Monday, 12 October at 19:30 Vilnius, after its unattended-run and accepted-improvement gates pass.
 
-Hosted checks on 10 Oct 2026: [Pages deployment](https://github.com/xndanius/while-you-sleep/actions/runs/38030166542), [133-source research and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030175806), and [measurement and commit](https://github.com/xndanius/while-you-sleep/actions/runs/38030178078) completed successfully on GitHub runners. All core cron/deployment workflows and the Monday backup are active. No model request or social post has been made yet.
+W1 was verified on 10 Oct 2026 at 10:15 Vilnius. The [bootstrap run](https://github.com/xndanius/while-you-sleep/actions/runs/38032271902) published two checked posts; the [normal loop run](https://github.com/xndanius/while-you-sleep/actions/runs/38033544598) published the third at 10:13. All three are live on the [feed](https://xndanius.github.io/while-you-sleep/) and [machine](https://xndanius.github.io/while-you-sleep/machine/), with source links, independently verified content/check hashes, committed publication records and public 1080×1350 JPEG cards. Desktop and phone checks passed.
 
-W1 is not achieved until a GitHub-hosted run has generated, independently checked and committed three posts, Pages displays them and the enabled cron workflows are verified. Verification will be recorded here after the run.
+GitHub runs the loop at 08:00, 13:00 and 19:00 Europe/Vilnius, daily measurement at 21:30 and improvement at 22:00. The active workflows, research commits and Pages deployments run on hosted infrastructure, with no laptop needed. Social publishing awaits Danielius's OAuth account connections and Postiz API secret; no social post or paid subscription has been made by this build.
