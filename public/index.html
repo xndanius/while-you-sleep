@@ -9,7 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23151915'/%3E%3Cpath d='M44 14a22 22 0 1 0 6 35A23 23 0 0 1 44 14' fill='%23d8e8af'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script src="analytics.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="app.js" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#feed">Skip to ideas</a>
@@ -25,7 +25,7 @@
     <main>
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <div class="eyebrow"><span class="tiny-orbit" aria-hidden="true"></span> A channel that runs itself</div>
+          <div class="eyebrow"><span class="tiny-orbit" aria-hidden="true"></span> A checked publishing loop</div>
           <h1 id="hero-title">While you sleep,<br>the ideas <span>keep coming.</span></h1>
           <p class="hero-intro">Small AI businesses you could build. Real examples, clear sources, and a first step you can take today.</p>
         </div>
@@ -37,10 +37,11 @@
       </section>
 
       <div class="cadence-strip" aria-label="Publication schedule">
-        <div><span class="strip-label">New ideas</span><strong id="cadence-summary">Three times a day</strong></div>
-        <div class="cadence-times" id="cadence-times"><span>08:00</span><span>13:00</span><span>19:00</span><small>Vilnius time</small></div>
+        <div><span class="strip-label">Planned loops</span><strong id="cadence-summary">Three slots a day</strong></div>
+        <div class="cadence-times" id="cadence-times"><span>08:07</span><span>13:07</span><span>19:07</span><small>Vilnius time</small></div>
         <a href="machine/" class="strip-link">Open loop log <span aria-hidden="true">↗</span></a>
       </div>
+      <p class="cadence-note" id="cadence-note">Scheduled publishing has not yet been verified.</p>
 
       <section class="feed-section" id="feed" aria-labelledby="feed-heading">
         <div class="section-heading">

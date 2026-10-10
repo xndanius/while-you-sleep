@@ -1,3 +1,5 @@
+import {loopTiming} from './schedule.js';
+
 (() => {
   'use strict';
 
@@ -50,13 +52,21 @@
 
   function renderStatus() {
     const status = data.status || {};
-    const verified = Boolean(data.schedule?.verifiedHostedRunAt || status.lastHostedRunUrl);
-    $('machine-state').textContent = status.state === 'awaiting_first_cloud_run' && verified ? 'Awaiting the first publication' : status.state ? stateLabel(status.state) : 'Record connected';
-    $('machine-signal').className = `signal-dot${stateClass(status.state) === 'bad' ? ' error' : verified ? ' live' : ''}`;
+    const hosted = Boolean(data.schedule?.verifiedHostedRunAt || status.lastHostedRunUrl),proof=data.schedule?.proof;
+    $('machine-state').textContent = proof?.state==='publication_observed'?'Scheduled publishing verified':proof?.state==='loop_observed'?'Scheduled loop observed':proof?.state==='trigger_observed'?'Schedule trigger observed':status.state==='awaiting_first_cloud_run'?(hosted?'Awaiting the first publication':'Awaiting the first cloud run'):'Schedule unverified';
+    $('machine-signal').className = `signal-dot${proof?.state==='publication_observed'?' live':''}`;
     $('last-research').textContent = formatDate(status.lastResearchAt);
     $('last-published').textContent = formatDate(status.lastPublishedAt);
-    $('next-published').textContent = data.schedule?.nextPublicationAt ? formatDate(data.schedule.nextPublicationAt) : 'Not recorded';
-    $('hosting-note').textContent = verified ? 'Hosted in GitHub Actions · laptops can close' : status.hosted === true ? 'Cloud schedule configured · first run not yet verified' : 'Hosted execution is not yet confirmed';
+    renderTiming();
+    $('hosting-note').textContent = proof?.state==='publication_observed'?'Scheduled publication verified · GitHub Actions':hosted?'Hosted runs recorded · scheduled publication unverified':'Cloud schedule configured · execution unverified';
+  }
+
+  function renderTiming() {
+    if (!data) return;
+    const latestLoop=data.runs?.filter(run=>run.type==='loop').sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
+    const cadence=loopTiming(data.status?.lastLoopAt||latestLoop?.startedAt);
+    $('next-published').textContent=formatDate(cadence.nextPublicationAt);
+    $('loop-slot-state').textContent=`${cadence.slotState==='recorded'?'Recorded':cadence.slotState==='waiting'?'Waiting':cadence.slotState==='late'?'Late':'Missed'} · ${shortTime(cadence.latestSlotAt)}${['late','missed'].includes(cadence.slotState)?' · no loop recorded':''}`;
   }
 
   function runTitle(type) {
@@ -84,10 +94,12 @@
       if (Array.isArray(run.rejected)) parts.push(`<strong>${rejected.length}</strong> rejected`);
       if (Array.isArray(run.published)) parts.push(`<strong>${published.length}</strong> published`);
       const runLink = link(run.githubRunUrl || run.runUrl || run.htmlUrl || run.workflowUrl, 'View hosted run');
+      const event=run.triggerEvent||run.eventName||run.scheduling?.event||run.scheduling?.eventName;
+      const provenance=event==='schedule'?'Scheduled event':event==='workflow_dispatch'?'Manual dispatch':'Trigger not recorded';
       const commitLink = link(run.commitUrl || run.githubCommitUrl, 'View commit');
       return `<details class="run" data-run-id="${escape(id)}"${open.has(id) || (!loaded && index === 0) ? ' open' : ''}>
         <summary><div class="run-summary-date">${escape(day(run.startedAt))}<strong>${escape(shortTime(run.startedAt))}</strong></div><div class="run-summary-main"><h3>${escape(runTitle(run.type))}</h3><p>${parts.length ? parts.join(' · ') : escape(plain(run.summary) || 'No counts recorded for this run.')}</p></div>${chip(run.status)}<span class="run-chevron" aria-hidden="true">+</span></summary>
-        <div class="run-body"><div class="run-facts">${run.finishedAt ? `<span>Finished <strong>${escape(formatDate(run.finishedAt))}</strong></span>` : ''}${presentNumber(run.usage?.costUsd) ? `<span>Model cost <strong>${escape(money(run.usage.costUsd))}</strong></span>` : ''}${run.version ? `<span>Rules <strong>${escape(run.version)}</strong></span>` : ''}${runLink}${commitLink}</div>
+        <div class="run-body"><div class="run-facts"><span>${escape(provenance)}</span>${run.scheduling?.localTime?`<span>Slot <strong>${escape(run.scheduling.localTime)} Vilnius</strong>${run.scheduling.catchUp?' · catch-up':''}</span>`:''}${run.finishedAt ? `<span>Finished <strong>${escape(formatDate(run.finishedAt))}</strong></span>` : ''}${presentNumber(run.usage?.costUsd) ? `<span>Model cost <strong>${escape(money(run.usage.costUsd))}</strong></span>` : ''}${run.version ? `<span>Rules <strong>${escape(run.version)}</strong></span>` : ''}${runLink}${commitLink}</div>
         ${run.message || run.error ? `<p class="muted">${escape(plain(run.message || run.error))}</p>` : ''}
         ${steps.length ? `<ol class="run-timeline">${steps.map((step) => `<li class="${stateClass(step.status) === 'bad' ? 'failed' : ''}"><time datetime="${escape(step.at || '')}">${escape(shortTime(step.at))}</time><span class="stage">${escape(human(step.stage || step.name || 'Step'))}</span><span class="stage-message">${escape(plain(step.message || step.summary || step.status))}</span></li>`).join('')}</ol>` : '<p class="muted">No stage messages recorded for this run.</p>'}
         ${rejected.length ? `<div class="run-rejections"><h4>Rejected ideas · ${rejected.length}</h4>${rejected.map((item) => typeof item === 'string' ? `<div class="rejection"><strong>${escape(item)}</strong><p>Reason not recorded.</p></div>` : `<div class="rejection"><strong>${escape(plain(item.title || item.name) || 'Candidate')}</strong><p>${escape(plain(item.reason || item.message) || 'Reason not recorded.')}</p></div>`).join('')}</div>` : ''}
@@ -97,17 +109,22 @@
   }
 
   function renderSchedule() {
-    const schedule = data.schedule;
-    if (!schedule || typeof schedule !== 'object') { $('schedule').innerHTML = '<p class="muted">The hosted schedule has not been recorded yet.</p>'; return; }
-    const hours = Array.isArray(schedule.publicationHours) ? schedule.publicationHours.map((hour) => typeof hour === 'number' ? `${String(hour).padStart(2,'0')}:00` : plain(hour).includes(':') ? plain(hour) : `${plain(hour).padStart(2,'0')}:00`).join(' · ') : '';
+    const schedule=loopTiming(data.status?.lastLoopAt),proof=data.schedule?.proof;
+    const hours=schedule.publicationTimes.join(' · ');
     const rows = [];
     if (hours) rows.push(['Research & publish',hours]);
-    if (schedule.researchEveryHours) rows.push(['Research scan',`Every ${schedule.researchEveryHours} hours`]);
+    if (schedule.researchEveryHours) rows.push(['Research scan',`Every ${schedule.researchEveryHours} hours at :${schedule.researchMinute}`]);
     if (schedule.measurementTime || schedule.measureAt) rows.push(['Measure results',`${schedule.measurementTime || schedule.measureAt} daily`]);
     if (schedule.improvementTime || schedule.improveAt) rows.push(['Improve rules',`${schedule.improvementTime || schedule.improveAt} daily`]);
     if (schedule.weeklyDigestTime) rows.push(['LinkedIn digest',schedule.weeklyDigestTime]);
     if (schedule.nextResearchAt) rows.push(['Next research',formatDate(schedule.nextResearchAt)]);
-    $('schedule').innerHTML = rows.map(([label,value]) => `<div class="schedule-row"><span>${escape(label)}</span><strong>${escape(value)}</strong></div>`).join('') + `<p class="schedule-footnote">${escape(schedule.timezone || 'Time zone not recorded')}${data.status?.hosted === true ? ' · GitHub Actions' : ''}. The log records what actually ran.</p>`;
+    rows.push(['Next measurement',formatDate(schedule.nextMeasurementAt)],['Next improvement',formatDate(schedule.nextImprovementAt)],['Next digest',formatDate(schedule.nextDigestAt)]);
+    const proofLabel=proof?.state==='publication_observed'?'Scheduled publication recorded':proof?.state==='loop_observed'?'Scheduled loop recorded; publication unverified':proof?.state==='trigger_observed'?'Trigger observed; publishing unverified':'No scheduled event verified';
+    rows.push(['Scheduler proof',proofLabel]);
+    if (Number.isSafeInteger(proof?.scheduledRunCount)) rows.push(['Scheduled events recorded',number(proof.scheduledRunCount)]);
+    if (proof?.checkedAt) rows.push(['Scheduler checked',formatDate(proof.checkedAt)]);
+    const proofLink=link(proof?.lastScheduledPublicationRunUrl||proof?.lastScheduledLoopRunUrl||proof?.lastScheduledRunUrl,'View scheduled-event evidence');
+    $('schedule').innerHTML = rows.map(([label,value]) => `<div class="schedule-row"><span>${escape(label)}</span><strong>${escape(value)}</strong></div>`).join('') + `<p class="schedule-footnote">Europe/Vilnius · planned slots in GitHub Actions. Timers use the current clock. A configured cron or manual hosted run does not verify scheduled publishing.${proofLink?`<br>${proofLink}`:''}</p>`;
   }
 
   function renderPlatforms() {
@@ -198,7 +215,7 @@
   }
 
   $('refresh-machine').addEventListener('click',refresh);
-  document.addEventListener('visibilitychange',() => { if (!document.hidden) refresh(); });
-  setInterval(() => { if (!document.hidden) refresh(); },60000);
+  document.addEventListener('visibilitychange',() => { if (!document.hidden) { renderTiming(); if (data) renderSchedule(); refresh(); } });
+  setInterval(() => { renderTiming(); if (data) renderSchedule(); if (!document.hidden) refresh(); },60000);
   refresh();
 })();

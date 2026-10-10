@@ -49,8 +49,8 @@ test('card is real JPEG with required image dimensions',()=>{
 test('cadence remains in Vilnius across winter and summer offsets',()=>{
   assert.equal(localParts(new Date('2026-10-10T05:00:00Z')).hour,8);
   assert.equal(localParts(new Date('2026-11-10T06:00:00Z')).hour,8);
-  assert.equal(schedule(new Date('2026-10-10T04:59:00Z')).nextPublicationAt,'2026-10-10T05:00:00.000Z');
-  assert.equal(schedule(new Date('2026-11-10T05:59:00Z')).nextPublicationAt,'2026-11-10T06:00:00.000Z');
+  assert.equal(schedule(new Date('2026-10-10T04:59:00Z')).nextPublicationAt,'2026-10-10T05:07:00.000Z');
+  assert.equal(schedule(new Date('2026-11-10T05:59:00Z')).nextPublicationAt,'2026-11-10T06:07:00.000Z');
 });
 test('record paths cannot escape public history directories',()=>{
   assert.throws(()=>dataPath('posts','../../secret'));

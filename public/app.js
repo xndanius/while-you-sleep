@@ -1,3 +1,5 @@
+import {loopTiming} from './schedule.js';
+
 (() => {
   'use strict';
 
@@ -25,6 +27,7 @@
   let hasLoaded = false;
   let observer;
   let toastTimer;
+  let record;
 
   function toast(message) {
     const element = $('toast');
@@ -108,12 +111,15 @@
     }
   }
 
-  function renderSchedule(schedule) {
-    const hours = schedule?.publicationHours;
-    if (!Array.isArray(hours) || !hours.length) return;
-    const labels = hours.map((hour) => typeof hour === 'number' ? `${String(hour).padStart(2, '0')}:00` : plain(hour).includes(':') ? plain(hour) : `${plain(hour).padStart(2, '0')}:00`);
-    $('cadence-summary').textContent = `${labels.length === 3 ? 'Three' : labels.length} times a day`;
-    $('cadence-times').innerHTML = `${labels.map((label) => `<span>${escape(label)}</span>`).join('')}<small>${schedule.timezone === 'Europe/Vilnius' ? 'Vilnius time' : escape(schedule.timezone || 'Vilnius time')}</small>`;
+  function renderSchedule() {
+    if (!record) return;
+    const cadence=loopTiming(record.status?.lastLoopAt),proof=record.schedule?.proof;
+    $('cadence-summary').textContent = 'Three slots a day';
+    $('cadence-times').innerHTML = `${cadence.publicationTimes.map(label=>`<span>${escape(label)}</span>`).join('')}<small>Vilnius time</small>`;
+    const slotLabel=dateLabel(cadence.latestSlotAt);
+    const slotNote=cadence.slotState==='recorded'?'Latest slot has a recorded loop.':cadence.slotState==='waiting'?`Waiting for the ${slotLabel} slot.`:`${cadence.slotState==='missed'?'Missed':'Late'} ${slotLabel} slot: no loop is recorded.`;
+    const proofNote=proof?.state==='publication_observed'?'Scheduled publishing is verified.':proof?.state==='loop_observed'?'A scheduled loop is recorded; scheduled publication is not yet verified.':proof?.state==='trigger_observed'?'A schedule trigger is recorded; scheduled publishing is not yet verified.':'Scheduled publishing is not yet verified.';
+    $('cadence-note').textContent=`Next planned loop: ${dateLabel(cadence.nextPublicationAt)} Vilnius. ${slotNote} ${proofNote}`;
   }
 
   async function refresh() {
@@ -130,10 +136,12 @@
       const nextPosts = data.posts.filter((post) => post && post.id).sort((a,b) => (validDate(b.publishedAt)?.getTime() || 0) - (validDate(a.publishedAt)?.getTime() || 0));
       const changed = !hasLoaded || JSON.stringify(posts) !== JSON.stringify(nextPosts);
       posts = nextPosts;
-      renderSchedule(data.schedule);
+      record = data;
+      renderSchedule();
       const hostedVerified = Boolean(data.schedule?.verifiedHostedRunAt || data.status?.lastHostedRunUrl);
-      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? hostedVerified ? 'Waiting for the first idea' : 'Waiting for the first run' : hostedVerified ? 'Runs in GitHub Actions' : 'Feed connected';
-      $('feed-signal').className = `signal-dot${data.status?.state === 'awaiting_first_cloud_run' ? '' : ' live'}`;
+      const scheduledVerified=data.schedule?.proof?.state==='publication_observed';
+      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? hostedVerified ? 'Waiting for the first idea' : 'Waiting for the first run' : scheduledVerified ? 'Scheduled publishing verified' : 'Scheduled publishing unverified';
+      $('feed-signal').className = `signal-dot${scheduledVerified?' live':''}`;
       $('feed-notice').classList.remove('visible');
       $('feed-notice').textContent = '';
       if (changed) render();
@@ -177,8 +185,8 @@
     readStorage(localStorage, 'wys-saved', []).forEach((id) => saved.add(String(id)));
     render();
   });
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
-  setInterval(() => { if (!document.hidden) refresh(); }, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { renderSchedule(); refresh(); } });
+  setInterval(() => { renderSchedule(); if (!document.hidden) refresh(); }, 60000);
   updateSavedCount();
   refresh();
 })();

@@ -5,10 +5,11 @@ import { INITIAL_RULES, schedule } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
 import { measuredPublication } from '../lib/publication-status.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
+import { schedulerProof } from '../lib/scheduler-proof.mjs';
 
 const xml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 try{
-  const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,rawUsageRecords]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage'].map(records));
+  const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,rawUsageRecords,scheduler]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage','scheduler'].map(records));
   const usageRecords=effectiveUsageRecords(rawUsageRecords);
   const usageByRun=new Map(usageRecords.map(record=>[record.runId,record]));
   const runs=rawRuns.map(run=>({...run,usage:usageByRun.get(run.id)||run.usage}));
@@ -26,16 +27,22 @@ try{
   for(const snapshot of sortedResearch)for(const health of snapshot.health||[])if(!healthMap.has(health.name))healthMap.set(health.name,health);
   const candidates=(await records('candidates')).reduce((n,r)=>n+(r.candidates?.length||0),0);
   const measuredCost=usageRecords.map(r=>r.costUsd).filter(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
-  const modelRunCount=runs.length+improvementRuns.length;
+  const modelRunCount=runs.filter(run=>run.modelExecuted!==false).length+improvementRuns.length;
   const stats={published:posts.length,candidates,rejected:rejections.length,views:metrics.site?.views??null,saves:metrics.site?.saves??null,totalCostUsd:measuredCost.length?measuredCost.reduce((a,b)=>a+b,0):null,costStatus:measuredCost.length===modelRunCount&&modelRunCount?'recorded_token_estimate':'invoice_or_usage_not_connected'};
-  const status={state:posts.length?'running':'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected'};
-  const cadence={...schedule(),verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null};
+  // Loop research files cross a model workspace; only the standalone no-model
+  // research job can contribute scheduler metadata from this collection.
+  const trustedResearch=research.filter(record=>record.id?.startsWith('research-'));
+  const proof=schedulerProof([...scheduler,...trustedResearch,...measurements,...versions],runs,posts);
+  const lastLoop=runs.filter(run=>run.type==='loop').sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
+  const status={state:posts.length?proof.state==='publication_observed'?'running':'schedule_unverified':'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastLoopAt:lastLoop?.startedAt||null,lastLoopEvent:lastLoop?.triggerEvent||lastLoop?.eventName||lastLoop?.scheduling?.event||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected',scheduleVerified:proof.state==='publication_observed'};
+  const cadence={...schedule(),verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null,proof};
   const feed={posts:hydrated,stats,schedule:cadence,status};
   const platformNames=['x','instagram','linkedin'];
   const platforms=platformNames.map(platform=>{
     const receipt=publications.slice().sort((a,b)=>(b.publishedAt||b.submittedAt||'').localeCompare(a.publishedAt||a.submittedAt||'')).find(r=>r.platform===platform||r.results?.[platform]||r.social?.[platform]);
     const result=measuredPublication(receipt,receipt?.results?.[platform]||receipt?.social?.[platform]||receipt,platform,metrics);
-    return {name:platform==='x'?'X':platform==='instagram'?'Instagram':'LinkedIn',id:platform,status:result?.status||'pending_setup',provider:result?.provider||'Postiz Cloud',lastPublishedAt:result?.publishedAt||null,message:result?.message||'Danielius needs to connect this account through the publishing service.'};
+    const servicePending=!result||['pending_setup','not_connected','awaiting_connection'].includes(result.status);
+    return {name:platform==='x'?'X':platform==='instagram'?'Instagram':'LinkedIn',id:platform,status:result?.status||'pending_setup',provider:servicePending?'Service undecided':result?.provider||'Service undecided',lastPublishedAt:result?.publishedAt||null,message:result?.message||'A publishing service has not been chosen. Danielius will connect this account after choosing one.'};
   });
   const versionHistory=versions.length?versions.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')):[{id:INITIAL_RULES.id,createdAt:INITIAL_RULES.createdAt,status:'adopted',reason:INITIAL_RULES.reason,change:'Initial evidence-first writing and picking rules',baselineScore:null,challengerScore:null}];
   const machine={...feed,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],platforms,metrics};
