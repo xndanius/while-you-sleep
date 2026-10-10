@@ -1,0 +1,238 @@
+{
+  "runId": "loop-38032271902-1",
+  "targetCount": 3,
+  "createdAt": "2026-10-10T07:00:00Z",
+  "candidates": [
+    {
+      "title": "Senro",
+      "productUrl": "https://senro.ai",
+      "sourceIds": [
+        "3e2023a51defab3a912814e5"
+      ],
+      "scores": {
+        "evidence": 4,
+        "novelty": 4,
+        "studentMvp": 4,
+        "autonomy": 4
+      },
+      "reason": "Picked: first-party description specifies goal and trajectory evaluations across models plus production monitoring; a narrow scheduled test-and-report loop is feasible as a student MVP."
+    },
+    {
+      "title": "CircleIt",
+      "productUrl": "https://circleit.ai",
+      "sourceIds": [
+        "173b61ec9f2786fecfe2f7b2"
+      ],
+      "scores": {
+        "evidence": 4,
+        "novelty": 4,
+        "studentMvp": 3,
+        "autonomy": 3
+      },
+      "reason": "Picked: founder describes capture, routing to a repo's running coding agent, status reporting, and optional approval gates. Scope the student version to staging feedback because code changes need review."
+    },
+    {
+      "title": "Velu agent-friendly documentation checker",
+      "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+      "sourceIds": [
+        "c1d509e3f4e25ec41804035e"
+      ],
+      "scores": {
+        "evidence": 4,
+        "novelty": 4,
+        "studentMvp": 5,
+        "autonomy": 3
+      },
+      "reason": "Picked: Show HN description says a docs URL is scored against an open spec using its reference implementation. A scan-and-report loop is feasible; remediation remains human reviewed."
+    },
+    {
+      "title": "Higherlevel",
+      "productUrl": "https://higherlevel.to/",
+      "sourceIds": [
+        "e2a8b4987abb258b0ed75d40"
+      ],
+      "scores": {
+        "evidence": 3,
+        "novelty": 3,
+        "studentMvp": 3,
+        "autonomy": 2
+      },
+      "reason": "Rejected: description explains product specs and review of agent work, but does not establish a repeatable autonomous operating loop or enough implementation detail."
+    },
+    {
+      "title": "Plannotator Inbox",
+      "productUrl": "https://plannotator.ai/inbox/",
+      "sourceIds": [
+        "316fc586dd07f59140fe5e8d"
+      ],
+      "scores": {
+        "evidence": 1,
+        "novelty": 3,
+        "studentMvp": 3,
+        "autonomy": 1
+      },
+      "reason": "Rejected: snapshot gives only a title and URL; no source text substantiates behavior beyond a broad decision-inbox label."
+    },
+    {
+      "title": "Marginal-IA reader",
+      "productUrl": "https://marginal-ia.app/en",
+      "sourceIds": [
+        "613c1ee9bb77fa406f6e60d6"
+      ],
+      "scores": {
+        "evidence": 2,
+        "novelty": 3,
+        "studentMvp": 3,
+        "autonomy": 1
+      },
+      "reason": "Rejected: title supports passage-linked answers for PDF/ePub questions, but that is an interactive reader rather than an autonomous business loop."
+    },
+    {
+      "title": "TaskHandoff",
+      "productUrl": "https://github.com/edgestorage/task-handoff",
+      "sourceIds": [
+        "4143a8a5fe40605775ff685f"
+      ],
+      "scores": {
+        "evidence": 1,
+        "novelty": 3,
+        "studentMvp": 2,
+        "autonomy": 3
+      },
+      "reason": "Rejected: only title and URL are in the snapshot; container control-plane behavior, customers, and operating loop are not evidenced."
+    },
+    {
+      "title": "VendIQ",
+      "productUrl": "https://vendiq.rishailabs.com/",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "scores": {
+        "evidence": 1,
+        "novelty": 3,
+        "studentMvp": 3,
+        "autonomy": 3
+      },
+      "reason": "Rejected: title suggests vendor follow-ups, but source text is only a title and URL, so no specific actions or safeguards are established."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Higherlevel",
+      "productUrl": "https://higherlevel.to/",
+      "reason": "Source describes specification and outcome review, but not a sufficiently evidenced autonomous loop."
+    },
+    {
+      "title": "Plannotator Inbox",
+      "productUrl": "https://plannotator.ai/inbox/",
+      "reason": "Snapshot contains only title and URL, with no substantiated behavior."
+    },
+    {
+      "title": "Marginal-IA reader",
+      "productUrl": "https://marginal-ia.app/en",
+      "reason": "An interactive reader is not a clear autonomous business operation, and details are limited to the title."
+    },
+    {
+      "title": "TaskHandoff",
+      "productUrl": "https://github.com/edgestorage/task-handoff",
+      "reason": "Snapshot contains only title and URL; operational behavior is unsupported."
+    },
+    {
+      "title": "VendIQ",
+      "productUrl": "https://vendiq.rishailabs.com/",
+      "reason": "Title alone does not substantiate vendor follow-up workflow, capabilities, or safeguards."
+    }
+  ],
+  "posts": [
+    {
+      "id": "8f9fc995d8bc2e96e7124814",
+      "candidateId": "8f9fc995d8bc2e96e7124814",
+      "title": "Test web agents against goals and paths",
+      "promise": "Run repeatable scenarios and review where a web agent succeeds or gets stuck.",
+      "whatItIs": "Senro is described by its maker as a platform for testing WebMCP tools, meaning tools a web page exposes for an AI agent. Its described tests include goal-oriented evaluations and trajectory evaluations across language models, and it can monitor production use. A small student version could store a few test goals, run them against a demo web tool, and save pass/fail results with the action path. Developers building agent-accessible web tools are a plausible paying customer; that customer and willingness to pay are hypotheses, not established by this source.",
+      "whoPays": "Hypothesis: developers or teams maintaining WebMCP tools may pay to catch regressions; the source does not establish paying customers.",
+      "loop": [
+        "Load saved test goals for a demo WebMCP tool.",
+        "Run each goal through a selected model and tool.",
+        "Record the action sequence and final result.",
+        "Compare results with the expected outcome.",
+        "Alert a developer when a result changes or fails.",
+        "A person reviews failures and updates the test or tool."
+      ],
+      "evidence": "The Show HN author says Senro tests WebMCP tools with goal-oriented and trajectory evaluations across LLMs and monitors production use. The author also describes a free plan with stated monthly event and evaluation limits using the user's own API key; these are founder-provided claims.",
+      "uncertainty": "The source is a founder description, not independent validation. It does not show evaluation accuracy or customer demand. The student version would test a controlled demo; model variation can make results inconsistent, and a person should diagnose failures before changing a live tool.",
+      "first24Hours": [
+        "Choose a public demo page with a harmless WebMCP tool and write five clear goals.",
+        "Build a script that runs each goal once and records tool actions and results.",
+        "Create a simple report that flags failed or changed outcomes for human review."
+      ],
+      "sourceIds": [
+        "3e2023a51defab3a912814e5",
+        "8f9fc995d8bc2e96e7124814"
+      ],
+      "productUrl": "https://senro.ai"
+    },
+    {
+      "id": "1b30245f8580f86bcc4685c8",
+      "candidateId": "1b30245f8580f86bcc4685c8",
+      "title": "Route visual feedback to a coding agent",
+      "promise": "Turn a marked-up staging page into an agent task with a reviewable status trail.",
+      "whatItIs": "CircleIt is described as a Chrome extension plus a Claude Code or Codex plugin. A teammate can mark an area on a page, explain the requested change, and send the screenshot, comment, and page metadata to a running coding agent. The source says the system matches the page address to a repository and reports status back in the sender's browser. A small student version could capture one staging page and open a proposed task for a developer's agent. Small product teams are a plausible customer, but that is a hypothesis. The loop handles intake and handoff; a human still needs to judge whether the requested change is correct and review code before release.",
+      "whoPays": "Hypothesis: small software teams that collect frequent website feedback may pay; no customer or payment evidence is given.",
+      "loop": [
+        "A teammate opens a staging page and marks a visible issue.",
+        "Capture the screenshot, comment, page address, and relevant metadata.",
+        "Match the page address to a configured repository.",
+        "Send the feedback to the team's running coding agent after any required approval.",
+        "Show the sender the agent's status and response.",
+        "A developer reviews code changes and decides whether to merge."
+      ],
+      "evidence": "The Show HN author describes a Chrome extension and Claude Code/Codex plugin, screenshot and comment transfer to a running agent, address-based repository routing, status updates, and optional approval requirements for people or sites. The author reports a time improvement for their own small UI changes; this is an attributed personal claim.",
+      "uncertainty": "The workflow is based on the maker's account and does not independently establish reliability or adoption. For a student MVP, limit access to a test repository and staging site. Address matching can route incorrectly, and agent-generated changes need human review before deployment.",
+      "first24Hours": [
+        "Create a disposable demo page and test repository with one visible UI issue.",
+        "Build a browser capture form for a marked region, comment, and page URL.",
+        "Route one captured report to a task queue and add a manual approval step before an agent receives it."
+      ],
+      "sourceIds": [
+        "173b61ec9f2786fecfe2f7b2",
+        "1b30245f8580f86bcc4685c8"
+      ],
+      "productUrl": "https://circleit.ai"
+    },
+    {
+      "id": "f8fa768c80d28297a81242e1",
+      "candidateId": "f8fa768c80d28297a81242e1",
+      "title": "Check whether docs work for AI agents",
+      "promise": "Scan a documentation URL for common access and format problems, then review a scorecard.",
+      "whatItIs": "Velu's agent-friendly documentation checker is described as scoring a documentation URL against the open Agent-Friendly Documentation Spec, using the spec's reference implementation called afdocs. The Show HN post names issues the spec is concerned with: pages rendered only in the browser, missing llms.txt or Markdown versions, soft 404 pages, and pages too large for an agent's context window. A beginner could build a small scheduled checker for one documentation site that records the score and lists detectable problems. Documentation teams are a plausible customer, but the source does not establish who pays. This is an audit and reporting loop, not an automatic documentation repair service.",
+      "whoPays": "Hypothesis: teams maintaining developer documentation may pay for recurring checks; the source does not establish customers or revenue.",
+      "loop": [
+        "Read a configured documentation site URL.",
+        "Check pages for supported agent access and format signals.",
+        "Run the reference checker and save its score.",
+        "Compare the result with the previous scan.",
+        "Send a report when the score or detected issues change.",
+        "A documentation owner verifies findings and chooses any fix."
+      ],
+      "evidence": "The Show HN description says Velu's tool scores documentation URLs against the open Agent-Friendly Documentation Spec using its reference implementation, afdocs. The author identifies client-rendered pages, missing llms.txt or Markdown, soft 404s, and oversized pages as problems the spec addresses.",
+      "uncertainty": "This is a maker's description; the snapshot does not include an independent test or performance data. A student checker can only detect a limited set of public signals and may misclassify sites. A human should verify a finding before editing a documentation site.",
+      "first24Hours": [
+        "Select a public documentation site and inspect the referenced open specification and checker interface.",
+        "Implement checks for one or two signals such as Markdown availability and obvious 404 responses.",
+        "Save a timestamped report and compare it with a second scan for changes."
+      ],
+      "sourceIds": [
+        "c1d509e3f4e25ec41804035e",
+        "776ffe3f52323ea0078899b9"
+      ],
+      "productUrl": "https://www.veludocs.com/agent-friendly-documentation/"
+    }
+  ],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Reviewed eight source-backed candidates; selected Senro, CircleIt, and Velu because their snapshot descriptions establish concrete recurring workflows. Rejected five with thinner evidence or no autonomous loop. No existing data/posts directory or post JSON files were present to compare for duplicates."
+    }
+  ]
+}
