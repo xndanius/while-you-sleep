@@ -1,0 +1,56 @@
+name: Measure the loop
+on:
+  schedule:
+    - cron: '30 21 * * *'
+      timezone: Europe/Vilnius
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: while-you-sleep-record
+  cancel-in-progress: false
+  queue: max
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node --test tests/measure.test.mjs
+      - name: Read aggregate measurements
+        run: node scripts/measure.mjs
+        env:
+          RUN_ID: measure-${{ github.run_id }}-${{ github.run_attempt }}
+          GOATCOUNTER_SITE: ${{ vars.GOATCOUNTER_SITE }}
+          GOATCOUNTER_API_TOKEN: ${{ secrets.GOATCOUNTER_API_TOKEN }}
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+          SOCIAL_PROVIDER: postiz
+      - name: Commit the measurement record
+        run: |
+          git config user.name 'While You Sleep loop'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- metrics.json "data/measurements/$RUN_ID.json"
+          if ! git diff --cached --quiet; then
+            git commit -m "measure: $RUN_ID · aggregate website and social results"
+            for attempt in 1 2 3; do
+              if git push origin HEAD:main; then exit 0; fi
+              git pull --rebase origin main
+            done
+            exit 1
+          fi
+        env:
+          RUN_ID: measure-${{ github.run_id }}-${{ github.run_attempt }}
+  pages:
+    needs: measure
+    if: needs.measure.result == 'success'
+    uses: ./.github/workflows/pages.yml

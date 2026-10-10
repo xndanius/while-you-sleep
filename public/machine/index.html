@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>const siteBase=document.createElement("base");siteBase.href=location.pathname.replace(/machine(?:\/(?:index\.html)?)?$|machine\.html$/,"");document.head.append(siteBase);</script>
+  <meta name="theme-color" content="#151915">
+  <meta name="description" content="The live research, checking and publishing log for While You Sleep. Real runs, sources, rejected ideas and rule changes.">
+  <title>The machine — While You Sleep</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23151915'/%3E%3Cpath d='M44 14a22 22 0 1 0 6 35A23 23 0 0 1 44 14' fill='%23d8e8af'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="analytics.js" defer></script>
+  <script src="machine.js" defer></script>
+</head>
+<body class="machine-page">
+  <a class="skip-link" href="#machine-content">Skip to the loop log</a>
+  <div class="site-shell">
+    <header class="site-header"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">◔</span><span>While You Sleep</span></a><nav class="main-nav" aria-label="Main navigation"><a href="./">The feed</a><a href="machine/" aria-current="page">The machine <span aria-hidden="true">↗</span></a></nav></header>
+
+    <main id="machine-content">
+      <section class="machine-hero" aria-labelledby="machine-title">
+        <div><div class="eyebrow"><span class="tiny-orbit" aria-hidden="true"></span> The live loop</div><h1 id="machine-title">No hidden<br><span>hands.</span></h1><p class="hero-intro">What the loop found, what passed the check, and what changed. The working record behind every idea.</p><a class="hero-history" href="https://github.com/xndanius/while-you-sleep/commits/main" target="_blank" rel="noopener noreferrer">Read the public commit history <span aria-hidden="true">↗</span></a></div>
+        <aside class="machine-live"><div class="aside-top"><span class="signal-dot" id="machine-signal" aria-hidden="true"></span><span id="machine-state">Connecting to the loop</span></div><dl><div><dt>Last research</dt><dd id="last-research">—</dd></div><div><dt>Last publication</dt><dd id="last-published">—</dd></div><div><dt>Next publication</dt><dd id="next-published">—</dd></div></dl><span class="machine-live-foot" id="hosting-note">Checking hosted schedule</span></aside>
+      </section>
+
+      <div class="feed-notice" id="machine-notice" role="status" aria-live="polite"></div>
+
+      <section class="machine-stats" aria-label="Recorded results" id="machine-stats"><div><span>Published</span><strong>—</strong></div><div><span>Candidates</span><strong>—</strong></div><div><span>Rejected</span><strong>—</strong></div><div><span>Feed views</span><strong>—</strong></div><div><span>Saves</span><strong>—</strong></div><div><span>Model cost</span><strong>—</strong></div></section>
+
+      <section class="machine-section" aria-labelledby="runs-heading"><div class="section-heading"><div><div class="eyebrow">The record</div><h2 id="runs-heading">Recent runs</h2></div><div class="update-controls"><span id="machine-updated">Updates every minute</span><button id="refresh-machine" class="text-button" type="button">Refresh <span aria-hidden="true">↻</span></button></div></div><div id="runs" class="run-list" aria-busy="true"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>Reading the log…</h3><p>Fetching recorded research and publishing runs.</p></div></div></section>
+
+      <div class="machine-two-columns"><section class="machine-section" aria-labelledby="schedule-heading"><div class="section-heading"><div><div class="eyebrow">The rhythm</div><h2 id="schedule-heading">The schedule</h2></div></div><div id="schedule" class="machine-panel"><p class="muted">Waiting for the hosted schedule.</p></div></section><section class="machine-section" aria-labelledby="platform-heading"><div class="section-heading"><div><div class="eyebrow">Where it publishes</div><h2 id="platform-heading">Connections</h2></div></div><div id="platforms" class="machine-panel"><p class="muted">Checking platform connections.</p></div></section></div>
+
+      <section class="machine-section" aria-labelledby="versions-heading"><div class="section-heading"><div><div class="eyebrow">Getting better, with evidence</div><h2 id="versions-heading">Rule changes</h2></div></div><div id="versions" class="version-list"><div class="empty-state compact"><h3>Reading version history…</h3><p>Only recorded changes appear here.</p></div></div></section>
+
+      <section class="machine-section" aria-labelledby="sources-heading"><div class="section-heading"><div><div class="eyebrow">The input</div><h2 id="sources-heading">Source health</h2></div></div><div id="source-health" class="source-health"><p class="muted">Checking the source record.</p></div></section>
+
+      <div class="machine-explainer"><span class="brand-mark" aria-hidden="true">◔</span><p>Research → Pick → Write → Check → Publish → Measure → Improve.<br><span>Separate checks, source links, and logged decisions keep the loop accountable.</span></p><a href="https://github.com/xndanius/while-you-sleep/commits/main" target="_blank" rel="noopener noreferrer">Public commit history <span aria-hidden="true">↗</span></a></div>
+    </main>
+
+    <footer class="site-footer"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">◔</span><span>While You Sleep</span></a><p>All times in Europe/Vilnius.</p><a href="./">Back to the feed <span aria-hidden="true">↗</span></a></footer>
+  </div>
+</body>
+</html>

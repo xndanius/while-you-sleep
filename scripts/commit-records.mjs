@@ -1,0 +1,20 @@
+import {spawnSync} from 'node:child_process';
+import {readdir,readFile} from 'node:fs/promises';
+const kind=process.argv[2]||'loop',runId=process.argv[3]||'';
+if(!/^[a-zA-Z0-9_.-]+$/.test(runId))throw new Error('Invalid run ID');
+function git(args,optional=false){const r=spawnSync('git',args,{encoding:'utf8'});if(r.status!==0&&!optional)throw new Error(`Git operation failed: ${args[0]}`);return r.stdout||''}
+git(['config','user.name','While You Sleep loop']);git(['config','user.email','41898282+github-actions[bot]@users.noreply.github.com']);
+async function files(dir){try{return(await readdir(dir)).filter(f=>f.endsWith('.json')).map(f=>`${dir}/${f}`)}catch{return[]}}
+function commit(paths,message){if(!paths.length)return;git(['add','--',...paths]);if(git(['diff','--cached','--name-only']).trim())git(['commit','-m',message])}
+commit((await files('data/research')).filter(p=>p.includes(runId)),`research: ${runId} · public sources and feed health`);
+for(const p of ['data/drafts','data/candidates','data/check-context','data/checks'])commit((await files(p)).filter(f=>f.includes(runId)),`${p.split('/')[1]}: ${runId} · evidence and decision record`);
+for(const file of (await files('data/rejections')).filter(f=>f.includes(runId))){const rejection=JSON.parse(await readFile(file,'utf8'));const reason=String(rejection.reason||'Independent check rejected this candidate').replace(/[\r\n]+/g,' ').slice(0,180);commit([file],`reject: ${runId} · ${reason}`)}
+for(const file of await files('data/posts')){const post=JSON.parse(await readFile(file,'utf8'));if(post.runId===runId)commit([file,`public/cards/${post.id}.jpg`],`post: ${post.title} · independent check passed`)}
+commit((await files('data/runs')).filter(p=>p.includes(runId)),`loop: ${runId} · final publication and rejection results`);
+// GitHub token pushes do not trigger on:push workflows; caller explicitly deploys Pages.
+for(let attempt=0;attempt<3;attempt++){
+ const pushed=spawnSync('git',['push','origin','HEAD:main'],{stdio:'inherit'});
+ if(pushed.status===0)process.exit(0);
+ git(['pull','--rebase','origin','main']);
+}
+throw new Error('Could not push cloud records after three attempts');

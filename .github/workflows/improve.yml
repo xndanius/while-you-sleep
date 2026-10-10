@@ -1,0 +1,260 @@
+name: Improve one rule with blind held-out trials
+on:
+  schedule:
+    - cron: '0 22 * * *'
+      timezone: Europe/Vilnius
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: while-you-sleep-improvement
+  cancel-in-progress: false
+  queue: max
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      due: ${{ steps.gate.outputs.due }}
+      run_id: ${{ steps.gate.outputs.runId }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - id: gate
+        run: node scripts/prepare-improvement.mjs gate
+  propose:
+    needs: gate
+    if: needs.gate.outputs.due == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      ready: ${{ steps.seed.outputs.ready }}
+      input_sha256: ${{ steps.seed.outputs.inputSha256 }}
+      research_sha256: ${{ steps.seed.outputs.researchSha256 }}
+    env:
+      RUN_ID: ${{ needs.gate.outputs.run_id }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - id: seed
+        run: node scripts/prepare-improvement.mjs seed "$RUN_ID"
+      - if: steps.seed.outputs.ready == 'true'
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/improver.md
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          codex-args: '["--ephemeral"]'
+      - name: Preserve evidence and proposal, including failed attempts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: improvement-input
+          path: |
+            data/research/${{ env.RUN_ID }}.json
+            data/improvements/${{ env.RUN_ID }}-input.json
+            data/improvements/${{ env.RUN_ID }}.json
+          if-no-files-found: warn
+  trials:
+    needs: [gate, propose]
+    if: needs.propose.result == 'success' && needs.propose.outputs.ready == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [baseline, proposal]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      RUN_ID: ${{ needs.gate.outputs.run_id }}
+      VARIANT: ${{ matrix.variant }}
+      EXPECTED_INPUT_SHA256: ${{ needs.propose.outputs.input_sha256 }}
+      EXPECTED_RESEARCH_SHA256: ${{ needs.propose.outputs.research_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-input
+          path: .staging/input
+      - run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/input input
+      - run: node scripts/prepare-improvement.mjs trial "$RUN_ID" "$VARIANT"
+      - uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/trial.md
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          codex-args: '["--ephemeral"]'
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: improvement-trial-${{ matrix.variant }}
+          path: data/improvements/${{ env.RUN_ID }}-trial-${{ matrix.variant }}.json
+          if-no-files-found: warn
+  blind:
+    needs: [gate, propose, trials]
+    if: needs.trials.result == 'success'
+    runs-on: ubuntu-latest
+    env:
+      RUN_ID: ${{ needs.gate.outputs.run_id }}
+      EXPECTED_INPUT_SHA256: ${{ needs.propose.outputs.input_sha256 }}
+      EXPECTED_RESEARCH_SHA256: ${{ needs.propose.outputs.research_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-input
+          path: .staging/input
+      - run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/input input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: improvement-trial-*
+          merge-multiple: true
+          path: .staging/trials
+      - run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/trials trials
+      - run: node scripts/prepare-improvement.mjs blind "$RUN_ID"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: improvement-blind
+          path: .run/blind/
+          include-hidden-files: true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: improvement-evaluation
+          path: |
+            data/improvements/${{ env.RUN_ID }}-labels.json
+            data/improvements/${{ env.RUN_ID }}-blind.json
+  grade:
+    needs: blind
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-blind
+          path: .run/blind
+      - name: Keep grader blind to current rules and proposal identities
+        run: |
+          rm -f RULES.md
+          rm -rf data
+      - uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: ${{ github.workspace }}/.run/blind/PROMPT.md
+          working-directory: ${{ github.workspace }}/.run/blind
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          codex-args: '["--ephemeral"]'
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: improvement-grade
+          path: .run/blind/grade.json
+          include-hidden-files: true
+          if-no-files-found: warn
+  commit:
+    needs: [gate, propose, trials, blind, grade]
+    if: always() && needs.gate.outputs.due == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    env:
+      RUN_ID: ${{ needs.gate.outputs.run_id }}
+      GH_TOKEN: ${{ github.token }}
+      EXPECTED_INPUT_SHA256: ${{ needs.propose.outputs.input_sha256 }}
+      EXPECTED_RESEARCH_SHA256: ${{ needs.propose.outputs.research_sha256 }}
+    outputs:
+      ref: ${{ steps.push.outputs.ref }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-input
+          path: .staging/input
+      - run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/input input
+      - if: needs.trials.result == 'success'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: improvement-trial-*
+          merge-multiple: true
+          path: .staging/trials
+      - if: needs.trials.result == 'success'
+        run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/trials trials
+      - if: needs.blind.result == 'success'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-evaluation
+          path: .staging/evaluation
+      - if: needs.blind.result == 'success'
+        run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/evaluation evaluation
+      - if: needs.grade.result == 'success'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-grade
+          path: .staging/grade
+      - if: needs.grade.result == 'success'
+        run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/grade grade
+      - name: Apply exact hashes, higher-score and immutable safety gates
+        run: node scripts/apply-improvement.mjs "$RUN_ID"
+      - id: push
+        name: Commit every decision without model access
+        run: |
+          git config user.name 'while-you-sleep[bot]'
+          git config user.email 'while-you-sleep[bot]@users.noreply.github.com'
+          git add -- data/research data/improvements data/versions RULES.md
+          git commit -F .run/improvement-commit-message.txt
+          gh auth setup-git
+          git push origin HEAD:main
+          echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  pages:
+    needs: commit
+    if: needs.commit.result == 'success'
+    uses: ./.github/workflows/pages.yml
+    with:
+      ref: ${{ needs.commit.outputs.ref }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

@@ -1,0 +1,265 @@
+name: Codex autonomous loop
+on:
+  schedule:
+    - cron: '0 8,13,19 * * *'
+      timezone: Europe/Vilnius
+  workflow_dispatch:
+    inputs:
+      bootstrap:
+        description: Produce the first three checked posts using the same cloud loop
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: while-you-sleep-loop
+  cancel-in-progress: false
+  queue: max
+env:
+  RUN_ID: loop-${{ github.run_id }}-${{ github.run_attempt }}
+  BOOTSTRAP: ${{ inputs.bootstrap || false }}
+  PUBLIC_BASE_URL: https://xndanius.github.io/while-you-sleep
+jobs:
+  writer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    outputs:
+      repo_sha: ${{ steps.trust.outputs.repo_sha }}
+      rules_sha256: ${{ steps.trust.outputs.rules_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Freeze the code and rules used by this loop
+        id: trust
+        run: |
+          echo "repo_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "rules_sha256=$(sha256sum RULES.md | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+      - name: Check secure model access
+        env:
+          MODEL_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$MODEL_KEY" ]; then
+            echo '::error::OPENAI_API_KEY is not installed. Complete secure setup, then dispatch bootstrap.'
+            exit 1
+          fi
+      - name: Research public sources and prepare the bounded writer
+        run: node scripts/research-snapshot.mjs "$RUN_ID" && node scripts/prepare-run.mjs writer
+      - name: Codex picks and writes
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          prompt-file: .github/codex/prompts/writer.md
+          codex-args: '["--ephemeral"]'
+      - name: Carry only data records to the independent checker
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: writer-${{ env.RUN_ID }}
+          path: |
+            data/research/${{ env.RUN_ID }}.json
+            data/drafts/${{ env.RUN_ID }}.json
+          if-no-files-found: warn
+          retention-days: 7
+  checker:
+    needs: writer
+    if: needs.writer.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    outputs:
+      repair: ${{ steps.verdict.outputs.repair }}
+      draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
+      context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ needs.writer.outputs.repo_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: writer-${{ env.RUN_ID }}
+          path: data/
+      - run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs checker
+      - id: fingerprint
+        run: node scripts/fingerprint-check.mjs "$RUN_ID" >> "$GITHUB_OUTPUT"
+      - name: Independent Codex checker
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          prompt-file: .github/codex/prompts/checker.md
+          codex-args: '["--ephemeral"]'
+      - name: Determine whether one repair is needed
+        id: verdict
+        run: node scripts/check-verdict.mjs "$RUN_ID"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: checked-${{ env.RUN_ID }}
+          path: |
+            data/research/${{ env.RUN_ID }}.json
+            data/drafts/${{ env.RUN_ID }}.json
+            data/check-context/${{ env.RUN_ID }}.json
+            data/checks/${{ env.RUN_ID }}.json
+          retention-days: 7
+  repair:
+    needs: [writer, checker]
+    if: needs.checker.outputs.repair == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ needs.writer.outputs.repo_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: checked-${{ env.RUN_ID }}
+          path: data/
+      - run: node scripts/save-first-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs repair
+      - name: Codex repairs once
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          prompt-file: .github/codex/prompts/writer.md
+          codex-args: '["--ephemeral"]'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: repaired-${{ env.RUN_ID }}
+          path: |
+            data/research/${{ env.RUN_ID }}.json
+            data/drafts/${{ env.RUN_ID }}.json
+            data/check-context/${{ env.RUN_ID }}.json
+            data/checks/${{ env.RUN_ID }}.json
+            data/drafts/${{ env.RUN_ID }}-first.json
+            data/check-context/${{ env.RUN_ID }}-first.json
+            data/checks/${{ env.RUN_ID }}-first.json
+          retention-days: 7
+  final_check:
+    needs: [writer, repair]
+    if: needs.repair.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    outputs:
+      draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
+      context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ needs.writer.outputs.repo_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: repaired-${{ env.RUN_ID }}
+          path: data/
+      - run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs final-checker
+      - id: fingerprint
+        run: node scripts/fingerprint-check.mjs "$RUN_ID" >> "$GITHUB_OUTPUT"
+      - name: Fresh Codex checker after the single repair
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          prompt-file: .github/codex/prompts/checker.md
+          codex-args: '["--ephemeral"]'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: final-${{ env.RUN_ID }}
+          path: |
+            data/research/${{ env.RUN_ID }}.json
+            data/drafts/${{ env.RUN_ID }}.json
+            data/check-context/${{ env.RUN_ID }}.json
+            data/checks/${{ env.RUN_ID }}.json
+            data/drafts/${{ env.RUN_ID }}-first.json
+            data/check-context/${{ env.RUN_ID }}-first.json
+            data/checks/${{ env.RUN_ID }}-first.json
+          retention-days: 7
+  record:
+    needs: [writer, checker, repair, final_check]
+    if: always() && (needs.writer.result == 'success' || needs.writer.result == 'failure')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: ${{ needs.final_check.result == 'success' && format('final-{0}', env.RUN_ID) || needs.checker.result == 'success' && format('checked-{0}', env.RUN_ID) || format('writer-{0}', env.RUN_ID) }}
+          path: .staging/data/
+      - name: Import only data and publish independently checked files
+        id: publish
+        env:
+          EXPECTED_DRAFT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
+          RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
+          RULES_COMMIT: ${{ needs.writer.outputs.repo_sha }}
+        run: node scripts/import-artifact.mjs .staging/data "$RUN_ID" && node scripts/finalize-run.mjs "$RUN_ID"
+      - name: Commit research, picking, rejection and publication records separately
+        if: always()
+        run: node scripts/commit-records.mjs loop "$RUN_ID"
+  pages:
+    needs: record
+    if: always() && needs.record.result == 'success'
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+  social:
+    needs: pages
+    if: needs.pages.result == 'success'
+    uses: ./.github/workflows/social.yml
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    secrets: inherit

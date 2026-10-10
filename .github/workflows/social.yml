@@ -1,0 +1,102 @@
+name: Publish checked social posts
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 1'
+      timezone: Europe/Vilnius
+
+permissions:
+  contents: read
+
+concurrency:
+  group: while-you-sleep-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SOCIAL_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+      PUBLIC_BASE_URL: https://xndanius.github.io/while-you-sleep
+    steps:
+      - name: Check out current main
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+      - name: Verify committed evidence and reserve sends
+        id: reserve
+        env:
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+          POSTIZ_X_CHANNEL_ID: ${{ vars.POSTIZ_X_CHANNEL_ID }}
+          POSTIZ_INSTAGRAM_CHANNEL_ID: ${{ vars.POSTIZ_INSTAGRAM_CHANNEL_ID }}
+          POSTIZ_LINKEDIN_PAGE_CHANNEL_ID: ${{ vars.POSTIZ_LINKEDIN_PAGE_CHANNEL_ID }}
+        run: node scripts/publish-social.mjs --reserve
+      - name: Commit reservations before any create request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh auth setup-git
+          git config user.name 'while-you-sleep[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --all data
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record checked social reservations [skip ci]'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
+      - name: Publish reserved checked content
+        id: send
+        env:
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+          POSTIZ_X_CHANNEL_ID: ${{ vars.POSTIZ_X_CHANNEL_ID }}
+          POSTIZ_INSTAGRAM_CHANNEL_ID: ${{ vars.POSTIZ_INSTAGRAM_CHANNEL_ID }}
+          POSTIZ_LINKEDIN_PAGE_CHANNEL_ID: ${{ vars.POSTIZ_LINKEDIN_PAGE_CHANNEL_ID }}
+          SOCIAL_RESERVATION_COMMITTED: 'true'
+        run: node scripts/publish-social.mjs --send
+      - name: Commit immutable service receipts
+        if: always() && steps.reserve.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh auth setup-git
+          git add --all data
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record social publication receipts [skip ci]'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
+      - name: Report provider attention
+        if: steps.reserve.outputs.needs_attention == 'true' || steps.send.outputs.needs_attention == 'true'
+        run: |
+          echo 'A social channel needs reconnection or a send needs reconciliation. See the committed safe receipts.'
+          exit 1
+
+  refresh-pages:
+    needs: publish
+    if: always() && !cancelled()
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/pages.yml
+    with:
+      ref: main
+      artifact_name: github-pages-social
