@@ -1,0 +1,59 @@
+name: Temporary real schedule probe
+on:
+  schedule:
+    # UTC control: every ten minutes away from :00. Runtime expires today.
+    - cron: '3,13,23,33,43,53 * 10 10 *'
+permissions:
+  contents: read
+concurrency:
+  group: while-you-sleep-schedule-probe
+  cancel-in-progress: false
+  queue: max
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    outputs:
+      recorded: ${{ steps.probe.outputs.recorded }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - id: probe
+        run: node scripts/record-schedule-probe.mjs
+      - if: steps.probe.outputs.recorded == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'while-you-sleep[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- data/scheduler
+          git commit -m "Record actual schedule event $GITHUB_RUN_ID (no post publication claimed)"
+          gh auth setup-git
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git pull --rebase origin main
+          done
+          exit 1
+  pages:
+    needs: record
+    if: needs.record.outputs.recorded == 'true'
+    uses: ./.github/workflows/pages.yml
+    with:
+      ref: main
+      artifact_name: github-pages-probe
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
