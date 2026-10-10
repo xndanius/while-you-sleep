@@ -1,0 +1,134 @@
+{
+  "id": "verification-20261010-1358",
+  "kind": "diagnosis",
+  "checkedAt": "2026-10-10T13:58:38.099Z",
+  "scheduledRunCount": 0,
+  "actionsEnabled": true,
+  "defaultBranch": "main",
+  "repository": {
+    "fullName": "xndanius/while-you-sleep",
+    "public": true,
+    "fork": false,
+    "archived": false,
+    "disabled": false
+  },
+  "state": "unverified",
+  "verification": "Authoritative gh REST event=schedule inventory; manual cloud jobs are not schedule evidence.",
+  "workflowStates": [
+    {
+      "name": "Record the W3 cloud backup",
+      "path": ".github/workflows/backup.yml",
+      "state": "active"
+    },
+    {
+      "name": "Improve one rule with blind held-out trials",
+      "path": ".github/workflows/improve.yml",
+      "state": "active"
+    },
+    {
+      "name": "Codex autonomous loop",
+      "path": ".github/workflows/loop.yml",
+      "state": "active"
+    },
+    {
+      "name": "Measure the loop",
+      "path": ".github/workflows/measure.yml",
+      "state": "active"
+    },
+    {
+      "name": "Publish Pages",
+      "path": ".github/workflows/pages.yml",
+      "state": "active"
+    },
+    {
+      "name": "Reconcile completed Codex usage",
+      "path": ".github/workflows/reconcile-usage.yml",
+      "state": "active"
+    },
+    {
+      "name": "Public source research",
+      "path": ".github/workflows/research.yml",
+      "state": "active"
+    },
+    {
+      "name": "Temporary real schedule probe",
+      "path": ".github/workflows/schedule-probe.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "name": "Publish checked social posts",
+      "path": ".github/workflows/social.yml",
+      "state": "active"
+    }
+  ],
+  "trial": {
+    "beganAt": "2026-10-10T12:58:00.000Z",
+    "expiresAt": "2026-10-10T13:58:00.000Z",
+    "cron": "3,13,23,33,43,53 * 10 10 *",
+    "timezone": "UTC",
+    "controlWorkflows": [
+      ".github/workflows/schedule-probe.yml",
+      ".github/workflows/loop.yml"
+    ],
+    "statesBeforeCleanup": [
+      {
+        "name": "Record the W3 cloud backup",
+        "path": ".github/workflows/backup.yml",
+        "state": "active"
+      },
+      {
+        "name": "Improve one rule with blind held-out trials",
+        "path": ".github/workflows/improve.yml",
+        "state": "active"
+      },
+      {
+        "name": "Codex autonomous loop",
+        "path": ".github/workflows/loop.yml",
+        "state": "active"
+      },
+      {
+        "name": "Measure the loop",
+        "path": ".github/workflows/measure.yml",
+        "state": "active"
+      },
+      {
+        "name": "Publish Pages",
+        "path": ".github/workflows/pages.yml",
+        "state": "active"
+      },
+      {
+        "name": "Reconcile completed Codex usage",
+        "path": ".github/workflows/reconcile-usage.yml",
+        "state": "active"
+      },
+      {
+        "name": "Public source research",
+        "path": ".github/workflows/research.yml",
+        "state": "active"
+      },
+      {
+        "name": "Temporary real schedule probe",
+        "path": ".github/workflows/schedule-probe.yml",
+        "state": "active"
+      },
+      {
+        "name": "Publish checked social posts",
+        "path": ".github/workflows/social.yml",
+        "state": "active"
+      }
+    ],
+    "result": "no_schedule_event_observed",
+    "scheduledRuns": []
+  },
+  "cleanup": {
+    "probeWorkflowState": "disabled_manually",
+    "runtimeControlsExpired": true
+  },
+  "manualDiagnostics": {
+    "loopGuard": "https://github.com/xndanius/while-you-sleep/actions/runs/38055146700",
+    "researchCatchUp": "https://github.com/xndanius/while-you-sleep/actions/runs/38057259822",
+    "eventName": "workflow_dispatch"
+  },
+  "unattendedPublishing": "unproven",
+  "nextAction": "Configure an external hosted clock with owner-provided service access and a dedicated repository-only dispatch credential. Preserve true workflow_dispatch provenance and independently capture exact scheduled-publication evidence."
+}
