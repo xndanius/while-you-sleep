@@ -1,6 +1,8 @@
 # Prepared external clock fallback
 
-Status: researched and ready to configure if the GitHub schedule trial fails. No service, account, credential or schedule has been created. This is a clock for the existing Codex workflow; all model work and publication remain in GitHub Actions. Social publishing service selection is separate and remains undecided.
+Status: the one-hour GitHub schedule trial ended on 10 October 2026 with zero scheduled events. The fallback configuration is prepared; no service, account, credential or schedule has been created. This is a clock for the existing Codex workflow; all model work and publication remain in GitHub Actions. Social publishing service selection is separate and remains undecided.
+
+Danielius chose to keep three total posts on 10 October, including the launch posts. Test an automatic trigger without generating another post today; publication proof must wait until 11 October or later. Keep the existing daily cap and record a real automatic cap skip separately from a checked publication. QStash has not yet been selected: Danielius requested an explanation before account setup.
 
 Upstash QStash is the proposed first option. Its current free tier lists 1,000 messages/day and 10 schedules, enough for one ten-minute loop watchdog (144 initial deliveries/day). Confirm the free plan in Danielius's account before enabling it. [Official pricing](https://upstash.com/pricing/qstash).
 
