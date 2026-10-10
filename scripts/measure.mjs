@@ -2,6 +2,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, records, writeJSON, validId } from '../lib/storage.mjs';
 import { measureSocial } from '../integrations/social.mjs';
+import { trustedScheduledMetadata } from './prepare-scheduled-job.mjs';
 
 const PROJECT_START = '2026-10-10T00:00:00.000Z';
 const HOUR = 3_600_000;
@@ -157,7 +158,7 @@ export async function runMeasurement({env = process.env,now = new Date(),fetch:f
   const states = [metrics.site.status,metrics.social.status];
   const status = states.some(state => ['unavailable','partial','invalid_configuration'].includes(state)) ? 'partial' : 'completed';
   const githubRunUrl = env.GITHUB_REPOSITORY && /^\d+$/.test(env.GITHUB_RUN_ID || '') ? `https://github.com/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}` : null;
-  const record = {id:runId,type:'measure',status,startedAt,finishedAt,githubRunUrl,
+  const record = {id:runId,type:'measure',status,startedAt,finishedAt,githubRunUrl,...trustedScheduledMetadata('measure',env),scheduleStatus:'completed',
     message:'Aggregate measurement recorded. Unavailable metrics remain null.',
     steps:[{stage:'measure',at:metrics.measuredAt,status:metrics.site.status,message:`Website measurement: ${metrics.site.status}.`},
       {stage:'measure',at:metrics.social.measuredAt,status:metrics.social.status,message:`Social measurement: ${metrics.social.status}.`}],

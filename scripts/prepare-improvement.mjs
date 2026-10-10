@@ -6,15 +6,13 @@ import { scanSources,fetchPublic,plainText } from '../lib/research.mjs';
 import { deterministicCheck } from '../lib/validation.mjs';
 import { validateRuleProposal } from '../lib/improvement.mjs';
 import { makeProposerInput,gradeOrUnavailable } from '../lib/improvement-runtime.mjs';
+import { prepareScheduledJob,trustedScheduledMetadata } from './prepare-scheduled-job.mjs';
 
 const [command,runId,variant,importKind]=process.argv.slice(2);
 async function output(values){if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,Object.entries(values).map(([k,v])=>`${k}=${v}\n`).join(''));console.log(JSON.stringify(values));}
 try{
   if(command==='gate'){
-    // The cron already has Europe/Vilnius timezone. Let a queued scheduled run
-    // catch up even if GitHub starts it after the advertised hour.
-    const due=['workflow_dispatch','schedule'].includes(process.env.GITHUB_EVENT_NAME);
-    await output({due:String(due),runId:`improve-${process.env.GITHUB_RUN_ID||Date.now()}-${process.env.GITHUB_RUN_ATTEMPT||1}`});
+    await prepareScheduledJob({kind:'improve'});
   }else{
     if(!validId(runId))throw new Error('Invalid improvement run ID.');
     if(command==='import'){
@@ -66,7 +64,7 @@ try{
         }catch(error){health.push({name:source.title,url:productUrl,status:'failed',fetchedAt:new Date().toISOString(),items:0,message:safeError(error)});}
       }
       let metrics;try{metrics=await readJSON(path.join(ROOT,'metrics.json'));}catch(error){if(error.code!=='ENOENT')throw error;metrics={site:{status:'not_connected',views:null,saves:null},social:{status:'not_connected'},measuredAt:null};}
-      const input={runId,createdAt:new Date().toISOString(),baselineRules,rulesSha256:sha256(baselineRules),sources:verified,sourceSnapshotSha256:sha256(stableJSON(verified)),selectionHealth:health,candidates,metrics,githubRunUrl};
+      const input={runId,createdAt:new Date().toISOString(),baselineRules,rulesSha256:sha256(baselineRules),sources:verified,sourceSnapshotSha256:sha256(stableJSON(verified)),selectionHealth:health,candidates,metrics,githubRunUrl,...trustedScheduledMetadata('improve')};
       await writeJSON(dataPath('improvements',runId+'-input'),input,{immutable:true});
       // This artifact is the proposal runner's entire checkout-free workspace.
       // The full frozen cases stay on the trusted seed/trial/evaluation runners.

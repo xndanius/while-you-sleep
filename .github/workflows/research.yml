@@ -15,6 +15,8 @@ concurrency:
 jobs:
   research:
     runs-on: ubuntu-latest
+    outputs:
+      due: ${{ steps.gate.outputs.due }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -25,14 +27,22 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node scripts/research-snapshot.mjs "$RUN_ID"
+      - id: gate
+        name: Select the latest elapsed research slot
+        run: node scripts/prepare-scheduled-job.mjs research
         env:
           RUN_ID: research-${{ github.run_id }}-${{ github.run_attempt }}
-      - if: always()
+      - if: steps.gate.outputs.due == 'true'
+        run: node scripts/research-snapshot.mjs "$RUN_ID"
+        env:
+          RUN_ID: ${{ steps.gate.outputs.runId }}
+          SCHEDULED_JOB_KEY: ${{ steps.gate.outputs.jobKey }}
+          SCHEDULED_AT: ${{ steps.gate.outputs.scheduledAt }}
+      - if: always() && steps.gate.outputs.due == 'true'
         run: node scripts/commit-records.mjs research "$RUN_ID"
         env:
-          RUN_ID: research-${{ github.run_id }}-${{ github.run_attempt }}
+          RUN_ID: ${{ steps.gate.outputs.runId }}
   pages:
     needs: research
-    if: always() && needs.research.result == 'success'
+    if: always() && needs.research.result == 'success' && needs.research.outputs.due == 'true'
     uses: ./.github/workflows/pages.yml

@@ -16,9 +16,12 @@ jobs:
     outputs:
       due: ${{ steps.gate.outputs.due }}
       run_id: ${{ steps.gate.outputs.runId }}
+      job_key: ${{ steps.gate.outputs.jobKey }}
+      scheduled_at: ${{ steps.gate.outputs.scheduledAt }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          ref: main
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
@@ -36,9 +39,12 @@ jobs:
       research_sha256: ${{ steps.seed.outputs.researchSha256 }}
     env:
       RUN_ID: ${{ needs.gate.outputs.run_id }}
+      SCHEDULED_JOB_KEY: ${{ needs.gate.outputs.job_key }}
+      SCHEDULED_AT: ${{ needs.gate.outputs.scheduled_at }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          ref: main
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
@@ -263,6 +269,8 @@ jobs:
     env:
       RUN_ID: ${{ needs.gate.outputs.run_id }}
       GH_TOKEN: ${{ github.token }}
+      SCHEDULED_JOB_KEY: ${{ needs.gate.outputs.job_key }}
+      SCHEDULED_AT: ${{ needs.gate.outputs.scheduled_at }}
       EXPECTED_INPUT_SHA256: ${{ needs.seed.outputs.input_sha256 }}
       EXPECTED_RESEARCH_SHA256: ${{ needs.seed.outputs.research_sha256 }}
       IMPROVEMENT_STAGE_RESULTS: ${{ toJSON(needs) }}

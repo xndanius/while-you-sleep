@@ -167,6 +167,8 @@ test('trusted runtime records a missing grader as an immutable rejection with un
     cp(path.join(repository, 'lib'), path.join(directory, 'lib'), { recursive: true }),
     cp(path.join(repository, 'scripts', 'prepare-improvement.mjs'), path.join(directory, 'scripts', 'prepare-improvement.mjs')),
     cp(path.join(repository, 'scripts', 'apply-improvement.mjs'), path.join(directory, 'scripts', 'apply-improvement.mjs')),
+    cp(path.join(repository, 'scripts', 'prepare-scheduled-job.mjs'), path.join(directory, 'scripts', 'prepare-scheduled-job.mjs')),
+    cp(path.join(repository, 'public'), path.join(directory, 'public'), { recursive: true, filter: source => source === path.join(repository, 'public') || source === path.join(repository, 'public', 'schedule.js') }),
     symlink(path.join(repository, 'node_modules'), path.join(directory, 'node_modules'), 'dir'),
     writeFile(path.join(directory, 'RULES.md'), rules),
     ...[[runId + '-input', input], [runId, proposal], [runId + '-blind', blind], [runId + '-labels', { runId, ...labels }]].map(([name, value]) => writeFile(path.join(directory, 'data', 'improvements', name + '.json'), JSON.stringify(value) + '\n')),
