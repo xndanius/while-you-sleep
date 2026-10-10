@@ -87,3 +87,19 @@ test('trusted gate reads committed completion records and writes auditable outpu
   assert.equal(diagnostic.due, true);
   assert.equal(diagnostic.eventName, 'workflow_dispatch');
 });
+
+test('model-writable loop research cannot suppress a standalone research slot', async t => {
+  const root = await mkdtemp(path.join(tmpdir(), 'wys-research-provenance-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const now = new Date('2026-10-10T13:30:00Z');
+  const directory = path.join(root, 'data', 'research');
+  await mkdir(directory, { recursive: true });
+  const claimed = { ...complete(latestScheduledSlot('research', now)), id: 'research-111-1', runId: 'research-111-1' };
+  await writeFile(path.join(directory, 'loop-111-1.json'), JSON.stringify(claimed));
+  const env = { GITHUB_EVENT_NAME: 'schedule', GITHUB_RUN_ID: '222', GITHUB_RUN_ATTEMPT: '1' };
+  assert.equal((await prepareScheduledJob({ kind: 'research', root, env, now })).due, true);
+  await writeFile(path.join(directory, 'research-111-1.json'), JSON.stringify({ ...claimed, runId: 'loop-111-1' }));
+  assert.equal((await prepareScheduledJob({ kind: 'research', root, env, now })).due, true);
+  await writeFile(path.join(directory, 'research-111-1.json'), JSON.stringify(claimed));
+  assert.equal((await prepareScheduledJob({ kind: 'research', root, env, now })).due, false);
+});

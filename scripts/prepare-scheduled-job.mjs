@@ -56,7 +56,13 @@ export async function prepareScheduledJob({ kind, root = ROOT, env = process.env
   const directory = path.join(root, 'data', directories[kind]);
   let files = [];
   try { files = await fs.readdir(directory); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-  const completions = await Promise.all(files.filter(file => file.endsWith('.json')).map(async file => JSON.parse(await fs.readFile(path.join(directory, file), 'utf8'))));
+  // Loop research crosses a model workspace. Only the dedicated, no-model
+  // research workflow's bounded filename can complete a research slot.
+  const completionFiles = files.filter(file => kind === 'research' ? /^research-\d+-\d+\.json$/.test(file) : file.endsWith('.json'));
+  const completions = (await Promise.all(completionFiles.map(async file => {
+    const record = JSON.parse(await fs.readFile(path.join(directory, file), 'utf8'));
+    return kind !== 'research' || (record.id + '.json' === file && record.runId === record.id) ? record : null;
+  }))).filter(Boolean);
   const decision = scheduledDecision({ kind, eventName: env.GITHUB_EVENT_NAME || 'unknown', now, completions });
   const runId = env.RUN_ID || `${kind}-${env.GITHUB_RUN_ID || new Date(now).getTime()}-${env.GITHUB_RUN_ATTEMPT || 1}`;
   if (!validId(runId)) throw new Error('Invalid scheduled job run ID.');

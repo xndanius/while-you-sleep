@@ -63,7 +63,7 @@ import {loopTiming} from './schedule.js';
 
   function renderTiming() {
     if (!data) return;
-    const latestLoop=data.runs?.filter(run=>run.type==='loop').sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
+    const latestLoop=data.runs?.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
     const cadence=loopTiming(data.status?.lastLoopAt||latestLoop?.startedAt);
     $('next-published').textContent=formatDate(cadence.nextPublicationAt);
     $('loop-slot-state').textContent=`${cadence.slotState==='recorded'?'Recorded':cadence.slotState==='waiting'?'Waiting':cadence.slotState==='late'?'Late':'Missed'} · ${shortTime(cadence.latestSlotAt)}${['late','missed'].includes(cadence.slotState)?' · no loop recorded':''}`;
@@ -94,7 +94,7 @@ import {loopTiming} from './schedule.js';
       if (Array.isArray(run.rejected)) parts.push(`<strong>${rejected.length}</strong> rejected`);
       if (Array.isArray(run.published)) parts.push(`<strong>${published.length}</strong> published`);
       const runLink = link(run.githubRunUrl || run.runUrl || run.htmlUrl || run.workflowUrl, 'View hosted run');
-      const event=run.triggerEvent||run.eventName||run.scheduling?.event||run.scheduling?.eventName;
+      const event=run.eventName||run.scheduling?.eventName||run.scheduling?.event;
       const provenance=event==='schedule'?'Scheduled event':event==='workflow_dispatch'?'Manual dispatch':'Trigger not recorded';
       const commitLink = link(run.commitUrl || run.githubCommitUrl, 'View commit');
       return `<details class="run" data-run-id="${escape(id)}"${open.has(id) || (!loaded && index === 0) ? ' open' : ''}>

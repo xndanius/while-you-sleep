@@ -1,8 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
 import {schedule,publicationSlots,dueJobs,previousLocalTime,localParts} from '../lib/config.mjs';
 import {loopTiming} from '../public/schedule.js';
-import {schedulerProof} from '../lib/scheduler-proof.mjs';
+import {schedulerProof,standaloneResearchRecords} from '../lib/scheduler-proof.mjs';
 
 test('Vilnius slots preserve minutes and identity over summer, winter and DST changes',()=>{
   for(const [day,offset] of [['2026-10-10',3],['2026-11-10',2],['2026-10-25',2],['2027-03-28',3]]){
@@ -46,8 +49,8 @@ test('client clock distinguishes waiting, late, missed and recorded loops withou
 test('hosted runs, enabled cron and manual posts cannot establish scheduled-event proof',()=>{
   const url='https://github.com/xndanius/while-you-sleep/actions/runs/123';
   const diagnosis={kind:'diagnosis',checkedAt:'2026-10-10T12:58:00Z',scheduledRunCount:0,actionsEnabled:true};
-  const runs=[{id:'loop-manual',type:'loop',triggerEvent:'workflow_dispatch',startedAt:'2026-10-10T07:13:00Z',githubRunUrl:url,published:['post']}];
-  const posts=[{id:'post',runId:'loop-manual',publishedAt:'2026-10-10T07:15:00Z',githubRunUrl:url}];
+  const runs=[{id:'loop-manual',type:'loop',eventName:'workflow_dispatch',triggerEvent:'schedule',startedAt:'2026-10-10T07:13:00Z',githubRunUrl:url,published:['post']}];
+  const posts=[{id:'post',runId:'loop-manual',publishedAt:'2026-10-10T07:15:00Z',githubRunUrl:url,eventName:'schedule',triggerEvent:'schedule'}];
   const proof=schedulerProof([diagnosis],runs,posts);
   assert.equal(proof.state,'unverified');
   assert.equal(proof.scheduledRunCount,0);
@@ -58,7 +61,7 @@ test('scheduler trigger, loop execution and checked publication remain separate 
   const url='https://github.com/xndanius/while-you-sleep/actions/runs/123';
   const probe={kind:'probe',eventName:'schedule',createdAt:'2026-10-10T13:03:00Z',githubRunUrl:url};
   assert.equal(schedulerProof([probe]).state,'trigger_observed');
-  const run={id:'loop-scheduled',type:'loop',triggerEvent:'schedule',startedAt:'2026-10-10T13:07:00Z',githubRunUrl:url,published:[]};
+  const run={id:'loop-scheduled',type:'loop',eventName:'schedule',startedAt:'2026-10-10T13:07:00Z',githubRunUrl:url,published:[]};
   assert.equal(schedulerProof([probe],[run]).state,'loop_observed');
   run.published=['post'];
   const post={id:'post',runId:run.id,publishedAt:'2026-10-10T13:10:00Z',githubRunUrl:url,scheduling:{event:'schedule'}};
@@ -66,4 +69,28 @@ test('scheduler trigger, loop execution and checked publication remain separate 
   assert.equal(proof.state,'publication_observed');
   assert.equal(proof.lastScheduledPostId,'post');
   assert.equal(proof.scheduledRunCount,1,'the same hosted run must not be counted three times');
+});
+
+test('scheduled publication requires matching trusted loop identity, URL and published ID',()=>{
+  const url='https://github.com/xndanius/while-you-sleep/actions/runs/123';
+  const run={id:'loop-123-1',type:'loop',eventName:'schedule',modelExecuted:true,startedAt:'2026-10-10T13:07:00Z',githubRunUrl:url,published:['post']};
+  const post={id:'post',runId:run.id,publishedAt:'2026-10-10T13:10:00Z',githubRunUrl:url,eventName:'schedule'};
+  assert.equal(schedulerProof([],[],[post]).state,'unverified','a post cannot supply its own provenance');
+  assert.equal(schedulerProof([],[run],[post]).state,'publication_observed');
+  for(const changed of [{...post,runId:'loop-other'},{...post,id:'unlisted'},{...post,githubRunUrl:url+'4'}])assert.equal(schedulerProof([],[run],[changed]).state,'loop_observed');
+  const gate={...run,modelExecuted:false};
+  assert.equal(schedulerProof([],[gate],[post]).state,'trigger_observed','a gate audit proves only the trigger');
+  assert.equal(schedulerProof([],[gate],[post]).lastScheduledLoopAt,null);
+});
+
+test('loop research cannot fake a standalone research identity by editing JSON fields',async t=>{
+  const directory=await mkdtemp(path.join(tmpdir(),'wys-proof-'));
+  t.after(()=>rm(directory,{recursive:true,force:true}));
+  const record={id:'research-123-1',runId:'research-123-1',eventName:'schedule',createdAt:'2026-10-10T13:07:00Z',githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/123'};
+  await writeFile(path.join(directory,'loop-123-1.json'),JSON.stringify(record));
+  assert.deepEqual(await standaloneResearchRecords(directory),[]);
+  await writeFile(path.join(directory,'research-123-1.json'),JSON.stringify(record));
+  assert.deepEqual(await standaloneResearchRecords(directory),[record]);
+  await writeFile(path.join(directory,'research-124-1.json'),JSON.stringify(record));
+  assert.equal((await standaloneResearchRecords(directory)).length,1,'standalone record must bind its actual filename');
 });

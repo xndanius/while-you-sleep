@@ -5,7 +5,7 @@ import { INITIAL_RULES, schedule } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
 import { measuredPublication } from '../lib/publication-status.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
-import { schedulerProof } from '../lib/scheduler-proof.mjs';
+import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof.mjs';
 
 const xml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 try{
@@ -31,10 +31,10 @@ try{
   const stats={published:posts.length,candidates,rejected:rejections.length,views:metrics.site?.views??null,saves:metrics.site?.saves??null,totalCostUsd:measuredCost.length?measuredCost.reduce((a,b)=>a+b,0):null,costStatus:measuredCost.length===modelRunCount&&modelRunCount?'recorded_token_estimate':'invoice_or_usage_not_connected'};
   // Loop research files cross a model workspace; only the standalone no-model
   // research job can contribute scheduler metadata from this collection.
-  const trustedResearch=research.filter(record=>record.id?.startsWith('research-'));
+  const trustedResearch=await standaloneResearchRecords(path.join(ROOT,'data','research'));
   const proof=schedulerProof([...scheduler,...trustedResearch,...measurements,...versions],runs,posts);
-  const lastLoop=runs.filter(run=>run.type==='loop').sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
-  const status={state:posts.length?proof.state==='publication_observed'?'running':'schedule_unverified':'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastLoopAt:lastLoop?.startedAt||null,lastLoopEvent:lastLoop?.triggerEvent||lastLoop?.eventName||lastLoop?.scheduling?.event||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected',scheduleVerified:proof.state==='publication_observed'};
+  const lastLoop=runs.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
+  const status={state:posts.length?proof.state==='publication_observed'?'running':'schedule_unverified':'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastLoopAt:lastLoop?.startedAt||null,lastLoopEvent:lastLoop?.eventName||lastLoop?.scheduling?.eventName||lastLoop?.scheduling?.event||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected',scheduleVerified:proof.state==='publication_observed'};
   const cadence={...schedule(),verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null,proof};
   const feed={posts:hydrated,stats,schedule:cadence,status};
   const platformNames=['x','instagram','linkedin'];

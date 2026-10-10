@@ -6,6 +6,10 @@ function git(args,optional=false){const r=spawnSync('git',args,{encoding:'utf8'}
 git(['config','user.name','While You Sleep loop']);git(['config','user.email','41898282+github-actions[bot]@users.noreply.github.com']);
 async function files(dir){try{return(await readdir(dir)).filter(f=>f.endsWith('.json')).map(f=>`${dir}/${f}`)}catch{return[]}}
 function commit(paths,message){if(!paths.length)return;git(['add','--',...paths]);if(git(['diff','--cached','--name-only']).trim())git(['commit','-m',message])}
+for(const directory of ['scheduling','slot-reservations','slot-outcomes']){
+ const matches=[];for(const file of await files(`data/${directory}`)){const record=JSON.parse(await readFile(file,'utf8'));if(record.runId===runId||record.settledByRunId===runId)matches.push(file);}
+ commit(matches,`schedule: ${runId} · ${directory} trusted slot decision`);
+}
 commit((await files('data/research')).filter(p=>p.includes(runId)),`research: ${runId} · public sources and feed health`);
 commit((await files('data/usage')).filter(p=>p===`data/usage/${runId}.json`),`usage: ${runId} · trusted cloud CLI token estimate`);
 for(const p of ['data/drafts','data/candidates','data/check-context','data/checks'])commit((await files(p)).filter(f=>f.includes(runId)),`${p.split('/')[1]}: ${runId} · evidence and decision record`);
