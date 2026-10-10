@@ -33,10 +33,11 @@ jobs:
     permissions:
       contents: read
       actions: read
-    env:
-      BACKUP_RUNTIME_DIR: ${{ runner.temp }}/while-you-sleep-backup-runtime
-      BACKUP_OUTPUT_DIR: ${{ runner.temp }}/while-you-sleep-backup
     steps:
+      - name: Set backup directories on this runner
+        run: |
+          echo "BACKUP_RUNTIME_DIR=$RUNNER_TEMP/while-you-sleep-backup-runtime" >> "$GITHUB_ENV"
+          echo "BACKUP_OUTPUT_DIR=$RUNNER_TEMP/while-you-sleep-backup" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           ref: main
