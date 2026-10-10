@@ -22,7 +22,7 @@ GitHub cron uses its documented IANA timezone support, including daylight-saving
 
 ## Credentials and owner setup
 
-Secrets belong only in repository **Settings → Secrets and variables → Actions**. Never paste keys or passwords into chat. `OPENAI_API_KEY` is provisioned with the OpenAI Developers secure flow, then sent to GitHub through stdin without printing it; any confirmed local transfer file is deleted after delivery. The content agents cannot read it: the official action supplies a secure Responses proxy.
+Secrets belong only in repository **Settings → Secrets and variables → Actions**. Never paste keys or passwords into chat. `OPENAI_API_KEY` is provisioned with the OpenAI Developers secure flow and delivered directly to Actions through stdin without a plaintext local file. The temporary recipient key is removed after successful delivery. The content agents cannot read the API key: the official action supplies a secure Responses proxy.
 
 Social: Postiz Cloud Standard, US$29/month for five channels, API and analytics. Danielius connects X, Instagram and a LinkedIn Page with OAuth; no platform developer apps are needed. The posting job is inactive until `POSTIZ_API_KEY` is installed. [Exact account steps and official pricing/terms](docs/PLATFORMS.md).
 
