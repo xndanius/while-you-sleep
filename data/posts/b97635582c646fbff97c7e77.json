@@ -1,0 +1,78 @@
+{
+  "id": "b97635582c646fbff97c7e77",
+  "candidateId": "b97635582c646fbff97c7e77",
+  "title": "Test AI phone agents with repeatable calls",
+  "promise": "Run a scripted call against a phone agent and receive a reviewable pass or fail result.",
+  "whatItIs": "VoiceGremlin is described by its maker as an API for testing AI systems that answer phone calls. A user supplies a phone number and a test case, such as checking whether the agent performs a requested behavior. The service calls the agent, has the two bots converse, and uses an LLM judge—a language model asked to assess the result—to return pass or fail for a software pipeline. A small student version could run one scripted scenario against a test phone agent and save the call outcome. Teams building voice agents are a plausible customer, but the source does not establish who pays or whether customers use it. The repeated loop can run without a person placing each test call, while a human still needs to configure safe test numbers, inspect ambiguous calls, and decide what failures mean.",
+  "whoPays": "Hypothesis: companies building AI phone agents may pay to check that their agents keep meeting defined behaviors; the source provides no customer or revenue evidence.",
+  "loop": [
+    "An operator defines a test case and supplies a test phone number.",
+    "The API places a call to the phone agent being checked.",
+    "The test bot speaks with the phone agent about the scenario.",
+    "An LLM judge compares the conversation with the requested behavior.",
+    "The system returns a pass or fail result to a software pipeline.",
+    "A developer reviews unclear failures and updates the test or phone agent."
+  ],
+  "evidence": "In a Show HN post, the maker says VoiceGremlin is a working API for tests against AI phone agents: a user supplies a phone number and test case, the service has bots converse, and an LLM judge provides a pass/fail result for a pipeline. The maker also describes a free trial. These are maker statements, not independent reliability or adoption evidence.",
+  "uncertainty": "The source is the founder's description and provides no independent accuracy results. LLM judgements can misread a conversation, and a test call can incur telephony costs or reach an unintended person if numbers are configured badly. A student version should use a controlled test number and have a person listen to failures before treating them as proof of a defect. The small version's customer and willingness to pay are hypotheses.",
+  "first24Hours": [
+    "Set up a test voice agent and a phone number that you control.",
+    "Write one scenario with a clear expected behavior and record a sample call by hand.",
+    "Build a small runner that starts one test call and saves the transcript and a human-reviewed pass/fail result."
+  ],
+  "productUrl": "https://voicegremlin.com/",
+  "publishedAt": "2026-10-10T07:13:15.146Z",
+  "version": "rules-8918d4f67df5",
+  "rulesSha256": "8918d4f67df520463c45d170efe6937be5d759839edbc5d5d8c516f96d8c00b3",
+  "rulesCommit": "2110b9f8d849b79db149e465d043f2e6753d364d",
+  "origin": "github-actions-codex-loop",
+  "runId": "loop-38033544598-1",
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38033544598",
+  "sources": [
+    {
+      "id": "7cd98dadfb653ac13c226271",
+      "title": "Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents",
+      "url": "https://news.ycombinator.com/item?id=49995804",
+      "publisher": "Hacker News · automation",
+      "fetchedAt": "2026-10-10T07:12:27.754Z",
+      "verifiedAt": "2026-10-10T07:12:27.754Z"
+    },
+    {
+      "id": "50b060ed0a327b94bd29e2c5",
+      "title": "Test AI phone agents with repeatable calls · official product",
+      "url": "https://voicegremlin.com/",
+      "publisher": "voicegremlin.com",
+      "fetchedAt": "2026-10-10T07:12:27.979Z",
+      "verifiedAt": "2026-10-10T07:12:27.979Z"
+    }
+  ],
+  "imageUrl": "./cards/b97635582c646fbff97c7e77.jpg",
+  "checker": {
+    "passed": true,
+    "checkedAt": "2026-10-10T07:12:27.982Z",
+    "checkerRunId": "loop-38033544598-1-independent-check",
+    "draftSha256": "80c3d26f61061a6bab80061363a7c53a0052f560df2715e02e9785354b0a2ca7",
+    "sourceSnapshotSha256": "b6d3473fc236e459b4e90c896daac318b4c86d23c51fb400c734be2ca2902150",
+    "claimChecks": [
+      {
+        "claim": "VoiceGremlin's API accepts a phone number and test case for testing a voice agent.",
+        "supported": true,
+        "sourceId": "7cd98dadfb653ac13c226271",
+        "evidenceQuote": "You pass the API a phone number and a test case like \"Verify that the agent does X.\""
+      },
+      {
+        "claim": "VoiceGremlin has bots converse and uses an LLM judge to return a pass/fail result to a pipeline.",
+        "supported": true,
+        "sourceId": "7cd98dadfb653ac13c226271",
+        "evidenceQuote": "It calls your voice agent, tests the thing by having the bots talk to each other, and uses LLM-as-judge to provide a pass/fail for your pipeline."
+      },
+      {
+        "claim": "The official product describes its service as end-to-end testing through real phone calls and a REST API.",
+        "supported": true,
+        "sourceId": "50b060ed0a327b94bd29e2c5",
+        "evidenceQuote": "E2E testing for AI phone agents - real phone calls, real audio, any functional test, via REST API."
+      }
+    ]
+  },
+  "contentSha256": "4156069a7172ade7e12e8d4d30ae3e9b190c03c752584eded52b00536c222e39"
+}
