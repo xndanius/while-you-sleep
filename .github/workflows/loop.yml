@@ -60,7 +60,7 @@ jobs:
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
           prompt-file: .github/codex/prompts/writer.md
-          codex-args: '["--ephemeral"]'
+          codex-args: '["--ephemeral", "--json"]'
       - name: Carry only data records to the independent checker
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -106,7 +106,7 @@ jobs:
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
           prompt-file: .github/codex/prompts/checker.md
-          codex-args: '["--ephemeral"]'
+          codex-args: '["--ephemeral", "--json"]'
       - name: Determine whether one repair is needed
         id: verdict
         run: node scripts/check-verdict.mjs "$RUN_ID"
@@ -149,7 +149,7 @@ jobs:
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
           prompt-file: .github/codex/prompts/writer.md
-          codex-args: '["--ephemeral"]'
+          codex-args: '["--ephemeral", "--json"]'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -197,7 +197,7 @@ jobs:
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
           prompt-file: .github/codex/prompts/checker.md
-          codex-args: '["--ephemeral"]'
+          codex-args: '["--ephemeral", "--json"]'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -217,6 +217,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: read
     concurrency:
       group: while-you-sleep-record
       cancel-in-progress: false
@@ -235,6 +236,12 @@ jobs:
         with:
           name: ${{ needs.final_check.result == 'success' && format('final-{0}', env.RUN_ID) || needs.checker.result == 'success' && format('checked-{0}', env.RUN_ID) || format('writer-{0}', env.RUN_ID) }}
           path: .staging/data/
+      - name: Collect only trusted CLI token usage
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CODEX_MODEL: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          MODEL_JOB_RESULTS: ${{ toJSON(needs) }}
+        run: node scripts/collect-usage.mjs loop "$RUN_ID"
       - name: Import only data and publish independently checked files
         id: publish
         env:

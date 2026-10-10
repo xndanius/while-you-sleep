@@ -56,7 +56,7 @@ jobs:
           safety-strategy: drop-sudo
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
-          codex-args: '["--ephemeral"]'
+          codex-args: '["--ephemeral", "--json"]'
       - name: Preserve evidence and proposal, including failed attempts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -103,7 +103,7 @@ jobs:
           safety-strategy: drop-sudo
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
-          codex-args: '["--ephemeral"]'
+          codex-args: '["--ephemeral", "--json"]'
       - if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -174,7 +174,7 @@ jobs:
           safety-strategy: drop-sudo
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
-          codex-args: '["--ephemeral"]'
+          codex-args: '["--ephemeral", "--json"]'
       - if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -188,6 +188,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: read
     concurrency:
       group: while-you-sleep-record
       cancel-in-progress: false
@@ -238,15 +239,28 @@ jobs:
         run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/grade grade
       - name: Apply exact hashes, higher-score and immutable safety gates
         run: node scripts/apply-improvement.mjs "$RUN_ID"
+      - name: Collect only trusted CLI token usage
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CODEX_MODEL: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          MODEL_JOB_RESULTS: ${{ toJSON(needs) }}
+        run: node scripts/collect-usage.mjs improve "$RUN_ID"
+      - name: Update the daily cost summary from trusted records
+        run: node scripts/update-cost-readme.mjs
       - id: push
         name: Commit every decision without model access
         run: |
           git config user.name 'while-you-sleep[bot]'
           git config user.email 'while-you-sleep[bot]@users.noreply.github.com'
-          git add -- data/research data/improvements data/versions RULES.md
+          git add -- data/research data/improvements data/versions "data/usage/$RUN_ID.json" RULES.md README.md
           git commit -F .run/improvement-commit-message.txt
           gh auth setup-git
-          git push origin HEAD:main
+          pushed=false
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then pushed=true; break; fi
+            git pull --rebase origin main
+          done
+          if [ "$pushed" != true ]; then exit 1; fi
           echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
   pages:
     needs: commit

@@ -1,0 +1,22 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {ROOT,records} from '../lib/storage.mjs';
+const start='<!-- MODEL_COSTS_START -->',end='<!-- MODEL_COSTS_END -->';
+const groups=new Map();
+for(const record of await records('usage')){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(record.localDate||''))continue;
+ const values=groups.get(record.localDate)||[];values.push(record);groups.set(record.localDate,values);
+}
+const dates=[...groups.keys()].sort().reverse().slice(0,14);
+const rows=dates.map(date=>{
+ const runs=groups.get(date),costs=runs.map(r=>r.costUsd);
+ const complete=costs.every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
+ const estimate=complete?`$${costs.reduce((a,b)=>a+b,0).toFixed(5)}`:'Unknown';
+ return `| ${date} | ${runs.length} | ${estimate} | ${complete?'Reported CLI counters':'Missing or partial counters'} |`;
+});
+const body=rows.length?`| Vilnius date | Cloud runs | Estimated USD | Coverage |\n| --- | ---: | ---: | --- |\n${rows.join('\n')}\n\nStandard-rate token estimates, not invoices. Unreported billing adjustments remain unknown. [Calculation and rates](docs/COSTS.md).`:'No model usage is recorded yet.';
+const file=path.join(ROOT,'README.md'),source=await readFile(file,'utf8');
+const left=source.indexOf(start),right=source.indexOf(end);
+if(left<0||right<left)throw new Error('README model-cost markers are missing.');
+await writeFile(file,source.slice(0,left+start.length)+'\n\n'+body+'\n\n'+source.slice(right));
+console.log('Updated the daily model-cost table from trusted cloud usage records.');

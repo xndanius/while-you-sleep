@@ -1,0 +1,85 @@
+name: Record the W3 cloud backup
+on:
+  schedule:
+    # Cron has no year field; the calendar gate allows 12 October 2026 only.
+    - cron: '30 19 12 10 *'
+      timezone: Europe/Vilnius
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: while-you-sleep-backup
+  cancel-in-progress: false
+  queue: max
+jobs:
+  calendar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    outputs:
+      due: ${{ steps.calendar.outputs.due }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Allow the one scheduled date or a manual retry
+        id: calendar
+        run: node scripts/record-backup.mjs --calendar
+  record:
+    needs: calendar
+    if: needs.calendar.outputs.due == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    env:
+      BACKUP_RUNTIME_DIR: ${{ runner.temp }}/while-you-sleep-backup-runtime
+      BACKUP_OUTPUT_DIR: ${{ runner.temp }}/while-you-sleep-backup
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - name: Check backup gates without opening a browser
+        run: node scripts/record-backup.mjs --self-test
+      - name: Require real public W3 evidence before installing the recorder
+        run: node scripts/record-backup.mjs --preflight
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Install the pinned recorder only in this runner
+        run: |
+          npm install --prefix "$BACKUP_RUNTIME_DIR" --ignore-scripts --no-audit --no-fund playwright@1.64.0
+          "$BACKUP_RUNTIME_DIR/node_modules/.bin/playwright" install --with-deps chromium
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+      - name: Record the real public pages and verify exactly 30 seconds
+        run: node scripts/record-backup.mjs --record
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Keep the recording and public evidence for 30 days
+        id: upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: while-you-sleep-w3-backup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.BACKUP_OUTPUT_DIR }}/while-you-sleep-backup-30s.mp4
+            ${{ env.BACKUP_OUTPUT_DIR }}/backup-evidence.json
+            ${{ env.BACKUP_OUTPUT_DIR }}/raw/*.webm
+          retention-days: 30
+          if-no-files-found: error
+          compression-level: 0
+      - name: Link the downloadable backup
+        env:
+          BACKUP_ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFile } from 'node:fs/promises';
+          const summary = `30-second real recording: 18s of the public machine, then 12s of public GitHub history.\n\n[Download the W3 backup](${process.env.BACKUP_ARTIFACT_URL}) (retained for 30 days).\n\nThe evidence JSON includes verified post counts, at least six completed scheduled loops across two Vilnius dates and 48 hours, adopted rule changes, public run and commit links, and the recording SHA-256.\n`;
+          await appendFile(process.env.GITHUB_STEP_SUMMARY, summary);
+          NODE

@@ -7,10 +7,12 @@ git(['config','user.name','While You Sleep loop']);git(['config','user.email','4
 async function files(dir){try{return(await readdir(dir)).filter(f=>f.endsWith('.json')).map(f=>`${dir}/${f}`)}catch{return[]}}
 function commit(paths,message){if(!paths.length)return;git(['add','--',...paths]);if(git(['diff','--cached','--name-only']).trim())git(['commit','-m',message])}
 commit((await files('data/research')).filter(p=>p.includes(runId)),`research: ${runId} · public sources and feed health`);
+commit((await files('data/usage')).filter(p=>p===`data/usage/${runId}.json`),`usage: ${runId} · trusted cloud CLI token estimate`);
 for(const p of ['data/drafts','data/candidates','data/check-context','data/checks'])commit((await files(p)).filter(f=>f.includes(runId)),`${p.split('/')[1]}: ${runId} · evidence and decision record`);
 for(const file of (await files('data/rejections')).filter(f=>f.includes(runId))){const rejection=JSON.parse(await readFile(file,'utf8'));const reason=String(rejection.reason||'Independent check rejected this candidate').replace(/[\r\n]+/g,' ').slice(0,180);commit([file],`reject: ${runId} · ${reason}`)}
 for(const file of await files('data/posts')){const post=JSON.parse(await readFile(file,'utf8'));if(post.runId===runId)commit([file,`public/cards/${post.id}.jpg`],`post: ${post.title} · independent check passed`)}
 commit((await files('data/runs')).filter(p=>p.includes(runId)),`loop: ${runId} · final publication and rejection results`);
+if(kind==='loop'){const costUpdate=spawnSync(process.execPath,['scripts/update-cost-readme.mjs'],{stdio:'inherit'});if(costUpdate.status!==0)throw new Error('Daily cost summary could not be updated');commit(['README.md'],`cost: ${runId} · daily token estimate and coverage`)}
 // GitHub token pushes do not trigger on:push workflows; caller explicitly deploys Pages.
 for(let attempt=0;attempt<3;attempt++){
  const pushed=spawnSync('git',['push','origin','HEAD:main'],{stdio:'inherit'});
