@@ -1,0 +1,78 @@
+{
+  "id": "f8fa768c80d28297a81242e1",
+  "candidateId": "f8fa768c80d28297a81242e1",
+  "title": "Check whether docs work for AI agents",
+  "promise": "Scan a documentation URL for common access and format problems, then review a scorecard.",
+  "whatItIs": "Velu's agent-friendly documentation checker is described as scoring a documentation URL against the open Agent-Friendly Documentation Spec, using the spec's reference implementation called afdocs. The Show HN post names issues the spec is concerned with: pages rendered only in the browser, missing llms.txt or Markdown versions, soft 404 pages, and pages too large for an agent's context window. A beginner could build a small scheduled checker for one documentation site that records the score and lists detectable problems. Documentation teams are a plausible customer, but the source does not establish who pays. This is an audit and reporting loop, not an automatic documentation repair service.",
+  "whoPays": "Hypothesis: teams maintaining developer documentation may pay for recurring checks; the source does not establish customers or revenue.",
+  "loop": [
+    "Read a configured documentation site URL.",
+    "Check pages for supported agent access and format signals.",
+    "Run the reference checker and save its score.",
+    "Compare the result with the previous scan.",
+    "Send a report when the score or detected issues change.",
+    "A documentation owner verifies findings and chooses any fix."
+  ],
+  "evidence": "The Show HN description says Velu's tool scores documentation URLs against the open Agent-Friendly Documentation Spec using its reference implementation, afdocs. The author identifies client-rendered pages, missing llms.txt or Markdown, soft 404s, and oversized pages as problems the spec addresses.",
+  "uncertainty": "This is a maker's description; the snapshot does not include an independent test or performance data. A student checker can only detect a limited set of public signals and may misclassify sites. A human should verify a finding before editing a documentation site.",
+  "first24Hours": [
+    "Select a public documentation site and inspect the referenced open specification and checker interface.",
+    "Implement checks for one or two signals such as Markdown availability and obvious 404 responses.",
+    "Save a timestamped report and compare it with a second scan for changes."
+  ],
+  "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+  "publishedAt": "2026-10-10T06:53:03.064Z",
+  "version": "rules-8918d4f67df5",
+  "rulesSha256": "8918d4f67df520463c45d170efe6937be5d759839edbc5d5d8c516f96d8c00b3",
+  "rulesCommit": "e43af8b97d5e53b0fea1c3ae8594bb406bac2f46",
+  "origin": "github-actions-codex-loop",
+  "runId": "loop-38032271902-1",
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032271902",
+  "sources": [
+    {
+      "id": "c1d509e3f4e25ec41804035e",
+      "title": "Show HN: Check how readable your docs are to AI agents",
+      "url": "https://news.ycombinator.com/item?id=50030369",
+      "publisher": "Hacker News · Show HN",
+      "fetchedAt": "2026-10-10T06:52:12.971Z",
+      "verifiedAt": "2026-10-10T06:52:12.971Z"
+    },
+    {
+      "id": "776ffe3f52323ea0078899b9",
+      "title": "Check whether docs work for AI agents · official product",
+      "url": "https://www.veludocs.com/agent-friendly-documentation/",
+      "publisher": "www.veludocs.com",
+      "fetchedAt": "2026-10-10T06:52:14.446Z",
+      "verifiedAt": "2026-10-10T06:52:14.446Z"
+    }
+  ],
+  "imageUrl": "./cards/f8fa768c80d28297a81242e1.jpg",
+  "checker": {
+    "passed": true,
+    "checkedAt": "2026-10-10T06:52:14.449Z",
+    "checkerRunId": "loop-38032271902-1-independent-check",
+    "draftSha256": "8a4e4a95ccc111c7b77a7c02998f92c2a7c7fbfca8f5e3a1d4f4ac5dfb5d9cd4",
+    "sourceSnapshotSha256": "c944adc27be2abcc856416784f424b180cfde2bb6b749856924f2a7ef23231f1",
+    "claimChecks": [
+      {
+        "claim": "Velu's checker scores documentation against the Agent-Friendly Documentation Spec using the afdocs reference implementation.",
+        "supported": true,
+        "sourceId": "776ffe3f52323ea0078899b9",
+        "evidenceQuote": "using its MIT-licensed reference implementation"
+      },
+      {
+        "claim": "The checker assesses Markdown availability, including Markdown URLs and server support for an Accept header.",
+        "supported": true,
+        "sourceId": "776ffe3f52323ea0078899b9",
+        "evidenceQuote": "Markdown at .md URLs, and a server that honours Accept: text/markdown."
+      },
+      {
+        "claim": "The described checks include server-rendered content, page size limits, and soft 404 detection.",
+        "supported": true,
+        "sourceId": "776ffe3f52323ea0078899b9",
+        "evidenceQuote": "Server-rendered content, 50K character budgets, and where your content starts."
+      }
+    ]
+  },
+  "contentSha256": "5714807553b841b8015218bc6bcb2cf30950e140693526008934093727f7eee9"
+}
