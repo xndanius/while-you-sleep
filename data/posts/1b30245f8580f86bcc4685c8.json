@@ -1,0 +1,78 @@
+{
+  "id": "1b30245f8580f86bcc4685c8",
+  "candidateId": "1b30245f8580f86bcc4685c8",
+  "title": "Route visual feedback to a coding agent",
+  "promise": "Turn a marked-up staging page into an agent task with a reviewable status trail.",
+  "whatItIs": "CircleIt is described as a Chrome extension plus a Claude Code or Codex plugin. A teammate can mark an area on a page, explain the requested change, and send the screenshot, comment, and page metadata to a running coding agent. The source says the system matches the page address to a repository and reports status back in the sender's browser. A small student version could capture one staging page and open a proposed task for a developer's agent. Small product teams are a plausible customer, but that is a hypothesis. The loop handles intake and handoff; a human still needs to judge whether the requested change is correct and review code before release.",
+  "whoPays": "Hypothesis: small software teams that collect frequent website feedback may pay; no customer or payment evidence is given.",
+  "loop": [
+    "A teammate opens a staging page and marks a visible issue.",
+    "Capture the screenshot, comment, page address, and relevant metadata.",
+    "Match the page address to a configured repository.",
+    "Send the feedback to the team's running coding agent after any required approval.",
+    "Show the sender the agent's status and response.",
+    "A developer reviews code changes and decides whether to merge."
+  ],
+  "evidence": "The Show HN author describes a Chrome extension and Claude Code/Codex plugin, screenshot and comment transfer to a running agent, address-based repository routing, status updates, and optional approval requirements for people or sites. The author reports a time improvement for their own small UI changes; this is an attributed personal claim.",
+  "uncertainty": "The workflow is based on the maker's account and does not independently establish reliability or adoption. For a student MVP, limit access to a test repository and staging site. Address matching can route incorrectly, and agent-generated changes need human review before deployment.",
+  "first24Hours": [
+    "Create a disposable demo page and test repository with one visible UI issue.",
+    "Build a browser capture form for a marked region, comment, and page URL.",
+    "Route one captured report to a task queue and add a manual approval step before an agent receives it."
+  ],
+  "productUrl": "https://circleit.ai",
+  "publishedAt": "2026-10-10T06:53:02.596Z",
+  "version": "rules-8918d4f67df5",
+  "rulesSha256": "8918d4f67df520463c45d170efe6937be5d759839edbc5d5d8c516f96d8c00b3",
+  "rulesCommit": "e43af8b97d5e53b0fea1c3ae8594bb406bac2f46",
+  "origin": "github-actions-codex-loop",
+  "runId": "loop-38032271902-1",
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38032271902",
+  "sources": [
+    {
+      "id": "173b61ec9f2786fecfe2f7b2",
+      "title": "Show HN: CircleIt – Circle something on a web page, your coding agent fixes it",
+      "url": "https://news.ycombinator.com/item?id=50020545",
+      "publisher": "Hacker News · Show HN",
+      "fetchedAt": "2026-10-10T06:52:12.909Z",
+      "verifiedAt": "2026-10-10T06:52:12.909Z"
+    },
+    {
+      "id": "1b30245f8580f86bcc4685c8",
+      "title": "Route visual feedback to a coding agent · official product",
+      "url": "https://circleit.ai",
+      "publisher": "circleit.ai",
+      "fetchedAt": "2026-10-10T06:52:14.115Z",
+      "verifiedAt": "2026-10-10T06:52:14.115Z"
+    }
+  ],
+  "imageUrl": "./cards/1b30245f8580f86bcc4685c8.jpg",
+  "checker": {
+    "passed": true,
+    "checkedAt": "2026-10-10T06:52:14.449Z",
+    "checkerRunId": "loop-38032271902-1-independent-check",
+    "draftSha256": "8a4e4a95ccc111c7b77a7c02998f92c2a7c7fbfca8f5e3a1d4f4ac5dfb5d9cd4",
+    "sourceSnapshotSha256": "c944adc27be2abcc856416784f424b180cfde2bb6b749856924f2a7ef23231f1",
+    "claimChecks": [
+      {
+        "claim": "CircleIt lets a user mark up a web page in Chrome and send the feedback to a running Claude Code or Codex session.",
+        "supported": true,
+        "sourceId": "1b30245f8580f86bcc4685c8",
+        "evidenceQuote": "Mark up any web page in Chrome and press Send. Your running Claude Code or Codex session wakes up"
+      },
+      {
+        "claim": "CircleIt can keep feedback pending when no agent is running and pick it up when a session starts in that project.",
+        "supported": true,
+        "sourceId": "1b30245f8580f86bcc4685c8",
+        "evidenceQuote": "If nothing is running, feedback stays pending until the next session starts in that project."
+      },
+      {
+        "claim": "CircleIt supports requiring approval before selected feedback is sent to a developer.",
+        "supported": true,
+        "sourceId": "1b30245f8580f86bcc4685c8",
+        "evidenceQuote": "Set a person or a site to Needs approval. Their feedback waits until the owner or an approver approves it."
+      }
+    ]
+  },
+  "contentSha256": "d9049e120684f6ae1c6e570eab6997701af69b1a0bda9da6f143f4a36543f6c0"
+}
