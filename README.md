@@ -51,7 +51,7 @@ Completed model workflows automatically reconcile incomplete counters from their
 
 | Vilnius date | Cloud runs | Estimated USD | Coverage |
 | --- | ---: | ---: | --- |
-| 2026-10-10 | 2 | Unknown | Missing or partial counters |
+| 2026-10-10 | 2 | $0.04770 | Reported CLI counters |
 
 Standard-rate token estimates, not invoices. Unreported billing adjustments remain unknown. [Calculation and rates](docs/COSTS.md).
 
