@@ -4,6 +4,7 @@ if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
 const targetCount=process.env.BOOTSTRAP==='true'?3:1;
 const role=process.argv[2]||'writer';
 const context={runId,targetCount,role,researchPath:`data/research/${runId}.json`,draftPath:`data/drafts/${runId}.json`,checkContextPath:`data/check-context/${runId}.json`,checkPath:`data/checks/${runId}.json`,githubRunUrl:process.env.GITHUB_REPOSITORY?`https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`:null};
+if(role==='repair')context.repairFeedbackPath='.run/repair-feedback.json';
 await mkdir('.run',{recursive:true});await mkdir('data/drafts',{recursive:true});await mkdir('data/checks',{recursive:true});
 await writeFile('.run/context.json',JSON.stringify(context,null,2));
 console.log(`Prepared ${role} for ${runId}, target ${targetCount}.`);
