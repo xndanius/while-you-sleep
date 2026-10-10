@@ -17,7 +17,7 @@ A post view means its article entered the viewport. Saves are observed save even
 
 ## The daily record
 
-**Measure the loop** runs around 21:30 in `Europe/Vilnius` and can also be dispatched manually. GitHub's time zone setting follows daylight saving time; hosted schedules can be delayed. [GitHub scheduling](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+**Measure the loop** is scheduled for 21:37 in `Europe/Vilnius` and can also be dispatched manually. GitHub's time zone setting follows daylight saving time; hosted schedules can be delayed or dropped. The active timer is unproven until real `event=schedule` evidence appears. [GitHub scheduling](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
 
 The job calls the read-only GoatCounter API with its Actions secret and pulls Postiz analytics with `POSTIZ_API_KEY`. It commits only aggregate counts, public post IDs, measurement timestamps, range/status metadata, and a run record. No model is called. The site token is available only to the measurement step.
 

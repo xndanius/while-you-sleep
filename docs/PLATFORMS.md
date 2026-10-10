@@ -2,7 +2,9 @@
 
 Verified against official documentation on **10 October 2026**. The v2 brief governs this setup: GitHub Actions runs the brain, GitHub Pages serves the public feed, and a hosted publishing service handles social OAuth. Danielius connects accounts and approves the subscription; the loop supplies checked posts.
 
-## Chosen service
+## Researched option — not selected
+
+As of 10 October, Danielius is creating the X, Instagram and LinkedIn pages with Claude's help. He will report when they exist. No publishing service is decided, and the steps below are reference material for a prepared Postiz adapter, not current owner instructions.
 
 **Postiz Cloud Standard**, billed monthly at **US$29 before tax**, includes five channels, unlimited posts, API access and analytics. Three channels cover X, Instagram and a LinkedIn Page. A seven-day trial is available. The checkout determines the euro total; $29 is a price near the brief's €30 target, not a guaranteed €30 total. [Official pricing](https://postiz.com/pricing)
 

@@ -12,19 +12,19 @@ GitHub Pages rebuilds from committed records. The linked Netlify project is reta
 
 ## Schedule · Europe/Vilnius
 
-- Public source scan every three hours.
-- Full Codex loop at 08:00, 13:00 and 19:00.
-- Measurement at 21:30.
-- Improvement at 22:00: propose one change, run held-out trials and a separate blinded grader, and change `RULES.md` only if it scores higher without safety or factual regressions.
-- LinkedIn Page digest each Monday, using already checked posts.
+- Public source scan at :23 every three hours.
+- Full Codex loop at 08:07, 13:07 and 19:07.
+- Measurement at 21:37.
+- Improvement at 22:13: propose one change, run held-out trials and a separate blinded grader, and change `RULES.md` only if it scores higher without safety or factual regressions.
+- LinkedIn Page digest each Monday at 08:17, using already checked posts, after a publishing service is selected and connected.
 
-GitHub cron uses its documented IANA timezone support, including daylight-saving changes. Runs may start late when GitHub is busy. The daily cap is three posts per Vilnius date, including the initial three-post bootstrap. A manual bootstrap uses the exact same workflow as the scheduled loop. Nothing requires this Mac, a browser, or the desktop app to stay open.
+GitHub cron uses its documented IANA timezone support, including daylight-saving changes. Runs may start late or be dropped when GitHub is busy. The daily cap is three posts per Vilnius date, including the initial three-post bootstrap. A manual bootstrap uses the same cloud workflow. **Unattended publishing is not yet proven:** the GitHub API showed zero `event=schedule` runs at 16:01 Vilnius on 10 October. Active cron definitions and successful manual runs do not prove a working timer. [Diagnosis](data/scheduler/diagnosis-20261010.json).
 
 ## Credentials and owner setup
 
 Secrets belong only in repository **Settings → Secrets and variables → Actions**. Never paste keys or passwords into chat. `OPENAI_API_KEY` is provisioned with the OpenAI Developers secure flow and delivered directly to Actions through stdin without a plaintext local file. The temporary recipient key is removed after successful delivery. The content agents cannot read the API key: the official action supplies a secure Responses proxy.
 
-Social: Postiz Cloud Standard, US$29/month for five channels, API and analytics. Danielius connects X, Instagram and a LinkedIn Page with OAuth; no platform developer apps are needed. The posting job is inactive until `POSTIZ_API_KEY` is installed. [Exact account steps and official pricing/terms](docs/PLATFORMS.md).
+Social service is **undecided**. Danielius is creating X, Instagram and LinkedIn pages with Claude's help and will report when they exist. The Postiz adapter remains a prepared option, with no account, subscription or secret installed. [Researched option and official pricing/terms](docs/PLATFORMS.md).
 
 Site analytics: optional GoatCounter, free for reasonable public use. The browser collects page views and save events without cookies; daily read-only measurements are committed to `metrics.json`. Metrics stay `null` until connected or when unavailable. Browser saves work without analytics. [Setup](docs/ANALYTICS.md).
 
@@ -57,8 +57,8 @@ Standard-rate token estimates, not invoices. Unreported billing adjustments rema
 
 <!-- MODEL_COSTS_END -->
 
-The [W3 backup workflow](docs/BACKUP.md) records the real public machine and GitHub history on Monday, 12 October at 19:30 Vilnius, after its unattended-run and accepted-improvement gates pass.
+The [W3 backup workflow](docs/BACKUP.md) is configured to record the real public machine and GitHub history on Monday, 12 October at 19:31 Vilnius, after its unattended-run and accepted-improvement gates pass. Its timer also requires real scheduled evidence.
 
-W1 was verified on 10 Oct 2026 at 10:15 Vilnius. The [bootstrap run](https://github.com/xndanius/while-you-sleep/actions/runs/38032271902) published two checked posts; the [normal loop run](https://github.com/xndanius/while-you-sleep/actions/runs/38033544598) published the third at 10:13. All three are live on the [feed](https://xndanius.github.io/while-you-sleep/) and [machine](https://xndanius.github.io/while-you-sleep/machine/), with source links, independently verified content/check hashes, committed publication records and public 1080×1350 JPEG cards. Desktop and phone checks passed.
+The feed portion of W1 was verified on 10 Oct 2026 at 10:15 Vilnius; the earlier full W1 claim was premature. The manually dispatched [bootstrap run](https://github.com/xndanius/while-you-sleep/actions/runs/38032271902) published two checked posts; the manually dispatched [normal loop run](https://github.com/xndanius/while-you-sleep/actions/runs/38033544598) published the third at 10:13. All three are live on the [feed](https://xndanius.github.io/while-you-sleep/) and [machine](https://xndanius.github.io/while-you-sleep/machine/), with source links, independently verified content/check hashes, committed publication records and public 1080×1350 JPEG cards. Desktop and phone checks passed.
 
-GitHub runs the loop at 08:00, 13:00 and 19:00 Europe/Vilnius, daily measurement at 21:30 and improvement at 22:00. The active workflows, research commits and Pages deployments run on hosted infrastructure, with no laptop needed. Social publishing awaits Danielius's OAuth account connections and Postiz API secret; no social post or paid subscription has been made by this build.
+W1 remains incomplete until an actual scheduled run publishes a checked post by itself. The odd-minute schedules and a temporary ten-minute UTC control probe are being tested. A probe records only its real GitHub event; it does not claim a post publication. No social post or paid subscription has been made by this build.
