@@ -39,7 +39,8 @@ try{
   const validCounter=/^https:\/\/[a-z0-9-]+\.goatcounter\.com\/?$/.test(counter);
   await writeJSON(path.join(ROOT,'public','api','analytics.json'),{provider:validCounter?'goatcounter':null,site:validCounter?counter.replace(/\/$/,''):null});
   await fs.mkdir(path.join(ROOT,'public','machine'),{recursive:true});
-  await fs.copyFile(path.join(ROOT,'public','machine.html'),path.join(ROOT,'public','machine','index.html'));
+  const machineHTML=await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8');
+  await fs.writeFile(path.join(ROOT,'public','machine','index.html'),machineHTML.replace('<base href="./">','<base href="../">'));
   await fs.writeFile(path.join(ROOT,'public','.nojekyll'),'');
   const items=posts.map(post=>`<item><title>${xml(post.title)}</title><link>${xml(baseURL+'/#post-'+post.id)}</link><guid isPermaLink="false">${xml(post.id)}</guid><pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate><description>${xml([post.promise,post.whatItIs,'Who pays: '+post.whoPays,'Evidence: '+post.evidence,'Limits: '+post.uncertainty,'Loop: '+post.loop.join(' → '),'First 24 hours: '+post.first24Hours.join(' '),'Sources: '+post.sources.map(s=>s.url).join(' ')].join('\n\n'))}</description><enclosure url="${xml(baseURL+'/cards/'+post.id+'.jpg')}" type="image/jpeg" length="0"/></item>`);
   // File sizes are required by RSS enclosure; replace them from the actual JPEGs.
