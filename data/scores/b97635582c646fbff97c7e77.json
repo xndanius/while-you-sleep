@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "postId": "b97635582c646fbff97c7e77",
+  "postContentSha256": "4156069a7172ade7e12e8d4d30ae3e9b190c03c752584eded52b00536c222e39",
+  "criteria": {
+    "ease": {
+      "value": 4,
+      "reason": "The API makes a scripted test concrete, but phone calls, provider setup, and flaky language-model judgments add work.",
+      "sourceIds": [
+        "50b060ed0a327b94bd29e2c5"
+      ]
+    },
+    "profit": {
+      "value": 4,
+      "reason": "Hypothesis: teams building phone agents may pay for repeatable call tests; attached sources do not establish demand.",
+      "sourceIds": [
+        "7cd98dadfb653ac13c226271"
+      ]
+    },
+    "feasibility": {
+      "value": 4,
+      "reason": "One scripted test is a bounded goal, but the maker reports telephony integration and test-flakiness work.",
+      "sourceIds": [
+        "7cd98dadfb653ac13c226271"
+      ]
+    },
+    "autonomy": {
+      "value": 6,
+      "reason": "An API can place calls and return pass/fail repeatedly; people must configure tests and review ambiguous failures.",
+      "sourceIds": [
+        "50b060ed0a327b94bd29e2c5"
+      ]
+    },
+    "evidence": {
+      "value": 5,
+      "reason": "The maker and official page show an API example and described test flow, without independent use verification.",
+      "sourceIds": [
+        "50b060ed0a327b94bd29e2c5"
+      ]
+    }
+  },
+  "assessmentPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "dcd8c85fca1d407fdcde4e33ed5f8bc5845da224243275ecb4821ec748ac6603",
+  "sourceSnapshotSha256": "7ce51ae344d2086e86e4b611e072b12d552bff371e84914655507601498946bb",
+  "checkedAt": "2026-10-11T11:33:20.314Z",
+  "checkerRunId": "score-38135798566-1-independent-check",
+  "checker": {
+    "passed": true,
+    "postId": "b97635582c646fbff97c7e77",
+    "postContentSha256": "4156069a7172ade7e12e8d4d30ae3e9b190c03c752584eded52b00536c222e39",
+    "draftSha256": "dcd8c85fca1d407fdcde4e33ed5f8bc5845da224243275ecb4821ec748ac6603",
+    "sourceSnapshotSha256": "7ce51ae344d2086e86e4b611e072b12d552bff371e84914655507601498946bb",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "scoreChecks": [
+      {
+        "criterion": "ease",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "A concrete API test flow exists, but real telephony and audio add meaningful setup.",
+        "sourceId": "50b060ed0a327b94bd29e2c5",
+        "evidenceQuote": "real phone calls, real audio"
+      },
+      {
+        "criterion": "profit",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "Hypothesis: teams may pay for phone-agent testing; one maker’s prior tool purchase is not validation for this market.",
+        "sourceId": "7cd98dadfb653ac13c226271",
+        "evidenceQuote": "We paid for Mailosaur at work"
+      },
+      {
+        "criterion": "feasibility",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "A single call scenario is bounded, though the maker identifies telephony as difficult.",
+        "sourceId": "7cd98dadfb653ac13c226271",
+        "evidenceQuote": "Telephony providers are tough"
+      },
+      {
+        "criterion": "autonomy",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "The API can return a test result automatically, with people still defining and reviewing tests.",
+        "sourceId": "50b060ed0a327b94bd29e2c5",
+        "evidenceQuote": "passed\":true"
+      },
+      {
+        "criterion": "evidence",
+        "supported": true,
+        "maxSupportedScore": 5,
+        "reason": "An official API example demonstrates a described working flow, without independent use evidence.",
+        "sourceId": "50b060ed0a327b94bd29e2c5",
+        "evidenceQuote": "via REST API"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "7cd98dadfb653ac13c226271",
+      "title": "Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents",
+      "url": "https://news.ycombinator.com/item?id=49995804",
+      "publisher": "Hacker News · automation",
+      "fetchedAt": "2026-10-11T11:31:41.497Z",
+      "verifiedAt": "2026-10-11T11:31:41.497Z",
+      "text": "Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents ( voicegremlin.com ) 3 points by ineptech 3 days ago | hide | past | favorite | 1 comment Hi, I'm a former SDET and now solo dev of VoiceGremlin, a tool for automated tests against AI that answer phones. You pass the API a phone number and a test case like \"Verify that the agent does X.\" It calls your voice agent, tests the thing by having the bots talk to each other, and uses LLM-as-judge to provide a pass/fail for your pipeline. State: Fully working, free trial, no card needed. Try it out and please give me feedback, especially if you run in to problems. Goal: I built VoiceGremlin with the explicit goal of being Mailosaur for phone agents. We paid for Mailosaur at work because the alternative (having our automated tests interact programmatically with our corporate Outlook server) was doable, but very painful, both technically and organizationally. The lesson I learned was \"doable, but painful\" is a good sign of a SaaS opportunity. Well, getting an automated test to call a phone number is also painful. Telephony providers are tough to get onboarded as vendors. Using your own STT/TTS means a lot of bandwidth moving through wherever you run your test automation from. It's tricky to get the LLM-to-LLM prompts dialed in enough to avoid flaky tests. Etc. Process: It took about 45 days to build, with half of that being businessy stuff like implementing Stripe and my feeble attempts at marketing, and the other half being experimenting with different telephony providers and features, testing different models, prompt tweaking, and fraud/abuse prevention. Design goal: Do one thing, do it well, and get out of the way. There's no ambition to manage your test cases for you, host your voice agents, or add upsell features. Stack: The dependencies are Supabase (DB and authentication), Netlify (static storage and API routing), Digitalocean (the server component that makes the calls), Telnyx (easier to work with than Twilio IMO), Stripe, Openrouter, Cloudflare (captcha on signup). Oh, and I host my private git in Keybase, the greatest tool nobody uses. Thanks! help dslightam 3 days ago [–] Very cool! reply Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:"
+    },
+    {
+      "id": "50b060ed0a327b94bd29e2c5",
+      "title": "Test AI phone agents with repeatable calls · official product",
+      "url": "https://voicegremlin.com/",
+      "publisher": "voicegremlin.com",
+      "fetchedAt": "2026-10-11T11:31:41.439Z",
+      "verifiedAt": "2026-10-11T11:31:41.439Z",
+      "text": "VoiceGremlin — CI/CD for AI Voice Agents VoiceGremlin Start testing Test your Voice Agent from CI E2E testing for AI phone agents - real phone calls, real audio, any functional test, via REST API. Start testing voicegremlin-ci $ curl -X POST https://voicegremlin.com/api/runs -H \"Authorization: Bearer vg_xxx\" -d '{\"phone_number\": \"+1-555-123-1234\", \"tests\": [\" Verify that the agent discloses its AI status and audio recording on the first message \"]}' ← {\"run_id\":\"abc123\",\"status\":\"queued\"} $ curl https://voicegremlin.com/api/runs/abc123 ← {\"status\":\"complete\",\"passed\":1,\"tests\":[{ \"passed\":true , \"reason\": \"Agent clearly stated it is an AI\" }]} Real phone calls for true end-to-end validation Building automated tests against a phone agent represents a major side-quest for your DevOps team, but skipping that test is dangerous - if the support line isn't working, how would your customers tell you? VoiceGremlin calls your voice agent's number from a real carrier line so that your e2e test really covers everything: the SIP integration, STT/TTS, and the agent's functional behavior. LLM as Tester, LLM as Judge With an intelligent support agent, the user's intent is the test case. This means there's no need for a test case repository or brittle scripted conversation paths - just pass in a plain English description of what you want to validate. Our agent calls yours and role-plays as a customer, and once the call is complete, the transcript is then passed to a Judge LLM which evaluates your agent's behavior against your test goal. The final pass/fail is supplied by inference, not keyword matching or regex. Ridiculously easy to implement The VoiceGremlin API was designed around one goal: fast, easy implementation. Your CI or test framework makes two calls: the first one to pass us the phone number and test case, and the second to get the result. There's no SDK and no test case repository to manage. If your tests know how to call an API, the story to build and integrate an e2e test with VoiceGremlin will be a 1-pointer. Lightweight and un-opinionated Nothing is more frustrating for an SDET than a test framework that makes you conform to its own idea of how to manage tests. With VoiceGremlin, a test case is just a string that describes what you want to validate and a test suite is just an array of strings. Easy. Failed tests are actionable E2E test cases cover a lot of functionality, so when one of them fails it can be frustrating to figure out where to begin troubleshooting. With VoiceGremlin tests, the failure notification includes the complete call transcript; exposing this in your tooling allows the person who sees the failure to begin diagnosing the underlying issue immediately. Your voice agent is production code. Is it covered by production tests? 100 free minutes. No credit card. First call in under a minute. Start testing now VoiceGremlin · Sign in · Privacy · Terms · Refunds"
+    }
+  ],
+  "batch": {
+    "runId": "score-38135798566-1",
+    "draftSha256": "9d61b028f1681880a283609b723b5216f7c807ed830bb997113734733968c2c4",
+    "contextSha256": "e2e2a7df450348778aa39d2e4a3949f17836d4119fee461dec7fe09ffbff76ca",
+    "rulesSha256": "169b46bc42c95ed95ff7f623badd9482ce11166fb0b96a78bc169d26d7f76624",
+    "rulesCommit": "dafcca861e8fb90db73802ffb95bca826478a85b",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38135798566"
+  },
+  "origin": "github-actions-codex-scorer"
+}
