@@ -1,0 +1,83 @@
+{
+  "runId": "loop-38176778193-1",
+  "createdAt": "2026-10-11T21:34:02.071Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "63a74c0ca782afb0ee0469543d8b2e19fc75b142f4dc6cd25e3effa7b5f609a9",
+  "sourceSnapshotSha256": "455fba33c7651621fc95eee96acd191e61180571670ac7a0fb648b50bdb7ee70",
+  "sources": [
+    {
+      "id": "7702a7ece50174c78fb9c1bc",
+      "title": "Process Large Documents with OCR using SubworkflowAI and Gemini · product evidence",
+      "url": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+      "publisher": "n8n.io",
+      "text": "Process large documents with OCR using SubworkflowAI and Gemini | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates HTTP Request If Google Drive +5 Process large documents with OCR using SubworkflowAI and Gemini Use for free Created by Jimleuk Last update Last update 8 months ago Categories Document Extraction Multimodal AI Share Working with Large Documents In Your VLM OCR Workflow Document workflows are popular ways to use AI but what happens when your document is too large for your app or your AI to handle? Whether its context window or application memory that's grinding to a halt, Subworkflow.ai is one approach to keep you going. Subworkflow.ai is a third party API service to help AI developers work with documents too large for context windows and runtime memory. Prequisites You'll need a Subworkflow.ai API key to use the Subworkflow.ai service. Add the API key as a header auth credential. More details in the official docs https://docs.subworkflow.ai/category/api-reference How it Works Import your document into your n8n workflow Upload it to the Subworkflow.ai service via the Extract API using the HTTP node. This endpoint takes files up to 100mb. Once uploaded, this will trigger an Extract job on the service's side and the response is a \"job\" record to track progress. Poll Subworkflow.ai 's Jobs endpoint and keep polling until the job is finished. You can use the \"IF\" node looping back unto itself to achieve this in n8n. Once the job is done, the Dataset of the uploaded document is ready for retrieval. Use the Datasets and DatasetItems API to retrieve whatever you need to complete your AI task. In this example, all pages are retrieved and run through a multimodal LLM to parse into markdown. A well-known process when parsing data tables or graphics are required. How to use Integrate Subworkflow's Extract API seemlessly into your existing document workflows to support larger documents from 100mb+ to up to 5000 pages. Customising the workflow Sometimes you don't want the entire document back especially if the document is quite large (think 500+ pages!), instead, use query parameters on the DatasetItems API to pick individual pages or a range of pages to reduce the load. Need Help? Official API documentation : https://docs.subworkflow.ai/category/api-reference Join the discord : https://discord.gg/RCHeCPJnYw Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-11T21:34:02.067Z",
+      "productUrl": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "7702a7ece50174c78fb9c1bc"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:43.943Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Process Large Documents with OCR using SubworkflowAI and Gemini Jimleuk ⋅ a year ago ⋅ Free Working with Large Documents In Your VLM OCR Workflow Document workflows are popular ways to use AI but what happens when your document is too large for your app or your AI to handle? Whether its context window or application memory that's grinding to a halt, Subworkflow.ai is one approach to keep you going. > Subworkflow.ai i... HTTP Request Google Drive Google Gemini",
+      "verifiedAt": "2026-10-11T21:34:02.067Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [
+    {
+      "postId": "7702a7ece50174c78fb9c1bc",
+      "pass": true,
+      "reasons": []
+    }
+  ],
+  "assessmentContractVersion": 1
+}

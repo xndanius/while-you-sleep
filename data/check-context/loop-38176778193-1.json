@@ -1,0 +1,677 @@
+{
+  "runId": "loop-38176778193-1",
+  "createdAt": "2026-10-11T21:35:54.919Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "5107e2313bf2678c21b9bcb9a1571d2e12ca5ec773796249c9cf8ef1994f4c5e",
+  "sourceSnapshotSha256": "fad4b2dcd04b2c7279a0654d4ce32315611777ba63d327e96e6ed93966e51a31",
+  "sources": [
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VendIQ – AI agent for vendor follow-ups and ops automation ( rishailabs.com ) 1 point by rishailabs 2 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T21:35:49.484Z",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "discoveredAt": "2026-10-09T09:33:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T21:35:49.484Z"
+    },
+    {
+      "id": "e99ead410e61535eb0e14af1",
+      "url": "https://raw.githubusercontent.com/phalladar/tracon/main/README.md",
+      "title": "Show HN: Tracon (air traffic control for subagents) · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# tracon **Air traffic control for parallel Claude Code subagents.** A live terminal and browser monitor that spots stuck, blocked and drifting agents, and the worktree file conflicts headed for your merge. [![PyPI](https://img.shields.io/pypi/v/tracon)](https://pypi.org/project/tracon/) [![Python 3.12+](https://img.shields.io/pypi/pyversions/tracon)](https://pypi.org/project/tracon/) [![tests](https://github.com/phalladar/tracon/actions/workflows/test.yml/badge.svg)](https://github.com/phalladar/tracon/actions/workflows/test.yml) [![MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![A terminal split in two. On the left, a Claude Code session is asked to /expedite checkout-v2 and dispatches seven worktree agents. On the right, tracon lists them as they start; over the run one agent is blocked on a permission prompt, one goes idle, one drifts off its brief and one is stuck retrying a failing command. The user selects the stuck agent in tracon, presses n to nudge the lead with a drafted note; it arrives in the Claude Code session, the lead messages the agent, and tracon shows it back on track.](https://raw.githubusercontent.com/phalladar/tracon/main/docs/screenshots/hero.gif) Left: a Claude Code session orchestrating seven worktree agents. Right: tracon in a split next to it. A made-up run from tracon --demo , sped up. ```sh uvx tracon --demo # look around a made-up run; no Claude Code session needed uvx tracon # watch the Claude Code session in the next split, else your newest with subagents ``` You dispatched six agents an hour ago. One has been waiting 40 minutes on a permission prompt nobody can see. Two are editing `shop/cart.py` at the same time. One is restyling the admin pages its brief said to leave alone, and another has run the same failing command six times. Claude Code's status line shows none of it. Like a [TRACON](https://en.wikipedia.org/wiki/Terminal_radar_approach_control_facilities) controller watching every aircraft on one scope, `tracon` shows every agent at once: what it is doing, whether it is holding, whether it has drifted off its brief, and whether two of them are on a collision course in the same file. Run it in a split next to your session. - **Read-only and local.** It reads the transcripts Claude Code already writes to disk and never writes to your repository. It sends something to a session only when you press `n`. See [What it touches](#what-it-touches). - **No setup.** No hooks, no config, no account. Start it in a split next to your session and it finds that session. - **Optional LLM judge.** A small model checks each busy agent against its brief, for about a tenth of a cent a check, with a hard per-run budget. `--no-judge` turns it off. > tracon is an independent project. It is not affiliated with, endorsed by or sponsored by > Anthropic. \"Claude\" and \"Claude Code\" are trademarks of Anthropic. ## What it catches ### Every agent on one scope Agents waiting on a permission prompt nobody can answer, agents that went quiet, hung test runs, processes left behind, loops, edits to the wrong checkout or on a stale base, two agents changing the same file, and (with the optional [judge](#the-judge-optional-on-by-default)) agents drifting from their brief. Red needs you now; amber is worth a look. ![tracon's terminal view: a table of agents with states BLOCKED, IDLE, RUNNING and WORKING, judge verdicts on track, drifting and stuck, and flags such as LOOP, COLLIDE and STALE-BASE; below it, the selected agent's feed of repeated connection-refused errors](https://raw.githubusercontent.com/phalladar/tracon/main/docs/screenshots/tui-overview.png) ### Why one is in trouble `enter` opens an agent: what it is doing, the judge's concern and how the verdict changed, every flag explained, the files it touched outside its brief, and a live tail of what it said, in full. The tool calls between two messages fold into one line (`▸ 23 tool calls Read 5 · Edit 8 …`); click it to open that run, or press `e` to open them all. The brief and the lead's messages show three lines; click `▸ N more lines` to read the rest. ![tracon's detail view of an agent the judge marks as drifting: it has edited admin files its brief says to leave alone](https://raw.githubusercontent.com/phalladar/tracon/main/docs/screenshots/tui-detail.png) ### Merge conflicts before the merge `x` shows which agent edited which file. `!` marks a file two agents were editing at the same time. ![tracon's files heatmap: rows of files, one column per agent, with two agents both editing shop/cart.py marked with an exclamation mark](https://raw.githubusercontent.com/phalladar/tracon/main/docs/screenshots/tui-files.png) ### Nudge the lead in one key `n` nudges your orchestrating session about the selected agent: tracon drafts a note with the agent's state, flags, the judge's concern and what to do, and sends it straight away (see [Nudging the lead](#nudging-the-lead)). ### Replay the whole run `t` is the timeline. `[` and `]` rewind and forward, `space` plays it back, and `--at \"07:20\"` opens any past session as it stood at that time. ![tracon's terminal timeline: one row per agent, coloured by edits, shell calls and reads, with silent stretches dotted](https://raw.githubusercontent.com/phalladar/tracon/main/docs/screenshots/tui-timeline.png) [Reading the screen](#reading-the-screen) lists every state and flag, what it means, and what to do about it. With `--notify`, a desktop notification fires when an agent needs you. The terminal title is set to the watched session's name (`◎ `, mirroring Claude Code's `✳ `), so the split reads as part of that session. ## Install Requires Python 3.12+, on macOS or Linux. ```sh uv tool install tracon # or: pipx install tracon uv tool install 'tracon[api]' # optional: judge through the Anthropic API instead of `claude -p` ``` Or run it without installing: `uvx tracon`. From source: ```sh git clone https://github.com/phalladar/tracon && cd tracon uv tool install --editable . ``` ## Use ```sh cd your-project && tracon # the session in the next split, else the newest in this project (or anywhere) tracon --demo # a made-up run, to look around tracon web # browser view only tracon --list # recent sessions that spawned subagents tracon -s 4f2a # pick a session by id prefix tracon --at \"2026-10-11 07:20\" # replay a session as it stood at that time tracon --once # print one snapshot and exit tracon --once --json # snapshot as JSON (for scripts and status bars) ``` A good layout: your orchestrating session on one side, `tracon` in a split next to it (in Ghostty, `cmd+d`). Without `--session`, tracon picks, in order: 1. the Claude Code session in a split of the same tab (Ghostty 1.3+ on macOS), matched by the name Claude Code gives its terminal, even before it has started any subagents; 2. the newest session with subagents in this folder's project, or in the nearest parent folder that has one; 3. the newest session with subagents anywhere. It keeps checking: when the session in the next split changes, or a new session with subagents takes the top spot, tracon switches to it. Picking a session with `s` stops that. ### Terminal keys | Key | | |---|---| | `enter` | agent detail: state, judge verdict, flags, files, live processes, and what the agent said, with the lead's messages and its tool calls folded between them (`e` or a click unfolds them) | | `e` | open or fold every run of tool calls and every long brief or lead message, in the pane under the table and in the detail (a click on `▸` does one) | | `t` | timeline: every agent across the run, coloured by activity, with the lead's merges and messages | | `x` | files heatmap: which agents edited which files, concurrent edits marked `!` | | `w` | open the browser view | | `j` | ask the judge about the selected agent now | | `d` | dismiss the judge's drifting or stuck verdict on the selected agent (press again to restore) | | `n` | nudge the lead about the selected agent: sends a note with its state, flags and what to do (live only) | | `[` `]` / `{` `}` | rewind / forward 5 / 30 min (enters replay) · `space` play · `l` back to live | | `o` / `c` | open the agent's worktree in a new terminal window (Ghostty if installed) / copy its path | | `s` | sessions, last active first: pick one to watch (stops following the next split and new sessions) | | `h` / `q` | hide finished agents / quit | ### Browser view `w` in the terminal, or `tracon web`, serves a page on `127.0.0.1`: ![The tracon browser timeline replaying a run: seven subagents spawn and work, coloured by edits, shell calls and reads, with judge verdicts per agent and the lead's merges and messages along the top](https://raw.githubusercontent.com/phalladar/tracon/main/docs/screenshots/replay.gif) - **Timeline**: zoom with the scroll wheel, drag to pan, double-click to fit. Hover any bar for the calls it covers. Silent stretches past the idle threshold are drawn in orange. - **Files**: heatmap of edits per file per agent, shared files first. - **Replay scrubber**: drag through the run, or press ▶ to play it back. - Click an agent for its detail drawer and live activity feed. ## Reading the screen Each agent row has a **state** (what it is doing now), a **JUDGE** column (the LLM's read of whether it is on brief), and any number of **flags** (things worth a look). Press `enter` on a row for the detail, which shows the judge's one-line concern and every flag's explanation. You don't control agents from tracon; it is read-only. When something needs action, you act in your orchestrating session: answer the prompt there, or ask the lead to message, stop or re-dispatch the agent. ### Columns | Column | Shows | |---|---| | **STATE** | What it is doing now (below) | | **TASK** | The description the lead gave the agent; the pinned row is the lead itself | | **MODEL** | The model it runs on | | **JUDGE** | The judge's latest verdict (below) | | **NOW** | Its current or latest action | | **QUIET** | Time since its transcript last moved; red past the 5 min idle threshold | | **RUN** | Time since it started | | **CONTEXT** | Context size in tokens; amber above 300k, red above 450k | | **EDITS** | Files it edited; `(n⚑)` counts those the brief never names | | **COMMITS** | `git commit` calls it made | | **MSGS** | Messages the lead sent it | | **FLAGS** | Things worth a look (below) | ### Colours | Colour | Browser label | Means | |---|---|---| | red | Needs you | act now: the agent can't continue, or is doing damage | | amber | Check | have a look when you can; often fine | | green | Working | nothing to do | | grey | Done / Note | finished, or history kept for context | Once an agent has finished, its flags turn grey: they are history, not action. Only **OUTSIDE** and **ORPHAN** stay loud, because what they describe outlives the agent. ### States | State | Means | What to do | |---|---|---| | **BLOCKED** | An instant call (Edit, Read, `git status`) has been open for 45 s, or a shell call with nothing running: it is waiting on a permission prompt | Answer the prompt if it is showing in your session. If nobody can see it, allow that tool in your permission settings, or have the lead stop and re-dispatch the agent | | **IDLE** | No transcript activity for 5 min and nothing running | Check the last lines of its feed: it often hit an error or is waiting for input it will never get. Have the lead message it or stop it | | **STALLED** | A process has run for 20 min with no file change or commit | Usually a hung test or a watcher that never exits. Check the process in the detail; kill it, or have the lead stop the agent | | **ORPHANED** | Silent, but a detached process it started is still running after its parent died | Kill the process (pid in the detail) | | **WAITING** | Its turn has ended (or it is quiet) while background work it launched still runs | Usually nothing: it resumes when that work finishes. If the work is stuck, see STALLED | | **PENDING** | Replay only: a tool call was open, and without process data tracon can't tell a long run from a prompt | Nothing; go live to see which it is | | **RUNNING** | A tool call is in progress (a build, a test run) | Nothing | | **WORKING** | Making calls normally | Nothing | | **STARTING** | Dispatched, no activity yet | Nothing | | **DONE** | Finished: handed back a report, the lead was told it completed, or it ended with a final answer and nothing running | Read its report; merge | | **STOPPED** | Stopped by the lead, failed, or killed | Check why if you didn't expect it | A pinned **◆ lead** row shows the orchestrating session itself (running, working, or waiting on its agents or on you), so its activity is never mistaken for a subagent's. ### Flags | Flag | Means | What to do | |---|---|---| | **LOOP** | The same call 3× in a row with no edit in between | It is spinning. Have the lead tell it what it is missing, or stop it | | **ERRORS** | Its last 3 tool calls failed | Look at the errors in the feed; it may recover on its own | | **DENIED** | Tool calls were denied, with the classifier's reasons (e.g. \"Modify Shared Resources\"), or refused by a guard (Claude Code's worktree isolation or its sleep block, which say what to do instead). A denial is amber for 30 min, then grey. A guard refusal stays grey while the agent's next call gets through, and turns amber only when it is refused twice in a row | For a denial, decide whether it should have that permission; if so, allow it and have the lead tell it to retry. For an amber refusal, have the lead tell it to do what the refusal says, or to report what it can't do | | **OUTSIDE** | A worktree agent edited the main checkout instead of its worktree | Check `git status` in your main checkout and undo or move those edits | | **BRANCH** | Its worktree is on a different branch from the one it was given | Check it hasn't committed to the wrong branch before you merge | | **STALE-BASE** | It started editing before merging the base branch, after the lead had already merged something. Live, git has the last word: no flag once its HEAD contains the base, and the flag says how many commits behind it is | Expect conflicts; have it merge the base before it goes further | | **COLLIDE** | Another agent edited the same file while both were running. Press `x` for the heatmap | The second merge may conflict. Decide which agent owns the file, or plan the merge order | | **OFF-BRIEF** | It edited files the brief never names (grey: often legitimate) | Glance at the list; worth a question only if the files look unrelated | | **BG** | It launched background or detached runs. Amber when its brief says to run in the foreground and nowhere allows a background or `nohup` run | If amber, it is ignoring the brief; have the lead remind it | | **UNCOMMITTED** | Edits left uncommitted for 45 min | Work at risk if the worktree is cleaned up; have it commit | | **CTX** | Context above 300k (amber) or 450k (red) tokens | It will slow down and forget earlier instructions. Have it wrap up and hand back, or re-dispatch the rest fresh | | **ORPHAN** | A detached process is still running from its worktree. Grey while the agent is still working (usually it is polling its own `nohup` run); red once the agent goes quiet or finishes | Kill it once you're sure nothing needs it | | **DRIFT** | The judge says it is drifting (below), and you haven't dismissed it | See below | | **STUCK** | The judge says it is stuck (below), and you haven't dismissed it | See below | ### Judge verdicts The **JUDGE** column shows the latest verdict from the optional [LLM check](#the-judge-optional-on-by-default). It is a small model's opinion of the brief against the last 40 actions, so treat it as a prompt to look, not a fact. The detail view (`enter`) shows what the agent is doing, the judge's concern, and how the verdict has changed over time. | Verdict | Means | What to do | |---|---|---| | ✓ **on track** | Its recent actions serve the brief's steps, even if slowly | Nothing | | ↯ **drifting** (amber, adds **DRIFT**) | It is doing work the brief doesn't ask for, widening scope, or breaking a rule the brief states (running tests in the background when told to run them in the foreground, editing files it was told not to touch). The concern names an action it can see; growth that still serves the brief, or a baseline taken on the base branch, doesn't count | Read the concern in the detail. If it is real, have the lead message the agent to get back to the brief, or stop it. If the extra work is fine (your brief was narrower than you meant), have the lead tell the agent so with `SendMessage`: the judge treats the lead's messages as part of the brief and checks again after the agent's next action. If it is a false alarm, press `d` to dismiss it | | ⟳ **stuck** (red, adds **STUCK**) | It repeats actions without progress, retries a failure without changing approach, or waits on something that won't come | Find the repeated failure in the feed. Give it the missing piece through the lead, or stop it and re-dispatch with a better brief. If it is a false alarm, press `d` to dismiss it | | ? **unclear** | Too little activity to tell | Nothing; wait | | … **judging** | A check is in progress | Nothing | | blank | Not judged yet (it needs 5 tool calls), or the judge is off | Nothing | Verdicts refresh at most every 3 min per agent, after 5 more tool calls. Press `j` to re-check the selected agent now, for example after the lead has nudged it. Finished agents are never judged; their last verdict stays, greyed out, and DRIFT and STUCK are dropped. **Dismissing.** `d` on a drifting or stuck agent marks that verdict as dismissed: it shows greyed out as \"· dismissed\", DRIFT or STUCK goes away, the nudge leaves the concern out, and the next check lists it to the judge as a concern you've cleared, so it shouldn't be raised again on the same actions. A new concern flags as usual. `d` again restores the verdict. ## The judge (optional, on by default) Rules cat",
+      "fetchedAt": "2026-10-11T21:35:49.697Z",
+      "productUrl": "https://github.com/phalladar/tracon",
+      "originSourceIds": [
+        "ce205d0f7d1308d661f3e9db"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:46.468Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/phalladar/tracon/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/phalladar/tracon/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T21:35:49.697Z"
+    },
+    {
+      "id": "ce205d0f7d1308d661f3e9db",
+      "title": "Show HN: Tracon (air traffic control for subagents)",
+      "url": "https://news.ycombinator.com/item?id=50046981",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Tracon (air traffic control for subagents) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Tracon (air traffic control for subagents) ( github.com/phalladar ) 1 point by allocate 2 hours ago | hide | past | favorite | discuss My Claude Code workflow usually involves... a lot of subagents. I make one Opus model coordinate work as my tech lead, it dispatches subagents using models appropriate for the task into their own git worktrees, and then I try to multitask and do something else while they run. I'd been finding lately (particularly with Opus 5.5) that there was a ton of drift and instances of subagents not doing anything and it was evading the attention of the TL despite the instructions I gave it to have them report in at a regular cadence. Running tracon in a split terminal is my new personal workflow. It gives me early indicators when things start going off the rails (ex. blocked on a prompt, idle, looping on a failing command, simultaneous edits to files other subagents are editing, drifting off the brief, etc.) and I can interrogate the subagent's workflow and by pressing n the main agent gets a note to make a call on how and if to correct it. Read-only and runs on your machine: it tails transcripts in ~/.claude/projects/ and checks each worktree with ps, lsof, and git -- only thing that leaves your machine is what the Haiku judge reads for classification (or optionally you can turn that off with --no-judge). I've found it super useful for the game I'm building and figured others in the community might also find it useful. If you just want to give it a spin without committing: uvx tracon --demo macOS and Linux, Python 3.12+, MIT. (Not affiliated with Anthropic.) help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T21:35:49.761Z",
+      "productUrl": "https://github.com/phalladar/tracon",
+      "discoveredAt": "2026-10-11T19:35:33Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ],
+      "verifiedAt": "2026-10-11T21:35:49.761Z"
+    },
+    {
+      "id": "5ddcd9b9a77277b323f87e71",
+      "title": "Show HN: Shortfuse – Make macOS permissions expire automatically · product evidence",
+      "url": "https://news.ycombinator.com/item?id=49995706",
+      "publisher": "news.ycombinator.com",
+      "text": "Show HN: Shortfuse – Make macOS permissions expire automatically | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Shortfuse – Make macOS permissions expire automatically 5 points by wxce 4 days ago | hide | past | favorite | 6 comments I used to get a little paranoid about the perms I was giving to apps, and them just keeping them. Especially, microphone (!!). So I made this Mac app that lets you schedule selected permissions to expire after 15 minutes, an hour, tonight, or when the app quits. You can also review permissions grouped by app and spot records left behind by deleted apps. MacOS 14+, Intel and Apple silicon. Demo and download: https://rygorlabs.com/shortfuse help go4rayyan 1 day ago | next [–] Unable to download the site is giving 404 reply buntp 4 days ago | prev | next [–] Neat, I will actually have use for this. Cheers reply wxce 4 days ago | parent | next [–] Glad you found it useful! :) reply bushyz 4 days ago | prev | next [–] Thanks for this! reply klolol 3 days ago | prev [–] can we get this feature in ios reply wxce 3 days ago | parent [–] I wish it was in built haha, there's even more granularity that would have been nice to have reply Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T21:35:49.824Z",
+      "productUrl": "https://news.ycombinator.com/item?id=49995706",
+      "discoveredAt": "2026-10-07T17:09:42Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "originSourceIds": [
+        "5ddcd9b9a77277b323f87e71"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://news.ycombinator.com",
+            "robotsUrl": "https://news.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:45.617Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 243,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://news.ycombinator.com/item?id=49995706",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://news.ycombinator.com/item?id=49995706",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Show HN: Shortfuse – Make macOS permissions expire automatically I used to get a little paranoid about the perms I was giving to apps, and them just keeping them. Especially, microphone (!!). So I made this Mac app that lets you schedule selected permissions to expire after 15 minutes, an hour, tonight, or when the app quits. You can also review permissions grouped by app and spot records left behind by deleted apps. MacOS 14+, Intel and Apple silicon. Demo and download: https://rygorlabs.com/shortfuse",
+      "verifiedAt": "2026-10-11T21:35:49.824Z"
+    },
+    {
+      "id": "b76e0dae669e83a29804f9e3",
+      "title": "Good luck slowing this down · product evidence",
+      "url": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+      "publisher": "www.bensbites.com",
+      "text": "Good luck slowing this down - Ben's Bites Subscribe Sign in Good luck slowing this down plus what’s new in AI this week Sep 15, 2026 89 Share Hi folks, How tf do I write an intro to the craziness that’s happened since the end of last week?! I got access to Instinct, the personal agent all the VCs are raving about - I think it’s a bit meh? I don’t know if it’s the pro-activeness that people seem to like, but I don’t love that. Makes me feel like I’m having to do work to keep it happy, or like I’ve got a boss again - no thanks. The first message it sent me was: I finished working on your meeting follow-ups - reply here and I’ll send the details. I sh*t myself a lil bit and thought, please don’t start sending emails on my behalf. And I’m pretty savvy (ish) with agents. I’ve no doubt getting these onboarding experiences for everyone is really hard, but I just don’t feel the magic yet. It also feels slow. I’ll wait for Muse access to see what that’s like, but I don’t love the idea of giving Meta access to more info about me…they’re not the most reliable of privacy partners. And another thing - you don’t see by default what these agents remember about you, or what context they have. I really like being able to see and edit what’s in my files to steer my agents. Much like every app adding an AI assistant chat box in their product, I unfortunately think every AI company will start shipping their own personal agents. Ben’s Bites is brought to you by Adobe Acrobat Acrobat’s new AI turns dense reports into visual summaries, interactive reports & podcasts you can take anywhere. Sharing your work? Stylize transforms documents into polished deliverables in just a few clicks. Every answer includes clickable citations & Adobe does not train on your data. Try here . Headlines Dario Amodei has a new essay: Pace the frontier . He says all the leading labs should slow down long enough for safety reasons. Sam Altman agrees , but Trump does not . He called Jensen Huang on stage at the All-In Summit: The US will not lose the AI race. David Sacks (AI czar for the US govt.) adds: feel free to slow down, but no need to impose it on others. Also read: More AI safety takes: two ways AI goes bad · it’s all for the IPO · pacing = losses · fear spreads faster · case for open-source and quite a long summary of what everyone’s actually saying. No IPO for OpenAI in 2026 . Sam told Fortune’s Alyson Shontell it would be “ill-timed” given the work ahead on alignment, control and safety. Look ma! They are misuing claude again - Another Anthropic crashout. tldraw took OpenAI up on a challenge . Steve (the founder of tldraw) said he could make ChatGPT’s Sketch 100x better. OpenAI’s Tibo gave him a day to prove it. The result: a whole ChatGPT-style prototype with better drawing tools built in. …w-chat-app-example.tldraw.workers.dev</a>)\",\"username\":\"bentossell\",\"name\":\"Ben Tossell\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1878086921726943233/vOx1kjeP_normal.jpg\",\"date\":\"2026-09-10T20:10:32.000Z\",\"photos\":[],\"quoted_tweet\":{\"full_text\":\"Here you go, link in the next post https://t.co/HIyZvKM4l8\",\"username\":\"tldraw\",\"name\":\"tldraw\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1998824870461796352/HFsywfLU_normal.jpg\"},\"reply_count\":22,\"retweet_count\":7,\"like_count\":550,\"impression_count\":156372,\"expanded_url\":null,\"video_url\":null,\"video_preview_media_key\":null,\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Ben Tossell @bentossell this is insane - steve says he can make the sketch 100x better - tibo says do it by tomorrow - steve runs a walkthough of a chatgpt app they built with the product in it and 100x better (the products they built i in their replies - its this …w-chat-app-example.tldraw.workers.dev ) tldraw @tldraw Here you go, link in the next post https://t.co/HIyZvKM4l8 8:10 PM · Sep 10, 2026 · 156K Views 22 Replies · 7 Reposts · 550 Likes ChatGPT mini - A tiny floating widget to start chats, see updates, and more. Go to Pets in your ChatGPT desktop app to switch. Claude Code can now test whether a plugin actually helps . Run the same tasks with and without it and compare the results. Works with skills too. Two new additions to the OpenAI API: GPT-Live-1 - the model behind ChatGPT’s new Voice mode. I love using it while reading books, asking about tricky terms and dictating notes. Now you can add it to your products. Here it is with Astra and a whiteboard, playing teacher . Agents API - OpenAI’s take on Managed Agents in the Claude API. It lets developers send any task to a Codex-like agent from their apps without worrying about configuring all the infra. Share Ben's Bites My feed I use Pi (the harness) a lot. Till now, you brought an API key or your Codex/Claude subs to Pi. Their new product solves that . And I tell you what, the new DeepSeek model is really nice to work with in Pi. (I’m an investor) Bolt Forge - GLM, DeepSeek and Kimi inside Bolt, free until October 14. ChatGPT Work has a new data agent . (Also see: summation - by Opendoor’s CTO ) Should your agent app have bots or tasks ? Maybe neither. Because both make you organise the work. Routines in Replit - automated recurring work with AI. What are people building with GPT-6 Astra ? Assistant Benchmark tests everyday assistants like Grok bot, Muse, Instinct and more. Ratings are a work in progress. SF autoresearch - Run agent-driven ML experiments while you save 25% on GPUs on average. A coding agent to improve your customer-facing agents . How Pangram detects AI writing - and why a human rewrite can still get flagged. How to run a team of agents , with agents as their managers. Cognition’s SWE-2 (based on Kimi K3) beats Grok 4.6 at half the cost. An interactive explainer of the AI compute stack . Inspo - Design inspiration from 800+ sites, available as an MCP server. Core Auto is hiring interns to be the human edge for businesses run by agents. Why even good AI startups end up with bad prompts , and how to fix them. Andrew Ng’s series on the skills AI engineers need . Underdog - a personal AI that runs entirely on your device. Subscribe Afters David Bellamy @DavidRBellamy I must be among an extremely small group of people (n=1?) that have both 1) trained a frontier LLM and 2) designed and synthesized custom viruses in a lab with my own two hands. And I think that the takes on AI killing us all by creating dangerous viruses is total bogus. 5:24 PM · Sep 13, 2026 · 1.27M Views 462 Replies · 1.52K Reposts · 11.8K Likes Nate Berkopec @nateberkopec Prompt I use a lot: \"how can I pokayoke this so this kind of error never happens again\" pokayoke is using simple, low-complexity methods to make a particular kind of mistake impossible to make. classic one would be connector shape: make it impossible to insert \"the wrong way\". 9:54 PM · Sep 14, 2026 · 26.2K Views 9 Replies · 24 Reposts · 415 Likes birthdaytraffic.com</a> \",\"username\":\"adriannalakatos\",\"name\":\"Adrianna Lakatos\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1876061841954336768/-i5S5fNZ_normal.jpg\",\"date\":\"2026-09-12T07:15:23.000Z\",\"photos\":[{\"img_url\":\"https://pbs.substack.com/media/HR_63SwawAAKETQ.jpg\",\"link_url\":\"https://t.co/asqNMUndYC\"}],\"quoted_tweet\":{},\"reply_count\":237,\"retweet_count\":56,\"like_count\":1667,\"impression_count\":203141,\"expanded_url\":null,\"video_url\":null,\"video_preview_media_key\":null,\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Adrianna Lakatos @adriannalakatos i scraped 85 million birthdays and used astra to make a website that tells you how rare your birthday is. birthdaytraffic.com 7:15 AM · Sep 12, 2026 · 203K Views 237 Replies · 56 Reposts · 1.67K Likes almonk @almonk idk about anyone else, but I find it really hard to dictate what I'm thinking. typing unlocks something in my brain that speaking just doesn't. 12:38 PM · Sep 14, 2026 · 110K Views 272 Replies · 53 Reposts · 1.73K Likes Thariq @trq212 I talked to Sid & Robert about building Claude Code: how much things have changed, how hard it's been to keep up with model capabilities and also what we miss about software engineering before AI. youtube.com How the Claude Code team uses Claude Code 5:29 PM · Sep 14, 2026 · 54.3K Views 51 Replies · 42 Reposts · 396 Likes eric provencher @pvncher When you want Astra to review snapshots of your app, ask it to collage them into a contact sheet to minimize the number of image read calls it needs to do. You’ll save a ton of context usage This works for fable too! 9:23 PM · Sep 12, 2026 · 156K Views 62 Replies · 37 Reposts · 1.28K Likes @figma</span>, <span class=\\\"tweet-fake-link\\\">@Box</span>, <span class=\\\"tweet-fake-link\\\">@cognition</span>, <span class=\\\"tweet-fake-link\\\">@tryramp</span>, BAM, and the one and only <span class=\\\"tweet-fake-link\\\">@clairevo</span> to hear how they’re using Astra.\\n\\nOptimizing GPU kernels, revamping workflows with computer use, designing many consistent screens… Amazed by what they’d done in just days! 🌌 \",\"username\":\"romainhuet\",\"name\":\"Romain Huet\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/2020288886602366976/TlUC1Ubk_normal.jpg\",\"date\":\"2026-09-11T16:18:38.000Z\",\"photos\":[{\"img_url\":\"https://substackcdn.com/image/fetch/$s_!oEUr!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2098266877483167744.jpg\",\"link_url\":\"https://t.co/cX06uNbfe0\"}],\"quoted_tweet\":{},\"reply_count\":16,\"retweet_count\":25,\"like_count\":182,\"impression_count\":40290,\"expanded_url\":null,\"video_url\":\"https://video.twimg.com/amplify_video/2098266877483167744/vid/avc1/1280x720/DIEtAFSKfeIWqfEs.mp4\",\"video_preview_media_key\":\"13_2098266877483167744\",\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Romain Huet @romainhuet I sat down with AI leaders from @figma , @Box , @cognition , @tryramp , BAM, and the one and only @clairevo to hear how they’re using Astra. Optimizing GPU kernels, revamping workflows with computer use, designing many consistent screens… Amazed by what they’d done in just days! 🌌 4:18 PM · Sep 11, 2026 · 40.3K Views 16 Replies · 25 Reposts · 182 Likes Peter Cooper @cooperx86 On macOS and wanna see something interesting? Ask your agent: \"look at ~/Library/Application Support/Knowledge/knowledgeC.db and tell me some interesting facts\" I had no idea this stuff was all getting logged and it can infer a lot about your activity. 6:06 PM · Sep 12, 2026 · 323K Views 43 Replies · 106 Reposts · 2.96K Likes Kun Chen @kunchenguid ok everyone, i took one for the team here's the data we all wanted to see - real token value of each LLM subscription, empirically measured through usage on my real subscriptions - supergrok heavy has now become the highest value at $12k worth of tokens (40x ROI) - the $200 … 3:43 AM · Sep 11, 2026 · 222K Views 279 Replies · 148 Reposts · 1.74K Likes Find me on X , Linkedin , or YouTube Read about me and Ben’s Bites 📷 thumbnail via @keshavatearth * sponsors who make this newsletter possible :) Wanna partner with us for the next quarter? Email us at shanice@bensbites.com or k@bensbites.com Ben's Bites is a reader-supported publication. To receive new posts and support my work, consider becoming a free or paid subscriber. Subscribe 89 Share Previous Next Discussion about this post Comments Restacks Top Latest Discussions No posts Ready for more? Subscribe © 2026 Ben's Bites Ltd · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-11T21:35:50.078Z",
+      "discoveredAt": "Tue, 15 Sep 2026 13:02:52 GMT",
+      "originFeedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ],
+      "productUrl": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+      "originSourceIds": [
+        "b76e0dae669e83a29804f9e3"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.bensbites.com",
+            "robotsUrl": "https://www.bensbites.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:43.974Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 595,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Hi folks, How tf do I write an intro to the craziness that’s happened since the end of last week?! I got access to Instinct, the personal agent all the VCs are raving about - I think it’s a bit meh? I don’t know if it’s the pro-activeness that people seem to like, but I don’t love that. Makes me feel like I’m having to do work to keep it happy, or like I’ve got a boss again - no thanks. The first message it sent me was: I finished working on your meeting follow-ups - reply here and I’ll send the details. I sh*t myself a lil bit and thought, please don’t start sending emails on my behalf. And I’m pretty savvy (ish) with agents. I’ve no doubt getting these onboarding experiences for everyone is really hard, but I just don’t feel the magic yet. It also feels slow. I’ll wait for Muse access to see what that’s like, but I don’t love the idea of giving Meta access to more info about me…they’re not the most reliable of privacy partners. And another thing - you don’t see by default what these agents remember about you, or what context they have. I really like being able to see and edit what’s in my files to steer my agents. Much like every app adding an AI assistant chat box in their produ",
+      "verifiedAt": "2026-10-11T21:35:50.078Z"
+    },
+    {
+      "id": "dc8958655abd8e125a7477ce",
+      "title": "kulkas2pintu/wan777",
+      "url": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "publisher": "Hugging Face · trending public Spaces",
+      "text": "Wan2.2 14B Preview - a Hugging Face Space by kulkas2pintu Spaces Duplicated from r3gm/wan2-2-fp8da-aoti-preview kulkas2pintu / wan777 Like 449 Agents Running on Zero Get PRO App Files Files Community 1 Fetching metadata from the HF Docker repository... Refreshing",
+      "fetchedAt": "2026-10-11T21:35:50.327Z",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "discoveredAt": "2026-07-15T11:49:16.000Z",
+      "originFeedIds": [
+        "63dbb54258e730e95fa20298"
+      ],
+      "verifiedAt": "2026-10-11T21:35:50.327Z"
+    },
+    {
+      "id": "6ecd8dfd6e05f7140ea08252",
+      "url": "https://engine.panelalpha.com",
+      "title": "Show HN: PanelAlpha Engine – Turn your VPS into a programmable hosting layer · product evidence",
+      "publisher": "engine.panelalpha.com",
+      "text": "The Easiest Way to Self-Host on Your VPS | PanelAlpha Engine panelalpha.com App Installations Changelog Roadmap Discord GitHub Documentation panelalpha.com Your AI agent running your server. Under Control. Open source. Self-hosted. Easy for anyone, not just sysadmins. Star Us on GitHub Install Now Your AI Agent your server Three simple steps to set it up. That’s it. 1 Install Engine on your VPS All it takes is just one command: $ curl -fsSL get. panelalpha. com/ engine | sh Copy Requires fresh Ubuntu/Debian, 2GB RAM, 1CPU at least 2 Connect your AI agent Follow simple instructions after installation. Run this in your Claude Code: claude plugin marketplace add panelalpha... Copy ⌘C Paste ⌘V Select all ⌘A 3 Done! Use your favorite AI agent: Claude Code Codex Cursor Grok CLI Gemini CLI +5 +5 more deploy github.com/anna/invoicer to my server Done. Available at invoicer.panelalpha.online One VPS. Multiple projects. Works with anything. Your own tools, AI-built projects or open source software you found online. It doesn’t matter, PanelAlpha Engine just runs it. Install any repository in one line with PanelAlpha Engine 3,408 deploys in the last 30 days. 47% worked on the first try. $ curl -fsSL get. panelalpha. com/ engine | sh -s --repo github.com/n8n-io/n8n Copy n8n Listmonk Umami Cal.com Ghost Plausible Any other repository… See what people install Don’t let AI turn your server into a mess. Giving AI full root access means open ports, random settings and one project affecting another. PanelAlpha Engine sets the rules: Less room for mistakes. AI works through Engine, not directly on the server. A clear structure. Projects, accounts and domains, all stay organized. Project isolation. Each runs separately in its own Docker container. Read more AI agent your server n8n WordPress Static site Your app Everything you need for production, out of the box. Deploy is only the beginning. PanelAlpha Engine is built for ongoing management, maintenance and professional production workflows. See it online right away. Every deploy gets a temporary URL you can open, test and share immediately. Add a password when you need it. Get me a preview link with password. Preview available at bingo.panelalpha.online. Password: HellCows37 Build on staging. Go live when ready. Connect to Git. Every push goes automatically to the right place, while live and staging stay separate. Push it to staging first. Done. Staging is live at staging.myproject.com. Built-in visitor stats and monitoring. No Google Analytics or separate uptime service needed. It’s all included by default, with no extra fees. How much traffic did we get last week? 2,431 visits, up 18% from the week before. Tuesday was the busiest day with 1,296 visits. The boring essentials, automated. Backups (internal and external), SSL, FTP, SFTP, domains, databases, CRON and logs are already there for you and your agent. Roll back to yesterday’s backup. Done. I restored yesterday’s backup and saved the current state just in case. Every project gets its own safe space. Docker isolation, firewall and ModSecurity/OWASP WAF rules with only the ports it needs open. One broken app can’t take the others down. Only let our office access this internal tool. I updated the firewall so it’s only accessible from your office IP 83.24.11.5 . Easy Cloudflare connection. Connect your account once and use DNS, tunnels and caching across your projects. Set up a Cloudflare Tunnel for this project through n8n.mydomain.com. Done. Tunnel active at n8n.mydomain.com. Explore Full Capabilities 4 years of PanelAlpha. 8,000 active sites. Privately owned. PanelAlpha started in 2022 as a WordPress management platform for hosting providers and agencies, now managing around 8,000 active sites across 60+ partners. We are part of INBS.Software, with 15 years in hosting and 40,000+ customers across our products. We’re privately owned and plan to stay that way. PanelAlpha Engine FAQ Everything you need to know before installing Engine and putting your first project online. Need more help? Join us on Discord Why do I even need PanelAlpha Engine? Building projects with AI is fun. Running them on your own server usually isn’t. Most self-hosted tools are still technical and expect you to know your way around DevOps. PanelAlpha Engine changes that. Connect it to your AI and let it handle the deployment, setup and day-to-day management for you, inside a safe, controlled environment. You get the benefits of self-hosting without having to become a sysadmin or worry about AI making a mess of your server. Do I need my own server? Yes, PanelAlpha Engine has been created as a tool for AI agents to manage your own servers. This means that you need to have a server, potentially a VPS, to run it. Perhaps in the future we will also simplify the process of buying servers, so you won’t even have to run an install command. Which AI agents work with PanelAlpha Engine? You can connect pretty much any AI agent that works with an MCP server. We specifically provided an explanation of how to use it with the most popular ones in our Documentation: Connecting AI Agent to PanelAlpha Engine What projects can I deploy with PanelAlpha Engine? Our primary objective for PanelAlpha Engine is to make it a universal tool for ANY project. Whether it’s a static site, WordPress, a front-end or back-end solution, it should work. This means that it can support your own tools, vibe-coded projects, but also open source projects. See what projects work Is it free? What do I pay for? PanelAlpha Engine is free and open source. You pay for your server and your AI subscription, both of which you already have. Debugging through PanelAlpha Engine runs on your agent’s subscription, not on API tokens. What is reported if a deploy fails? In order to make PanelAlpha Engine support “any project”, we need to make sure that we get information about the errors you are facing and can potentially reproduce them on our end. PanelAlpha Engine collects data about the technology stack and repository that you are using (only if it’s public!). PanelAlpha Engine prepares a report that you can preview yourself, and it does not send any content from your project files to our servers. You can always opt out of reporting, just keep in mind that we won’t even know that you have an issue and we won’t be able to solve it unless someone else faces the same problem. Read more about PanelAlpha Engine Telemetry Can I use PanelAlpha Engine for shared hosting? Yes! PanelAlpha Engine had already been working for over 2 years as a back-end for WordPress hosting providers before we decided to open it and support other stacks. We already have a few thousand sites running on it in production with dozens of different providers. Your server is one command away. AI made building projects fun. PanelAlpha Engine does the same for running your own server. $ curl -fsSL get. panelalpha. com/ engine | sh Copy Requires fresh Ubuntu/Debian, 2GB RAM, 1CPU at least panelalpha.com App Installations Changelog Roadmap License Discord GitHub Documentation © 2026 PanelAlpha",
+      "fetchedAt": "2026-10-11T21:35:51.467Z",
+      "productUrl": "https://engine.panelalpha.com",
+      "originSourceIds": [
+        "0a8561b508cdd701e1e1e925"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://engine.panelalpha.com",
+            "robotsUrl": "https://engine.panelalpha.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:46.902Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 91,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://engine.panelalpha.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://engine.panelalpha.com/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T21:35:51.467Z"
+    },
+    {
+      "id": "0a8561b508cdd701e1e1e925",
+      "title": "Show HN: PanelAlpha Engine – Turn your VPS into a programmable hosting layer",
+      "url": "https://news.ycombinator.com/item?id=49991829",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: PanelAlpha Engine – Turn your VPS into a programmable hosting layer | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: PanelAlpha Engine – Turn your VPS into a programmable hosting layer ( panelalpha.com ) 2 points by konradkeck 4 days ago | hide | past | favorite | 2 comments PanelAlpha Engine is an open-source hosting environment for your VPS, programmable through MCP, API and CLI. After ~2 years in the making (we started back in the non-ai era) we've decided to open source our Docker-based Engine. So far, we've used it as a back-end environment for WordPress sites and we have been distributing it through web hosting providers and larger agencies. It's been tested on a few thousand sites already. Now people are vibe coding, using AI for everything and building agentic workflows, while at the same time open source projects are getting through a reinassaince. So, not only we have open-sourced it ourselves, but we've also expanded it to support any web application and tested it against over a thousand repositories (and soon will be much more). You can use it with MCP, API or CLI to: - deploy projects from files or git - get a preview URL or use your own domain with automatic SSL - restrict access with a password - get built-in monitoring and visitor stats (no need for Google Analytics) - manage databases, SFTP/FTP, CRON, firewall rules - read through logs and debug - create or restore backups (locally or remotely via S3/FTP) - connect with Cloudflare (for tunnels and DNS) ... and much more (see docs). You install it with one command (you can also define a repo to be installed together with it) and then with another command connect your AI with it. Done. Your agent gets a hosting environment on your server without unrestricted root SSH access. You can even define its permissions. Our early users have asked us about the visual/panel - it will be available soon too (and also open source). Feel free to roast, we're open for feedback! help jvrpl 4 days ago [–] Looks interesting. I like the idea of giving AI agents a controlled hosting environment instead of full root access. The permissions model and built-in backups/monitoring are especially useful. reply konradkeck 4 days ago | parent [–] Thanks! Feel free to test, there will be lots of new improvements soon and panel as well. reply Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T21:35:51.573Z",
+      "productUrl": "https://engine.panelalpha.com",
+      "discoveredAt": "2026-10-07T12:28:51Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T21:35:51.573Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T21:35:51.635Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-11T21:35:51.635Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T21:35:51.696Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-11T21:35:51.696Z"
+    },
+    {
+      "id": "7702a7ece50174c78fb9c1bc",
+      "title": "Process Large Documents with OCR using SubworkflowAI and Gemini · product evidence",
+      "url": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+      "publisher": "n8n.io",
+      "text": "Process large documents with OCR using SubworkflowAI and Gemini | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates HTTP Request If Google Drive +5 Process large documents with OCR using SubworkflowAI and Gemini Use for free Created by Jimleuk Last update Last update 8 months ago Categories Document Extraction Multimodal AI Share Working with Large Documents In Your VLM OCR Workflow Document workflows are popular ways to use AI but what happens when your document is too large for your app or your AI to handle? Whether its context window or application memory that's grinding to a halt, Subworkflow.ai is one approach to keep you going. Subworkflow.ai is a third party API service to help AI developers work with documents too large for context windows and runtime memory. Prequisites You'll need a Subworkflow.ai API key to use the Subworkflow.ai service. Add the API key as a header auth credential. More details in the official docs https://docs.subworkflow.ai/category/api-reference How it Works Import your document into your n8n workflow Upload it to the Subworkflow.ai service via the Extract API using the HTTP node. This endpoint takes files up to 100mb. Once uploaded, this will trigger an Extract job on the service's side and the response is a \"job\" record to track progress. Poll Subworkflow.ai 's Jobs endpoint and keep polling until the job is finished. You can use the \"IF\" node looping back unto itself to achieve this in n8n. Once the job is done, the Dataset of the uploaded document is ready for retrieval. Use the Datasets and DatasetItems API to retrieve whatever you need to complete your AI task. In this example, all pages are retrieved and run through a multimodal LLM to parse into markdown. A well-known process when parsing data tables or graphics are required. How to use Integrate Subworkflow's Extract API seemlessly into your existing document workflows to support larger documents from 100mb+ to up to 5000 pages. Customising the workflow Sometimes you don't want the entire document back especially if the document is quite large (think 500+ pages!), instead, use query parameters on the DatasetItems API to pick individual pages or a range of pages to reduce the load. Need Help? Official API documentation : https://docs.subworkflow.ai/category/api-reference Join the discord : https://discord.gg/RCHeCPJnYw Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-11T21:35:53.604Z",
+      "productUrl": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "7702a7ece50174c78fb9c1bc"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:43.943Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Process Large Documents with OCR using SubworkflowAI and Gemini Jimleuk ⋅ a year ago ⋅ Free Working with Large Documents In Your VLM OCR Workflow Document workflows are popular ways to use AI but what happens when your document is too large for your app or your AI to handle? Whether its context window or application memory that's grinding to a halt, Subworkflow.ai is one approach to keep you going. > Subworkflow.ai i... HTTP Request Google Drive Google Gemini",
+      "verifiedAt": "2026-10-11T21:35:53.604Z"
+    },
+    {
+      "id": "6e42807071487eaa9603bb28",
+      "title": "Todoless BOOSTED · product evidence",
+      "url": "https://betalist.com/startups/todoless",
+      "publisher": "betalist.com",
+      "text": "Todoless: AI-native, privacy-first task management that | BetaList BetaList Home Browse Newsletter Search FAQ Advertise Support Startup Jobs Vision Pro apps Home Browse Newsletter Search FAQ Advertise Support theme#toggle\" class=\" size-9 rounded-full hover:bg-gray-100 flex items-center justify-center dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 \" title=\"Toggle theme\" > Log in Submit Startup Back to all startups Todoless BOOSTED AI-native, privacy-first task management that understands natural typing Todoless is an AI-native task and project app for professionals, freelancers, and small teams. Its on-device parser turns plain sentences like \"Call Sara tomorrow 3pm #work 30min\" into structured tasks instantly, in English, German, and Italian, with nothing sent to a server. It works fully offline, syncs across iOS, Android, and web, and is Swiss-made and privacy-first. The team is also building toward Task Decay: an AI that clears tasks once they stop mattering. Visit Site Visit Site Makers Todoless Topics SaaS Startups Business Productivity Mobile Productivity Software Featured July 8, 2026 Request changes Get your badge Report this startup Manage collections Discover startups similar to Todoless FreeDAST SPONSOR Scan your live site for risks and get a clear security grade SPONSOR Nothing Notes, Tasks, AI Effortless note-taking with AI intelligence Taskie Get it done, keep it yours Whacka BOOSTED Turn any idea into your own mobile app with no code from your phone BOOSTED Anything.so Catch tasks early. Delegate instantly. Your AI + human assistant. Clearo The AI second brain that actually stays organized 11MHz Manage tasks and notes with privacy by design Taupia BOOSTED Track, compare, and switch UK household bills from one app BOOSTED TaskNavi Manage your tasks using the Eisenhower Matrix",
+      "fetchedAt": "2026-10-11T21:35:54.027Z",
+      "productUrl": "https://betalist.com/startups/todoless",
+      "originFeedIds": [
+        "498a696b45de80618b28713d"
+      ],
+      "originSourceIds": [
+        "6e42807071487eaa9603bb28"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://betalist.com",
+            "robotsUrl": "https://betalist.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-11T21:32:44.845Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 99,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://betalist.com/startups/todoless",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://betalist.com/startups/todoless",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Todoless BOOSTED. AI-native, privacy-first task management that understands natural typing Public startup listing; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-11T21:35:54.027Z"
+    },
+    {
+      "id": "73dbab235c9e479c1fd6d116",
+      "url": "https://raw.githubusercontent.com/bilawalsidhu/gods-eye-view/main/README.md",
+      "title": "bilawalsidhu / gods-eye-view · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# 🌐 God's Eye View [![CI](https://github.com/bilawalsidhu/gods-eye-view/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bilawalsidhu/gods-eye-view/actions/workflows/ci.yml) [![Reached #1 on GitHub Trending](https://img.shields.io/badge/%231_GitHub_Trending-thank_you!-F0A63C?style=flat-square&logo=github)](https://x.com/bilawalsidhu/status/2093798887815348521) ### A spy-satellite simulator in your browser — then you realize the sources are public and the data is real. Photorealistic 3D globe. Live aircraft, ships, satellites, earthquakes, traffic, and public cameras. Hands-free voice control powered by a realtime AI agent. _No place left behind._ ![Orbital HUD, a tracked live globe, FLIR terrain — then OPEN SOURCED](docs/media/hero-open-source-reveal.gif) ▶️ **From the project behind the viral God's Eye View series** _(formerly WorldView)_ — [5M+ on YouTube](https://youtube.com/playlist?list=PL6qSg2I-7_koPbDnSMo0QeeHX_RknA2uv&si=nBGYMoHWQw41v93Q) · [25M+ across socials](https://www.google.com/search?q=god%27s+eye+view) 🏆 **Reached #1 on GitHub Trending, daily and weekly · August 2026** **[#8 Product of the Day](https://www.producthunt.com/products/god-s-eye-view?launch=god-s-eye-view)** · Hunted by Chris Messina, creator of the hashtag _“pretty cool”_ — [Brendan Eich](https://x.com/BrendanEich/status/2094592096401490266), creator of JavaScript and co-founder of Mozilla and Brave · Featured on **[Pinokio](https://pinokio.co/posts/01m1m4p9xxm3qw7dnnpj2wr93g)** ⚡ **Start without API keys.** Install with [Pinokio](https://pinokio.co/apps/github-com-bilawalsidhu-gods-eye-view) or run locally from the terminal. Add optional keys inside the app. **[→ Quick Start](#-quick-start)** --- **[Quick Start](#-quick-start) · [First Five Minutes](#-the-first-five-minutes) · [Talk to It](#-talk-to-it) · [What's Live](#-whats-on-the-globe) · [Under the Hood](#-under-the-hood) · [Keys & Costs](#-api-keys) · [Contributing](CONTRIBUTING.md)** --- ## 🌍 Why This Exists God's Eye View brings public signals into one explorable globe. Track the world live. Talk to it. Break it. Extend it. Flight transponders, ship beacons, orbital elements, seismographs, and public cameras already tell us a lot about the world. God's Eye View puts them in the same place, so you can move between a global picture and an individual aircraft, ship, or street. It runs locally in your browser, with source code you can inspect and extend. > Half the magic is that it looks like a forbidden cockpit. The other half is that every line of code is inspectable. Most feeds are live or regularly refreshed. Traffic is simulated along real roads using aggregate location data. CCTV camera poses and rocket launch trajectories are coarse estimates. Start with the included data sources, then add your own. Each layer is a separate module. --- ## 🎛️ What This Thing Does - **🛩️ Cockpit view:** Ride inside a tracked flight — the camera holds the terrain under you all the way down. - **📡 Contacts:** A 250 km roster of everything near your target — step through live aircraft and drop into any cockpit. - **🎯 Click-to-track anything:** Camera locks on, draws a fading trail, surfaces full metadata — and a tracked fire or vessel hands you off to the nearest live camera in one click. - **🖊️ Voice whiteboard:** Speak annotations onto the world — real boundary polygons, marks, and routes. - **🛫 3D hangar:** Real per-class aircraft models — 787, ATR-72, Citation, Bell 206, MQ-9 — and a tracked contact swaps from glyph to 3D model as you close in. - **🎨 Reskin reality:** GLSL sensor looks over the normal globe — CRT, NVG, FLIR/thermal, Noir, Snow. - **🟩 Detection overlay:** Screen-space bounding boxes and IDs on everything in view. - **🎖️ Military HUD:** Tactical heads-up display with intelligence-style telemetry. - **🌐 Global Context:** Stage the full situational picture with one switch — and get your exact view back when you leave. - **🎥 Scene director:** Capture cinematic camera tours for clips and demos. - **🔗 Share Links:** Camera, style, layers, and even one tracked target serialize into a URL — a live target is a handoff, not a bookmark. - **🏠 Reset Globe:** One control — or one sentence — back to the full Earth. - **🌦️ Weather:** Animate GFS or ECMWF forecast wind, replay observed radar, satellite clouds and lightning on one timeline, and follow NHC/CPHC cyclone tracks. No key needed. - **📷 Mapped ALPR cameras:** License-plate-reader camera locations tagged in OpenStreetMap, one city at a time. Locations and tags only; no key needed. - **🔭 Satellite passes:** Ask by voice when any loaded satellite next rises over you: rise, peak and set times, and whether you can see it. - **🔎 Analyst answers:** Count, filter and rank satellites, datacenters and dams by voice, alongside flights, ships, fires and quakes; answers say when a feed is stale or on a fallback. - **🧭 Tilt and North Up:** Switch between straight-down and a 35° oblique, or put north at the top, while a tracked target stays centered. - **🔍 Keyless search:** Type coordinates or a bundled city or landmark to fly there with no network request; other names use Google when configured, then Photon and Nominatim. - **📦 Shareable scenes:** Import, preview and share Director scenes as files or bundles, with camera anchors, authored moves and data packs. - **🌊 Nepal flood scene:** Replay the Bhote Koshi flood: flood path, witness sources and before-and-after imagery (bundled data is non-commercial; see [DATA_SOURCES.md](DATA_SOURCES.md)). --- [![YouTube video about the God's Eye View open source release](https://img.youtube.com/vi/GRJaKcXZS94/maxresdefault.jpg)](https://www.youtube.com/watch?v=GRJaKcXZS94) ▶️ **[The full walkthrough of everything below, on YouTube](https://www.youtube.com/watch?v=GRJaKcXZS94)** ## ⚡ Quick Start **Start without an account or API keys.** Both paths open the same app with Esri satellite imagery and keyless terrain. OSM is the fallback if Esri is unreachable. Flights, military traffic, satellites, earthquakes, public cameras, radio, and launches are available without keys. For photorealistic 3D, add a **Cesium ion token** for eligible personal, non-commercial use, or a **Google Maps key** for the direct, metered route and Google place search. Provider terms and quotas apply. Add keys through the app's **POWER UP** panel; [Keys & Costs](#-api-keys) explains the options. > **Already installed?** Update to the latest version. Older versions query > public OpenStreetMap Overpass servers, which now refuse them, so Traffic, > Mapped Installations and ALPR stay empty until you update. ### Path 1 — One click, no terminal 1. Install or update [Pinokio](https://desktop.pinokio.co/) to **8.2 or later**. 2. Open [God's Eye View in Pinokio](https://pinokio.co/apps/github-com-bilawalsidhu-gods-eye-view). 3. Click **Install**, then **Start**. Available on **Windows, macOS, and Linux**. The Pinokio maintainer reports cross-platform testing of the fixed installer. The launcher installs the locked dependencies, finds a free local port, and opens the app. **Tried before and installation failed?** Update Pinokio and try again. Version 8.2 fixes the launcher installation issue; [details from the Pinokio maintainer](https://pinokio.co/posts/01m1m4p9xxm3qw7dnnpj2wr93g). ### Path 2 — Terminal / coding agent Use **Node.js 24.x (24.14.0 or later) or 26.x**. The setup doctor warns about Node 25, which is end-of-life. ```bash git clone https://github.com/bilawalsidhu/gods-eye-view.git cd gods-eye-view npm ci npm run doctor npm run dev ``` Open **`http://localhost:4173`**. Choose **Live Contacts**, **Space Missions**, **Environmental**, or **Explore Manually** from the first-run panel. Startup performance A point-in-time M5/Chrome capture measured a median 1.86-second cold start. This is a comparison baseline, not a guarantee for your machine or connection. See [docs/PERFORMANCE.md](docs/PERFORMANCE.md). **macOS shortcut:** `./scripts/dev-fresh.sh` clears the Vite cache and pulls any configured keys straight from the Keychain. It starts keyless too. ### Then power it up — in the app, not in a file Keys are upgrades, not prerequisites. When you want one, click the **POWER UP** chip in the bottom-right corner: Provider Settings lists every supported key, what it switches on, and where to get it. Paste, hit **SAVE KEYS**, and the app restarts itself with the new capability on. Once everything is configured the chip reads **POWERED UP** — and if a compact layout hides it, `?setup=1` reopens the same panel. - **Where keys land:** Pinokio → the app's ignored `pinokio/ENVIRONMENT`; a terminal clone → the repo-root `.env`. Either file is made owner-only _before_ a secret is written into it. These are local plaintext files, excluded from Git; the app uses your keys to contact the providers. - **Keys you already have stay yours:** values from your shell or the macOS Keychain show as _configured externally_ and are read-only to the panel. - **What to get first:** the free [Cesium ion](https://cesium.com/ion) token (eligible personal, non-commercial use; current terms and quotas apply) for photorealistic 3D and world terrain; a Google Maps key only for the billing-enabled, metered route + Google place search; OpenAI when you want to talk to the world. Full map, costs included, in [Keys & Costs](#-api-keys). Older Pinokio versions and credential storage Do not enter credentials in Pinokio 8.0.40's native **Configure** panel: that release does not save this nested app file correctly, and it logs submitted values. Use **POWER UP → Provider Settings** inside GEV instead. The Pinokio 8.2 announcement fixes installation; it does not establish that this separate Configure issue is resolved. On macOS, the Keychain via `./scripts/dev-fresh.sh` remains the stronger storage option. The server binds to **localhost** on both paths, and Provider Settings answers requests only from your machine. Browser-side keys (Google Maps, Cesium ion) must be restricted at their providers — [SECURITY.md](SECURITY.md) shows how, and it carries the LAN-sharing rules alongside [Keys & Costs](#-api-keys). --- ## 🕐 The First Five Minutes Choose a first-run mission, or try these in order. The GIFs show Google Photorealistic 3D; your starting basemap depends on the keys you've added. 1. **Light up the sky.** Take the **Live Contacts** mission (or turn on **Flights** yourself) — thousands of live aircraft, gliding on real telemetry, detection mesh already reading the scene. Click one: the camera locks on, a trail draws behind it, and its live telemetry card comes up. 2. **Take the controls.** Hit **COCKPIT** on your tracked plane and ride it down, switching sensors mid-flight: NVG into Ironbow FLIR. ![Riding with a live aircraft in cockpit view while switching sensor modes](docs/media/06-cockpit-ar.gif) 3. **Drop into a busy airport.** Search one and descend to the taxiways with **3D** aircraft on — grounded contacts, taxi trails, the whole apron working in real time. ![Moving from a full airport overhead down to close taxiway inspection with 3D flight models](docs/media/start-here/airport-ground-traffic-google-3d.gif) 4. **Look through a public camera.** Turn on **Cameras** over Austin, London, California, Finland, or Delaware (live video). The feeds aren't webcam embeds — they project _into_ the 3D city. Cycle coverage to **VIEWSHED** and every camera draws its estimated coverage volume — where it reaches, and where it goes blind. ![Diving into an Austin intersection with a live public camera projected into the 3D scene](docs/media/03-austin-cctv.gif) 5. **Track something in orbit.** Turn on **Satellites** and click the ISS — you ride along at orbital distance, orbit ring and all. ![Tracking the ISS along its orbital path as it crosses over Ukraine](docs/media/14-iss-over-ukraine.gif) 6. **Switch the optics.** Tap `1`–`7` — CRT, NVG, FLIR — and the whole live planet re-renders through a different sensor. ![Cycling a dense live globe through CRT, FLIR, and NVG in one continuous view](docs/media/01-style-sweep.gif) 7. **Talk to it** _(needs an OpenAI key)_: _\"Take me to LAX and select the nearest airborne aircraft.\"_ 8. **Come home.** Hit **Reset Globe** — or just say _\"zoom out to a globe view.\"_ **Keyboard:** `1`–`7` visual styles · `H` HUD · `D` detection · `C` cockpit · `` ` `` frame rate · `Esc` out. Trackpad pinch zooms the globe. --- ## 🛩️ The Cockpit > Every plane should let you do this. Real-time cockpit mode, built from live flight data: the camera rides your contact with real terrain holding underneath, all the way down — sensor styles come along for the ride, and **Contacts** keeps the 250 km roster one click away: jump plane to plane and fall straight into the next cockpit. ![Jumping between live aircraft and falling straight into a cockpit view](docs/media/12-switch-aircraft-cockpit.gif) The cockpit even carries its own briefing strip: nearby live signals, regional headlines, and real local weather — with an opt-in **WX** mode that renders volumetric clouds from actual observations around your aircraft. ![A live military contact ridden through Normal, NVG, and Ironbow FLIR with dense detection](docs/media/start-here/military-cockpit-dense-google-3d.gif) _Why cockpit mode exists: you're riding a real aircraft over real terrain — and you get to pick which sensor you see the world through._ --- ## 🎙️ Talk to It > Voice can use an **OpenAI API key** or, on the same machine, an opt-in signed-in **ChatGPT/Codex OAuth** session. The API-key path remains the default. Selecting ChatGPT OAuth in Provider Settings reuses an existing local sign-in or starts the Codex browser sign-in flow and selects OAuth when it completes. The OpenAI key still drives the **AI HUD summary**: a terse, five-word intelligence-style readout of the current view that regenerates as you move. The OAuth option is experimental. OpenAI documents ChatGPT plan usage for the [Responses API](https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference); a supported third-party Realtime contract for reusing Codex tokens has not been confirmed. A successful token mint does not establish billing or support terms. GEV reads Codex's file credentials but does not write or refresh them. It checks token shape and expiry, and reports expired sign-in as requiring re-authentication. The login button runs `codex login`, permits one pending attempt, and reports exit failures or a two-minute timeout. `CODEX_HOME` must match the directory that Codex uses. If `CODEX_AUTH_JSON` points elsewhere, sign in separately or fix that mismatch before using the button. Codex credential storage must use `auth.json`; Keychain-only and in-memory storage are not readable by GEV. On Windows, the login button may not be able to start an npm-installed Codex; run `codex login` yourself, then select OAuth. See [Codex credential storage](https://learn.chatgpt.com/docs/auth#credential-storage). For a live voice check, run `node scripts/qa-voice-auth.mjs http://127.0.0.1:4189 oauth microphone.wav` against your local dev server. Use a WAV with three seconds of leading silence followed by a short spoken reply request. Replace `oauth` with `api-key` to check the API-key path. The check verifies audio input, a completed spoken reply, usage, resource cleanup, and reconnect. It saves screenshots and credential-free results under `.gev-logs/voice-auth/`. Click **GEV MIC**, grant the microphone, and just talk. This is more than a voice-controlled remote: - **🧠 It knows what it's looking at.** The agent pulls live scene context before answering — including coordinates, street names, active layers, and view scale. Ask _\"what city is this?\"_ mid-flight and it knows. - **🎯 Entity Q&A.** Click any plane, ship, or datacenter and ask _\"what's this?\"_ It answers using the object's live telemetry. - **👁️ Visual grounding.** At street level, it reads a viewport screenshot to identify legible signage and building names, and is instructed never to hallucinate labels. - **🎬 Cinematic framing.** _\"Show me the planes overhead\"_ pulls the camera back, angles it, and frames the live traffic like a director. - **🔒 Honest and secure.** The agent only confirms actions that succeeded. Your `OPENAI_API_KEY` never touches the browser; the client only gets a short-lived session token. If you choose **USE CHATGPT OAUTH** in Provider Settings, the local server uses that sign-in only to mint the same kind of short-lived Realtime credential, and refuses the OAuth path for non-loopback clients. Thirty tools, four jobs — the commands below come straight from the product's voice test suite and tool playbook: **🎥 Direct it** — drone-operator camera verbs: > 🗣️ _\"Take me to Tokyo.\"_ · _\"Orbit around this area slowly.\"_ · _\"Draw the walking route from the Capitol to Zilker Park.\"_ → _\"Fly the route we just drew.\"_ · _\"Zoom out to a globe view.\"_ **🖊️ Annotate it** — a whiteboard over the real world: > 🗣️ _\"Outline the state of Texas.\"_ · _\"Annotate the Texas State Capitol and its grounds\"_ — it draws the **actual enclosing boundary**, not a circle. · _\"How far is the Eiffel Tower from the Louvre?\"_ — a connector arrow appears and it speaks the distance. Everything persists until you say _\"clear the map.\"_ **✍️ Or draw it yourself** — DISPLAY ▸ **Draw**: pick Area, Line or Pin, click the vertices on the real world, double-click to finish, label it. Same whiteboard, same persistence, no microphone needed. ![Zilker Park and Lady Bird Lake drawing onto the 3D city as persistent vector annotations, by voice](docs/media/01-voice-annotate-zilker.gif) ![A spoken distance measurement spanning an airport, inspected from orbit](docs/media/04-airport-distance.gif) **🔎 Interrogate it** — analyst queries against the live layers: > 🗣️ _\"How many flights are over Texas right now?\"_ · _\"Which ships are headed to Oakland?\"_ · _\"What is the biggest fire near Los Angeles?\"_ ",
+      "fetchedAt": "2026-10-11T21:35:54.122Z",
+      "productUrl": "https://github.com/bilawalsidhu/gods-eye-view",
+      "originSourceIds": [
+        "f3d0d1f85de671d55fee2b62"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:46.468Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/bilawalsidhu/gods-eye-view/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/bilawalsidhu/gods-eye-view/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T21:35:54.122Z"
+    },
+    {
+      "id": "f3d0d1f85de671d55fee2b62",
+      "title": "bilawalsidhu / gods-eye-view",
+      "url": "https://github.com/bilawalsidhu/gods-eye-view",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - bilawalsidhu/gods-eye-view: A spy satellite simulator in your browser, except the data is real. Live open source spatial intelligence on a photorealistic 3D globe. · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} bilawalsidhu gods-eye-view Repository navigation Code Issues 98 ( 98 ) Pull requests 271 ( 271 ) Actions Projects Security and quality Insights More items gods-eye-view Public Notifications You must be signed in to change notification settings Fork 10.3k ( 10.3k ) Star 51.5k ( 51.5k ) You must be signed in to star a repository About A spy satellite simulator in your browser, except the data is real. Live open source spatial intelligence on a photorealistic 3D globe. maptheworld.ai/ Topics 3d-globe cesium flight-tracking geospatial geospatial-intelligence gis osint photogrammetry satellite-tracking spatial-intelligence webgl worldview Resources Readme License Contributing Contributing Security policy Security policy Activity Stars 51.5k stars Watchers 1.0k watching Forks 10.3k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 817 Commits 817 Commits Folders and files Name Name Last commit message Last commit date .agents/ skills/ community-pr .agents/ skills/ community-pr .github .github build build config config docs docs pinokio pinokio public public scripts scripts server server src src <svg data-component=\"Octicon\" aria-hidden=\"true\" focusable=\"false\" class=\"octicon octicon-file-directory-fill icon-directory\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"currentColor\" display=\"inline-block\" overflow=\"visible\" style=\"vertical-align:t",
+      "fetchedAt": "2026-10-11T21:35:54.718Z",
+      "productUrl": "https://github.com/bilawalsidhu/gods-eye-view",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-11T21:35:54.718Z"
+    },
+    {
+      "id": "d891023fbeca57db064ac511",
+      "url": "https://raw.githubusercontent.com/CigaleAI/guilds/main/docs/README.md",
+      "title": "Show HN: Guilds – Open-source inspectable multi-agents collaboration framework · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# guilds.run guilds.run runs standing teams of AI agents you can inspect. A guild is a department: named roles, a shared room, shared tables. Every run keeps the prompt the model saw, every tool call, and every memory change. Agent-to-agent work opens uses of LLMs a single agent cannot cover, and it accentuates the ways those models fail. guilds.run is the framework Cigale built so that collaboration stays tractable. System thinking used to belong to people who already wrote software. With LLMs it is work anyone with a need or an interest can do, at a different level of abstraction. - **Deeply inspectable.** What the model sees is what you see. - **Deeply customizable.** Each connection, each tool, and the model for each agent is chosen for the job. - **Iterate till perfection.** A long-running multi-agent system is refined in place. - **Share the love.** Recipes carry a working guild to someone who does not want to design one from scratch. These pages are for the people who run it, the people who use it, and the people who change it. Each page describes what the code does today. The security register is the one page that keeps history. ## Philosophy - [Philosophy](philosophy.md) — why the product is shaped this way ## Getting started Three pages, in order, take an empty machine to a working guild: 1. [Install](getting-started/install.md) — requirements, the three commands, what runs, where the state lives 2. [Model keys](getting-started/model-keys.md) — the welcome dialog: a provider, its models, the default; managing keys afterwards 3. [Your first guild](getting-started/first-guild.md) — a guild, an agent, its Task, the group chat, the run, memory, a routine, a tool, a recipe Then, when the box needs it: - [Configure](getting-started/configure.md) — platform keys, and `.env`: environment integrations, reaching the box, limits, the model catalog - [Remote access](getting-started/remote-access.md) — reaching the box from another machine, with one operator or with accounts - [Operate](getting-started/operate.md) — update, back up, restore, logs, when it fails ## Concepts How the product works, for the operator. - [Users and organisations](concepts/users-and-organisations.md) — identity modes, organisations, members, the instance admin, the seed - [Guilds and agents](concepts/guilds-and-agents.md) — membership, configuration, avatars, deletion - [Prompts and memory](concepts/prompts-and-memory.md) — the system prompt, the Task, memory, hydration - [Notes and collections](concepts/notes-and-collections.md) — notes, display paths, collections, records, grants - [Runs](concepts/runs.md) — direct, group, and schedule runs; generation; sandboxes - [Group chat](concepts/group-chat.md) — tags, recipients, the cursor queue, posting - [Secrets and access](concepts/secrets-and-access.md) — secrets, grants, what reaches a sandbox - [Recipes](concepts/recipes.md) — portable guild configuration - [Prompt Studio](concepts/prompt-studio.md) — improve standing tasks on a live guild - [Guild builder](concepts/guild-builder.md) — design a recipe from a conversation - [Operator app](concepts/operator-app.md) — the screens ## Tools and connectors Native tools, the catalog, and the apps a box registers so agents can reach Gmail, Drive, and GitHub. - [Catalog](tools-and-connectors/catalog.md) — native and MCP catalogs, connections, bindings, what a run offers - [Native tools](tools-and-connectors/native.md) — notes, tables, memory, browser, scripts, routines, secrets - [Code tools](tools-and-connectors/code.md) — shell, files, search - [Connectors](tools-and-connectors/connectors.md) — token logins and remote MCP - [Gmail and Drive](tools-and-connectors/google.md) — the Google Cloud OAuth client - [GitHub](tools-and-connectors/github.md) — the GitHub App - [Registry](tools-and-connectors/registry.md) — connectors beyond the image ## Architecture For the people who change the code. - [System](architecture/system.md) — process model, topology, state on disk, images and stacks, the trust boundary - [Code map](architecture/code-map.md) — repository layout, `src/` directories, boot, the request path, the run flow - [Orchestrator](architecture/orchestrator.md) — startup and shutdown, events, PostgreSQL and migrations, codecs, the model client, the sandbox manager - [Extension points](architecture/extension-points.md) — what an edition built on core may replace - [Design system](architecture/design-system.md) — `@guildsrun/ui`: tokens, components, [Storybook](/storybook) - [Security register](architecture/security-register.md) — issues fixed and still open, with their history ## Contributing - [Contributing](CONTRIBUTING.md) — licence, pull requests, the check - [Development](contributing/development.md) — the development stack, local state and reset, verify, check, the pre-push hook, CI, fixtures - [Code guidelines](contributing/code-guidelines.md) — names, function size, scaffolding, boundaries, tests, docs ## Licence guilds.run is made and operated by Cigale AI. It is free software under the GNU Affero General Public License, version 3 only ([LICENSE](../LICENSE)). What it builds on is listed in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). The hosted edition, the layer Cigale AI runs its own service with, is separate and proprietary.",
+      "fetchedAt": "2026-10-11T21:35:54.794Z",
+      "productUrl": "https://github.com/CigaleAI/guilds",
+      "originSourceIds": [
+        "b65ad416099dd4150b5d3ace"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T21:32:46.468Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/CigaleAI/guilds/main/docs/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/CigaleAI/guilds/main/docs/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T21:35:54.794Z"
+    },
+    {
+      "id": "b65ad416099dd4150b5d3ace",
+      "title": "Show HN: Guilds – Open-source inspectable multi-agents collaboration framework",
+      "url": "https://news.ycombinator.com/item?id=50043499",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Guilds – Open-source inspectable multi-agents collaboration framework | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Guilds – Open-source inspectable multi-agents collaboration framework ( github.com/cigaleai ) 2 points by 0mbre 7 hours ago | hide | past | favorite | discuss Getting AI to handle long-running tasks reliably takes more than good prompts. There’s a lot of system design involved: figuring out how agents should work together, anticipating edge cases, and being able to debug and tune the system when things go wrong. That’s why we built guilds.run. The goal is to make the whole system understandable, so you can trace how mistakes propagate between agents, fix the underlying causes, and see if your changes work. We’re open-sourcing guilds.run because we’d like to see what other people built and share working team the solve real world use cases for long running agent collaboration help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T21:35:54.917Z",
+      "productUrl": "https://github.com/CigaleAI/guilds",
+      "discoveredAt": "2026-10-11T14:11:07Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ],
+      "verifiedAt": "2026-10-11T21:35:54.917Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [],
+  "assessmentContractVersion": 1,
+  "considerationEvidence": [
+    {
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: Tracon (air traffic control for subagents) · public README",
+      "productUrl": "https://github.com/phalladar/tracon",
+      "sourceIds": [
+        "e99ead410e61535eb0e14af1",
+        "ce205d0f7d1308d661f3e9db"
+      ],
+      "availableSourceIds": [
+        "e99ead410e61535eb0e14af1",
+        "ce205d0f7d1308d661f3e9db"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: Shortfuse – Make macOS permissions expire automatically · product evidence",
+      "productUrl": "https://news.ycombinator.com/item?id=49995706",
+      "sourceIds": [
+        "5ddcd9b9a77277b323f87e71"
+      ],
+      "availableSourceIds": [
+        "5ddcd9b9a77277b323f87e71"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Good luck slowing this down · product evidence",
+      "productUrl": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+      "sourceIds": [
+        "b76e0dae669e83a29804f9e3"
+      ],
+      "availableSourceIds": [
+        "b76e0dae669e83a29804f9e3"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "kulkas2pintu/wan777",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "sourceIds": [
+        "dc8958655abd8e125a7477ce"
+      ],
+      "availableSourceIds": [
+        "dc8958655abd8e125a7477ce"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: PanelAlpha Engine – Turn your VPS into a programmable hosting layer · product evidence",
+      "productUrl": "https://engine.panelalpha.com",
+      "sourceIds": [
+        "6ecd8dfd6e05f7140ea08252",
+        "0a8561b508cdd701e1e1e925"
+      ],
+      "availableSourceIds": [
+        "6ecd8dfd6e05f7140ea08252",
+        "0a8561b508cdd701e1e1e925"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Process Large Documents with OCR using SubworkflowAI and Gemini · product evidence",
+      "productUrl": "https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini",
+      "sourceIds": [
+        "7702a7ece50174c78fb9c1bc"
+      ],
+      "availableSourceIds": [
+        "7702a7ece50174c78fb9c1bc"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Todoless BOOSTED · product evidence",
+      "productUrl": "https://betalist.com/startups/todoless",
+      "sourceIds": [
+        "6e42807071487eaa9603bb28"
+      ],
+      "availableSourceIds": [
+        "6e42807071487eaa9603bb28"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "bilawalsidhu / gods-eye-view · public README",
+      "productUrl": "https://github.com/bilawalsidhu/gods-eye-view",
+      "sourceIds": [
+        "73dbab235c9e479c1fd6d116",
+        "f3d0d1f85de671d55fee2b62"
+      ],
+      "availableSourceIds": [
+        "73dbab235c9e479c1fd6d116",
+        "f3d0d1f85de671d55fee2b62"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: Guilds – Open-source inspectable multi-agents collaboration framework · public README",
+      "productUrl": "https://github.com/CigaleAI/guilds",
+      "sourceIds": [
+        "d891023fbeca57db064ac511",
+        "b65ad416099dd4150b5d3ace"
+      ],
+      "availableSourceIds": [
+        "d891023fbeca57db064ac511",
+        "b65ad416099dd4150b5d3ace"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
