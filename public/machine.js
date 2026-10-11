@@ -1,5 +1,6 @@
 import {loopTiming} from './schedule.js';
 import {slotPresentation,currentDaySlots} from './slot-display.js';
+import {clockTiming,runTriggerLabel} from './clock-display.js';
 
 (() => {
   'use strict';
@@ -35,7 +36,7 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
     const state = plain(value).toLowerCase();
     if (['success','succeeded','completed','complete','published','healthy','ok','active','live','connected','adopted','shipped','passed','available','enabled'].includes(state)) return 'good';
     if (['failed','failure','error','unhealthy','unavailable'].includes(state)) return 'bad';
-    if (['running','pending','pending_setup','awaiting_first_cloud_run','awaiting_access','awaiting_connection','restricted','partial','degraded','skipped','not_connected','disabled','dry_run','rejected','late','missed','cap_reached','waiting_for_first_linkedin_post'].includes(state)) return 'warning';
+    if (['running','pending','pending_setup','awaiting_first_cloud_run','awaiting_access','awaiting_connection','restricted','partial','degraded','skipped','not_connected','disabled','dry_run','rejected','late','missed','cap_reached','waiting_for_first_linkedin_post','stalled','waiting','not_started','unverified','recovering'].includes(state)) return 'warning';
     return '';
   };
   const stateLabel = (state) => ({awaiting_key:'Awaiting model access',awaiting_first_cloud_run:'Awaiting the first cloud run',awaiting_access:'Needs access',awaiting_connection:'Needs connection',pending_setup:'Needs setup',not_connected:'Not connected',dry_run:'Dry run',succeeded:'Completed',success:'Completed',ok:'Available',enabled:'Connected'}[state] || human(state) || 'Not recorded');
@@ -54,16 +55,17 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
   function renderStatus() {
     const status = data.status || {};
     const hosted = Boolean(data.schedule?.verifiedHostedRunAt || status.lastHostedRunUrl),proof=data.schedule?.proof;
-    $('machine-state').textContent = proof?.state==='publication_observed'?'Scheduled publishing verified':proof?.state==='loop_observed'?'Scheduled loop observed':proof?.state==='trigger_observed'?'Schedule trigger observed':status.state==='awaiting_first_cloud_run'?(hosted?'Awaiting the first publication':'Awaiting the first cloud run'):'Schedule unverified';
+    $('machine-state').textContent = proof?.state==='publication_observed'?'Automatic publishing verified':proof?.state==='loop_observed'?'Automatic loop observed':proof?.state==='trigger_observed'?'Automatic trigger observed':status.state==='awaiting_first_cloud_run'?(hosted?'Awaiting the first publication':'Awaiting the first cloud run'):'Automatic publishing unverified';
     $('machine-signal').className = `signal-dot${proof?.state==='publication_observed'?' live':''}`;
     $('last-research').textContent = formatDate(status.lastResearchAt);
     $('last-published').textContent = formatDate(status.lastPublishedAt);
     renderTiming();
-    $('hosting-note').textContent = proof?.state==='publication_observed'?'Scheduled publication verified · GitHub Actions':hosted?'Hosted runs recorded · scheduled publication unverified':'Cloud schedule configured · execution unverified';
+    $('hosting-note').textContent = proof?.state==='publication_observed'?`${proof.publicationSource==='github-environment-clock'?'Hosted clock':'GitHub cron'} publication verified · GitHub Actions`:hosted?'Hosted runs recorded · automatic publication unverified':'Cloud clock configured · execution unverified';
   }
 
   function renderTiming() {
     if (!data) return;
+    renderClock();
     const latestLoop=data.runs?.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
     const cadence=loopTiming(data.status?.lastLoopAt||latestLoop?.startedAt);
     $('next-published').textContent=formatDate(cadence.nextPublicationAt);
@@ -71,6 +73,13 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
     const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1)||slots[0];
     $('loop-slot-state').textContent=latest?`${latest.state==='cap_reached'?'Daily cap reached':latest.state==='scheduled'?'Upcoming':human(latest.state)} · ${shortTime(latest.plannedAt)}${latest.actualAt?` · published ${shortTime(latest.actualAt)}`:''}`:'No slot recorded';
     renderPublicationSlots(slots);
+  }
+
+  function renderClock(){
+    const clock=data.clock||{},timing=clockTiming(clock);
+    const currentRun=link(clock.clockRunUrl,'View current clock run'),tickRun=link(clock.lastTickRunUrl,'View last tick');
+    const dispatches=Array.isArray(clock.dispatches)?clock.dispatches:[];
+    $('hosted-clock').innerHTML=`<div class="clock-heading">${chip(timing.state,timing.label)}${timing.elapsedMinutes!==null?`<span>Last record ${number(Math.floor(timing.elapsedMinutes))} min ago</span>`:''}</div><dl class="clock-facts"><div><dt>Last committed tick</dt><dd>${clock.lastTickAt?escape(formatDate(clock.lastTickAt)):'No tick recorded'}</dd></div><div><dt>Next tick, no earlier than</dt><dd>${clock.nextTickAt?escape(formatDate(clock.nextTickAt)):'Not recorded'}${timing.state==='late'&&timing.lateMinutes!==null?` <small>${number(timing.lateMinutes)} min past this estimate</small>`:''}</dd></div></dl>${currentRun||tickRun?`<div class="clock-links">${currentRun}${tickRun}</div>`:''}${dispatches.length?`<p class="clock-dispatches">Last tick dispatched: ${dispatches.map(item=>link(item.githubRunUrl,human(item.workflow?.replace(/\.yml$/,'')||'Workflow'))).filter(Boolean).join(' · ')}</p>`:''}<p class="schedule-footnote">The clock waits ${number(clock.waitMinutes||15)} minutes in a GitHub environment without holding a runner, then checks due slots and dispatches its next wait. Queue time can add delay; the next tick is an earliest estimate. A record older than 45 minutes is marked stalled. GitHub cron gates remain a recovery backup.</p>`;
   }
 
   function renderPublicationSlots(slots){
@@ -81,7 +90,7 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
     const table=rows=>rows.length?`<div class="slot-table-wrap"><table class="slot-table"><caption>${escape(day(rows[0].plannedAt))}</caption><thead><tr><th scope="col">Planned · Vilnius</th><th scope="col">Actual publication / run</th><th scope="col">Publication delay</th><th scope="col">State</th></tr></thead><tbody>${rows.map(slot=>{
       const actual=slot.actualAt?formatDate(slot.actualAt):'Not published';
       const attemptDelay=validDate(slot.attemptedAt)&&validDate(slot.plannedAt)?Math.max(0,Math.floor((validDate(slot.attemptedAt).getTime()-validDate(slot.plannedAt).getTime())/60000)):null;
-      const attempt=slot.attemptedAt?`<small>Run started ${escape(formatDate(slot.attemptedAt))}${attemptDelay!==null?` · ${number(attemptDelay)} min late`:''}${slot.eventName==='schedule'?' · scheduled':slot.eventName==='workflow_dispatch'?' · manual':''}</small>`:'';
+      const attempt=slot.attemptedAt?`<small>Run started ${escape(formatDate(slot.attemptedAt))}${attemptDelay!==null?` · ${number(attemptDelay)} min late`:''} · ${escape(runTriggerLabel(slot))}</small>`:'';
       const url=link(slot.githubRunUrl,'View run');
       const stateLabel=slot.state==='cap_reached'?'Daily cap reached':slot.state==='scheduled'?'Upcoming':human(slot.state);
       const elapsed=validDate(slot.plannedAt)?Math.max(0,Math.floor((Date.now()-validDate(slot.plannedAt).getTime())/60000)):null;
@@ -119,7 +128,7 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
       if (Array.isArray(run.published)) parts.push(`<strong>${published.length}</strong> published`);
       const runLink = link(run.githubRunUrl || run.runUrl || run.htmlUrl || run.workflowUrl, 'View hosted run');
       const event=run.eventName||run.scheduling?.eventName||run.scheduling?.event;
-      const provenance=event==='schedule'?'Scheduled event':event==='workflow_dispatch'?'Manual dispatch':'Trigger not recorded';
+      const provenance=runTriggerLabel(run);
       const commitLink = link(run.commitUrl || run.githubCommitUrl, 'View commit');
       return `<details class="run" data-run-id="${escape(id)}"${open.has(id) || (!loaded && index === 0) ? ' open' : ''}>
         <summary><div class="run-summary-date">${escape(day(run.startedAt))}<strong>${escape(shortTime(run.startedAt))}</strong></div><div class="run-summary-main"><h3>${escape(runTitle(run.type))}</h3><p>${parts.length ? parts.join(' · ') : escape(plain(run.summary) || 'No counts recorded for this run.')}</p></div>${chip(run.status)}<span class="run-chevron" aria-hidden="true">+</span></summary>
@@ -137,18 +146,20 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
     const hours=schedule.publicationTimes.join(' · ');
     const rows = [];
     if (hours) rows.push(['Research & publish',hours]);
-    rows.push(['Publishing gate','Every 20 minutes · runs only when due'],['Other gates','Every 30 minutes · run only when due']);
+    rows.push(['Hosted clock','15-minute environment waits · checks due slots'],['Backup publishing gate','Every 20 minutes · runs only when due'],['Other backup gates','Every 30 minutes · run only when due']);
     if (schedule.researchEveryHours) rows.push(['Research scan',`Every ${schedule.researchEveryHours} hours at :${schedule.researchMinute}`]);
     if (schedule.measurementTime || schedule.measureAt) rows.push(['Measure results',`${schedule.measurementTime || schedule.measureAt} daily`]);
     if (schedule.improvementTime || schedule.improveAt) rows.push(['Improve rules',`${schedule.improvementTime || schedule.improveAt} daily`]);
     if (schedule.nextResearchAt) rows.push(['Next research',formatDate(schedule.nextResearchAt)]);
     rows.push(['Next measurement',formatDate(schedule.nextMeasurementAt)],['Next improvement',formatDate(schedule.nextImprovementAt)]);
-    const proofLabel=proof?.state==='publication_observed'?'Scheduled publication recorded':proof?.state==='loop_observed'?'Scheduled loop recorded; publication unverified':proof?.state==='trigger_observed'?'Trigger observed; publishing unverified':'No scheduled event verified';
-    rows.push(['Scheduler proof',proofLabel]);
-    if (Number.isSafeInteger(proof?.scheduledRunCount)) rows.push(['Scheduled events recorded',number(proof.scheduledRunCount)]);
+    const proofLabel=proof?.state==='publication_observed'?'Automatic publication recorded':proof?.state==='loop_observed'?'Automatic loop recorded; publication unverified':proof?.state==='trigger_observed'?'Automatic trigger observed; publishing unverified':'No automatic event verified';
+    rows.push(['Automatic publishing proof',proofLabel]);
+    if (Number.isSafeInteger(proof?.scheduledRunCount)) rows.push(['GitHub cron events recorded',number(proof.scheduledRunCount)]);
+    if (Number.isSafeInteger(proof?.clockRunCount)) rows.push(['Verified clock gate runs',number(proof.clockRunCount)]);
+    if (Number.isSafeInteger(proof?.clockTickCount)) rows.push(['Clock ticks recorded',number(proof.clockTickCount)]);
     if (proof?.checkedAt) rows.push(['Scheduler checked',formatDate(proof.checkedAt)]);
-    const proofLink=link(proof?.lastScheduledPublicationRunUrl||proof?.lastScheduledLoopRunUrl||proof?.lastScheduledRunUrl,'View scheduled-event evidence');
-    $('schedule').innerHTML = rows.map(([label,value]) => `<div class="schedule-row"><span>${escape(label)}</span><strong>${escape(value)}</strong></div>`).join('') + `<p class="schedule-footnote">Europe/Vilnius · planned slots in GitHub Actions. Timers use the current clock. A configured cron or manual hosted run does not verify scheduled publishing.${proofLink?`<br>${proofLink}`:''}</p>`;
+    const proofLink=link(proof?.lastAutomaticPublicationRunUrl||proof?.lastAutomaticLoopRunUrl||proof?.lastAutomaticRunUrl||proof?.lastScheduledPublicationRunUrl||proof?.lastScheduledLoopRunUrl||proof?.lastScheduledRunUrl,'View automatic-run evidence');
+    $('schedule').innerHTML = rows.map(([label,value]) => `<div class="schedule-row"><span>${escape(label)}</span><strong>${escape(value)}</strong></div>`).join('') + `<p class="schedule-footnote">Europe/Vilnius · planned slots in GitHub Actions. Timers use the current clock. Configuration or a manual hosted run alone does not verify automatic publishing. Clock dispatches retain their real GitHub event.${proofLink?`<br>${proofLink}`:''}</p>`;
   }
 
   function renderRelay() {
@@ -219,6 +230,7 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
         $('hosting-note').textContent = 'The hosted schedule could not be read';
         $('runs').innerHTML = '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>We couldn’t reach the record.</h3><p>Recorded runs will appear when the connection returns.</p></div>';
         $('schedule').innerHTML = '<p class="muted">The schedule is unavailable while the connection is interrupted.</p>';
+        $('hosted-clock').innerHTML = '<p class="muted">The clock record is unavailable while the connection is interrupted.</p>';
         $('relay').innerHTML = '<p class="muted">Relay status is unavailable while the record cannot be reached.</p>';
         $('versions').innerHTML = '<div class="empty-state compact"><h3>Version history is unavailable.</h3><p>Recorded rule changes will appear when the connection returns.</p></div>';
         $('source-health').innerHTML = '<p class="muted">Source health is unavailable while the record cannot be reached.</p>';

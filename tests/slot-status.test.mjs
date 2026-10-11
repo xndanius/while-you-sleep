@@ -27,3 +27,21 @@ test('pending reservations are running and yesterday never fulfils today',()=>{
   const rows=publicationSlotStatus({posts:[{publishedAt:'2026-10-10T18:00:00Z'}],reservations,now});
   assert.deepEqual(rows.map(row=>row.state),['running','running','late']);assert.ok(rows.every(row=>row.actualAt===null));
 });
+
+test('slot rows preserve verified clock origins without making dispatch attempts publications',()=>{
+  const clock={source:'github-environment-clock',verified:true,tickId:'clock-111-1',clockRunId:'111',parentAttempt:1,clockRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/111',dispatchId:'clock-111-1-loop',runId:'222',workflow:'loop.yml',tickedAt:'2026-10-11T10:27:00Z',requestedAt:'2026-10-11T10:27:00Z',verifiedAt:'2026-10-11T10:28:00Z'};
+  const run={id:'loop-222-1',type:'loop',startedAt:'2026-10-11T10:28:00Z',finishedAt:'2026-10-11T10:40:00Z',eventName:'workflow_dispatch',clock,status:'completed',scheduling:{slotIds:[slots[0],slots[1]],requestedAt:'2026-10-11T10:28:00Z'}};
+  const posts=[{id:'checked',runId:run.id,publishedAt:'2026-10-11T10:38:00Z',eventName:'workflow_dispatch',scheduling:{slotId:slots[0],clock}}];
+  const rows=publicationSlotStatus({posts,runs:[run],now});
+  assert.deepEqual(rows[0].clock,clock);
+  assert.equal(rows[0].eventName,'workflow_dispatch');
+  assert.equal(rows[0].state,'published');
+  assert.deepEqual(rows[1].clock,clock);
+  assert.equal(rows[1].eventName,'workflow_dispatch');
+  assert.equal(rows[1].actualAt,null);
+  assert.equal(rows[1].state,'missed');
+  const untrusted=publicationSlotStatus({runs:[{...run,clock:{source:'github-environment-clock',verified:true}}],now});
+  assert.equal(untrusted[0].clock,null,'An input-like clock label cannot survive as verified metadata.');
+  const manualPost=publicationSlotStatus({posts:[{...posts[0],scheduling:{slotId:slots[0]}}],runs:[run],now});
+  assert.equal(manualPost[0].clock,null,'A later clock attempt cannot replace a published post’s own origin.');
+});

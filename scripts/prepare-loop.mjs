@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { ROOT, validId, sha256, stableJSON, writeJSON } from '../lib/storage.mjs';
 import { loopDecision, slotOutcome, reservationSlotIds } from '../lib/loop-schedule.mjs';
 import { githubApiGet } from '../lib/usage.mjs';
+import { verifyClockDispatch } from '../lib/clock-provenance.mjs';
 
 async function records(root,directory) {
   const dir=path.join(root,'data',directory);let names;
@@ -16,8 +17,9 @@ async function records(root,directory) {
 // recovery. API failures leave the reservation held without another model call.
 export async function prepareLoop({ root=ROOT,env=process.env,now=new Date(),apiGet=githubApiGet }={}) {
   const runId=env.RUN_ID;if(!validId(runId))throw new Error('Invalid loop run ID.');
+  const clock=await verifyClockDispatch({kind:'loop',root,env,apiGet,now});
   const [posts,reservations,outcomes]=await Promise.all(['posts','slot-reservations','slot-outcomes'].map(dir=>records(root,dir)));
-  const input={runId,eventName:env.GITHUB_EVENT_NAME||'unknown',triggerCron:env.LOOP_TRIGGER_CRON||null,githubRunId:env.GITHUB_RUN_ID,githubRunUrl:env.GITHUB_RUN_ID?`https://github.com/xndanius/while-you-sleep/actions/runs/${env.GITHUB_RUN_ID}`:null,bootstrap:env.BOOTSTRAP==='true',now,posts,reservations,outcomes};
+  const input={runId,eventName:env.GITHUB_EVENT_NAME||'unknown',triggerCron:env.LOOP_TRIGGER_CRON||null,githubRunId:env.GITHUB_RUN_ID,githubRunUrl:env.GITHUB_RUN_ID?`https://github.com/xndanius/while-you-sleep/actions/runs/${env.GITHUB_RUN_ID}`:null,clock,bootstrap:!clock&&env.BOOTSTRAP==='true',now,posts,reservations,outcomes};
   const preliminary=loopDecision(input);
   const relevantSlots=new Set(preliminary.missedSlots.map(slot=>slot.id));
   if(preliminary.bootstrap)relevantSlots.add('bootstrap-initial');

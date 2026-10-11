@@ -1,0 +1,103 @@
+name: Repository environment clock
+on:
+  workflow_dispatch:
+    inputs:
+      chain_id:
+        description: Trusted chain identity; leave blank only for its initial start
+        type: string
+        default: ''
+      parent_run_id:
+        description: Exact preceding clock run from its trusted receipt
+        type: string
+        default: ''
+      parent_run_attempt:
+        description: Exact preceding clock attempt
+        type: string
+        default: ''
+      generation:
+        description: Next generation from the committed clock state
+        type: string
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: while-you-sleep-clock
+  cancel-in-progress: false
+  queue: max
+env:
+  CLOCK_CHAIN_ID: ${{ inputs.chain_id }}
+  CLOCK_PARENT_RUN_ID: ${{ inputs.parent_run_id }}
+  CLOCK_PARENT_RUN_ATTEMPT: ${{ inputs.parent_run_attempt }}
+  CLOCK_GENERATION: ${{ inputs.generation }}
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    outputs:
+      claimed: ${{ steps.claim.outputs.claimed }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - id: claim
+        name: Claim the singleton before any environment wait
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/clock.mjs claim
+  timer:
+    needs: claim
+    if: needs.claim.outputs.claimed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    environment:
+      name: clock
+      deployment: false
+    steps:
+      - name: Environment wait released without a runner held while waiting
+        run: echo 'The clock environment wait released this job.'
+  tick:
+    needs: [claim, timer]
+    if: needs.claim.outputs.claimed == 'true' && needs.timer.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: write
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    outputs:
+      ticked: ${{ steps.tick.outputs.ticked }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - id: tick
+        name: Run cheap due checks, dispatch exact children and persist the next tick
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/clock.mjs tick
+  pages:
+    needs: tick
+    if: needs.tick.outputs.ticked == 'true'
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

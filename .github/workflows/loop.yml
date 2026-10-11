@@ -9,6 +9,18 @@ on:
         description: Produce the first three checked posts using the same cloud loop
         type: boolean
         default: false
+      clock_tick_run_id:
+        description: Trusted hosted clock parent run, verified against its receipt
+        type: string
+        default: ''
+      clock_dispatch_id:
+        description: Exact dispatch receipt identifier
+        type: string
+        default: ''
+      clock_parent_attempt:
+        description: Hosted clock parent attempt
+        type: string
+        default: ''
 permissions:
   contents: read
 concurrency:
@@ -25,7 +37,7 @@ jobs:
     timeout-minutes: 6
     permissions:
       contents: write
-      actions: read
+      actions: write
     concurrency:
       group: while-you-sleep-record
       cancel-in-progress: false
@@ -43,11 +55,18 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22
+      - name: Keep one hosted clock chain alive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/ensure-clock.mjs
       - name: Select and reserve every due publication slot of the Vilnius day
         id: slot
         env:
           GH_TOKEN: ${{ github.token }}
           LOOP_TRIGGER_CRON: ${{ github.event.schedule || '' }}
+          CLOCK_TICK_RUN_ID: ${{ inputs.clock_tick_run_id || '' }}
+          CLOCK_DISPATCH_ID: ${{ inputs.clock_dispatch_id || '' }}
+          CLOCK_PARENT_ATTEMPT: ${{ inputs.clock_parent_attempt || '' }}
         run: node scripts/prepare-loop.mjs
       - name: Persist the trusted reservation before any model runs
         if: steps.slot.outputs.run_models == 'true'

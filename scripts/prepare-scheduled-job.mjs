@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROOT, validId, writeJSON } from '../lib/storage.mjs';
 import { TIMEZONE, RESEARCH_MINUTE, RESEARCH_EVERY_HOURS, MEASUREMENT_TIME, IMPROVEMENT_TIME, localParts, previousLocalTime } from '../lib/config.mjs';
+import { verifyClockDispatch,validClockProvenance } from '../lib/clock-provenance.mjs';
 
 const directories = { research: 'research', measure: 'measurements', improve: 'versions' };
 const pad = value => String(value).padStart(2, '0');
@@ -24,7 +25,7 @@ export function latestScheduledSlot(kind, now = new Date()) {
   return { jobKey: `${kind}-${part.day}-${pad(part.hour)}-${pad(part.minute)}`, scheduledAt, timezone: TIMEZONE };
 }
 
-export function scheduledDecision({ kind, eventName, now = new Date(), completions = [] }) {
+export function scheduledDecision({ kind, eventName, automatic = false, now = new Date(), completions = [] }) {
   const slot = latestScheduledSlot(kind, now);
   const completed = completions.some(record => {
     if (!['schedule', 'workflow_dispatch'].includes(record.eventName) || record.jobKey !== slot.jobKey || record.scheduleStatus !== 'completed') return false;
@@ -34,8 +35,10 @@ export function scheduledDecision({ kind, eventName, now = new Date(), completio
       return trustedScheduledMetadata(kind, { GITHUB_EVENT_NAME: record.eventName, SCHEDULED_JOB_KEY: record.jobKey, SCHEDULED_AT: record.scheduledAt }).jobKey === slot.jobKey;
     } catch { return false; }
   });
-  return { ...slot, eventName, due: eventName === 'workflow_dispatch' || (eventName === 'schedule' && !completed),
-    reason: eventName === 'workflow_dispatch' ? 'manual_diagnostic' : completed ? 'scheduled_slot_completed' : eventName === 'schedule' ? 'scheduled_slot_stale' : 'unsupported_event' };
+  const manual = eventName === 'workflow_dispatch' && !automatic;
+  const scheduled = eventName === 'schedule' || (eventName === 'workflow_dispatch' && automatic);
+  return { ...slot, eventName, due: manual || (scheduled && !completed),
+    reason: manual ? 'manual_diagnostic' : completed ? 'scheduled_slot_completed' : scheduled ? 'scheduled_slot_stale' : 'unsupported_event' };
 }
 
 // These values come from a trusted gate job, never a model artifact. A successful
@@ -43,17 +46,21 @@ export function scheduledDecision({ kind, eventName, now = new Date(), completio
 // true event name. Completion is idempotence, never evidence of an automatic trigger.
 export function trustedScheduledMetadata(kind, env = process.env) {
   const eventName = ['schedule', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME) ? env.GITHUB_EVENT_NAME : 'unknown';
-  if (!env.SCHEDULED_JOB_KEY && !env.SCHEDULED_AT) return { eventName, jobKey: null, scheduledAt: null };
+  let clock;
+  if(env.SCHEDULED_CLOCK_JSON){clock=JSON.parse(env.SCHEDULED_CLOCK_JSON);if(clock&&(eventName!=='workflow_dispatch'||!env.GITHUB_RUN_ID||!validClockProvenance(clock,{kind,runId:env.GITHUB_RUN_ID})))throw new Error('Invalid trusted clock gate metadata.');}
+  const provenance={eventName,...(clock?{clock}:{} )};
+  if (!env.SCHEDULED_JOB_KEY && !env.SCHEDULED_AT) return { ...provenance, jobKey: null, scheduledAt: null };
   const scheduledAt = new Date(env.SCHEDULED_AT);
   if (!Number.isFinite(scheduledAt.getTime()) || scheduledAt.getUTCSeconds() || scheduledAt.getUTCMilliseconds()
     || !predicate(kind)(localParts(scheduledAt))) throw new Error('Invalid trusted scheduled slot timestamp.');
   const slot = latestScheduledSlot(kind, scheduledAt);
   if (slot.jobKey !== env.SCHEDULED_JOB_KEY || slot.scheduledAt !== scheduledAt.toISOString()) throw new Error('Trusted scheduled slot ID and timestamp disagree.');
-  return { eventName, jobKey: slot.jobKey, scheduledAt: slot.scheduledAt };
+  return { ...provenance, jobKey: slot.jobKey, scheduledAt: slot.scheduledAt };
 }
 
-export async function prepareScheduledJob({ kind, root = ROOT, env = process.env, now = new Date() } = {}) {
+export async function prepareScheduledJob({ kind, root = ROOT, env = process.env, now = new Date(),apiGet } = {}) {
   if (!directories[kind]) throw new Error('Unknown scheduled job kind.');
+  const clock=await verifyClockDispatch({kind,root,env,now,apiGet});
   const directory = path.join(root, 'data', directories[kind]);
   let files = [];
   try { files = await fs.readdir(directory); } catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -64,12 +71,12 @@ export async function prepareScheduledJob({ kind, root = ROOT, env = process.env
     const record = JSON.parse(await fs.readFile(path.join(directory, file), 'utf8'));
     return kind !== 'research' || (record.id + '.json' === file && record.runId === record.id) ? record : null;
   }))).filter(Boolean);
-  const decision = scheduledDecision({ kind, eventName: env.GITHUB_EVENT_NAME || 'unknown', now, completions });
+  const decision = scheduledDecision({ kind, eventName: env.GITHUB_EVENT_NAME || 'unknown', automatic:!!clock,now, completions });
   const runId = env.RUN_ID || `${kind}-${env.GITHUB_RUN_ID || new Date(now).getTime()}-${env.GITHUB_RUN_ATTEMPT || 1}`;
   if (!validId(runId)) throw new Error('Invalid scheduled job run ID.');
-  const record = { ...decision, runId, selectedAt: new Date(now).toISOString() };
+  const record = { ...decision, runId, selectedAt: new Date(now).toISOString(),...(clock?{clock}:{} ) };
   await writeJSON(path.join(root, '.run', `scheduled-${kind}.json`), record);
-  const values = { due: String(record.due), runId, jobKey: record.jobKey, scheduledAt: record.scheduledAt, eventName: record.eventName, reason: record.reason };
+  const values = { due: String(record.due), runId, jobKey: record.jobKey, scheduledAt: record.scheduledAt, eventName: record.eventName, reason: record.reason,clock:JSON.stringify(clock) };
   if (env.GITHUB_OUTPUT) await fs.appendFile(env.GITHUB_OUTPUT, Object.entries(values).map(([key, value]) => `${key}=${value}\n`).join(''));
   console.log(JSON.stringify(values));
   return record;

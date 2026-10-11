@@ -6,20 +6,21 @@ Codex researches real autonomous AI projects, picks beginner-friendly ideas, wri
 
 ## Scope and runtime
 
-The v3 scope is **website + LinkedIn Page**. GitHub Actions runs the official `openai/codex-action` on disposable hosted runners. GitHub Pages serves the committed feed, machine and permanent post pages. The website RSS feed supplies the Zapier relay to the LinkedIn Page. Danielius connects Zapier and Claude configures the relay; this repository holds no relay credentials.
+The v3.2 scope is **website + LinkedIn Page**. GitHub Actions runs the official `openai/codex-action` on disposable hosted runners. A self-dispatching chain of 15-minute GitHub environment waits supplies the clock; cron gates remain recovery backups. Waiting jobs hold no runner. GitHub Pages serves the committed feed, machine and permanent post pages. The website RSS feed supplies the Zapier relay to the LinkedIn Page. Danielius connects Zapier and Claude configures the relay; this repository holds no relay credentials.
 
 The default model remains `gpt-6-luna`, low effort. RULES.md controls research, picking, writing, checking and daily improvement. Writers and checkers have read-only GitHub permissions and separate workspaces. A publisher with no model access repeats schema, source, content-hash and duplicate checks. One repair is allowed, followed by a fresh independent check or rejection. No SSE Riga show or demo is used or changed.
 
 ## Schedule · Europe/Vilnius
 
-- Publication slots: 08:07, 13:07 and 19:07; cheap gates at :07/:27/:47 every hour.
-- Research slots: :23 every three hours; gates at :23/:53 every hour.
-- Measurement: 21:37; gates at :13/:43 every hour.
-- Improvement: 22:13; gates at :13/:43 every hour. Invalid proposals are recorded green rejections; valid proposals undergo held-out trials and blinded grading. Adoption requires a higher score without safety or factual regressions.
+- Primary clock: one authorized chain waits 15 minutes in the `clock` environment, checks due slots, records its tick and dispatches its successor. Queue time can add delay.
+- Publication slots: 08:07, 13:07 and 19:07; backup cron gates at :07/:27/:47 every hour.
+- Research slots: :23 every three hours; backup gates at :23/:53 every hour.
+- Measurement: 21:37; backup gates at :13/:43 every hour.
+- Improvement: 22:13; backup gates at :13/:43 every hour. Invalid proposals are recorded green rejections; valid proposals undergo held-out trials and blinded grading. Adoption requires a higher score without safety or factual regressions.
 
-Skipped gates call no model, commit nothing and do not deploy. Publication catches up every unfulfilled elapsed slot of the current Vilnius day up to three posts, including launch posts. Durable per-slot reservations prevent repeats and retain partial batch results. Late GitHub starts stay visible on the machine. [Timing and guards](docs/SCHEDULER.md).
+Skipped content gates call no model, commit no work record and do not deploy. The clock retains its own immutable tick receipts and singleton state. Duplicates stop before dispatching work; cron backups can restart a chain with no tick for over 45 minutes. Publication catches up every unfulfilled elapsed slot of the current Vilnius day up to three posts, including launch posts. Durable per-slot reservations prevent repeats and retain partial batch results. The machine shows tick time, the next earliest estimated tick, and planned versus actual slot times; it marks a stale clock stalled. [Timing and guards](docs/SCHEDULER.md).
 
-Real scheduled events now exist: the 10 October 19:07 loop started at 23:01 and correctly skipped the full daily cap. This proves a trigger; checked scheduled publication is a separate proof state. The earlier one-hour trial with zero events remains an immutable historical observation. [Current verification](data/scheduler/verification-20261011-052931.json).
+Real cron events exist: the 10 October 19:07 loop started at 23:01 and correctly skipped the full daily cap. This proves a trigger; checked automatic publication is a separate proof state. Clock-origin runs keep the GitHub event `workflow_dispatch` and require exact dispatch receipts plus authoritative parent metadata to distinguish them from manual diagnostics. The earlier one-hour cron trial with zero events remains an immutable historical observation. [Verification](data/scheduler/verification-20261011-052931.json).
 
 ## LinkedIn relay
 
@@ -41,7 +42,7 @@ There are no hand-written seed posts. The cloud loop generated, independently ch
 
 ## Cost
 
-GitHub-hosted standard runners and Pages are available for public repositories without a paid hosting subscription. [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+GitHub-hosted standard runners and Pages are available for public repositories without a paid hosting subscription. Environment wait time is not billable; the short claim and tick jobs still run normally. [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [environment waits](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments#wait-timer), [Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
 Target model budget is under $0.50/day. Recorded token estimates are not invoices; missing usage stays unknown. No account, subscription or payment was created for the v3 relay. [Calculation and rates](docs/COSTS.md).
 
@@ -56,4 +57,4 @@ Standard-rate token estimates, not invoices. Unreported billing adjustments rema
 
 <!-- MODEL_COSTS_END -->
 
-The [W3 backup](docs/BACKUP.md) is configured for Monday 12 October at 19:31 Vilnius, subject to real unattended-run and accepted-improvement evidence. W1 remains incomplete until a real scheduled loop publishes a checked post.
+The [W3 backup](docs/BACKUP.md) is configured for Monday 12 October at 19:31 Vilnius, subject to real unattended-run and accepted-improvement evidence. W1 remains incomplete until a checked post has verified automatic clock or cron provenance.

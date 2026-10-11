@@ -58,6 +58,6 @@ export function currentDaySlots(data={},now=new Date()){
         state=receipt.state||receipt.status;reason=receipt.reason;
       }
     }
-    return slotPresentation({...receipt,...slot,plannedAt:slot.scheduledAt,state,status:state,reason,actualAt,attemptedAt,postId:post?.id||receipt.postId||null,runId:post?.runId||attempt?.id||receipt.runId||null,eventName:post?.eventName||post?.scheduling?.eventName||attempt?.eventName||receipt.eventName||null,githubRunUrl:post?.githubRunUrl||attempt?.githubRunUrl||receipt.githubRunUrl||null},clock);
+    return slotPresentation({...receipt,...slot,plannedAt:slot.scheduledAt,state,status:state,reason,actualAt,attemptedAt,postId:post?.id||receipt.postId||null,runId:post?.runId||attempt?.id||receipt.runId||null,eventName:post?.eventName||post?.scheduling?.eventName||attempt?.eventName||receipt.eventName||null,githubRunUrl:post?.githubRunUrl||attempt?.githubRunUrl||receipt.githubRunUrl||null,clock:post?.clock||post?.scheduling?.clock||attempt?.clock||attempt?.scheduling?.clock||receipt.clock||null},clock);
   });
 }

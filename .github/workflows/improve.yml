@@ -6,6 +6,19 @@ on:
     - cron: '13,43 * * * *'
       timezone: Europe/Vilnius
   workflow_dispatch:
+    inputs:
+      clock_tick_run_id:
+        description: Trusted hosted clock parent run, verified against its receipt
+        type: string
+        default: ''
+      clock_dispatch_id:
+        description: Exact dispatch receipt identifier
+        type: string
+        default: ''
+      clock_parent_attempt:
+        description: Hosted clock parent attempt
+        type: string
+        default: ''
 permissions:
   contents: read
 concurrency:
@@ -15,22 +28,38 @@ concurrency:
 jobs:
   gate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
     outputs:
       due: ${{ steps.gate.outputs.due }}
       run_id: ${{ steps.gate.outputs.runId }}
       job_key: ${{ steps.gate.outputs.jobKey }}
       scheduled_at: ${{ steps.gate.outputs.scheduledAt }}
+      clock: ${{ steps.gate.outputs.clock }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           ref: main
-          persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24'
-      - run: npm ci --ignore-scripts
+      - name: Keep one hosted clock chain alive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/ensure-clock.mjs
       - id: gate
-        run: node scripts/prepare-improvement.mjs gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOCK_TICK_RUN_ID: ${{ inputs.clock_tick_run_id || '' }}
+          CLOCK_DISPATCH_ID: ${{ inputs.clock_dispatch_id || '' }}
+          CLOCK_PARENT_ATTEMPT: ${{ inputs.clock_parent_attempt || '' }}
+        run: node scripts/prepare-scheduled-job.mjs improve
   seed:
     needs: gate
     if: needs.gate.outputs.due == 'true'
@@ -43,6 +72,7 @@ jobs:
       RUN_ID: ${{ needs.gate.outputs.run_id }}
       SCHEDULED_JOB_KEY: ${{ needs.gate.outputs.job_key }}
       SCHEDULED_AT: ${{ needs.gate.outputs.scheduled_at }}
+      SCHEDULED_CLOCK_JSON: ${{ needs.gate.outputs.clock }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -309,6 +339,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       SCHEDULED_JOB_KEY: ${{ needs.gate.outputs.job_key }}
       SCHEDULED_AT: ${{ needs.gate.outputs.scheduled_at }}
+      SCHEDULED_CLOCK_JSON: ${{ needs.gate.outputs.clock }}
       EXPECTED_INPUT_SHA256: ${{ needs.seed.outputs.input_sha256 }}
       EXPECTED_RESEARCH_SHA256: ${{ needs.seed.outputs.research_sha256 }}
       IMPROVEMENT_STAGE_RESULTS: ${{ toJSON(needs) }}

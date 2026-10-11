@@ -300,6 +300,6 @@ test('model jobs receive only their assigned isolated artifacts and skip Git che
   assert.match(validation, /name:\s*improvement-validation/);
   assert.doesNotMatch(validation, /uses:\s*openai\/codex-action@/);
   assert.match(job('commit'), /node scripts\/prepare-improvement\.mjs import "\$RUN_ID" \.staging\/validation validation/);
-  assert.match(job('gate'), /node scripts\/prepare-improvement\.mjs gate/);
+  assert.match(job('gate'), /node scripts\/prepare-scheduled-job\.mjs improve/);
   assert.match(workflow, /cron: '13,43 \* \* \* \*'/);
 });
