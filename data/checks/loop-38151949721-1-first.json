@@ -1,0 +1,88 @@
+{
+  "runId": "loop-38151949721-1",
+  "draftSha256": "f69f50d513e2b4bb5e4d399a4e1f960db6cf26f7b329d552e7504950f3677fe9",
+  "sourceSnapshotSha256": "de6377efc9eb3a0ffaf8eeeefd1496c3711cf41e43aecc47b79c07dc096717f6",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "d3612ff459da8b570925d705",
+      "pass": false,
+      "reasons": [
+        "Writer scores feasibility 7, autonomy 7 and evidence 7, exceeding independently supported maxima of 6; the fresh source is one attributed example and does not establish a repeatable student implementation or reliable ongoing operation."
+      ],
+      "claimChecks": [
+        {
+          "claim": "Simon Willison asked an assistant to clone the actions/python-versions repository and check it hourly until stable 3.15 appeared, then notify him.",
+          "supported": true,
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "Clone https://github.com/actions/python-versions and git pull once an hour until they add the stable 3.15 - then tell me about it"
+        },
+        {
+          "claim": "The post reports that Python 3.15.0 had landed in actions/python-versions.",
+          "supported": true,
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "Python 3.15.0 added to actions/python-versions"
+        },
+        {
+          "claim": "The post says Python 3.15 could then be added to a GitHub Actions testing matrix.",
+          "supported": true,
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "you can add \"3.15\" to a GitHub Actions testing matrix to run tests against the new Python 3.15.0 release"
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "The source gives a one-repository polling example, but no beginner setup or accessible scheduling instructions to support a higher ease score.",
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "Clone https://github.com/actions/python-versions and git pull once an hour"
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "Only a hypothetical buyer can be proposed: the source shows one author's monitoring use and provides no demand or willingness-to-pay evidence.",
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "I've been waiting for this for a couple of days"
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A bounded repository check is a plausible small experiment, but the source omits implementation details needed to justify 7 or above.",
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "git pull once an hour until they add the stable 3.15"
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The account describes a requested recurring check and notification; it does not establish that the complete loop ran reliably without human involvement.",
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "check for it: Clone https://github.com/actions/python-versions and git pull once an hour"
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "This is a specific first-party report of a detected release, suitable for real-use evidence at 6, but it is one unverified account.",
+          "sourceId": "d3612ff459da8b570925d705",
+          "evidenceQuote": "Now that this has landed, you can add \"3.15\" to a GitHub Actions testing matrix"
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "Assessed the sole proposed post against its attached fresh public source and passing deterministic gate; three writer scores exceed the evidence-supported maxima.",
+    "contextSha256": "2a68b3e744f6ea7a6f5a9a003d6f1a0d1ccfd5ce7b566e06ebe2541f3e5c79ab",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "f69f50d513e2b4bb5e4d399a4e1f960db6cf26f7b329d552e7504950f3677fe9",
+    "sourceSnapshotSha256": "de6377efc9eb3a0ffaf8eeeefd1496c3711cf41e43aecc47b79c07dc096717f6",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
