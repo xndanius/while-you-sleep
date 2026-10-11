@@ -5,7 +5,8 @@ import { ROOT, validId, sha256, stableJSON, writeJSON } from '../lib/storage.mjs
 import { loopDecision, slotOutcome, reservationSlotIds } from '../lib/loop-schedule.mjs';
 import { githubApiGet } from '../lib/usage.mjs';
 import { verifyClockDispatch } from '../lib/clock-provenance.mjs';
-import {DEFAULT_CADENCE_CONFIG} from '../public/cadence-config.js';
+import {DEFAULT_CADENCE_CONFIG,cadenceAt} from '../public/cadence-config.js';
+import {readRelayStatus,relayPublicationReady} from '../lib/relay.mjs';
 
 async function records(root,directory) {
   const dir=path.join(root,'data',directory);let names;
@@ -36,7 +37,11 @@ export async function prepareLoop({ root=ROOT,env=process.env,now=new Date(),api
     const outcome=slotOutcome(reservation,recoveredRun,{settledByRunId:runId,now:Number.isFinite(Date.parse(source.updated_at))?new Date(source.updated_at):now,posts});
     recovered.push(outcome);outcomes.push(outcome);
   }
-  const record=needsRecovery?loopDecision(input):preliminary;
+  let record=needsRecovery?loopDecision(input):preliminary;
+  if(record.decision==='run'&&env.GITHUB_ACTIONS==='true'&&cadenceAt(now,cadence)==='hourly'){
+    let relay;try{relay=await readRelayStatus(root);}catch{}
+    if(!relayPublicationReady(relay))record={...record,decision:'skip',reason:'awaiting_confirmed_best_feed_switch',targetCount:0};
+  }
   const schedulingSha256=sha256(stableJSON(record));
   if(record.decision==='run'){
     for(const outcome of recovered)await writeJSON(path.join(root,'data','slot-outcomes',outcome.id+'.json'),outcome,{immutable:true});

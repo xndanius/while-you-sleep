@@ -1,5 +1,6 @@
-// This is the single browser/server activation boundary. Change to hourly only
-// after a human confirms the LinkedIn relay reads best.xml.
+// Frozen scheduling activation metadata: relayConfirmedAt records the approval
+// reported at activation. Corrections and actual current readiness are recorded
+// in data/relay/status.json and checked separately by the hosted publication gate.
 export const LEGACY_CADENCE_CONFIG = Object.freeze({schema:1,mode:'legacy',activatedAt:null,relayConfirmedAt:null});
 export const DEFAULT_CADENCE_CONFIG = Object.freeze({"schema":1,"mode":"hourly","activatedAt":"2026-10-11T12:15:05.785Z","relayConfirmedAt":"2026-10-11T12:10:58.834Z"});
 export const MAX_PUBLICATION_BATCH_SIZE = 6;
