@@ -76,7 +76,7 @@ export async function prepareScheduledJob({ kind, root = ROOT, env = process.env
   if (!validId(runId)) throw new Error('Invalid scheduled job run ID.');
   const record = { ...decision, runId, selectedAt: new Date(now).toISOString(),...(clock?{clock}:{} ) };
   await writeJSON(path.join(root, '.run', `scheduled-${kind}.json`), record);
-  const values = { due: String(record.due), runId, jobKey: record.jobKey, scheduledAt: record.scheduledAt, eventName: record.eventName, reason: record.reason,clock:JSON.stringify(clock) };
+  const values = { due: String(record.due), runId, jobKey: record.jobKey, scheduledAt: record.scheduledAt, eventName: record.eventName, reason: record.reason,clock:JSON.stringify(clock),clock_verified:String(clock?.verified===true) };
   if (env.GITHUB_OUTPUT) await fs.appendFile(env.GITHUB_OUTPUT, Object.entries(values).map(([key, value]) => `${key}=${value}\n`).join(''));
   console.log(JSON.stringify(values));
   return record;

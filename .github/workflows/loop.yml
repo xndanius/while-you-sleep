@@ -46,6 +46,7 @@ jobs:
       run_models: ${{ steps.slot.outputs.run_models }}
       target_count: ${{ steps.slot.outputs.target_count }}
       scheduling_sha256: ${{ steps.slot.outputs.scheduling_sha256 }}
+      clock_verified: ${{ steps.slot.outputs.clock_verified }}
       repo_sha: ${{ steps.commit.outputs.repo_sha }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -113,6 +114,7 @@ jobs:
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
           permission-profile: ':workspace'
           safety-strategy: drop-sudo
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
@@ -161,6 +163,7 @@ jobs:
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
           permission-profile: ':workspace'
           safety-strategy: drop-sudo
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
@@ -206,6 +209,7 @@ jobs:
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
           permission-profile: ':workspace'
           safety-strategy: drop-sudo
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
@@ -256,6 +260,7 @@ jobs:
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
           permission-profile: ':workspace'
           safety-strategy: drop-sudo
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}

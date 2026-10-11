@@ -43,7 +43,7 @@ export async function prepareLoop({ root=ROOT,env=process.env,now=new Date(),api
     // No repository records, commits, models or deployment on a cheap skip.
     await writeJSON(path.join(root,'.run','loop-gate.json'),record);
   }
-  const values={run_models:String(record.decision==='run'),target_count:String(record.targetCount),scheduling_sha256:schedulingSha256,slot_id:record.slotId,decision:record.decision,reason:record.reason};
+  const values={run_models:String(record.decision==='run'),target_count:String(record.targetCount),scheduling_sha256:schedulingSha256,slot_id:record.slotId,decision:record.decision,reason:record.reason,clock_verified:String(record.clock?.verified===true)};
   if(env.GITHUB_OUTPUT)await fs.appendFile(env.GITHUB_OUTPUT,Object.entries(values).map(([key,value])=>`${key}=${value}\n`).join(''));
   console.log(JSON.stringify(values));return record;
 }

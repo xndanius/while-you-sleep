@@ -44,11 +44,13 @@ test('clock inputs alone never prove automation; exact receipt and authoritative
 
 test('clock-launched auxiliary gates retain workflow_dispatch and suppress completed work instead of forcing diagnostics',async t=>{
   const {env,receipt,parent}=fixtures('research'),root=await fixtureRoot(t,receipt);
+  env.GITHUB_OUTPUT=path.join(root,'verified-auxiliary-output');
   const slot=latestScheduledSlot('research',now),completion={id:'research-333-1',runId:'research-333-1',...slot,eventName:'workflow_dispatch',scheduleStatus:'completed'};
   await mkdir(path.join(root,'data','research'),{recursive:true});await writeFile(path.join(root,'data','research',completion.id+'.json'),JSON.stringify(completion));
   const result=await prepareScheduledJob({kind:'research',root,env,now,apiGet:async()=>JSON.stringify(parent)});
   assert.equal(result.due,false);assert.equal(result.reason,'scheduled_slot_completed');assert.equal(result.eventName,'workflow_dispatch');
   assert.equal(result.clock.runId,'222');assert.equal(result.clock.workflow,'research.yml');
+  assert.match(await readFile(env.GITHUB_OUTPUT,'utf8'),/clock_verified=true\n/);
   assert.deepEqual(JSON.parse(await readFile(path.join(root,'data','research',completion.id+'.json'),'utf8')),completion);
   const metadata=trustedScheduledMetadata('research',{...env,SCHEDULED_JOB_KEY:result.jobKey,SCHEDULED_AT:result.scheduledAt,SCHEDULED_CLOCK_JSON:JSON.stringify(result.clock)});
   assert.equal(metadata.eventName,'workflow_dispatch');assert.deepEqual(metadata.clock,result.clock);
@@ -59,14 +61,28 @@ test('clock-launched auxiliary gates retain workflow_dispatch and suppress compl
 
 test('verified clock publication gates preserve ordinary cap and duplicate guards and never bootstrap',async t=>{
   const {env,receipt,parent}=fixtures(),root=await fixtureRoot(t,receipt);
+  env.GITHUB_OUTPUT=path.join(root,'verified-loop-output');
   const gate=await prepareLoop({root,env:{...env,BOOTSTRAP:'true'},now,apiGet:async()=>JSON.stringify(parent)});
   assert.equal(gate.eventName,'workflow_dispatch');assert.equal(gate.bootstrap,false);assert.equal(gate.targetCount,1);
   assert.equal(gate.clock.source,CLOCK_SOURCE);assert.equal(gate.slotId,'publish-2026-10-11-08-07');
+  assert.match(await readFile(env.GITHUB_OUTPUT,'utf8'),/clock_verified=true\n/);
   await mkdir(path.join(root,'data','posts'),{recursive:true});
   await writeFile(path.join(root,'data','posts','published.json'),JSON.stringify({id:'published',publishedAt:'2026-10-11T05:17:00Z',scheduling:{slotId:gate.slotId}}));
   const repeated=await prepareLoop({root,env,now,apiGet:async()=>JSON.stringify(parent)});
   assert.equal(repeated.decision,'skip');assert.equal(repeated.reason,'slot_already_published');
   assert.equal(repeated.eventName,'workflow_dispatch');
+});
+
+test('ordinary manual diagnostics never gain bot access from a claimed clock flag',async t=>{
+  const {env,receipt}=fixtures(),root=await fixtureRoot(t,receipt);
+  const manual={...env,CLOCK_TICK_RUN_ID:'',CLOCK_PARENT_ATTEMPT:'',CLOCK_DISPATCH_ID:'',CLOCK_VERIFIED:'true',GITHUB_OUTPUT:path.join(root,'manual-loop-output')};
+  const result=await prepareLoop({root,env:manual,now,apiGet:async()=>{throw new Error('A manual gate must not verify a claimed bot flag.');}});
+  assert.equal(result.clock,undefined);assert.equal(result.eventName,'workflow_dispatch');
+  assert.match(await readFile(manual.GITHUB_OUTPUT,'utf8'),/clock_verified=false\n/);
+  const auxiliary={...manual,RUN_ID:'improve-222-1',GITHUB_OUTPUT:path.join(root,'manual-auxiliary-output')};
+  const diagnostic=await prepareScheduledJob({kind:'improve',root,env:auxiliary,now});
+  assert.equal(diagnostic.reason,'manual_diagnostic');assert.equal(diagnostic.clock,undefined);
+  assert.match(await readFile(auxiliary.GITHUB_OUTPUT,'utf8'),/clock_verified=false\n/);
 });
 
 test('clock publication proof requires its trusted loop and exact clock receipt without claiming a schedule event',async t=>{
@@ -100,10 +116,18 @@ test('clock backup writes are confined to trusted workflow gates and never model
   for(const [workflow,names] of [[loop,['writer','checker','repair','final_check']],[improve,['propose','trials','grade']]]) {
     assert.match(workflow,/^permissions:\n  contents: read\n/m);
     for(const name of names) {
-      assert.doesNotMatch(job(workflow,name),/actions: write|GH_TOKEN:/);
+      const text=job(workflow,name);
+      assert.doesNotMatch(text,/actions: write|GH_TOKEN:|contents: write/);
+      assert.match(text,/needs: (?:gate|\[gate,)/,'every model job must consume the trusted gate directly');
+      assert.match(text,/allow-bot-users: \$\{\{ needs\.gate\.outputs\.clock_verified == 'true' && 'github-actions\[bot\]' \|\| '' \}\}/);
+      assert.equal((text.match(/allow-bot-users:/g)||[]).length,1,'only the explicit trusted bot is allowed');
+      assert.doesNotMatch(text,/allow-bots:|allow-users:/,'no broad bot or user override');
+      assert.match(text,/safety-strategy: drop-sudo/);
+      assert.match(text,/permission-profile: ':workspace'/);
     }
     assert.match(job(workflow,'gate'),/actions: write/);
     assert.match(job(workflow,'gate'),/group: while-you-sleep-record/);
+    assert.match(job(workflow,'gate'),/clock_verified: \$\{\{ steps\.(?:slot|gate)\.outputs\.clock_verified \}\}/);
   }
   for(const name of ['research','measure']) {
     const workflow=await read(name);

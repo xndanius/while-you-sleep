@@ -41,6 +41,7 @@ jobs:
       job_key: ${{ steps.gate.outputs.jobKey }}
       scheduled_at: ${{ steps.gate.outputs.scheduledAt }}
       clock: ${{ steps.gate.outputs.clock }}
+      clock_verified: ${{ steps.gate.outputs.clock_verified }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -116,6 +117,7 @@ jobs:
       - uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
           prompt-file: ${{ github.workspace }}/.run/proposer/PROMPT.md
           working-directory: ${{ github.workspace }}/.run/proposer
           permission-profile: ':workspace'
@@ -234,6 +236,7 @@ jobs:
       - uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
           prompt-file: ${{ github.workspace }}/.run/trial/PROMPT.md
           working-directory: ${{ github.workspace }}/.run/trial
           permission-profile: ':workspace'
@@ -298,7 +301,7 @@ jobs:
             data/improvements/${{ env.RUN_ID }}-labels.json
             data/improvements/${{ env.RUN_ID }}-blind.json
   grade:
-    needs: blind
+    needs: [gate, blind]
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -309,6 +312,7 @@ jobs:
       - uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
           prompt-file: ${{ github.workspace }}/.run/blind/PROMPT.md
           working-directory: ${{ github.workspace }}/.run/blind
           permission-profile: ':workspace'
