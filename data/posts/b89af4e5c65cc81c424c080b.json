@@ -1,0 +1,131 @@
+{
+  "id": "b89af4e5c65cc81c424c080b",
+  "candidateId": "b89af4e5c65cc81c424c080b",
+  "title": "Track GPU prices and specs in one view",
+  "promise": "Collect a small set of public GPU prices and compare them with published specifications.",
+  "whatItIs": "Flopper is a GPU hardware explorer. Its maker says it combines GPU specifications, workload estimates, and prices from dozens of providers. The maker also notes that reliable quotes for some large systems are difficult to obtain, so listings are not complete procurement quotes. A student version could track a few consumer GPUs and public provider pages, showing dated prices beside basic specifications. Small AI teams or hardware shoppers might pay for such a comparison, but this customer and willingness to pay are hypotheses. The automated part is checking selected pages and recording changes. A person should confirm the exact model, configuration, availability, and final price before relying on a listing.",
+  "whoPays": "Hypothesis: small AI teams or individuals comparing hardware may pay for a focused price and specification tracker; the source establishes no customers or revenue.",
+  "loop": [
+    "Keep a manually reviewed list of GPU models and public provider pages.",
+    "Fetch the selected pages on a schedule and extract visible price and configuration text.",
+    "Store each observation with its URL and timestamp.",
+    "Compare new observations with prior ones and flag changes or missing prices.",
+    "Show a comparison with the published hardware specifications.",
+    "Have a person verify configuration, availability, and quote details before purchase."
+  ],
+  "evidence": "The maker says Flopper compares GPU specifications and workload estimates and recently added pricing from dozens of providers. The maker says reliable quotes for some large systems are difficult. These are attributed claims; this source does not independently test accuracy or establish adoption.",
+  "uncertainty": "The snapshot gives no independent accuracy results, customer numbers, or revenue. Provider pages can change or omit configuration details, making prices incomparable. A student version should track only a few public listings with timestamps; people must confirm details before purchase. Proposed buyers and willingness to pay remain hypotheses.",
+  "first24Hours": [
+    "Choose three consumer GPU models and identify a few public pages that show a price and configuration.",
+    "Record each page's URL, displayed model, price, and observation time in a simple table.",
+    "Build a one-page comparison and manually verify whether each price refers to the intended GPU configuration."
+  ],
+  "productUrl": "https://flopper.io/",
+  "publishedAt": "2026-10-11T10:20:06.032Z",
+  "version": "rules-e72bb9f59242",
+  "rulesSha256": "e72bb9f5924298df86fc8817dfdc193cd12853784124dacce676b370e48bc53b",
+  "rulesCommit": "8068f150f9bb7f66f9548217f3d9319bffd60cd3",
+  "origin": "github-actions-codex-loop",
+  "runId": "loop-38131420022-1",
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38131420022",
+  "sources": [
+    {
+      "id": "e2fa4aa7ef0dd836deaac7fb",
+      "title": "Show HN: Flopper is a hardware explorer for AI infrastructure and beyond",
+      "url": "https://news.ycombinator.com/item?id=50035826",
+      "publisher": "Hacker News · automation",
+      "fetchedAt": "2026-10-11T10:19:11.279Z",
+      "verifiedAt": "2026-10-11T10:19:11.279Z"
+    }
+  ],
+  "imageUrl": "./cards/b89af4e5c65cc81c424c080b.jpg",
+  "checker": {
+    "passed": true,
+    "checkedAt": "2026-10-11T10:19:11.374Z",
+    "checkerRunId": "loop-38131420022-1-independent-check",
+    "draftSha256": "4e9117b363b4553cc6b26b22f7406719621991821e3ce0259d4e675e87e2fd3a",
+    "sourceSnapshotSha256": "a574d99e2c7326eddfb192a6f1fe81eb519ff9c27ecfae84a2fc845029e041d2",
+    "claimChecks": [
+      {
+        "claim": "The maker says Flopper compares GPU specifications, including TDP and compute throughput.",
+        "supported": true,
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "Flopper lets you compare GPU specs, including TDP and compute throughput"
+      },
+      {
+        "claim": "The maker says Flopper recently added pricing from dozens of providers to track price changes over time.",
+        "supported": true,
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "I recently added pricing data from dozens of providers to help track how prices change over time."
+      },
+      {
+        "claim": "The maker says reliable quotes for some large systems are difficult to obtain.",
+        "supported": true,
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "Getting reliable quotes for systems like the NVL72 is still particularly difficult"
+      }
+    ]
+  },
+  "eventName": "workflow_dispatch",
+  "publicUrl": "https://xndanius.github.io/while-you-sleep/p/b89af4e5c65cc81c424c080b/",
+  "scheduling": {
+    "id": "loop-38131420022-1",
+    "runId": "loop-38131420022-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "38131420022",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38131420022",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-38130461675-1",
+      "clockRunId": "38130461675",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38130461675",
+      "dispatchId": "clock-38130461675-1-loop",
+      "runId": "38131420022",
+      "workflow": "loop.yml",
+      "tickedAt": "2026-10-11T10:17:25.983Z",
+      "requestedAt": "2026-10-11T10:17:25.983Z",
+      "verifiedAt": "2026-10-11T10:17:37.558Z",
+      "parentHeadSha": "51306046c2c41903f19485f25b9cb1ded0e62f11"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-11-13-07",
+    "scheduledAt": "2026-10-11T10:07:00.000Z",
+    "localDate": "2026-10-11",
+    "localTime": "13:07",
+    "requestedAt": "2026-10-11T10:17:37.558Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "dailyCap": 3,
+    "dailyCount": 1,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-11-13-07",
+        "scheduledAt": "2026-10-11T10:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "13:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-11-13-07",
+        "scheduledAt": "2026-10-11T10:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "13:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-11-13-07"
+    ],
+    "reservationId": "loop-38131420022-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot",
+    "batchSlotId": "publish-2026-10-11-13-07"
+  },
+  "contentSha256": "c8eb9de6fdf8fd53dcd5de5e6eda830ba8cc479b3810e603e95dc93b6ba38e0b"
+}
