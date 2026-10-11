@@ -1,0 +1,70 @@
+{
+  "runId": "loop-38163159638-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-11T18:20:25Z",
+  "candidates": [
+    {
+      "title": "SelfBench repository agent benchmarks",
+      "productUrl": "https://github.com/mupt-ai/self-bench",
+      "sourceIds": [
+        "9d24f51ff8767e75d5350bc5",
+        "85c36091d9395f17a992933d",
+        "9fd4d9300ad80cb040070291"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A one-repository prototype can follow the documented web workflow, though it needs GitHub, agents, and sandbox setup.",
+            "sourceIds": [
+              "85c36091d9395f17a992933d"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: engineering teams may pay for repository-specific comparisons; the sources show no validated demand or revenue.",
+            "sourceIds": [
+              "85c36091d9395f17a992933d"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A manually bounded demo is conceivable, but task validation, agent runs, and a safe sandbox are substantial two-week work.",
+            "sourceIds": [
+              "85c36091d9395f17a992933d"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "Batch generation continues after closing the page, while people approve tasks and select runs.",
+            "sourceIds": [
+              "85c36091d9395f17a992933d"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "First-party documentation describes the app workflow and public leaderboards, without verified independent use or outcomes.",
+            "sourceIds": [
+              "85c36091d9395f17a992933d"
+            ]
+          }
+        }
+      },
+      "reason": "Fresh checker feedback caps feasibility at 5 and evidence at 6; with the other supported ratings the unrounded mean is 5.6, below the threshold of 6."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "SelfBench repository agent benchmarks",
+      "productUrl": "https://github.com/mupt-ai/self-bench",
+      "reason": "The repair-adjusted ratings are ease 6, profit 5, feasibility 5, autonomy 6, and evidence 6: mean 5.6, below threshold 6. The first-party docs establish a product workflow but not independent customer use; a safe sandbox and task validation make a beginner two-week build too substantial for a qualifying feasibility score."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Reassessed the sole repair candidate against the fresh checker feedback. Its supported feasibility and evidence ceilings produce a mean below policy threshold, so no post is proposed."
+    }
+  ]
+}
