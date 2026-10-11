@@ -68,8 +68,8 @@ import {slotPresentation,currentDaySlots} from './slot-display.js';
     const cadence=loopTiming(data.status?.lastLoopAt||latestLoop?.startedAt);
     $('next-published').textContent=formatDate(cadence.nextPublicationAt);
     const slots=currentDaySlots(data);
-    const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1);
-    $('loop-slot-state').textContent=latest?`${latest.state==='cap_reached'?'Daily cap reached':human(latest.state)} · ${shortTime(latest.plannedAt)}${latest.actualAt?` · published ${shortTime(latest.actualAt)}`:''}`:`${cadence.slotState==='recorded'?'Attempt recorded':cadence.slotState==='waiting'?'Waiting':cadence.slotState==='late'?'Late':'Missed'} · ${shortTime(cadence.latestSlotAt)}`;
+    const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1)||slots[0];
+    $('loop-slot-state').textContent=latest?`${latest.state==='cap_reached'?'Daily cap reached':latest.state==='scheduled'?'Upcoming':human(latest.state)} · ${shortTime(latest.plannedAt)}${latest.actualAt?` · published ${shortTime(latest.actualAt)}`:''}`:'No slot recorded';
     renderPublicationSlots(slots);
   }
 
