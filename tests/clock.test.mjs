@@ -174,3 +174,17 @@ test('natural parent completion during cancellation permits safe replacement onl
   },commit:async()=>{}});
  assert.equal(result.restarted,true);assert.equal(parentReads,2);assert.ok(mutations.at(-1).endsWith('/clock.yml/dispatches'));
 });
+
+test('pending and requested singleton children recover their active parent just like queued children',async t=>{
+ for(const childStatus of ['pending','requested']){
+  const {root}=await blockedClockFixture(t);const cancelled=[];
+  const result=await ensureClock({root,env:{...env,GITHUB_RUN_ID:'900'},now:new Date('2026-10-11T06:00:00Z'),api:async(endpoint,options)=>{
+    if(options.method==='POST'){
+     if(endpoint.endsWith('/cancel')){cancelled.push(endpoint);return null;}
+     return fakeDispatch(300);
+    }
+    return endpoint.endsWith('/runs/200')?source(200,childStatus):source(100,'in_progress');
+   },commit:async()=>{}});
+  assert.equal(result.restarted,true);assert.deepEqual(cancelled.map(endpoint=>endpoint.match(/runs\/(\d+)\/cancel$/)[1]),['200','100']);
+ }
+});

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { publicationSlotStatus } from '../lib/slot-status.mjs';
+import { currentDaySlots } from '../public/slot-display.js';
 
 const now = new Date('2026-10-11T17:00:00Z');
 const slots = ['08','13','19'].map(hour=>`publish-2026-10-11-${hour}-07`);
@@ -44,4 +45,6 @@ test('slot rows preserve verified clock origins without making dispatch attempts
   assert.equal(untrusted[0].clock,null,'An input-like clock label cannot survive as verified metadata.');
   const manualPost=publicationSlotStatus({posts:[{...posts[0],scheduling:{slotId:slots[0]}}],runs:[run],now});
   assert.equal(manualPost[0].clock,null,'A later clock attempt cannot replace a published post’s own origin.');
+  const browserRows=currentDaySlots({posts:[{...posts[0],scheduling:{slotId:slots[0]}}],runs:[run],schedule:{slots:manualPost}},now);
+  assert.equal(browserRows[0].clock,null,'The browser also retains the published post’s original provenance.');
 });

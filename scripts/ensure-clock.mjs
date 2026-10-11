@@ -18,7 +18,7 @@ export async function ensureClock({root=ROOT,env=process.env,now=new Date(),api=
   const live=clockLiveness(state,sourceRun,now);
   if(live.alive){console.log(JSON.stringify({restarted:false,reason:live.reason}));return {restarted:false,reason:live.reason};}
   let blockingParent=null;
-  if(state?.parentRunId && sourceRun?.status==='queued'){
+  if(state?.parentRunId && ['queued','pending','requested'].includes(sourceRun?.status)){
     const receipt=await readJSON(path.join(root,'data','clock','ticks',clockTickId(state.parentRunId,state.parentRunAttempt)+'.json'));
     if(receipt.id!==clockTickId(state.parentRunId,state.parentRunAttempt) || receipt.kind!=='clock-tick' || receipt.chainId!==state.chainId || receipt.githubRunId!==String(state.parentRunId) || receipt.githubRunAttempt!==state.parentRunAttempt || receipt.child?.runId!==String(state.expectedRunId) || receipt.child?.githubRunUrl!==clockRunURL(state.expectedRunId) || receipt.child?.generation!==state.generation)throw new Error('Clock backup parent is not bound to its expected child.');
     const parent=await api(`repos/${CLOCK_REPOSITORY}/actions/runs/${state.parentRunId}`,{env});
