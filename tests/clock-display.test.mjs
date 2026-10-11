@@ -18,6 +18,12 @@ test('only trusted clock verifier output distinguishes clock dispatches while ke
   const run={eventName:'workflow_dispatch',triggerEvent:'schedule',clock_origin:'yes'};
   assert.equal(runTriggerLabel(run),'Manual dispatch · workflow_dispatch');
   assert.equal(runTriggerLabel({...run,clock:{source:'github-environment-clock',verified:false}}),'Manual dispatch · workflow_dispatch');
-  assert.equal(runTriggerLabel({...run,clock:{source:'github-environment-clock',verified:true}}),'Hosted clock dispatch · workflow_dispatch');
+  assert.equal(runTriggerLabel({...run,clock:{source:'github-environment-clock',verified:true}}),'Manual dispatch · workflow_dispatch');
+  const verified={...run,id:'loop-123-1',githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/123',clock:{source:'github-environment-clock',verified:true,workflow:'loop.yml',runId:'123'}};
+  assert.equal(runTriggerLabel(verified),'Hosted clock dispatch · workflow_dispatch');
+  assert.equal(runTriggerLabel({...verified,clock:{...verified.clock,runAttempt:1,actor:'github-actions[bot]',triggeringActor:'github-actions[bot]'}}),'Hosted clock dispatch · workflow_dispatch');
+  assert.equal(runTriggerLabel({...verified,id:'loop-123-2'}),'Manual rerun · original workflow_dispatch');
+  assert.equal(runTriggerLabel({...verified,clock:{...verified.clock,actor:'owner'}}),'Manual dispatch · workflow_dispatch');
+  assert.equal(runTriggerLabel({...verified,githubRunUrl:'https://github.com/other/repo/actions/runs/123'}),'Manual dispatch · workflow_dispatch');
   assert.equal(runTriggerLabel({eventName:'schedule'}),'GitHub cron · schedule');
 });

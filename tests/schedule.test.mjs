@@ -61,7 +61,7 @@ test('scheduler trigger, loop execution and checked publication remain separate 
   const url='https://github.com/xndanius/while-you-sleep/actions/runs/123';
   const probe={kind:'probe',eventName:'schedule',createdAt:'2026-10-10T13:03:00Z',githubRunUrl:url};
   assert.equal(schedulerProof([probe]).state,'trigger_observed');
-  const run={id:'loop-scheduled',type:'loop',eventName:'schedule',startedAt:'2026-10-10T13:07:00Z',githubRunUrl:url,published:[]};
+  const run={id:'loop-123-1',type:'loop',eventName:'schedule',startedAt:'2026-10-10T13:07:00Z',githubRunUrl:url,published:[]};
   assert.equal(schedulerProof([probe],[run]).state,'loop_observed');
   run.published=['post'];
   const post={id:'post',runId:run.id,publishedAt:'2026-10-10T13:10:00Z',githubRunUrl:url,scheduling:{event:'schedule'}};
@@ -81,6 +81,23 @@ test('scheduled publication requires matching trusted loop identity, URL and pub
   const gate={...run,modelExecuted:false};
   assert.equal(schedulerProof([],[gate],[post]).state,'trigger_observed','a gate audit proves only the trigger');
   assert.equal(schedulerProof([],[gate],[post]).lastScheduledLoopAt,null);
+});
+
+test('cron reruns retain trigger evidence but cannot prove automatic execution or publication',()=>{
+  const url='https://github.com/xndanius/while-you-sleep/actions/runs/123';
+  const run={id:'loop-123-1',type:'loop',eventName:'schedule',modelExecuted:true,startedAt:'2026-10-10T13:07:00Z',githubRunUrl:url,published:['post']};
+  const post={id:'post',runId:run.id,publishedAt:'2026-10-10T13:10:00Z',githubRunUrl:url};
+  for(const changed of [{...run,id:'loop-123-2'},{...run,id:'loop-124-1'},
+    {...run,runId:'loop-123-2'},{...run,runAttempt:2},{...run,githubRunAttempt:2}]) {
+    const proof=schedulerProof([],[changed],[{...post,runId:changed.id}]);
+    assert.equal(proof.state,'trigger_observed');assert.equal(proof.scheduledRunCount,1);
+    assert.equal(proof.automaticRunCount,0);assert.equal(proof.lastAutomaticLoopAt,null);
+    assert.equal(proof.lastScheduledLoopAt,null);assert.equal(proof.lastScheduledPublicationAt,null);
+    assert.equal(proof.lastAutomaticPublicationAt,null);
+  }
+  const proof=schedulerProof([],[run,{...run,id:'loop-123-2'}],[post]);
+  assert.equal(proof.state,'publication_observed','a later rerun does not erase the original automatic publication');
+  assert.equal(proof.lastAutomaticPostId,'post');assert.equal(proof.automaticRunCount,1);
 });
 
 test('loop research cannot fake a standalone research identity by editing JSON fields',async t=>{

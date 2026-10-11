@@ -38,6 +38,7 @@ jobs:
     permissions:
       contents: write
       actions: write
+      deployments: write
     concurrency:
       group: while-you-sleep-record
       cancel-in-progress: false
@@ -59,6 +60,7 @@ jobs:
       - name: Keep one hosted clock chain alive
         env:
           GH_TOKEN: ${{ github.token }}
+          CLOCK_RUNTIME_MODE: deployments-v1
         run: node scripts/ensure-clock.mjs
       - name: Select and reserve every due publication slot of the Vilnius day
         id: slot

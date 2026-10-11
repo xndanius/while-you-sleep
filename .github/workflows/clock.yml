@@ -25,6 +25,7 @@ concurrency:
   cancel-in-progress: false
   queue: max
 env:
+  CLOCK_RUNTIME_MODE: deployments-v1
   CLOCK_CHAIN_ID: ${{ inputs.chain_id }}
   CLOCK_PARENT_RUN_ID: ${{ inputs.parent_run_id }}
   CLOCK_PARENT_RUN_ATTEMPT: ${{ inputs.parent_run_attempt }}
@@ -36,6 +37,7 @@ jobs:
     permissions:
       contents: write
       actions: read
+      deployments: write
     concurrency:
       group: while-you-sleep-record
       cancel-in-progress: false
@@ -74,12 +76,14 @@ jobs:
     permissions:
       contents: write
       actions: write
+      deployments: write
     concurrency:
       group: while-you-sleep-record
       cancel-in-progress: false
       queue: max
     outputs:
       ticked: ${{ steps.tick.outputs.ticked }}
+      committed: ${{ steps.tick.outputs.committed }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -95,7 +99,7 @@ jobs:
         run: node scripts/clock.mjs tick
   pages:
     needs: tick
-    if: needs.tick.outputs.ticked == 'true'
+    if: needs.tick.outputs.ticked == 'true' && needs.tick.outputs.committed == 'true'
     uses: ./.github/workflows/pages.yml
     permissions:
       contents: read

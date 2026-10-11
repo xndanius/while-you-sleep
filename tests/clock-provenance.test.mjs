@@ -11,10 +11,17 @@ import { schedulerProof } from '../lib/scheduler-proof.mjs';
 const repository='xndanius/while-you-sleep',runURL=id=>`https://github.com/${repository}/actions/runs/${id}`;
 const now=new Date('2026-10-11T05:18:00Z');
 function fixtures(kind='loop') {
-  const env={RUN_ID:`${kind}-222-1`,GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:repository,GITHUB_REF:'refs/heads/main',GITHUB_RUN_ID:'222',GITHUB_RUN_ATTEMPT:'1',GITHUB_EVENT_NAME:'workflow_dispatch',CLOCK_TICK_RUN_ID:'111',CLOCK_PARENT_ATTEMPT:'1',CLOCK_DISPATCH_ID:`clock-111-1-${kind}`};
+  const env={RUN_ID:`${kind}-222-1`,GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:repository,GITHUB_REF:'refs/heads/main',GITHUB_RUN_ID:'222',GITHUB_RUN_ATTEMPT:'1',GITHUB_ACTOR:'github-actions[bot]',GITHUB_TRIGGERING_ACTOR:'github-actions[bot]',GITHUB_EVENT_NAME:'workflow_dispatch',CLOCK_TICK_RUN_ID:'111',CLOCK_PARENT_ATTEMPT:'1',CLOCK_DISPATCH_ID:`clock-111-1-${kind}`};
   const receipt={id:'clock-111-1',kind:'clock-tick',chainId:'clock-100-1',generation:1,githubRunId:'111',githubRunAttempt:1,githubRunUrl:runURL('111'),environment:'clock',waitMinutes:15,claimedAt:'2026-10-11T05:00:00Z',tickedAt:'2026-10-11T05:15:00Z',dispatches:[{workflow:`${kind}.yml`,dispatchId:env.CLOCK_DISPATCH_ID,runId:'222',githubRunUrl:runURL('222'),requestedAt:'2026-10-11T05:15:00Z'}]};
   const parent={id:111,repository:{full_name:repository},head_repository:{full_name:repository},head_branch:'main',head_sha:'a'.repeat(40),path:'.github/workflows/clock.yml',event:'workflow_dispatch',run_attempt:1,status:'completed'};
-  return {env,receipt,parent};
+  const child={...parent,id:222,path:`.github/workflows/${kind}.yml`,status:'in_progress',actor:{login:'github-actions[bot]'},triggering_actor:{login:'github-actions[bot]'}};
+  return {env,receipt,parent,child};
+}
+function apiFor({parent,child}) {
+  return async endpoint=>{
+    assert.ok([`repos/${repository}/actions/runs/111`,`repos/${repository}/actions/runs/222`].includes(endpoint));
+    return JSON.stringify(endpoint.endsWith('/111')?parent:child);
+  };
 }
 async function fixtureRoot(t,receipt) {
   const root=await mkdtemp(path.join(os.tmpdir(),'wys-clock-provenance-'));
@@ -24,11 +31,13 @@ async function fixtureRoot(t,receipt) {
   return root;
 }
 
-test('clock inputs alone never prove automation; exact receipt and authoritative parent run are required',async t=>{
-  const {env,receipt,parent}=fixtures(),root=await fixtureRoot(t,receipt);let calls=0;
-  const apiGet=async endpoint=>{calls++;assert.equal(endpoint,`repos/${repository}/actions/runs/111`);return JSON.stringify(parent);};
+test('clock inputs alone never prove automation; receipt and authoritative parent and child identities are required',async t=>{
+  const fixture=fixtures(),{env,receipt,parent}=fixture,root=await fixtureRoot(t,receipt),calls=[];
+  const apiGet=async endpoint=>{calls.push(endpoint);return apiFor(fixture)(endpoint);};
   const clock=await verifyClockDispatch({kind:'loop',root,env,now,apiGet});
-  assert.equal(calls,1);assert.equal(clock.source,CLOCK_SOURCE);assert.equal(clock.runId,'222');
+  assert.deepEqual(calls,[`repos/${repository}/actions/runs/111`,`repos/${repository}/actions/runs/222`]);
+  assert.equal(clock.source,CLOCK_SOURCE);assert.equal(clock.runId,'222');
+  assert.equal(clock.runAttempt,1);assert.equal(clock.actor,env.GITHUB_ACTOR);assert.equal(clock.triggeringActor,env.GITHUB_TRIGGERING_ACTOR);
   assert.equal(validClockProvenance(clock,{kind:'loop',runId:'222'}),true);
   assert.equal(clockReceiptMatches(clock,receipt),true);
   assert.equal(await verifyClockDispatch({kind:'loop',root,env:{},apiGet}),null);
@@ -36,29 +45,47 @@ test('clock inputs alone never prove automation; exact receipt and authoritative
     await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env:{...env,...extra},now,apiGet}));
   }
   for(const extra of [{head_branch:'other'},{path:'.github/workflows/loop.yml'},{run_attempt:2},{event:'schedule'},{status:'unknown'},{head_repository:{full_name:'other/repo'}}]) {
-    await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet:async()=>JSON.stringify({...parent,...extra})}),/GitHub did not verify/);
+    await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet:apiFor({...fixture,parent:{...parent,...extra}})}),/GitHub did not verify/);
   }
   await writeFile(path.join(root,'data','clock','ticks',receipt.id+'.json'),JSON.stringify({...receipt,tickedAt:'2026-10-11T05:01:00Z'}));
   await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet}),/parent tick/);
 });
 
 test('a committed exact clock dispatch remains verified while its parent waits for a later Pages job',async t=>{
-  const {env,receipt,parent}=fixtures(),root=await fixtureRoot(t,receipt);
+  const fixture=fixtures(),{env,receipt,parent}=fixture,root=await fixtureRoot(t,receipt);
   for(const status of ['queued','requested','pending','waiting','in_progress','completed']) {
-    const clock=await verifyClockDispatch({kind:'loop',root,env,now,apiGet:async()=>JSON.stringify({...parent,status})});
+    const clock=await verifyClockDispatch({kind:'loop',root,env,now,apiGet:apiFor({...fixture,parent:{...parent,status}})});
     assert.equal(clock.verified,true,status);
     assert.equal(clockReceiptMatches(clock,receipt),true,status);
   }
   await writeFile(path.join(root,'data','clock','ticks',receipt.id+'.json'),JSON.stringify({...receipt,tickedAt:'2026-10-11T05:01:00Z'}));
-  await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet:async()=>JSON.stringify({...parent,status:'waiting'})}),/parent tick/);
+  await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet:apiFor({...fixture,parent:{...parent,status:'waiting'}})}),/parent tick/);
+});
+
+test('retained clock markers cannot authorize a human rerun or an unverified child identity',async t=>{
+  const fixture=fixtures(),{env,receipt,child}=fixture,root=await fixtureRoot(t,receipt);
+  for(const extra of [{GITHUB_RUN_ATTEMPT:'2'},{GITHUB_RUN_ATTEMPT:''},{GITHUB_ACTOR:'xndanius'},
+    {GITHUB_TRIGGERING_ACTOR:'xndanius'},{GITHUB_ACTOR:undefined},{GITHUB_TRIGGERING_ACTOR:undefined}]) {
+    await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env:{...env,...extra},now,
+      apiGet:async()=>{assert.fail('Untrusted runner identity must be rejected before API access.');}}),/Untrusted clock dispatch context/);
+  }
+  for(const extra of [{id:333},{run_attempt:2},{run_attempt:'1'},{head_branch:'other'},
+    {path:'.github/workflows/improve.yml'},{event:'schedule'},{status:'unknown'},
+    {repository:{full_name:'other/repo'}},{head_repository:{full_name:'other/repo'}},
+    {actor:{login:'xndanius'}},{triggering_actor:{login:'xndanius'}},{actor:null},{triggering_actor:null}]) {
+    await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,
+      apiGet:apiFor({...fixture,child:{...child,...extra}})}),/exact first-attempt clock child/);
+  }
+  await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,
+    apiGet:async endpoint=>{if(endpoint.endsWith('/222'))throw new Error('GitHub unavailable');return apiFor(fixture)(endpoint);}}),/GitHub unavailable/);
 });
 
 test('clock-launched auxiliary gates retain workflow_dispatch and suppress completed work instead of forcing diagnostics',async t=>{
-  const {env,receipt,parent}=fixtures('research'),root=await fixtureRoot(t,receipt);
+  const fixture=fixtures('research'),{env,receipt}=fixture,root=await fixtureRoot(t,receipt);
   env.GITHUB_OUTPUT=path.join(root,'verified-auxiliary-output');
   const slot=latestScheduledSlot('research',now),completion={id:'research-333-1',runId:'research-333-1',...slot,eventName:'workflow_dispatch',scheduleStatus:'completed'};
   await mkdir(path.join(root,'data','research'),{recursive:true});await writeFile(path.join(root,'data','research',completion.id+'.json'),JSON.stringify(completion));
-  const result=await prepareScheduledJob({kind:'research',root,env,now,apiGet:async()=>JSON.stringify(parent)});
+  const result=await prepareScheduledJob({kind:'research',root,env,now,apiGet:apiFor(fixture)});
   assert.equal(result.due,false);assert.equal(result.reason,'scheduled_slot_completed');assert.equal(result.eventName,'workflow_dispatch');
   assert.equal(result.clock.runId,'222');assert.equal(result.clock.workflow,'research.yml');
   assert.match(await readFile(env.GITHUB_OUTPUT,'utf8'),/clock_verified=true\n/);
@@ -71,15 +98,15 @@ test('clock-launched auxiliary gates retain workflow_dispatch and suppress compl
 });
 
 test('verified clock publication gates preserve ordinary cap and duplicate guards and never bootstrap',async t=>{
-  const {env,receipt,parent}=fixtures(),root=await fixtureRoot(t,receipt);
+  const fixture=fixtures(),{env,receipt}=fixture,root=await fixtureRoot(t,receipt);
   env.GITHUB_OUTPUT=path.join(root,'verified-loop-output');
-  const gate=await prepareLoop({root,env:{...env,BOOTSTRAP:'true'},now,apiGet:async()=>JSON.stringify(parent)});
+  const gate=await prepareLoop({root,env:{...env,BOOTSTRAP:'true'},now,apiGet:apiFor(fixture)});
   assert.equal(gate.eventName,'workflow_dispatch');assert.equal(gate.bootstrap,false);assert.equal(gate.targetCount,1);
   assert.equal(gate.clock.source,CLOCK_SOURCE);assert.equal(gate.slotId,'publish-2026-10-11-08-07');
   assert.match(await readFile(env.GITHUB_OUTPUT,'utf8'),/clock_verified=true\n/);
   await mkdir(path.join(root,'data','posts'),{recursive:true});
   await writeFile(path.join(root,'data','posts','published.json'),JSON.stringify({id:'published',publishedAt:'2026-10-11T05:17:00Z',scheduling:{slotId:gate.slotId}}));
-  const repeated=await prepareLoop({root,env,now,apiGet:async()=>JSON.stringify(parent)});
+  const repeated=await prepareLoop({root,env,now,apiGet:apiFor(fixture)});
   assert.equal(repeated.decision,'skip');assert.equal(repeated.reason,'slot_already_published');
   assert.equal(repeated.eventName,'workflow_dispatch');
 });
@@ -97,8 +124,8 @@ test('ordinary manual diagnostics never gain bot access from a claimed clock fla
 });
 
 test('clock publication proof requires its trusted loop and exact clock receipt without claiming a schedule event',async t=>{
-  const {env,receipt,parent}=fixtures(),root=await fixtureRoot(t,receipt);
-  const clock=await verifyClockDispatch({kind:'loop',root,env,now,apiGet:async()=>JSON.stringify(parent)});
+  const fixture=fixtures(),{env,receipt}=fixture,root=await fixtureRoot(t,receipt);
+  const clock=await verifyClockDispatch({kind:'loop',root,env,now,apiGet:apiFor(fixture)});
   const run={id:'loop-222-1',type:'loop',eventName:'workflow_dispatch',startedAt:'2026-10-11T05:18:00Z',githubRunUrl:runURL('222'),published:['post'],modelExecuted:true,scheduling:{clock}};
   const post={id:'post',runId:run.id,githubRunUrl:run.githubRunUrl,publishedAt:'2026-10-11T05:22:00Z',eventName:'workflow_dispatch'};
   assert.equal(schedulerProof([],[run],[post]).state,'unverified','claimed verified metadata is insufficient without its committed tick');
@@ -113,6 +140,27 @@ test('clock publication proof requires its trusted loop and exact clock receipt 
   }
   const forged={...receipt,dispatches:[{...receipt.dispatches[0],runId:'333',githubRunUrl:runURL('333')}]};
   assert.equal(schedulerProof([],[run],[post],[forged]).state,'trigger_observed');
+});
+
+test('historical exact attempt-1 clock proofs remain valid while retained rerun metadata fails closed',async t=>{
+  const fixture=fixtures(),{env,receipt}=fixture,root=await fixtureRoot(t,receipt);
+  const verified=await verifyClockDispatch({kind:'loop',root,env,now,apiGet:apiFor(fixture)});
+  const {runAttempt,actor,triggeringActor,...legacy}=verified;
+  const run={id:'loop-222-1',type:'loop',eventName:'workflow_dispatch',startedAt:now.toISOString(),githubRunUrl:runURL('222'),published:['post'],clock:legacy};
+  const post={id:'post',runId:run.id,githubRunUrl:run.githubRunUrl,publishedAt:'2026-10-11T05:22:00Z'};
+  assert.equal(validClockProvenance(legacy),true);
+  assert.equal(schedulerProof([],[run],[post],[receipt]).state,'publication_observed');
+  for(const changed of [{...run,id:'loop-222-2'},{...run,id:'loop-333-1'},{...run,runId:'loop-222-2'},
+    {...run,runAttempt:2},{...run,githubRunAttempt:2},{...run,id:'improve-222-1'}]) {
+    const proof=schedulerProof([],[changed],[{...post,runId:changed.id}],[receipt]);
+    assert.equal(proof.state,'trigger_observed');assert.equal(proof.clockRunCount,0);
+    assert.equal(proof.lastAutomaticPublicationAt,null);assert.equal(proof.lastClockLoopAt,null);
+  }
+  for(const changed of [{...verified,runAttempt:2},{...verified,actor:'xndanius'},
+    {...verified,triggeringActor:'xndanius'},{...legacy,runAttempt:1},{...legacy,actor:'github-actions[bot]'}]) {
+    assert.equal(validClockProvenance(changed),false);
+    assert.equal(schedulerProof([],[{...run,clock:changed}],[post],[receipt]).state,'trigger_observed');
+  }
 });
 
 test('clock backup writes are confined to trusted workflow gates and never model jobs',async()=>{

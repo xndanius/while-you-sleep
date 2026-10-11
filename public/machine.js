@@ -1,6 +1,7 @@
 import {loopTiming} from './schedule.js';
 import {slotPresentation,currentDaySlots} from './slot-display.js';
 import {clockTiming,runTriggerLabel} from './clock-display.js';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js';
 
 (() => {
   'use strict';
@@ -45,6 +46,12 @@ import {clockTiming,runTriggerLabel} from './clock-display.js';
   let fetching = false;
   let loaded = false;
   let data;
+  let runtimeClock=null,runtimeCheckedAt=0,runtimeFetching=false,runtimeUnavailable=false;
+  try{
+    const cached=JSON.parse(localStorage.getItem('wys-clock-runtime-v1')||'null');
+    runtimeClock=publicClockRuntime(cached?.deployment);
+    if(runtimeClock&&Number.isFinite(cached?.checkedAt)&&cached.checkedAt<=Date.now()+60000)runtimeCheckedAt=cached.checkedAt;
+  }catch{}
   document.querySelector('.skip-link').setAttribute('href',`${location.pathname}#machine-content`);
 
   function renderStats(stats) {
@@ -76,10 +83,29 @@ import {clockTiming,runTriggerLabel} from './clock-display.js';
   }
 
   function renderClock(){
-    const clock=data.clock||{},timing=clockTiming(clock);
+    const clock=newerClockRecord(data.clock||{},runtimeClock),timing=clockTiming(clock);
     const currentRun=link(clock.clockRunUrl,'View current clock run'),tickRun=link(clock.lastTickRunUrl,'View last tick');
     const dispatches=Array.isArray(clock.dispatches)?clock.dispatches:[];
-    $('hosted-clock').innerHTML=`<div class="clock-heading">${chip(timing.state,timing.label)}${timing.elapsedMinutes!==null?`<span>Last record ${number(Math.floor(timing.elapsedMinutes))} min ago</span>`:''}</div><dl class="clock-facts"><div><dt>Last committed tick</dt><dd>${clock.lastTickAt?escape(formatDate(clock.lastTickAt)):'No tick recorded'}</dd></div><div><dt>Next tick, no earlier than</dt><dd>${clock.nextTickAt?escape(formatDate(clock.nextTickAt)):'Not recorded'}${timing.state==='late'&&timing.lateMinutes!==null?` <small>${number(timing.lateMinutes)} min past this estimate</small>`:''}</dd></div></dl>${currentRun||tickRun?`<div class="clock-links">${currentRun}${tickRun}</div>`:''}${dispatches.length?`<p class="clock-dispatches">Last tick dispatched: ${dispatches.map(item=>link(item.githubRunUrl,human(item.workflow?.replace(/\.yml$/,'')||'Workflow'))).filter(Boolean).join(' · ')}</p>`:''}<p class="schedule-footnote">The clock waits ${number(clock.waitMinutes||15)} minutes in a GitHub environment without holding a runner, then checks due slots and dispatches its next wait. Queue time can add delay; the next tick is an earliest estimate. A record older than 45 minutes is marked stalled. GitHub cron gates remain a recovery backup.</p>`;
+    $('hosted-clock').innerHTML=`<div class="clock-heading">${chip(timing.state,timing.label)}${timing.elapsedMinutes!==null?`<span>Last record ${number(Math.floor(timing.elapsedMinutes))} min ago</span>`:''}</div><dl class="clock-facts"><div><dt>Last tick</dt><dd>${clock.lastTickAt?escape(formatDate(clock.lastTickAt)):'No tick recorded'}</dd></div><div><dt>Next tick, no earlier than</dt><dd>${clock.nextTickAt?escape(formatDate(clock.nextTickAt)):'Not recorded'}${timing.state==='late'&&timing.lateMinutes!==null?` <small>${number(timing.lateMinutes)} min past this estimate</small>`:''}</dd></div></dl>${currentRun||tickRun?`<div class="clock-links">${currentRun}${tickRun}</div>`:''}${dispatches.length?`<p class="clock-dispatches">Last tick dispatched: ${dispatches.map(item=>link(item.githubRunUrl,human(item.workflow?.replace(/\.yml$/,'')||'Workflow'))).filter(Boolean).join(' · ')}</p>`:''}<p class="schedule-footnote">${runtimeUnavailable?'Live clock metadata could not refresh; the last known record remains visible. ':clock.runtimeSource==='github-deployment-metadata'?'Live clock timing comes from GitHub metadata, refreshed every three minutes. ':''}Empty ticks keep no Git commits. The clock waits ${number(clock.waitMinutes||15)} minutes in a GitHub environment without holding a runner, then checks due slots and dispatches its next wait. Queue time can add delay; the next tick is an earliest estimate. A record older than 45 minutes is marked stalled. GitHub cron gates remain a recovery backup.</p>`;
+  }
+
+  async function refreshClockRuntime(){
+    if(runtimeFetching||Date.now()-runtimeCheckedAt<CLOCK_RUNTIME_REFRESH_MS)return;
+    runtimeFetching=true;runtimeCheckedAt=Date.now();
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),10000);
+    try{
+      const response=await fetch(CLOCK_RUNTIME_URL,{signal:controller.signal,cache:'no-store',headers:{Accept:'application/vnd.github+json'}});
+      if(!response.ok)throw new Error('Clock metadata unavailable.');
+      const raw=await response.text();if(raw.length>262144)throw new Error('Clock metadata too large.');
+      const rows=JSON.parse(raw);if(!Array.isArray(rows))throw new Error('Invalid clock metadata.');
+      if(rows.length){
+        const record=publicClockRuntime(rows[0]);if(!record)throw new Error('Invalid clock metadata.');
+        runtimeClock=record;
+        try{localStorage.setItem('wys-clock-runtime-v1',JSON.stringify({deployment:rows[0],checkedAt:runtimeCheckedAt}));}catch{}
+      }
+      runtimeUnavailable=false;
+    }catch{runtimeUnavailable=true;}
+    finally{clearTimeout(timeout);runtimeFetching=false;if(data)renderClock();}
   }
 
   function renderPublicationSlots(slots){
@@ -164,7 +190,7 @@ import {clockTiming,runTriggerLabel} from './clock-display.js';
 
   function renderRelay() {
     const relay=data.relay||{},verified=relay.state==='published';
-    $('relay').innerHTML=`<p class="relay-path">Website -&gt; RSS -&gt; Zapier -&gt; LinkedIn Page</p><p class="relay-state">${escape(verified?relay.message||'LinkedIn publication recorded':'waiting for first LinkedIn post')}</p><p class="muted">${verified?'A LinkedIn receipt is recorded.':'The website and RSS are the relay source. LinkedIn publishing is verified only after a post receipt is recorded.'}</p><div class="relay-links">${link(relay.feedUrl||'feed.xml','Open RSS feed')}${link(relay.linkedinUrl||'https://www.linkedin.com/company/whileyousleep-ai/','Follow on LinkedIn')}${verified&&relay.postUrl?link(relay.postUrl,'View LinkedIn post'):''}</div>`;
+    $('relay').innerHTML=`<p class="relay-path">Website -&gt; RSS -&gt; Zapier -&gt; LinkedIn Page</p><p class="relay-state">${escape(verified?relay.message||'LinkedIn publication recorded':'waiting for first LinkedIn post')}</p><p class="muted">${verified?`First publication ${escape(formatDate(relay.firstPublishedAt))}, confirmed by Danielius via Claude. LinkedIn metrics are not connected.`:'The website and RSS are the relay source. LinkedIn publishing is verified only after a post receipt is recorded.'}</p><div class="relay-links">${link(relay.feedUrl||'feed.xml','Open RSS feed')}${link(relay.linkedinUrl||'https://www.linkedin.com/company/whileyousleep-ai/','Follow on LinkedIn')}${verified&&relay.postUrl?link(relay.postUrl,'View LinkedIn post'):''}</div>`;
   }
 
   function renderVersions() {
@@ -209,6 +235,7 @@ import {clockTiming,runTriggerLabel} from './clock-display.js';
       const result = await response.json();
       if (!result || typeof result !== 'object' || !Array.isArray(result.runs)) throw new Error('The machine returned an unexpected response.');
       data = result;
+      void refreshClockRuntime();
       renderStatus();
       renderStats(data.stats);
       renderRuns();

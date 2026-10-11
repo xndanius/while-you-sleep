@@ -25,7 +25,7 @@ async function hostedClockRecord(){
   }))).filter(Boolean).sort((a,b)=>b.tickedAt.localeCompare(a.tickedAt));
   const latest=ticks[0];
   const dispatches=(latest?.dispatches||[]).filter(record=>['loop.yml','research.yml','measure.yml','improve.yml'].includes(record.workflow)&&clockRunURL(record.githubRunUrl)===`https://github.com/xndanius/while-you-sleep/actions/runs/${record.runId}`).map(record=>({workflow:record.workflow,githubRunUrl:record.githubRunUrl,requestedAt:clockDate(record.requestedAt)}));
-  return {clock:{phase:['waiting','ticking','queued','fenced'].includes(state.phase)?state.phase:'not_started',lastTickAt:latest?.tickedAt||clockDate(state.lastTickAt),nextTickAt:clockDate(state.nextTickAt),claimedAt:clockDate(state.claimedAt),clockRunUrl:clockRunURL(state.clockRunUrl),lastTickRunUrl:clockRunURL(latest?.githubRunUrl),waitMinutes:Number.isInteger(state.waitMinutes)&&state.waitMinutes>0?state.waitMinutes:15,dispatches},ticks};
+  return {clock:{phase:['waiting','ticking','queued','fenced'].includes(state.phase)?state.phase:'not_started',lastTickAt:latest?.tickedAt||clockDate(state.lastTickAt),nextTickAt:clockDate(state.nextTickAt),claimedAt:clockDate(state.claimedAt),fencedAt:clockDate(state.fencedAt),runtimeUpdatedAt:clockDate(state.runtimeUpdatedAt)||clockDate(state.claimedAt)||clockDate(state.lastTickAt),runtimeSource:'committed-fallback',clockRunUrl:clockRunURL(state.clockRunUrl),lastTickRunUrl:clockRunURL(latest?.githubRunUrl),waitMinutes:Number.isInteger(state.waitMinutes)&&state.waitMinutes>0?state.waitMinutes:15,dispatches},ticks};
 }
 
 try{
@@ -63,8 +63,9 @@ try{
   const cadence={...schedule(),slots,previousSlots,gateEveryMinutes:20,auxiliaryGateEveryMinutes:30,verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null,proof};
   const feed={posts:hydrated,stats,schedule:cadence,status};
   const linkedinUrl='https://www.linkedin.com/company/whileyousleep-ai/';
-  const relay={path:'Website -> RSS -> Zapier -> LinkedIn Page',state:'waiting_for_first_linkedin_post',message:'waiting for first LinkedIn post',linkedinUrl,feedUrl:baseURL+'/feed.xml'};
-  const platforms=[{name:'LinkedIn',id:'linkedin',status:'waiting_for_first_linkedin_post',provider:'Zapier RSS relay',lastPublishedAt:null,url:linkedinUrl,message:relay.message}];
+  const relayStatus=await readJSON(path.join(ROOT,'data','relay','status.json'));
+  const relay={...relayStatus,path:'Website -> RSS -> Zapier -> LinkedIn Page',linkedinUrl,feedUrl:baseURL+'/feed.xml'};
+  const platforms=[{name:'LinkedIn',id:'linkedin',status:relay.state==='published'?'active':relay.state,provider:'Zapier RSS relay',lastPublishedAt:relay.firstPublishedAt||null,url:linkedinUrl,message:relay.message}];
   const versionHistory=versions.length?versions.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')):[{id:INITIAL_RULES.id,createdAt:INITIAL_RULES.createdAt,status:'adopted',reason:INITIAL_RULES.reason,change:'Initial evidence-first writing and picking rules',baselineScore:null,challengerScore:null}];
   const machine={...feed,clock,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);

@@ -12,4 +12,4 @@ RSS titles and descriptions exclude LinkedIn markup characters: parentheses, squ
 
 The post page contains the complete checked post and source links. Static Open Graph tags provide title, description, image, 1080x1350 dimensions, URL and article type. The meta description, og:description and twitter:description share a one-line summary of at most 300 characters ending at a sentence or word boundary. A summary_large_image card and canonical link use the same public URL.
 
-Until an actual LinkedIn Page post is confirmed, the public relay state remains **waiting for first LinkedIn post**. RSS availability and successful website publication do not establish LinkedIn publication or measured engagement. No LinkedIn metric is fabricated as zero.
+Danielius via Claude confirmed the first LinkedIn Page post at **11:55 Vilnius on 11 October 2026** and the active Zap in brief v4. The public relay state records that confirmation; no individual LinkedIn post URL was supplied. RSS availability and successful website publication do not establish LinkedIn publication or measured engagement. No LinkedIn metric is fabricated as zero.
