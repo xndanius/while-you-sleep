@@ -1,0 +1,83 @@
+{
+  "runId": "loop-38180052902-1",
+  "createdAt": "2026-10-11T22:22:54.606Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "4daff74a8c78ca2ab599b05c5e7aa9eaf7fff569d6478d1ffc07ebb2750a1c0c",
+  "sourceSnapshotSha256": "b409f85689c322d1e8c809ca578cfcaabb65dacb5490b860f2943bf444a6d5c6",
+  "sources": [
+    {
+      "id": "28ef18e1692643accb11b312",
+      "title": "PPC Campaign Intelligence & Optimization with Google Ads, Sheets & Slack · product evidence",
+      "url": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+      "publisher": "n8n.io",
+      "text": "PPC campaign intelligence & optimization with Google Ads, Sheets & Slack | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Send Email Google Sheets If +6 PPC campaign intelligence & optimization with Google Ads, Sheets & Slack Use for free Created by Daniel Shashko Last update Last update 8 months ago Categories Document Extraction AI Summarization Share How it Works This workflow automatically monitors your Google Ads campaigns every day, analyzing performance with AI-powered scoring to identify scaling opportunities and catch issues before they drain your budget. Each morning at 9 AM, it fetches all active campaign data including clicks, impressions, conversions, costs, and conversion rates from your Google Ads account. The AI analysis engine evaluates four critical dimensions: CTR (click-through rate) to measure ad relevance, conversion rate to assess landing page effectiveness, cost per conversion to evaluate profitability, and traffic volume to identify scale-readiness. Each campaign receives a performance score (0-100 points) and is automatically categorized as Excellent (75+), Good (55-74), Fair (35-54), or Underperforming (0-34). High-performing campaigns trigger instant Slack alerts to your PPC team with detailed scaling recommendations and projected ROI improvements, while underperforming campaigns generate urgent alerts with specific optimization actions. Every campaign is logged to your Google Sheets dashboard with daily metrics, and the system generates personalized email reports—action-oriented scaling plans for top performers and troubleshooting guides for campaigns needing attention. The entire analysis takes minutes, providing your team with daily intelligence reports that would otherwise require hours of manual spreadsheet work and data analysis. Who is this for? PPC managers and paid media specialists drowning in campaign data and manual reporting Marketing agencies managing multiple client accounts needing automated performance monitoring E-commerce brands running high-spend campaigns who can't afford budget waste Growth teams looking to scale winners faster and pause losers immediately Anyone spending $5K+ monthly on Google Ads who needs data-driven optimization decisions Setup Steps Setup time: Approx. 15-25 minutes (credential configuration, dashboard setup, alert customization) Requirements: Google Ads account with active campaigns Google account with a tracking spreadsheet Slack workspace SMTP email provider (Gmail, SendGrid, etc.) Create a Google Sheets dashboard with two tabs: \"Daily Performance\" and \"Campaign Log\" with appropriate column headers. Set up these nodes: Schedule Daily Check: Pre-configured to run at 9 AM daily (adjust timing if needed). Fetch Google Ads Data: Connect your Google Ads account and authorize API access. AI Performance Analysis: Review scoring thresholds (CTR, conversion rate, cost benchmarks). Route by Performance: Automatically splits campaigns into high-performers vs. issues. Update Campaign Dashboard: Connect Google Sheets and select your \"Daily Performance\" tab. Log All Campaigns: Select your \"Campaign Log\" tab for historical tracking. Slack Alerts: Connect workspace and configure separate channels for scaling opportunities and performance issues. Generate Action Plan: Customize email templates with your brand voice and action items. Email Performance Report: Configure SMTP and set recipient email addresses. Credentials must be entered into their respective nodes for successful execution. Customization Guidance Scoring Weights: Adjust point values for CTR (30), conversion rate (35), cost efficiency (25), and volume (10) in the AI Performance Analysis node based on your business priorities. Performance Thresholds: Modify the 75-point Excellent threshold and 55-point Good threshold to match your campaign quality distribution and industry benchmarks. Benchmark Values: Update CTR benchmarks (5% excellent, 3% good, 1.5% average) and conversion rate targets (10%, 5%, 2%) for your industry. Alert Channels: Create separate Slack channels for different alert types or route critical alerts to Microsoft Teams, Discord, or SMS via Twilio. Email Recipients: Configure different recipient lists for scaling alerts (executives, growth team) vs. optimization alerts (campaign managers). Schedule Frequency: Change from daily to hourly monitoring for high-spend campaigns, or weekly for smaller accounts. Additional Platforms: Duplicate the workflow structure for Facebook Ads, Microsoft Ads, or LinkedIn Ads with platform-specific nodes. Budget Controls: Add nodes to automatically pause campaigns exceeding cost thresholds or adjust bids based on performance scores. Once configured, this workflow will continuously monitor your ad spend, identify opportunities worth thousands in additional revenue, and alert you to issues before they waste your budget—transforming manual reporting into automated intelligence. Built by Daniel Shashko Connect on LinkedIn Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-11T22:22:54.597Z",
+      "productUrl": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "28ef18e1692643accb11b312"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T22:21:26.180Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "PPC Campaign Intelligence & Optimization with Google Ads, Sheets & Slack Daniel Shashko ⋅ a year ago ⋅ Free How it Works This workflow automatically monitors your Google Ads campaigns every day, analyzing performance with AI-powered scoring to identify scaling opportunities and catch issues before they drain your budget. Each morning at 9 AM, it fetches all active campaign data including clicks, impressions, conversions, costs, and conv... Send Email Google Sheets Slack +2",
+      "verifiedAt": "2026-10-11T22:22:54.597Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [
+    {
+      "postId": "28ef18e1692643accb11b312",
+      "pass": true,
+      "reasons": []
+    }
+  ],
+  "assessmentContractVersion": 1
+}

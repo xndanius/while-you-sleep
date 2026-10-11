@@ -1,0 +1,665 @@
+{
+  "runId": "loop-38180052902-1",
+  "createdAt": "2026-10-11T22:24:28.288Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "b536f4dd7e0c62e7331bd8cea105c76b9c2bf82965af0a4104268f7f2654fd48",
+  "sourceSnapshotSha256": "efee8e3fba554ee03a43a8335a813ae5bbdee5ca444cecb352406ee2164a041b",
+  "sources": [
+    {
+      "id": "28ef18e1692643accb11b312",
+      "title": "PPC Campaign Intelligence & Optimization with Google Ads, Sheets & Slack · product evidence",
+      "url": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+      "publisher": "n8n.io",
+      "text": "PPC campaign intelligence & optimization with Google Ads, Sheets & Slack | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Send Email Google Sheets If +6 PPC campaign intelligence & optimization with Google Ads, Sheets & Slack Use for free Created by Daniel Shashko Last update Last update 8 months ago Categories Document Extraction AI Summarization Share How it Works This workflow automatically monitors your Google Ads campaigns every day, analyzing performance with AI-powered scoring to identify scaling opportunities and catch issues before they drain your budget. Each morning at 9 AM, it fetches all active campaign data including clicks, impressions, conversions, costs, and conversion rates from your Google Ads account. The AI analysis engine evaluates four critical dimensions: CTR (click-through rate) to measure ad relevance, conversion rate to assess landing page effectiveness, cost per conversion to evaluate profitability, and traffic volume to identify scale-readiness. Each campaign receives a performance score (0-100 points) and is automatically categorized as Excellent (75+), Good (55-74), Fair (35-54), or Underperforming (0-34). High-performing campaigns trigger instant Slack alerts to your PPC team with detailed scaling recommendations and projected ROI improvements, while underperforming campaigns generate urgent alerts with specific optimization actions. Every campaign is logged to your Google Sheets dashboard with daily metrics, and the system generates personalized email reports—action-oriented scaling plans for top performers and troubleshooting guides for campaigns needing attention. The entire analysis takes minutes, providing your team with daily intelligence reports that would otherwise require hours of manual spreadsheet work and data analysis. Who is this for? PPC managers and paid media specialists drowning in campaign data and manual reporting Marketing agencies managing multiple client accounts needing automated performance monitoring E-commerce brands running high-spend campaigns who can't afford budget waste Growth teams looking to scale winners faster and pause losers immediately Anyone spending $5K+ monthly on Google Ads who needs data-driven optimization decisions Setup Steps Setup time: Approx. 15-25 minutes (credential configuration, dashboard setup, alert customization) Requirements: Google Ads account with active campaigns Google account with a tracking spreadsheet Slack workspace SMTP email provider (Gmail, SendGrid, etc.) Create a Google Sheets dashboard with two tabs: \"Daily Performance\" and \"Campaign Log\" with appropriate column headers. Set up these nodes: Schedule Daily Check: Pre-configured to run at 9 AM daily (adjust timing if needed). Fetch Google Ads Data: Connect your Google Ads account and authorize API access. AI Performance Analysis: Review scoring thresholds (CTR, conversion rate, cost benchmarks). Route by Performance: Automatically splits campaigns into high-performers vs. issues. Update Campaign Dashboard: Connect Google Sheets and select your \"Daily Performance\" tab. Log All Campaigns: Select your \"Campaign Log\" tab for historical tracking. Slack Alerts: Connect workspace and configure separate channels for scaling opportunities and performance issues. Generate Action Plan: Customize email templates with your brand voice and action items. Email Performance Report: Configure SMTP and set recipient email addresses. Credentials must be entered into their respective nodes for successful execution. Customization Guidance Scoring Weights: Adjust point values for CTR (30), conversion rate (35), cost efficiency (25), and volume (10) in the AI Performance Analysis node based on your business priorities. Performance Thresholds: Modify the 75-point Excellent threshold and 55-point Good threshold to match your campaign quality distribution and industry benchmarks. Benchmark Values: Update CTR benchmarks (5% excellent, 3% good, 1.5% average) and conversion rate targets (10%, 5%, 2%) for your industry. Alert Channels: Create separate Slack channels for different alert types or route critical alerts to Microsoft Teams, Discord, or SMS via Twilio. Email Recipients: Configure different recipient lists for scaling alerts (executives, growth team) vs. optimization alerts (campaign managers). Schedule Frequency: Change from daily to hourly monitoring for high-spend campaigns, or weekly for smaller accounts. Additional Platforms: Duplicate the workflow structure for Facebook Ads, Microsoft Ads, or LinkedIn Ads with platform-specific nodes. Budget Controls: Add nodes to automatically pause campaigns exceeding cost thresholds or adjust bids based on performance scores. Once configured, this workflow will continuously monitor your ad spend, identify opportunities worth thousands in additional revenue, and alert you to issues before they waste your budget—transforming manual reporting into automated intelligence. Built by Daniel Shashko Connect on LinkedIn Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-11T22:24:24.542Z",
+      "productUrl": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "28ef18e1692643accb11b312"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T22:21:26.180Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "PPC Campaign Intelligence & Optimization with Google Ads, Sheets & Slack Daniel Shashko ⋅ a year ago ⋅ Free How it Works This workflow automatically monitors your Google Ads campaigns every day, analyzing performance with AI-powered scoring to identify scaling opportunities and catch issues before they drain your budget. Each morning at 9 AM, it fetches all active campaign data including clicks, impressions, conversions, costs, and conv... Send Email Google Sheets Slack +2",
+      "verifiedAt": "2026-10-11T22:24:24.542Z"
+    },
+    {
+      "id": "053b85ff0023403f9bead324",
+      "url": "https://raw.githubusercontent.com/confident-ai/eval-skills/main/README.md",
+      "title": "Show HN: Eval-skills for automatic agent improvement · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# Eval Skills **Build your evals. Run Descent to improve your app.** Skills for coding agents that guide you from your first inspectable AI execution to human error analysis, validated graders, repeatable experiments, and production feedback. Works with Claude Code, Codex, Cursor, and other assistants that support Agent Skills. Start with your application's stage, not a metric catalog. Reuse the traces, datasets, evaluators, and review tools you already have. The first useful outcome is one real execution you can understand—not an account setup or a dashboard project. > [!NOTE] > This guide defaults to **Jev** for supported model-based graders in the **local, managed graders** route. The agent confirms your judging-mode preference before setup. You can choose another judge or bring your own; see the [judging setup](skills/eval-grade/references/deepeval.md). ## Who this is for - **Product managers and domain experts** reviewing real examples and defining what good behavior means for users. - **Engineers** debugging failures, comparing changes, and adding regression checks to production apps. - **Solo builders and founders** turning an AI prototype into something they can test and improve. - **Teams building AI products** bringing shared review, trusted graders, and repeatable experiments into their workflow. Use these skills with a coding agent. Bring your existing traces, datasets, and evals, or start with one real execution. **Not for:** training foundation models, running general model leaderboards, or getting a universal quality score without reviewing application behavior. The workflow needs someone who can judge what a good outcome means for the product; an agent can organize the evidence and implement checks, but cannot supply that judgment for you. ## The eval workflow Designed for an individual quickstart, this workflow also scales to team review and shared eval work through the [fully managed route below](#choose-how-the-workflow-runs). Start with one AI feature and enter at the first missing piece. Reuse trustworthy evidence instead of repeating completed stages. - **Inspect evidence:** check what you already have—production traffic, traces, datasets, and evals. Capture one real execution if needed, and make its behavior understandable. - **Review examples:** sample realistic cases and record human observations about what failed and why it matters. - **Analyze errors:** group annotations into failure modes, refine them with a reviewer, and prioritize problems using their frequency and impact. - **Build trusted evals:** curate reusable cases, validate graders against human judgment, and establish a reproducible baseline. - **Run Descent:** test one improvement hypothesis at a time, check for regressions, and keep or revert the change based on evidence. - **Maintain:** catch regressions and feed new production failures back into review. [![From evidence to better AI: a stage-based entry guide and six-step eval workflow, from inspecting evidence through review, error analysis, trusted evals, Descent, and maintenance.](assets/eval-workflow-poster.png)](assets/eval-workflow-poster.png) [Open the full-size poster](assets/eval-workflow-poster.png) · [Read the text version](docs/workflow-poster.md) A prototype that cannot run yet can produce scenarios and an eval specification. It cannot produce a measured baseline. Production teams with trustworthy evals can go straight to experiments or maintenance. ## Install Install the suite with the Skills CLI: ```bash npx skills add https://github.com/confident-ai/codex-eval-skills ``` Claude Code users can also install the repository as a plugin: ```text /plugin marketplace add confident-ai/codex-eval-skills /plugin install eval-skills@eval-skills ``` Or install from a local checkout: ```bash npx skills add /absolute/path/to/eval-skills ``` For manual installation, copy the desired directories under `skills/` into your assistant's skills directory. Each skill contains its own references; no sibling skill is required to resolve a file link. Install the full suite for automatic handoffs. If only one skill is installed, it explains the next outcome instead of assuming another skill exists. Start with one of two main entrypoints: - **[Build](skills/eval-build/SKILL.md)** takes your application from its current stage to reviewed cases, validated graders, and a runnable baseline. - **[Descent](skills/eval-descent/SKILL.md)** improves your application against that baseline through bounded experiments. > Use eval-build to build evals from real failures and establish a runnable baseline. > > Use eval-descent to reduce latency without regressing our validated quality checks. Already know the task? Invoke a focused skill directly: > Use eval-discover to help me review these traces and identify failure modes. > > Use eval-error-analysis to group our review notes into failure modes and prioritize them. > > Use eval-grade to check whether this judge agrees with our expert labels. ## Skills | Skill | Use it when | | --- | --- | | [eval-build](skills/eval-build/SKILL.md) | You want to build or resume evals through a trustworthy, runnable baseline. | | [eval-audit](skills/eval-audit/SKILL.md) | Existing evidence, evals, or headline numbers need examination. | | [eval-trace](skills/eval-trace/SKILL.md) | You need the first real trace or missing diagnostic context. | | [eval-discover](skills/eval-discover/SKILL.md) | You need realistic data and human-led failure discovery. | | [eval-error-analysis](skills/eval-error-analysis/SKILL.md) | You have annotations to cluster into reviewed failure modes and priorities. | | [eval-dataset](skills/eval-dataset/SKILL.md) | You need reusable cases, trustworthy references, and independent splits. | | [eval-grade](skills/eval-grade/SKILL.md) | You need failure-specific checks calibrated against human judgment. | | [eval-run](skills/eval-run/SKILL.md) | You need repeatable runs, reliable accounting, and inspectable results. | | [eval-descent](skills/eval-descent/SKILL.md) | You want controlled application improvements against validated evals. | | [eval-maintain](skills/eval-maintain/SKILL.md) | You need regression gates, fresh production evidence, or recalibration. | **Descent** is our bounded improvement loop: choose an evidence-backed hypothesis, test a change, check regressions, and keep or revert it. The name describes reducing failures; the process does not require gradients. ## Three example journeys [![Three starting points: a prototype moves toward reviewed evidence, production traces toward prioritized failure modes, and existing evals toward a trustworthy baseline.](assets/eval-journeys-poster.png)](assets/eval-journeys-poster.png) [Open the full-size journeys poster](assets/eval-journeys-poster.png). Each journey is described below. **Prototype, no logs.** Run one real request locally. Inspect its full execution. Gather a few expert examples, then generate variations aimed at plausible failures. Review outputs before designing graders. Do not call synthetic scenarios production-representative without evidence. **Production agent, lots of traces.** Reuse the existing exporter. Sample across customer tasks, failures, and normal traffic. Review in a shared workspace or a fitted local viewer. Human notes become failure categories, and confirmed examples become regression cases. Discovery samples do not estimate production prevalence. **Existing evals, questionable score.** Recompute the headline from raw results, inspect the grader's false passes and false failures, and verify references. Fix the measurement before optimizing the application. Compare variants using unchanged cases and grader versions. The runnable [offline example](examples/README.md) exercises the portable format and deterministic grading without credentials. The [workflow scenarios](tests/scenarios.md) cover agent behavior and track selection. ## Choose how the workflow runs The same process works across three setups. Choose after inspecting a real execution and identifying what you need next. | Track | What you get | What you maintain | | --- | --- | --- | | **Fully managed** | Shared tracing, review, annotation, datasets, and experiment history through [Confident AI](skills/eval-build/references/managed.md), saving agent tokens on custom tooling and making evals simpler to run | Your application and domain-specific quality decisions | | **Local, managed graders** | An AI-built review UI and local artifacts, with ready-made graders from [DeepEval](skills/eval-grade/references/deepeval.md) | Local UI, runner, storage, and grader configuration | | **Fully local, build from scratch** | An AI-built review UI, code checks, and custom or existing judges | Local UI, runner, storage, and graders | Setup instructions and judging-mode choices live in the skills. Local refers to review, storage, and orchestration; model-based graders can still call external services. Preserve your cases, annotations, and results so you can [change setups later](docs/portability.md). ## What this repository provides Instructions, reusable local review scaffolds, Python and TypeScript tracing and runner templates, grader calibration tools, and portable interchange examples. The agent adapts these to your application; human reviewers still define quality. Most of the work is discovering and understanding failures; grader integration is one part of that process. - [Runnable toolkit](docs/toolkit.md): setup, review, grading, runs, and exports. - [Migration notes](docs/migration.md): workspace layout and compatibility. - [Artifact contract](docs/artifacts.md): portable evidence and experiment records. - [Development and validation](CONTRIBUTING.md): tests and contribution expectations. ## License Licensed under the [Apache License 2.0](LICENSE). See [NOTICE](NOTICE) for attribution information.",
+      "fetchedAt": "2026-10-11T22:24:24.765Z",
+      "productUrl": "https://github.com/confident-ai/eval-skills",
+      "originSourceIds": [
+        "38aa1e7d60db4ba3eb939f03"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T22:21:29.422Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/confident-ai/eval-skills/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/confident-ai/eval-skills/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T22:24:24.765Z"
+    },
+    {
+      "id": "720fb70c45c475729b832402",
+      "url": "https://raw.githubusercontent.com/ailaflow/ailaflow/main/README.md",
+      "title": "Show HN: AilaFlow – AI workflow automation for teams with Human-AI interfaces · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "[![AilaFlow - AI workspace for teams](.github/cover.png)](https://ailaflow.com) # AilaFlow **Tell AI to build your workspace, powered by processes with Human-AI interfaces.** AilaFlow is a collaborative low-code workspace where people and AI agents design, automate, and execute business processes together. Processes can combine human tasks, AI agents, forms, scripts, shared data, and external systems-giving humans and AI a common way to participate in the same workflow and act on the same process state. Let AI build your processes, including integrations with external systems using Node.js and NPM packages, with the code running safely in isolated sandboxes. Bring AilaFlow into your existing workflow through Slack and Telegram. Learn more: - [Get started](https://ailaflow.com/docs/) - [See Use Cases](https://ailaflow.com/marketplace/) - [Build your first process](https://ailaflow.com/docs/build-your-first-process/) ## How AilaFlow works [![AilaFlow - Screenshot](.github/portal-screenshot.png)](.github/portal-screenshot.png) - **Admins build the workspace.** Administrators use AI to create and manage processes that define how work gets done. Regular users execute the processes available to them. - **Processes are permission-aware.** Administrators decide which processes are available to specific users or groups, and can keep selected actions human-only-so sensitive decisions, approvals, or operations remain under explicit human control. - **Every user works with their own AI.** Each user has a personal AI chat that can understand requests and execute the processes they have access to. - **Human-AI interfaces use the same processes.** A process can be operated through AI chat or provide its own HTML interface and forms for desktop and mobile-allowing people and AI to act through the same underlying workflow. - **Process code runs in isolated sandboxes.** Scripts and integrations execute in separate sandboxed environments, allowing processes to use Node.js and NPM packages while keeping execution isolated from the host and other sandboxes. ## Quick Setup AilaFlow requires Docker to be installed on your system. Start AilaFlow with: ```bash npm install -g @ailaflow/cli ailaflow serve ``` Then open: ```text http://localhost:2048/install ``` and follow the installation steps. After logging in, open **Configuration**. AilaFlow will show you what still needs to be configured, including AI access and the public URL used to make your workspace accessible externally. ## Chat integrations Connect your preferred chat platform to AilaFlow, then send requests and run the processes available to you without leaving the conversation. We currently support: - Telegram - Slack ## License AilaFlow is distributed under the [AilaFlow Fair-Code License 1.0](./LICENSE.md). Home use is free, including personal, educational, and eligible non-profit use. AilaFlow is also free for professional teams with up to 3 Authorized Users. See the [LICENSE.md](./LICENSE.md) for the complete terms. ## Contributing Contributions are welcome. Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before submitting changes or opening a pull request.",
+      "fetchedAt": "2026-10-11T22:24:25.386Z",
+      "productUrl": "https://github.com/ailaflow/ailaflow",
+      "originSourceIds": [
+        "550ab6e26ca07d5a2fc62a8d"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T22:21:29.422Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/ailaflow/ailaflow/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/ailaflow/ailaflow/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T22:24:25.386Z"
+    },
+    {
+      "id": "2df0dc4ff808279ea987dca7",
+      "url": "https://raw.githubusercontent.com/Ontos-AI/knowhere/main/README.md",
+      "title": "Show HN: Knowhere-Rebuilds the document structure that chunking throws away · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "🔗 Website | 📄 Docs | 🏠 Self-Host | 🖥️ Dashboard ## Overview **Knowhere is a document parsing and retrieval system that turns complex, dirty files into persistent, navigable memory for AI agents—especially across local and offline document collections.** It ingests unstructured documents and produces persistent, navigable memory: parsing, hierarchy reconstruction, multi-modal structuring, and graph construction in a single pipeline. Every result stays connected to its document, section, source pages, and related assets, making the output a natural fit for *Agentic RAG*, *vector-based RAG*, or any LLM workflow. Knowhere 2.0 supports complementary **Vision and Text tracks**. Text-native documents retain precise extracted structure, while complex PDFs and PowerPoint files can be understood directly as pages by frontier vision models. Both tracks converge into the same memory schema, hierarchy, retrieval engine, and citation model. > [!NOTE] > **Get started in seconds with Knowhere Cloud.** > Avoid the complexity of self-deployment. Use our managed API at [knowhereto.ai](https://knowhereto.ai) and enjoy **$5 in free credits** upon registration. ## 📢 News - **September 8, 2026**: 🧭 **Introducing agent-native Retrieval 2.0.** MapNav has evolved from a fixed navigation workflow into a corpus-native foundation for agents. Knowhere provides a unified schema, hierarchy-aware tools, and resolvable evidence references; the agent decides how to search, traverse, read, and cite. The same foundation powers built-in retrieval and external agents through MCP. - **September 2026**: 👁️ **Introducing dual-track Document Parsing 2.0.** Vision Page and Text Track now converge into one hierarchy-native memory schema for retrieval, understanding, and citation. - **June 1, 2026**: 📚 **Knowhere now supports ultra-long PDFs and atlas-style documents.** The parsing pipeline can process long-form PDFs with hundreds of pages (for example, 300, 500, or more) and route technical atlases or drawing collections through a dedicated layout-aware parser. - **May 7, 2026**: 🚀 **Knowhere is now Open Source!** We have open-sourced our entire stack for document ingestion, parsing, and agentic RAG. You can now self-host the full platform using [knowhere-self-hosted](https://github.com/Ontos-AI/knowhere-self-hosted). Check out our [Contribution Guide](CONTRIBUTING.md) to get involved! ## Vision + Text: Document Parsing 2.0 Traditional OCR and Document Intelligence pipelines try to extract every element before a model can understand the document. On dirty PDFs and slide decks, mistakes in reading order, layout, tables, or hidden text layers can accumulate into unreliable model context. Knowhere does not make perfect element-by-element extraction a prerequisite for retrieval. The Text Track preserves precise text and native structure where they are reliable. The Vision Track uses frontier vision models to understand a page or slide as a whole, so visually complex content can still be recalled and understood without first reconstructing every element. - **Two tracks, one contract**: Both parsing paths produce the same chunk and metadata schema, so downstream storage, hierarchy, graph construction, and retrieval remain format-independent. - **Recall without brittle reconstruction**: Pages can be indexed through summaries, entities, source text, and hierarchy even when OCR or layout extraction cannot reliably recover every component. - **One navigable memory**: Text sections and vision-understood pages become compatible hierarchy nodes with source evidence, linked assets, and cross-document relationships. PDF and `.pptx` uploads through the V2 Jobs API use the Vision Track; other supported formats use the Text Track. The tracks differ in how they understand the source, not in how agents consume the resulting memory. ## How it Works Knowhere runs in two steps: build memory from documents, then let agents retrieve from it. ### Step 1: Parse and Build Memory - **Route**: Select the Vision or Text track according to the document format and API generation. - **Understand**: Preserve native text structure where it is reliable, or understand complex pages holistically with a vision model. - **Normalize**: Convert both tracks into the same hierarchy-native chunk and metadata schema. - **Build Memory**: Store navigation trees, linked assets, citations, and cross-document relationships as agent-ready context. ### Step 2: Agentic Retrieval Knowhere provides the document-memory substrate; the agent decides how to explore it. - **Provide the substrate**: Knowhere exposes one corpus schema and tools for document outlines, structural filters, exact search, fuzzy recall, full reading, assets, and cross-document relationships. - **Let the agent explore**: Instead of forcing every query through a fixed navigation pipeline, the agent chooses which tools to call, in what order, and how deeply to traverse. - **Stay agent-neutral**: The same corpus and evidence contract works across built-in agents, MCP clients, models, and orchestration frameworks. Whichever agent explores the memory, Knowhere resolves its references into traceable documents, sections, pages, and linked assets. ## FAQ **Q: What is Knowhere's relationship with MinerU?** A: MinerU remains the default raw PDF extractor for Knowhere's V1 chunk-based pipeline. PDF and PowerPoint uploads through the V2 API use Vision Page instead: Knowhere renders the source pages, combines their visual interpretation with document profiling and TOC structure, and assembles page-grounded hierarchy nodes. MinerU is still useful, but V2 no longer treats parser-generated Markdown as the only source of truth. **Q: What LLM / VLM dependencies does Knowhere have?** A: We recommend [`deepseek-flash`](https://api-docs.deepseek.com/guides/vision/) as a unified model for both Text and Vision workloads. It accepts text and image input, so the same model can handle summarization, hierarchy reasoning, page understanding, and asset descriptions. Knowhere remains model-agnostic: you can use another model—or separate Text and Vision models—from OpenAI, Qwen, GLM, Volcengine, or any compatible provider. **Q: How is Agentic Retrieval different from traditional RAG?** A: Traditional RAG does a flat vector lookup and returns isolated snippets. Knowhere's agents navigate the document's section tree and cross-document graph, drilling into the most relevant regions the way a human reader would, returning traceable, well-contextualized evidence. **Q: Does it handle images and tables?** A: Yes. Knowhere extracts images and tables, runs them through VLM-assisted summarization and feature extraction, and links them back to their source section nodes. Vision Page also retains rendered page citations, so agents can return both structured context and the visual source evidence. ## Performance Benchmark Agents using Knowhere outperform those working from raw documents, Markitdown, Unstructured, or MinerU output on real-world tasks: searching, modifying, and answering questions. > **We're not developing the next MinerU — we're building document memory infrastructure that agents can effectively consume.** ### Key Advantages - **Accuracy**: +36% first-try accuracy and +11% recall over raw documents. - **Reliability**: 79% accuracy with feedback, vs. a ~53% ceiling on raw docs. - **Efficiency**: Fewer loops, fewer tokens, less time. Agents navigate a structured graph instead of reading monolithic text. *(Internal evaluation across identical agentic RAG tasks. Baselines: raw documents and parser output fed directly to agents.)* > [!NOTE] > **📊 Benchmarks are actively expanding.** More parsers and retrieval baselines coming soon. ## Ecosystem | Repository | Description | |---|---| | [knowhere](https://github.com/Ontos-AI/knowhere) | **This repo.** Backend API and worker: document ingestion, parsing, graph construction, and retrieval. | | 🖥️ [knowhere-dashboard](https://github.com/Ontos-AI/knowhere-dashboard) | The web UI. Connects to the API for the full product experience. | | 🐳 [knowhere-self-hosted](https://github.com/Ontos-AI/knowhere-self-hosted) | Docker Compose stack for self-hosted deployments. Packages the API, worker, and dashboard together. | | 🐍 [knowhere-python-sdk](https://github.com/Ontos-AI/knowhere-python-sdk) | Official Python SDK for the Knowhere Cloud API. | | 🦕 [knowhere-node-sdk](https://github.com/Ontos-AI/knowhere-node-sdk) | Official Node.js SDK for the Knowhere Cloud API. | ## Features - **Dual-track Parsing**: Vision and Text tracks handle different document conditions while producing the same downstream schema. - **Vision Page Understanding**: Frontier vision models make complex PDF and PowerPoint content recallable without requiring perfect element-by-element OCR or layout reconstruction. - **Hierarchy-native Memory**: Section nodes preserve document paths, page ranges, summaries, entities, and linked assets instead of returning disconnected chunks. - **Cross-document Memory Graph**: Page-derived typed entities and keywords connect related documents across a namespace. - **Agent-native Retrieval**: Built-in and MCP-connected agents explore the same corpus schema and hierarchy-aware tools; classic retrieval remains available for deterministic top-K search. - **Page-grounded Citations**: Results retain source documents, section paths, page numbers, and rendered visual evidence. ## Supported Formats **✅ Supported** - [x] `.pdf` `.pptx` — Vision Page through the V2 Jobs API - [x] `.doc` `.docx` `.xls` `.xlsx` - [x] `.jpg` `.jpeg` `.png` - [x] `.md` `.txt` `.html` `.htm` `.json` **⏳ Coming Soon** - [ ] `.epub` `.xml` - [ ] `.mp4` `.mp3` - [ ] `.skills.md` Want to see a new format supported? Adding a parser is a great first contribution. Check out [CONTRIBUTING.md](CONTRIBUTING.md) to get started. ## Prerequisites - Python 3.11+ - `uv` - Docker with `docker compose` ## Quick Start 1. Sync the workspace dependencies: ```bash uv sync --all-packages ``` 2. Copy the environment examples: ```bash cp apps/api/.env.example apps/api/.env cp apps/worker/.env.example apps/worker/.env ``` 3. Update the copied `.env` files with the values you need for local work: - database and Redis connection settings - S3-compatible storage credentials - at least one LLM provider key: `DS_KEY`, `ALI_API_KEYS`, `GPT_API_KEY`, or `GLM_API_KEY` - a vision-capable model provider for V2 PDF/PowerPoint parsing, page understanding, image summaries, OCR, atlas classification, or image-aware retrieval - `MINERU_API_KEYS` only if you use the V1 chunk-based PDF/PowerPoint pipeline - any optional billing or webhook providers you want to enable Most parser and retrieval tuning values have code defaults. Start with the required external services first, then override model names, provider URLs, budgets, or concurrency limits only when your deployment needs different behavior. See [docs/external-services.md](docs/external-services.md) for the full dependency matrix. 4. Start the local infrastructure stack: ```bash ./deploy/local-dev/start-dev.sh ``` 5. Run migrations with the local management role. The infrastructure script provisions `knowhere_runtime`; the API/Worker environment examples use that non-superuser role so shared demo row-level security is enforced. ```bash cd apps/api MIGRATION_DATABASE_URL=postgresql+asyncpg://root:root123@localhost:5432/Knowhere \\ uv run alembic upgrade heads ``` 6. Start the API and worker in separate terminals: ```bash cd apps/api && uv run main.py cd apps/worker && uv run worker.py ``` For API-only development without the dashboard, create an API-only user/key after the API service starts: ```bash cd apps/api uv run scripts/init_user.py --email you@example.com ``` If you plan to use the dashboard, register through the dashboard instead of using `scripts/init_user.py`. The API is now running at `http://localhost:5005`. If you want the full product experience with a UI, run the [knowhere-dashboard](https://github.com/Ontos-AI/knowhere-dashboard) alongside it; it connects to this API out of the box. ## Quality Checks Run lint checks from the repository root: ```bash make lint ``` Apply safe Ruff fixes: ```bash make lint-fix ``` Run type checks across the API, worker, and shared source code: ```bash make typecheck ``` Run both lint and type checks: ```bash make check ``` ## Local Endpoints - API: `http://localhost:5005` - OpenAPI docs: `http://localhost:5005/docs` - LocalStack: `http://localhost:4566` - PostgreSQL: `localhost:5432` - Redis: `localhost:6379` ## Additional Guides - Retrieval document scope: [docs/retrieval-document-scope.md](docs/retrieval-document-scope.md) - External dependency guide: [docs/external-services.md](docs/external-services.md) - Architecture decisions: [docs/adr/README.md](docs/adr/README.md) ## Telemetry Self-hosted Knowhere emits **anonymous** product telemetry to PostHog so Ontos operators can understand OSS adoption (install liveness, usage aggregates, client/document mix). Events never include filenames, prompts, emails, IPs, or geo. Schema and allowlists are locked in [ADR-0004](docs/adr/0004-anonymous-self-hosted-telemetry.md). Telemetry is **default-on**. To opt out, set: ```bash TELEMETRY_ENABLED=false ``` Related settings live in `apps/api/.env.example` under `TELEMETRY_*`. ## Citation If you use Knowhere in your research, please cite it as: ```bibtex @software{knowhere2026, author = {Ontos AI}, title = {Knowhere: Prepare Unstructured Data for AI Agents}, year = {2026}, publisher = {GitHub}, url = {https://github.com/Ontos-AI/knowhere}, version = {2026.04.30.1}, license = {Apache-2.0} } ``` ## Communication - [GitHub Discussions](https://github.com/Ontos-AI/knowhere/discussions) for questions, ideas, and general conversation. - [GitHub Issues](https://github.com/Ontos-AI/knowhere/issues) for bug reports and feature requests. ## Contribution Any contributions to Knowhere are more than welcome! If you are new to the project, check out the [good first issues](https://github.com/Ontos-AI/knowhere/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22). They are well-defined, relatively simple, and a great way to get familiar with the codebase and the contribution workflow. For general guidelines on branching, commit conventions, and the review process, take a look at [CONTRIBUTING.md](CONTRIBUTING.md). Other useful references: - [SECURITY.md](SECURITY.md): how to report vulnerabilities responsibly. - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md): community behavior expectations. - [LICENSE](LICENSE) and [NOTICE](NOTICE): Apache 2.0. ## 👋 We're Hiring! We're building the knowledge layer for the Agent era. If that sounds like work you want to do, reach out. Decode the address below and drop us a line: ```bash echo 'dGVhbUBrbm93aGVyZXRvLmFp' | base64 --decode ```",
+      "fetchedAt": "2026-10-11T22:24:25.567Z",
+      "productUrl": "https://github.com/Ontos-AI/knowhere",
+      "originSourceIds": [
+        "4925b235e80f8eeb3af64447"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T22:21:29.422Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/Ontos-AI/knowhere/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/Ontos-AI/knowhere/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T22:24:25.567Z"
+    },
+    {
+      "id": "d1cc332f52c94c649361a801",
+      "title": "Scale AI Y Combinator Logo S2016 • Active • 500 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/scale-ai",
+      "publisher": "www.ycombinator.com",
+      "text": "Scale AI: Data-centric infrastructure to accelerate the development of AI | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Scale AI Scale AI Data-centric infrastructure to accelerate the development of AI Y Combinator Logo Summer 2016 Active Artificial Intelligence Machine Learning San Francisco Company Jobs 6 News http://scale.com Data-centric infrastructure to accelerate the development of AI Scale accelerates the development of AI within organizations of any size to deliver critical business insights and operational efficiency. Its data-centric infrastructure platform leverages RLHF (Reinforced Learning with Human Feedback) to help organizations build the strongest AI models that supercharge their business, with customers across industries including Meta, Microsoft, U.S. Army, DoD’s Defense Innovation Unit, Open AI, General Motors, Toyota Research Institute, Brex, Instacart and Flexport. Latest News Meta to Pay Nearly $15 Billion for Scale AI Stake and Startup’s 28-Year-Old CEO — The Information Jun 10, 2025 Scale AI Expects to More Than Double Sales to $2 Billion in 2025 - Bloomberg Apr 02, 2025 Data-labeling startup Scale AI raises $1B as valuation doubles to $13.8B | TechCrunch May 21, 2024 Scale Valued at Nearly $14 Billion With Funding From Amazon, AMD - Bloomberg May 21, 2024 Exclusive: Scale AI secures $1B funding at $14B valuation as its CEO predicts big revenue growth and profitability by year-end | Fortune May 21, 2024 Jobs at Scale AI View all jobs Strategic Product Manager San Francisco, CA / New York, NY $150K - $220K 3+ years Apply Now › Account Executive - Automotive US, Europe, Asia, and/or Remote / Remote (US) $125K - $175K 3+ years Apply Now › Account Executive: Global Accounts New York, San Francisco, Seattle, Washington DC, or Remote / Remote (US) $125K - $175K 3+ years Apply Now › Account Executive: Lead - eCommerce New York, San Francisco, Seattle, Washington DC, or Remote / Remote (US) $125K - $175K 3+ years Apply Now › Account Executive, Strategic - Financial Services/Insurance New York, San Francisco, Seattle, Washington DC, or Remote / Remote (US) $125K - $175K 3+ years Apply Now › Scale AI Founded: 2016 Batch: Summer 2016 Team Size: 500 Status: Active Location: San Francisco Primary Partner: Jared Friedman Founders Alexandr Wang Founder/CEO Alexandr Wang Founder/CEO Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-11T22:24:26.347Z",
+      "productUrl": "https://www.ycombinator.com/companies/scale-ai",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "d1cc332f52c94c649361a801"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-11T22:21:26.320Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/scale-ai",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/scale-ai",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Scale AI Y Combinator Logo S2016 • Active • 500 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-11T22:24:26.347Z"
+    },
+    {
+      "id": "afacaf413bd4ff2bd45612fc",
+      "title": "Show HN: Claude Code for Customer Support · product evidence",
+      "url": "https://news.ycombinator.com/item?id=48243325",
+      "publisher": "news.ycombinator.com",
+      "text": "Show HN: Claude Code for Customer Support | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Claude Code for Customer Support 4 points by darweenist 4 months ago | hide | past | favorite Letterbook ( https://letterbook.ai ) helps growing companies manage and solve customer support tickets across email, app, Discord, and website forms. Our AI integrates with your inbox, database, Stripe, Shopify, you name it. Every ticket that comes in gets a draft resolution that you can approve in 1 click. Watch our demo video: ( https://www.youtube.com/watch?v=S1vNoMTcKoI ). My co-founder Ethan and I grew our last product, an AI personal assistant app, to 100k users. At one point, we’d get 30-50 support tickets a day, and I had to buy an ancient help desk software and a VA in the Philippines to respond to users. We knew AI agents could make support 10x easier, so we built the first version of Letterbook and immediately migrated Martin off of Freshdesk. Now, we're giving Letterbook to other startups at a discounted price. You can try it for free, and then pay half the price of Fin or Zendesk AI to start automating customer support at scale. If you happen to be in need of a support platform, I can't wait to hear your feedback! If you have general thoughts on AI support agents, past experiences using Zendesk/Intercom/Freshdesk, or AI-native challengers broadly, I'd love to discuss any of these topics with you. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T22:24:26.455Z",
+      "productUrl": "https://news.ycombinator.com/item?id=48243325",
+      "discoveredAt": "2026-05-23T00:40:14Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "originSourceIds": [
+        "afacaf413bd4ff2bd45612fc"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://news.ycombinator.com",
+            "robotsUrl": "https://news.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T22:21:26.145Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 243,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://news.ycombinator.com/item?id=48243325",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://news.ycombinator.com/item?id=48243325",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Show HN: Claude Code for Customer Support Letterbook ( https://letterbook.ai ) helps growing companies manage and solve customer support tickets across email, app, Discord, and website forms. Our AI integrates with your inbox, database, Stripe, Shopify, you name it. Every ticket that comes in gets a draft resolution that you can approve in 1 click. Watch our demo video: ( https://www.youtube.com/watch?v=S1vNoMTcKoI ). My co-founder Ethan and I grew our last product, an AI personal assistant app, to 100k users. At one point, we’d get 30-50 support tickets a day, and I had to buy an ancient help desk software and a VA in the Philippines to respond to users. We knew AI agents could make support 10x easier, so we built the first version of Letterbook and immediately migrated Martin off of Freshdesk. Now, we're giving Letterbook to other startups at a discounted price. You can try it for free, and then pay half the price of Fin or Zendesk AI to start automating customer support at scale. If you happen to be in need of a support platform, I can't wait to hear your feedback! If you have general thoughts on AI support agents, past experiences using Zendesk/Intercom/Freshdesk, or AI-native ",
+      "verifiedAt": "2026-10-11T22:24:26.455Z"
+    },
+    {
+      "id": "870569c2eeba8a14e83f0a7c",
+      "title": "Quoting Victoria Kim · product evidence",
+      "url": "https://simonwillison.net/2026/Oct/6/victoria-kim",
+      "publisher": "simonwillison.net",
+      "text": "A quote from Victoria Kim Simon Willison’s Weblog Newsletter Sponsored by: Pomerium &mdash; Static OAuth scopes won't stop AI agent breakouts. Upgrade to Pomerium's agentic access management trusted by NVIDIA and OpenAI 6th October 2026 Since the Medicare breach, OpenAI has put in place additional monitoring to allow “immediate intervention” by staff to stop training if the company’s models access the internet in ways they’re not supposed to, Mr. Kwon [chief strategy officer at OpenAI] said. &mdash; Victoria Kim , Reporting from the Australian parliament Posted 6th October 2026 at 11:58 pm Recent articles A new feature for my blog, built using my voice - 9th October 2026 Claude Haiku 5.5 - 7th October 2026 We're going to need default hard budget caps on pretty much everything - 3rd October 2026 OpenAI DevDay 2026 live blog - 29th September 2026 This is a quotation collected by Simon Willison, posted on 6th October 2026 . ai 2,274 openai 475 generative-ai 2,016 llms 1,982 ai-security-research 48 accidental-cyberattacks 20 Disclosures Colophon &copy; 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 2025 2026",
+      "fetchedAt": "2026-10-11T22:24:26.808Z",
+      "discoveredAt": "2026-10-06T23:58:56+00:00",
+      "originFeedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ],
+      "productUrl": "https://simonwillison.net/2026/Oct/6/victoria-kim",
+      "originSourceIds": [
+        "870569c2eeba8a14e83f0a7c"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-11T22:21:26.897Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/2026/Oct/6/victoria-kim",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-11T22:21:26.897Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/2026/Oct/6/victoria-kim/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [
+          {
+            "url": "https://simonwillison.net/2026/Oct/6/victoria-kim",
+            "status": 301,
+            "next": "https://simonwillison.net/2026/Oct/6/victoria-kim/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://simonwillison.net/2026/Oct/6/victoria-kim/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "<blockquote cite=\"https://www.nytimes.com/live/2026/10/05/world/openai-australia-hearing/94c8067e-4098-5c00-9673-c78cb58a9d8a\"><p>Since the Medicare breach, OpenAI has put in place additional monitoring to allow “immediate intervention” by staff to stop training if the company’s models access the internet in ways they’re not supposed to, Mr. Kwon [chief strategy officer at OpenAI] said.</p></blockquote> <p class=\"cite\">&mdash; <a href=\"https://www.nytimes.com/live/2026/10/05/world/openai-australia-hearing/94c8067e-4098-5c00-9673-c78cb58a9d8a\">Victoria Kim</a>, Reporting from the Australian parliament</p> <p>Tags: <a href=\"https://simonwillison.net/tags/accidental-cyberattacks\">accidental-cyberattacks</a>, <a href=\"https://simonwillison.net/tags/generative-ai\">generative-ai</a>, <a href=\"https://simonwillison.net/tags/ai-security-research\">ai-security-research</a>, <a href=\"https://simonwillison.net/tags/openai\">openai</a>, <a href=\"https://simonwillison.net/tags/ai\">ai</a>, <a href=\"https://simonwillison.net/tags/llms\">llms</a></p>",
+      "verifiedAt": "2026-10-11T22:24:26.808Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-11T22:24:27.132Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-11T22:24:27.132Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T22:24:27.192Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-11T22:24:27.192Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T22:24:27.252Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-11T22:24:27.252Z"
+    },
+    {
+      "id": "74e4d3c1d44cdb9371da1733",
+      "title": "AI-Driven Inventory Management with OpenAI Forecasting & ERP Integration · product evidence",
+      "url": "https://n8n.io/workflows/10531-ai-driven-inventory-management-with-openai-forecasting-and-erp-integration",
+      "publisher": "n8n.io",
+      "text": "AI-driven inventory management with OpenAI forecasting & ERP integration | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Send Email HTTP Request Postgres +5 AI-driven inventory management with OpenAI forecasting & ERP integration Use for free Created by Oneclick AI Squad Last update Last update 8 months ago Categories Document Extraction AI Summarization Share This n8n workflow automates the monitoring of warehouse inventory and sales velocity to predict demand, generate purchase orders automatically, send them to suppliers, and record all transactions in ERP and database systems. It uses AI-driven forecasting to ensure timely restocking while maintaining operational efficiency and minimizing stockouts or overstocking. Key Features Automated Scheduling: Periodically checks inventory and sales data at defined intervals. Real-Time Data Fetching: Retrieves live warehouse stock levels and sales trends. AI Demand Forecasting: Uses OpenAI GPT to predict future demand based on sales velocity and stock trends. Auto-Purchase Orders: Automatically generates and sends purchase orders to suppliers. ERP Integration: Logs completed purchase orders into ERP systems like SAP, Oracle, or Netsuite. Database Logging: Saves purchase order details and forecast confidence data into SQL databases (PostgreSQL/MySQL). Email Notifications: Notifies relevant teams upon successful order creation and logging. Modular Configuration: Each node includes configuration notes and credentials setup instructions. Workflow Process Schedule Trigger Runs every 6 hours to monitor stock and sales data. Interval can be adjusted for higher or lower frequency checks. Fetch Current Inventory Data Retrieves live inventory levels from the warehouse API endpoint. Requires API credentials and optional GET/POST method setup. Fetch Sales Velocity Pulls recent sales data for forecasting analysis. Used later for AI-based trend prediction. Merge Inventory & Sales Data Combines inventory and sales datasets into a unified JSON structure. Prepares data for AI model input. AI Demand Forecasting Sends merged data to OpenAI GPT for demand prediction. Returns demand score, reorder need, and confidence levels. Parse AI Response Extracts and structures forecast results. Combines AI data with original inventory dataset. Filter: Reorder Needed Identifies items flagged for reorder based on AI output. Passes only reorder-required products to next steps. Create Purchase Order Automatically creates a PO document with item details, quantity, and supplier information. Calculates total cost and applies forecast-based reorder logic. Send PO to Supplier Sends the generated purchase order to supplier API endpoints. Includes response validation for order success/failure. Log to ERP System Records confirmed purchase orders into ERP platforms (SAP, Oracle, Netsuite). Includes timestamps and forecast metrics. Save to Database Stores all PO data, supplier responses, and AI forecast metrics into PostgreSQL/MySQL tables. Useful for long-term audit and analytics. Send Notification Email Sends summary emails upon PO creation and logging. Includes PO ID, supplier, cost, and demand reasoning. Setup Instructions Schedule Trigger: Adjust to your preferred interval (e.g., every 6 hours or once daily). API Configuration: Provide credentials in Inventory, Sales, and Supplier nodes. Use Authorization headers or API keys as per your system. AI Node (OpenAI): Add your OpenAI API key in the credentials section. Modify the prompt if you wish to include additional forecasting parameters. ERP Integration: Replace placeholder URLs with your ERP system endpoints. Match fields like purchase order number, date, and cost. Database Connection: Configure credentials for PostgreSQL/MySQL in the Save to Database node. Ensure tables ( purchase_orders ) are created as per schema provided in sticky notes. Email Notifications: Set up SMTP credentials (e.g., Gmail, Outlook, or custom mail server). Add recipients under workflow notification settings. Industries That Benefit This automation is highly beneficial for: Retail & E-commerce: Predicts product demand and auto-orders from suppliers. Manufacturing: Ensures raw materials are restocked based on production cycles. Pharmaceuticals: Maintains optimum inventory for high-demand medicines. FMCG & Supply Chain: Balances fast-moving goods availability with minimal overstocking. Automotive & Electronics: Prevents delays due to missing components. Prerequisites API access to inventory, sales, supplier, and ERP systems. Valid OpenAI API key for demand forecasting. SQL database (PostgreSQL/MySQL) for record storage. SMTP or mail server credentials for email notifications. n8n environment with required nodes installed (HTTP, AI, Filter, Email, Database). Modification Options Change forecast logic or thresholds for different industries. Integrate Slack/Teams for live notifications. Add approval workflow before sending POs. Extend AI prompt for seasonality or promotional trends. Add dashboard visualization using Grafana or Google Sheets. Explore More AI Workflows: Get in touch with us to build industry-grade n8n automations with predictive intelligence. Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-11T22:24:28.287Z",
+      "productUrl": "https://n8n.io/workflows/10531-ai-driven-inventory-management-with-openai-forecasting-and-erp-integration",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "74e4d3c1d44cdb9371da1733"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T22:21:26.180Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/10531-ai-driven-inventory-management-with-openai-forecasting-and-erp-integration",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/10531-ai-driven-inventory-management-with-openai-forecasting-and-erp-integration",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "AI-Driven Inventory Management with OpenAI Forecasting & ERP Integration Oneclick AI Squad ⋅ a year ago ⋅ Free This n8n workflow automates the monitoring of warehouse inventory and sales velocity to predict demand, generate purchase orders automatically, send them to suppliers, and record all transactions in ERP and database systems. It uses AI-driven forecasting to ensure timely restocking while maintaining operational efficiency and minim... Send Email HTTP Request Postgres +2",
+      "verifiedAt": "2026-10-11T22:24:28.287Z"
+    }
+  ],
+  "health": [
+    {
+      "sourceId": "38aa1e7d60db4ba3eb939f03",
+      "url": "https://news.ycombinator.com/item?id=50035864",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "sourceId": "550ab6e26ca07d5a2fc62a8d",
+      "url": "https://news.ycombinator.com/item?id=49908260",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "sourceId": "4925b235e80f8eeb3af64447",
+      "url": "https://news.ycombinator.com/item?id=49738595",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "sourceId": "265adce9a63ce1b22335c79d",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    }
+  ],
+  "deterministicResults": [],
+  "assessmentContractVersion": 1,
+  "considerationEvidence": [
+    {
+      "title": "PPC campaign reporting loop",
+      "productUrl": "https://n8n.io/workflows/10174-ppc-campaign-intelligence-and-optimization-with-google-ads-sheets-and-slack",
+      "sourceIds": [
+        "28ef18e1692643accb11b312"
+      ],
+      "availableSourceIds": [
+        "28ef18e1692643accb11b312"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Eval Skills for AI app improvement",
+      "productUrl": "https://github.com/confident-ai/eval-skills",
+      "sourceIds": [
+        "053b85ff0023403f9bead324",
+        "38aa1e7d60db4ba3eb939f03"
+      ],
+      "availableSourceIds": [
+        "053b85ff0023403f9bead324"
+      ],
+      "unavailableSourceIds": [
+        "38aa1e7d60db4ba3eb939f03"
+      ]
+    },
+    {
+      "title": "AilaFlow team process workspace",
+      "productUrl": "https://github.com/ailaflow/ailaflow",
+      "sourceIds": [
+        "720fb70c45c475729b832402",
+        "550ab6e26ca07d5a2fc62a8d"
+      ],
+      "availableSourceIds": [
+        "720fb70c45c475729b832402"
+      ],
+      "unavailableSourceIds": [
+        "550ab6e26ca07d5a2fc62a8d"
+      ]
+    },
+    {
+      "title": "Knowhere document memory platform",
+      "productUrl": "https://github.com/Ontos-AI/knowhere",
+      "sourceIds": [
+        "2df0dc4ff808279ea987dca7",
+        "4925b235e80f8eeb3af64447"
+      ],
+      "availableSourceIds": [
+        "2df0dc4ff808279ea987dca7"
+      ],
+      "unavailableSourceIds": [
+        "4925b235e80f8eeb3af64447"
+      ]
+    },
+    {
+      "title": "Scale AI data infrastructure",
+      "productUrl": "https://www.ycombinator.com/companies/scale-ai",
+      "sourceIds": [
+        "d1cc332f52c94c649361a801"
+      ],
+      "availableSourceIds": [
+        "d1cc332f52c94c649361a801"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Letterbook support inbox assistant",
+      "productUrl": "https://news.ycombinator.com/item?id=48243325",
+      "sourceIds": [
+        "afacaf413bd4ff2bd45612fc"
+      ],
+      "availableSourceIds": [
+        "afacaf413bd4ff2bd45612fc"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Victoria Kim quotation post",
+      "productUrl": "https://simonwillison.net/2026/Oct/6/victoria-kim",
+      "sourceIds": [
+        "870569c2eeba8a14e83f0a7c"
+      ],
+      "availableSourceIds": [
+        "870569c2eeba8a14e83f0a7c"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "VendIQ vendor follow-ups",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [],
+      "unavailableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ]
+    },
+    {
+      "title": "Invoice agent Space",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dooza Desk support inbox",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Lumro support and sales agents",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "AI inventory purchasing workflow",
+      "productUrl": "https://n8n.io/workflows/10531-ai-driven-inventory-management-with-openai-forecasting-and-erp-integration",
+      "sourceIds": [
+        "74e4d3c1d44cdb9371da1733"
+      ],
+      "availableSourceIds": [
+        "74e4d3c1d44cdb9371da1733"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
