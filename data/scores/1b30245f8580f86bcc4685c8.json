@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "postId": "1b30245f8580f86bcc4685c8",
+  "postContentSha256": "d9049e120684f6ae1c6e570eab6997701af69b1a0bda9da6f143f4a36543f6c0",
+  "criteria": {
+    "ease": {
+      "value": 4,
+      "reason": "The page shows a working marked-feedback flow, but a student clone must bridge browser capture, routing, and a coding-agent session.",
+      "sourceIds": [
+        "1b30245f8580f86bcc4685c8"
+      ]
+    },
+    "profit": {
+      "value": 5,
+      "reason": "Hypothesis: developers or small teams may pay for a feedback-to-agent tool; the product page states a paid developer plan but not demand.",
+      "sourceIds": [
+        "1b30245f8580f86bcc4685c8"
+      ]
+    },
+    "feasibility": {
+      "value": 4,
+      "reason": "A capture-and-handoff prototype is conceivable, while extension permissions and reliable project routing make the scope challenging.",
+      "sourceIds": [
+        "173b61ec9f2786fecfe2f7b2"
+      ]
+    },
+    "autonomy": {
+      "value": 6,
+      "reason": "The product describes repeatable capture, delivery, and status updates; humans still review requested edits and code changes.",
+      "sourceIds": [
+        "1b30245f8580f86bcc4685c8"
+      ]
+    },
+    "evidence": {
+      "value": 6,
+      "reason": "The official page includes a detailed product walkthrough and workflow claims; maker-reported time savings are not independently verified.",
+      "sourceIds": [
+        "1b30245f8580f86bcc4685c8"
+      ]
+    }
+  },
+  "assessmentPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "86baa83d20c3de7959dba4251219aac211b39f61412e9a8a5233a629d4bc3d14",
+  "sourceSnapshotSha256": "953af1ab311861aa260bc06e53b44db6474028457faf4a3a3e9849e8d0ec3252",
+  "checkedAt": "2026-10-11T11:33:20.314Z",
+  "checkerRunId": "score-38135798566-1-independent-check",
+  "checker": {
+    "passed": true,
+    "postId": "1b30245f8580f86bcc4685c8",
+    "postContentSha256": "d9049e120684f6ae1c6e570eab6997701af69b1a0bda9da6f143f4a36543f6c0",
+    "draftSha256": "86baa83d20c3de7959dba4251219aac211b39f61412e9a8a5233a629d4bc3d14",
+    "sourceSnapshotSha256": "953af1ab311861aa260bc06e53b44db6474028457faf4a3a3e9849e8d0ec3252",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "scoreChecks": [
+      {
+        "criterion": "ease",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "Browser capture is demonstrated as a product capability, but the small clone still requires capture and routing work.",
+        "sourceId": "1b30245f8580f86bcc4685c8",
+        "evidenceQuote": "works on any page"
+      },
+      {
+        "criterion": "profit",
+        "supported": true,
+        "maxSupportedScore": 5,
+        "reason": "Hypothesis: developers may pay; the listed price makes the model concrete but does not validate demand.",
+        "sourceId": "1b30245f8580f86bcc4685c8",
+        "evidenceQuote": "$9 a month or $79"
+      },
+      {
+        "criterion": "feasibility",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "An extension prototype is bounded, while reliable delivery into an agent session remains challenging.",
+        "sourceId": "173b61ec9f2786fecfe2f7b2",
+        "evidenceQuote": "Chrome extension"
+      },
+      {
+        "criterion": "autonomy",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "Feedback delivery and status can repeat, but the product waits when no agent is running and people judge code changes.",
+        "sourceId": "1b30245f8580f86bcc4685c8",
+        "evidenceQuote": "feedback stays pending"
+      },
+      {
+        "criterion": "evidence",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "The official page walks through a marked page, code edits, and reload as first-party product evidence.",
+        "sourceId": "1b30245f8580f86bcc4685c8",
+        "evidenceQuote": "page reloads with all three changes"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "173b61ec9f2786fecfe2f7b2",
+      "title": "Show HN: CircleIt – Circle something on a web page, your coding agent fixes it",
+      "url": "https://news.ycombinator.com/item?id=50020545",
+      "publisher": "Hacker News · Show HN",
+      "fetchedAt": "2026-10-11T11:31:41.487Z",
+      "verifiedAt": "2026-10-11T11:31:41.487Z",
+      "text": "Show HN: CircleIt – Circle something on a web page, your coding agent fixes it | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: CircleIt – Circle something on a web page, your coding agent fixes it ( circleit.ai ) 1 point by mintone 1 day ago | hide | past | favorite | discuss Hi HN! Agents have made our development so much faster and we've found that the bottleneck has moved to feedback from the rest of the team. We have marketers and sales teams that were screenshotting pages and providing notes via Google Docs which then had to be translated to prompts by devs. So we built CircleIt, a Chrome extension plus a Claude Code/Codex plugin. Anyone on the team can circle (and more!) things on any page (live/staging/dev), explain the change, and send it straight to the developer’s running agent. The screenshot, comment and meta information then goes straight to the agent. Then it makes the change and reports back, and the status updates in the sender’s browser. Feedback is routed to the right repo by matching the site address, and you can require approval for specific people or sites before anything reaches the agent. For us, small UI changes went from around a day of back-and-forth to a few minutes. We’d love feedback - if this is useful then that's great! help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:"
+    },
+    {
+      "id": "1b30245f8580f86bcc4685c8",
+      "title": "Route visual feedback to a coding agent · official product",
+      "url": "https://circleit.ai",
+      "publisher": "circleit.ai",
+      "fetchedAt": "2026-10-11T11:31:41.470Z",
+      "verifiedAt": "2026-10-11T11:31:41.470Z",
+      "text": "CircleIt Skip to content CircleIt Features Pricing Docs Sign in Start free Features Pricing Docs Sign in Circle it. Say it. Your agent fixes it. Mark up any web page in Chrome and press Send. Your running Claude Code or Codex session wakes up with the screenshots and the exact elements you marked, makes the change, and tells you what it did. Start free Try it in your browser A product page for the Everyday Mug, a $42 speckled stoneware mug from a small ceramics shop, is marked up in Chrome: a circle around its Bestseller badge with the comment \"Remove this badge\", a box around the price with \"Make the price bigger\", and a pin on the main photo, which shows the mug on a breakfast table, with \"Wrong image, use the front shot\". After Send, a Claude Code session in ~/Herd/kilnworth receives feedback #42, opens it, edits Show.vue, Gallery.vue and Price.vue, and resolves it: \"Removed the Bestseller badge, made the price 28px semibold and opened the gallery on the front shot.\" The page reloads with all three changes. kilnworth.test /products/everyday-mug Kilnworth Shop Journal About 0 Shop / Mugs & cups / Everyday Mug 3 Wrong image, use the front shot Bestseller 1 Remove this badge Everyday Mug Speckled stoneware, 12 oz 4.9 212 reviews $42 2 Make the price bigger Glaze: Oat Add to bag Ships in 2 to 4 days. Free shipping over $75. Draw Box Point Browse Note Send ⌘↵ Sent to kilnworth · Claude Code Delivered to Claude Code · ~/Herd/kilnworth Claude Code is working on it Resolved by Claude Code Reload page Removed the Bestseller badge, made the price 28px semibold and opened the gallery on the front shot. claude · ~/Herd/kilnworth > close the bag drawer on Esc ● Read(resources/js/components/BagDrawer.vue) ● Update(resources/js/components/BagDrawer.vue) ⎿ Added an Escape handler that closes the drawer ● Done. The drawer closes on Esc and puts focus back on the bag button. CircleIt feedback #42 for project kilnworth — page https://kilnworth.test/products/everyday-mug — from Ana, 3 annotations: (1) \"Remove this badge\" → main .product-info > span.badge; (2) \"Make the price bigger\" → main .product-info p.price; (3) \"Wrong image, use the front shot\" → main .gallery figure > img. Call the circleit_get_feedback tool with id 42 to see the annotated screenshots, then implement the changes and call circleit_set_status. ● circleit_get_feedback (id: 42) ⎿ 3 annotations · 2 screenshots · 1440×900 ● kilnworth.test is this project’s APP_URL, so this is the right codebase. Making the three changes. ● Update (resources/js/pages/Products/Show.vue) ⎿ Removed the Bestseller badge above the title ● Update (resources/js/components/Gallery.vue) ⎿ Opens on the front shot, not the breakfast-table photo ● Update (resources/js/components/Price.vue) ⎿ text-base font-medium → text-[28px] font-semibold ● circleit_set_status (id: 42, status: \"resolved\", message: \"Removed the Bestseller badge, made the price 28px semibold and opened the gallery on the front shot.\" ) ⎿ Feedback #42 marked resolved. > Pause No screenshots pasted into chat. No describing which button you mean. You point at the thing on the page. Your agent gets exactly that thing. Draw Box Point Kilnworth Everyday Mug $42 Add to bag Circle it. Open the extension on any page: localhost, staging or live. Draw around something, drag a box, point at one element, or select words and rewrite them. The page still scrolls and your marks stay put. Kilnworth Everyday Mug $42 1 Add to bag Make the price bigger Shift+↵ new line Save ↵ Say it. Type what should change next to each mark and press ⌘↵. Before it goes, you can see which project, folder and branch it is going to. Kilnworth Everyday Mug $42 Add to bag Resolved by Claude Code The price is now 28px semibold. Your agent fixes it. Your session picks it up, even if it was sitting idle. It reads your marks, edits the code and reports back, and the status updates in your browser as it goes. Works inside the agent you already use. CC Claude Code The plugin’s monitor wakes an idle session within seconds of you pressing Send. You do not have to keep a prompt running. › /plugin marketplace add circleit-ai/circleit-plugin › /plugin install circleit@circleit Cx Codex Feedback is queued to your Codex thread, and an idle thread picks it up within about ten seconds. Approve the plugin’s hooks once in /hooks. $ codex plugin marketplace add circleit-ai/circleit-plugin $ codex plugin add circleit@circleit Using another agent? Every item in your inbox has Copy as prompt, which gives any agent the same brief. Its screenshot links open for people in your team signed in to CircleIt. Let clients mark up staging themselves. Clients and teammates are free: invite them to your team, and they install the extension, circle what they want changed and press Send. No terminal, no tickets, no annotated PDFs. It waits for your agent. If nothing is running, feedback stays pending until the next session starts in that project. They see it land. Delivered, in progress, resolved: with your agent’s note, written for them. Everyone stays in their lane. People only see the projects and feedback of teams they belong to. Inbox Open 2 Resolved 1 All 3 Harbour & Co Form button is the wrong green Pending staging.harbourandco.com/contact Ana Ruiz 2m ago Can we use the team photo from the shoot instead? In progress staging.harbourandco.com/about Ana Ruiz CC Claude Code / 9m ago Boats, built properly. Headline wraps badly on mobile Resolved staging.harbourandco.com/boats Ana Ruiz Cx Codex / 1h ago /boats: shortened the headline and balanced the wrap. Checked at 390 wide. Pay for the developer. Everyone else is free. Plans from $9 a month, for the person whose Claude Code or Codex makes the changes. Clients and teammates who send feedback are free. How pricing works CircleIt Personal Just you $9 a month or $79 a year Team 1 developer included $25 Unlimited clients and teammates a month or $225 a year Your first 10 changes are free 1 2 3 4 5 6 7 8 9 10 A change is one press of Send, whether it has one mark or ten. No card needed to start. Start free Compare plans Questions Does it work on localhost and staging? Yes. The extension runs in your own browser, so it works on any page you can open there: localhost, .test domains, and staging sites behind a login. No browser lets an extension run on its own settings pages or on the Chrome Web Store. Do my clients need Claude Code or Codex? No. They need Chrome or Edge on a computer, the CircleIt extension and an invitation to your team. What they send goes to your developer’s Claude Code or Codex. What does it cost? Personal is $79 a year or $9 a month, just for you. Team is $225 a year or $25 a month and includes 1 developer; clients and teammates are free. Your first 10 changes are free, no card needed. What counts as a change? Each press of Send is one change, whether it has one mark or 50. Your agent’s replies and status updates don’t count. What happens if no agent is running? The feedback waits in your inbox. The next time you open that project in Claude Code or Codex, it picks the feedback up. You can also copy any item as a prompt and paste it into another agent. Can I check feedback before my developer gets it? Yes. Set a person or a site to Needs approval. Their feedback waits until the owner or an approver approves it. Approvers can edit a comment, take a mark out, or reject it with a note. How does feedback find the right project? Each project has a list of site addresses. When Claude Code or Codex starts in a project, it adds the addresses it finds: the APP_URL in the .env file, Herd and Valet .test domains, and local dev-server ports. You add staging and live addresses on the Projects page. The extension matches the page you are on to the project with that address. What exactly does my agent receive? A brief with the page address and your comments. For each mark it lists the elements under it: CSS selector, text, styles, HTML and the source file where it can tell. For a text edit it gives the exact words and what to change them to. Then come the screenshots, cropped, with your marks drawn on. Which browsers are supported? Chrome and Microsoft Edge on a computer, and other browsers built on Chrome, such as Brave and Arc. All of them install it from the Chrome Web Store; Edge asks you to allow extensions from other stores first. Safari, Firefox and phones aren’t supported. Stop describing it. Circle it. Start free Your first 10 changes are free. No card needed. CircleIt Design feedback, straight from the page to your coding agent. Product Features Mark up a page Change the words Claude Code and Codex Approvals Clients and teammates Pricing Who it’s for Agencies and freelancers Developers Compare All comparisons vs BugHerd vs Marker.io vs Pastel vs Agentation and Vibe Annotations vs pasting screenshots Resources Docs Security Support Legal Privacy Terms &copy; 2026 CircleIt. Claude Code and Codex are trademarks of their respective owners; CircleIt is not affiliated with either."
+    }
+  ],
+  "batch": {
+    "runId": "score-38135798566-1",
+    "draftSha256": "9d61b028f1681880a283609b723b5216f7c807ed830bb997113734733968c2c4",
+    "contextSha256": "e2e2a7df450348778aa39d2e4a3949f17836d4119fee461dec7fe09ffbff76ca",
+    "rulesSha256": "169b46bc42c95ed95ff7f623badd9482ce11166fb0b96a78bc169d26d7f76624",
+    "rulesCommit": "dafcca861e8fb90db73802ffb95bca826478a85b",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38135798566"
+  },
+  "origin": "github-actions-codex-scorer"
+}
