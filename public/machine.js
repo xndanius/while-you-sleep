@@ -1,7 +1,7 @@
-import {loopTiming,nextLocalTime} from './schedule.js?v=30c4c255f004';
-import {slotPresentation,currentDaySlots} from './slot-display.js?v=30c4c255f004';
-import {clockTiming,runTriggerLabel} from './clock-display.js?v=30c4c255f004';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=30c4c255f004';
+import {loopTiming,nextLocalTime} from './schedule.js?v=a7581070eafb';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=a7581070eafb';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=a7581070eafb';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=a7581070eafb';
 
 (() => {
   'use strict';
@@ -233,8 +233,9 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
         return `<span>${escape(title)}</span>`;
       };
       const unknown=registry.unknownAttribution||{},changes=Array.isArray(registry.recentChanges)?registry.recentChanges:[],exclusions=Array.isArray(registry.exclusions)?registry.exclusions:[];
+      const considerationGaps=Object.hasOwn(unknown,'unmappedConsiderations')?metric('Unmapped considered ideas',unknown.unmappedConsiderations)+metric('Invalid considered entries',unknown.invalidConsiderations)+metric('Entries beyond the counting limit',unknown.omittedConsiderations):'';
       $('sources-heading').textContent='Source leaderboard';
-      $('source-health').innerHTML=`<div class="source-registry-summary"><p>Measured yield since ${escape(formatDate(registry.coverageStartedAt))}. New measured zeroes are separate from unknown historical attribution.</p><dl class="source-registry-history">${metric('Legacy scans',unknown.legacyScans)}${metric('Legacy model runs',unknown.legacyRuns)}${metric('Legacy posts',unknown.legacyPosts)}${metric('Legacy LinkedIn picks',unknown.legacyPicks)}${metric('Unmapped candidates',unknown.unmappedCandidates)}</dl><div class="relay-links">${link('method/#method-sources','Source method and policy')}${link('api/sources.json','Public registry JSON')}${link('https://github.com/xndanius/while-you-sleep/blob/main/data/sources/registry.json','Registry in GitHub')}</div></div>
+      $('source-health').innerHTML=`<div class="source-registry-summary"><p>Measured yield since ${escape(formatDate(registry.coverageStartedAt))}. New measured zeroes are separate from unknown historical attribution.</p><p>Candidates are distinct considered or proposed ideas matched to frozen source items. Checked counts and scores require independent evidence.</p><dl class="source-registry-history">${metric('Legacy scans',unknown.legacyScans)}${metric('Legacy model runs',unknown.legacyRuns)}${metric('Legacy posts',unknown.legacyPosts)}${metric('Legacy LinkedIn picks',unknown.legacyPicks)}${metric('Unmapped candidates',unknown.unmappedCandidates)}${considerationGaps}</dl><div class="relay-links">${link('method/#method-sources','Source method and policy')}${link('api/sources.json','Public registry JSON')}${link('https://github.com/xndanius/while-you-sleep/blob/main/data/sources/registry.json','Registry in GitHub')}</div></div>
       ${registry.sources.length?registry.sources.map(source=>{
         const yieldRecord=source.yield||{},health=source.health||source.latestObservation||{},rank=source.rank||{};
         const rankValue=typeof rank.value==='number'&&Number.isFinite(rank.value)&&rank.value>=0?new Intl.NumberFormat('en-GB',{maximumFractionDigits:3}).format(rank.value):null;
