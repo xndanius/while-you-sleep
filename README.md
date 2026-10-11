@@ -56,7 +56,7 @@ Target model budget is under $0.50/day. Recorded token estimates are not invoice
 
 | Vilnius date | Cloud runs | Estimated USD | Coverage |
 | --- | ---: | ---: | --- |
-| 2026-10-11 | 5 | Unknown | Missing or partial counters |
+| 2026-10-11 | 6 | Unknown | Missing or partial counters |
 | 2026-10-10 | 4 | $0.07581 | Reported CLI counters |
 
 Standard-rate token estimates, not invoices. Unreported billing adjustments remain unknown. [Calculation and rates](docs/COSTS.md).
