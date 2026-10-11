@@ -196,7 +196,7 @@ test('trusted rejected proposal exits successfully and completes its scheduled s
   await Promise.all([
     cp(path.join(repository, 'lib'), path.join(directory, 'lib'), { recursive: true }),
     ...['prepare-improvement.mjs', 'apply-improvement.mjs', 'prepare-scheduled-job.mjs'].map(script => cp(path.join(repository, 'scripts', script), path.join(directory, 'scripts', script))),
-    cp(path.join(repository, 'public'), path.join(directory, 'public'), { recursive: true, filter: source => source === path.join(repository, 'public') || source === path.join(repository, 'public', 'schedule.js') }),
+    cp(path.join(repository, 'public'), path.join(directory, 'public'), { recursive: true, filter: source => source === path.join(repository, 'public') || ['schedule.js','cadence-config.js'].some(file=>source === path.join(repository, 'public', file)) }),
     symlink(path.join(repository, 'node_modules'), path.join(directory, 'node_modules'), 'dir'),
     writeFile(path.join(directory, 'RULES.md'), rules),
     ...[[runId + '-input', input], [runId, proposal]].map(([name, value]) => writeFile(path.join(directory, 'data', 'improvements', name + '.json'), JSON.stringify(value) + '\n')),
@@ -240,7 +240,7 @@ test('trusted runtime records a missing grader as an immutable rejection with un
     cp(path.join(repository, 'scripts', 'prepare-improvement.mjs'), path.join(directory, 'scripts', 'prepare-improvement.mjs')),
     cp(path.join(repository, 'scripts', 'apply-improvement.mjs'), path.join(directory, 'scripts', 'apply-improvement.mjs')),
     cp(path.join(repository, 'scripts', 'prepare-scheduled-job.mjs'), path.join(directory, 'scripts', 'prepare-scheduled-job.mjs')),
-    cp(path.join(repository, 'public'), path.join(directory, 'public'), { recursive: true, filter: source => source === path.join(repository, 'public') || source === path.join(repository, 'public', 'schedule.js') }),
+    cp(path.join(repository, 'public'), path.join(directory, 'public'), { recursive: true, filter: source => source === path.join(repository, 'public') || ['schedule.js','cadence-config.js'].some(file=>source === path.join(repository, 'public', file)) }),
     symlink(path.join(repository, 'node_modules'), path.join(directory, 'node_modules'), 'dir'),
     writeFile(path.join(directory, 'RULES.md'), rules),
     ...[[runId + '-input', input], [runId, proposal], [runId + '-blind', blind], [runId + '-labels', { runId, ...labels }]].map(([name, value]) => writeFile(path.join(directory, 'data', 'improvements', name + '.json'), JSON.stringify(value) + '\n')),

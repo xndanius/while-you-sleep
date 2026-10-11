@@ -1,6 +1,6 @@
 // Build records contain receipts; the browser clock only ages an unfilled slot.
 // A run attempt never becomes a publication time.
-import {publicationSlots,localParts} from './schedule.js?v=d286ac356b02';
+import {publicationSlots,localParts,schedule} from './schedule.js?v=663dfaa48031';
 const validTime=value=>value&&Number.isFinite(new Date(value).getTime());
 const covers=(run,id)=>{
   const scheduling=run.scheduling||{};
@@ -26,7 +26,7 @@ export function slotPresentation(slot,now=new Date()){
 // older day. Cadence comes from the current clock; receipts retain their exact
 // slot IDs and publication timestamps. This does not upgrade scheduler proof.
 export function currentDaySlots(data={},now=new Date()){
-  const clock=new Date(now),today=localParts(clock).day,slots=publicationSlots(clock);
+  const clock=new Date(now),today=localParts(clock).day,slots=publicationSlots(clock,data.schedule?.cadence);
   const known=new Map([...(data.schedule?.previousSlots||[]),...(data.schedule?.slots||[])].map(slot=>[slot.id,slot]));
   const posts=(data.posts||[]).filter(post=>validTime(post.publishedAt));
   const assigned=new Map();
@@ -39,7 +39,7 @@ export function currentDaySlots(data={},now=new Date()){
     const slot=slots.find(slot=>!assigned.has(slot.id)&&new Date(slot.scheduledAt)<=new Date(post.publishedAt));
     if(slot)assigned.set(slot.id,post);
   }
-  const atCap=posts.filter(post=>localParts(post.publishedAt).day===today).length>=3;
+  const cap=schedule(clock,data.schedule?.cadence).dailyCap||3,atCap=posts.filter(post=>localParts(post.publishedAt).day===today).length>=cap;
   return slots.map(slot=>{
     const receipt=known.get(slot.id)||{},post=assigned.get(slot.id);
     const attempt=(data.runs||[]).filter(run=>run.type==='loop'&&covers(run,slot.id)&&validTime(run.scheduling?.requestedAt||run.startedAt)).sort((a,b)=>new Date(b.scheduling?.requestedAt||b.startedAt)-new Date(a.scheduling?.requestedAt||a.startedAt))[0];
@@ -47,7 +47,8 @@ export function currentDaySlots(data={},now=new Date()){
     const attemptedAt=attempt?.scheduling?.requestedAt||attempt?.startedAt||receipt.attemptedAt||null;
     let state='scheduled',reason;
     if(!actualAt&&clock>=new Date(slot.scheduledAt)){
-      if(atCap){state='cap_reached';reason='The three-post cap is already reached for this Vilnius day.';}
+      if(['no_post','retry_exhausted'].includes(receipt.state||receipt.status)){state=receipt.state||receipt.status;reason=receipt.reason;}
+      else if(atCap){state='cap_reached';reason=`The ${cap}-post cap is already reached for this Vilnius day.`;}
       else if(receipt.state==='running'||receipt.status==='running'||attempt&&!validTime(attempt.finishedAt)&&attempt.status==='running'){
         state='running';reason='A trusted reservation is held; publication is not complete.';
       }

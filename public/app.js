@@ -1,6 +1,6 @@
-import {loopTiming} from './schedule.js?v=d286ac356b02';
-import {currentDaySlots} from './slot-display.js?v=d286ac356b02';
-import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=d286ac356b02';
+import {loopTiming} from './schedule.js?v=663dfaa48031';
+import {currentDaySlots} from './slot-display.js?v=663dfaa48031';
+import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=663dfaa48031';
 
 (() => {
   'use strict';
@@ -147,12 +147,12 @@ import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPos
   function renderSchedule() {
     if (!record) return;
     const cadence=loopTiming(record.status?.lastLoopAt),proof=record.schedule?.proof;
-    $('cadence-summary').textContent = 'Three slots a day';
-    $('cadence-times').innerHTML = `${cadence.publicationTimes.map(label=>`<span>${escape(label)}</span>`).join('')}<small>Vilnius time</small>`;
+    $('cadence-summary').textContent = cadence.hourlyActive ? 'Hourly idea checks' : 'Three slots a day';
+    $('cadence-times').innerHTML = `${cadence.hourlyActive?'<span>Every hour at :07</span>':cadence.publicationTimes.map(label=>`<span>${escape(label)}</span>`).join('')}<small>Vilnius time · up to ${cadence.dailyCap||3} posts a day</small>`;
     const slots=currentDaySlots(record);
     const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1);
     const slotLabel=dateLabel(latest?.plannedAt||cadence.latestSlotAt);
-    const slotNote=latest?latest.state==='published'?`The ${slotLabel} slot published at ${dateLabel(latest.actualAt)}.`:latest.state==='cap_reached'?`The ${slotLabel} slot reached the three-post daily cap.`:latest.state==='running'?`The ${slotLabel} slot is running; publication is not yet recorded.`:`The ${slotLabel} slot is ${latest.state.replace(/_/g,' ')}; no publication is recorded.`:cadence.slotState==='recorded'?'Latest slot has a recorded attempt.':`Publication for the ${slotLabel} slot is not recorded.`;
+    const slotNote=latest?latest.state==='published'?`The ${slotLabel} slot published at ${dateLabel(latest.actualAt)}.`:latest.state==='cap_reached'?`The ${slotLabel} slot reached the ${cadence.dailyCap||3}-post daily cap.`:latest.state==='no_post'?`The ${slotLabel} slot completed without a qualifying idea.`:latest.state==='retry_exhausted'?`The ${slotLabel} slot stopped after its failed retries.`:latest.state==='running'?`The ${slotLabel} slot is running; publication is not yet recorded.`:`The ${slotLabel} slot is ${latest.state.replace(/_/g,' ')}; no publication is recorded.`:cadence.slotState==='recorded'?'Latest slot has a recorded attempt.':`Publication for the ${slotLabel} slot is not recorded.`;
     const proofNote=proof?.state==='publication_observed'?'Scheduled publishing is verified.':proof?.state==='loop_observed'?'A scheduled loop is recorded; scheduled publication is not yet verified.':proof?.state==='trigger_observed'?'A schedule trigger is recorded; scheduled publishing is not yet verified.':'Scheduled publishing is not yet verified.';
     $('cadence-note').textContent=`Next planned loop: ${dateLabel(cadence.nextPublicationAt)} Vilnius. ${slotNote} ${proofNote}`;
   }

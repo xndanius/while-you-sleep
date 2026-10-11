@@ -3,8 +3,10 @@ import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {schedule,publicationSlots,dueJobs,previousLocalTime,localParts} from '../lib/config.mjs';
-import {loopTiming} from '../public/schedule.js';
+import {schedule as configuredSchedule,publicationSlots as configuredSlots,dueJobs as configuredJobs,previousLocalTime,localParts} from '../lib/config.mjs';
+import {loopTiming as configuredTiming} from '../public/schedule.js';
+import {LEGACY_CADENCE_CONFIG} from '../public/cadence-config.js';
+const schedule=date=>configuredSchedule(date,LEGACY_CADENCE_CONFIG),publicationSlots=date=>configuredSlots(date,LEGACY_CADENCE_CONFIG),dueJobs=date=>configuredJobs(date,LEGACY_CADENCE_CONFIG),loopTiming=(last,date)=>configuredTiming(last,date,LEGACY_CADENCE_CONFIG);
 import {schedulerProof,standaloneResearchRecords} from '../lib/scheduler-proof.mjs';
 
 test('Vilnius slots preserve minutes and identity over summer, winter and DST changes',()=>{

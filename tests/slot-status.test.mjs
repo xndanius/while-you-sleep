@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { publicationSlotStatus } from '../lib/slot-status.mjs';
-import { currentDaySlots } from '../public/slot-display.js';
+import { publicationSlotStatus as slotStatus } from '../lib/slot-status.mjs';
+import { currentDaySlots as browserSlots } from '../public/slot-display.js';
+
+const legacy={schema:1,mode:'legacy',activatedAt:null,relayConfirmedAt:null};
+const publicationSlotStatus=input=>slotStatus({...input,cadence:legacy});
+const currentDaySlots=(data,now)=>browserSlots({...data,schedule:{...data.schedule,cadence:legacy}},now);
 
 const now = new Date('2026-10-11T17:00:00Z');
 const slots = ['08','13','19'].map(hour=>`publish-2026-10-11-${hour}-07`);
@@ -47,4 +51,14 @@ test('slot rows preserve verified clock origins without making dispatch attempts
   assert.equal(manualPost[0].clock,null,'A later clock attempt cannot replace a published post’s own origin.');
   const browserRows=currentDaySlots({posts:[{...posts[0],scheduling:{slotId:slots[0]}}],runs:[run],schedule:{slots:manualPost}},now);
   assert.equal(browserRows[0].clock,null,'The browser also retains the published post’s original provenance.');
+});
+
+
+test('terminal checked refusals and exhausted failures remain honest in build and browser rows',()=>{
+ const reservations=[{id:'loop-4',runId:'loop-4',slotIds:[slots[0]]},{id:'loop-5',runId:'loop-5',slotIds:[slots[1]]}];
+ const outcomes=[{reservationId:'loop-4',slotOutcomes:[{slotId:slots[0],status:'no_post',reason:'No checked idea reached the threshold.'}]},{reservationId:'loop-5',slotOutcomes:[{slotId:slots[1],status:'retry_exhausted',reason:'Fresh source retrieval failed three times.'}]}];
+ const rows=publicationSlotStatus({reservations,outcomes,now});
+ assert.equal(rows[0].state,'no_post');assert.equal(rows[1].state,'retry_exhausted');assert.ok(rows.every(row=>row.actualAt===null));
+ const aged=currentDaySlots({schedule:{slots:rows}},new Date('2026-10-11T19:00:00Z'));
+ assert.equal(aged[0].state,'no_post');assert.equal(aged[0].reason,rows[0].reason);assert.equal(aged[1].state,'retry_exhausted');
 });

@@ -1,7 +1,7 @@
-import {loopTiming,nextLocalTime} from './schedule.js?v=d286ac356b02';
-import {slotPresentation,currentDaySlots} from './slot-display.js?v=d286ac356b02';
-import {clockTiming,runTriggerLabel} from './clock-display.js?v=d286ac356b02';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=d286ac356b02';
+import {loopTiming,nextLocalTime} from './schedule.js?v=663dfaa48031';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=663dfaa48031';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=663dfaa48031';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=663dfaa48031';
 
 (() => {
   'use strict';
@@ -125,7 +125,7 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
     }).join('')}</tbody></table></div>`:'';
     const pastDays=new Map();
     for(const slot of previous){const date=day(slot.plannedAt);if(!pastDays.has(date))pastDays.set(date,[]);pastDays.get(date).push(slot);}
-    $('publication-slots').innerHTML=table(slots)+[...pastDays.values()].reverse().map(table).join('')+'<p class="schedule-footnote">Publication times come from committed posts. Run starts and their delays are shown separately. Delayed gates catch up unfinished slots within the same Vilnius day, up to three posts.</p>';
+    $('publication-slots').innerHTML=table(slots)+[...pastDays.values()].reverse().map(table).join('')+`<p class="schedule-footnote">Publication times come from committed posts. Run starts and their delays are shown separately. Delayed gates catch up unfinished slots within the same Vilnius day, up to ${escape(data.schedule?.dailyCap||3)} posts. A completed check with no qualifying idea settles its slot without a post. Source failures and incomplete checks stay retryable, with at most three attempts per slot.</p>`;
   }
 
   function runTitle(type) {
@@ -169,11 +169,14 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
 
   function renderSchedule() {
     const schedule=loopTiming(data.status?.lastLoopAt),proof=data.schedule?.proof;
-    const hours=schedule.publicationTimes.join(' · ');
+    const hours=schedule.hourlyActive?'Every hour at :07':schedule.publicationTimes.join(' · ');
     const rows = [];
     if (hours) rows.push(['Research & publish',hours]);
     rows.push(['Hosted clock','15-minute environment waits · checks due slots'],['Backup publishing gate','Every 20 minutes · runs only when due'],['Other backup gates','Every 30 minutes · run only when due']);
-    if (schedule.researchEveryHours) rows.push(['Research scan',`Every ${schedule.researchEveryHours} hours at :${schedule.researchMinute}`]);
+    if (schedule.researchEveryHours) rows.push(['Research scan',`${schedule.researchEveryHours===1?'Every hour':`Every ${schedule.researchEveryHours} hours`} at :${schedule.researchMinute}`]);
+    rows.push(['Daily publication cap',String(schedule.dailyCap||3)],['Scoring threshold',`${data.scoringPolicy?.threshold??6} / 10`]);
+    if(schedule.hourlyActive)rows.push(['Hourly cadence activated',formatDate(schedule.cadence?.activatedAt)]);
+    else rows.push(['Hourly cadence','Ready after the best-feed relay switch is confirmed']);
     if (schedule.measurementTime || schedule.measureAt) rows.push(['Measure results',`${schedule.measurementTime || schedule.measureAt} daily`]);
     if (schedule.improvementTime || schedule.improveAt) rows.push(['Improve rules',`${schedule.improvementTime || schedule.improveAt} daily`]);
     if (schedule.nextResearchAt) rows.push(['Next research',formatDate(schedule.nextResearchAt)]);

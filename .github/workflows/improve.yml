@@ -42,6 +42,7 @@ jobs:
       job_key: ${{ steps.gate.outputs.jobKey }}
       scheduled_at: ${{ steps.gate.outputs.scheduledAt }}
       clock: ${{ steps.gate.outputs.clock }}
+      cadence: ${{ steps.gate.outputs.cadence }}
       clock_verified: ${{ steps.gate.outputs.clock_verified }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -76,6 +77,7 @@ jobs:
       SCHEDULED_JOB_KEY: ${{ needs.gate.outputs.job_key }}
       SCHEDULED_AT: ${{ needs.gate.outputs.scheduled_at }}
       SCHEDULED_CLOCK_JSON: ${{ needs.gate.outputs.clock }}
+      SCHEDULED_CADENCE_JSON: ${{ needs.gate.outputs.cadence }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -346,6 +348,7 @@ jobs:
       SCHEDULED_JOB_KEY: ${{ needs.gate.outputs.job_key }}
       SCHEDULED_AT: ${{ needs.gate.outputs.scheduled_at }}
       SCHEDULED_CLOCK_JSON: ${{ needs.gate.outputs.clock }}
+      SCHEDULED_CADENCE_JSON: ${{ needs.gate.outputs.cadence }}
       EXPECTED_INPUT_SHA256: ${{ needs.seed.outputs.input_sha256 }}
       EXPECTED_RESEARCH_SHA256: ${{ needs.seed.outputs.research_sha256 }}
       IMPROVEMENT_STAGE_RESULTS: ${{ toJSON(needs) }}

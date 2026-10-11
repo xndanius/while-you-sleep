@@ -80,6 +80,7 @@ jobs:
           SCHEDULED_JOB_KEY: ${{ steps.gate.outputs.jobKey }}
           SCHEDULED_AT: ${{ steps.gate.outputs.scheduledAt }}
           SCHEDULED_CLOCK_JSON: ${{ steps.gate.outputs.clock }}
+          SCHEDULED_CADENCE_JSON: ${{ steps.gate.outputs.cadence }}
       - if: always() && steps.gate.outputs.due == 'true'
         run: node scripts/commit-records.mjs research "$RUN_ID"
         env:

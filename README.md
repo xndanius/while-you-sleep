@@ -19,12 +19,12 @@ Historical posts keep their original checked content, IDs and publication times.
 ## Schedule · Europe/Vilnius
 
 - Primary clock: one authorized chain waits 15 minutes in the `clock` environment, checks due slots, records its tick and dispatches its successor. Queue time can add delay.
-- Publication slots: 08:07, 13:07 and 19:07; backup cron gates at :07/:27/:47 every hour.
-- Research slots: :23 every three hours; backup gates at :23/:53 every hour.
+- Publication slots are controlled by `public/cadence-config.js`: legacy 08:07, 13:07 and 19:07 until the best-feed Zap switch is confirmed; then hourly at :07 with a recorded activation instant and cap24. Backup cron gates stay at :07/:27/:47.
+- Research slots: :23 every three hours under legacy cadence, then every hour once hourly cadence is active. Backup gates stay at :23/:53.
 - Measurement: 21:37; backup gates at :13/:43 every hour.
 - Improvement: 22:13; backup gates at :13/:43 every hour. Invalid proposals are recorded green rejections; valid proposals undergo held-out trials and blinded grading. Adoption requires a higher score without safety or factual regressions.
 
-Skipped content gates call no model, commit no work record and do not deploy. The clock retains committed immutable receipts when it dispatches content. Empty ticks and claims keep their lease in public GitHub metadata without commits or Pages rebuilds. Duplicates stop before dispatching work; cron backups can restart a chain with no tick for over 45 minutes. Publication catches up every unfulfilled elapsed slot of the current Vilnius day up to three posts, including launch posts. Durable per-slot reservations prevent repeats and retain partial batch results. The machine shows tick time, the next earliest estimated tick, and planned versus actual slot times; it marks a stale clock stalled. [Timing and guards](docs/SCHEDULER.md).
+Skipped content gates call no model, commit no work record and do not deploy. The clock retains committed immutable receipts when it dispatches content. Empty ticks and claims keep their lease in public GitHub metadata without commits or Pages rebuilds. Duplicates stop before dispatching work; cron backups can restart a chain with no tick for over 45 minutes. Publication catches up every unfulfilled elapsed slot of the current Vilnius day up to the configured cap, including launch posts. Hourly catch-up batches contain at most six slots; complete independently checked refusals settle without a post, and operational failures stop after three attempts. Durable per-slot reservations prevent repeats and retain partial batch results. The machine shows tick time, the next earliest estimated tick, and planned versus actual slot times; it marks a stale clock stalled. [Timing and guards](docs/SCHEDULER.md).
 
 Real cron events exist: the 10 October 19:07 loop started at 23:01 and correctly skipped the full daily cap. This proves a trigger; checked automatic publication is a separate proof state. Clock-origin runs keep the GitHub event `workflow_dispatch` and require exact dispatch receipts plus authoritative parent metadata to distinguish them from manual diagnostics. The earlier one-hour cron trial with zero events remains an immutable historical observation. [Verification](data/scheduler/verification-20261011-052931.json).
 
@@ -34,7 +34,7 @@ RSS: https://xndanius.github.io/while-you-sleep/feed.xml
 
 Each item has a permanent /p/<id>/ link, stable post-ID GUID, publication time, short plain-text description and absolute JPEG enclosure. Permanent pages contain the full checked post, sources, canonical URL and Open Graph metadata. The machine reports **Website -> RSS -> Zapier -> LinkedIn Page**. Danielius via Claude confirmed the first LinkedIn post at 11:55 Vilnius on 11 October and the active Zap; engagement metrics remain unknown. [Relay contract](docs/PLATFORMS.md).
 
-The separate [best feed](https://xndanius.github.io/while-you-sleep/best.xml) contains only recorded LinkedIn picks. At 12:17 and 18:17 Vilnius, a deterministic job chooses the highest current checked weighted score from the preceding 12 hours, at least 7, excluding previous picks and posts published before activation. It records a pick or an honest empty window, with at most two picks a day. Each RSS item freezes the score used to select it; later rule changes cannot rewrite its relay text. The current Zapier feed remains `/feed.xml` until Danielius or Claude confirms the switch. Hourly publication stays inactive until that confirmation.
+The separate [best feed](https://xndanius.github.io/while-you-sleep/best.xml) contains only recorded LinkedIn picks. At 12:17 and 18:17 Vilnius, a deterministic job chooses the highest current checked weighted score from the preceding 12 hours, at least 7, excluding previous picks and posts published before activation. It records a pick or an honest empty window, with at most two picks a day. Each RSS item freezes the score used to select it; later rule changes cannot rewrite its relay text. Danielius confirmed that Zap now reads `/best.xml` at 15:10:58 Vilnius on 11 October. The recorded hourly activation follows that confirmation and preserves earlier slots.
 
 ## Credentials and metrics
 
@@ -52,7 +52,7 @@ There are no hand-written seed posts. The cloud loop generated, independently ch
 
 GitHub-hosted standard runners and Pages are available for public repositories without a paid hosting subscription. Environment wait time is not billable; the short claim and tick jobs still run normally. [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [environment waits](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments#wait-timer), [Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
-Target model budget is under $0.50/day. Recorded token estimates are not invoices; missing usage stays unknown. No account, subscription or payment was created for the v3 relay. [Calculation and rates](docs/COSTS.md).
+The hourly planning target is about $0.03 per loop run, roughly $0.70/day at 24 runs. This is a target, not measured hourly spending; extra repairs and daily improvement can increase it. Recorded token estimates are not invoices; missing usage stays unknown. No account, subscription or payment was created for the v3 relay. [Calculation and rates](docs/COSTS.md).
 
 <!-- MODEL_COSTS_START -->
 

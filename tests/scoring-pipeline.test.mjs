@@ -86,7 +86,8 @@ test('publication uses the unrounded weighted mean and scores remain inside cont
 async function runPublisher(t,{mutate=()=>{},liveText=source.text}={}){
  const root=await mkdtemp(path.join(os.tmpdir(),'wys-score-publication-'));t.after(()=>rm(root,{recursive:true,force:true}));
  await cp(new URL('../lib',import.meta.url),path.join(root,'lib'),{recursive:true});
- await mkdir(path.join(root,'public'));await cp(new URL('../public/schedule.js',import.meta.url),path.join(root,'public','schedule.js'));
+ await mkdir(path.join(root,'public'));for(const file of ['schedule.js','cadence-config.js'])await cp(new URL('../public/'+file,import.meta.url),path.join(root,'public',file));
+ await cp(new URL('../public/cadence-config.js',import.meta.url),path.join(root,'public','cadence-config.js'));
  await writeFile(path.join(root,'package.json'),JSON.stringify({type:'module'}));
  await mkdir(path.join(root,'scripts'));await cp(new URL('../scripts/publish-checked.mjs',import.meta.url),path.join(root,'scripts','publish-checked.mjs'));
  await symlink(fileURLToPath(new URL('../node_modules',import.meta.url)),path.join(root,'node_modules'),'dir');

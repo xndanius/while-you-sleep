@@ -84,6 +84,7 @@ jobs:
           SCHEDULED_JOB_KEY: ${{ steps.gate.outputs.jobKey }}
           SCHEDULED_AT: ${{ steps.gate.outputs.scheduledAt }}
           SCHEDULED_CLOCK_JSON: ${{ steps.gate.outputs.clock }}
+          SCHEDULED_CADENCE_JSON: ${{ steps.gate.outputs.cadence }}
           GOATCOUNTER_SITE: ${{ vars.GOATCOUNTER_SITE }}
           GOATCOUNTER_API_TOKEN: ${{ secrets.GOATCOUNTER_API_TOKEN }}
           SOCIAL_PROVIDER: linkedin-rss-relay

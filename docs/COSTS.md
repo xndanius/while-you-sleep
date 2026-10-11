@@ -77,4 +77,4 @@ If all required counters become available, it adds immutable `data/usage/<runId>
 
 The commit job shares the record concurrency lock, retries a rebased push up to three times and invokes Pages explicitly after writing a correction. Public data therefore reflects the corrected counters even though a GitHub-token commit does not trigger a normal push workflow.
 
-The configured target is under $0.50/day. The collector observes and reports usage; it does not itself enforce an OpenAI account spending limit or promise that target. Budget controls can consume these records without treating an unavailable total as zero.
+The hourly planning target is approximately $0.03 per loop run and $0.70 per day at 24 runs, before variable repairs and daily improvement. These are expectations from the v4 brief, not observed full-day costs. Empty clock ticks, deterministic LinkedIn selection and settled cheap gates make no model calls. The collector observes and reports usage; it does not itself enforce an OpenAI account spending limit or promise that target. Budget controls can consume these records without treating an unavailable total as zero.

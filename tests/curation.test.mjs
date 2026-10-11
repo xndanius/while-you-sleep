@@ -72,7 +72,7 @@ test('receipt validation blocks changed originals, extra fields, foreign workflo
 });
 test('cheap planner can import and run in a clean checkout without third-party modules',async t=>{
  const root=await mkdtemp(path.join(os.tmpdir(),'wys-curation-node-only-'));t.after(()=>rm(root,{recursive:true,force:true}));
- await cp(new URL('../lib',import.meta.url),path.join(root,'lib'),{recursive:true});await mkdir(path.join(root,'public'));await cp(new URL('../public/schedule.js',import.meta.url),path.join(root,'public','schedule.js'));await writeFile(path.join(root,'package.json'),'{"type":"module"}');
+ await cp(new URL('../lib',import.meta.url),path.join(root,'lib'),{recursive:true});await mkdir(path.join(root,'public'));for(const file of ['schedule.js','cadence-config.js'])await cp(new URL('../public/'+file,import.meta.url),path.join(root,'public',file));await writeFile(path.join(root,'package.json'),'{"type":"module"}');
  const code="import {curationDecision} from './lib/curation.mjs';console.log(curationDecision({config:{schema:1,enabled:false,activatedAt:null}}).due)";
  const result=spawnSync(process.execPath,['--input-type=module','-e',code],{cwd:root,encoding:'utf8'});assert.equal(result.status,0,result.stderr);assert.equal(result.stdout.trim(),'false');
 });

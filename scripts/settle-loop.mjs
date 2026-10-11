@@ -7,6 +7,8 @@ export async function settleLoop(runId,env=process.env) {
   if(reservation.schedulingSha256!==env.LOOP_SCHEDULING_SHA||reservation.slotId!==scheduling.slotId)throw new Error('Loop reservation does not match its trusted scheduling decision.');
   let existing;try{existing=await readJSON(dataPath('slot-outcomes',runId));}catch(error){if(error.code!=='ENOENT')throw error;}
   if(existing)return existing;
-  const run=await readJSON(dataPath('runs',runId)),outcome=slotOutcome(reservation,run,{posts:await records('posts')});
+  const run=await readJSON(dataPath('runs',runId));
+  if(run.id!==runId||run.type!=='loop')throw new Error('Only the matching trusted loop record may settle its reservation.');
+  const outcome=slotOutcome(reservation,run,{posts:await records('posts')});
   await writeJSON(dataPath('slot-outcomes',runId),outcome,{immutable:true});return outcome;
 }

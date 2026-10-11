@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { latestScheduledSlot, scheduledDecision, trustedScheduledMetadata, prepareScheduledJob } from '../scripts/prepare-scheduled-job.mjs';
+import { latestScheduledSlot as configuredSlot, scheduledDecision as configuredDecision, trustedScheduledMetadata, prepareScheduledJob } from '../scripts/prepare-scheduled-job.mjs';
+import {LEGACY_CADENCE_CONFIG} from '../public/cadence-config.js';
+const latestScheduledSlot=(kind,now)=>configuredSlot(kind,now,LEGACY_CADENCE_CONFIG),scheduledDecision=input=>configuredDecision({...input,cadence:LEGACY_CADENCE_CONFIG});
 
 const complete = slot => ({ ...slot, eventName: 'schedule', scheduleStatus: 'completed' });
 

@@ -267,7 +267,7 @@ test('aged slot reasons agree with future, waiting and missed states',()=>{
 
 test('after Vilnius midnight an old build yields all current-day slots without migrating yesterday receipts',()=>{
   const oldId='publish-2026-10-11-08-07';
-  const data={schedule:{proof:{state:'trigger_observed'},slots:[{id:oldId,scheduledAt:'2026-10-11T05:07:00Z',state:'published',actualAt:'2026-10-11T05:25:00Z',postId:'old'}]},posts:[{id:'old',publishedAt:'2026-10-11T05:25:00Z',scheduling:{slotId:oldId},eventName:'schedule'}],runs:[]};
+  const data={schedule:{cadence:{schema:1,mode:'legacy',activatedAt:null,relayConfirmedAt:null},proof:{state:'trigger_observed'},slots:[{id:oldId,scheduledAt:'2026-10-11T05:07:00Z',state:'published',actualAt:'2026-10-11T05:25:00Z',postId:'old'}]},posts:[{id:'old',publishedAt:'2026-10-11T05:25:00Z',scheduling:{slotId:oldId},eventName:'schedule'}],runs:[]};
   const midnight=currentDaySlots(data,'2026-10-11T21:10:00Z');
   assert.deepEqual(midnight.map(slot=>slot.id),['publish-2026-10-12-08-07','publish-2026-10-12-13-07','publish-2026-10-12-19-07']);
   assert.deepEqual(midnight.map(slot=>slot.localTime),['08:07','13:07','19:07']);
@@ -281,7 +281,7 @@ test('after Vilnius midnight an old build yields all current-day slots without m
 
 test('current-day receipts merge exact post slots and retain manual attempts without changing schedule proof',()=>{
   const id='publish-2026-10-12-08-07';
-  const data={schedule:{proof:{state:'trigger_observed'},slots:[]},posts:[{id:'current',publishedAt:'2026-10-12T05:25:00Z',scheduling:{slotId:id,eventName:'workflow_dispatch'},runId:'loop-123-1'}],runs:[{id:'loop-123-1',type:'loop',eventName:'workflow_dispatch',modelExecuted:true,startedAt:'2026-10-12T05:15:00Z',finishedAt:'2026-10-12T05:26:00Z',status:'completed',scheduling:{slotIds:[id],requestedAt:'2026-10-12T05:15:00Z'}}]};
+  const data={schedule:{cadence:{schema:1,mode:'legacy',activatedAt:null,relayConfirmedAt:null},proof:{state:'trigger_observed'},slots:[]},posts:[{id:'current',publishedAt:'2026-10-12T05:25:00Z',scheduling:{slotId:id,eventName:'workflow_dispatch'},runId:'loop-123-1'}],runs:[{id:'loop-123-1',type:'loop',eventName:'workflow_dispatch',modelExecuted:true,startedAt:'2026-10-12T05:15:00Z',finishedAt:'2026-10-12T05:26:00Z',status:'completed',scheduling:{slotIds:[id],requestedAt:'2026-10-12T05:15:00Z'}}]};
   const slots=currentDaySlots(data,'2026-10-12T06:30:00Z');
   assert.equal(slots[0].state,'published');
   assert.equal(slots[0].actualAt,'2026-10-12T05:25:00Z');
@@ -296,4 +296,13 @@ test('current-day receipts merge exact post slots and retain manual attempts wit
   assert.equal(attempt.actualAt,null);
   assert.equal(attempt.state,'missed');
   assert.equal(attempt.eventName,'workflow_dispatch');
+});
+
+
+test('hourly browser cadence reaches the next day without moving yesterday publication receipts',()=>{
+ const cadence={schema:1,mode:'hourly',activatedAt:'2026-10-11T12:15:00.000Z',relayConfirmedAt:'2026-10-11T12:10:00.000Z'};
+ const data={schedule:{cadence,slots:[{id:'publish-2026-10-11-13-07',actualAt:'2026-10-11T10:20:00Z',state:'published'}]},posts:[]};
+ const rows=currentDaySlots(data,'2026-10-11T21:10:00Z');
+ assert.equal(rows.length,24);assert.equal(rows[0].localTime,'00:07');assert.equal(rows[0].state,'waiting');assert.equal(rows[0].actualAt,null);
+ assert.ok(rows.slice(1).every(row=>row.state==='scheduled'));
 });

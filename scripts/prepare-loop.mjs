@@ -5,6 +5,7 @@ import { ROOT, validId, sha256, stableJSON, writeJSON } from '../lib/storage.mjs
 import { loopDecision, slotOutcome, reservationSlotIds } from '../lib/loop-schedule.mjs';
 import { githubApiGet } from '../lib/usage.mjs';
 import { verifyClockDispatch } from '../lib/clock-provenance.mjs';
+import {DEFAULT_CADENCE_CONFIG} from '../public/cadence-config.js';
 
 async function records(root,directory) {
   const dir=path.join(root,'data',directory);let names;
@@ -15,11 +16,11 @@ async function records(root,directory) {
 // A missing settlement is never treated as an expired lock on time alone.
 // Only GitHub's terminal source run plus the committed public-post state permits
 // recovery. API failures leave the reservation held without another model call.
-export async function prepareLoop({ root=ROOT,env=process.env,now=new Date(),apiGet=githubApiGet }={}) {
+export async function prepareLoop({ root=ROOT,env=process.env,now=new Date(),apiGet=githubApiGet,cadence=DEFAULT_CADENCE_CONFIG }={}) {
   const runId=env.RUN_ID;if(!validId(runId))throw new Error('Invalid loop run ID.');
   const clock=await verifyClockDispatch({kind:'loop',root,env,apiGet,now});
   const [posts,reservations,outcomes]=await Promise.all(['posts','slot-reservations','slot-outcomes'].map(dir=>records(root,dir)));
-  const input={runId,eventName:env.GITHUB_EVENT_NAME||'unknown',triggerCron:env.LOOP_TRIGGER_CRON||null,githubRunId:env.GITHUB_RUN_ID,githubRunUrl:env.GITHUB_RUN_ID?`https://github.com/xndanius/while-you-sleep/actions/runs/${env.GITHUB_RUN_ID}`:null,clock,bootstrap:!clock&&env.BOOTSTRAP==='true',now,posts,reservations,outcomes};
+  const input={runId,eventName:env.GITHUB_EVENT_NAME||'unknown',triggerCron:env.LOOP_TRIGGER_CRON||null,githubRunId:env.GITHUB_RUN_ID,githubRunUrl:env.GITHUB_RUN_ID?`https://github.com/xndanius/while-you-sleep/actions/runs/${env.GITHUB_RUN_ID}`:null,clock,bootstrap:!clock&&env.BOOTSTRAP==='true',now,posts,reservations,outcomes,cadence};
   const preliminary=loopDecision(input);
   const relevantSlots=new Set(preliminary.missedSlots.map(slot=>slot.id));
   if(preliminary.bootstrap)relevantSlots.add('bootstrap-initial');
@@ -30,7 +31,9 @@ export async function prepareLoop({ root=ROOT,env=process.env,now=new Date(),api
     let source;try{source=JSON.parse(await apiGet(`repos/xndanius/while-you-sleep/actions/runs/${reservation.githubRunId}`,{maxBytes:2*1024*1024,env}));}catch{continue;}
     if(source.id!==Number(reservation.githubRunId)||source.repository?.full_name!=='xndanius/while-you-sleep'||source.head_branch!=='main'||source.path!=='.github/workflows/loop.yml'||source.status!=='completed')continue;
     const existing=posts.filter(post=>post.runId===reservation.runId).map(post=>post.id);
-    const outcome=slotOutcome(reservation,{id:reservation.runId,published:existing},{settledByRunId:runId,now:Number.isFinite(Date.parse(source.updated_at))?new Date(source.updated_at):now,posts});
+    let completedRun=null;try{completedRun=JSON.parse(await fs.readFile(path.join(root,'data','runs',reservation.runId+'.json'),'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
+    const recoveredRun=completedRun?.id===reservation.runId?{...completedRun,published:existing}:{id:reservation.runId,published:existing};
+    const outcome=slotOutcome(reservation,recoveredRun,{settledByRunId:runId,now:Number.isFinite(Date.parse(source.updated_at))?new Date(source.updated_at):now,posts});
     recovered.push(outcome);outcomes.push(outcome);
   }
   const record=needsRecovery?loopDecision(input):preliminary;
@@ -38,7 +41,7 @@ export async function prepareLoop({ root=ROOT,env=process.env,now=new Date(),api
   if(record.decision==='run'){
     for(const outcome of recovered)await writeJSON(path.join(root,'data','slot-outcomes',outcome.id+'.json'),outcome,{immutable:true});
     await writeJSON(path.join(root,'data','scheduling',runId+'.json'),record,{immutable:true});
-    await writeJSON(path.join(root,'data','slot-reservations',runId+'.json'),{id:runId,runId,slotId:record.slotId,slotIds:record.slotIds,slots:record.slots,createdAt:record.requestedAt,githubRepository:'xndanius/while-you-sleep',githubRunId:record.githubRunId,schedulingSha256},{immutable:true});
+    await writeJSON(path.join(root,'data','slot-reservations',runId+'.json'),{id:runId,runId,slotId:record.slotId,slotIds:record.slotIds,slots:record.slots,cadence:record.cadence,assessmentContractVersion:record.assessmentContractVersion,maxBatchSize:record.maxBatchSize,attemptCounts:record.attemptCounts,dailyCap:record.dailyCap,createdAt:record.requestedAt,githubRepository:'xndanius/while-you-sleep',githubRunId:record.githubRunId,schedulingSha256},{immutable:true});
   }else{
     // No repository records, commits, models or deployment on a cheap skip.
     await writeJSON(path.join(root,'.run','loop-gate.json'),record);

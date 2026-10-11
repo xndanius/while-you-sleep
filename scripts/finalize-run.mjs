@@ -1,5 +1,6 @@
 import {spawnSync} from 'node:child_process';
-import {readJSON,writeJSON,dataPath,records} from '../lib/storage.mjs';
+import {readJSON,writeJSON,dataPath,records,safeError} from '../lib/storage.mjs';
+import {appendFile} from 'node:fs/promises';
 import {validateLoopScheduling} from '../lib/loop-schedule.mjs';
 import {settleLoop} from './settle-loop.mjs';
 const runId=process.argv[2];
@@ -13,15 +14,21 @@ if(scheduling?.decision==='skip'){
 }else{
 const child=spawnSync(process.execPath,['scripts/publish-checked.mjs',runId],{encoding:'utf8'});
 if(child.stdout)process.stdout.write(child.stdout);
+if(child.stderr)process.stderr.write(safeError({message:child.stderr.trim()})+'\n');
 if(child.status!==0){
  let existing;try{existing=await readJSON(dataPath('runs',runId))}catch{}
  if(!existing){
   let research;try{research=await readJSON(dataPath('research',runId));}catch{}
   let usage;try{usage=await readJSON(dataPath('usage',runId));}catch{usage={inputTokens:null,outputTokens:null,costUsd:null};}
   const published=(await records('posts')).filter(post=>post.runId===runId).map(post=>post.id);
-  await writeJSON(dataPath('runs',runId),{id:runId,type:'loop',status:published.length?'completed_with_failure':'failed_closed',startedAt:scheduling?.requestedAt||research?.createdAt||new Date().toISOString(),finishedAt:new Date().toISOString(),eventName:scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown',...(scheduling?{scheduling}:{}),modelExecuted:!!research,published,rejected:[{reason:'Research, model, independent check or deterministic publication gate did not complete.'}],steps:[{stage:'check',status:'failed',message:'Nothing was published without a valid separate checker approval.'}],githubRunUrl:scheduling?.githubRunUrl||research?.githubRunUrl||null,engine:'official openai/codex-action',usage},{immutable:true});
+  const reason=safeError({message:child.error?.message||child.stderr.trim()||'Research, model, independent check or deterministic publication gate did not complete.'});
+  await writeJSON(dataPath('runs',runId),{id:runId,type:'loop',status:published.length?'completed_with_failure':'failed_closed',assessmentOutcome:'incomplete',operationalFailures:[{stage:'publication',code:'publication_pipeline_incomplete',reason}],startedAt:scheduling?.requestedAt||research?.createdAt||new Date().toISOString(),finishedAt:new Date().toISOString(),eventName:scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown',...(scheduling?{scheduling}:{}),modelExecuted:!!research,published,rejected:[{reason}],steps:[{stage:'check',status:'failed',message:reason}],githubRunUrl:scheduling?.githubRunUrl||research?.githubRunUrl||null,engine:'official openai/codex-action',usage},{immutable:true});
  }
  console.log('Loop recorded its rejection/failure; its reserved slot remains eligible for a bounded retry.');
 }
 if(scheduling)await settleLoop(runId);
+const finalized=await readJSON(dataPath('runs',runId));
+const operationalFailure=child.status!==0||finalized.operationalFailures?.length>0;
+if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,`operational_failure=${operationalFailure}\nrun_status=${finalized.status}\n`);
+console.log(JSON.stringify({runId,operationalFailure,assessmentOutcome:finalized.assessmentOutcome||'legacy',status:finalized.status}));
 }

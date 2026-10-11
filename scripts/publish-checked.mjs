@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { ROOT, dataPath, readJSON, writeJSON, records, sha256, stableJSON, safeError, hash } from '../lib/storage.mjs';
-import { checkApproval, deterministicCheck, contentHash,frozenScoringPolicyReasons } from '../lib/validation.mjs';
+import { checkApproval, deterministicCheck, contentHash,frozenScoringPolicyReasons,completedAssessmentReasons,assessmentJobReasons } from '../lib/validation.mjs';
 import { fetchPublic, plainText } from '../lib/research.mjs';
 import { renderCard } from '../lib/card.mjs';
 import { localParts } from '../lib/config.mjs';
@@ -26,7 +26,13 @@ try{
   if(policyFailures.length)throw new Error(policyFailures.join(' '));
   if(Date.now()-Date.parse(context.createdAt)>3*3600000||!Number.isFinite(Date.parse(context.createdAt)))throw new Error('Verified evidence snapshot is missing or older than three hours.');
   if(Number(draft.repairAttempt||0)>1)throw new Error('Only one writer repair is allowed.');
+  const contract=scheduling?.assessmentContractVersion===1;
+  if((contract?1:null)!==(context.assessmentContractVersion||null))throw new Error('Independent assessment contract differs from the frozen scheduling reservation.');
+  const assessmentFailures=completedAssessmentReasons(draft,context,manifest);
+  if(assessmentFailures.length)throw new Error(assessmentFailures.join(' '));
+  if(!Array.isArray(draft.posts)||!contract&&!draft.posts.length)throw new Error('Writer proposed no assessable posts under the legacy contract.');
   const targetCount=scheduling?.targetCount||Math.min(3,Math.max(1,Number(process.argv[3]||draft.targetCount||1)));
+  const dailyCap=scheduling?.dailyCap||DAILY_PUBLICATION_CAP;
   if(scheduling&&draft.targetCount!==targetCount)throw new Error('Writer target count differs from the trusted slot reservation.');
   const previous=await records('posts');
   const todayCount=dailyPublicationCount(previous);
@@ -34,6 +40,7 @@ try{
   const reservedSlots=scheduling?.slots||[scheduling].filter(Boolean);
   if(scheduling&&!scheduling.bootstrap&&previous.some(post=>reservedSlots.some(slot=>post.scheduling?.slotId===(slot.id?.startsWith('publish-')?slot.id:slot.slotId))))throw new Error('A reserved publication slot already has a committed post.');
   const results=checkApproval(draft,context,manifest),published=[],rejected=[...(draft.rejected||[])],steps=[...(draft.steps||[])];
+  const operationalFailures=assessmentJobReasons(draft,process.env.MODEL_JOB_RESULTS,{required:contract&&process.env.GITHUB_ACTIONS==='true'}).map(reason=>({stage:'model_jobs',code:'model_stage_incomplete',reason}));
   await writeJSON(dataPath('candidates',runId),{runId,createdAt:research.createdAt,candidates:draft.candidates||[],picked:draft.posts.map(p=>({id:p.id,title:p.title,sourceIds:p.sourceIds})),rejected:draft.rejected||[]},{immutable:true});
   const publishedUrls=[];
   for(const result of results){
@@ -41,7 +48,7 @@ try{
     const post=draft.posts.find(p=>p.id===result.postId);
     const reasons=[...result.reasons,...deterministicCheck(post,[...research.sources,...context.sources],previous,{scoringPolicy:context.scoringPolicy})];
     if(!reasons.length && weightedOverall(post.scoring.criteria,context.scoringPolicy.weights)<context.scoringPolicy.threshold)reasons.push(`Overall score is below the frozen publish threshold of ${context.scoringPolicy.threshold}.`);
-    if(todayCount+published.length>=DAILY_PUBLICATION_CAP){steps.push({stage:'publish',status:'skipped',at:new Date().toISOString(),message:'Daily cap reached: three posts are already public for this Vilnius date.'});break;}
+    if(todayCount+published.length>=dailyCap){steps.push({stage:'publish',status:'skipped',at:new Date().toISOString(),message:`Daily cap reached: ${dailyCap} posts are already public for this Vilnius date.`});break;}
     if(published.length>=targetCount)break;
     if(!reasons.length){
       for(const sourceId of post.sourceIds){
@@ -53,7 +60,7 @@ try{
             const occurs=claim.criterion?text.includes(claim.evidenceQuote):text.toLowerCase().includes(plainText(claim.evidenceQuote).toLowerCase());
             if(!occurs)throw new Error('A checked claim or score evidence quote no longer exists on the live source.');
           }
-        }catch(error){reasons.push(`${source.url}: ${safeError(error)}`);}
+        }catch(error){const reason=safeError(error);reasons.push(`${source.url}: ${reason}`);operationalFailures.push({stage:'live_source',code:'live_evidence_unavailable',sourceId,url:source.url,reason});}
       }
     }
     if(reasons.length){rejected.push({postId:post.id,title:post.title,reason:[...new Set(reasons)].join(' ')});continue;}
@@ -79,13 +86,32 @@ try{
     published.push(post.id);previous.push(record);publishedUrls.push(post.productUrl);
     steps.push({stage:'publish',status:'completed',at:publishedAt,message:`Published “${post.title}” and its 1080×1350 JPEG after separate checker approval.`,postId:post.id});
   }
+  // No-candidate decisions still need a currently reachable public evidence
+  // snapshot. Empty model output cannot turn a network outage into success.
+  if(contract&&!draft.posts.length){
+    let available=0;
+    for(const source of context.sources){
+      try{const page=await fetchPublic(source.url);if(plainText(page.text).length<100)throw new Error('Live source contains too little readable evidence.');available++;}
+      catch(error){operationalFailures.push({stage:'live_source',code:'empty_assessment_evidence_unavailable',sourceId:source.id,url:source.url,reason:safeError(error)});}
+    }
+    if(!available&&!operationalFailures.length)operationalFailures.push({stage:'live_source',code:'empty_assessment_evidence_unavailable',reason:'No fresh public evidence was available for the empty assessment.'});
+  }
   for(let i=0;i<rejected.length;i++)await writeJSON(dataPath('rejections',`${runId}-${String(i).padStart(3,'0')}`),{...rejected[i],runId,at:new Date().toISOString()},{immutable:true});
-  const run={id:runId,type:'loop',status:published.length>=targetCount?'completed':todayCount>=3?'skipped_daily_cap':published.length?'completed_with_rejections':'rejected',startedAt:research.createdAt,finishedAt:new Date().toISOString(),candidatesFound:draft.candidates?.length||0,picked:draft.posts.length,rejected,published,steps:[{stage:'research',status:'completed',at:research.createdAt,message:`Fetched ${research.sources.length} live source records; ${research.health.filter(h=>h.status==='failed').length} feeds reported failure.`},{stage:'write',status:'completed',at:context.createdAt,message:`Codex CLI wrote ${draft.posts.length} proposed posts.`},{stage:'check',status:results.every(r=>r.pass)?'passed':'rejected',at:manifest.checkedAt||context.createdAt,message:'Separate Codex checker decisions bound to exact draft and evidence hashes.'},...steps],githubRunUrl:research.githubRunUrl||null,version:process.env.RULES_SHA256?`rules-${process.env.RULES_SHA256.slice(0,12)}`:draft.version||'v1',rulesSha256:process.env.RULES_SHA256||null,rulesCommit:process.env.RULES_COMMIT||null,usage:trustedUsage,engine:'official openai/codex-action',sourceSnapshotSha256:context.sourceSnapshotSha256};
+  const completed=contract&&!operationalFailures.length;
+  const run={id:runId,type:'loop',status:operationalFailures.length?(published.length?'completed_with_failure':'failed_closed'):published.length>=targetCount?'completed':todayCount>=dailyCap?'skipped_daily_cap':published.length?'completed_with_rejections':completed?'completed_no_post':'rejected',startedAt:research.createdAt,finishedAt:new Date().toISOString(),candidatesFound:draft.candidates?.length||0,picked:draft.posts.length,rejected,published,steps:[{stage:'research',status:'completed',at:research.createdAt,message:`Fetched ${research.sources.length} live source records; ${(research.health||[]).filter(h=>h.status==='failed').length} feeds reported failure.`},{stage:'write',status:'completed',at:context.createdAt,message:`Codex CLI wrote ${draft.posts.length} proposed posts.`},{stage:'check',status:results.every(r=>r.pass)?'passed':'rejected',at:manifest.checkedAt||context.createdAt,message:'Separate Codex checker decisions bound to exact draft and evidence hashes.'},...steps,...operationalFailures.map(failure=>({stage:failure.stage,status:'failed',at:new Date().toISOString(),message:failure.reason}))],githubRunUrl:research.githubRunUrl||null,version:process.env.RULES_SHA256?`rules-${process.env.RULES_SHA256.slice(0,12)}`:draft.version||'v1',rulesSha256:process.env.RULES_SHA256||null,rulesCommit:process.env.RULES_COMMIT||null,usage:trustedUsage,engine:'official openai/codex-action',sourceSnapshotSha256:context.sourceSnapshotSha256};
+  if(contract){
+    run.assessmentOutcome=completed?'completed':'incomplete';run.operationalFailures=operationalFailures;
+    if(completed){
+      const assessedRefusals=rejected.filter(rejection=>results.some(result=>result.postId===rejection.postId));
+      const reason=!draft.posts.length?manifest.completedAssessment.reason:assessedRefusals.length?assessedRefusals.map(rejection=>`${rejection.title}: ${rejection.reason}`).join(' ').slice(0,500):`Assessment completed with ${published.length} checked publications; no further supported candidate was proposed. ${manifest.completedAssessment.reason}`.slice(0,500);
+      run.checkedAssessment={schema:1,completed:true,contractVersion:1,runId,schedulingSha256:process.env.LOOP_SCHEDULING_SHA,slotIds:scheduling.slotIds||[scheduling.slotId],draftSha256:context.draftSha256,contextSha256:sha256(stableJSON(context)),rulesSha256:context.rulesSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,policySha256:context.scoringPolicy.policySha256,checkerRunId:`${runId}-independent-check`,completedAt:run.finishedAt,decision:manifest.completedAssessment.decision,reason,checkedPostIds:results.filter(result=>result.pass).map(result=>result.postId)};
+    }
+  }
   run.eventName=scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown';run.modelExecuted=true;
   run.startedAt=scheduling?.requestedAt||research.createdAt;
   run.githubRunUrl=scheduling?.githubRunUrl||research.githubRunUrl||null;
   if(scheduling)run.scheduling=scheduling;
   await writeJSON(dataPath('runs',runId),run,{immutable:true});
   console.log(JSON.stringify({runId,status:run.status,published,rejected:rejected.length}));
-  if(published.length<targetCount&&todayCount<3)process.exitCode=1;
+  if(operationalFailures.length||!completed&&published.length<targetCount&&todayCount<dailyCap)process.exitCode=1;
 }catch(error){console.error(safeError(error));process.exitCode=1;}

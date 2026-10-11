@@ -283,6 +283,9 @@ jobs:
             data/checks/${{ env.RUN_ID }}-first.json
           retention-days: 7
   record:
+    outputs:
+      operational_failure: ${{ steps.finalize.outputs.operational_failure }}
+      run_status: ${{ steps.finalize.outputs.run_status }}
     needs: [gate, writer, checker, repair, final_check]
     if: always() && needs.gate.result == 'success' && needs.gate.outputs.run_models == 'true'
     runs-on: ubuntu-latest
@@ -329,8 +332,10 @@ jobs:
           RULES_COMMIT: ${{ needs.writer.outputs.repo_sha }}
         run: node scripts/import-artifact.mjs .staging/data "$RUN_ID"
       - name: Finalize checked publication and settle every reserved slot
+        id: finalize
         if: always()
         env:
+          MODEL_JOB_RESULTS: ${{ toJSON(needs) }}
           EXPECTED_DRAFT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
@@ -347,3 +352,13 @@ jobs:
       contents: read
       pages: write
       id-token: write
+  report-status:
+    needs: [record, pages]
+    if: always() && needs.record.outputs.operational_failure == 'true'
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Report the operational failure after committing and deploying its record
+        run: |
+          echo '::error::The loop recorded an operational failure. See the public machine record for the bounded reason and retry state.'
+          exit 1
