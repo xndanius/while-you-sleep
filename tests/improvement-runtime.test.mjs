@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { makeProposerInput, gradeOrUnavailable } from '../lib/improvement-runtime.mjs';
+import { makeProposerInput, gradeOrUnavailable, proposalTrialReadiness, isCompletedProposalRejection } from '../lib/improvement-runtime.mjs';
 import { evaluateImprovement } from '../lib/improvement.mjs';
 import { sha256, stableJSON } from '../lib/storage.mjs';
 
@@ -156,6 +156,78 @@ test('failed or cancelled model stages reject even a complete higher-scoring gra
   assert.equal(gradeOrUnavailable(grade, blind, {}).status, 'unavailable', 'missing results fail closed when stage results are supplied');
 });
 
+test('invalid proposals reject before trials but damaged frozen evidence remains an operational failure', () => {
+  const { input, proposal } = fixtures();
+  assert.equal(proposalTrialReadiness(input, proposal).status, 'ready');
+  const invalid = { ...proposal, newRules: proposal.newRules.replace('Plain words and truthful claims.\n\n', 'Plain words and truthful claims.\n\n\n') };
+  const result = proposalTrialReadiness(input, invalid);
+  assert.equal(result.status, 'rejected');
+  assert.deepEqual(result.reasons, ['Current rules must remain verbatim; only the declared paragraph may be appended.']);
+  assert.equal(proposalTrialReadiness(input, null).status, 'rejected');
+  assert.throws(() => proposalTrialReadiness({ ...input, sourceSnapshotSha256: 'tampered' }, invalid), /Frozen improvement input/);
+  assert.throws(() => proposalTrialReadiness(input, invalid, { expectedInputSha256: 'changed' }), /trusted frozen seed/);
+});
+
+test('only an exact trusted validation rejection with successful upstream jobs completes its daily slot', () => {
+  const { input, proposal } = fixtures();
+  const invalid = { ...proposal, newRules: proposal.newRules.replace('Plain words and truthful claims.', 'Invent unsupported claims.') };
+  const validation = proposalTrialReadiness(input, invalid);
+  const stages = { seed: { result: 'success' }, propose: { result: 'success' }, 'validate-proposal': { result: 'success' } };
+  assert.equal(isCompletedProposalRejection(input, invalid, validation, stages), true);
+  for (const stage of Object.keys(stages)) {
+    for (const result of ['failure', 'cancelled', 'skipped']) {
+      assert.equal(isCompletedProposalRejection(input, invalid, validation, { ...stages, [stage]: { result } }), false);
+    }
+  }
+  for (const changed of [undefined, { ...validation, reasons: [] }, { ...validation, proposalSha256: 'changed' }, { ...validation, status: 'ready' }]) {
+    assert.equal(isCompletedProposalRejection(input, invalid, changed, stages), false);
+  }
+  assert.equal(isCompletedProposalRejection(input, proposal, proposalTrialReadiness(input, proposal), stages), false);
+});
+
+test('trusted rejected proposal exits successfully and completes its scheduled slot without running trials or changing rules', async t => {
+  const directory = await mkdtemp(path.join(tmpdir(), 'wys-proposal-rejection-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const { input, proposal } = fixtures();
+  const runId = input.runId;
+  proposal.newRules = proposal.newRules.replace('Plain words and truthful claims.\n\n', 'Plain words and truthful claims.\n\n\n');
+  await mkdir(path.join(directory, 'scripts'), { recursive: true });
+  await mkdir(path.join(directory, 'data', 'improvements'), { recursive: true });
+  await Promise.all([
+    cp(path.join(repository, 'lib'), path.join(directory, 'lib'), { recursive: true }),
+    ...['prepare-improvement.mjs', 'apply-improvement.mjs', 'prepare-scheduled-job.mjs'].map(script => cp(path.join(repository, 'scripts', script), path.join(directory, 'scripts', script))),
+    cp(path.join(repository, 'public'), path.join(directory, 'public'), { recursive: true, filter: source => source === path.join(repository, 'public') || source === path.join(repository, 'public', 'schedule.js') }),
+    symlink(path.join(repository, 'node_modules'), path.join(directory, 'node_modules'), 'dir'),
+    writeFile(path.join(directory, 'RULES.md'), rules),
+    ...[[runId + '-input', input], [runId, proposal]].map(([name, value]) => writeFile(path.join(directory, 'data', 'improvements', name + '.json'), JSON.stringify(value) + '\n')),
+  ]);
+  const env = {
+    GITHUB_EVENT_NAME: 'schedule', SCHEDULED_JOB_KEY: 'improve-2026-10-10-22-13', SCHEDULED_AT: '2026-10-10T19:13:00.000Z',
+    EXPECTED_INPUT_SHA256: sha256(stableJSON(input)),
+    IMPROVEMENT_STAGE_RESULTS: JSON.stringify({ seed: { result: 'success' }, propose: { result: 'success' }, 'validate-proposal': { result: 'success' } }),
+  };
+  const command = (script, ...args) => execute(process.execPath, [path.join(directory, 'scripts', script), ...args], { cwd: directory, env, timeout: 10000, maxBuffer: 100000 });
+  const validated = await command('prepare-improvement.mjs', 'validate', runId);
+  assert.equal(JSON.parse(validated.stdout).ready, 'false');
+  assert.match(validated.stdout, /Current rules must remain verbatim/);
+  await assert.rejects(readFile(path.join(directory, '.run', 'trial', 'input.json')), error => error.code === 'ENOENT');
+  await command('apply-improvement.mjs', runId);
+  const version = JSON.parse(await readFile(path.join(directory, 'data', 'versions', runId + '.json'), 'utf8'));
+  assert.equal(version.status, 'rejected');
+  assert.equal(version.scheduleStatus, 'completed');
+  assert.equal(version.evaluationStatus, 'proposal_rejected');
+  assert.equal(version.adopted, false);
+  assert.equal(version.baselineScore, null);
+  assert.equal(version.challengerScore, null);
+  assert.deepEqual(version.evaluations, []);
+  assert.match(version.reason, /Current rules must remain verbatim/);
+  assert.equal(version.eventName, 'schedule');
+  assert.equal(version.jobKey, env.SCHEDULED_JOB_KEY);
+  assert.equal(version.scheduledAt, env.SCHEDULED_AT);
+  assert.equal(await readFile(path.join(directory, 'RULES.md'), 'utf8'), rules);
+  assert.match(await readFile(path.join(directory, '.run', 'improvement-commit-message.txt'), 'utf8'), /not run: proposal failed deterministic validation/);
+});
+
 test('trusted runtime records a missing grader as an immutable rejection with unchanged rules', async t => {
   const directory = await mkdtemp(path.join(tmpdir(), 'wys-improvement-runtime-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
@@ -218,8 +290,16 @@ test('model jobs receive only their assigned isolated artifacts and skip Git che
     assert.doesNotMatch(text, /codex-args:.*--skip-git-repo-check/);
   }
   const trusted = job('prepare-trials');
+  assert.match(trusted, /if:\s*needs\.validate-proposal\.outputs\.ready == 'true'/);
   assert.match(trusted, /uses:\s*actions\/checkout@/);
   assert.match(trusted, /name:\s*improvement-input(?:\s|$)/);
   assert.match(trusted, /node scripts\/prepare-improvement\.mjs trial/);
   assert.doesNotMatch(trusted, /uses:\s*openai\/codex-action@/, 'full inputs remain in a trusted preparation job without model access');
+  const validation = job('validate-proposal');
+  assert.match(validation, /node scripts\/prepare-improvement\.mjs validate/);
+  assert.match(validation, /name:\s*improvement-validation/);
+  assert.doesNotMatch(validation, /uses:\s*openai\/codex-action@/);
+  assert.match(job('commit'), /node scripts\/prepare-improvement\.mjs import "\$RUN_ID" \.staging\/validation validation/);
+  assert.match(job('gate'), /node scripts\/prepare-improvement\.mjs gate/);
+  assert.match(workflow, /cron: '13,43 \* \* \* \*'/);
 });

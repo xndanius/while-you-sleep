@@ -1,7 +1,9 @@
 name: Improve one rule with blind held-out trials
 on:
   schedule:
-    - cron: '13 22 * * *'
+    # Cheap half-hour gates catch up the daily 22:13 slot without model calls
+    # or commits after its terminal adoption/rejection has been recorded.
+    - cron: '13,43 * * * *'
       timezone: Europe/Vilnius
   workflow_dispatch:
 permissions:
@@ -111,9 +113,45 @@ jobs:
           path: .run/proposer/proposal.json
           include-hidden-files: true
           if-no-files-found: error
-  prepare-trials:
+  validate-proposal:
     needs: [gate, seed, propose]
     if: needs.propose.result == 'success'
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.validate.outputs.ready }}
+    env:
+      RUN_ID: ${{ needs.gate.outputs.run_id }}
+      EXPECTED_INPUT_SHA256: ${{ needs.seed.outputs.input_sha256 }}
+      EXPECTED_RESEARCH_SHA256: ${{ needs.seed.outputs.research_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-input
+          path: .staging/input
+      - run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/input input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-proposal
+          path: .staging/proposal
+      - run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/proposal proposal
+      - id: validate
+        name: Reject invalid proposals as a successful decision
+        run: node scripts/prepare-improvement.mjs validate "$RUN_ID"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: improvement-validation
+          path: .run/validation.json
+          if-no-files-found: error
+  prepare-trials:
+    needs: [gate, seed, propose, validate-proposal]
+    if: needs.validate-proposal.outputs.ready == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -256,7 +294,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
   commit:
-    needs: [gate, seed, propose, prepare-trials, trials, blind, grade]
+    needs: [gate, seed, propose, validate-proposal, prepare-trials, trials, blind, grade]
     if: always() && needs.gate.outputs.due == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -305,6 +343,14 @@ jobs:
       - if: steps.proposal.outcome == 'success'
         continue-on-error: true
         run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/proposal proposal
+      - id: validation
+        if: needs.validate-proposal.result == 'success'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: improvement-validation
+          path: .staging/validation
+      - if: steps.validation.outcome == 'success'
+        run: node scripts/prepare-improvement.mjs import "$RUN_ID" .staging/validation validation
       - id: baseline
         if: needs.trials.result == 'success'
         continue-on-error: true
