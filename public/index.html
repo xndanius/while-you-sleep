@@ -47,9 +47,15 @@
 
       <section class="feed-section" id="feed" aria-labelledby="feed-heading">
         <div class="section-heading">
-          <div><div class="eyebrow">From source to small business</div><h2 id="feed-heading">The latest ideas <span id="post-count" class="heading-count"></span></h2></div>
+          <div><div class="eyebrow">From source to small business</div><h2 id="feed-heading">The ideas <span id="post-count" class="heading-count"></span></h2></div>
           <div class="feed-tabs" role="group" aria-label="Choose ideas to display"><button class="active" id="all-tab" type="button" aria-pressed="true">All ideas</button><button id="saved-tab" type="button" aria-pressed="false">Saved <span id="saved-count"></span></button></div>
         </div>
+        <div class="feed-controls" aria-label="Sort and filter ideas">
+          <div class="feed-sort" role="group" aria-label="Sort ideas"><button class="active" id="newest-sort" type="button" aria-pressed="true">Newest</button><button id="best-sort" type="button" aria-pressed="false">Best</button></div>
+          <label class="feed-filter" for="minimum-score"><span>Minimum score</span><select id="minimum-score"><option value="any">Any score</option><option value="6">6+</option><option value="7">7+</option><option value="8">8+</option></select></label>
+          <label class="feed-filter" for="feed-period"><span>Period</span><select id="feed-period"><option value="24h">24 hours</option><option value="7d">7 days</option><option value="all" selected>All time</option></select></label>
+        </div>
+        <p class="feed-view-note" id="feed-view-note" role="status" aria-live="polite">Newest first · any score · all time</p>
         <div class="feed-notice" id="feed-notice" role="status" aria-live="polite"></div>
         <div id="posts" class="posts" aria-busy="true"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>Reading the feed…</h3><p>Fetching the latest posts and their sources.</p></div></div>
         <div class="feed-bottom"><span id="feed-updated">Updates automatically every minute.</span><button class="text-button" id="refresh-feed" type="button">Refresh now <span aria-hidden="true">↻</span></button></div>

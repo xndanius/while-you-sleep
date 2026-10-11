@@ -1,5 +1,6 @@
 import {loopTiming} from './schedule.js';
 import {currentDaySlots} from './slot-display.js';
+import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js';
 
 (() => {
   'use strict';
@@ -24,6 +25,7 @@ import {currentDaySlots} from './slot-display.js';
   const saved = new Set(readStorage(localStorage, 'wys-saved', []));
   let posts = [];
   let currentTab = 'all';
+  let feedView = readFeedView(window.location.search);
   let fetching = false;
   let hasLoaded = false;
   let observer;
@@ -48,6 +50,35 @@ import {currentDaySlots} from './slot-display.js';
     return `<a class="source-link" href="${escape(url)}" target="_blank" rel="noopener noreferrer" title="${escape(title)}">${escape(label)} <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>`;
   }
 
+  function scoreMarkup(post,publicURL){
+    const overall=overallScore(post);
+    if(overall===null)return '<p class="feed-score-pending">Score pending independent check.</p>';
+    const criteria=[['ease','Ease','Ease to start'],['profit','Profit','Profit potential — a hypothesis'],['feasibility','Feasibility','Student build in 2 weeks'],['autonomy','Autonomy','Autonomy'],['evidence','Evidence','Evidence']];
+    return `<div class="feed-score"><a class="feed-overall-score" href="${escape(publicURL)}" aria-label="Overall score ${overall.toFixed(1)} out of 10. Read the score reasons."><span>Score</span><strong>${overall.toFixed(1)}<small> / 10</small></strong></a><dl class="feed-criterion-scores">${criteria.map(([key,label,title])=>{const value=post.scoring.criteria?.[key]?.value;return `<div title="${escape(title)}"><dt>${label}</dt><dd>${Number.isInteger(value)&&value>=1&&value<=10?value:'—'}<span class="sr-only"> out of 10</span></dd></div>`;}).join('')}</dl></div>`;
+  }
+
+  function syncFeedControls(){
+    for(const sort of ['newest','best']){
+      $(`${sort}-sort`).classList.toggle('active',feedView.sort===sort);
+      $(`${sort}-sort`).setAttribute('aria-pressed',String(feedView.sort===sort));
+    }
+    $('minimum-score').value=feedView.min;
+    $('feed-period').value=feedView.period;
+  }
+
+  function setFeedView(next){
+    const url=feedViewURL(window.location.href,{...feedView,...next});
+    feedView=readFeedView(new URL(url).search);
+    if(url!==window.location.href)window.history.pushState(null,'',url);
+    syncFeedControls();
+    render();
+  }
+
+  function visiblePosts(){
+    const source=currentTab==='saved'?posts.filter(post=>saved.has(String(post.id))):posts;
+    return filterAndSortPosts(source,feedView);
+  }
+
   function postMarkup(post, index) {
     const id = String(post.id);
     const title = plain(post.title) || 'Untitled idea';
@@ -65,6 +96,7 @@ import {currentDaySlots} from './slot-display.js';
       <div class="post-top"><div class="post-meta"><span class="post-number">${String(index + 1).padStart(2, '0')}</span><span class="meta-separator" aria-hidden="true"></span><time datetime="${escape(post.publishedAt || '')}">${escape(dateLabel(post.publishedAt))}</time></div><div class="verified-label"><span aria-hidden="true">✓</span> Checked by the loop</div></div>
       <div class="post-content"><div class="post-image-column"><a class="post-image-link" href="${escape(imageURL)}" target="_blank" rel="noopener noreferrer" aria-label="Open image card for ${escape(title)}"><img class="post-image" src="${escape(imageURL)}" alt="${escape(imageAlt)}" loading="lazy" width="1080" height="1350" data-fallback="${escape(imageFallback)}"></a><p class="post-image-caption">One idea. A small version you can build.<br>Open the card to see it full size.</p></div>
       <div class="post-copy"><h3 id="title-${escape(anchorId(id))}"><a href="${escape(publicURL)}">${escape(title)}</a></h3>${post.promise ? `<p class="post-promise">${paragraphs(post.promise)}</p>` : ''}
+        ${scoreMarkup(post,publicURL)}
         <div class="post-body-grid">${post.whatItIs ? `<section class="post-field"><h4>What it is</h4><p>${paragraphs(post.whatItIs)}</p></section>` : ''}${post.whoPays ? `<section class="post-field"><h4>Who pays</h4><p>${paragraphs(post.whoPays)}</p></section>` : ''}${loop.length ? `<section class="post-field full"><h4>How the loop runs</h4><ol class="idea-loop">${loop.map((step) => `<li>${escape(step)}</li>`).join('')}</ol></section>` : ''}</div>
         ${post.evidence || uncertainty ? `<section class="post-evidence"><h4>The evidence</h4>${post.evidence ? `<p>${paragraphs(post.evidence)}</p>` : ''}${uncertainty ? `<p class="uncertainty"><strong>What we don’t know:</strong> ${paragraphs(uncertainty)}</p>` : ''}</section>` : ''}
         ${actions.length ? `<section class="first-hours"><h4>Build a small version · your first 24 hours</h4><ol>${actions.map((action) => `<li>${escape(action)}</li>`).join('')}</ol></section>` : ''}
@@ -83,17 +115,22 @@ import {currentDaySlots} from './slot-display.js';
 
   function render() {
     updateSavedCount();
-    const filtered = currentTab === 'saved' ? posts.filter((post) => saved.has(String(post.id))) : posts;
+    const filtered = visiblePosts();
     $('post-count').textContent = hasLoaded ? `(${filtered.length})` : '';
+    const period=feedView.period==='24h'?'last 24 hours':feedView.period==='7d'?'last 7 days':'all time';
+    $('feed-view-note').textContent=`${hasLoaded?`${filtered.length} ${filtered.length===1?'idea':'ideas'} · `:''}${feedView.sort==='best'?'Highest score first':'Newest first'} · ${feedView.min==='any'?'any score':`score ${feedView.min}+`} · ${period}${currentTab==='saved'?' · saved on this browser':''}`;
     $('posts').setAttribute('aria-busy', 'false');
     observer?.disconnect();
     if (!filtered.length) {
-      $('posts').innerHTML = currentTab === 'saved'
+      const hasFilters=feedView.min!=='any'||feedView.period!=='all';
+      $('posts').innerHTML = hasLoaded&&hasFilters&&(currentTab!=='saved'||posts.some(post=>saved.has(String(post.id))))
+        ? '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>No ideas match these filters.</h3><p>Try a lower minimum score or a longer period.</p><button class="button reset-feed-filters" type="button" data-reset-filters>Clear filters</button></div>'
+        : currentTab === 'saved'
         ? '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>A place for the ideas you keep.</h3><p>Tap “Save idea” on any post to keep it here on this browser.</p><a href="#feed" data-show-all>Browse all ideas <span aria-hidden="true">↗</span></a></div>'
         : '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>The first ideas are on their way.</h3><p>The loop publishes after research and a separate source check. Its recorded progress is on the machine page.</p><a href="machine/">See the loop log <span aria-hidden="true">↗</span></a></div>';
       return;
     }
-    $('posts').innerHTML = filtered.map((post) => postMarkup(post, posts.indexOf(post))).join('');
+    $('posts').innerHTML = filtered.map((post,index) => postMarkup(post,index)).join('');
     $('posts').querySelectorAll('.post-image').forEach((image) => {
       image.addEventListener('error', () => { image.parentNode.innerHTML = image.dataset.fallback; }, {once:true});
     });
@@ -104,12 +141,6 @@ import {currentDaySlots} from './slot-display.js';
         observer.unobserve(entry.target);
       }),{threshold:0.15});
       $('posts').querySelectorAll('.post').forEach((post) => observer.observe(post));
-    }
-    if (window.location.hash && !hasLoaded) {
-      try {
-        const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
-        if (target?.classList.contains('post')) target.scrollIntoView();
-      } catch { /* A malformed fragment should not interrupt the feed. */ }
     }
   }
 
@@ -148,9 +179,13 @@ import {currentDaySlots} from './slot-display.js';
       $('feed-signal').className = `signal-dot${scheduledVerified?' live':''}`;
       $('feed-notice').classList.remove('visible');
       $('feed-notice').textContent = '';
-      if (changed) render();
+      const firstLoad=!hasLoaded;
       hasLoaded = true;
-      $('post-count').textContent = `(${currentTab === 'saved' ? posts.filter((post) => saved.has(String(post.id))).length : posts.length})`;
+      if (changed) render();
+      else if(feedView.period!=='all')render();
+      if(firstLoad&&window.location.hash){
+        try{document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView();}catch{ /* A malformed fragment does not interrupt the feed. */ }
+      }
       $('feed-updated').textContent = `Refreshed ${new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Vilnius',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date())} Vilnius · every minute`;
     } catch {
       $('feed-signal').className = 'signal-dot error';
@@ -168,8 +203,14 @@ import {currentDaySlots} from './slot-display.js';
 
   $('all-tab').addEventListener('click', () => { currentTab = 'all'; render(); });
   $('saved-tab').addEventListener('click', () => { currentTab = 'saved'; render(); });
+  $('newest-sort').addEventListener('click',()=>setFeedView({sort:'newest'}));
+  $('best-sort').addEventListener('click',()=>setFeedView({sort:'best'}));
+  $('minimum-score').addEventListener('change',()=>setFeedView({min:$('minimum-score').value}));
+  $('feed-period').addEventListener('change',()=>setFeedView({period:$('feed-period').value}));
+  window.addEventListener('popstate',()=>{feedView=readFeedView(window.location.search);syncFeedControls();render();});
   $('refresh-feed').addEventListener('click', refresh);
   $('posts').addEventListener('click', (click) => {
+    if(click.target.closest('[data-reset-filters]')){setFeedView({min:DEFAULT_FEED_VIEW.min,period:DEFAULT_FEED_VIEW.period});return;}
     if (click.target.closest('[data-show-all]')) { click.preventDefault(); currentTab = 'all'; render(); return; }
     const button = click.target.closest('[data-save]');
     if (!button) return;
@@ -192,5 +233,6 @@ import {currentDaySlots} from './slot-display.js';
   document.addEventListener('visibilitychange', () => { if (!document.hidden) { renderSchedule(); refresh(); } });
   setInterval(() => { renderSchedule(); if (!document.hidden) refresh(); }, 60000);
   updateSavedCount();
+  syncFeedControls();
   refresh();
 })();
