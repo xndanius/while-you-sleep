@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {hash,canonicalURL} from '../lib/storage.mjs';
 import {parseSourcePage,validateSource,scanSourceDefinitions,sourceSeedCatalog,sourceDefinitions,inferSourceKind,extractPublicFeedLinks,plainText} from '../lib/research.mjs';
 const now='2026-10-11T12:00:00.000Z';
@@ -10,10 +11,31 @@ function page(text,url='https://example.com/feed',contentType='text/html'){
 const rss=(url='https://product.example.com/one')=>`<?xml version="1.0"?><rss version="2.0"><channel><title>Public</title><item><title>Receipt parser</title><link>${url}</link><description><![CDATA[Extracts receipts &amp; exports CSV. Human review is required.]]></description></item></channel></rss>`;
 
 test('all original and requested seeds have canonical fixed IDs; no source is locally pre-admitted',()=>{
- assert.equal(sourceDefinitions.length,13);assert.equal(sourceSeedCatalog.length,33);assert.equal(new Set(sourceSeedCatalog.map(value=>value.id)).size,sourceSeedCatalog.length);
+ assert.equal(sourceDefinitions.length,13);assert.equal(sourceSeedCatalog.length,35);assert.equal(new Set(sourceSeedCatalog.map(value=>value.id)).size,sourceSeedCatalog.length);
  for(const value of sourceSeedCatalog){assert.equal(value.id,hash(canonicalURL(value.url)));assert.ok(value.reason);assert.equal(value.eligible,undefined);}
  for(const name of ['SaaS','microsaas','indiehackers','automation','LocalLLaMA','ChatGPTCoding'])assert.ok(sourceSeedCatalog.some(value=>value.name===`Reddit · r/${name}`));
  assert.ok(sourceSeedCatalog.some(value=>value.kind==='unparsed-listing'));assert.ok(sourceSeedCatalog.some(value=>value.url==='https://github.com/trending'));
+});
+
+test('n8n category SSR cards retain exact public detail identities and literal capability excerpts',async()=>{
+ const url='https://n8n.io/workflows/categories/document-extraction',html=await readFile(new URL('./fixtures/n8n-workflow-category.html',import.meta.url),'utf8');
+ const items=parseSourcePage(definition('n8n-workflows',url),page(html,url));
+ assert.equal(items.length,2);assert.equal(items[0].title,'Talk to Your Google Sheets Using ChatGPT-5');assert.equal(items[0].url,'https://n8n.io/workflows/7639-talk-to-your-google-sheets-using-chatgpt-5');assert.equal(items[1].url,'https://n8n.io/workflows/10566-process-large-documents-with-ocr-using-subworkflowai-and-gemini');
+ for(const item of items){assert.equal(item.id,hash(item.url));assert.equal(item.productUrl,item.url);assert.equal(item.discoveryKind,'public-workflow-template');assert.ok(item.text.length<=1200);assert.match(item.evidenceNote,/not proof/);}
+ assert.ok(items[0].text.includes("This n8n workflow template creates an intelligent data analysis chatbot that can answer questions about data stored in Google Sheets using OpenAI's GPT-5 Mini model."));
+ assert.equal(inferSourceKind(url),'n8n-workflows');assert.equal(inferSourceKind(items[0].url),'html');
+ const scan=await scanSourceDefinitions([definition('n8n-workflows',url)],{fetchPage:async()=>page(html,url)});assert.equal(scan.observations[0].itemCount,2);assert.equal(scan.originMap[0].sourceId,items[0].id);assert.deepEqual(scan.originMap[0].feedIds,[hash(url)]);assert.equal(scan.originMap[0].productUrl,items[0].productUrl);
+});
+
+test('n8n listing adapter excludes navigation, scripts, foreign cards and unverified shells and never calls an API',async()=>{
+ const url='https://n8n.io/workflows/categories/invoice-processing',card=(href,title='A literal receipt workflow',classes='workflow-result-item')=>`<a class="${classes}" href="${href}"><h3>${title}</h3><div>Extract invoice fields for human review.</div></a>`;
+ const good=card('/workflows/123-receipt-review/'),invalid=[card('/workflows/categories/ai/'),card('https://outside.example.org/workflows/123-foreign/'),card('//n8n.io.evil.org/workflows/123-foreign/'),card('/workflows/0-invalid/'),card('/workflows/123-receipt-review/?redirect=https://outside.example.org'),card('javascript:alert(1)'),card('/workflows/124-ungrounded/','Navigation only','not-workflow-result-item'),`<script>${card('/workflows/125-script/')}</script>`].join('');
+ const items=parseSourcePage(definition('n8n-workflows',url),page(good+invalid+good,url));assert.equal(items.length,1);assert.equal(items[0].url,'https://n8n.io/workflows/123-receipt-review');
+ const many=Array.from({length:30},(_,index)=>card(`/workflows/${index+1}-bounded-${index}/`)).join('');assert.equal(parseSourcePage(definition('n8n-workflows',url),page(many,url)).length,20);
+ assert.throws(()=>parseSourcePage(definition('n8n-workflows',url),page('<div>Load workflows with JavaScript</div>',url)),/no readable public item/);
+ assert.throws(()=>parseSourcePage(definition('n8n-workflows',url),page(good,'https://outside.example.org/')),/public n8n HTML origin/);
+ assert.throws(()=>parseSourcePage(definition('n8n-workflows',url),page(good,url,'application/json')),/public n8n HTML origin/);
+ let fetched=false;const refused=await validateSource({name:'Forbidden template API',kind:'n8n-workflows',url:'https://api.n8n.io/api/templates/search'},{fetchPage:async()=>{fetched=true;throw Error('Must not fetch the API.');}});assert.equal(refused.eligible,false);assert.equal(refused.code,'invalid_definition');assert.equal(fetched,false);
 });
 
 test('RSS and Atom parse complete bounded feeds and preserve contiguous literal evidence text',()=>{
