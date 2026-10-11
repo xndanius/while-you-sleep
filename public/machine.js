@@ -1,5 +1,5 @@
 import {loopTiming} from './schedule.js';
-import {slotPresentation} from './slot-display.js';
+import {slotPresentation,currentDaySlots} from './slot-display.js';
 
 (() => {
   'use strict';
@@ -67,14 +67,16 @@ import {slotPresentation} from './slot-display.js';
     const latestLoop=data.runs?.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
     const cadence=loopTiming(data.status?.lastLoopAt||latestLoop?.startedAt);
     $('next-published').textContent=formatDate(cadence.nextPublicationAt);
-    const slots=(data.schedule?.slots||[]).map(slot=>slotPresentation(slot));
+    const slots=currentDaySlots(data);
     const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1);
     $('loop-slot-state').textContent=latest?`${latest.state==='cap_reached'?'Daily cap reached':human(latest.state)} · ${shortTime(latest.plannedAt)}${latest.actualAt?` · published ${shortTime(latest.actualAt)}`:''}`:`${cadence.slotState==='recorded'?'Attempt recorded':cadence.slotState==='waiting'?'Waiting':cadence.slotState==='late'?'Late':'Missed'} · ${shortTime(cadence.latestSlotAt)}`;
     renderPublicationSlots(slots);
   }
 
   function renderPublicationSlots(slots){
-    const previous=(data.schedule?.previousSlots||[]).map(slot=>slotPresentation(slot));
+    const todayIds=new Set(slots.map(slot=>slot.id));
+    const previousById=new Map([...(data.schedule?.previousSlots||[]),...(data.schedule?.slots||[])].filter(slot=>!todayIds.has(slot.id)).map(slot=>[slot.id,slot]));
+    const previous=[...previousById.values()].map(slot=>slotPresentation(slot)).sort((a,b)=>new Date(a.plannedAt)-new Date(b.plannedAt));
     if(!slots.length&&!previous.length){$('publication-slots').innerHTML='<p class="muted">No slot receipts are recorded for the current day.</p>';return;}
     const table=rows=>rows.length?`<div class="slot-table-wrap"><table class="slot-table"><caption>${escape(day(rows[0].plannedAt))}</caption><thead><tr><th scope="col">Planned · Vilnius</th><th scope="col">Actual publication / run</th><th scope="col">Publication delay</th><th scope="col">State</th></tr></thead><tbody>${rows.map(slot=>{
       const actual=slot.actualAt?formatDate(slot.actualAt):'Not published';
@@ -86,7 +88,9 @@ import {slotPresentation} from './slot-display.js';
       const delay=slot.actualAt?`${number(slot.delayMinutes)} min`:['late','missed'].includes(slot.state)&&elapsed!==null?`${number(elapsed)} min overdue`:'—';
       return `<tr><td><time datetime="${escape(slot.plannedAt)}">${escape(formatDate(slot.plannedAt))}</time></td><td>${escape(actual)}${attempt}${url?`<small>${url}</small>`:''}</td><td>${escape(delay)}</td><td>${chip(slot.state,stateLabel)}${slot.reason?`<small>${escape(slot.reason)}</small>`:''}${slot.postId?`<small><a href="p/${escape(encodeURIComponent(slot.postId))}/">Read post ↗</a></small>`:''}</td></tr>`;
     }).join('')}</tbody></table></div>`:'';
-    $('publication-slots').innerHTML=table(slots)+table(previous)+'<p class="schedule-footnote">Publication times come from committed posts. Run starts and their delays are shown separately. Delayed gates catch up unfinished slots within the same Vilnius day, up to three posts.</p>';
+    const pastDays=new Map();
+    for(const slot of previous){const date=day(slot.plannedAt);if(!pastDays.has(date))pastDays.set(date,[]);pastDays.get(date).push(slot);}
+    $('publication-slots').innerHTML=table(slots)+[...pastDays.values()].reverse().map(table).join('')+'<p class="schedule-footnote">Publication times come from committed posts. Run starts and their delays are shown separately. Delayed gates catch up unfinished slots within the same Vilnius day, up to three posts.</p>';
   }
 
   function runTitle(type) {

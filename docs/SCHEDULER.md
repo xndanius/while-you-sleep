@@ -17,7 +17,7 @@ Before any model runs, immutable scheduling and reservation records are committe
 
 Reservations with unknown outcomes stay held. Recovery requires authoritative GitHub metadata proving that the exact repository's main-branch loop run is terminal, plus committed post state. Failed slots with no publication retry after 10, 20, 40 and at most 60 minutes. Partial batch outcomes retain per-slot results, so a published slot cannot repeat during recovery. Workflow serialization prevents concurrent batches.
 
-Research, measure and improve retain trusted daily/three-hour slot keys. A successful scheduled completion suppresses a repeated tick. Manual diagnostic runs keep their real event name. Expected improver rejection is a terminal completed evaluation with a reason; it does not trigger repeated proposal spending. Operational failure remains eligible for retry.
+Research, measure and improve retain trusted daily/three-hour slot keys. A successful completion, whether scheduled or explicitly dispatched for diagnostics, suppresses repeated automatic ticks for that exact slot. Explicit manual diagnostics remain available and keep their real event name; they supply no automatic-trigger proof. Expected improver rejection is a terminal completed evaluation with a reason; it does not trigger repeated proposal spending. Operational failure remains eligible for retry.
 
 The machine page separates planned slot time, attempt time, actual checked publication time and delay. Future slots stay planned; elapsed unfulfilled slots become waiting, late or missed, or show an active reservation, rejection or cap skip. A cheap gate skip never advances the last model loop time.
 

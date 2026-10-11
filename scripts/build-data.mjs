@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { ROOT, records, readJSON, writeJSON, safeError } from '../lib/storage.mjs';
-import { INITIAL_RULES, schedule } from '../lib/config.mjs';
+import { INITIAL_RULES, schedule, previousLocalTime } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
 import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof.mjs';
@@ -25,7 +25,7 @@ try{
   const sortedRuns=[...runs,...measurements,...improvementRuns].sort((a,b)=>(b.finishedAt||b.startedAt).localeCompare(a.finishedAt||a.startedAt));
   const sortedResearch=research.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
   const healthMap=new Map();
-  for(const snapshot of sortedResearch)for(const health of snapshot.health||[])if(!healthMap.has(health.name))healthMap.set(health.name,health);
+  for(const snapshot of sortedResearch)for(const health of snapshot.health||[])if(health.name!=='X'&&!healthMap.has(health.name))healthMap.set(health.name,health);
   const candidates=(await records('candidates')).reduce((n,r)=>n+(r.candidates?.length||0),0);
   const measuredCost=usageRecords.map(r=>r.costUsd).filter(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
   const modelRunCount=runs.filter(run=>run.modelExecuted!==false).length+improvementRuns.length;
@@ -37,7 +37,8 @@ try{
   const lastLoop=runs.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
   const status={state:posts.length?proof.state==='publication_observed'?'running':proof.state==='unverified'?'schedule_unverified':proof.state:'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastLoopAt:lastLoop?.startedAt||null,lastLoopEvent:lastLoop?.eventName||lastLoop?.scheduling?.eventName||lastLoop?.scheduling?.event||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected',scheduleVerified:proof.state==='publication_observed'};
   const slots=publicationSlotStatus({posts,runs,reservations,outcomes}).map(slot=>({...slot,plannedAt:slot.scheduledAt,status:slot.state}));
-  const previousSlots=publicationSlotStatus({posts,runs,reservations,outcomes,now:new Date(Date.now()-86400000)}).map(slot=>({...slot,plannedAt:slot.scheduledAt,status:slot.state}));
+  const previousDayEnd=previousLocalTime(part=>part.hour===23&&part.minute===59,new Date(schedule().publicationSlots[0].scheduledAt));
+  const previousSlots=publicationSlotStatus({posts,runs,reservations,outcomes,now:new Date(previousDayEnd)}).map(slot=>({...slot,plannedAt:slot.scheduledAt,status:slot.state}));
   const cadence={...schedule(),slots,previousSlots,gateEveryMinutes:20,auxiliaryGateEveryMinutes:30,verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null,proof};
   const feed={posts:hydrated,stats,schedule:cadence,status};
   const linkedinUrl='https://www.linkedin.com/company/whileyousleep-ai/';

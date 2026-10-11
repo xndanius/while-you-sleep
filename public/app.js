@@ -1,5 +1,5 @@
 import {loopTiming} from './schedule.js';
-import {slotPresentation} from './slot-display.js';
+import {currentDaySlots} from './slot-display.js';
 
 (() => {
   'use strict';
@@ -118,7 +118,7 @@ import {slotPresentation} from './slot-display.js';
     const cadence=loopTiming(record.status?.lastLoopAt),proof=record.schedule?.proof;
     $('cadence-summary').textContent = 'Three slots a day';
     $('cadence-times').innerHTML = `${cadence.publicationTimes.map(label=>`<span>${escape(label)}</span>`).join('')}<small>Vilnius time</small>`;
-    const slots=(record.schedule?.slots||[]).map(slot=>slotPresentation(slot));
+    const slots=currentDaySlots(record);
     const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1);
     const slotLabel=dateLabel(latest?.plannedAt||cadence.latestSlotAt);
     const slotNote=latest?latest.state==='published'?`The ${slotLabel} slot published at ${dateLabel(latest.actualAt)}.`:latest.state==='cap_reached'?`The ${slotLabel} slot reached the three-post daily cap.`:latest.state==='running'?`The ${slotLabel} slot is running; publication is not yet recorded.`:`The ${slotLabel} slot is ${latest.state.replace(/_/g,' ')}; no publication is recorded.`:cadence.slotState==='recorded'?'Latest slot has a recorded attempt.':`Publication for the ${slotLabel} slot is not recorded.`;

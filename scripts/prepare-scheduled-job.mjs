@@ -27,19 +27,20 @@ export function latestScheduledSlot(kind, now = new Date()) {
 export function scheduledDecision({ kind, eventName, now = new Date(), completions = [] }) {
   const slot = latestScheduledSlot(kind, now);
   const completed = completions.some(record => {
-    if (record.eventName !== 'schedule' || record.jobKey !== slot.jobKey || record.scheduleStatus !== 'completed') return false;
+    if (!['schedule', 'workflow_dispatch'].includes(record.eventName) || record.jobKey !== slot.jobKey || record.scheduleStatus !== 'completed') return false;
     try {
       // The autumn clock change can produce two UTC instants for one local
       // slot ID. A successful first occurrence must also suppress the second.
-      return trustedScheduledMetadata(kind, { GITHUB_EVENT_NAME: 'schedule', SCHEDULED_JOB_KEY: record.jobKey, SCHEDULED_AT: record.scheduledAt }).jobKey === slot.jobKey;
+      return trustedScheduledMetadata(kind, { GITHUB_EVENT_NAME: record.eventName, SCHEDULED_JOB_KEY: record.jobKey, SCHEDULED_AT: record.scheduledAt }).jobKey === slot.jobKey;
     } catch { return false; }
   });
   return { ...slot, eventName, due: eventName === 'workflow_dispatch' || (eventName === 'schedule' && !completed),
     reason: eventName === 'workflow_dispatch' ? 'manual_diagnostic' : completed ? 'scheduled_slot_completed' : eventName === 'schedule' ? 'scheduled_slot_stale' : 'unsupported_event' };
 }
 
-// These values come from a trusted gate job, never a model artifact. A manual
-// diagnostic retains its true event name and cannot complete a scheduled slot.
+// These values come from a trusted gate job, never a model artifact. A successful
+// manual diagnostic can fulfil its exact auxiliary slot, while retaining its
+// true event name. Completion is idempotence, never evidence of an automatic trigger.
 export function trustedScheduledMetadata(kind, env = process.env) {
   const eventName = ['schedule', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME) ? env.GITHUB_EVENT_NAME : 'unknown';
   if (!env.SCHEDULED_JOB_KEY && !env.SCHEDULED_AT) return { eventName, jobKey: null, scheduledAt: null };

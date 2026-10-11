@@ -4,7 +4,6 @@ import { trustedScheduledMetadata } from './prepare-scheduled-job.mjs';
 const runId=process.argv[2]||id('loop');
 try{
   const health=[];const sources=await scanSources(async record=>health.push(record));
-  health.push({name:'X',url:'https://x.com',status:'unavailable',fetchedAt:new Date().toISOString(),items:null,message:'Authenticated X source scanning awaits owner account connection.'});
   // Loop writers also scan sources, but their publication slot is a different
   // job. Only dedicated research runs may complete a research schedule slot.
   const scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?process.env:{GITHUB_EVENT_NAME:process.env.GITHUB_EVENT_NAME});

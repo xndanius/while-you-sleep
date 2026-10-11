@@ -6,7 +6,7 @@ import os from 'node:os';
 import { XMLParser,XMLValidator } from 'fast-xml-parser';
 import jpeg from 'jpeg-js';
 import { LINKEDIN_PAGE_URL,publicPostURL,rssDescription,renderPostPage,writeSiteArtifacts } from '../lib/site-artifacts.mjs';
-import { slotPresentation } from '../public/slot-display.js';
+import { slotPresentation,currentDaySlots } from '../public/slot-display.js';
 
 const baseURL='https://example.test/while-you-sleep';
 const post=(id='one',publishedAt='2026-10-11T05:20:00.000Z')=>({id,publishedAt,title:'Ideas & evidence <checked>',promise:'A useful promise & a clear limit.',whatItIs:'The complete description, including <untrusted> text.',whoPays:'Teams who need a small tool.',loop:['Research & gather','Check <claims>','Publish'],evidence:'An attributed observation with no invented numbers.',uncertainty:'Unknown adoption and reliability.',first24Hours:['Build a tiny form.','Test it with one real user.'],sources:[{title:'The maker & product',url:'https://example.org/product?a=one&b=two',publisher:'Example'},{title:'Never execute',url:'javascript:alert(1)'}]});
@@ -102,4 +102,51 @@ test('client clock ages unfilled slots and never treats an attempt as a publicat
   assert.equal(published.state,'published');
   assert.equal(published.delayMinutes,18);
   assert.equal(slotPresentation({...slot,state:'cap_reached',status:'cap_reached'},'2026-10-11T07:00:00Z').state,'cap_reached');
+});
+
+test('aged slot reasons agree with future, waiting and missed states',()=>{
+  const slot={scheduledAt:'2026-10-11T10:07:00Z',state:'scheduled',reason:'The planned publication time is still ahead.',actualAt:null};
+  const future=slotPresentation(slot,'2026-10-11T09:00:00Z');
+  assert.equal(future.state,'scheduled');
+  assert.match(future.reason,/still ahead/);
+  const waiting=slotPresentation(slot,'2026-10-11T10:20:00Z');
+  assert.equal(waiting.state,'waiting');
+  assert.match(waiting.reason,/No checked publication/);
+  const missed=slotPresentation(slot,'2026-10-11T12:00:00Z');
+  assert.equal(missed.state,'missed');
+  assert.equal(missed.status,'missed');
+  assert.doesNotMatch(missed.reason,/still ahead/);
+});
+
+test('after Vilnius midnight an old build yields all current-day slots without migrating yesterday receipts',()=>{
+  const oldId='publish-2026-10-11-08-07';
+  const data={schedule:{proof:{state:'trigger_observed'},slots:[{id:oldId,scheduledAt:'2026-10-11T05:07:00Z',state:'published',actualAt:'2026-10-11T05:25:00Z',postId:'old'}]},posts:[{id:'old',publishedAt:'2026-10-11T05:25:00Z',scheduling:{slotId:oldId},eventName:'schedule'}],runs:[]};
+  const midnight=currentDaySlots(data,'2026-10-11T21:10:00Z');
+  assert.deepEqual(midnight.map(slot=>slot.id),['publish-2026-10-12-08-07','publish-2026-10-12-13-07','publish-2026-10-12-19-07']);
+  assert.deepEqual(midnight.map(slot=>slot.localTime),['08:07','13:07','19:07']);
+  assert.ok(midnight.every(slot=>slot.state==='scheduled'&&slot.actualAt===null&&slot.postId===null));
+  const morning=currentDaySlots(data,'2026-10-12T06:30:00Z');
+  assert.equal(morning[0].state,'missed');
+  assert.match(morning[0].reason,/No checked publication/);
+  assert.equal(data.schedule.proof.state,'trigger_observed');
+  assert.equal(data.schedule.slots[0].postId,'old');
+});
+
+test('current-day receipts merge exact post slots and retain manual attempts without changing schedule proof',()=>{
+  const id='publish-2026-10-12-08-07';
+  const data={schedule:{proof:{state:'trigger_observed'},slots:[]},posts:[{id:'current',publishedAt:'2026-10-12T05:25:00Z',scheduling:{slotId:id,eventName:'workflow_dispatch'},runId:'loop-123-1'}],runs:[{id:'loop-123-1',type:'loop',eventName:'workflow_dispatch',modelExecuted:true,startedAt:'2026-10-12T05:15:00Z',finishedAt:'2026-10-12T05:26:00Z',status:'completed',scheduling:{slotIds:[id],requestedAt:'2026-10-12T05:15:00Z'}}]};
+  const slots=currentDaySlots(data,'2026-10-12T06:30:00Z');
+  assert.equal(slots[0].state,'published');
+  assert.equal(slots[0].actualAt,'2026-10-12T05:25:00Z');
+  assert.equal(slots[0].attemptedAt,'2026-10-12T05:15:00Z');
+  assert.equal(slots[0].delayMinutes,18);
+  assert.equal(slots[0].eventName,'workflow_dispatch');
+  assert.equal(data.schedule.proof.state,'trigger_observed');
+  data.posts=[];
+  data.runs[0].modelExecuted=false;
+  data.runs[0].published=[];
+  const attempt=currentDaySlots(data,'2026-10-12T06:30:00Z')[0];
+  assert.equal(attempt.actualAt,null);
+  assert.equal(attempt.state,'missed');
+  assert.equal(attempt.eventName,'workflow_dispatch');
 });

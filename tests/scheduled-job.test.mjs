@@ -24,13 +24,22 @@ test('queued jobs crossing local midnight catch the preceding elapsed slot', () 
   for (const kind of ['research', 'measure', 'improve']) assert.equal(scheduledDecision({ kind, eventName: 'schedule', now }).due, true);
 });
 
-test('only an exact successful scheduled slot suppresses automatic work; diagnostics remain distinct', () => {
+test('exact successful scheduled or manual auxiliary slots suppress automatic work; explicit diagnostics remain available', () => {
   const now = '2026-10-10T19:30:00Z';
   for (const kind of ['research', 'measure', 'improve']) {
     const slot = latestScheduledSlot(kind, now);
-    assert.equal(scheduledDecision({ kind, eventName: 'schedule', now, completions: [complete(slot)] }).due, false);
+    for (const completedBy of ['schedule', 'workflow_dispatch']) {
+      const completion = { ...complete(slot), eventName: completedBy };
+      const automatic = scheduledDecision({ kind, eventName: 'schedule', now, completions: [completion] });
+      assert.equal(automatic.due, false);
+      assert.equal(automatic.eventName, 'schedule');
+      assert.equal(automatic.reason, 'scheduled_slot_completed');
+      assert.equal(completion.eventName, completedBy, 'stored provenance never changes');
+    }
     for (const completion of [
-      { ...complete(slot), eventName: 'workflow_dispatch' },
+      { ...complete(slot), eventName: 'unknown' },
+      { ...complete(slot), eventName: 'push' },
+      { ...complete(slot), eventName: 'workflow_dispatch', scheduleStatus: 'failed' },
       { ...complete(slot), scheduleStatus: 'failed' },
       { ...complete(slot), jobKey: slot.jobKey + '-wrong' },
       { ...complete(slot), scheduledAt: 'invalid' },
@@ -73,7 +82,7 @@ test('trusted gate reads committed completion records and writes auditable outpu
   const now = new Date('2026-10-10T19:30:00Z');
   const slot = latestScheduledSlot('improve', now);
   await mkdir(path.join(root, 'data', 'versions'), { recursive: true });
-  await writeFile(path.join(root, 'data', 'versions', 'completed.json'), JSON.stringify(complete(slot)));
+  await writeFile(path.join(root, 'data', 'versions', 'completed.json'), JSON.stringify({ ...complete(slot), eventName: 'workflow_dispatch' }));
   const output = path.join(root, 'output');
   const env = { GITHUB_EVENT_NAME: 'schedule', GITHUB_RUN_ID: '123', GITHUB_RUN_ATTEMPT: '2', GITHUB_OUTPUT: output };
   const result = await prepareScheduledJob({ kind: 'improve', root, env, now });
@@ -81,6 +90,7 @@ test('trusted gate reads committed completion records and writes auditable outpu
   assert.equal(result.runId, 'improve-123-2');
   assert.equal(result.eventName, 'schedule');
   assert.equal(result.reason, 'scheduled_slot_completed');
+  assert.equal(JSON.parse(await readFile(path.join(root, 'data', 'versions', 'completed.json'), 'utf8')).eventName, 'workflow_dispatch');
   assert.match(await readFile(output, 'utf8'), /due=false\nrunId=improve-123-2\njobKey=improve-2026-10-10-22-13\n/);
   assert.deepEqual(JSON.parse(await readFile(path.join(root, '.run', 'scheduled-improve.json'), 'utf8')), result);
   const diagnostic = await prepareScheduledJob({ kind: 'improve', root, env: { ...env, GITHUB_EVENT_NAME: 'workflow_dispatch' }, now });
@@ -94,7 +104,7 @@ test('model-writable loop research cannot suppress a standalone research slot', 
   const now = new Date('2026-10-10T13:30:00Z');
   const directory = path.join(root, 'data', 'research');
   await mkdir(directory, { recursive: true });
-  const claimed = { ...complete(latestScheduledSlot('research', now)), id: 'research-111-1', runId: 'research-111-1' };
+  const claimed = { ...complete(latestScheduledSlot('research', now)), eventName: 'workflow_dispatch', id: 'research-111-1', runId: 'research-111-1' };
   await writeFile(path.join(directory, 'loop-111-1.json'), JSON.stringify(claimed));
   const env = { GITHUB_EVENT_NAME: 'schedule', GITHUB_RUN_ID: '222', GITHUB_RUN_ATTEMPT: '1' };
   assert.equal((await prepareScheduledJob({ kind: 'research', root, env, now })).due, true);
