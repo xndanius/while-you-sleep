@@ -1,0 +1,600 @@
+{
+  "runId": "loop-38154214010-1",
+  "createdAt": "2026-10-11T16:12:16.481Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "8dd7312b38a4e733a3ac672a7b6352cdba33e1744912171ca51159c846dc4813",
+  "sourceSnapshotSha256": "b05bf490ebe77535b35b24789712402e7a5861b853ddac8cd32d53f2f08384cd",
+  "sources": [
+    {
+      "id": "f1018237e7ff700d62fd3aed",
+      "url": "https://raw.githubusercontent.com/tiliondev/waystone/main/README.md",
+      "title": "Show HN: Waystone – Browser automation from one recording, no code · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "Browser action recorder for automation Waystone records a person doing a task in a browser, such as filing a form or opening each item in a listing, and writes a folder that describes exactly what was done: - numbered instructions per step, with ranked selectors for the element used - a screenshot per step with that element boxed - the workflow as JSON - a Chrome DevTools Protocol command list that performs the same actions The folder is used in three ways: - `waystone run` replays the steps in a browser. - An agent reads the instructions and performs the task itself, including for items that were not in the recording. - `waystone export` writes the steps as a Playwright or Puppeteer script. The script runs with those libraries alone; Waystone does not need to be installed. ## What it is used for - **Web scraping.** Record opening a listing, paging through results, opening each item. Replay it on a schedule. - **Data collection from sites without an API.** Government portals, school boards, court records, property listings, supplier catalogues. - **Repetitive work.** The same form, the morning report download, an order status check, a CRM update. One recording, a parameter for the parts that change. - **Teaching an agent a site.** Browser agents fail on dense or unusual layouts. The recording tells the agent which element to use at each step, how to find it, and when the page is ready. - **Test and automation scripts.** Export Playwright (Python or JavaScript), Puppeteer, or a DevTools Recorder flow for Cypress, TestCafe, Nightwatch and WebdriverIO. - **Documenting a process.** The generated README and screenshots are a step-by-step guide a person can follow. ## The problem it addresses An agent working a site from scratch makes three decisions per step, each a model call: - which of the clickable elements is the right one - whether the page has finished loading - what to do on the page it reached That makes runs slow and different each time, and on dense layouts (BoardDocs, OpenTable, most enterprise software) the agent regularly picks the wrong element or acts too early. A recording of a person doing the task replaces all three decisions with facts: the element used, several ways to find it, how long the page took to settle, and a screenshot. ## How it compares Chrome DevTools has a recorder built in, Playwright ships `codegen`, Selenium IDE is a browser extension, and LLM browser agents skip recording and decide every step at run time. ✓ handled, ◐ partly or depends on the harness, ✗ not handled. | | Waystone | DevTools Recorder | Playwright codegen | Selenium IDE | LLM browser agents | |---|:-:|:-:|:-:|:-:|:-:| | Fields inside cross-origin iframes | ✓ | ✓ | ✓ | ✓ | ◐ | | Closed shadow roots | ✓ | ✗ | ✗ | ✗ | ◐ | | Canvas clicks identified by content, not coordinates | ✓ | ✗ | ✗ | ✗ | ◐ | | Settle time measured per step | ✓ | ✗ | ✗ | ✗ | ✗ | | Analytics and polling ignored when waiting | ✓ | ✗ | ✗ | ✗ | ✗ | | New tabs and popups | ✓ | ✗ | ✓ | ✓ | ◐ | | Right-click → open in new tab | ✓ | ✗ | ✗ | ✗ | ✗ | | JavaScript dialogs | ✓ | ✗ | ✓ | ✓ | ◐ | | Print dialog | ✓ | ✗ | ✗ | ✗ | ✗ | | Hover menus recorded | ✓ | ✗ | ✗ | ✓ | ◐ | | Drag | ✓ | ✗ | ✗ | ✓ | ◐ | | File uploads | ✓ | ✗ | ✓ | ✓ | ◐ | | Secrets stored as parameters, not values | ✓ | ✗ | ✗ | ✗ | ◐ | | Several ranked selectors per element | ✓ | ✓ | ✗ | ✓ | ✗ | | Repeated blocks detected, per-item selector given | ✓ | ✗ | ✗ | ✗ | ◐ | | Screenshot per step with the element boxed | ✓ | ✗ | ✗ | ✗ | ◐ | | Instructions an agent can follow | ✓ | ✗ | ✗ | ✗ | — | | Deterministic replay | ✓ | ✓ | ✓ | ✓ | ✗ | | Failure reports step, reason and screenshot | ✓ | ✗ | ◐ | ✗ | ✗ | | Exports to other tools' formats | ✓ | ✓ | ✗ | ✓ | ✗ | ## Recording ``` pip install \"waystone-browser[fortress]\" waystone record https://go.boarddocs.com/ca/dublinusd/Board.nsf/Public -n board-minutes -g \"Open the minutes of the two most recent board meetings\" ``` A browser opens with a panel in the top right showing the recording state and the steps so far. Do the task, press stop. Captured: - clicks, double-clicks, modifier-clicks, right-click → open in new tab - typing (one step per field), Enter, Tab, Escape, arrow keys, key combinations - select elements, checkboxes, radios, range and date inputs - hover menus, drags, file uploads, window and element scrolling - new tabs and popups, JavaScript dialogs, print - iframes (same-origin and cross-origin), shadow DOM (open and closed), clicks on canvas Passwords and upload paths are stored as `{{parameters}}`, never as values. ## Output ``` board-minutes/ README.md goal, then one numbered instruction per step with the element, its selectors and the settle time automation.json the same steps as data, the full workflow, and the CDP command list resolver.js the selector engine the command list depends on steps/005.png one screenshot per step; the element is boxed in red and the instruction is written at the top video.mp4 screencast of the session ``` From the generated README for the recording above: > **Steps 2 to 12 repeat 2x: the same 3-step move for each item** (“Aug 12, 2025 (Tue) Regular Meeting…”, “Jun 10, 2025 (Tue) Regular Meeting…”). > The item that varies is step 2's target, a link. All such items on the page: `css=div.wrap-year.ui-accordion-content:nth-of-type(1) > a.icon.prevnext`. Enumerate those and repeat the block once per item. > > 5. Click the link “View Minutes” > find it with: `role=link name=\"View Minutes\"` · `css=#btn-view-minutes-id` · `text=\"View Minutes\"` > then wait ~1.5s for the page to settle (it loads 1 request) Each instruction has the element, the selectors that matched it in order of stability, and the settle time. A block that repeats per item is called out with the selector for all such items. ## Running ``` waystone run board-minutes/ waystone run board-minutes/ -p password=… --until 7 ``` - Selectors are tried in recorded order; the first that matches exactly one visible element is used. - Before each action the runner waits for in-flight requests and loading indicators to clear. Analytics, beacons and polling do not count, nor do indicators that were already on screen. - A step whose element cannot be found fails with the step number, the reason and a screenshot. Nothing is clicked. - Each step prints which selector resolved it and what it waited for. `--until` stops after a step. Canvas clicks have no element. During recording a hook on `CanvasRenderingContext2D` records what the page drew, so the click is stored as the primitive under it with its text and the row and column headers around it (“the item reading 34 in row 5, column C”), plus crops of the screenshot. - default replay relocates the crops by template match - `--canvas-hooks` reads the display list again and finds the same text anchors, which survives scrolling, zoom and theme changes - a target whose anchors are not drawn is reported as not on screen; nothing is clicked The command list in `automation.json` is plain CDP (`Page.navigate`, `Input.dispatchMouseEvent`, `Input.dispatchKeyEvent`, `Runtime.evaluate`) with a `resolve` entry before each action that returns the element's position via `resolver.js`. `examples/run_cdp_export.py` runs it over a websocket in about sixty lines with no dependency on Waystone. ## Editing ``` waystone edit board-minutes/ --remove 6 7 # drop steps waystone edit board-minutes/ --wait 5 2000 # pause 2s after step 5 waystone edit board-minutes/ --move 9 3 # move step 9 before step 3 waystone edit board-minutes/ --set-value 4 \"{{query}}\" ``` Steps are renumbered, screenshots renamed, README.md and the CDP run regenerated. ## Engines ``` waystone record -n flow # launches Fortress waystone record -n flow --engine chrome # launches a stock Chromium waystone record -n flow --cdp http://127.0.0.1:9222 # attaches to a running browser ``` - Default is [Fortress](https://github.com/tiliondev/fortress), a Chromium build whose fingerprint reads as an ordinary Chrome install. Stock Chromium works too. - Each launch gets a fresh temporary profile, so several Waystone processes can run at once. `--profile ` (or `WAYSTONE_PROFILE`) keeps cookies and logins between runs, for sites that need the user signed in. - Everything Waystone injects runs in a CDP isolated world; the panel is in a closed shadow root; marks are drawn on screenshots, not added to the DOM. Page scripts cannot see any of it. ## Other formats ``` waystone export board-minutes/automation.json -f playwright-python waystone export … -f playwright-js | puppeteer | devtools | cdp | agent waystone import recording.json ``` - `playwright-python`, `playwright-js`, `puppeteer`: runnable scripts using the top-ranked selector per step - `devtools`: a Chrome DevTools Recorder flow, which DevTools imports and `@puppeteer/replay`, TestCafe, Cypress, Nightwatch and WebdriverIO run or convert - `waystone import`: a DevTools Recorder flow in, a Waystone workflow out ## MCP server ``` pip install \"waystone-browser[fortress,mcp]\" waystone mcp ``` Claude Code, Claude Desktop, Cursor and Codex configuration. With `npx`, nothing has to be installed first (Python 3.11+ must be present; a private environment is created on first run): ```json { \"mcpServers\": { \"waystone\": { \"command\": \"npx\", \"args\": [\"-y\", \"waystone-mcp\"] } } } ``` With `uvx`: `\"command\": \"uvx\", \"args\": [\"--from\", \"waystone-browser[fortress,mcp]\", \"waystone\", \"mcp\"]`. With it installed: `\"command\": \"waystone\", \"args\": [\"mcp\"]`. Tools: - `record_start`, `record_status`, `record_stop`: open a browser for the user, watch steps arrive, get the folder and its README when they press stop - `run`: replay a folder; on a miss returns the step, the reason and a screenshot path - `show`, `edit`, `export`: read, change and convert a folder - `page_open`, `page_mark`, `page_act`, `page_close`: drive a page with no recording by element index (returns the numbered screenshot) ## Agent mode For a page with no recording, `page.mark()` returns every actionable element with an index and a screenshot with the indices drawn on it. The agent acts by index. ```python from waystone import Waystone with Waystone() as ws: page = ws.page(\"https://news.ycombinator.com\") marks = page.mark() print(marks.to_prompt()) # [1] link \"new\" [5] textbox \"search\" … page.click(marks.find(\"new\")) page.type(5, \"fortress\") page.press(\"Enter\") ``` ## Roadmap Done - [x] Cross-origin iframes (one CDP session per frame) - [x] Closed shadow roots (`DOM.getDocument` with `pierce: true`) - [x] Step editing in the generated folder (`waystone edit`: remove, reorder, add a wait, change a value) - [x] Wait-for-element steps recorded after navigations - [x] Canvas clicks by template match (context crop grown until unique; ambiguity reported rather than guessed) - [x] 2D canvas display list: a main-world hook during recording records what the app drew; a click is identified as “the item reading 34 in row 5, column C”; `--canvas-hooks` relocates by the same reading - [x] Identity through draw arguments: image sources and sprite rects recorded with the click, so content placed differently on each load is found by what it is Next - [ ] Pointer paths: full mousedown, moves and mouseup with timing for draw, paint, select-box, slider and drag - [ ] Pixel cascade for WebGL and WebGPU: multi-scale template match, OCR anchors, ORB keypoints with homography, scroll-to-find - [ ] \"Any one of these\": a click on one of several identical items, replayed by picking one - [ ] Optional element-detection model for screens with no DOM and no text - [ ] Rule inference across repeated blocks (nearest, first, largest) ## Development ``` python -m venv .venv && .venv/bin/pip install -e \".[dev,fortress]\" .venv/bin/pytest -q ``` `tests/test_record_replay.py` records a session covering every action type above and replays it on a fresh page. ## License MIT. Fortress is a separate dependency under its own [source-available license](https://github.com/tiliondev/fortress/blob/main/LICENSE).",
+      "fetchedAt": "2026-10-11T16:12:14.403Z",
+      "productUrl": "https://github.com/tiliondev/waystone",
+      "originSourceIds": [
+        "82a9a7673fdc5fd395c6ba05"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/tiliondev/waystone/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/tiliondev/waystone/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:14.403Z"
+    },
+    {
+      "id": "82a9a7673fdc5fd395c6ba05",
+      "title": "Show HN: Waystone – Browser automation from one recording, no code",
+      "url": "https://news.ycombinator.com/item?id=50002499",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Waystone – Browser automation from one recording, no code | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Waystone – Browser automation from one recording, no code ( github.com/tiliondev ) 1 point by armanluthra26 3 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T16:12:14.979Z",
+      "productUrl": "https://github.com/tiliondev/waystone",
+      "discoveredAt": "2026-10-08T06:42:01Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T16:12:14.979Z"
+    },
+    {
+      "id": "612e77bf438b6924b5010025",
+      "url": "https://raw.githubusercontent.com/Guksu/suta/main/README.md",
+      "title": "Show HN: Suta – A skill to reduce AI slop in generated UIs · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# suta Layout, color and motion guidelines, with code for 56 UI patterns, for Claude Code and Codex. I built suta because AI-generated UI kept repeating the same cards, excessive colors and unnecessary decoration. I wanted to reduce that design AI slop. [한국어](README.ko.md) · [Live demo](https://guksu.github.io/suta/) · [Install](#installation) · [Full guide](docs/guide.en.md) ![The same shopping app request: without suta on top, with suta below](docs/assets/as-is-to-be.jpg) Same request, model and settings in Claude Code. Top: without suta (one run). Bottom: run 3 of 4 with suta 0.8. Results vary; generation took longer with suta. [Method, all results and limitations](docs/comparisons.en.md) · [Photo credits](docs/assets/CREDITS.md) ## Installation **Claude Code** — run in the chat: ```text /plugin marketplace add Guksu/suta /plugin install suta@suta ``` **Codex** — run in a terminal, then approve suta's post-edit check in `/hooks`: ```bash codex plugin marketplace add Guksu/suta codex plugin add suta@suta ``` **Other agents / skill only** — installs the guidelines and patterns without the plugin's post-edit check: ```bash npx skills add Guksu/suta --skill suta ``` [Install options and migration](docs/guide.en.md#installation) · [Updating](docs/guide.en.md#updating) · [skills.sh listing](https://skills.sh/guksu/suta/suta) ## Try it After installing, ask your agent: > Use suta to build a login screen with email, password, a sign-in button and a password reset link. Keep it simple and make it usable with a keyboard. The agent reads the guidelines, selects relevant patterns and adapts their code to your project. Plugin installs also report layout and motion issues after edits. The skill and pattern documentation are in Korean; one recorded check used an English request and produced English UI copy and a reply in English. Try the patterns in the [live demo](https://guksu.github.io/suta/). Browser checks are still needed; static checks cannot catch every UI problem. ## Follow development I use suta in my own work and will keep fixing issues and updating the guidelines and patterns. If something feels wrong, [open an issue](https://github.com/Guksu/suta/issues) with your request and what happened. [Releases](https://github.com/Guksu/suta/releases) · [Screen comparisons](docs/comparisons.en.md) · [Benchmark](docs/benchmark.en.md) · [Contributing](docs/guide.en.md#contributing) [![Deploy demo](https://github.com/Guksu/suta/actions/workflows/deploy-demo.yml/badge.svg)](https://github.com/Guksu/suta/actions/workflows/deploy-demo.yml) ![Patterns](https://img.shields.io/badge/suta-56%20patterns-1b1e24) ![Tests](https://img.shields.io/badge/tests-633%20passing-555555) [![License: MIT](https://img.shields.io/badge/license-MIT-555555)](LICENSE) ## License The code is [MIT](LICENSE) (© 2026 Guksu). Licenses for the photos in the comparison image are in [Image credits](docs/assets/CREDITS.md).",
+      "fetchedAt": "2026-10-11T16:12:14.990Z",
+      "productUrl": "https://github.com/Guksu/suta",
+      "originSourceIds": [
+        "ae12dc0931dfeb783966a604"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/Guksu/suta/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/Guksu/suta/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:14.990Z"
+    },
+    {
+      "id": "ae12dc0931dfeb783966a604",
+      "title": "Show HN: Suta – A skill to reduce AI slop in generated UIs",
+      "url": "https://news.ycombinator.com/item?id=50040224",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Suta – A skill to reduce AI slop in generated UIs | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Suta – A skill to reduce AI slop in generated UIs ( github.com/guksu ) 1 point by yung3152 10 hours ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T16:12:15.063Z",
+      "productUrl": "https://github.com/Guksu/suta",
+      "discoveredAt": "2026-10-11T06:10:15Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ],
+      "verifiedAt": "2026-10-11T16:12:15.063Z"
+    },
+    {
+      "id": "1953ea0ea6c191235f771bfd",
+      "url": "https://raw.githubusercontent.com/cathrynlavery/diagram-design/main/README.md",
+      "title": "cathrynlavery / diagram-design · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "**An agent skill that draws diagrams as one self-contained HTML + SVG file, in your brand. 44 diagram types. No shadows. No Mermaid slop.** [![GitHub stars](https://img.shields.io/github/stars/cathrynlavery/diagram-design?style=flat-square&color=bf4520)](https://github.com/cathrynlavery/diagram-design/stargazers) [![skills.sh installs](https://skills.sh/b/cathrynlavery/diagram-design?style=flat-square)](https://skills.sh/cathrynlavery/diagram-design/diagram-design) [![CI](https://img.shields.io/github/actions/workflow/status/cathrynlavery/diagram-design/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/cathrynlavery/diagram-design/actions/workflows/ci.yml) [![Plugin version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcathrynlavery%2Fdiagram-design%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&style=flat-square&color=555555)](CHANGELOG.md) [![MIT license](https://img.shields.io/badge/license-MIT-555555?style=flat-square)](LICENSE) **[Website](https://diagramdesign.dev) · [Gallery](https://cathrynlavery.github.io/diagram-design/) · [Changelog](CHANGELOG.md)** [Install](#install) · [What it makes](#what-it-makes) · [Quickstart](#quickstart) · [Match your brand](#onboarding-make-it-look-like-your-brand) · [Import](#import-from-drawio-mermaid-or-excalidraw) · [Export](#export-to-png--svg) · [Contributing](#contributing) npx skills add cathrynlavery/diagram-design Ask your agent in plain words: - *\"Make me an architecture diagram of my app: frontend, backend, database, Redis cache.\"* - *\"I need a quadrant showing Q2 projects by impact vs effort.\"* - *\"Give me a sequence of a bearer call with token refresh on 401.\"* - *\"Onboard diagram-design to https://yoursite.com\"* (pulls your palette and fonts so every diagram after this one matches your site) The agent picks the type, states its plan, and writes one `.html` file you can open by double-clicking. --- ## Install Works with any host that reads Agent Skills, including Cursor, Claude Code, Codex, GitHub Copilot, Gemini CLI, Cline, Windsurf and Amp: ```bash npx skills add cathrynlavery/diagram-design ``` In Claude Code, the plugin marketplace gets you updates and the slash commands: ```text /plugin marketplace add cathrynlavery/diagram-design /plugin install diagram-design@diagram-design ``` Official builds come only from this repository. LittleMight, Cathryn Lavery's company, publishes the plugin directory listings; a listing under any other name is an unofficial copy. [PRIVACY.md](PRIVACY.md) lists what the skill sends over the network. Claude Code : turn on auto-update After installing, run `/plugin`, open **Marketplaces**, select **diagram-design**, and choose **Enable auto-update**. Claude Code disables auto-update by default for third-party marketplaces; after this toggle, it refreshes the marketplace and installed plugin in the background after startup. Run `/reload-plugins` when prompted, or let the next session load the update. Cursor , Cline, Gemini CLI, Windsurf, Amp, Zed, Warp, Roo, Kilo and other Agent Skills hosts The cross-agent [`skills` CLI](https://skills.sh) resolves this repository, detects `skills/diagram-design/SKILL.md`, and installs the whole skill (`references/`, `assets/`, `scripts/`) into every host root you select, including Cursor's: ```bash npx skills add cathrynlavery/diagram-design ``` When the selected roots resolve to more than one skills directory, the CLI asks for an installation method and recommends **Symlink**: one canonical copy, linked into each root, so a later update reaches all of them at once. Pass `--copy` for independent copies per host instead. A selection that resolves to a single directory is copied, because the distinction is immaterial there. Where symlinks are unavailable (Windows without Developer Mode) the CLI falls back to copies and reports which roots it copied. This is a standalone install, separate from the marketplaces below: it does not follow marketplace updates automatically. Pull merged updates with `npx skills update diagram-design`. It also installs the Agent Skill only, so the `/export-diagram`, `/import-mermaid`, `/profile`, and `/doctor` command surfaces stay with the native packages. On a host that has one of the marketplaces below, prefer the marketplace. > **One-time migration:** an existing standalone `npx skills add` copy will not start following the Codex marketplace automatically. Remove that standalone copy, then use the Codex marketplace commands. Likewise, uninstall a personal Cowork copy and reinstall Diagram Design from your organization's marketplace. Future marketplace version bumps then flow through each client's native update path. Codex ```bash codex plugin marketplace add cathrynlavery/diagram-design codex plugin add diagram-design@diagram-design ``` Codex refreshes configured Git marketplaces at startup. To fetch immediately, run `codex plugin marketplace upgrade diagram-design` and start a new session. GitHub Copilot ```bash copilot plugin marketplace add cathrynlavery/diagram-design copilot plugin install diagram-design@diagram-design ``` Copilot installs the shared Diagram Design skill plus its doctor, export, import, and profile capabilities from the existing repository marketplace. Confirm discovery with `copilot skill list` (or `/skills` in an interactive session), then ask for a diagram in natural language. To fetch a merged update, run `copilot plugin marketplace update diagram-design`, then `copilot plugin update diagram-design@diagram-design`. Factory Droid ```bash droid plugin marketplace add https://github.com/cathrynlavery/diagram-design droid plugin install diagram-design@diagram-design --scope user ``` Droid tracks Git plugins by commit rather than the manifest's display version. To fetch a merged update, run `droid plugin marketplace update diagram-design`, then `droid plugin update diagram-design@diagram-design --scope user`, and start a new session. Claude Cowork (organization marketplace) Organization GitHub marketplaces currently require a private or internal repository, so first mirror this public repository into one owned by your organization. In **Organization settings → Plugins**, choose **Add plugin → GitHub**, connect that mirror, and enable **Sync automatically** from the marketplace menu. Automatic sync runs when a pull request containing a plugin version bump is merged to the mirror's default branch; direct pushes do not trigger the webhook. Install Diagram Design from the resulting organization marketplace. Pi ```bash pi install https://github.com/cathrynlavery/diagram-design ``` Run `/reload` in an open Pi session. Pi makes the skill available for matching diagram requests; use `/skill:diagram-design` to invoke it explicitly. Pi also loads the `/export-diagram`, `/import-mermaid`, `/import-excalidraw`, `/profile`, and `/doctor` prompt templates. The unpinned Git install is intentional: Pi has no automatic package refresh, so run `pi update --extensions` to pull merged updates. Kiro Import the Agent Skill from the repository subdirectory URL: ```text https://github.com/cathrynlavery/diagram-design/tree/main/skills/diagram-design ``` Kiro copies imported skills into `.kiro/skills/` for a workspace or `~/.kiro/skills/` globally, so re-import the URL to pick up updates. Custom agents that declare resources should include `skill://diagram-design/**/SKILL.md`. OpenCode Copy or symlink `skills/diagram-design/` to `.opencode/skills/diagram-design` in a project or `~/.config/opencode/skills/diagram-design` globally. OpenCode has no Diagram Design marketplace package; copied installs update only when you replace the directory from a newer checkout. Editable install (customize the style guide in a clone) Managed installs are convenient, but changes to `references/style-guide.md` may be replaced by package updates. Saved profiles in `~/.diagram-design/profiles/` survive updates, and projects with a `.diagram-design` marker are unaffected. Clone the repo and install the local path if you plan to customize the working style guide directly: ```bash git clone git@github.com:cathrynlavery/diagram-design.git ~/code/diagram-design # Pi: register the checkout as a local package pi install ~/code/diagram-design # Claude Code: symlink the inner skill ln -s ~/code/diagram-design/skills/diagram-design ~/.claude/skills/diagram-design # Other Agent Skills hosts: create only the roots you use mkdir -p ~/.agents/skills ~/.cursor/skills ~/.cline/skills ~/.kiro/skills ~/.config/opencode/skills ~/.copilot/skills ln -s ~/code/diagram-design/skills/diagram-design ~/.agents/skills/diagram-design ln -s ~/code/diagram-design/skills/diagram-design ~/.cursor/skills/diagram-design ln -s ~/code/diagram-design/skills/diagram-design ~/.cline/skills/diagram-design ln -s ~/code/diagram-design/skills/diagram-design ~/.kiro/skills/diagram-design ln -s ~/code/diagram-design/skills/diagram-design ~/.config/opencode/skills/diagram-design ln -s ~/code/diagram-design/skills/diagram-design ~/.copilot/skills/diagram-design ``` The shared skill lives at `skills/diagram-design/`. Pi discovers it through the repo's standard `skills/` package directory; Claude Code, GitHub Copilot, Codex, Factory Droid, Cursor, and other Agent Skills-compatible tools use the same files. --- ## How it compares | | Mermaid / PlantUML | draw.io / Excalidraw | Diagram Design | |---|---|---|---| | You make it by | Writing text | Dragging shapes by hand | Describing it to your agent | | Layout | Automatic | Manual | Placed by the agent on a 4px grid, with CI checks for overlaps and clipping | | Look | The renderer's theme | Whatever you draw | One opinionated editorial style, matched to your brand | | Output | Text that renders on GitHub | An editable `.drawio` or `.excalidraw` file | One HTML file with inline SVG, exportable to SVG or PNG | | Change it later | Edit the text | Edit the canvas | Ask the agent again, or edit the SVG | | Existing diagrams | | | Redraws Mermaid, draw.io and Excalidraw files | The downsides are real. Output quality depends on the model you run it with, and the same prompt can lay out differently twice. The result is not an editable source format: there is no text to diff in a pull request and no canvas to drag a box on. For docs that live in Git and change every sprint, Mermaid is still the better fit. Diagram Design is for the diagram you are going to publish. --- ## Why I built it I wanted diagrams I actually liked for my blog posts on [littlemight.com](https://littlemight.com). Every time I needed one, whether an architecture sketch, a flowchart, or a pyramid of what matters most, I'd ask Claude and get back a generic rounded-box thing that looked nothing like the rest of the site. I'd either fight with Figma for 30 minutes or skip the diagram. The model already understood the content. What it was missing was taste, so I wrote the taste down: one accent color for the one or two things that matter, 1px hairlines, no shadows, every coordinate on a 4px grid. > *The highest-quality move is usually deletion.* Every node earns its place. The accent color is reserved for the 1 or 2 things the reader should look at first. Target density: 4/10. --- ## What it makes 44 diagram types, each in three static variants: minimal light, minimal dark, and full-editorial. Open any of them directly in a browser. There is no build step, JavaScript, or external image dependency. Architecture Components + connections IT current-state Legacy landscape + modernization Flowchart Decision logic Sequence Messages over time State machine States + transitions ER / data model Entities + fields Timeline Events on an axis Swimlane Cross-functional flow Quadrant Two-axis positioning Radar / spider Multi-axis comparison Loop / flywheel Reinforcing cycle + shared hub Nested Hierarchy by containment Tree Parent → children Org chart Ownership + routing Layer stack Stacked abstractions Venn Set overlap Pyramid / funnel Ranked hierarchy or drop-off Bar chart Categorical comparison Treemap Part-of-whole by area Line chart Trends over time Gantt Tasks + phases on a timeline Scatter plot Distribution + correlation High-Level End-to-end stack on a cluster Process Multi-actor sequential workflow Medallion Multi-tier data storage Data flow Role-scoped pipeline steps DP integration Sources → core → consumers DP security matrix Per-role access permissions Sankey Quantities that split + merge Fishbone Grouped causes → one effect Wardley map Value chain × evolution Kanban Work in progress by state User journey Stages, actions + sentiment Deployment Zones, hosts + artifacts Dependency graph Fan-in, ranks + cycles UML class Classes, operations + typed relations Story map Backbone × release slices Database schema Physical tables + column FKs Polar chart Cyclic magnitude · linear radius Waterfall Running total + signed bridges Architecture delta Before · Changes · After topology Exploded axonometric Parts pulled apart on one axis Axonometric plan Rooms and buildings on one plate Heatmap Value per row × column cell Several types have named variants that share their reference: Line covers slopegraph, ridgeline, streamgraph and bump; Scatter covers bubble and beeswarm; Treemap covers marimekko. Architecture delta compares synchronized topologies through a Before · Changes · After ledger of added, removed, changed, moved, and rewired objects. See its [reference](skills/diagram-design/references/type-architecture-delta.md) and [order-fulfilment example](skills/diagram-design/assets/example-architecture-delta.html). Attribute-only comparisons remain tables; a single snapshot uses Architecture. Exploded axonometric draws one object in 2:1 dimetric projection with its parts lifted apart at equal gaps: a [phone teardown](skills/diagram-design/assets/example-exploded-phone.html), an [unboxing](skills/diagram-design/assets/example-exploded-unboxing.html), an [app stack](skills/diagram-design/assets/example-exploded.html), an [AI agent stack](skills/diagram-design/assets/example-exploded-ai-stack.html), or a [mechanical keyboard](skills/diagram-design/assets/example-exploded-keyboard.html). Every coordinate comes from one projection function, and the [animated phone](skills/diagram-design/assets/example-exploded-phone-animated.html) opens assembled and explodes once. See its [reference](skills/diagram-design/references/type-exploded.md). Axonometric plan uses the same projection for one floor or one site: walls cut at desk height so every room reads from a single view, or buildings on a campus tagged by build phase. See the [office floor](skills/diagram-design/assets/example-axonometric-plan.html), the [campus](skills/diagram-design/assets/example-axonometric-plan-campus.html), the [coffee shop](skills/diagram-design/assets/example-axonometric-plan-coffee-shop.html), the [fulfillment floor](skills/diagram-design/assets/example-axonometric-plan-warehouse.html), the [phased campus animation](skills/diagram-design/assets/example-axonometric-plan-campus-animated.html), and the [reference](skills/diagram-design/references/type-axonometric-plan.md). **Browse the live gallery:** [cathrynlavery.github.io/diagram-design](https://cathrynlavery.github.io/diagram-design/), or open [`skills/diagram-design/assets/index.html`](skills/diagram-design/assets/index.html) locally to flip through every diagram with light / dark / full-editorial tabs. Each type has one number, 01 to 44; its variants and worked examples carry the same number with a letter. --- ## Onboarding: make it look like *your* brand The whole point is editorial diagrams in **your** colors and typography, not a generic template. Out of the box, diagrams render in a **jet-black + tangerine** palette (white-smoke paper, jet-black ink, a darkened tangerine accent that clears 4.5:1 contrast as text, blue-slate muted, silver hairlines). Good enough to screenshot straight away. Sixty seconds of onboarding is better: the skill pulls your brand from your website and applies it across every diagram. ### The flow ``` You: \"onboard diagram-design to https://yoursite.com\" Agent: → fetches the homepage → extracts the dominant palette + font stack → maps detected values to semantic roles: paper, ink, muted, accent, link → shows a proposed diff → writes your tokens to references/style-guide.md You: \"yes, apply it\" ``` Every new diagram now uses your colors. Your website's paper color becomes the diagram background. Your CTA color becomes the focal accent. Your body font stack becomes the node label family. Brand matching also emits a fidelity receipt: sampled URLs, exact color roles, font families and weights, font source URLs, and any fallback. Public site fonts are used directly and verified after rendering rather than silently replaced with generic system fonts. ### What gets extracted | Detected from your site | Becomes | |---|---| | ` ` background | `paper` token | | Primary text color | `ink` token | | Secondary / caption text | `muted` token | | Cards or containers | `paper-2` token | | Most-used brand color (CTA, link, heading) | `accent` token | | ` ` font family | `title` font | | ` ` font family | `node-name` font | | ` ` / ` ` font | `sublabel` font | ### Contrast checks happen automatically Before writing tokens, the skill verifies WCAG AA contrast on `ink` over `paper`. If your site has a color that fails contrast at diagram sizes (9 to 12px), it proposes an adjusted value and explains why. The default skin is held to the same contract in CI: text roles clear 4.5:1 and essential marks clear 3:1 on both light and dark paper. ### Accessible by default Every diagram template gives the inline SVG an accessible name and description: `role=\"img\"`, a resolving `aria-labelledby`, and first-child ` ` / ` ` slots. IDs are prefixed per diagram and variant, so multiple SVG exports can be safely inlined on one page without duplicate accessible-name IDs. Decorative specimen icons are hid",
+      "fetchedAt": "2026-10-11T16:12:15.114Z",
+      "productUrl": "https://github.com/cathrynlavery/diagram-design",
+      "originSourceIds": [
+        "9c939c7199afd9a60700695b"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/cathrynlavery/diagram-design/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/cathrynlavery/diagram-design/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:15.114Z"
+    },
+    {
+      "id": "9c939c7199afd9a60700695b",
+      "title": "cathrynlavery / diagram-design",
+      "url": "https://github.com/cathrynlavery/diagram-design",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - cathrynlavery/diagram-design: Editorial diagram design for Claude Code, Codex, GitHub Copilot, Cursor, Factory Droid, and Pi. 44 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop. · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} cathrynlavery diagram-design Repository navigation Code Issues 22 ( 22 ) Pull requests 63 ( 63 ) Actions Projects Security and quality Insights More items diagram-design Public Sponsor Notifications You must be signed in to change notification settings Fork 3.2k ( 3.2k ) Star 49.9k ( 49.9k ) You must be signed in to star a repository About Editorial diagram design for Claude Code, Codex, GitHub Copilot, Cursor, Factory Droid, and Pi. 44 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop. cathrynlavery.github.io/diagram-design/ Topics agent-skills claude-code codex data-visualization diagrams drawio mermaid svg Resources Readme MIT license Code of conduct Code of conduct Contributing Contributing Security policy Security policy Activity Stars 49.9k stars Watchers 140 watching Forks 3.2k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit <div data-testid=\"lat",
+      "fetchedAt": "2026-10-11T16:12:15.597Z",
+      "productUrl": "https://github.com/cathrynlavery/diagram-design",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-11T16:12:15.597Z"
+    },
+    {
+      "id": "788c215e3e7e326347d0b910",
+      "url": "https://raw.githubusercontent.com/swimmingbrain/brainotes/main/README.md",
+      "title": "Show HN: BraiNOTES, handwritten notes on your lecture PDFs in a browser tab · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "braiNOTES Handwritten notes and a whiteboard that run in your browser. Write with a pen, keep the pdf next to your notes. Try it now &rarr; notes.swimmingbrain.dev braiNOTES is an open source app for writing by hand, like OneNote or GoodNotes, but in a browser tab. It is made for lectures: the slides open next to your notes or become the pages you write on. There is no account and no server, everything stays in your browser. ## Features - Ballpoint, fountain pen, marker, pencil and highlighter, with pen pressure - Notebooks on blank, lined, grid or dotted paper, and whiteboards without edges - Write on a pdf, or read it on the side and snip parts of it into your notes - Pictures, shapes, text, a lasso, an eraser and a laser pointer - Export to PDF with the original pages and vector ink, or a page to PNG - `.brainotes` files to back up a notebook or share it - Saves by itself and works offline once it has been opened ## Shortcuts | Key | What it does | |-----|--------------| | `P` `H` `E` `V` | Pen, highlighter, eraser, select | | `S` `T` `X` `L` | Shapes, text, snip, laser | | `Space` | Hand while held | | `Ctrl+Z` `Ctrl+Shift+Z` | Undo, redo | | `Ctrl+Enter` | New page | | `PageDown` `PageUp` | Next and previous page | | `Ctrl+1` `Ctrl+2` `Ctrl+3` | Notes, Study, Board | | `Ctrl+Shift+F` | Present in fullscreen | | `Ctrl+K` | Command palette | | `?` | All shortcuts | ## Running locally ```bash pnpm install pnpm dev ``` Open `http://localhost:5173`. `pnpm test` runs the tests, `pnpm check` the type checks and `pnpm build` writes the static site to `build/`. See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) if you want to help. ## How it works - Ink is drawn into cached canvas tiles, only the tiles where something changed are drawn again. - A stroke is an outline from perfect-freehand, made from the points and the pen pressure. - The line is drawn the moment the pen moves. A one euro filter calms a shaky hand while you write and a light refit runs when the pen lifts. - PDFs are drawn by pdf.js in a worker, only the pages you see and at the zoom you see them. - Notebooks, pages and files live in IndexedDB and are saved a moment after every change. - A `.brainotes` file is a zip with the notebook, one json file per page and the pdfs and pictures. - The PDF export puts the original pdf pages into the file and the ink on top as vectors. ## Tech stack | Part | Library | |------|---------| | Framework | Svelte 5 + SvelteKit (static adapter) | | Strokes | perfect-freehand | | Reading PDFs | pdf.js | | Writing PDFs | pdf-lib (the pdfme fork) | | Storage | IndexedDB through idb | | Files | fflate, browser-fs-access | | Language | TypeScript | ## License MIT, see [LICENSE](LICENSE). The libraries keep their own licenses, [THIRD_PARTY_LICENSES](THIRD_PARTY_LICENSES) lists them.",
+      "fetchedAt": "2026-10-11T16:12:15.608Z",
+      "productUrl": "https://github.com/swimmingbrain/brainotes",
+      "originSourceIds": [
+        "7249882030a473ef23602f67"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/swimmingbrain/brainotes/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/swimmingbrain/brainotes/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:15.608Z"
+    },
+    {
+      "id": "7249882030a473ef23602f67",
+      "title": "Show HN: BraiNOTES, handwritten notes on your lecture PDFs in a browser tab",
+      "url": "https://news.ycombinator.com/item?id=50025048",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: BraiNOTES, handwritten notes on your lecture PDFs in a browser tab | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: BraiNOTES, handwritten notes on your lecture PDFs in a browser tab ( github.com/swimmingbrain ) 2 points by swimmingbrain 1 day ago | hide | past | favorite | discuss In August, I posted here about TeXbrain, a LaTeX editor that runs completely in the browser, with no need for an account or server. (I didn't excpect it to get that much feedback, bug reports and help from here!) This is the same idea for the other half of my studies, the handwritten notes. I take them on a convertible laptop, and I've had a hard time with apps for that, taking notes from a device to another, exporting as PDF, needing an account for many of them, etc. So I've been working on the version of it that I always wanted. Open a tab, the slides of the lecture or multiple PDFs open next to the page or even become the page, write on them with my pen, and nothing ever leaves my browser. braiNOTES is a static website and has no backend. Strokes are perfect-freehand outlines which support pen pressure, the PDF files are rendered by pdf.js in a worker, and for storage it uses IndexedDB a moment after every change. No account, no analytics, and completely offline and local-first. You can export notebooks as .brainotes files, which in the background is a zip with one json per page + the PDFs and pictures you import. It keeps the original pages and puts the vectorized ink on top, this way the text stays selectable in the slides. You can try it here: https://notes.swimmingbrain.dev GitHub Repo: https://github.com/swimmingbrain/brainotes (MIT) In Study mode, the PDF opens on the side of the tab, you can read it simultaneously to the notes, snip a formula or diagrams directly into the notes with the snip tool, and then write around it. In Board mode, you have just a Whiteboard for tutoring or simply for more place for exercises, and can also highlight or draw things with the laser pointer tool while presenting. The line of the ink appears the moment the pen moves, and a one euro filter calms shaky hands while you write + a light a refit when you lift the pen. I also have a video editor and an animation tool which are still a work in progress, on the same GitHub profile. I'm also working on a MCP server for each tool, so you can use your MCP client to do further things with your notes, automatically edit videos on the video editor, etc. That feature will of course be off unless you turn it on and will only be able to talk to localhost. I've used this tool for every lecture in the last few months and a few friends use it too. Bug reports, fixes, recommendations, feedback are all welcome! help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T16:12:15.768Z",
+      "productUrl": "https://github.com/swimmingbrain/brainotes",
+      "discoveredAt": "2026-10-09T18:48:41Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T16:12:15.768Z"
+    },
+    {
+      "id": "442969d87a48d4334868eb49",
+      "url": "https://raw.githubusercontent.com/ktwu01/agent-pr-gate/main/README.md",
+      "title": "Show HN: Four Questions to stop AI-gen PRs from DDoSing your GitHub repository · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# agent-pr-gate **DDoS us with PRs? Your own agent has questions to DDoS you first.** One account. **58 PRs in 10 days. Five merged.** That's what landed in [benchmark-radar's review queue](https://github.com/ktwu01/benchmark-radar/blob/main/CONTRIBUTING.md#a-real-example-of-a-flood). So we put four questions in `CONTRIBUTING.md`. Before an AI agent writes a PR, it has to stop and ask its human what they're actually trying to achieve. **The agent can't answer for them. It has to wait.** The person generating the work gets the questions first. Give your agent the prompt below. [简体中文](README.zh-CN.md) ## 30-second install Paste this into your Agent: ```text help me copy and paste https://github.com/ktwu01/agent-pr-gate/blob/main/CONTRIBUTING.md into our CONTRIBUTING.md ``` No bot. No dependencies. [We use it here too.](CONTRIBUTING.md) The copied guide includes the four-question gate and [which PRs we don't accept](CONTRIBUTING.md#what-we-dont-merge), drawing on [benchmark-radar's contributing guide](https://github.com/ktwu01/benchmark-radar/blob/main/CONTRIBUTING.md). ## Why this exists One account opened **58 PRs in 10 days** on benchmark-radar. **Five were merged.** The [maintainer's account](https://github.com/ktwu01/benchmark-radar/blob/main/CONTRIBUTING.md#a-real-example-of-a-flood) documents the flood, including eight PRs in 27 seconds. benchmark-radar now asks these four questions and tells agents to wait for the human. It also added a separate open-item limit. Results after adopting the gate have not been measured here yet. The idea is simple: ask contributors to think about who benefits before generating work for maintainers. “Customer” can mean a user or a maintainer. This works only when an agent reads and follows the instructions. It is not an enforced PR blocker. ## Who uses it? Keep ` ` in your snippet so others can find it. [Search GitHub for adopters](https://github.com/search?q=%22github.com%2Fktwu01%2Fagent-pr-gate%22+path%3ACONTRIBUTING.md&type=code). Verify actual use and count unique repos before reporting adoption numbers. Search results can include copies and examples, and miss unindexed repos. ## Pass it on Share [this repo](https://github.com/ktwu01/agent-pr-gate) with a maintainer whose review queue needs a break. Inspired by [@ycaophysics](https://x.com/ycaophysics). [CC0 1.0](LICENSE). Copy and adapt freely. No attribution required.",
+      "fetchedAt": "2026-10-11T16:12:15.777Z",
+      "productUrl": "https://github.com/ktwu01/agent-pr-gate",
+      "originSourceIds": [
+        "5e50ca129c68766d358a111a"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/ktwu01/agent-pr-gate/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/ktwu01/agent-pr-gate/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:15.777Z"
+    },
+    {
+      "id": "5e50ca129c68766d358a111a",
+      "title": "Show HN: Four Questions to stop AI-gen PRs from DDoSing your GitHub repository",
+      "url": "https://news.ycombinator.com/item?id=50040727",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Four Questions to stop AI-gen PRs from DDoSing your GitHub repository | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Four Questions to stop AI-gen PRs from DDoSing your GitHub repository ( github.com/ktwu01 ) 1 point by ktwu01 8 hours ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T16:12:15.856Z",
+      "productUrl": "https://github.com/ktwu01/agent-pr-gate",
+      "discoveredAt": "2026-10-11T08:12:01Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ],
+      "verifiedAt": "2026-10-11T16:12:15.856Z"
+    },
+    {
+      "id": "9e4523c74960bf936d7ced8c",
+      "url": "https://raw.githubusercontent.com/IliaMManolov/safari-animated-webp-extension/main/README.md",
+      "title": "Show HN: A Safari extension to accelerate animated WebP images · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "WebP Player Smooth animated WebP in Safari, with player controls. Some animated WebP images play very slowly in Safari on the Mac. On the iPhone, they stop on the first frame. Chrome plays the same images at full speed. WebP Player is a Safari extension for macOS and iOS that fixes this. It finds the animated WebP images on a page and plays them with its own player. You do not have to do anything on each page. ## Features - Plays heavy animated WebP images at full speed in Safari on the Mac, iPhone and iPad. - Starts to play while the image downloads. - Adds play, pause, scrub and speed controls to each image. On a touch screen, a small button in the corner opens the controls. - Keeps the links and the layout of the page. - Turns off for one site from the toolbar button. ## How it works The extension reads the frames of each animated WebP file itself and draws them on a canvas. It decodes only a few frames ahead, so it uses little memory. The original image stays in the page, hidden. ## Build and install WebP Player is not in the App Store yet. To use it now, build it from the source code. You need a Mac with Xcode 26. 1. Run `scripts/make-xcode-project.sh` in the folder of the repository. 2. Open `xcode/WebP Player/WebP Player.xcodeproj` in Xcode. 3. For the iPhone, select your Apple ID team in the Signing & Capabilities tab. 4. Select the `WebP Player (macOS)` scheme or the `WebP Player (iOS)` scheme and click Run. 5. On the Mac, turn on Safari Settings > Developer > \"Allow unsigned extensions\". 6. Turn on WebP Player in Safari Settings > Extensions on the Mac, or in Settings > Apps > Safari > Extensions on the iPhone. Allow it on all websites. To run the tests, use `npm install` and then `npm test`. The tests need Python 3 with Pillow. ## License WebP Player uses the [GNU General Public License version 3](LICENSE), with an [additional permission](APP-STORE-EXCEPTION) for distribution through the App Store. To contribute, read [CONTRIBUTING.md](CONTRIBUTING.md).",
+      "fetchedAt": "2026-10-11T16:12:15.867Z",
+      "productUrl": "https://github.com/IliaMManolov/safari-animated-webp-extension",
+      "originSourceIds": [
+        "fbe9d9a37efb0726aa423ce5"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/IliaMManolov/safari-animated-webp-extension/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/IliaMManolov/safari-animated-webp-extension/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:15.867Z"
+    },
+    {
+      "id": "fbe9d9a37efb0726aa423ce5",
+      "title": "Show HN: A Safari extension to accelerate animated WebP images",
+      "url": "https://news.ycombinator.com/item?id=50043040",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: A Safari extension to accelerate animated WebP images | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: A Safari extension to accelerate animated WebP images ( github.com/iliammanolov ) 2 points by 76SlashDolphin 2 hours ago | hide | past | favorite | discuss Hi HN! The other day I had to do some work with a lot of large animated WebP files on my Macbook running Safari and noticed that it handles them very poorly. They load slowly and it seems like they're constantly being decoded, also with really poor performance. Here's a website with similar images to what I was working with: https://colinbendell.github.io/webperf/animated-gif-decode/w... On that website, my M1 Macbook Air decodes the boat and smoke images at fewer than 5FPS, and the brown underwater office one has a constant stutter. The performance on my iPhone 15 Pro is very similar with the additional annoyance that I have to manually \"Play\" each animation. This was one of those small things that bothered me during my work week so on the weekend I decided to see if I can do something about it. I started by experimenting with the decoder itself and noticed that if you decode a static WebP image it's pretty fast - approximately as fast as other browser engines. It's actually fast enough to fit in 0.16ms. So I thought \"what if I just take the WebP animation decode the frames one by one with the internal decoder and just plonk them on a canvas\" and after quickly vibe coding the experiment, the images on the test page played at 60FPS flawlessly. So I reported the issue to Apple, and then made an extension that will find animated WebP images in webpages and swap them out for the same trick. Have a look here: https://github.com/IliaMManolov/safari-animated-webp-extensi... It's currently GitHub-only and I've spent about a day on this all-in-all but I hope anyone that has to interact with similar images in the future finds it useful. Let me know if there's interest in this too, I'd happily put it on the App Store if I can somehow have the extension cover the developer fee. help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T16:12:15.979Z",
+      "productUrl": "https://github.com/IliaMManolov/safari-animated-webp-extension",
+      "discoveredAt": "2026-10-11T13:19:34Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ],
+      "verifiedAt": "2026-10-11T16:12:15.979Z"
+    },
+    {
+      "id": "188ecadbd8b06952d5875ab7",
+      "url": "https://raw.githubusercontent.com/modelship-ai/modelship/main/README.md",
+      "title": "Show HN: Modelship – an open source ray backed model cluster · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# Modelship [![CI](https://github.com/modelship-ai/modelship/actions/workflows/ci.yml/badge.svg)](https://github.com/modelship-ai/modelship/actions/workflows/ci.yml) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/) [![Docs](https://img.shields.io/badge/docs-docs.model--ship.ai-0E7C86.svg)](https://docs.model-ship.ai/) [![Discord](https://img.shields.io/badge/Discord-Join%20Chat-5865F2?logo=discord&logoColor=white)](https://discord.gg/apbtTdk2Am) **Your agents already speak OpenAI. Give them a `/v1/responses` backend you own.** Modelship serves the whole agentic surface — reasoning, tool calling, server-side conversation state, and MCP servers the gateway calls for you — and scores **17/17** on the independent [Open Responses](https://github.com/openresponses/openresponses) conformance suite. Embeddings, speech, and image generation ride the same `/v1`. Change the base URL and your agent runs unchanged, on hardware you control. ## Quick Start One command, one model. Pick your hardware: **CPU** — Linux, Windows, or macOS via Docker (images are multi-arch: amd64 + arm64): ```bash docker run --rm --shm-size=8g -p 8000:8000 -v modelship-cache:/.cache \\ ghcr.io/modelship-ai/modelship:latest-cpu start \\ --model \"Qwen/Qwen3-8B-GGUF:*Q4_K_M.gguf\" --loader llama_server \\ --usecase generate --num-cpus 4 ``` **NVIDIA GPU** — needs the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html): ```bash docker run --rm --shm-size=8g --gpus all -p 8000:8000 -v modelship-cache:/.cache \\ ghcr.io/modelship-ai/modelship:latest-cuda start \\ --model \"Qwen/Qwen3-8B-GGUF:*Q4_K_M.gguf\" --loader llama_server \\ --usecase generate --num-gpus 1 ``` **Apple Silicon** — native, with Metal offload: ```bash uv tool install mship && mship bootstrap --metal mship start --model \"Qwen/Qwen3-8B-GGUF:*Q4_K_M.gguf\" --loader llama_server \\ --usecase generate --num-gpus 1 ``` Wait for the `Deploy … succeeded` log line, then talk to it — this hits the **Responses API** and streams the model's reasoning as it thinks: ```bash uvx --with httpx llm openai endpoint http://localhost:8000/modelship/v1 \\ -m qwen3-8b --responses \"Which is larger, 9.11 or 9.9?\" ``` Add `--chat` for an interactive session, `-T` to hand it a tool, or `--models` to list what's deployed. The model serves as `qwen3-8b`, inferred from the reference. It pulls ~5 GB and wants ~10 GB of free RAM; `--num-cpus 4` reserves four cores for it, so lower it if the container has fewer (the deploy waits for resources it can't get). On a small box, swap in `lmstudio-community/Qwen3-0.6B-GGUF:*Q4_K_M.gguf`. Deploying several models at once uses a `models.yaml` instead; one model's tuning blocks have flags too (`--llama-server-config.n-ctx 8192`) — see [Model Configuration](docs/model-configuration.md). Hitting an error? Check [Troubleshooting](docs/troubleshooting.md). Prefer curl ? ```bash curl http://localhost:8000/modelship/v1/responses \\ -H \"Content-Type: application/json\" \\ -d '{\"model\": \"qwen3-8b\", \"input\": \"Which is larger, 9.11 or 9.9?\"}' ``` The response carries both `output_text` and a first-class `reasoning` output item. `/modelship/v1/chat/completions` is there too, if that's what your client speaks. ## Open Responses conformance `/v1/responses` is tested against the independent [Open Responses](https://github.com/openresponses/openresponses) compliance suite (`bun run test:compliance`), which drives the endpoint over real HTTP against a live deployment rather than mocks. **Latest result: 17/17** — every core, compaction, vision, and WebSocket test (`Qwen3-VL-8B-Instruct` AWQ 4-bit, vLLM, 2026-10-04). **Loader parity:** the `vllm` and `llama_server` loaders return the same result on all 17 tests. Full test breakdown | Test | Category | Status | |---|---|---| | Basic Text Response | Core | ✅ Pass | | Assistant Message Phase | Core | ✅ Pass | | Response Output Phase Schema | Core | ✅ Pass | | Streaming Response | Core | ✅ Pass | | System Prompt | Core | ✅ Pass | | Multi-turn Conversation | Core | ✅ Pass | | Tool Calling | Core | ✅ Pass | | Compaction Endpoint | `/v1/responses/compact` | ✅ Pass | | Compaction Missing Required Model | `/v1/responses/compact` | ✅ Pass | | Image Input | Vision | ✅ Pass | | WebSocket Response | WebSocket | ✅ Pass | | WebSocket Sequential Responses | WebSocket | ✅ Pass | | WebSocket Continuation | WebSocket | ✅ Pass | | WebSocket Store False Reconnect Recovery | WebSocket | ✅ Pass | | WebSocket Missing Previous Response | WebSocket | ✅ Pass | | WebSocket Failed Continuation Evicts Cache | WebSocket | ✅ Pass | | WebSocket Compact New Chain | WebSocket | ✅ Pass | Fourteen cluster guarantees — zero-downtime model cutover, load-driven autoscaling, engine crash recovery, fractional-GPU multi-tenancy, server-side MCP tool loops — are likewise asserted end-to-end against a live cluster with real models over real HTTP. See [Verified cluster behaviour](docs/production-readiness.md#verified-cluster-behaviour). ## Why Modelship - **Conversations that survive the replica that started them.** `previous_response_id`, reasoning, and tool state live in one store every gateway replica shares — a Ray actor by default, Redis when you want it to outlive the cluster. Scale the gateway out without sharding your users onto specific replicas. - **One endpoint for the whole app.** Chat, embeddings for RAG, speech-to-text, text-to-speech, and image generation on a single OpenAI-compatible `/v1` — instead of a service per modality. - **A stack that fits the hardware you have.** Allocate GPU fractions per model (70% for the LLM, 5% for TTS), or run the same model CPU-only. vLLM, llama.cpp, Diffusers, sherpa-onnx, and whisper.cpp coexist in one deployment. - **Changes you can ship on a Tuesday.** Edit the model set and reconcile: models are added, replaced, or dropped incrementally, with a blue-green cutover per model and no gateway restart. Full feature list - **Multi-model, multi-GPU** — chat, embedding, STT, TTS, and image models running at once across one or more GPUs, with tunable per-model GPU memory allocation - **CPU-only support** — vLLM or llama.cpp (`llama_server`) without a GPU (chat, embeddings, transcription, vision) - **Multiple inference backends** — vLLM, llama.cpp, Diffusers, sherpa-onnx, whisper.cpp, stable-diffusion.cpp - **Zero-downtime hot-reloads** — reconcile a changed model set incrementally, without interrupting the gateway or unchanged models - **Reasoning and tool calling** — ` `-style reasoning parsed into first-class output, and universal tool/function calling across the vLLM and GGUF (`llama_server`) backends - **Server-side MCP tool execution** — point `/v1/responses` at any self-hosted MCP server (`tools: [{\"type\": \"mcp\", ...}]`) and the gateway discovers its tools, calls them, and loops — with an approval flow (`require_approval`) client-driven tool calling doesn't have - **Multiple gateways per cluster** — `--gateway-name` mounts each gateway at its own route prefix on the same port, with its own model set - **Per-model isolated deployments** — independent lifecycle, health checks, failure isolation, and replica count per model - **Streaming** — SSE for chat completions, responses, and TTS audio - **Client disconnect detection** — cancels in-flight inference when the client goes away, freeing the GPU immediately - **Security** — Ray cluster token auth (`--enable-ray-auth`), caller identity from your auth layer (`MSHIP_TRUSTED_IDENTITY_HEADER`), payload and concurrency limits - **Built-in observability** — Prometheus metrics, custom `modelship:*` metrics, vLLM engine stats, structured JSON logging, OpenTelemetry export, plus a pre-built Grafana dashboard and alerting rules ## Supported OpenAI endpoints | Endpoint | Usecase | |---|---| | `POST /v1/chat/completions` | Chat / text generation (streaming and non-streaming) | | `POST /v1/responses` | Responses API — text, reasoning, client-driven tool calls, server-side MCP tool execution, and stored conversations (streaming and non-streaming) | | `GET`/`DELETE /v1/responses/{id}` | Fetch or drop a stored response (`/input_items` lists its input); `background: true` on create + `POST .../cancel` for queued/pollable runs | | `POST /v1/embeddings` | Text embeddings | | `POST /v1/audio/transcriptions` | Speech-to-text | | `POST /v1/audio/translations` | Audio translation | | `POST /v1/audio/speech` | Text-to-speech (SSE streaming or single-response) | | `POST /v1/images/generations` | Image generation | | `GET /v1/models` | List available models | ## Architecture Each model runs as an isolated [Ray Serve](https://docs.ray.io/en/latest/serve/index.html) deployment with its own lifecycle, health checks, and resource budget. Several inference backends are available: | Backend | Best for | GPU required | |---|---|---| | **vLLM** | High-throughput chat, embeddings, transcription | No — installs on GPU or CPU | | **llama.cpp** (`llama_server`) | High-efficiency quantized GGUF models (chat, embeddings, vision) | No | | **Diffusers** | Image generation | Yes | | **sherpa-onnx** | TTS (Kokoro) | No | | **whisper.cpp** | STT | No | A model name maps to exactly one deployment — swapping GPU/CPU or backend replaces it with a blue-green cutover rather than adding a second one alongside it. Each deployment scales horizontally with `num_replicas`, load-balanced by Ray Serve. Multiple gateways can share one cluster and one port (`--gateway-name`), each mounted at `/ /v1` with its own model set. ## More ways to run **Several models at once** — a `models.yaml` replaces the flags and unlocks the nested tuning blocks (`vllm_engine_kwargs`, `llama_server_config`, `autoscaling_config`): ```bash docker run --rm --shm-size=8g -p 8000:8000 -v modelship-cache:/.cache \\ -v ./models.yaml:/models.yaml \\ ghcr.io/modelship-ai/modelship:latest-cpu start --config /models.yaml ``` See [Model Configuration](docs/model-configuration.md) for the full reference, and [config/examples/](config/examples/) for working files per backend. **Native install, any node role** — one install command everywhere; pick the role once, at bootstrap: ```bash uv tool install mship # or: pipx install mship / pip install mship mship bootstrap --cuda # NVIDIA GPU node mship bootstrap --cpu # CPU node (includes vLLM CPU) mship bootstrap --metal # Apple Silicon mship bootstrap --thin # coordinator/head only, no capacity mship start --config models.yaml ``` `mship bootstrap` installs a pinned Python 3.12.10 environment for that role and records it, so `deploy` afterwards needs no variant flag and installs nothing. A new node joins the cluster by running the same two commands. Platform prerequisites apply — see [Native install](docs/install-native.md). **High-throughput GPU serving** — use `--loader vllm` with safetensors or AWQ/GPTQ/FP8 weights instead of GGUF, and set `HF_TOKEN` for gated models. **Multi-node** — join hosts into one Ray cluster with plain `docker run`, or deploy on Kubernetes with the [Helm chart](helm/modelship/). > [!TIP] > Always set `--shm-size=8g` (or higher) — Ray falls back to slower disk-backed storage without enough shared memory. ## Documentation Full docs are hosted at **[docs.model-ship.ai](https://docs.model-ship.ai/)**. The same source files are browsable in this repo: - [Installation](docs/installation.md) — requirements, node roles, and the Docker / native / Helm guides - [Model Configuration](docs/model-configuration.md) — full `models.yaml` reference, GPU pinning, environment variables - [Architecture](docs/architecture.md) — system design, request lifecycle, loaders - [Production Readiness](docs/production-readiness.md) — verified cluster behaviour and the hardening roadmap - [Monitoring & Logging](docs/monitoring.md) — Prometheus metrics on port 8079, Grafana dashboard, structured logging, health checks - [Multi-node without Kubernetes](docs/multi-node-docker.md) — join VMs into one Ray cluster with plain `docker run` - [Development](docs/development.md) — dev environment setup, building, and running locally - [Troubleshooting](docs/troubleshooting.md) — common first-run errors and fixes ## Contributing See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on setting up the dev environment, code style, and submitting pull requests.",
+      "fetchedAt": "2026-10-11T16:12:16.036Z",
+      "productUrl": "https://github.com/modelship-ai/modelship",
+      "originSourceIds": [
+        "f2a6627779bcc167602d2540"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/modelship-ai/modelship/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/modelship-ai/modelship/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:16.036Z"
+    },
+    {
+      "id": "f2a6627779bcc167602d2540",
+      "title": "Show HN: Modelship – an open source ray backed model cluster",
+      "url": "https://news.ycombinator.com/item?id=50040528",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Modelship – an open source ray backed model cluster | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Modelship – an open source ray backed model cluster ( github.com/modelship-ai ) 1 point by Alez007 8 hours ago | hide | past | favorite | discuss Hey all, just wanted to share how my spare time has been spent for quite some time now. Ok, this one started oddly. My aim initially was just to serve multiple models on one GPU and fire it up in my unraid machine. By the time that first bit was done, I realised I could just add one more thing... and another... and well, from beginning of this year when, imho, AI became useful, the whole thing it kind of blew up. So here's what it does: - spins a ray cluster - deploys models using various loaders (vllm, llamacpp, diffusers, sherpa_onnx, etc.) - serves an openai responses ready api on top of them Now some the details, already listed in my production readiness ( https://docs.model-ship.ai/production-readiness/#production-... ) plan: - scores 17/17 on the Open Responses conformance suite and it's got its own responses redis backed store - currently supports cpu, metal and cuda - it has prometheus metrics and grafana dashboard - can run under docker, k8s or simply native install - automatically sizes model context - has MCP support Feedback would be much appreciated. https://github.com/modelship-ai/modelship help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T16:12:16.107Z",
+      "productUrl": "https://github.com/modelship-ai/modelship",
+      "discoveredAt": "2026-10-11T07:28:20Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c",
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T16:12:16.107Z"
+    },
+    {
+      "id": "46dd48d514b937a4559ffd43",
+      "url": "https://raw.githubusercontent.com/morluto/rea/main/README.md",
+      "title": "morluto / rea · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "**English** · [简体中文](README_zh.md) · [繁體中文](README_zh-TW.md) · [日本語](README_ja.md) · [한국어](README_ko.md) · [Türkçe](README_tr.md) · [Русский](README_ru.md) · [Tiếng Việt](README_vi.md) · [ไทย](README_th.md) · [Deutsch](README_de.md) · [Español](README_es.md) · [Français](README_fr.md) · [Українська](README_uk.md) · [Polski](README_pl.md) · [Português (Brasil)](README_pt-BR.md) · [العربية](README_ar.md) · [فارسی](README_fa.md) · [Bahasa Indonesia](README_id.md) · [Italiano](README_it.md) # REA: Reverse Engineer Anything ### One MCP for reverse engineering across binaries, applications, and runtime behavior. **See a feature you like. Understand how it works, down to the binary level.** [![npm version](https://img.shields.io/npm/v/rea-agents?style=flat-square&color=cb3837)](https://www.npmjs.com/package/rea-agents) [![CI](https://img.shields.io/github/actions/workflow/status/morluto/rea/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/morluto/rea/actions/workflows/ci.yml) [![MCP tool catalog](https://img.shields.io/badge/MCP-tool_catalog-5c4ee5?style=flat-square)](docs/mcp-contracts.md#generated-catalog) [![Node.js requirements](https://img.shields.io/badge/Node.js-requirements-339933?style=flat-square&logo=nodedotjs&logoColor=white)](#what-you-can-analyze) [![skills.sh](https://skills.sh/b/morluto/rea?style=flat-square)](https://skills.sh/morluto/rea/reverse-engineer-anything) [![MIT license](https://img.shields.io/badge/license-MIT-f4c430?style=flat-square)](LICENSE) [![Discord](https://img.shields.io/discord/1556595354999332884?logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.gg/GkcryMnJDM) **[Website](https://rea.tools/) · [Guides](https://rea.tools/guides/) · [Showcases](https://rea.tools/showcase/)** [Quick start](#quick-start) · [How REA works](#how-rea-works) · [What you can analyze](#what-you-can-analyze) · [Showcases](#showcases) · [FAQ](#faq) · [Documentation](#documentation) npx rea-agents setup Join the Reverse Engineering Community Discord · Q&A · Show and Tell --- See a feature in an app that you want in your own product? Ask your agent to investigate it with REA. It can inspect the app without its source code, explain how the feature works, show the evidence, and build a version for your project. REA connects your agent to tools for inspecting native binaries, JavaScript and Electron apps, .NET assemblies, and websites. You can also use the same tools from your terminal. Analysis runs locally, and results include the evidence and limitations behind each conclusion. Setup registers REA with your agent and installs matching workflow instructions. Native analysis can use an existing Hopper, Ghidra, or IDA installation; setup can optionally install Hopper with approval. Static JavaScript analysis needs no native analysis engine. > **[Visit the REA website](https://rea.tools/)** for setup instructions, illustrated guides, and real case studies. ## Quick start ### Set up your agent With Node.js and npm installed, run: ```bash npx rea-agents setup ``` Choose your agents, review the proposed changes, and approve them. Setup adds REA's MCP server and matching workflow instructions, with backups of existing configuration. Restart your agent afterward. Setup supports Claude Code, Codex, Cursor, Gemini CLI, Grok Build and [other agents](docs/installation.md#supported-agents). See [installation and setup](docs/installation.md) for provider configuration and manual MCP registration. ### Ask your agent ```text Understand how search works in the Notes app, show me the evidence, and build a similar feature for my project. ``` Replace Notes with your target app and the feature you want to understand. ### Use the terminal Inspect an extracted JavaScript/Electron app directory or ASAR: ```bash npx -y rea-agents@latest analyze-javascript-application /absolute/path/to/app --json ``` The result includes modules, imports, Electron boundaries and their evidence. Replace the path with your target, such as `\"D:/apps/example\"` on Windows. To install the `rea` command for regular use: ```bash npm install --global rea-agents rea --help ``` For native analysis, configure a provider first. See the [CLI and Evidence guide](docs/cli.md) for native commands, provider selection, snapshots and scripting. ### Update REA REA changes quickly, and new releases include frequent bug fixes. Keep your installation up to date. For a CLI installed with `npm install --global` or `bun add --global`: ```bash rea update ``` Bun global updates require Bun 1.2.17 or later. With an older Bun release, upgrade Bun manually before running `rea update`. To refresh your agent registrations and skill, run the setup command printed by the update. If you use `npx`, update your agent setup with: ```bash npx rea-agents@latest setup ``` Review the setup changes and restart your agent. For one-off CLI commands, use `npx rea-agents@latest` followed by the command. With Bun, use `bunx rea-agents@latest` in place of `npx rea-agents@latest`. ## How REA works Your agent calls REA through MCP to inspect the target and trace relevant code. REA returns findings with their evidence. The agent uses them to ask follow-up questions, explain the behavior, or write and test an implementation. CLI commands use the same workflows. ![REA investigation flow: your agent asks about a local target, REA inspects and traces it using analysis tools, and the agent uses the returned code, references and unknowns to explain, implement and test.](website/public/assets/figures/rea-investigation-flow.svg) [Open the full-size figure](website/public/assets/figures/rea-investigation-flow.svg). ## What you can analyze REA requires Node.js 22.x (>=22.19), 24.x (>=24.11), or 26+, plus npm. Additional tools and host support depend on the target: | Target | What REA returns | Requirements and guide | | ---------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | | Native binaries | Pseudocode, assembly, strings, symbols, calls and references | Hopper, Ghidra or IDA; [native analysis](https://rea.tools/guides/native/) | | Offline ELF layout | Sections, segments, original symbols/relocations and static mitigation candidates | Caller-supplied pwntools on Linux x64; [binary diagnostics](docs/binary-diagnostics.md) | | WASM artifact | Validation, sections, exact import/export WAT forms and decoded WAT | Caller-supplied WABT 1.0.42; `inspect_wasm_artifact` | | EVM bytecode | Dispatch selectors, byte offsets, inferred arguments and mutability | Local raw/hex carrier on Linux x64; [offline EVM guide](docs/evm-bytecode.md) | | Recorded Linux crashes | Raw notes, every recorded thread's registers/signals and optional mapping candidates | Caller-supplied pwntools on Linux x64; optional GDB/pwndbg; [recorded crashes](docs/recorded-crashes.md) | | JavaScript / Electron | Modules, imports, source maps, routes, IPC and native add-on relationships | Node.js and npm; [application analysis](https://rea.tools/guides/javascript/) | | Websites | Page structure, scripts, network observations and requested screenshots | A Chrome-family browser; [browser analysis](https://rea.tools/guides/browser/) | | Saved network captures | Requests, responses, exposed payloads and source locations | HAR; mitmdump on Linux for native mitmproxy captures; [capture guide](docs/web-network-captures.md) | | .NET assemblies | Metadata, CIL instructions, declared native dependencies and build comparisons | None (static only); [managed-code guide](docs/managed-code-analysis.md) | | Android APKs | Manifest declarations, classes, decompiled methods and references | Headless JADX and a full JDK on Linux/macOS/Windows x64; [Android guide](docs/android-analysis.md) | | Android devices | Devices, packages, processes, logs, dumps, screen captures, and APK/file transfers | Caller-supplied adb (emulator or hardware); [ADB guide](docs/adb-device-analysis.md) | | JEB projects | Engine-backed project units, artifact digests and type/method pseudo-code | A caller-started JEB client serving MCP, selected with REA_JEB_MCP_URL; [JEB guide](docs/jeb-analysis.md) | | Android resources | Decoded manifest, string tables, locales and version facts | Caller-supplied Apktool launcher; [resource guide](docs/apktool-resource-analysis.md) | | Firmware | Regions, extraction results and native-analysis handoffs | Binwalk / Unblob on Linux; [firmware guide](docs/firmware-analysis.md) | | Packages and resources | File inventories, digests, plists, Apple bundle anatomy and extracted resources | [Artifact and JavaScript guide](docs/javascript-artifact-reconstruction.md), [Apple applications](docs/apple-application-analysis.md) | | Process behavior | Terminal output, interactions, exit and filesystem observations, and run comparisons | Linux/macOS with a native PTY; [process capture](docs/process-capture.md) | Static JavaScript and .NET inspection read the supplied files without running the application. Runtime capture runs or interacts with the selected target using your user permissions; each runtime guide describes its effects. Native formats and host support vary by provider. See [Hopper and Ghidra setup](docs/installation.md#hopper), the [IDA guide](docs/ida-provider.md), and [experimental Windows Ghidra support](docs/windows-ghidra-p0.md). Ghidra also supports [16-bit DOS analysis](docs/ghidra-dos.md). For large binaries, raise the provider's startup deadline with `REA_GHIDRA_STARTUP_TIMEOUT_MS` or `REA_HOPPER_STARTUP_TIMEOUT_MS`. For provider selection, see the [CLI guide](docs/cli.md#choose-a-provider). Check [release availability](docs/installation.md#released-package-and-main) for features added since the latest npm release. ## Showcases [![Illustrations of the DX-Ball sound-pan, Notion clipboard-bridge, and TH04 bullet-ring showcases](docs/assets/rea-showcases.png)](https://rea.tools/showcase/) ### DX-Ball: reconstruct a sound-pan calculation Follow a sound call into its position-to-pan helper, inspect the instructions, and turn incomplete pseudocode into C. The reconstruction passes 3,205 original-x86 cases and reproduces all 63 compiled function bytes. [Read the case study](https://rea.tools/showcase/dx-ball/) · [Reconstruction repository](https://github.com/N0zoM1z0/dx-ball) ### Notion: trace the Electron clipboard bridge Find the renderer's clipboard API, follow it through preload and IPC into the main process, and inspect the rich clipboard format. [Read the case study](https://rea.tools/showcase/notion/) ### TH04: recover a DOS bullet-ring calculation Inspect the original PC-98 game's 16-bit instructions, recover the fixed and aimed angle calculations, and compare the reconstructed C++ with the historical compiler output. [Read the case study](https://rea.tools/showcase/th04/) · [Reconstruction repository](https://github.com/N0zoM1z0/th04) If you've used REA on something interesting, we'd love to see it. Share your case in an [issue](https://github.com/morluto/rea/issues) or a [pull request](https://github.com/morluto/rea/pulls), including the target, your question, how REA helped, and what you found. ## FAQ Which agents can use REA? Any agent that supports local MCP servers. Setup configures the [supported agents](docs/installation.md#supported-agents); other clients can use [manual MCP registration](docs/installation.md#mcp-registry). Do I need Hopper, Ghidra or IDA? Deep native analysis uses one of them. Static JavaScript and .NET inspection work without a native analysis engine. Setup can install Hopper after approval; Ghidra and IDA use your existing installations. See [provider setup](docs/installation.md#hopper). Do I need to start Hopper first? REA starts Hopper when an operation needs it. On macOS, a first-run dialog may ask you to choose demo mode or activate your license. See [Hopper startup and troubleshooting](docs/installation.md#launcher-paths-and-troubleshooting). What does installing the skill from skills.sh do? The skill supplies investigation instructions for your agent. Use `npx rea-agents setup` to register REA's MCP server and install the matching instructions, then restart your agent. See [skill-only installation](docs/installation.md#skill-only-installation). What code does REA return? Native analysis returns pseudocode and assembly. JavaScript/Electron analysis recovers modules and their relationships. Your agent uses these findings to write and test an implementation; the [showcases](#showcases) give worked examples. Does REA upload my app? REA analyzes targets locally. Your agent receives the tool results, and its model provider has its own data policy. What should I do if I hit a bug? Update first; a recent release may already fix it. For a CLI installed with `npm install --global` or `bun add --global`: ```bash rea update ``` For agent setup through `npx`: ```bash npx rea-agents@latest setup ``` If you're using an agent, complete the [setup refresh](#update-rea) and restart it. Retry the same task. If the problem persists, [open an issue](https://github.com/morluto/rea/issues) with your REA version, target type, steps to reproduce and error output. ## Documentation Start with the website's [worked guides](https://rea.tools/guides/). For exact options, prerequisites and result contracts: - [Installation and setup](docs/installation.md): agent registration, provider configuration, updates and uninstall. - [Readiness and troubleshooting](docs/installation.md#check-readiness-for-your-task): diagnose one agent or analysis engine. - [CLI and Evidence](docs/cli.md): commands, provider selection, snapshots, import/export and exit statuses. - [MCP contracts](docs/mcp-contracts.md) and [agent prompts](docs/mcp-prompts.md): tool results, sessions and guided investigations. - [Tool catalog](docs/mcp-contracts.md#generated-catalog): generated inventory of tools, providers and CLI commands. - [Roadmap](docs/roadmap.md): planned work and capability trackers. Report vulnerabilities through [SECURITY.md](SECURITY.md). ## Star history 🎉 **90,000 GitHub stars — thank you!** Thanks to everyone using REA, reporting bugs, requesting features, testing builds, and contributing fixes. ## Disclaimer REA provides tools for lawful reverse-engineering research, analysis, and reconstruction. You are responsible for obtaining any required authorization and complying with applicable laws. The project does not endorse illegal or unauthorized use. REA is an open-source software project. We have not issued or endorsed any cryptocurrency or token. Tokens using the REA name are not affiliated with the project. ## Contributing We'd love your help with REA! [Open an issue](https://github.com/morluto/rea/issues) to report a bug or suggest a feature, or [send a pull request](https://github.com/morluto/rea/pulls) to improve the code or docs. See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and checks, [testing](docs/testing.md) for verification lanes, and the [architecture map](docs/architecture.mermaid) for the project structure. ## License [MIT](LICENSE)",
+      "fetchedAt": "2026-10-11T16:12:16.117Z",
+      "productUrl": "https://github.com/morluto/rea",
+      "originSourceIds": [
+        "458c04cd04ca960bc316608e"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T16:09:05.446Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/morluto/rea/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/morluto/rea/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T16:12:16.117Z"
+    },
+    {
+      "id": "458c04cd04ca960bc316608e",
+      "title": "morluto / rea",
+      "url": "https://github.com/morluto/rea",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - morluto/rea: Reverse engineer anything with agents, from app behavior down to native binaries. · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} morluto rea Repository navigation Code Issues 107 ( 107 ) Pull requests 61 ( 61 ) Discussions Actions Projects Security and quality Insights More items rea Public Notifications You must be signed in to change notification settings Fork 20.8k ( 20.8k ) Star 93.3k ( 93.3k ) You must be signed in to star a repository About Reverse engineer anything with agents, from app behavior down to native binaries. rea.tools Topics agent-skills ai-agents binary-analysis claude-code cli codex cordis ctf decompiler developer-tools disassembler dsh dsh-plugin ghidra hopper llm mcp model-context-protocol reverse-engineering static-analysis Resources Readme MIT license Contributing Contributing Security policy Security policy Activity Stars 93.3k stars Watchers 294 watching Forks 20.8k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 2,331 Commits 2,331 Commits Folders and files Name Name Last commit message Last commit date .agents/ skills .agents/ skills .github .github .husky .husky bridge bridge docs docs licenses licenses native/ windows native/ windows scripts scripts src src tests tests third_party third_party website website .gitattributes .gitattributes .gitignore .gitignore .gitmodules .gitmodules .jscpd.json .jscpd.json .npmrc .npmrc .nvmrc .nvmrc .oxfmtrc.json .oxfmtrc.json .oxlintrc.json .oxlintrc.json .release-please-manifest.json .release-please-manifest.json AGENTS.md AGENTS.md CHANGELOG.md CHANGELOG.md CONTRIBUTING.md CONTRIBUTING.md LICENSE LICENSE README.md README.md README_ar.md README_ar.md README_de.md README_de.md README_es.md README_es.md README_fa.md README_fa.md README_fr.md README_fr.md README_id.md README_id.md README_it.md README_it.md README_ja.md README_ja.md <div class=\"",
+      "fetchedAt": "2026-10-11T16:12:16.478Z",
+      "productUrl": "https://github.com/morluto/rea",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-11T16:12:16.478Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [],
+  "assessmentContractVersion": 1,
+  "considerationEvidence": [
+    {
+      "title": "Browser task recorder for repeatable workflows",
+      "productUrl": "https://github.com/tiliondev/waystone",
+      "sourceIds": [
+        "f1018237e7ff700d62fd3aed",
+        "82a9a7673fdc5fd395c6ba05"
+      ],
+      "availableSourceIds": [
+        "f1018237e7ff700d62fd3aed",
+        "82a9a7673fdc5fd395c6ba05"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Suta UI design skill",
+      "productUrl": "https://github.com/Guksu/suta",
+      "sourceIds": [
+        "612e77bf438b6924b5010025",
+        "ae12dc0931dfeb783966a604"
+      ],
+      "availableSourceIds": [
+        "612e77bf438b6924b5010025",
+        "ae12dc0931dfeb783966a604"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Agent generated brand-matched diagrams",
+      "productUrl": "https://github.com/cathrynlavery/diagram-design",
+      "sourceIds": [
+        "1953ea0ea6c191235f771bfd",
+        "9c939c7199afd9a60700695b"
+      ],
+      "availableSourceIds": [
+        "1953ea0ea6c191235f771bfd",
+        "9c939c7199afd9a60700695b"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Browser based handwritten PDF notes",
+      "productUrl": "https://github.com/swimmingbrain/brainotes",
+      "sourceIds": [
+        "788c215e3e7e326347d0b910",
+        "7249882030a473ef23602f67"
+      ],
+      "availableSourceIds": [
+        "788c215e3e7e326347d0b910",
+        "7249882030a473ef23602f67"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Human question gate for AI pull requests",
+      "productUrl": "https://github.com/ktwu01/agent-pr-gate",
+      "sourceIds": [
+        "442969d87a48d4334868eb49",
+        "5e50ca129c68766d358a111a"
+      ],
+      "availableSourceIds": [
+        "442969d87a48d4334868eb49",
+        "5e50ca129c68766d358a111a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Safari animated WebP player",
+      "productUrl": "https://github.com/IliaMManolov/safari-animated-webp-extension",
+      "sourceIds": [
+        "9e4523c74960bf936d7ced8c",
+        "fbe9d9a37efb0726aa423ce5"
+      ],
+      "availableSourceIds": [
+        "9e4523c74960bf936d7ced8c",
+        "fbe9d9a37efb0726aa423ce5"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Self hosted model serving cluster",
+      "productUrl": "https://github.com/modelship-ai/modelship",
+      "sourceIds": [
+        "188ecadbd8b06952d5875ab7",
+        "f2a6627779bcc167602d2540"
+      ],
+      "availableSourceIds": [
+        "188ecadbd8b06952d5875ab7",
+        "f2a6627779bcc167602d2540"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Local reverse engineering toolkit",
+      "productUrl": "https://github.com/morluto/rea",
+      "sourceIds": [
+        "46dd48d514b937a4559ffd43",
+        "458c04cd04ca960bc316608e"
+      ],
+      "availableSourceIds": [
+        "46dd48d514b937a4559ffd43",
+        "458c04cd04ca960bc316608e"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
