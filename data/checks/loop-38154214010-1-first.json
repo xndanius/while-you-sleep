@@ -1,0 +1,169 @@
+{
+  "runId": "loop-38154214010-1",
+  "draftSha256": "5cc1083a71cbfd107e3ab2c475cac964c3abad003700a0eab1d0a700ba62a850",
+  "sourceSnapshotSha256": "940a53f21db928946643d9ceb8d785653594f97c03022e07936c2390803fe095",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "33e170cb05b6718e82b1da41",
+      "pass": false,
+      "reasons": [
+        "The feasibility score of 6 exceeds the evidence-supported maximum of 5: the documentation describes a feature-rich browser recorder and export workflow, while the student scope still requires browser automation implementation and reliable replay. Rejecting this score makes the post ineligible under the frozen rubric."
+      ],
+      "claimChecks": [
+        {
+          "claim": "Waystone records browser actions into numbered steps, screenshots and workflow data.",
+          "supported": true,
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "numbered instructions per step, with ranked selectors for the element used - a screenshot per step"
+        },
+        {
+          "claim": "Waystone can replay recorded steps in a browser.",
+          "supported": true,
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "waystone run` replays the steps in a browser."
+        },
+        {
+          "claim": "Waystone exports steps as Playwright or Puppeteer scripts.",
+          "supported": true,
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "`waystone export` writes the steps as a Playwright or Puppeteer script."
+        },
+        {
+          "claim": "The project lists web scraping and data collection as use cases, without establishing customer results.",
+          "supported": true,
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "**Web scraping.** Record opening a listing, paging through results, opening each item."
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The documented record and export workflow supports a plausible narrow prototype, but requires browser automation setup and coding.",
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "`waystone export` writes the steps as a Playwright or Puppeteer script."
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "A repeat-task buyer is only a hypothesis; use cases are listed, but no demand or payment is evidenced.",
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "Repetitive work.** The same form, the morning report download, an order status check"
+        },
+        {
+          "criterion": "feasibility",
+          "supported": false,
+          "maxSupportedScore": 5,
+          "reason": "A single-site recorder/replayer is plausible but entails browser control, selectors, screenshots and replay failure handling; 6 is too high for the stated student scope.",
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "a screenshot per step with that element boxed - the workflow as JSON"
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "Replay of a prepared workflow automates steps, while recording, task choice and handling misses remain human work.",
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "`waystone run` replays the steps in a browser."
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "The first-party README describes concrete product behavior but offers no verified customer use in the cited evidence.",
+          "sourceId": "f1018237e7ff700d62fd3aed",
+          "evidenceQuote": "the workflow as JSON - a Chrome DevTools Protocol command list"
+        }
+      ]
+    },
+    {
+      "postId": "9c939c7199afd9a60700695b",
+      "pass": false,
+      "reasons": [
+        "The ease score of 7 exceeds the evidence-supported maximum of 6, and feasibility 7 exceeds the supported maximum of 6. The README documents an agent skill and installation, but the proposed build still depends on an agent-skill host and correctly rendering diagrams."
+      ],
+      "claimChecks": [
+        {
+          "claim": "Diagram Design describes itself as an agent skill that creates a single HTML and SVG file.",
+          "supported": true,
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "An agent skill that draws diagrams as one self-contained HTML + SVG file"
+        },
+        {
+          "claim": "The README lists 44 diagram types.",
+          "supported": true,
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "44 diagram types. No shadows."
+        },
+        {
+          "claim": "A user can ask the agent in plain words for diagram output.",
+          "supported": true,
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "Ask your agent in plain words:"
+        },
+        {
+          "claim": "The agent can apply site colors and fonts to diagrams.",
+          "supported": true,
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "extracts the dominant palette + font stack"
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": false,
+          "maxSupportedScore": 6,
+          "reason": "Installation is documented, but the scope depends on a compatible skill host and producing valid HTML/SVG; 7 overstates beginner accessibility.",
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "Works with any host that reads Agent Skills"
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "Product team payment remains a hypothesis; the documentation shows a workflow, not demand or revenue.",
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "a darkened tangerine accent that clears 4.5:1 contrast as text"
+        },
+        {
+          "criterion": "feasibility",
+          "supported": false,
+          "maxSupportedScore": 6,
+          "reason": "A few static templates are plausible in two weeks, but the agent skill and HTML/SVG generation still require implementation and review; 7 is too high.",
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "writes one `.html` file you can open by double-clicking."
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "The agent drafts and formats a diagram, but a person must check factual labels and relationships.",
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "The agent picks the type, states its plan"
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "First-party documentation and examples support working-product evidence, but not verified customer use.",
+          "sourceId": "1953ea0ea6c191235f771bfd",
+          "evidenceQuote": "one `.html` file you can open by double-clicking."
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "Both proposals have fresh first-party evidence and passed deterministic gates, but each includes scores above the rubric-supported maximum, so both are rejected.",
+    "contextSha256": "e95f30a973cf62aea0b573d7ca07f77b7f56172a0358bddbcfa41c1a57b41f85",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "5cc1083a71cbfd107e3ab2c475cac964c3abad003700a0eab1d0a700ba62a850",
+    "sourceSnapshotSha256": "940a53f21db928946643d9ceb8d785653594f97c03022e07936c2390803fe095",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
