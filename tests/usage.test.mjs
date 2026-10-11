@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm, writeFile, chmod } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import { collectUsage, estimateTokenCost, githubApiGet, modelJobNames, parseCodexUsage, parseModelJobResults } from '../lib/usage.mjs';
+import { collectUsage, effectiveUsageRecords, estimateTokenCost, githubApiGet, modelJobNames, parseCodexUsage, parseModelJobResults, usageCountersComplete } from '../lib/usage.mjs';
 import { runCollector } from '../scripts/collect-usage.mjs';
 
 const usage={input_tokens:10000,cached_input_tokens:6000,cache_write_input_tokens:1000,output_tokens:1000,reasoning_output_tokens:100};
@@ -131,6 +131,24 @@ test('improvement matrix roles, pagination and attempt identity are bounded',asy
   assert.equal(stale.status,'partial');
   assert.equal(stale.jobs[0].reason,'invalid_job_identity');
   assert.equal(stale.costUsd,null);
+});
+
+test('historical scoring accounts for both independent jobs without accepting unrelated model logs',async()=>{
+  const jobs=[job('scorer',1),job('checker',2),job('writer',3),job('record',4)];
+  const calls=[];
+  const record=await collectUsage({...context,kind:'score',runId:'score-123-2'},{apiGet:async endpoint=>{
+    calls.push(endpoint);
+    return endpoint.includes('/attempts/')?JSON.stringify({total_count:jobs.length,jobs}):logFor();
+  }});
+  assert.deepEqual(modelJobNames('score'),['scorer','checker']);
+  assert.deepEqual(calls.slice(1),['repos/owner/while-you-sleep/actions/jobs/1/logs','repos/owner/while-you-sleep/actions/jobs/2/logs']);
+  assert.equal(record.coverage.expectedModelJobs,2);
+  assert.equal(record.inputTokens,20000);
+  assert.equal(usageCountersComplete(record),true);
+  assert.deepEqual(effectiveUsageRecords([record]),[record]);
+  assert.equal(usageCountersComplete({...record,coverage:{...record.coverage,expectedModelJobs:4}}),false);
+  assert.deepEqual(effectiveUsageRecords([{...record,workflowKind:'unknown'}]),[]);
+  assert.deepEqual(parseModelJobResults(JSON.stringify({scorer:{result:'success'},checker:{result:'skipped',outputs:{secret:'ignored'}},writer:{result:'skipped'}}),'score'),{checker:'skipped'});
 });
 
 test('collector saves only immutable bounded counters in an isolated data directory',async()=>{

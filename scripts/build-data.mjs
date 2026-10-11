@@ -8,6 +8,8 @@ import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof
 import { publicationSlotStatus } from '../lib/slot-status.mjs';
 import { writeSiteArtifacts,publicPostURL } from '../lib/site-artifacts.mjs';
 import { trustedClockTick } from '../lib/clock-provenance.mjs';
+import { parseScoringPolicy,hydrateScoring } from '../lib/scoring.mjs';
+import { renderCard } from '../lib/card.mjs';
 
 const clockDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const clockRunURL=value=>typeof value==='string'&&/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/\d+$/.test(value)?value:null;
@@ -36,11 +38,20 @@ try{
   const versions=rawVersions.map(version=>({...version,usage:usageByRun.get(version.id)||version.usage}));
   const posts=allPosts.filter(verifyPublishedPost).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
   if(posts.length!==allPosts.length)throw new Error('A committed post failed checker provenance or content-integrity validation.');
+  const baseURL=(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'');
+  // Original records must pass their publication hash before a score sidecar
+  // can be joined. Derived presentation never rewrites that original record.
+  const currentScoringPolicy=parseScoringPolicy(await fs.readFile(path.join(ROOT,'RULES.md'),'utf8'));
+  const scoredPosts=await Promise.all(posts.map(async post=>{
+    publicPostURL(baseURL,post.id); // Validate the file ID before reading its sidecar.
+    let sidecar=null;
+    try{sidecar=await readJSON(path.join(ROOT,'data','scores',post.id+'.json'));}catch(error){if(error.code!=='ENOENT')throw error;}
+    return {...post,scoring:hydrateScoring(post,sidecar,currentScoringPolicy)};
+  }));
   let metrics;try{metrics=await readJSON(path.join(ROOT,'metrics.json'));}catch(error){if(error.code==='ENOENT')metrics={site:{status:'not_connected',views:null,saves:null},social:{status:'not_connected'},measuredAt:null};else throw error;}
   if(metrics.social?.provider!=='zapier')metrics={...metrics,social:{provider:'zapier',status:'not_connected',posts:[],channels:[],measuredAt:metrics.measuredAt||null,reason:'LinkedIn relay metrics have not been connected.'}};
   const postMetrics=metrics.posts||metrics.social?.posts||[];
-  const baseURL=(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'');
-  const hydrated=posts.map(post=>({...post,imageUrl:`./cards/${post.id}.jpg`,publicUrl:publicPostURL(baseURL,post.id),metrics:{views:postMetrics.find(m=>m.postId===post.id)?.views??null,saves:postMetrics.find(m=>m.postId===post.id)?.saves??null}}));
+  const hydrated=scoredPosts.map(post=>({...post,imageUrl:`./cards/${post.id}.jpg`,publicUrl:publicPostURL(baseURL,post.id),metrics:{views:postMetrics.find(m=>m.postId===post.id)?.views??null,saves:postMetrics.find(m=>m.postId===post.id)?.saves??null}}));
   const improvementRuns=versions.filter(v=>v.evaluations).map(v=>({id:v.id,type:'improve',status:v.status,startedAt:v.startedAt||v.createdAt,finishedAt:v.createdAt,eventName:v.eventName,clock:v.clock,jobKey:v.jobKey,scheduledAt:v.scheduledAt,scheduleStatus:v.scheduleStatus,githubRunUrl:v.githubRunUrl||null,version:v.id,usage:v.usage||{inputTokens:null,outputTokens:null,costUsd:null},steps:[{stage:'improve',status:v.status,at:v.createdAt,message:`${v.change} ${(v.reasons?.length?v.reasons.join(' '):v.reason)||''}`,baselineScore:v.baselineScore,challengerScore:v.challengerScore}]}));
   const sortedRuns=[...runs,...measurements,...improvementRuns].sort((a,b)=>(b.finishedAt||b.startedAt).localeCompare(a.finishedAt||a.startedAt));
   const sortedResearch=research.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
@@ -48,7 +59,8 @@ try{
   for(const snapshot of sortedResearch)for(const health of snapshot.health||[])if(health.name!=='X'&&!healthMap.has(health.name))healthMap.set(health.name,health);
   const candidates=(await records('candidates')).reduce((n,r)=>n+(r.candidates?.length||0),0);
   const measuredCost=usageRecords.map(r=>r.costUsd).filter(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
-  const modelRunCount=runs.filter(run=>run.modelExecuted!==false).length+improvementRuns.length;
+  const scoringRunIds=new Set(usageRecords.filter(record=>record.workflowKind==='score').map(record=>record.runId));
+  const modelRunCount=runs.filter(run=>run.modelExecuted!==false).length+improvementRuns.length+scoringRunIds.size;
   const stats={published:posts.length,candidates,rejected:rejections.length,views:metrics.site?.views??null,saves:metrics.site?.saves??null,totalCostUsd:measuredCost.length?measuredCost.reduce((a,b)=>a+b,0):null,costStatus:measuredCost.length===modelRunCount&&modelRunCount?'recorded_token_estimate':'invoice_or_usage_not_connected'};
   // Loop research files cross a model workspace; only the standalone no-model
   // research job can contribute scheduler metadata from this collection.
@@ -77,6 +89,9 @@ try{
   const machineHTML=await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8');
   await fs.writeFile(path.join(ROOT,'public','machine','index.html'),machineHTML.replace('<base href="./">','<base href="../">'));
   await fs.writeFile(path.join(ROOT,'public','.nojekyll'),'');
-  await writeSiteArtifacts({root:ROOT,posts,baseURL});
+  // Cards are derived artifacts. A checked backfill or accepted weight change
+  // updates their score line while preserving original JSON and RSS identity.
+  for(const post of scoredPosts)if(post.scoring)await fs.writeFile(path.join(ROOT,'public','cards',post.id+'.jpg'),renderCard(post));
+  await writeSiteArtifacts({root:ROOT,posts:scoredPosts,baseURL});
   console.log(JSON.stringify({posts:posts.length,runs:runs.length,path:'public/api/feed.json'}));
 }catch(error){console.error(safeError(error));process.exitCode=1;}

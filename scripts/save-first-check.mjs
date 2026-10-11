@@ -12,12 +12,14 @@ export function repairFeedback(draft,context,manifest) {
     approvedPostIds:results.filter(result=>result.pass).map(result=>result.postId),
     repairPostIds:results.filter(result=>!result.pass).map(result=>result.postId),
     decisions:results.map(result=>({postId:result.postId,passed:result.pass,checkerPass:result.check?.pass===true,reasons:result.reasons,
-      quoteIssues:(result.check?.claimChecks||[]).flatMap(claim=>{
+      quoteIssues:[...(result.check?.claimChecks||[]),...(result.check?.scoreChecks||[])].flatMap(claim=>{
         const source=context.sources.find(source=>source.id===claim.sourceId);
         const quote=typeof claim.evidenceQuote==='string'?plainText(claim.evidenceQuote):'';
-        return !source||quote.length<12||!plainText(source.text).toLowerCase().includes(quote.toLowerCase())
-          ? [{claim:claim.claim,sourceId:claim.sourceId,evidenceQuote:claim.evidenceQuote,reason:'This quote is missing, too short, or is not a contiguous substring of its verified source. Copy a literal source span; do not paraphrase.'}] : [];
-      })})),
+        const occurs=claim.criterion?typeof claim.evidenceQuote==='string'&&source?.text?.includes(claim.evidenceQuote):plainText(source?.text||'').toLowerCase().includes(quote.toLowerCase());
+        return !source||quote.length<12||!occurs
+          ? [{...(claim.criterion?{criterion:claim.criterion}:{claim:claim.claim}),sourceId:claim.sourceId,evidenceQuote:claim.evidenceQuote,reason:'This quote is missing, too short, or is not a contiguous substring of its verified source. Copy a literal source span; do not paraphrase.'}] : [];
+      }),scoreIssues:(result.check?.scoreChecks||[]).filter(check=>check.supported!==true||draft.posts.find(post=>post.id===result.postId)?.scoring?.criteria?.[check.criterion]?.value>check.maxSupportedScore)
+        .map(check=>({criterion:check.criterion,maxSupportedScore:check.maxSupportedScore,reason:check.reason}))})),
   };
 }
 

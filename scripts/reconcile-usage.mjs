@@ -5,7 +5,7 @@ import { ROOT, sha256, stableJSON, writeJSON } from '../lib/storage.mjs';
 import { collectUsage, githubApiGet, modelJobNames, usageCountersComplete } from '../lib/usage.mjs';
 
 export const REPOSITORY='xndanius/while-you-sleep';
-const WORKFLOWS=Object.freeze({'.github/workflows/loop.yml':'loop','.github/workflows/improve.yml':'improve'});
+const WORKFLOWS=Object.freeze({'.github/workflows/loop.yml':'loop','.github/workflows/improve.yml':'improve','.github/workflows/score-posts.yml':'score'});
 
 export function validateSourceRun(source, requestedId) {
   const kind=WORKFLOWS[source?.path];

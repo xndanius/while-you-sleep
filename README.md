@@ -10,6 +10,12 @@ The v4 scope is **website + LinkedIn Page**. GitHub Actions runs the official `o
 
 The default model remains `gpt-6-luna`, low effort. RULES.md controls research, picking, writing, checking and daily improvement. Writers and checkers have read-only GitHub permissions and separate workspaces. A publisher with no model access repeats schema, source, content-hash and duplicate checks. One repair is allowed, followed by a fresh independent check or rejection. No SSE Riga show or demo is used or changed.
 
+## Checked scores
+
+Each idea is assessed from 1 to 10 for ease to start, profit potential, feasibility for a student in two weeks, autonomy and evidence. Every value has a short evidence-linked reason; profit potential is always a hypothesis. A fresh independent checker sets the highest supported value for each criterion. The trusted publisher rejects inflated scores and calculates the weighted mean itself. The initial weights are equal and the publication threshold is 6; the current policy lives in RULES.md.
+
+Historical posts keep their original checked content, IDs and publication times. A separate cloud scoring workflow records independently checked assessments alongside them, including assessments below today's threshold. Post pages show the five reasons and sources, and the JPEG card includes a compact score line. Display scores use the current policy weights, while a publication decision retains the policy frozen for its own run. The daily improver can propose a narrowly bounded policy change with a stated reason; adoption still requires independent held-out trials and no factual or safety regression.
+
 ## Schedule · Europe/Vilnius
 
 - Primary clock: one authorized chain waits 15 minutes in the `clock` environment, checks due slots, records its tick and dispatches its successor. Queue time can add delay.

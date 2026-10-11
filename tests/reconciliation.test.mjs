@@ -26,6 +26,25 @@ test('reconciliation rejects nonterminal, fork, wrong workflow, branch, event an
   for(const patch of invalid)assert.throws(()=>validateSourceRun({...source,...patch},'123'),/trusted completed-main/);
   assert.throws(()=>validateSourceRun(source,'123; echo secret'),/trusted completed-main/);
   assert.equal(validateSourceRun({...source,path:'.github/workflows/improve.yml'},'123').kind,'improve');
+  assert.equal(validateSourceRun({...source,path:'.github/workflows/score-posts.yml'},'123').runId,'score-123-2');
+});
+
+test('score backfill reconciliation requires both independent jobs and keeps one effective record',async()=>{
+  const root=await mkdtemp(path.join(os.tmpdir(),'wys-reconcile-score-'));
+  try {
+    const initial={...original,id:'score-123-2',runId:'score-123-2',workflowKind:'score',coverage:{expectedModelJobs:2,observedModelJobs:0,notRunModelJobs:0,unknownModelJobs:2},jobs:[]};
+    const scoreJobs=['scorer','checker'].map((name,i)=>({...jobs[i],name}));
+    await writeJSON(path.join(root,'data','usage',initial.id+'.json'),initial,{immutable:true});
+    const result=await reconcileUsage({root,sourceRunId:'123',env,apiGet:async endpoint=>{
+      if(endpoint.endsWith('/runs/123'))return JSON.stringify({...source,path:'.github/workflows/score-posts.yml'});
+      if(endpoint.includes('/attempts/'))return JSON.stringify({total_count:2,jobs:scoreJobs});
+      return log;
+    }});
+    assert.equal(result.changed,true);
+    assert.equal(result.coverage.expectedModelJobs,2);
+    const correction=JSON.parse(await readFile(path.join(root,'data','usage',initial.id+'-reconciled.json'),'utf8'));
+    assert.deepEqual(effectiveUsageRecords([initial,correction]),[correction]);
+  } finally {await rm(root,{recursive:true,force:true});}
 });
 
 test('terminal reconciliation preserves original bytes/date and writes only bounded immutable counters',async()=>{

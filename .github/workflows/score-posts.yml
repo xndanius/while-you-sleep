@@ -1,0 +1,187 @@
+name: Score existing posts with independent checks
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: while-you-sleep-score-posts
+  cancel-in-progress: false
+  queue: max
+env:
+  RUN_ID: score-${{ github.run_id }}-${{ github.run_attempt }}
+  PUBLIC_BASE_URL: https://xndanius.github.io/while-you-sleep
+jobs:
+  prepare:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    outputs:
+      run_models: ${{ steps.prepare.outputs.run_models }}
+      repo_sha: ${{ steps.prepare.outputs.repo_sha }}
+      rules_sha256: ${{ steps.prepare.outputs.rules_sha256 }}
+      input_sha256: ${{ steps.prepare.outputs.input_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Freeze original posts, scoring policy and public evidence
+        id: prepare
+        run: node scripts/prepare-score-posts.mjs >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: steps.prepare.outputs.run_models == 'true'
+        with:
+          name: score-input-${{ env.RUN_ID }}
+          path: .run/score-data/input.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  scorer:
+    needs: prepare
+    if: needs.prepare.outputs.run_models == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ needs.prepare.outputs.repo_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: score-input-${{ env.RUN_ID }}
+          path: .run/score-data
+      - name: Independently score the historical ideas
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          prompt-file: .github/codex/prompts/score-posts.md
+          codex-args: '["--ephemeral", "--json"]'
+      - name: Carry only the frozen input and score draft
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: score-draft-${{ env.RUN_ID }}
+          path: |
+            .run/score-data/input.json
+            .run/score-data/draft.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  checker:
+    needs: [prepare, scorer]
+    if: needs.scorer.result == 'success' && needs.prepare.outputs.run_models == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    permissions:
+      contents: read
+    outputs:
+      draft_sha256: ${{ steps.prepare.outputs.draft_sha256 }}
+      context_sha256: ${{ steps.prepare.outputs.context_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ needs.prepare.outputs.repo_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: score-draft-${{ env.RUN_ID }}
+          path: .staging/scoring
+      - name: Verify the frozen input and refetch independent evidence
+        id: prepare
+        env:
+          EXPECTED_INPUT_SHA: ${{ needs.prepare.outputs.input_sha256 }}
+          RULES_SHA256: ${{ needs.prepare.outputs.rules_sha256 }}
+          RULES_COMMIT: ${{ needs.prepare.outputs.repo_sha }}
+        run: node scripts/prepare-score-check.mjs >> "$GITHUB_OUTPUT"
+      - name: Fresh independent score checker
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          prompt-file: .github/codex/prompts/check-post-scores.md
+          codex-args: '["--ephemeral", "--json"]'
+      - name: Carry only the checked scoring files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: score-checked-${{ env.RUN_ID }}
+          path: |
+            .run/score-data/input.json
+            .run/score-data/draft.json
+            .run/score-data/context.json
+            .run/score-data/check.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  record:
+    needs: [prepare, scorer, checker]
+    if: needs.prepare.result == 'success' && needs.scorer.result == 'success' && needs.checker.result == 'success' && needs.prepare.outputs.run_models == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: score-checked-${{ env.RUN_ID }}
+          path: .staging/scoring
+      - name: Collect trusted scorer and checker CLI usage
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CODEX_MODEL: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          MODEL_JOB_RESULTS: ${{ toJSON(needs) }}
+        run: node scripts/collect-usage.mjs score "$RUN_ID"
+      - name: Validate and commit checked score sidecars
+        env:
+          EXPECTED_INPUT_SHA: ${{ needs.prepare.outputs.input_sha256 }}
+          EXPECTED_DRAFT_SHA: ${{ needs.checker.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ needs.checker.outputs.context_sha256 }}
+          RULES_SHA256: ${{ needs.prepare.outputs.rules_sha256 }}
+          RULES_COMMIT: ${{ needs.prepare.outputs.repo_sha }}
+        run: node scripts/record-score-posts.mjs
+  pages:
+    needs: record
+    if: needs.record.result == 'success'
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

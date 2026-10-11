@@ -5,6 +5,8 @@ import { ROOT,dataPath,readJSON,writeJSON,records,hash,sha256,stableJSON,candida
 import { scanSources,fetchPublic,plainText } from '../lib/research.mjs';
 import { deterministicCheck } from '../lib/validation.mjs';
 import { makeProposerInput,gradeOrUnavailable,proposalTrialReadiness } from '../lib/improvement-runtime.mjs';
+import { policyTrialAssessment } from '../lib/improvement.mjs';
+import { parseScoringPolicy } from '../lib/scoring.mjs';
 import { prepareScheduledJob,trustedScheduledMetadata } from './prepare-scheduled-job.mjs';
 
 const [command,runId,variant,importKind]=process.argv.slice(2);
@@ -92,9 +94,12 @@ try{
       const input=await readJSON(dataPath('improvements',runId+'-input')),proposal=await readJSON(dataPath('improvements',runId));
       const validation=proposalTrialReadiness(input,proposal,{expectedInputSha256:process.env.EXPECTED_INPUT_SHA256});if(validation.status!=='ready')throw new Error(validation.reasons.join(' '));
       const trialId=hash(runId+variant);
+      const rules=variant==='baseline'?input.baselineRules:proposal.newRules;
+      const trialKind=proposal.type==='scoring_policy'?'scoring_policy':'prose';
+      const scoringPolicy=parseScoringPolicy(rules);
       // Trial agents see only their assigned rules, never the alternative or label.
       const directory=path.join(ROOT,'.run','trial');
-      await writeJSON(path.join(directory,'input.json'),{runId,trialId,rules:variant==='baseline'?input.baselineRules:proposal.newRules,candidates:input.candidates,sources:input.sources});
+      await writeJSON(path.join(directory,'input.json'),{runId,trialId,trialKind,rules,scoringPolicy,candidates:input.candidates,sources:input.sources});
       await writeJSON(path.join(directory,'context.json'),{runId,trialId,inputPath:'input.json',outputPath:'trial.json'});
       await fs.copyFile(path.join(ROOT,'.github','codex','prompts','trial.md'),path.join(directory,'PROMPT.md'));
       await fs.writeFile(path.join(directory,'AGENTS.md'),'This is an isolated held-out writing workspace. Read only context.json and its inputPath. Use only the assigned rules and attached evidence. Write only its outputPath. Do not access credentials, environment variables, network resources, parent directories, other rules, code or repositories. Do not commit or push.\n');
@@ -102,14 +107,25 @@ try{
     }else if(command==='blind'){
       const input=await readJSON(dataPath('improvements',runId+'-input')),proposal=await readJSON(dataPath('improvements',runId));
       const baseline=await readJSON(dataPath('improvements',runId+'-trial-baseline')),challenger=await readJSON(dataPath('improvements',runId+'-trial-proposal'));
+      const trialKind=proposal.type==='scoring_policy'?'scoring_policy':'prose';
+      const policies={baseline:parseScoringPolicy(input.baselineRules),proposal:parseScoringPolicy(proposal.newRules)};
+      if(trialKind==='scoring_policy')for(const [variant,record] of [['baseline',baseline],['proposal',challenger]]){
+        if(record.runId!==runId||record.trialId!==hash(runId+variant)||record.policySha256!==policies[variant].policySha256
+          ||!Array.isArray(record.assessments)||record.assessments.length!==input.candidates.length
+          ||new Set(record.assessments.map(row=>row.candidateId)).size!==input.candidates.length)throw new Error('Policy trial output does not bind its exact variant, assigned policy and held-out cases.');
+      }
       const cases=[],mapping=[];
       for(const candidate of input.candidates){
-        const toTrial=record=>{const raw=record.posts?.find(p=>p.productUrl===candidate.productUrl),post=raw?{...raw,id:candidate.candidateId,candidateId:candidate.candidateId}:null;return {post,refusal:record.refusals?.find(r=>r.candidateId===candidate.candidateId)?.reason||null,deterministicReasons:post?deterministicCheck(post,input.sources):['Trial produced no draft.']};};
+        const toTrial=(record,variant)=>{
+          if(trialKind==='scoring_policy')return policyTrialAssessment(record.assessments?.find(row=>row.candidateId===candidate.candidateId),candidate,input.sources.filter(source=>candidate.sourceIds.includes(source.id)),policies[variant]);
+          const raw=record.posts?.find(p=>p.productUrl===candidate.productUrl),post=raw?{...raw,id:candidate.candidateId,candidateId:candidate.candidateId}:null;
+          return {post,refusal:record.refusals?.find(r=>r.candidateId===candidate.candidateId)?.reason||null,deterministicReasons:post?deterministicCheck(post,input.sources,[],{scoringPolicy:policies[variant]}):['Trial produced no draft.']};
+        };
         const reversed=randomInt(2)===1;
-        cases.push({candidateId:candidate.candidateId,productUrl:candidate.productUrl,sources:input.sources.filter(s=>candidate.sourceIds.includes(s.id)),A:toTrial(reversed?challenger:baseline),B:toTrial(reversed?baseline:challenger)});
+        cases.push({candidateId:candidate.candidateId,productUrl:candidate.productUrl,sources:input.sources.filter(s=>candidate.sourceIds.includes(s.id)),A:toTrial(reversed?challenger:baseline,reversed?'proposal':'baseline'),B:toTrial(reversed?baseline:challenger,reversed?'baseline':'proposal')});
         mapping.push({candidateId:candidate.candidateId,baseline:reversed?'B':'A',proposal:reversed?'A':'B'});
       }
-      const blind={runId,sourceSnapshotSha256:input.sourceSnapshotSha256,trialsSha256:sha256(stableJSON(cases)),cases};
+      const blind={runId,trialKind,sourceSnapshotSha256:input.sourceSnapshotSha256,trialsSha256:sha256(stableJSON(cases)),cases};
       await writeJSON(dataPath('improvements',runId+'-labels'),{runId,proposalSha256:sha256(stableJSON(proposal)),cases:mapping},{immutable:true});
       await writeJSON(dataPath('improvements',runId+'-blind'),blind,{immutable:true});
       await writeJSON(path.join(ROOT,'.run','blind','context.json'),blind);

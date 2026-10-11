@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { XMLParser,XMLValidator } from 'fast-xml-parser';
 import jpeg from 'jpeg-js';
+import { renderCard } from '../lib/card.mjs';
 import { LINKEDIN_PAGE_URL,publicPostURL,rssTitle,rssDescription,metaDescription,renderPostPage,writeSiteArtifacts } from '../lib/site-artifacts.mjs';
 import { slotPresentation,currentDaySlots } from '../public/slot-display.js';
 
@@ -12,6 +13,7 @@ const baseURL='https://example.test/while-you-sleep';
 const post=(id='one',publishedAt='2026-10-11T05:20:00.000Z')=>({id,publishedAt,title:'Ideas & evidence <checked>',promise:'A useful promise & a clear limit.',whatItIs:'The complete description, including <untrusted> text.',whoPays:'Teams who need a small tool.',loop:['Research & gather','Check <claims>','Publish'],evidence:'An attributed observation with no invented numbers.',uncertainty:'Unknown adoption and reliability.',first24Hours:['Build a tiny form.','Test it with one real user.'],sources:[{title:'The maker & product',url:'https://example.org/product?a=one&b=two',publisher:'Example'},{title:'Never execute',url:'javascript:alert(1)'}]});
 const parser=new XMLParser({ignoreAttributes:false,parseTagValue:false,parseAttributeValue:false});
 const relayMarkup=/[()[\]{}<>@#*_~|\\]/u;
+const scoring=()=>({criteria:Object.fromEntries(Object.entries({ease:7,profit:6,feasibility:8,autonomy:8,evidence:7}).map(([key,value])=>[key,{value,reason:`${key} rests on the maker's stated product, with adoption still unknown.`,sourceIds:['maker']}])) ,overall:44/6,weights:{ease:1,profit:1,feasibility:2,autonomy:1,evidence:1},threshold:6,policySha256:'a'.repeat(64),assessmentPolicySha256:'b'.repeat(64),checkedAt:'2026-10-11T11:00:00.000Z',checkerRunId:'score-backfill-123-independent-check'});
 
 test('LinkedIn description has three plaintext paragraphs and up to three numbered steps',()=>{
   const content={...post(),first24Hours:['Build a tiny form.','Test it with one real user.','Record the result.','This fourth step is not relayed.']};
@@ -157,6 +159,71 @@ test('static post page contains the complete post, sources and required sharing 
   assert.ok(html.includes(LINKEDIN_PAGE_URL));
   assert.doesNotMatch(html,/href="javascript:/);
   assert.doesNotMatch(html,/<untrusted>/);
+});
+
+test('post page shows all five checked criteria, evidence links and current weighted score without rounding its data',()=>{
+  const content={...post(),sources:[{id:'maker',title:'Maker & evidence',url:'https://example.org/product?a=one&b=two'}],scoring:scoring()};
+  content.scoring.criteria.profit.reason='Hypothesis: a buyer may pay; <script>alert("invented revenue")</script> is untrusted text.';
+  const original=structuredClone(content),html=renderPostPage(content,baseURL);
+  assert.match(html,/<strong>7\.3<\/strong><span> \/ 10<\/span>/);
+  assert.equal((html.match(/class="criterion-heading"/g)||[]).length,5);
+  for(const label of ['Ease to start','Profit potential','Student build in 2 weeks','Autonomy','Evidence'])assert.ok(html.includes(`<h3>${label}</h3>`));
+  for(const criterion of Object.values(content.scoring.criteria))assert.ok(html.includes(`<strong>${criterion.value}<span> / 10</span></strong>`));
+  assert.equal((html.match(/class="score-evidence-links"><a href="https:\/\/example.org\/product\?a=one&amp;b=two"/g)||[]).length,5);
+  assert.ok(html.includes('Profit potential is a hypothesis.'));
+  assert.ok(html.includes('student build in 2 weeks 2'));
+  assert.ok(html.includes(content.scoring.checkerRunId));
+  assert.ok(html.includes(content.scoring.policySha256));
+  assert.ok(html.includes(content.scoring.assessmentPolicySha256));
+  assert.match(html,/&lt;script&gt;alert\(&quot;invented revenue&quot;\)&lt;\/script&gt;/);
+  assert.doesNotMatch(html,/<script>/);
+  assert.deepEqual(content,original,'Presentation cannot mutate the original content or unrounded aggregate.');
+});
+
+test('post pages and cards keep unscored posts pending rather than fabricating values',()=>{
+  const html=renderPostPage(post(),baseURL);
+  assert.match(html,/Score pending independent check\./);
+  assert.doesNotMatch(html,/class="overall-score"|class="criterion-heading"/);
+  assert.throws(()=>renderPostPage({...post(),scoring:{...scoring(),overall:NaN}},baseURL),/Invalid hydrated presentation score/);
+  assert.throws(()=>renderCard({...post(),scoring:{overall:11}}),/Invalid hydrated card score/);
+});
+
+test('checked card score occupies its reserved line without altering title, promise or footer pixels',()=>{
+  const content={...post(),title:'ABCDEFGHIJKLM NOPQRSTUVWXYZ ABCDEFGHIJKLM NOPQRSTUVWXYZ',promise:'AAAAAAAAAAAAAAAAAA BBBBBBBBBBBBBBBBBB CCCCCCCCCCCCCCCCCC DDDDDDDDDDDDDDDDDD EEEEEEEEEEEEEEEEEE'};
+  assert.equal(content.title.length,55);
+  assert.ok(content.promise.length<=100);
+  const pending=jpeg.decode(renderCard(content)),checked=jpeg.decode(renderCard({...content,scoring:scoring()}));
+  assert.equal(checked.width,1080);
+  assert.equal(checked.height,1350);
+  const rowBytes=checked.width*4;
+  // JPEG blocks bordering the score line can change; text regions well away
+  // from it must remain identical, even with near-limit title and promise.
+  assert.deepEqual(checked.data.subarray(0,rowBytes*896),pending.data.subarray(0,rowBytes*896));
+  assert.deepEqual(checked.data.subarray(rowBytes*960),pending.data.subarray(rowBytes*960));
+  assert.notDeepEqual(checked.data.subarray(rowBytes*904,rowBytes*944),pending.data.subarray(rowBytes*904,rowBytes*944));
+});
+
+test('adding a checked score leaves RSS identity, dates and relay paragraphs unchanged',async t=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'wys-score-rss-'));
+  t.after(()=>fs.rm(root,{recursive:true,force:true}));
+  await fs.mkdir(path.join(root,'public','cards'),{recursive:true});
+  const content=post();
+  await fs.writeFile(path.join(root,'public','cards','one.jpg'),renderCard(content));
+  await writeSiteArtifacts({root,posts:[content],baseURL});
+  const original=parser.parse(await fs.readFile(path.join(root,'public','feed.xml'),'utf8')).rss.channel.item;
+  const checked={...content,scoring:scoring()};
+  await fs.writeFile(path.join(root,'public','cards','one.jpg'),renderCard(checked));
+  await writeSiteArtifacts({root,posts:[checked],baseURL});
+  const xml=await fs.readFile(path.join(root,'public','feed.xml'),'utf8');
+  assert.equal(XMLValidator.validate(xml),true);
+  const updated=parser.parse(xml).rss.channel.item;
+  for(const key of ['title','link','guid','pubDate','description'])assert.deepEqual(updated[key],original[key],`${key} remains identical after backfill.`);
+  assert.equal(updated.description.split('\n\n').length,3);
+  assert.doesNotMatch(updated.description,/Score|ease|profit|feasibility/);
+  const card=await fs.stat(path.join(root,'public','cards','one.jpg'));
+  assert.equal(Number(updated.enclosure['@_length']),card.size);
+  const html=await fs.readFile(path.join(root,'public','p','one','index.html'),'utf8');
+  assert.match(html,/class="overall-score"/);
 });
 
 test('public page generation rejects traversal IDs, duplicate GUIDs and missing images',async t=>{

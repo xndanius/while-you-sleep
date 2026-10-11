@@ -1,9 +1,13 @@
 import { fetchPublic, plainText } from '../lib/research.mjs';
-import { dataPath, readJSON, writeJSON, records, candidateIdentity, hash, sha256, stableJSON, safeError } from '../lib/storage.mjs';
+import { ROOT,dataPath, readJSON, writeJSON, records, candidateIdentity, hash, sha256, stableJSON, safeError } from '../lib/storage.mjs';
 import { deterministicCheck } from '../lib/validation.mjs';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import { parseScoringPolicy } from '../lib/scoring.mjs';
 const runId=process.argv[2];
 try{
   const draft=await readJSON(dataPath('drafts',runId));const research=await readJSON(dataPath('research',runId));
+  const rules=await fs.readFile(path.join(ROOT,'RULES.md'),'utf8'),rulesSha256=sha256(rules),scoringPolicy=parseScoringPolicy(rules);
   if(draft.runId!==runId||!Array.isArray(draft.posts)||draft.posts.length<1||draft.posts.length>6)throw new Error('Writer output must have matching runId and 1..6 posts.');
   const previous=await records('posts'),sources=[],health=[];
   for(const post of draft.posts)if(typeof post.productUrl==='string'){try{post.id=candidateIdentity(post);post.candidateId=post.id;}catch{}}
@@ -19,9 +23,9 @@ try{
     catch(error){health.push({url:post.productUrl,status:'failed',message:safeError(error)});}
   }
   const sameBatch=new Set();
-  const deterministicResults=draft.posts.map(post=>{const reasons=deterministicCheck(post,[...research.sources,...sources],previous);if(sameBatch.has(post.id))reasons.push('Duplicate product in this writer batch.');sameBatch.add(post.id);if(post.sourceIds?.some(sourceId=>!sources.some(s=>s.id===sourceId)))reasons.push('Attached evidence source could not be re-fetched.');return {postId:post.id,pass:reasons.length===0,reasons};});
+  const deterministicResults=draft.posts.map(post=>{const reasons=deterministicCheck(post,[...research.sources,...sources],previous,{scoringPolicy});if(sameBatch.has(post.id))reasons.push('Duplicate product in this writer batch.');sameBatch.add(post.id);if(post.sourceIds?.some(sourceId=>!sources.some(s=>s.id===sourceId)))reasons.push('Attached evidence source could not be re-fetched.');return {postId:post.id,pass:reasons.length===0,reasons};});
   await writeJSON(dataPath('drafts',runId),draft);
-  const context={runId,createdAt:new Date().toISOString(),draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults};
+  const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults};
   await writeJSON(dataPath('check-context',runId),context);
   console.log(JSON.stringify({runId,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,results:deterministicResults}));
 }catch(error){console.error(safeError(error));process.exitCode=1;}

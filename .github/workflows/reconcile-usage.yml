@@ -1,13 +1,13 @@
 name: Reconcile completed Codex usage
 on:
   workflow_run:
-    workflows: [Codex autonomous loop, Improve one rule with blind held-out trials]
+    workflows: [Codex autonomous loop, Improve one rule with blind held-out trials, Score existing posts with independent checks]
     types: [completed]
     branches: [main]
   workflow_dispatch:
     inputs:
       source_run_id:
-        description: Completed main loop or improvement workflow run ID
+        description: Completed main loop, improvement or score workflow run ID
         required: true
         type: string
 permissions:
