@@ -1,0 +1,359 @@
+{
+  "id": "e20bcacf021524725d3fc275",
+  "candidateId": "e20bcacf021524725d3fc275",
+  "title": "A human checked support inbox loop",
+  "promise": "Sort incoming questions and prepare reply drafts for a person to review.",
+  "whatItIs": "n8n is a workflow builder that connects services and can include AI steps. A small student version could take incoming support messages, label them by topic, and prepare a draft reply for review. A workflow is a set of connected steps that runs when an event occurs.",
+  "whoPays": "Hypothesis: a small online shop with a recurring support inbox might pay for setup or maintenance; the supplied page does not establish demand for this student service.",
+  "loop": [
+    "A new test support email triggers the workflow.",
+    "Rules remove obvious junk and pass the message to a classifier.",
+    "The classifier assigns a topic and priority.",
+    "The workflow retrieves an approved answer note and drafts a reply.",
+    "A person reviews and sends the draft, correcting uncertain cases.",
+    "The workflow records the outcome for later review."
+  ],
+  "evidence": "The n8n page describes integrations, AI workflows, templates, human approvals and execution monitoring. It attributes to SanctifAI a first workflow setup in two hours; this is a vendor-published case study, not independent verification. The source shows an automation platform, not this proposed inbox service or its earnings.",
+  "uncertainty": "This is a proposed small version, not a claim that n8n autonomously runs a support business. Email permissions, model costs, privacy, errors and integration setup need testing. A person must approve customer-facing replies and handle unusual or sensitive messages. The page does not prove demand for this offer.",
+  "first24Hours": [
+    "Choose a test inbox and write ten fictional support messages.",
+    "Build a workflow that labels those messages and drafts replies from a short approved FAQ.",
+    "Run the examples, record misclassifications, and add a human approval step before any send action."
+  ],
+  "productUrl": "https://n8n.io/ai",
+  "scoring": {
+    "criteria": {
+      "ease": {
+        "value": 6,
+        "reason": "A narrow visual workflow can be configured from templates and integrations; live service setup still needs technical work.",
+        "sourceIds": [
+          "e20bcacf021524725d3fc275"
+        ]
+      },
+      "profit": {
+        "value": 5,
+        "reason": "Hypothesis: a small support team may pay for inbox triage; the source establishes no demand for this student offer.",
+        "sourceIds": [
+          "e20bcacf021524725d3fc275"
+        ]
+      },
+      "feasibility": {
+        "value": 6,
+        "reason": "One inbox demo can fit two weeks; production integrations, reliability and onboarding remain substantial limits.",
+        "sourceIds": [
+          "e20bcacf021524725d3fc275"
+        ]
+      },
+      "autonomy": {
+        "value": 6,
+        "reason": "Triggers can label and draft repeatedly; a person must review replies and handle errors, consistent with the page’s human checkpoints.",
+        "sourceIds": [
+          "e20bcacf021524725d3fc275"
+        ]
+      },
+      "evidence": {
+        "value": 7,
+        "reason": "The first-party page documents a working platform and attributes a two-hour setup to one case study, not independent use evidence.",
+        "sourceIds": [
+          "e20bcacf021524725d3fc275"
+        ]
+      }
+    },
+    "overall": 6,
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "assessmentPolicySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkedAt": "2026-10-11T17:14:41.873Z",
+    "checkerRunId": "loop-38158686735-1-independent-check"
+  },
+  "publishedAt": "2026-10-11T17:15:34.229Z",
+  "version": "rules-b68e2a16de6e",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "rulesCommit": "d10733c3223775a1d348d67ad7088e821e5756f3",
+  "origin": "github-actions-codex-loop",
+  "runId": "loop-38158686735-1",
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38158686735",
+  "sources": [
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "title": "Advanced AI Workflow Automation Software & Tools - n8n · product evidence",
+      "url": "https://n8n.io/ai",
+      "publisher": "n8n.io",
+      "fetchedAt": "2026-10-11T17:14:41.864Z",
+      "verifiedAt": "2026-10-11T17:14:41.864Z"
+    }
+  ],
+  "imageUrl": "./cards/e20bcacf021524725d3fc275.jpg",
+  "checker": {
+    "passed": true,
+    "checkedAt": "2026-10-11T17:14:41.873Z",
+    "checkerRunId": "loop-38158686735-1-independent-check",
+    "draftSha256": "4189e0e7906eac5a2e4cbd223772d53fcf3e78757de804ec050b246c5bddc70f",
+    "sourceSnapshotSha256": "04e319a949bf93064424de8908624429119e864a5e167de9171121c8ca0575ea",
+    "claimChecks": [
+      {
+        "claim": "n8n connects services and includes AI steps in workflows.",
+        "supported": true,
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "Blend 500+ integrations, AI agents, human approvals, and code into flexible workflows"
+      },
+      {
+        "claim": "The n8n page includes workflow templates, including an email support workflow with human involvement.",
+        "supported": true,
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "Self Improving Email AI Support with Human-in-the-Loop"
+      },
+      {
+        "claim": "The page describes a first-party case study in which SanctifAI set up its first workflow in two hours.",
+        "supported": true,
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "SanctifAI spun up its first n8n workflow in just 2 hours"
+      },
+      {
+        "claim": "The draft's customer and student service offer is explicitly a hypothesis and is not established by the source.",
+        "supported": true,
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "The challenge SanctifAI, a leader in Human-AI collaboration, needed to find a way for human workers"
+      }
+    ],
+    "scoreChecks": [
+      {
+        "criterion": "ease",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "Templates and integrations support a narrow start, while AI workflow setup still calls for technical judgment.",
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "Our active developer community shares new workflows every week that you can download and adapt."
+      },
+      {
+        "criterion": "profit",
+        "supported": true,
+        "maxSupportedScore": 5,
+        "reason": "A buyer is only a hypothesis; the source describes platform use but provides no demand evidence for this student offer.",
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "Support can Use RAG to answer questions from internal PDFs"
+      },
+      {
+        "criterion": "feasibility",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "A single inbox demonstration is a bounded student scope; production reliability and service onboarding are not demonstrated.",
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "Self Improving Email AI Support with Human-in-the-Loop"
+      },
+      {
+        "criterion": "autonomy",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "Workflow steps can automate routing and drafting, with human approval remaining part of the proposed loop.",
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "Place human-in-the-loop checks at any point in a workflow"
+      },
+      {
+        "criterion": "evidence",
+        "supported": true,
+        "maxSupportedScore": 7,
+        "reason": "The first-party page documents a working platform and an attributed case example, but not independent use or this inbox service.",
+        "sourceId": "e20bcacf021524725d3fc275",
+        "evidenceQuote": "SanctifAI spun up its first n8n workflow in just 2 hours"
+      }
+    ],
+    "scoreSources": [
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "title": "Advanced AI Workflow Automation Software & Tools - n8n · product evidence",
+        "url": "https://n8n.io/ai",
+        "publisher": "n8n.io",
+        "text": "Advanced AI Workflow Automation Software & Tools - n8n n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. The potential of AI with the power of automation The practical way to make a business impact with AI n8n is about help, not hype. Build modular AI systems that are easy to debug, explainable by design, and maintainable as requirements change. Start building for free* Talk to sales * 14 days free trial. No credit card required. Over 206k GitHub stars Self host-able SOC2 compliant Common use cases Create complex AI agents with confidence Pair AI with explicit logic to stay in control of inputs and outcomes. Blend 500+ integrations, AI agents, human approvals, and code into flexible workflows that perform reliably in production. ITOps can Route employee requests to best model for type of inquiry Support can Use RAG to answer questions from internal PDFs Sales can Discover leads using MCP - connected services Finance can Automate operations with specialized agent teams Marketing can Orchestrate agents for strategic research Click on image to go to the template AI agents and workflows for technical teams at Why n8n? AI does the ‘what’. You decide the ‘how'. Keep AI grounded in clean inputs and business rules, with human checkpoints, performance monitoring, and built-in audit trails. Ensure human brains hold the reins Autopilot is for planes, not production AI. Place human-in-the-loop checks at any point in a workflow or in front of any AI Agent tool. Get fine-grained control over when to enforce human approval and when AI can guide requests for user input. Get the playbook for adding human oversight to production AI workflows. Guard your AI against going rogue Boundaries matter. Combine AI with rule-based automation to constrain inputs, then validate and route outputs using explicit logic. Filter out malicious input, sanitize sensitive data, and handle errors early to keep AI behavior on the rails. Get the playbook for combining deterministic steps and AI steps. Monitor every decision your AI makes Ignorance of your AI is anything but bliss. With n8n, you can inspect every execution to see the prompt sent, model response, and what happened next. Stream logs to your favorite observability tools. Track changes and versions. And trace behavior for debugging, audits, and compliance. Reliable AI outputs, every time Hope is a horrible deployment strategy. Control your workflows with evaluations that test AI reliability against defined metrics. Use the results to refine prompts and select models. Then monitor your workflows to detect drift and trigger follow-up actions. Get the playbook on evaluations and monitoring. “n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way .” Oliver Scheers Chief Technology Officer Template library Automate out of the gate with thousands of templates Create workflows in no time with templates for the most common and complex AI use cases. Our active developer community shares new workflows every week that you can download and adapt. Browse All Templates Automate Document Q&A with Multi-Agent RAG Orchestration using Contextual AI & Gemini If Loop Over Items (Split in Batches) Wait +8 Deep research agent - automated research & Notion report builder HTTP Request Edit Fields (Set) Loop Over Items (Split in Batches) +17 🤖 Self Improving Email AI Support with Human-in-the-Loop Google Sheets If No Operation, do nothing +9 Design UI projects 🎨🖼️ with Google Stitch via Telegram using MCP and Gemini AI If Edit Fields (Set) Telegram +9 Complete AI safety suite: test 9 guardrail layers with Groq LLM Edit Fields (Set) Sticky Note Manual Trigger +3 AI multi-agent executive team for entrepreneurs with Gemini, Perplexity and WhatsApp Sticky Note WhatsApp Business Cloud AI Agent +11 Advanced AI The flexible way to bring AI into your business MCP Connect your workflows to the world Make your n8n workflows callable by any AI platform. Enable MCP on your instance to give Lovable, Claude, and other clients direct access to the automations you choose. And call other MCP-enabled tools from within your workflows. AI Workflow Builder Describe it. Build it. Ship it. Skip the blank canvas. Tell n8n what you want to automate in plain language. AI Assistant plans it, builds it in your project, runs it, and fixes what breaks until it works. Everything it builds is a normal n8n workflow: open the canvas, inspect execution logs, and approve high-impact actions before they happen. Chat Hub Your company’s AI control center Give everyone in your org controlled access to multiple AI models and n8n agentic workflows through a single chat interface. Create custom agents to access external tools or surface internal workflows that any user can run with simple prompts. Case studies SanctifAI embeds human intelligence into AI processes 3X faster than Python Read more The challenge SanctifAI, a leader in Human-AI collaboration, needed to find a way for human workers in 400+ workforces to easily complete tasks as part of AI workflows. The solution had to be scalable and highly composable. The team didn’t want to build from scratch or maintain an in-house codebase. The solution After rejecting less flexible Langchain tools, SanctifAI spun up its first n8n workflow in just 2 hours, thanks to n8n’s visual builder and routing systems. That’s 3X faster than writing Python controls for LangChain. n8n’s visual UI eliminated the constraints of scarce engineering talent and budget to build solutions. SanctifAI now trains product managers to build and test directly. Read more \"There’s no problem we haven’t been able to solve with n8n.” We’re having so much fun with n8n. It’s like playing a game, but we’re actually building powerful tools for our customers. Nathaniel Gates CEO Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+        "fetchedAt": "2026-10-11T17:14:41.864Z",
+        "originFeedIds": [
+          "e20bcacf021524725d3fc275"
+        ],
+        "productUrl": "https://n8n.io/ai",
+        "originSourceIds": [
+          "e20bcacf021524725d3fc275"
+        ],
+        "evidenceKind": "product-page",
+        "evidenceFetch": {
+          "maxBytes": 2000000,
+          "complete": true
+        },
+        "enriched": true,
+        "evidenceExcerpted": true,
+        "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+        "evidenceValidation": {
+          "robots": [
+            {
+              "origin": "https://n8n.io",
+              "robotsUrl": "https://n8n.io/robots.txt",
+              "status": 200,
+              "contentType": "text/plain; charset=utf-8",
+              "fetchedAt": "2026-10-11T17:13:15.584Z",
+              "redirects": [],
+              "state": "available",
+              "bytes": 76,
+              "truncated": false,
+              "allowed": true,
+              "matchedRule": null,
+              "selectedUserAgents": [
+                "*"
+              ],
+              "evaluatedUrl": "https://n8n.io/ai",
+              "reason": "No matching robots Disallow rule."
+            },
+            {
+              "origin": "https://n8n.io",
+              "robotsUrl": "https://n8n.io/robots.txt",
+              "status": 200,
+              "contentType": "text/plain; charset=utf-8",
+              "fetchedAt": "2026-10-11T17:13:15.584Z",
+              "redirects": [],
+              "state": "available",
+              "bytes": 76,
+              "truncated": false,
+              "allowed": true,
+              "matchedRule": null,
+              "selectedUserAgents": [
+                "*"
+              ],
+              "evaluatedUrl": "https://n8n.io/ai/",
+              "reason": "No matching robots Disallow rule."
+            }
+          ],
+          "redirects": [
+            {
+              "url": "https://n8n.io/ai",
+              "status": 308,
+              "next": "https://n8n.io/ai/"
+            }
+          ],
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "resolvedUrl": "https://n8n.io/ai/",
+          "maxBytes": 2000000,
+          "truncated": false
+        },
+        "feedExcerpt": "Advanced AI Workflow Automation Software & Tools - n8n n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. The potential of AI with the power of automation The practical way to make a business impact with AI n8n is about help, not hype. Build modular AI systems that are easy to debug, explainable by design, and maintainable as requirements change. Start building for free* Talk to sales * 14 days free trial. No credit card required. Over 206k GitHub stars Self host-able SOC2 compliant Common ",
+        "verifiedAt": "2026-10-11T17:14:41.864Z"
+      }
+    ],
+    "scoringPolicy": {
+      "weights": {
+        "ease": 1,
+        "profit": 1,
+        "feasibility": 1,
+        "autonomy": 1,
+        "evidence": 1
+      },
+      "threshold": 6,
+      "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+    }
+  },
+  "eventName": "workflow_dispatch",
+  "publicUrl": "https://xndanius.github.io/while-you-sleep/p/e20bcacf021524725d3fc275/",
+  "scheduling": {
+    "id": "loop-38158686735-1",
+    "runId": "loop-38158686735-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "38158686735",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38158686735",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-38157591611-1",
+      "clockRunId": "38157591611",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38157591611",
+      "dispatchId": "clock-38157591611-1-loop",
+      "runId": "38158686735",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-11T17:12:41.287Z",
+      "requestedAt": "2026-10-11T17:12:41.287Z",
+      "verifiedAt": "2026-10-11T17:12:58.498Z",
+      "parentHeadSha": "826db0841822336043e3c4c56857df11a57b338d"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-11-20-07",
+    "scheduledAt": "2026-10-11T17:07:00.000Z",
+    "localDate": "2026-10-11",
+    "localTime": "20:07",
+    "requestedAt": "2026-10-11T17:12:58.498Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 2,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-11-16-07",
+        "scheduledAt": "2026-10-11T13:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "16:07"
+      },
+      {
+        "id": "publish-2026-10-11-17-07",
+        "scheduledAt": "2026-10-11T14:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "17:07"
+      },
+      {
+        "id": "publish-2026-10-11-18-07",
+        "scheduledAt": "2026-10-11T15:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "18:07"
+      },
+      {
+        "id": "publish-2026-10-11-19-07",
+        "scheduledAt": "2026-10-11T16:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "19:07"
+      },
+      {
+        "id": "publish-2026-10-11-20-07",
+        "scheduledAt": "2026-10-11T17:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "20:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-11-20-07",
+        "scheduledAt": "2026-10-11T17:07:00.000Z",
+        "localDate": "2026-10-11",
+        "localTime": "20:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-11-20-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-11-20-07": 1
+    },
+    "reservationId": "loop-38158686735-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot",
+    "batchSlotId": "publish-2026-10-11-20-07"
+  },
+  "contentSha256": "bd7b87ce08f86736bcdaeabbab4686ac3b0e889c60b987612bc4a77f7293008e"
+}
