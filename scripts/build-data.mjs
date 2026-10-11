@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { ROOT, records, readJSON, writeJSON, safeError } from '../lib/storage.mjs';
+import { ROOT, records, readJSON, writeJSON, safeError,hash } from '../lib/storage.mjs';
 import { INITIAL_RULES, schedule, previousLocalTime } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
@@ -12,6 +12,8 @@ import { parseScoringPolicy,hydrateScoring } from '../lib/scoring.mjs';
 import { renderCard } from '../lib/card.mjs';
 import { curationStatus,validatedCurationPicks,readCurationRecords } from '../lib/curation.mjs';
 import { versionBrowserAssets } from '../lib/browser-assets.mjs';
+import { sourceDefinitions } from '../lib/research.mjs';
+import { renderMethodology } from '../lib/methodology.mjs';
 
 const clockDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const clockRunURL=value=>typeof value==='string'&&/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/\d+$/.test(value)?value:null;
@@ -89,7 +91,13 @@ try{
   const relay={...relayStatus,path:'Website -> RSS -> Zapier -> LinkedIn Page',linkedinUrl,feedUrl:baseURL+(bestFeedConfirmed?'/best.xml':'/feed.xml'),recommendedFeedUrl:baseURL+'/best.xml'};
   const platforms=[{name:'LinkedIn',id:'linkedin',status:relay.state==='published'?'active':relay.state,provider:'Zapier RSS relay',lastPublishedAt:relay.firstPublishedAt||null,url:linkedinUrl,message:relay.message}];
   const versionHistory=versions.length?versions.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')):[{id:INITIAL_RULES.id,createdAt:INITIAL_RULES.createdAt,status:'adopted',reason:INITIAL_RULES.reason,change:'Initial evidence-first writing and picking rules',baselineScore:null,challengerScore:null}];
-  const machine={...feed,clock,curation,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],platforms,relay,metrics};
+  // Before registry accounting starts, old scan health can describe reported
+  // availability but cannot identify which source produced a checked idea.
+  const sources={enabled:false,coverage:{reason:'Historic origin attribution was not recorded; yield accounting starts with the source registry.',trustedFetchSnapshots:trustedResearch.length},rows:sourceDefinitions.map(definition=>{
+    const health=healthMap.get(definition.name);
+    return {id:hash(definition.url),name:definition.name,url:definition.url,status:'configured',lastFetchAt:health?.fetchedAt||null,health:health?{status:health.status,message:health.message}:null,stats:{fetchAttempts:null,successfulFetches:null,itemsFetched:null,distinctItems:null,candidates:null,checkedCandidates:null,passedChecks:null,averageScore:null,published:null,linkedInPicks:null}};
+  }),changes:[]};
+  const machine={...feed,clock,curation,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources,platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);
   await writeJSON(path.join(ROOT,'public','api','machine.json'),machine);
   const counter=process.env.GOATCOUNTER_SITE||'';
@@ -101,6 +109,8 @@ try{
   const machineHTML=versionHTML(await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8'));
   await fs.writeFile(path.join(ROOT,'public','machine.html'),machineHTML);
   await fs.writeFile(path.join(ROOT,'public','machine','index.html'),machineHTML.replace('<base href="./">','<base href="../">'));
+  await fs.mkdir(path.join(ROOT,'public','method'),{recursive:true});
+  await fs.writeFile(path.join(ROOT,'public','method','index.html'),renderMethodology({baseURL,styleVersion,generatedAt:new Date().toISOString(),policy:currentScoringPolicy,schedule:cadence,clock,curation,relay,sources,versions:versionHistory,picks:curation.picks}));
   await fs.writeFile(path.join(ROOT,'public','.nojekyll'),'');
   // Cards are derived artifacts. A checked backfill or accepted weight change
   // updates their score line while preserving original JSON and RSS identity.

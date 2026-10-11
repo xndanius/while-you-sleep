@@ -2,7 +2,7 @@
 
 Codex researches real autonomous AI projects, picks beginner-friendly ideas, writes them, and submits each to a fresh independent checker. A deterministic job publishes only checked files. Every research run, pick, rejection, post and rule change belongs in this public Git history.
 
-[Website](https://xndanius.github.io/while-you-sleep/) · [Machine](https://xndanius.github.io/while-you-sleep/machine/) · [Follow on LinkedIn](https://www.linkedin.com/company/whileyousleep-ai/) · [Actions](https://github.com/xndanius/while-you-sleep/actions) · [History](https://github.com/xndanius/while-you-sleep/commits/main/)
+[Website](https://xndanius.github.io/while-you-sleep/) · [Machine](https://xndanius.github.io/while-you-sleep/machine/) · [Method](https://xndanius.github.io/while-you-sleep/method/) · [Follow on LinkedIn](https://www.linkedin.com/company/whileyousleep-ai/) · [Actions](https://github.com/xndanius/while-you-sleep/actions) · [History](https://github.com/xndanius/while-you-sleep/commits/main/)
 
 ## Scope and runtime
 
@@ -37,6 +37,8 @@ Each item has a permanent /p/<id>/ link, stable post-ID GUID, publication time, 
 The separate [best feed](https://xndanius.github.io/while-you-sleep/best.xml) contains only recorded LinkedIn picks. At 12:17 and 18:17 Vilnius, a deterministic job chooses the highest current checked weighted score from the preceding 12 hours, at least 7, excluding previous picks and posts published before activation. It records a pick or an honest empty window, with at most two picks a day. Each RSS item freezes the score used to select it; later rule changes cannot rewrite its relay text. Danielius confirmed that Zap now reads `/best.xml` at 15:10:58 Vilnius on 11 October. The recorded hourly activation follows that confirmation and preserves earlier slots.
 
 ## Credentials and metrics
+
+The public [method page](https://xndanius.github.io/while-you-sleep/method/) is generated during each Pages build from the current scoring policy, cadence, checked LinkedIn selections, source records and rule-change history. It explains what has been measured and what remains unavailable. The clock's current last and next tick come from runtime metadata on the machine page.
 
 OPENAI_API_KEY is already installed in Actions through the OpenAI Developers secure flow. Keep secrets in GitHub Actions or the relay's private account UI, never chat or public files. The content models use the official action's secure API proxy.
 
