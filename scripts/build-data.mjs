@@ -3,7 +3,6 @@ import path from 'node:path';
 import { ROOT, records, readJSON, writeJSON, safeError } from '../lib/storage.mjs';
 import { INITIAL_RULES, schedule } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
-import { measuredPublication } from '../lib/publication-status.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
 import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof.mjs';
 import { publicationSlotStatus } from '../lib/slot-status.mjs';
@@ -18,6 +17,7 @@ try{
   const posts=allPosts.filter(verifyPublishedPost).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
   if(posts.length!==allPosts.length)throw new Error('A committed post failed checker provenance or content-integrity validation.');
   let metrics;try{metrics=await readJSON(path.join(ROOT,'metrics.json'));}catch(error){if(error.code==='ENOENT')metrics={site:{status:'not_connected',views:null,saves:null},social:{status:'not_connected'},measuredAt:null};else throw error;}
+  if(metrics.social?.provider!=='zapier')metrics={...metrics,social:{provider:'zapier',status:'not_connected',posts:[],channels:[],measuredAt:metrics.measuredAt||null,reason:'LinkedIn relay metrics have not been connected.'}};
   const postMetrics=metrics.posts||metrics.social?.posts||[];
   const baseURL=(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'');
   const hydrated=posts.map(post=>({...post,imageUrl:`./cards/${post.id}.jpg`,publicUrl:`${baseURL}/#post-${post.id}`,metrics:{views:postMetrics.find(m=>m.postId===post.id)?.views??null,saves:postMetrics.find(m=>m.postId===post.id)?.saves??null}}));
@@ -40,15 +40,11 @@ try{
   const previousSlots=publicationSlotStatus({posts,runs,reservations,outcomes,now:new Date(Date.now()-86400000)}).map(slot=>({...slot,plannedAt:slot.scheduledAt,status:slot.state}));
   const cadence={...schedule(),slots,previousSlots,gateEveryMinutes:20,auxiliaryGateEveryMinutes:30,verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null,proof};
   const feed={posts:hydrated,stats,schedule:cadence,status};
-  const platformNames=['x','instagram','linkedin'];
-  const platforms=platformNames.map(platform=>{
-    const receipt=publications.slice().sort((a,b)=>(b.publishedAt||b.submittedAt||'').localeCompare(a.publishedAt||a.submittedAt||'')).find(r=>r.platform===platform||r.results?.[platform]||r.social?.[platform]);
-    const result=measuredPublication(receipt,receipt?.results?.[platform]||receipt?.social?.[platform]||receipt,platform,metrics);
-    const servicePending=!result||['pending_setup','not_connected','awaiting_connection'].includes(result.status);
-    return {name:platform==='x'?'X':platform==='instagram'?'Instagram':'LinkedIn',id:platform,status:result?.status||'pending_setup',provider:servicePending?'Service undecided':result?.provider||'Service undecided',lastPublishedAt:result?.publishedAt||null,message:result?.message||'A publishing service has not been chosen. Danielius will connect this account after choosing one.'};
-  });
+  const linkedinUrl='https://www.linkedin.com/company/whileyousleep-ai/';
+  const relay={path:'Website -> RSS -> Zapier -> LinkedIn Page',state:'waiting_for_first_linkedin_post',message:'waiting for first LinkedIn post',linkedinUrl,feedUrl:baseURL+'/feed.xml'};
+  const platforms=[{name:'LinkedIn',id:'linkedin',status:'waiting_for_first_linkedin_post',provider:'Zapier RSS relay',lastPublishedAt:null,url:linkedinUrl,message:relay.message}];
   const versionHistory=versions.length?versions.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')):[{id:INITIAL_RULES.id,createdAt:INITIAL_RULES.createdAt,status:'adopted',reason:INITIAL_RULES.reason,change:'Initial evidence-first writing and picking rules',baselineScore:null,challengerScore:null}];
-  const machine={...feed,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],platforms,metrics};
+  const machine={...feed,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);
   await writeJSON(path.join(ROOT,'public','api','machine.json'),machine);
   const counter=process.env.GOATCOUNTER_SITE||'';

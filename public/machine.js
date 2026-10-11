@@ -1,4 +1,5 @@
 import {loopTiming} from './schedule.js';
+import {slotPresentation} from './slot-display.js';
 
 (() => {
   'use strict';
@@ -33,8 +34,8 @@ import {loopTiming} from './schedule.js';
   const stateClass = (value) => {
     const state = plain(value).toLowerCase();
     if (['success','succeeded','completed','complete','published','healthy','ok','active','live','connected','adopted','shipped','passed','available','enabled'].includes(state)) return 'good';
-    if (['failed','failure','error','unhealthy','rejected','unavailable'].includes(state)) return 'bad';
-    if (['running','pending','pending_setup','awaiting_first_cloud_run','awaiting_access','awaiting_connection','restricted','partial','degraded','skipped','not_connected','disabled','dry_run'].includes(state)) return 'warning';
+    if (['failed','failure','error','unhealthy','unavailable'].includes(state)) return 'bad';
+    if (['running','pending','pending_setup','awaiting_first_cloud_run','awaiting_access','awaiting_connection','restricted','partial','degraded','skipped','not_connected','disabled','dry_run','rejected','late','missed','cap_reached','waiting_for_first_linkedin_post'].includes(state)) return 'warning';
     return '';
   };
   const stateLabel = (state) => ({awaiting_key:'Awaiting model access',awaiting_first_cloud_run:'Awaiting the first cloud run',awaiting_access:'Needs access',awaiting_connection:'Needs connection',pending_setup:'Needs setup',not_connected:'Not connected',dry_run:'Dry run',succeeded:'Completed',success:'Completed',ok:'Available',enabled:'Connected'}[state] || human(state) || 'Not recorded');
@@ -66,7 +67,26 @@ import {loopTiming} from './schedule.js';
     const latestLoop=data.runs?.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
     const cadence=loopTiming(data.status?.lastLoopAt||latestLoop?.startedAt);
     $('next-published').textContent=formatDate(cadence.nextPublicationAt);
-    $('loop-slot-state').textContent=`${cadence.slotState==='recorded'?'Recorded':cadence.slotState==='waiting'?'Waiting':cadence.slotState==='late'?'Late':'Missed'} · ${shortTime(cadence.latestSlotAt)}${['late','missed'].includes(cadence.slotState)?' · no loop recorded':''}`;
+    const slots=(data.schedule?.slots||[]).map(slot=>slotPresentation(slot));
+    const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1);
+    $('loop-slot-state').textContent=latest?`${latest.state==='cap_reached'?'Daily cap reached':human(latest.state)} · ${shortTime(latest.plannedAt)}${latest.actualAt?` · published ${shortTime(latest.actualAt)}`:''}`:`${cadence.slotState==='recorded'?'Attempt recorded':cadence.slotState==='waiting'?'Waiting':cadence.slotState==='late'?'Late':'Missed'} · ${shortTime(cadence.latestSlotAt)}`;
+    renderPublicationSlots(slots);
+  }
+
+  function renderPublicationSlots(slots){
+    const previous=(data.schedule?.previousSlots||[]).map(slot=>slotPresentation(slot));
+    if(!slots.length&&!previous.length){$('publication-slots').innerHTML='<p class="muted">No slot receipts are recorded for the current day.</p>';return;}
+    const table=rows=>rows.length?`<div class="slot-table-wrap"><table class="slot-table"><caption>${escape(day(rows[0].plannedAt))}</caption><thead><tr><th scope="col">Planned · Vilnius</th><th scope="col">Actual publication / run</th><th scope="col">Publication delay</th><th scope="col">State</th></tr></thead><tbody>${rows.map(slot=>{
+      const actual=slot.actualAt?formatDate(slot.actualAt):'Not published';
+      const attemptDelay=validDate(slot.attemptedAt)&&validDate(slot.plannedAt)?Math.max(0,Math.floor((validDate(slot.attemptedAt).getTime()-validDate(slot.plannedAt).getTime())/60000)):null;
+      const attempt=slot.attemptedAt?`<small>Run started ${escape(formatDate(slot.attemptedAt))}${attemptDelay!==null?` · ${number(attemptDelay)} min late`:''}${slot.eventName==='schedule'?' · scheduled':slot.eventName==='workflow_dispatch'?' · manual':''}</small>`:'';
+      const url=link(slot.githubRunUrl,'View run');
+      const stateLabel=slot.state==='cap_reached'?'Daily cap reached':slot.state==='scheduled'?'Upcoming':human(slot.state);
+      const elapsed=validDate(slot.plannedAt)?Math.max(0,Math.floor((Date.now()-validDate(slot.plannedAt).getTime())/60000)):null;
+      const delay=slot.actualAt?`${number(slot.delayMinutes)} min`:['late','missed'].includes(slot.state)&&elapsed!==null?`${number(elapsed)} min overdue`:'—';
+      return `<tr><td><time datetime="${escape(slot.plannedAt)}">${escape(formatDate(slot.plannedAt))}</time></td><td>${escape(actual)}${attempt}${url?`<small>${url}</small>`:''}</td><td>${escape(delay)}</td><td>${chip(slot.state,stateLabel)}${slot.reason?`<small>${escape(slot.reason)}</small>`:''}${slot.postId?`<small><a href="p/${escape(encodeURIComponent(slot.postId))}/">Read post ↗</a></small>`:''}</td></tr>`;
+    }).join('')}</tbody></table></div>`:'';
+    $('publication-slots').innerHTML=table(slots)+table(previous)+'<p class="schedule-footnote">Publication times come from committed posts. Run starts and their delays are shown separately. Delayed gates catch up unfinished slots within the same Vilnius day, up to three posts.</p>';
   }
 
   function runTitle(type) {
@@ -103,7 +123,7 @@ import {loopTiming} from './schedule.js';
         ${run.message || run.error ? `<p class="muted">${escape(plain(run.message || run.error))}</p>` : ''}
         ${steps.length ? `<ol class="run-timeline">${steps.map((step) => `<li class="${stateClass(step.status) === 'bad' ? 'failed' : ''}"><time datetime="${escape(step.at || '')}">${escape(shortTime(step.at))}</time><span class="stage">${escape(human(step.stage || step.name || 'Step'))}</span><span class="stage-message">${escape(plain(step.message || step.summary || step.status))}</span></li>`).join('')}</ol>` : '<p class="muted">No stage messages recorded for this run.</p>'}
         ${rejected.length ? `<div class="run-rejections"><h4>Rejected ideas · ${rejected.length}</h4>${rejected.map((item) => typeof item === 'string' ? `<div class="rejection"><strong>${escape(item)}</strong><p>Reason not recorded.</p></div>` : `<div class="rejection"><strong>${escape(plain(item.title || item.name) || 'Candidate')}</strong><p>${escape(plain(item.reason || item.message) || 'Reason not recorded.')}</p></div>`).join('')}</div>` : ''}
-        ${published.length ? `<div class="run-published"><span>Published: </span>${published.map((post) => { const postId = typeof post === 'string' ? post : post.id; const title = typeof post === 'string' ? data.posts?.find((item) => item.id === post)?.title || post : post.title || postId; return `<a href="./#${escape(anchorId(postId))}">${escape(title)} <span aria-hidden="true">↗</span></a>`; }).join('')}</div>` : ''}
+        ${published.length ? `<div class="run-published"><span>Published: </span>${published.map((post) => { const postId = typeof post === 'string' ? post : post.id; const title = typeof post === 'string' ? data.posts?.find((item) => item.id === post)?.title || post : post.title || postId; return `<a href="p/${escape(encodeURIComponent(postId))}/">${escape(title)} <span aria-hidden="true">↗</span></a>`; }).join('')}</div>` : ''}
         </div></details>`;
     }).join('');
   }
@@ -113,12 +133,12 @@ import {loopTiming} from './schedule.js';
     const hours=schedule.publicationTimes.join(' · ');
     const rows = [];
     if (hours) rows.push(['Research & publish',hours]);
+    rows.push(['Publishing gate','Every 20 minutes · runs only when due'],['Other gates','Every 30 minutes · run only when due']);
     if (schedule.researchEveryHours) rows.push(['Research scan',`Every ${schedule.researchEveryHours} hours at :${schedule.researchMinute}`]);
     if (schedule.measurementTime || schedule.measureAt) rows.push(['Measure results',`${schedule.measurementTime || schedule.measureAt} daily`]);
     if (schedule.improvementTime || schedule.improveAt) rows.push(['Improve rules',`${schedule.improvementTime || schedule.improveAt} daily`]);
-    if (schedule.weeklyDigestTime) rows.push(['LinkedIn digest',schedule.weeklyDigestTime]);
     if (schedule.nextResearchAt) rows.push(['Next research',formatDate(schedule.nextResearchAt)]);
-    rows.push(['Next measurement',formatDate(schedule.nextMeasurementAt)],['Next improvement',formatDate(schedule.nextImprovementAt)],['Next digest',formatDate(schedule.nextDigestAt)]);
+    rows.push(['Next measurement',formatDate(schedule.nextMeasurementAt)],['Next improvement',formatDate(schedule.nextImprovementAt)]);
     const proofLabel=proof?.state==='publication_observed'?'Scheduled publication recorded':proof?.state==='loop_observed'?'Scheduled loop recorded; publication unverified':proof?.state==='trigger_observed'?'Trigger observed; publishing unverified':'No scheduled event verified';
     rows.push(['Scheduler proof',proofLabel]);
     if (Number.isSafeInteger(proof?.scheduledRunCount)) rows.push(['Scheduled events recorded',number(proof.scheduledRunCount)]);
@@ -127,17 +147,9 @@ import {loopTiming} from './schedule.js';
     $('schedule').innerHTML = rows.map(([label,value]) => `<div class="schedule-row"><span>${escape(label)}</span><strong>${escape(value)}</strong></div>`).join('') + `<p class="schedule-footnote">Europe/Vilnius · planned slots in GitHub Actions. Timers use the current clock. A configured cron or manual hosted run does not verify scheduled publishing.${proofLink?`<br>${proofLink}`:''}</p>`;
   }
 
-  function renderPlatforms() {
-    const platforms = list(data.platforms);
-    if (!platforms.length) { $('platforms').innerHTML = '<p class="muted">No platform connections have been recorded yet.</p>'; return; }
-    $('platforms').innerHTML = platforms.map((platform) => {
-      const name = platform.name || platform.platform || platform.id;
-      const status = plain(platform.status || platform.state) || (platform.connected === true || platform.configured === true ? 'connected' : platform.connected === false || platform.configured === false ? 'not_connected' : 'not_recorded');
-      const note = plain(platform.note || platform.message || platform.reason || platform.description);
-      const metrics = [];
-      for (const [key,label] of [['likes','likes'],['reposts','reposts'],['followers','followers'],['published','posts']]) if (presentNumber(platform.metrics?.[key])) metrics.push(`${number(platform.metrics[key])} ${label}`);
-      return `<div class="platform-row"><div><div class="platform-name">${escape(name === 'x' ? 'X' : name === 'linkedin' ? 'LinkedIn' : human(name))}</div>${note ? `<p class="platform-note">${escape(note)}</p>` : ''}</div><div class="platform-right">${chip(status)}${metrics.length ? `<div class="platform-metrics">${escape(metrics.join(' · '))}</div>` : ''}</div></div>`;
-    }).join('');
+  function renderRelay() {
+    const relay=data.relay||{},verified=relay.state==='published';
+    $('relay').innerHTML=`<p class="relay-path">Website -&gt; RSS -&gt; Zapier -&gt; LinkedIn Page</p><p class="relay-state">${escape(verified?relay.message||'LinkedIn publication recorded':'waiting for first LinkedIn post')}</p><p class="muted">${verified?'A LinkedIn receipt is recorded.':'The website and RSS are the relay source. LinkedIn publishing is verified only after a post receipt is recorded.'}</p><div class="relay-links">${link(relay.feedUrl||'feed.xml','Open RSS feed')}${link(relay.linkedinUrl||'https://www.linkedin.com/company/whileyousleep-ai/','Follow on LinkedIn')}${verified&&relay.postUrl?link(relay.postUrl,'View LinkedIn post'):''}</div>`;
   }
 
   function renderVersions() {
@@ -186,7 +198,7 @@ import {loopTiming} from './schedule.js';
       renderStats(data.stats);
       renderRuns();
       renderSchedule();
-      renderPlatforms();
+      renderRelay();
       renderVersions();
       renderSources();
       loaded = true;
@@ -203,7 +215,7 @@ import {loopTiming} from './schedule.js';
         $('hosting-note').textContent = 'The hosted schedule could not be read';
         $('runs').innerHTML = '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>We couldn’t reach the record.</h3><p>Recorded runs will appear when the connection returns.</p></div>';
         $('schedule').innerHTML = '<p class="muted">The schedule is unavailable while the connection is interrupted.</p>';
-        $('platforms').innerHTML = '<p class="muted">Connection status is unavailable while the record cannot be reached.</p>';
+        $('relay').innerHTML = '<p class="muted">Relay status is unavailable while the record cannot be reached.</p>';
         $('versions').innerHTML = '<div class="empty-state compact"><h3>Version history is unavailable.</h3><p>Recorded rule changes will appear when the connection returns.</p></div>';
         $('source-health').innerHTML = '<p class="muted">Source health is unavailable while the record cannot be reached.</p>';
       }

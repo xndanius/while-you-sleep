@@ -1,51 +1,49 @@
 # While You Sleep
 
-Codex researches real autonomous AI projects, picks a beginner-friendly idea, writes it, and submits it to a fresh independent Codex checker. A separate job publishes only checked files. Every research run, pick, rejection, post and rule change lives in this public repository.
+Codex researches real autonomous AI projects, picks beginner-friendly ideas, writes them, and submits each to a fresh independent checker. A deterministic job publishes only checked files. Every research run, pick, rejection, post and rule change belongs in this public Git history.
 
-Public feed: https://xndanius.github.io/while-you-sleep/ · Live loop: https://xndanius.github.io/while-you-sleep/machine/ · [Actions](https://github.com/xndanius/while-you-sleep/actions) · [History](https://github.com/xndanius/while-you-sleep/commits/main/)
+[Website](https://xndanius.github.io/while-you-sleep/) · [Machine](https://xndanius.github.io/while-you-sleep/machine/) · [Follow on LinkedIn](https://www.linkedin.com/company/whileyousleep-ai/) · [Actions](https://github.com/xndanius/while-you-sleep/actions) · [History](https://github.com/xndanius/while-you-sleep/commits/main/)
 
-## Cloud runtime
+## Scope and runtime
 
-The brain is the official `openai/codex-action` running the Codex CLI on disposable GitHub-hosted Linux runners. The default configured model is `gpt-6-luna`, low effort. `RULES.md` controls research, picking, writing, checking and daily improvement. The writer and checker run in separate jobs with read-only GitHub permissions and an API proxy. Neither has a repository write credential. The publishing job has no model access; it rechecks content hashes, source quotes and duplicates before making commits. One repair is allowed, then a fresh check or rejection.
+The v3 scope is **website + LinkedIn Page**. GitHub Actions runs the official `openai/codex-action` on disposable hosted runners. GitHub Pages serves the committed feed, machine and permanent post pages. The website RSS feed supplies the Zapier relay to the LinkedIn Page. Danielius connects Zapier and Claude configures the relay; this repository holds no relay credentials.
 
-GitHub Pages rebuilds from committed records. The linked Netlify project is retained as a static-hosting option; no Netlify Functions or laptop scheduler is part of this architecture. Nothing in the SSE Riga show or its demo is used or changed.
+The default model remains `gpt-6-luna`, low effort. RULES.md controls research, picking, writing, checking and daily improvement. Writers and checkers have read-only GitHub permissions and separate workspaces. A publisher with no model access repeats schema, source, content-hash and duplicate checks. One repair is allowed, followed by a fresh independent check or rejection. No SSE Riga show or demo is used or changed.
 
 ## Schedule · Europe/Vilnius
 
-- Public source scan at :23 every three hours.
-- Full Codex loop at 08:07, 13:07 and 19:07.
-- Measurement at 21:37.
-- Improvement at 22:13: propose one change, run held-out trials and a separate blinded grader, and change `RULES.md` only if it scores higher without safety or factual regressions.
-- LinkedIn Page digest each Monday at 08:17, using already checked posts, after a publishing service is selected and connected.
+- Publication slots: 08:07, 13:07 and 19:07; cheap gates at :07/:27/:47 every hour.
+- Research slots: :23 every three hours; gates at :23/:53 every hour.
+- Measurement: 21:37; gates at :13/:43 every hour.
+- Improvement: 22:13; gates at :13/:43 every hour. Invalid proposals are recorded green rejections; valid proposals undergo held-out trials and blinded grading. Adoption requires a higher score without safety or factual regressions.
 
-GitHub cron uses its documented IANA timezone support, including daylight-saving changes. Runs may start late or be dropped when GitHub is busy. The daily cap is three posts per Vilnius date, including the initial three-post bootstrap. A manual bootstrap uses the same cloud workflow. **Unattended publishing is not yet proven:** the GitHub API still showed zero `event=schedule` runs at 16:58 Vilnius on 10 October, after the one-hour odd-minute UTC control trial. Active cron definitions and successful manual runs do not prove a working timer. [Verified trial outcome](data/scheduler/verification-20261010-1358.json).
+Skipped gates call no model, commit nothing and do not deploy. Publication catches up every unfulfilled elapsed slot of the current Vilnius day up to three posts, including launch posts. Durable per-slot reservations prevent repeats and retain partial batch results. Late GitHub starts stay visible on the machine. [Timing and guards](docs/SCHEDULER.md).
 
-## Credentials and owner setup
+Real scheduled events now exist: the 10 October 19:07 loop started at 23:01 and correctly skipped the full daily cap. This proves a trigger; checked scheduled publication is a separate proof state. The earlier one-hour trial with zero events remains an immutable historical observation. [Current verification](data/scheduler/verification-20261011-052931.json).
 
-Secrets belong only in repository **Settings → Secrets and variables → Actions**. Never paste keys or passwords into chat. `OPENAI_API_KEY` is provisioned with the OpenAI Developers secure flow and delivered directly to Actions through stdin without a plaintext local file. The temporary recipient key is removed after successful delivery. The content agents cannot read the API key: the official action supplies a secure Responses proxy.
+## LinkedIn relay
 
-Social service is **undecided**. Danielius is creating X, Instagram and LinkedIn pages with Claude's help and will report when they exist. The Postiz adapter remains a prepared option, with no account, subscription or secret installed. [Researched option and official pricing/terms](docs/PLATFORMS.md).
+RSS: https://xndanius.github.io/while-you-sleep/feed.xml
 
-Site analytics: optional GoatCounter, free for reasonable public use. The browser collects page views and save events without cookies; daily read-only measurements are committed to `metrics.json`. Metrics stay `null` until connected or when unavailable. Browser saves work without analytics. [Setup](docs/ANALYTICS.md).
+Each item has a permanent /p/<id>/ link, stable post-ID GUID, publication time, short plain-text description and absolute JPEG enclosure. Permanent pages contain the full checked post, sources, canonical URL and Open Graph metadata. The machine reports **Website -> RSS -> Zapier -> LinkedIn Page** and **waiting for first LinkedIn post** until a confirmed relay publication is recorded. [Relay contract](docs/PLATFORMS.md).
+
+## Credentials and metrics
+
+OPENAI_API_KEY is already installed in Actions through the OpenAI Developers secure flow. Keep secrets in GitHub Actions or the relay's private account UI, never chat or public files. The content models use the official action's secure API proxy.
+
+Optional website analytics use aggregate GoatCounter counts. Missing metrics remain null, including LinkedIn metrics that have not been connected. [Analytics](docs/ANALYTICS.md).
 
 ## Development
 
-Build outside iCloud: `~/Developer/while-you-sleep`.
+Build outside iCloud at ~/Developer/while-you-sleep. Run `npm ci --ignore-scripts`, `npm run check && npm test`, `npm run build`, then `npm run dev`.
 
-- `npm ci --ignore-scripts`
-- `npm run check && npm test`
-- `npm run build`
-- `npm run dev`
-
-There are no hand-written seed posts. `data/posts/` started empty; the cloud loop generated, independently checked and committed the first three posts. Research snapshots, draft/check hashes, rejected candidates, exact claim checks, publication records and rules history form the audit trail. The UI displays only posts that pass content-integrity checks.
+There are no hand-written seed posts. The cloud loop generated, independently checked and committed the first three posts on 10 October using manual dispatches. Public records retain their real trigger provenance; they do not prove automatic scheduling.
 
 ## Cost
 
-GitHub-hosted standard runners and Pages are available for public repositories without a paid hosting subscription. See [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions) and [Pages availability](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+GitHub-hosted standard runners and Pages are available for public repositories without a paid hosting subscription. [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
-Model standard rates verified 10 Oct 2026: GPT-6 Luna US$0.10/M input, $0.01/M cached input, $0.125/M cache write and $0.50/M output for prompts up to 272K tokens ([official pricing](https://developers.openai.com/api/docs/pricing)). Target model budget under $0.50/day; actual costs depend on runner token usage and the OpenAI invoice. Missing usage is not recorded as zero. Postiz costs US$29/month when Danielius starts the subscription; GoatCounter reasonable public use is free. No subscription or payment has been made by this build.
-
-Completed model workflows automatically reconcile incomplete counters from their terminal job logs. Original usage records stay immutable; the feed and table use one verified effective record per run, so a correction does not count the run twice. Retrieval failures keep usage unknown. [Reconciliation and calculation](docs/COSTS.md#completed-run-reconciliation).
+Target model budget is under $0.50/day. Recorded token estimates are not invoices; missing usage stays unknown. No account, subscription or payment was created for the v3 relay. [Calculation and rates](docs/COSTS.md).
 
 <!-- MODEL_COSTS_START -->
 
@@ -58,10 +56,4 @@ Standard-rate token estimates, not invoices. Unreported billing adjustments rema
 
 <!-- MODEL_COSTS_END -->
 
-The [W3 backup workflow](docs/BACKUP.md) is configured to record the real public machine and GitHub history on Monday, 12 October at 19:31 Vilnius, after its unattended-run and accepted-improvement gates pass. Its timer also requires real scheduled evidence.
-
-The feed portion of W1 was verified on 10 Oct 2026 at 10:15 Vilnius; the earlier full W1 claim was premature. The manually dispatched [bootstrap run](https://github.com/xndanius/while-you-sleep/actions/runs/38032271902) published two checked posts; the manually dispatched [normal loop run](https://github.com/xndanius/while-you-sleep/actions/runs/38033544598) published the third at 10:13. All three are live on the [feed](https://xndanius.github.io/while-you-sleep/) and [machine](https://xndanius.github.io/while-you-sleep/machine/), with source links, independently verified content/check hashes, committed publication records and public 1080×1350 JPEG cards. Desktop and phone checks passed.
-
-W1 remains incomplete until an actual scheduled run publishes a checked post by itself. The one-hour UTC trial ended at 16:58 Vilnius with zero scheduled events. Its temporary loop cron was removed and its probe disabled; all eight normal workflows remain active with their revised odd-minute schedules. The cause of the absent GitHub events remains unproven. An [external hosted clock is prepared](docs/EXTERNAL_TRIGGER.md) but requires Danielius's service account and dedicated dispatch credential; it has not been configured. No social post or paid subscription has been made by this build.
-
-[Scheduling, catch-up guards and proof levels](docs/SCHEDULER.md) explain the hosted timer and the distinction between a trigger, a loop attempt and checked publication. The [manual guard test](https://github.com/xndanius/while-you-sleep/actions/runs/38055146700) passed with every model job skipped because today's three launch posts fill the daily cap.
+The [W3 backup](docs/BACKUP.md) is configured for Monday 12 October at 19:31 Vilnius, subject to real unattended-run and accepted-improvement evidence. W1 remains incomplete until a real scheduled loop publishes a checked post.

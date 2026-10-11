@@ -1,4 +1,5 @@
 import {loopTiming} from './schedule.js';
+import {slotPresentation} from './slot-display.js';
 
 (() => {
   'use strict';
@@ -54,6 +55,7 @@ import {loopTiming} from './schedule.js';
     const actions = Array.isArray(post.first24Hours) ? post.first24Hours.filter((item) => typeof item === 'string') : plain(post.first24Hours) ? [post.first24Hours] : [];
     const sources = Array.isArray(post.sources) ? post.sources.map(sourceMarkup).filter(Boolean) : [];
     const imageURL = safeURL(post.imageUrl || `cards/${encodeURIComponent(id)}.jpg`);
+    const publicURL = safeURL(post.publicUrl || `p/${encodeURIComponent(id)}/`);
     const isSaved = saved.has(id);
     const recordedSaves = typeof post.metrics?.saves === 'number' && Number.isFinite(post.metrics.saves) && post.metrics.saves >= 0 ? new Intl.NumberFormat('en-GB').format(post.metrics.saves) : null;
     const uncertainty = post.uncertainty || post.limitations;
@@ -62,7 +64,7 @@ import {loopTiming} from './schedule.js';
     return `<article class="post" id="${escape(anchorId(id))}" data-post-id="${escape(id)}" aria-labelledby="title-${escape(anchorId(id))}">
       <div class="post-top"><div class="post-meta"><span class="post-number">${String(index + 1).padStart(2, '0')}</span><span class="meta-separator" aria-hidden="true"></span><time datetime="${escape(post.publishedAt || '')}">${escape(dateLabel(post.publishedAt))}</time></div><div class="verified-label"><span aria-hidden="true">✓</span> Checked by the loop</div></div>
       <div class="post-content"><div class="post-image-column"><a class="post-image-link" href="${escape(imageURL)}" target="_blank" rel="noopener noreferrer" aria-label="Open image card for ${escape(title)}"><img class="post-image" src="${escape(imageURL)}" alt="${escape(imageAlt)}" loading="lazy" width="1080" height="1350" data-fallback="${escape(imageFallback)}"></a><p class="post-image-caption">One idea. A small version you can build.<br>Open the card to see it full size.</p></div>
-      <div class="post-copy"><h3 id="title-${escape(anchorId(id))}">${escape(title)}</h3>${post.promise ? `<p class="post-promise">${paragraphs(post.promise)}</p>` : ''}
+      <div class="post-copy"><h3 id="title-${escape(anchorId(id))}"><a href="${escape(publicURL)}">${escape(title)}</a></h3>${post.promise ? `<p class="post-promise">${paragraphs(post.promise)}</p>` : ''}
         <div class="post-body-grid">${post.whatItIs ? `<section class="post-field"><h4>What it is</h4><p>${paragraphs(post.whatItIs)}</p></section>` : ''}${post.whoPays ? `<section class="post-field"><h4>Who pays</h4><p>${paragraphs(post.whoPays)}</p></section>` : ''}${loop.length ? `<section class="post-field full"><h4>How the loop runs</h4><ol class="idea-loop">${loop.map((step) => `<li>${escape(step)}</li>`).join('')}</ol></section>` : ''}</div>
         ${post.evidence || uncertainty ? `<section class="post-evidence"><h4>The evidence</h4>${post.evidence ? `<p>${paragraphs(post.evidence)}</p>` : ''}${uncertainty ? `<p class="uncertainty"><strong>What we don’t know:</strong> ${paragraphs(uncertainty)}</p>` : ''}</section>` : ''}
         ${actions.length ? `<section class="first-hours"><h4>Build a small version · your first 24 hours</h4><ol>${actions.map((action) => `<li>${escape(action)}</li>`).join('')}</ol></section>` : ''}
@@ -116,8 +118,10 @@ import {loopTiming} from './schedule.js';
     const cadence=loopTiming(record.status?.lastLoopAt),proof=record.schedule?.proof;
     $('cadence-summary').textContent = 'Three slots a day';
     $('cadence-times').innerHTML = `${cadence.publicationTimes.map(label=>`<span>${escape(label)}</span>`).join('')}<small>Vilnius time</small>`;
-    const slotLabel=dateLabel(cadence.latestSlotAt);
-    const slotNote=cadence.slotState==='recorded'?'Latest slot has a recorded loop.':cadence.slotState==='waiting'?`Waiting for the ${slotLabel} slot.`:`${cadence.slotState==='missed'?'Missed':'Late'} ${slotLabel} slot: no loop is recorded.`;
+    const slots=(record.schedule?.slots||[]).map(slot=>slotPresentation(slot));
+    const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1);
+    const slotLabel=dateLabel(latest?.plannedAt||cadence.latestSlotAt);
+    const slotNote=latest?latest.state==='published'?`The ${slotLabel} slot published at ${dateLabel(latest.actualAt)}.`:latest.state==='cap_reached'?`The ${slotLabel} slot reached the three-post daily cap.`:latest.state==='running'?`The ${slotLabel} slot is running; publication is not yet recorded.`:`The ${slotLabel} slot is ${latest.state.replace(/_/g,' ')}; no publication is recorded.`:cadence.slotState==='recorded'?'Latest slot has a recorded attempt.':`Publication for the ${slotLabel} slot is not recorded.`;
     const proofNote=proof?.state==='publication_observed'?'Scheduled publishing is verified.':proof?.state==='loop_observed'?'A scheduled loop is recorded; scheduled publication is not yet verified.':proof?.state==='trigger_observed'?'A schedule trigger is recorded; scheduled publishing is not yet verified.':'Scheduled publishing is not yet verified.';
     $('cadence-note').textContent=`Next planned loop: ${dateLabel(cadence.nextPublicationAt)} Vilnius. ${slotNote} ${proofNote}`;
   }
@@ -139,8 +143,8 @@ import {loopTiming} from './schedule.js';
       record = data;
       renderSchedule();
       const hostedVerified = Boolean(data.schedule?.verifiedHostedRunAt || data.status?.lastHostedRunUrl);
-      const scheduledVerified=data.schedule?.proof?.state==='publication_observed';
-      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? hostedVerified ? 'Waiting for the first idea' : 'Waiting for the first run' : scheduledVerified ? 'Scheduled publishing verified' : 'Scheduled publishing unverified';
+      const proof=data.schedule?.proof,scheduledVerified=proof?.state==='publication_observed';
+      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? hostedVerified ? 'Waiting for the first idea' : 'Waiting for the first run' : scheduledVerified ? 'Scheduled publishing verified' : proof?.state==='loop_observed'?'Scheduled loop observed':proof?.state==='trigger_observed'?'Schedule trigger observed':'Scheduled publishing unverified';
       $('feed-signal').className = `signal-dot${scheduledVerified?' live':''}`;
       $('feed-notice').classList.remove('visible');
       $('feed-notice').textContent = '';
