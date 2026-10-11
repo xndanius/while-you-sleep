@@ -9,6 +9,7 @@ import {candidateIdentity,sha256,stableJSON} from '../lib/storage.mjs';
 import {completedAssessmentReasons,assessmentJobReasons,verifyPublishedPost} from '../lib/validation.mjs';
 import {parseScoringPolicy,SCORING_KEYS} from '../lib/scoring.mjs';
 import {loopDecision} from '../lib/loop-schedule.mjs';
+import {checkerOutputSchema,acceptCheckerOutput} from '../lib/checker-output.mjs';
 
 const now='2026-10-11T12:20:00.000Z',runId='loop-123-1';
 const rules='# Rules\n<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n';
@@ -39,16 +40,18 @@ function fixture({count=1,legacy=false,mode='hourly'}={}){
  ],scoreChecks:SCORING_KEYS.map(criterion=>({criterion,supported:true,maxSupportedScore:6,reason:criterion==='profit'?'Hypothesis: an administration buyer without proven demand.':'The source supports a bounded extraction experiment with review.',sourceId:sources[index].id,evidenceQuote:'extracts structured fields for review'}))}));
  const value={scheduling,draft,context,manifest:{runId,checks,checkedAt:now},jobs:structuredClone(jobs)};bind(value);return value;
 }
-async function execute(t,{count=1,legacy=false,mode='hourly',mutate=()=>{},afterBind=()=>{},script='finalize-run',liveStatus=200,liveText=text,missing}={}){
+async function execute(t,{count=1,legacy=false,mode='hourly',mutate=()=>{},afterBind=()=>{},mutateResearch=()=>{},script='finalize-run',liveStatus=200,liveText=text,missing,relayConfirmed=true}={}){
  const root=await mkdtemp(path.join(os.tmpdir(),'wys-assessment-'));t.after(()=>rm(root,{recursive:true,force:true}));
  await cp(new URL('../lib',import.meta.url),path.join(root,'lib'),{recursive:true});
  await mkdir(path.join(root,'public'));for(const file of ['schedule.js','cadence-config.js'])await cp(new URL('../public/'+file,import.meta.url),path.join(root,'public',file));
  await cp(new URL('../scripts',import.meta.url),path.join(root,'scripts'),{recursive:true});
  await symlink(fileURLToPath(new URL('../node_modules',import.meta.url)),path.join(root,'node_modules'),'dir');
  await writeFile(path.join(root,'package.json'),JSON.stringify({type:'module'}));await writeFile(path.join(root,'RULES.md'),rules);
+ await mkdir(path.join(root,'data','relay'),{recursive:true});await writeFile(path.join(root,'data','relay','status.json'),JSON.stringify({feedPath:'best.xml',bestFeedSwitch:{state:relayConfirmed?'confirmed':'pending',confirmedAt:relayConfirmed?now:null}}));
  const f=fixture({count,legacy,mode});mutate(f);bind(f);afterBind(f);
  const schedulingSha256=sha256(stableJSON(f.scheduling));
  const research={runId,createdAt:now,sources:f.context.sources,health:[],githubRunUrl:f.scheduling.githubRunUrl};
+ mutateResearch(research);
  for(const [directory,record] of [['scheduling',f.scheduling],['slot-reservations',{...f.scheduling,schedulingSha256}],['drafts',f.draft],['check-context',f.context],['checks',f.manifest],['research',research]]){
   if(directory===missing)continue;await mkdir(path.join(root,'data',directory),{recursive:true});await writeFile(path.join(root,'data',directory,runId+'.json'),JSON.stringify(record));
  }
@@ -76,6 +79,22 @@ test('trusted completion requires successful applicable model jobs; input labels
  assert.ok(assessmentJobReasons({}, {...jobs,repair:{result:'failure'}},{required:true}).length);
  assert.ok(assessmentJobReasons({repairAttempt:1},jobs,{required:true}).length);
  assert.deepEqual(assessmentJobReasons({repairAttempt:1},{...jobs,repair:{result:'success'},final_check:{result:'success'}},{required:true}),[]);
+ assert.deepEqual(assessmentJobReasons({}, {...jobs,repair:{result:'success'},final_check:{result:'success'}},{required:true}),[],'actual repair success survives a model rewrite that omits repairAttempt');
+ for(const result of ['failure','cancelled','skipped'])assert.ok(assessmentJobReasons({}, {...jobs,repair:{result:'success'},final_check:{result}},{required:true}).length);
+});
+
+test('fresh structured checker output can carry an independently completed empty verdict but never fabricates one',()=>{
+ const f=fixture({count:0}),response={outcome:'completed',reason:'The independently examined exclusions lack sufficient support.',manifest:f.manifest};
+ const expected={expectedDraftSha256:sha256(stableJSON(f.draft)),expectedContextSha256:sha256(stableJSON(f.context))};
+ assert.equal(acceptCheckerOutput(response,f.draft,f.context,expected),f.manifest);
+ assert.throws(()=>acceptCheckerOutput({...response,outcome:'operational_failure',manifest:null},f.draft,f.context,expected),/operational failure/);
+ assert.throws(()=>acceptCheckerOutput({...response,manifest:null},f.draft,f.context,expected),/completed manifest/);
+ assert.throws(()=>acceptCheckerOutput(response,f.draft,f.context,{...expected,existing:{...f.manifest,draftSha256:'a'.repeat(64)}}),/disagree/);
+ assert.throws(()=>acceptCheckerOutput(response,f.draft,f.context,{...expected,expectedContextSha256:'a'.repeat(64)}),/trusted frozen/);
+ const bad=structuredClone(response);bad.manifest.completedAssessment.contextSha256='a'.repeat(64);assert.throws(()=>acceptCheckerOutput(bad,f.draft,f.context,expected),/fingerprints/);
+ const schema=checkerOutputSchema(f.draft,f.context),manifestSchema=schema.properties.manifest.anyOf[1];
+ assert.equal(manifestSchema.properties.checks.maxItems,0);assert.deepEqual(manifestSchema.properties.completedAssessment.properties.contextSha256.enum,[expected.expectedContextSha256]);
+ assert.equal(schema.properties.outcome.enum.includes('operational_failure'),true);
 });
 
 test('a genuinely checked below-threshold refusal settles green without publishing, repair or quota retry',async t=>{
@@ -115,6 +134,44 @@ test('independently checked empty research stays green but never produces scored
  const run=await result.record('runs');assert.equal(run.assessmentOutcome,'completed');assert.equal(run.picked,0);assert.deepEqual(run.checkedAssessment.checkedPostIds,[]);assert.equal(run.checkedAssessment.decision,'no_supported_candidate');assert.equal((await result.record('slot-outcomes')).status,'no_post');
  const prepare=await execute(t,{count:0,script:'prepare-check'});assert.equal(prepare.execution.status,0,prepare.execution.stderr);assert.ok((await prepare.record('check-context')).sources.length);
  const unavailable=await execute(t,{count:0,script:'prepare-check',liveStatus:503});assert.equal(unavailable.execution.status,1);assert.match(unavailable.execution.stderr,/empty assessment needs at least one/);
+});
+
+test('repair may legitimately return no posts without retaining a model-owned repair marker',async t=>{
+ const result=await execute(t,{count:0,mutate:f=>{f.jobs.repair.result='success';f.jobs.final_check.result='success';}});
+ assert.equal(result.execution.status,0,result.execution.stderr);assert.equal(result.f.draft.repairAttempt,undefined);
+ assert.equal((await result.record('runs')).assessmentOutcome,'completed');assert.equal((await result.record('slot-outcomes')).status,'no_post');assert.match(result.outputs,/operational_failure=false/);
+});
+
+test('empty assessment refetch covers each actual exclusion rather than arbitrary first-six source records',async t=>{
+ const result=await execute(t,{count:8,script:'prepare-check',mutate:f=>{
+  f.draft.candidates=f.draft.posts.map(post=>({title:post.title,productUrl:post.productUrl,sourceIds:post.sourceIds}));f.draft.posts=[];
+ }});
+ assert.equal(result.execution.status,0,result.execution.stderr);const context=await result.record('check-context');
+ assert.equal(context.sources.length,8);assert.equal(context.considerationEvidence.length,8);assert.ok(context.considerationEvidence.every(item=>item.availableSourceIds.length===1));
+});
+
+test('new enriched snapshots restrict assessments to their selected product identities',async t=>{
+ const accepted=await execute(t,{script:'prepare-check',mutateResearch:research=>research.enrichment={status:'completed',observations:[{productUrl:research.sources[0].url}]}});
+ assert.equal(accepted.execution.status,0,accepted.execution.stderr);
+ const outside=await execute(t,{script:'prepare-check',mutateResearch:research=>research.enrichment={status:'completed',observations:[{productUrl:'https://example.com/another-product'}]}});
+ assert.equal(outside.execution.status,1);assert.match(outside.execution.stderr,/outside the bounded primary evidence selection/);
+ const ordinary=await execute(t,{script:'prepare-check',mutateResearch:research=>research.enrichment={status:'not_requested',observations:[]}});
+ assert.equal(ordinary.execution.status,0,ordinary.execution.stderr);
+});
+
+test('every independent checker starts without a stale inherited manifest and gets a non-verdict hash template',async t=>{
+ const result=await execute(t,{count:0,script:'prepare-run'});
+ const execution=spawnSync(process.execPath,['scripts/prepare-run.mjs','final-checker'],{cwd:result.root,env:result.env,encoding:'utf8'});
+ assert.equal(execution.status,0,execution.stderr);
+ await assert.rejects(readFile(path.join(result.root,'data','checks',runId+'.json'),'utf8'),error=>error.code==='ENOENT');
+ const context=JSON.parse(await readFile(path.join(result.root,'.run','context.json'),'utf8')),template=JSON.parse(await readFile(path.join(result.root,'.run','checker-template.json'),'utf8'));
+ assert.equal(context.checkContextSha256,sha256(stableJSON(result.f.context)));assert.equal(template.completedAssessment.completed,false);assert.equal(template.completedAssessment.contextSha256,context.checkContextSha256);assert.equal(context.priorPostsPath,'.run/prior-posts.json');
+});
+
+test('pending relay holds eligible publication but honest checked threshold refusal stays green',async t=>{
+ const held=await execute(t,{relayConfirmed:false});const heldRun=await held.record('runs');assert.equal(heldRun.assessmentOutcome,'incomplete');assert.deepEqual(heldRun.published,[]);assert.ok(heldRun.operationalFailures.some(failure=>failure.code==='relay_confirmation_pending'));
+ const refusal=await execute(t,{relayConfirmed:false,mutate:f=>{for(const rating of Object.values(f.draft.posts[0].scoring.criteria))rating.value=5;}});
+ assert.equal((await refusal.record('runs')).assessmentOutcome,'completed');assert.equal((await refusal.record('slot-outcomes')).status,'no_post');assert.match(refusal.outputs,/operational_failure=false/);
 });
 
 test('missing checks, corrupt completion, unavailable sources and failed model stages remain operational',async t=>{

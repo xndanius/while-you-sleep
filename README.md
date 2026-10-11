@@ -10,6 +10,10 @@ The v4 scope is **website + LinkedIn Page**. GitHub Actions runs the official `o
 
 The default model remains `gpt-6-luna`, low effort. RULES.md controls research, picking, writing, checking and daily improvement. Writers and checkers have read-only GitHub permissions and separate workspaces. A publisher with no model access repeats schema, source, content-hash and duplicate checks. One repair is allowed, followed by a fresh independent check or rejection. No SSE Riga show or demo is used or changed.
 
+Before each loop's writer starts, a deterministic fetch enriches up to 12 discovered leads with their public product page or GitHub README. The fetch uses three concurrent requests, a 90-second total budget, complete bounded responses and the existing HTTPS, DNS, redirect and robots guards. Access failures are recorded; a listing alone does not establish product capabilities. The original feed receipt stays frozen, and documentation retains its discovery origin. The independent checker fetches attached evidence again.
+
+An independently completed assessment with no eligible post is a successful `completed_no_post` run. Missing evidence, incomplete model jobs or a missing, stale or contradictory checker output remain failures. Repair completion comes from trusted Actions job results. Every checker starts without an inherited verdict and returns a structured verdict bound to the current frozen draft, context, sources, rules and scoring policy.
+
 ## Checked scores
 
 Each idea is assessed from 1 to 10 for ease to start, profit potential, feasibility for a student in two weeks, autonomy and evidence. Every value has a short evidence-linked reason; profit potential is always a hypothesis. A fresh independent checker sets the highest supported value for each criterion. The trusted publisher rejects inflated scores and calculates the weighted mean itself. The initial weights are equal and the publication threshold is 6; the current policy lives in RULES.md.

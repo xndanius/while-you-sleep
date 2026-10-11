@@ -7,6 +7,8 @@ import { renderCard } from '../lib/card.mjs';
 import { localParts } from '../lib/config.mjs';
 import { validateLoopScheduling, dailyPublicationCount, DAILY_PUBLICATION_CAP, postScheduling } from '../lib/loop-schedule.mjs';
 import { weightedOverall,publishedScoring } from '../lib/scoring.mjs';
+import { readRelayStatus,relayPublicationReady } from '../lib/relay.mjs';
+import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
 
 const runId=process.argv[2];
 try{
@@ -41,20 +43,30 @@ try{
   if(scheduling&&!scheduling.bootstrap&&previous.some(post=>reservedSlots.some(slot=>post.scheduling?.slotId===(slot.id?.startsWith('publish-')?slot.id:slot.slotId))))throw new Error('A reserved publication slot already has a committed post.');
   const results=checkApproval(draft,context,manifest),published=[],rejected=[...(draft.rejected||[])],steps=[...(draft.steps||[])];
   const operationalFailures=assessmentJobReasons(draft,process.env.MODEL_JOB_RESULTS,{required:contract&&process.env.GITHUB_ACTIONS==='true'}).map(reason=>({stage:'model_jobs',code:'model_stage_incomplete',reason}));
+  let relayReady=true;
+  if(process.env.GITHUB_ACTIONS==='true'&&scheduling?.cadence?.mode==='hourly'&&draft.posts.length){
+    try{relayReady=relayPublicationReady(await readRelayStatus(ROOT),{hourly:true});}catch{relayReady=false;}
+  }
   await writeJSON(dataPath('candidates',runId),{runId,createdAt:research.createdAt,candidates:draft.candidates||[],picked:draft.posts.map(p=>({id:p.id,title:p.title,sourceIds:p.sourceIds})),rejected:draft.rejected||[]},{immutable:true});
   const publishedUrls=[];
   for(const result of results){
+    if(operationalFailures.some(failure=>failure.stage==='model_jobs'))break;
     if(scheduling&&localParts(new Date()).day!==scheduling.localDate)throw new Error('Reserved publication date ended during publication.');
     const post=draft.posts.find(p=>p.id===result.postId);
     const reasons=[...result.reasons,...deterministicCheck(post,[...research.sources,...context.sources],previous,{scoringPolicy:context.scoringPolicy})];
     if(!reasons.length && weightedOverall(post.scoring.criteria,context.scoringPolicy.weights)<context.scoringPolicy.threshold)reasons.push(`Overall score is below the frozen publish threshold of ${context.scoringPolicy.threshold}.`);
     if(todayCount+published.length>=dailyCap){steps.push({stage:'publish',status:'skipped',at:new Date().toISOString(),message:`Daily cap reached: ${dailyCap} posts are already public for this Vilnius date.`});break;}
     if(published.length>=targetCount)break;
+    if(!reasons.length&&!relayReady){
+      const reason='Publishing is held until the actual LinkedIn relay switch to best.xml is confirmed.';
+      reasons.push(reason);
+      if(!operationalFailures.some(failure=>failure.stage==='relay'))operationalFailures.push({stage:'relay',code:'relay_confirmation_pending',reason});
+    }
     if(!reasons.length){
       for(const sourceId of post.sourceIds){
         const source=context.sources.find(s=>s.id===sourceId);
         try{
-          const fetched=await fetchPublic(source.url),text=plainText(fetched.text);
+          const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source)),text=plainText(fetched.text);
           if(text.length<100)throw new Error('Live source contains too little readable evidence.');
           for(const claim of [...result.check.claimChecks,...result.check.scoreChecks].filter(c=>c.sourceId===sourceId)){
             const occurs=claim.criterion?text.includes(claim.evidenceQuote):text.toLowerCase().includes(plainText(claim.evidenceQuote).toLowerCase());
@@ -91,7 +103,7 @@ try{
   if(contract&&!draft.posts.length){
     let available=0;
     for(const source of context.sources){
-      try{const page=await fetchPublic(source.url);if(plainText(page.text).length<100)throw new Error('Live source contains too little readable evidence.');available++;}
+      try{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));if(plainText(page.text).length<100)throw new Error('Live source contains too little readable evidence.');available++;}
       catch(error){operationalFailures.push({stage:'live_source',code:'empty_assessment_evidence_unavailable',sourceId:source.id,url:source.url,reason:safeError(error)});}
     }
     if(!available&&!operationalFailures.length)operationalFailures.push({stage:'live_source',code:'empty_assessment_evidence_unavailable',reason:'No fresh public evidence was available for the empty assessment.'});

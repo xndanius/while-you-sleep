@@ -186,7 +186,14 @@ jobs:
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
           prompt-file: .github/codex/prompts/checker.md
+          output-file: .run/checker-response.json
+          output-schema-file: .run/checker-output-schema.json
           codex-args: '["--ephemeral", "--json"]'
+      - name: Accept only a fresh independent output bound to the frozen context
+        env:
+          EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
+        run: node scripts/accept-check-output.mjs "$RUN_ID"
       - name: Determine whether one repair is needed
         id: verdict
         run: node scripts/check-verdict.mjs "$RUN_ID"
@@ -283,7 +290,14 @@ jobs:
           model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
           effort: low
           prompt-file: .github/codex/prompts/checker.md
+          output-file: .run/checker-response.json
+          output-schema-file: .run/checker-output-schema.json
           codex-args: '["--ephemeral", "--json"]'
+      - name: Accept only the new final independent output
+        env:
+          EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
+        run: node scripts/accept-check-output.mjs "$RUN_ID"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
