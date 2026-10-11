@@ -1,0 +1,213 @@
+{
+  "runId": "improve-38115365797-1",
+  "sourceSnapshotSha256": "6a0dd9099cc34e3d3b962cd45672444b150851b342838645a099bfaeebaa4b1d",
+  "trialsSha256": "9500ba8e28e3ea6ed475e6b0ed888d47d95e17a88795fa3cd98ce94fda242462",
+  "cases": [
+    {
+      "candidateId": "027a7982ab98844766fc447f",
+      "productUrl": "https://plannotator.ai/inbox/",
+      "sources": [
+        {
+          "id": "a0c615116acf274d8ac57fdc",
+          "url": "https://plannotator.ai/inbox/",
+          "title": "Show HN: Plannotator Inbox – Decision Making Surface for Agents",
+          "publisher": "plannotator.ai",
+          "text": "Plannotator Inbox Plannotator Docs | Blog | Inbox | Workspaces soon | GitHub plannotator inbox An async surface for your long‑running agents Coding agents now work for hours. Over a run they have questions. They hit blockers. They produce plans and prototypes and diffs you need to review. The Inbox is where all of that arrives while they keep working. You read it like mail and answer when you get to it. Reviewing and annotating is the native Plannotator experience. The agent picks up your answer and goes on. Local. Claude Code and Pi and OpenCode and any MCP agent. Open source. Set up the Inbox Copy install prompt Prefer to do it yourself? 01 Install Plannotator macOS / Linux / WSL Windows $ curl -fsSL https://plannotator.ai/install.sh | bash > irm https://plannotator.ai/install.ps1 | iex 02 Start the Inbox $ plannotator inbox It opens in your browser. You only run this once: from then on, agents start the Inbox in the background when they write to it. 03 Connect your agent Claude Code Pi OpenCode Codex Cursor Other MCP agent $ claude plugin marketplace add backnotprop/plannotator $ claude plugin install plannotator@plannotator Then quit Claude Code and start it again. The plugin adds a plannotator_inbox tool when Claude Code starts, once the Inbox has run, and your replies arrive as Claude's next turn. Claude Code 2.1.287 or newer on macOS or Linux. On Windows, use the MCP command under Other MCP agent. $ pi install npm:@plannotator/pi-extension Then turn on Pi under The Inbox in your agent's tools in the Inbox's Settings, and start a new Pi session or run /reload . Your replies arrive as Pi's next message once it is idle. The tool is off by default on Pi because Pi sends every tool's definition with each request. opencode.json (OpenCode 2) { \"plugins\": [{ \"package\": \"@plannotator/opencode@latest\" }] } opencode.json (OpenCode 1) { \"plugin\": [\"@plannotator/opencode@latest\"] } Then turn on OpenCode under The Inbox in your agent's tools in the Inbox's Settings, and restart OpenCode. On OpenCode 2 your replies arrive as the session's next turn. $ codex mcp add plannotator-inbox -- plannotator inbox mcp Then restart Codex. Codex reads your reply when it calls wait_for_reply . If it can't find plannotator, use the full path from command -v plannotator . ~/.cursor/mcp.json { \"mcpServers\": { \"plannotator-inbox\": { \"command\": \"plannotator\", \"args\": [\"inbox\", \"mcp\"] } } } Cursor reads your reply when it calls wait_for_reply . If it can't find plannotator, use the full path from command -v plannotator . $ plannotator inbox mcp Add it to your agent as a stdio MCP server named plannotator-inbox . The Inbox's first screen gives the exact step for VS Code, Gemini CLI, Windsurf, Zed, Goose, Amp, Cline, Kiro, JetBrains and the Claude app, with the full path to plannotator . 04 Send yourself a test message Ask your agent, in a session started after step 3: Send me a test question in the Plannotator Inbox, then wait for my answer. Pick an answer in the Inbox and press Send . The thread then reads \"Delivered to\" your agent. Why not the agent's own window The agent's window is for the run you are watching. Long runs are the ones you are not watching. With several agents going you are not sitting in any of their windows. Their questions and blockers and reviews need somewhere to land that is not a scrollback. The Inbox is that place. Every agent writes to it. Each item is a thread with its context attached. You open it when you are ready. You answer or annotate once. The agent continues from there. How it works 01 An agent writes to the Inbox while it works. A question with options. A blocker. A plan or a prototype or a diff to review. 02 You answer in the Inbox. Pick an option. Annotate the file with Plannotator. Send. 03 The agent gets the answer. It arrives as the session's next turn. The thread shows \"Delivered to Claude Code\". What arrives during one run 01 The plan The agent drafts a plan and asks what it cannot decide alone. The plan opens next to the thread. You comment on a line and pick the answers. Nothing reaches the agent until you send. If the agent edits the plan after sending it the Inbox says so and opens the version it sent. You are somewhere else while this happens. The agents keep working. The Inbox tells you when something needs you. 02 A question the plan did not cover Halfway through the agent hits a case the plan left open and stops. The thread goes to the top under \"Stopped on you\". You answer. If the answer is a decision you turn the switch on and the decision is stored with the project. Your agents read it on the next run. 03 A prototype The agent attaches the prototype. It opens inside the Inbox at full screen. You pin comments on the parts to change. The comments go with your next send. Markdown and HTML and Mermaid and Graphviz. Plannotator's annotation tools. The prototype open in the Inbox with one comment pinned 04 The guided review At the end of the run the agent sends a guided review. The change is split into sections in reading order. Each section has its diff and a short summary. Every file is checked against the real diff. You read the whole change in one sitting. Connections Plannotator's Claude Code mod and Pi extension and OpenCode plugin write to the Inbox on their own and wake the agent when you send. Nothing to install for those three. Claude Code Pi OpenCode Any other agent connects to the Inbox as a local MCP server. The Inbox shows the exact step for Codex and Cursor and VS Code and Gemini CLI and Zed and Goose and Amp and Cline. codex mcp add plannotator-inbox -- plannotator inbox mcp Local Listens on 127.0.0.1 . Opens in your browser. Threads and answers and decisions are files under ~/.plannotator . Part of Plannotator. MIT or Apache 2.0. coming The same inbox hosted and on your phone. Blog An Async Surface for Long-Running Agents Install Install Plannotator and run plannotator inbox . $ curl -fsSL https://plannotator.ai/install.sh | bash Inbox docs GitHub &times; Product Plan Review Code Review Inbox Install Resources Quickstart Security Claude Code OpenCode Learn Community GitHub @backnotprop @plannotator Plannotator &copy; 2026 backnotprop. Licensed under MIT or Apache 2.0 , at your option. Privacy Policy Built by With contributions from",
+          "fetchedAt": "2026-10-11T05:37:26.367Z",
+          "verifiedAt": "2026-10-11T05:37:26.367Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "027a7982ab98844766fc447f",
+          "candidateId": "027a7982ab98844766fc447f",
+          "title": "An inbox for questions from coding agents",
+          "promise": "Collect agent questions and reviews so you can answer when you have time.",
+          "whatItIs": "Plannotator Inbox is a local browser inbox for long-running coding agents. Agents can send questions, blockers, plans, prototypes, or guided reviews; a person can answer or annotate and send a reply. The agent can then pick up that answer. A small student adaptation might route one coding agent’s questions into a local inbox.",
+          "whoPays": "Hypothesis: an individual developer or small team using long-running coding agents might pay for a smoother review workflow. The source does not establish paying customers or pricing.",
+          "loop": [
+            "A coding agent reaches a question, blocker, or review point during a run.",
+            "The connected agent sends the item and its context to the Inbox.",
+            "The person opens the thread in a browser when available.",
+            "The person answers, or annotates a plan or prototype, then presses Send.",
+            "The connected agent receives the answer on its next turn and can continue.",
+            "The person checks the agent's subsequent work before accepting changes."
+          ],
+          "evidence": "The product page says Inbox runs locally, opens in a browser, and accepts threads from connected agents. It describes a user answering or annotating and sending, after which the agent receives the answer. It lists integrations for Claude Code, Pi, OpenCode, Codex, Cursor, and other MCP agents, and describes guided review with diffs and summaries.",
+          "uncertainty": "These capabilities are described on the product page; the supplied evidence does not independently verify reliability, security beyond the page's local-listening description, or commercial demand. The agent can deliver a response, but a human must make decisions, assess annotations and review resulting changes. A student adaptation and its customer are hypothetical; it should not auto-approve code or treat agent output as verified.",
+          "first24Hours": [
+            "Read the Inbox setup steps and choose one supported agent integration to investigate.",
+            "Sketch a local prototype with one question thread, a human reply box, and a send action.",
+            "Write a manual test case that checks the reply is delivered and that a person reviews the agent's follow-up."
+          ],
+          "sourceIds": [
+            "a0c615116acf274d8ac57fdc"
+          ],
+          "productUrl": "https://plannotator.ai/inbox/"
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": {
+          "id": "027a7982ab98844766fc447f",
+          "candidateId": "027a7982ab98844766fc447f",
+          "title": "An inbox for coding agent questions",
+          "promise": "Build a small queue that collects agent questions for a person to answer.",
+          "whatItIs": "Plannotator Inbox is a local inbox where coding agents can send questions, blockers, plans, prototypes, or code changes for a person to review. A beginner-sized adaptation could collect agent questions in a simple web inbox and pass a person's reply back to the agent.",
+          "whoPays": "Hypothesis: a small software team or independent developer might pay for a hosted version that coordinates several coding agents.",
+          "loop": [
+            "An agent sends a question or work item to the inbox.",
+            "The inbox keeps the item and its context in a thread.",
+            "A person opens the thread and reviews the request or attached work.",
+            "The person writes a reply or annotations and chooses to send them.",
+            "The agent receives the reply and continues its run.",
+            "A person checks the resulting work before using or merging it."
+          ],
+          "evidence": "The supplied Plannotator source describes a local inbox for agent questions, blockers, plans, prototypes, and diffs, with replies delivered to the agent as its next turn. It says the product supports Claude Code, Pi, OpenCode, and other agents through MCP, and that threads and answers are stored as files under ~/.plannotator. The small web inbox adaptation and potential customer are hypotheses.",
+          "uncertainty": "The source documents Plannotator's described behavior, not customer demand or willingness to pay. Software can route messages and preserve context, but a person must decide what to tell the agent and review its output; the inbox does not establish that agent work is correct or safe.",
+          "first24Hours": [
+            "Sketch one inbox screen with a thread list, message view, and reply box.",
+            "Create a local prototype that stores a manually entered question and reply in a thread.",
+            "Walk through the prototype with a volunteer acting as an agent operator and note where human review is needed."
+          ],
+          "sourceIds": [
+            "a0c615116acf274d8ac57fdc"
+          ],
+          "productUrl": "https://plannotator.ai/inbox/"
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    },
+    {
+      "candidateId": "d554ca3fc8b9fd3548600b86",
+      "productUrl": "https://dify.ai",
+      "sources": [
+        {
+          "id": "d554ca3fc8b9fd3548600b86",
+          "url": "https://dify.ai",
+          "title": "Dify - The Platform for Production-Ready Agentic Workflows",
+          "publisher": "dify.ai",
+          "text": "Dify - The Platform for Production-Ready Agentic Workflows Products Solutions Docs Pricing Company Contact Sales Log in Get Started EN Menu Get Back Products Solutions Docs Pricing Company Products Get Back Build Workflow Studio Visual Builder for Agentic Workflows Knowledge Pipeline Prepare searchable knowledge bases Marketplace Explore Dify tools, models, and integrations Deploy Dify Cloud Hosted SaaS — prototype to production Dify Enterprise Private deployment for enterprise teams Community Edition Open-source, self-deploy with Docker Solutions Get Back Assessment & Testing Scale item generation with multi-stage review Manufacturing & Industrial One private platform across every business unit Consumer Goods & FMCG Let business teams build their own Agents Professional Services & Audit Drive audit automation with Agents and RPA Logistics & Supply Chain Grow business volume without proportional cost growth Public Sector Deploy locally and share securely across institutions Banking & Financial Services Unify business teams on one AI platform Pharma & Life Sciences Governed expert-level AI assistants Semiconductor Orchestrate AI on top of proprietary LLMs Education One knowledge base for multi-campus services Internet & Media Move from pilot projects to everyday productivity Company Get Back About Us Blog Join Us Language Get Back English 简体中文 日本語 한국어 Deutsch English 简体中文 日本語 한국어 Deutsch The Platform for Production-Ready Agentic Workflows. Build Agentic workflows, RAG pipelines, with rich AI model and tool support on one collaborative workspace. Deploy on cloud, VPC, or self-hosted, so teams move from prototype to production without rebuilding the stack. Trusted by Builders & Enterprises Worldwide MAERSK Adobe Google Panasonic PayPal Lilly Thermo Fisher Scientific MITRE Mercedes-Benz Novartis Deloitte McDonald's AIA Volkswagen CTC KPMG RICOH RICOH What makes Dify stand out is its ability to democratize AI agent development. By combining powerful AI/ML capabilities on a no-code platform, its rapid deployment and intuitive interface make it highly accessible even for beginners, significantly accelerating citizen development. What makes Dify stand out is its ability to democratize AI agent development. By combining powerful AI/ML capabilities on a no-code platform, its rapid deployment and intuitive interface make it highly accessible even for beginners, significantly accelerating citizen development. VOLVO VOLVO In this climate of perpetual beta, tools enabling rapid validation aren't just helpful, they're existential. For Volvo Cars, strategically navigating this AI frontier, this is where Dify delivers indispensable value. In this climate of perpetual beta, tools enabling rapid validation aren't just helpful, they're existential. For Volvo Cars, strategically navigating this AI frontier, this is where Dify delivers indispensable value. ets ets Dify's intuitive interface allows our teams to rapidly design and deploy complex natural language processing pipelines, enabling us to improve the quality of our assessment products while reducing cost and time to market. Dify's intuitive interface allows our teams to rapidly design and deploy complex natural language processing pipelines, enabling us to improve the quality of our assessment products while reducing cost and time to market. MAERSK Adobe Google Panasonic PayPal Lilly Thermo Fisher Scientific <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M105.333 25.5516V23.3396C104.216 23.3158 103.383 23.6964 103.05 24.7905L103.002 23.5299H100.434C100.481 24.1245 100.481 24.9094 100.481 25.3851V30.7606H103.05V27.6209C103.05 26.4317 103.407 25.5754 104.81 25.5278C104.977 25.5516 105.143 25.5516 105.333 25.5516ZM92.0376 30.8081C91.9662 30.1184 91.9424 29.6189 91.9424 29.2145V25.7181C91.9424 24.2672 90.8721 23.3634 89.445 23.3634C89.0169 23.3634 88.6363 23.4348 88.2557 23.6013C87.9228 23.7678 87.5898 23.9818 87.3043 24.3386V20.4378H84.7356V30.8081H87.3043V26.4317C87.3043 26.1938 87.2092 24.957 88.3747 24.957C89.1834 24.957 89.3499 25.6706 89.3499 26.3603V30.7843L92.0376 30.8081ZM84.1171 28.6437C84.1171 27.5258 83.5225 26.9787 82.7138 26.6695C81.1678 26.1225 80.0261 26.0987 80.0261 25.5278C80.0261 25.0997 80.264 24.8619 80.6921 24.8619C81.0251 24.8619 81.2392 24.957 81.3819 25.0997C81.5008 25.2424 81.5722 25.4803 81.5722 25.7895H83.9982C83.9507 23.8867 82.4522 23.3872 80.811 23.3872C79.4077 23.3872 77.6 23.8867 77.6 25.623C77.6 28.1442 81.6911 27.502 81.6911 28.834C81.6911 29.3097 81.3105 29.5237 80.811 29.5237C80.5256 29.5237 80.2878 29.381 80.1451 29.167C80.0023 28.9767 79.9548 28.715 79.9786 28.4534H77.5287C77.4811 30.6178 79.0747 30.9984 80.8586 30.9984C82.5236 30.9984 84.1171 30.4038 84.1171 28.6437ZM99.8391 27.6685C99.8629 25.0759 99.0779 23.3634 96.1762 23.3634C93.8928 23.3634 92.5133 24.7667 92.",
+          "fetchedAt": "2026-10-11T05:37:26.401Z",
+          "verifiedAt": "2026-10-11T05:37:26.401Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "d554ca3fc8b9fd3548600b86",
+          "candidateId": "d554ca3fc8b9fd3548600b86",
+          "title": "A visual builder for AI workflows",
+          "promise": "Prototype a workflow that connects an AI model with your own reference material.",
+          "whatItIs": "Dify describes itself as a collaborative workspace for building AI workflows and retrieval-augmented generation (RAG) pipelines, which let an AI system search provided knowledge sources. It lists a visual workflow builder, knowledge pipeline, model and tool support, and cloud, private-cloud, or self-hosted deployment options. A small student adaptation could let a user assemble a simple question-answer workflow over a few supplied documents.",
+          "whoPays": "Hypothesis: a small organization that wants to prototype an internal document question-answering tool might pay for setup or hosting help.",
+          "loop": [
+            "A user adds a small set of documents to a knowledge collection.",
+            "The user connects that collection and a model in a visual workflow.",
+            "The workflow receives a question and searches the supplied material.",
+            "The model drafts an answer using the retrieved passages.",
+            "A person checks the answer against the source documents before relying on it.",
+            "The builder adjusts the workflow when the review finds gaps."
+          ],
+          "evidence": "The supplied Dify source describes a visual builder for agentic workflows, knowledge pipelines for searchable knowledge bases, model and tool support, and cloud, VPC, or self-hosted deployment. It also describes Dify as a collaborative workspace for building workflows and RAG pipelines. The student adaptation, proposed use case, and potential customer are hypotheses.",
+          "uncertainty": "The supplied page is product marketing and does not independently verify performance, customer outcomes, or buyer demand. Workflow steps and document search can be automated, but a person must verify that answers are accurate, appropriate, and supported by the source documents; the source does not establish that generated answers are reliable without review.",
+          "first24Hours": [
+            "Choose a narrow document set and write five questions whose answers can be checked directly in it.",
+            "Sketch a workflow that accepts a question, retrieves relevant text, and drafts an answer with its source passage.",
+            "Manually compare each draft answer with the documents and record errors or missing context."
+          ],
+          "sourceIds": [
+            "d554ca3fc8b9fd3548600b86"
+          ],
+          "productUrl": "https://dify.ai"
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": {
+          "id": "d554ca3fc8b9fd3548600b86",
+          "candidateId": "d554ca3fc8b9fd3548600b86",
+          "title": "Build a small AI workflow with Dify",
+          "promise": "Prototype a workflow that uses a knowledge base and a human review step.",
+          "whatItIs": "Dify describes itself as a collaborative workspace for building agentic workflows and retrieval-augmented generation (RAG) pipelines. RAG means retrieving relevant material from a knowledge base to use with an AI model. Its site lists a visual workflow builder, a knowledge pipeline for searchable knowledge bases, and support for AI models and tools. A two-week student project could test a narrow workflow that drafts an answer from supplied reference material and asks a person to review it; that adaptation is hypothetical.",
+          "whoPays": "Hypothesis: a small team that wants to prototype an internal question-answering workflow might pay for a useful hosted or self-managed setup. The supplied source does not establish these customers or willingness to pay.",
+          "loop": [
+            "A user submits a question about a chosen set of reference documents.",
+            "The prototype workflow retrieves potentially relevant material from its knowledge base.",
+            "An AI model drafts an answer using that material.",
+            "The workflow presents the draft and its supporting material to a person for review.",
+            "The person edits or rejects the draft before sharing it with the requester.",
+            "The builder checks sample questions and incorrect answers, then revises the workflow."
+          ],
+          "evidence": "The supplied Dify page describes a visual builder for agentic workflows, a knowledge pipeline for preparing searchable knowledge bases, and a collaborative workspace with AI model and tool support. It lists cloud, VPC, and self-hosted deployment options. The particular student workflow and review loop above are a proposed adaptation, not an existing Dify product claim.",
+          "uncertainty": "The source is a product page and does not demonstrate this specific question-answering workflow or its accuracy, nor does it establish pricing or customer demand. Retrieval and drafting can be automated in the proposed prototype; a person should verify the references, correct or reject answers, and decide what may be sent. Do not use it for consequential decisions without appropriate expert review.",
+          "first24Hours": [
+            "Choose one low-stakes question type and gather a small set of reference documents you are allowed to use.",
+            "Review Dify's visual workflow builder and knowledge pipeline descriptions, then sketch the proposed draft-and-review steps.",
+            "Prepare three sample questions, including one the documents cannot answer, to check whether the human review step catches unsupported drafts."
+          ],
+          "sourceIds": [
+            "d554ca3fc8b9fd3548600b86"
+          ],
+          "productUrl": "https://dify.ai"
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    },
+    {
+      "candidateId": "5d63c736fb7cf98e1f5dab4c",
+      "productUrl": "https://againstallodds.games/blog/2026/10/03/our-risc-v-emulator-pasriscv/",
+      "sources": [
+        {
+          "id": "6ea5c750c570a40cd5a7df7c",
+          "url": "https://againstallodds.games/blog/2026/10/03/our-risc-v-emulator-pasriscv/",
+          "title": "Show HN: Our space game has a built-in RISC-V emulator that runs Linux",
+          "publisher": "againstallodds.games",
+          "text": "Our RISC-V emulator PasRISCV | SEEDS · Against All Odds EN EN FR DE ES PL PT RU UA CN JP Home News Videos Trailer --> Gallery Press --> Tech About Our RISC-V emulator PasRISCV Tech / Dev Blog Our RISC-V emulator PasRISCV You may already know that our game SEEDS includes a fully emulated Linux system, which runs our in-game tools for the player. For example, if they are accessing the planetary overview and stats through the program selector on the computer in the homebase, these apps are native Linux programs. Even if you’re playing the game on a Windows machine, these ELF binaries are executed on this emulated RISC-V 64-bit system running the Alpine Linux distribution. I want to take the opportunity to let you peek behind the curtains and tell you a bit about our emulator. It is powered by our in-house PasRISCV project, which is programmed in Object Pascal and accessible to everyone as free open-source software (FOSS). You’re invited to check out its sources and maybe even make use of it. PasRISCV and its frontend companion pasriscvemu are licensed under the permissive zlib license . A real RISC-V Linux machine running inside our game and not a fake terminal. GOT ROOT‽ Emulation First, there are two ways we could have done this: emulating only the userspace, or emulating a complete virtual machine. For PasRISCV we chose the latter and emulate a machine including display and storage devices, interrupts, everything down to the last thing, so that for the running kernel it appears as a complete hardware system, even though it’s virtual. The emulated machine uses the 64-bit RISC-V instruction set architecture (ISA), which, in contrast to most proprietary architectures – like x86 and ARM – is an open standard and completely open and free to use under a permissive license. That means if you’re building a new hardware device based on it, you don’t have to pay any royalties for using the RISC-V ISA itself. On the technical side, the system provides SMP/MultiHART, RV64GC, and RVA23 support, including the Hypervisor and Vector extensions, together with additional scalar and vector cryptography extensions. Nevertheless, listing and explaining all emulated features is beyond the scope of this introduction, so to get a full overview of the emulation head over to the PasRISCV repository . CPU and FPU To emulate the CPU, the emulator uses a hybrid approach: an interpreter combined with a tracing JIT compiler. As of now, the JIT is limited to x86-64 hosts, but about 99% of the instructions we encounter are supported by it. Floating-point operations, for example, can be handled directly by the host FPU. For cases where stricter behaviour is required, PasRISCV offers an optional mode that combines software floating point with the interpreter. This exists because IEEE 754-2008 specifies some behaviour that can’t be reproduced exactly using the x86 floating-point hardware. fastfetch : Alpine Linux riscv64 running on PasRISCV oh, and spot the typo… btop running on the emulated computer Linux If you start a new game or load a saved game in SEEDS , the emulator in the background is already booting the system. A normal Linux kernel can be booted in two ways: directly through OpenSBI or through U-Boot . For a direct OpenSBI to kernel boot, all required modules and, more importantly, the disk images currently need to reside in the initramfs. Therefore, we use the more traditional OpenSBI to U-Boot chain, which then loads and executes the kernel. This allows us to have a normal disk image which holds the system. These images can be attached to the guest system either as VirtIO Block devices or as emulated NVMe hardware over PCIe. Disks can operate normally in read-write mode, but they can also be attached read-only. This is especially useful for our game as we can have a root partition that gets replaced by game updates. In addition, we keep a separate user partition for the player’s own data, like the high score tables of the mini-games, until we have a proper mechanism to hold that state in the game state itself. Host directories can also be made available inside the guest through VirtIO-9P or VirtIO-FS . This is particularly convenient during development because we can compile tools directly on the host and then access them immediately from inside the emulated machine. Otherwise, we’d have to inject the binaries directly into memory, or use a separate exchange mechanism, or even worse, reboot the emulator on every little change. Our game uses a slightly modified version of the lean and excellent Alpine Linux v3.23.6 system, which some of us also love to run on our servers, together with our custom kernel build. However, a recent stock Alpine image also runs without problems. Graphics For graphics, our virtual game screens currently access their displayed pixels using the emulator framebuffer device. More specifically, we use SimpleFB backed by a custom MMIO display buffer. PasRISCV provides several other virtual graphics adapters as well. One option is VirtIO GPU , which supports EDID and 2D functionality, along with experimental 3D/ VirGL capabilities. Through its PCI emulation, it also provides devices supported by drivers such as Bochs VBE and Cirrus Logic. We even managed to run an X server with the Motif Window Manager in the VM, but it’s a bit too slow to be really usable on most machines. For our game, however, the simple framebuffer display is quite useful, as it’s fast enough and lets us process its output with custom shaders running in the game. This way we add additional retro effects such as scanlines, phosphor glow, and similar – I’m tempted to say beautiful , but that of course is in the eye of the player – visual degradations of the 80s and 90s. Space Prowler running inside SEEDS Audio The emulator of course also supports audio. We emulate retro sound cards, such as the CMI8738 and FM801, with PCM, OPL2 , and OPL3 available on both. Intel HDA and VirtIO sound are supported as well. OPL and OPN are closely related Yamaha FM synthesis families that influenced the sound of the mid and late 80s and early 90s of various consoles and PCs. Even professional synthesizers such as the Yamaha DX7 were powered by related FM synthesis chips. Newer cards featured PCM playback, often retaining FM synthesis only as a legacy feature, until later cards left it out completely. PCM allowed the playback of samples and quickly – and imho sadly – largely displaced the distinctive OPL chiptune sound. Back then, most people were fascinated by the more realistic-sounding music that used samples, instead of sound chips. So more and more games used the new sample-based sound. Nowadays, the sound of OPL has a relatively large fan base in retro circles that love computer music. Various websites and archives provide easy access to the vast libraries of 80s and 90s chiptune music. Fitting our somewhat retro-80s theme, our little proof-of-concept space game running on the computer in SEEDS is called Space Prowler. It features a charming retro pixel style and has a dedicated chiptune as its title theme, which combines both OPL3 synthesis and PCM sound samples for the drums. I actually wrote a small editor named chOPLin to compose this music. This so-called tracker runs entirely in a normal Linux console; it even works from within the game using the computer’s 80×50-character, 640×400-pixel framebuffer console, albeit creating music in that way is a bit cumbersome. I plan to release the tracker as free and open-source software once I have some spare time, as I still have to polish it and make it more user-friendly. Integration The link between the emulated machine and the surrounding game uses Linux Virtual Sockets ( vsock ) for its communication. Moreover, we use a small binary serialization format. Conceptually, it’s somewhat like a binary version of JSON, highly optimized for fast (de-)serialization. Data can flow in both directions, much like with a normal network protocol. We also have a small priority queue and message-reference system, so we can handle urgent, prioritized messages as well as request-and-response exchanges. For example, imagine that the in-game computer is displaying the planetary sphere. The client program that sits inside the virtual computer can request updated information about things such as terrain information or the locations of animals, and receive this data from the game running the virtual machine. We also have most of the wiring ready for players to be able to program, reshape, and populate the whole planet through automation. As it’s a normal Linux system, you’ll be able to use Ruby, Python, or even Rust, C, C++, and Go to change and automate your world. That said, it’s not our primary concept for the game at the moment, as there’s just as much satisfaction in building things by hand and manually shaping the planet into something beautiful. PasRISCV running a certain game… Spaceship interior Networking The emulator also has real networking through its own Slirp -like userspace NAT implementation. It doesn’t rely on an external library for this, and it supports both IPv4 and IPv6. As a result, the emulated Linux system has normal network access. For example, we can run Alpine’s package manager apk update and apk install to install packages directly from inside the virtual machine. Our own tools are also installed as signed Alpine packages. However, networking is disabled in the game for the foreseeable future: the VM cannot make any outbound connections at all, mainly for security, isolation, and reproducibility. Debugging PasRISCV also contains its own custom disassembler and debugger. In addition, it can act as a GDB server. Although it currently is only partially implemented, this means you can use your preferred debugging tools with it, as long as they support GDB’s remote debugging protocol. Coda We hope you gained some insight into how SEEDS and PasRISCV function together to provide a fully usable, in-game Linux system to run our (and maybe in the near future your own) programs to create an immersive experience when taking on Naxiah’s journey in space. And I don’t think I need to mention that Linux is a first-class platform for playing our game. Fun fact: two-thirds of the creative and development team use Linux as their main OS. ;) Alex | #emulation, #risc-v, #linux, #gamedev Permalink | 2026-10-03 Back to blog index Contact | Privacy Policy © 2026 Against All Odds . All rights reserved.",
+          "fetchedAt": "2026-10-11T05:37:27.716Z",
+          "verifiedAt": "2026-10-11T05:37:27.716Z"
+        }
+      ],
+      "A": {
+        "post": null,
+        "refusal": "The supplied source describes SEEDS, a game containing an emulated Linux system, and the PasRISCV emulator. It does not support a beginner post about an autonomous AI product or operation, or an evidence-backed business loop and customer. The post format therefore cannot be supported from this source.",
+        "deterministicReasons": [
+          "Trial produced no draft."
+        ]
+      },
+      "B": {
+        "post": {
+          "id": "5d63c736fb7cf98e1f5dab4c",
+          "candidateId": "5d63c736fb7cf98e1f5dab4c",
+          "title": "A Linux computer inside a space game",
+          "promise": "Explore a small teaching demo inspired by a game's RISC-V Linux emulator.",
+          "whatItIs": "The SEEDS game source describes a full RISC-V virtual machine running Alpine Linux for in-game tools, powered by the developers' open-source PasRISCV emulator. A beginner-sized adaptation could be a desktop demo that boots a Linux image in an emulator and guides a learner through a few safe, local commands. This is a proposed learning project, not a feature or product claim about SEEDS.",
+          "whoPays": "Hypothesis: a teacher, hobbyist, or game developer might pay for a guided educational demo about emulation and Linux.",
+          "loop": [
+            "The learner starts a supplied local virtual machine image.",
+            "The emulator boots Linux in the isolated demo environment.",
+            "A short guide asks the learner to inspect files or run a basic command.",
+            "The demo displays the command output for the learner to interpret.",
+            "A person reviews the instructions, environment boundaries, and learner's results before expanding the exercise."
+          ],
+          "evidence": "The supplied developer blog says SEEDS runs native Linux programs on an emulated 64-bit RISC-V system using Alpine Linux and the in-house PasRISCV project, which it describes as free open-source software under the zlib license. It also says the emulator supports Linux and that networking is disabled in the game for the foreseeable future. The teaching demo and possible customer are hypotheses.",
+          "uncertainty": "The source is a developer description of SEEDS and PasRISCV, not evidence of demand for a teaching product or proof that a separate beginner demo will be easy to build. Emulation can boot and run programs, but a person must review the commands, image, and environment configuration. The game's stated network restriction should not be assumed for a separate adaptation.",
+          "first24Hours": [
+            "Read the PasRISCV project documentation linked from the supplied article and note the prerequisites for running it.",
+            "Design a one-command local exercise with a harmless Linux command and a clear explanation of its output.",
+            "Review the proposed image and every command manually before asking a learner to try the exercise."
+          ],
+          "sourceIds": [
+            "6ea5c750c570a40cd5a7df7c"
+          ],
+          "productUrl": "https://againstallodds.games/blog/2026/10/03/our-risc-v-emulator-pasriscv/"
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    }
+  ]
+}

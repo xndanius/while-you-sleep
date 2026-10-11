@@ -1,0 +1,66 @@
+{
+  "runId": "improve-38115365797-1",
+  "trialId": "e7c5de7f2ab30d6a0c680be3",
+  "posts": [
+    {
+      "id": "027a7982ab98844766fc447f",
+      "candidateId": "027a7982ab98844766fc447f",
+      "title": "An inbox for questions from coding agents",
+      "promise": "Collect agent questions and reviews so you can answer when you have time.",
+      "whatItIs": "Plannotator Inbox is a local browser inbox for long-running coding agents. Agents can send questions, blockers, plans, prototypes, or guided reviews; a person can answer or annotate and send a reply. The agent can then pick up that answer. A small student adaptation might route one coding agent’s questions into a local inbox.",
+      "whoPays": "Hypothesis: an individual developer or small team using long-running coding agents might pay for a smoother review workflow. The source does not establish paying customers or pricing.",
+      "loop": [
+        "A coding agent reaches a question, blocker, or review point during a run.",
+        "The connected agent sends the item and its context to the Inbox.",
+        "The person opens the thread in a browser when available.",
+        "The person answers, or annotates a plan or prototype, then presses Send.",
+        "The connected agent receives the answer on its next turn and can continue.",
+        "The person checks the agent's subsequent work before accepting changes."
+      ],
+      "evidence": "The product page says Inbox runs locally, opens in a browser, and accepts threads from connected agents. It describes a user answering or annotating and sending, after which the agent receives the answer. It lists integrations for Claude Code, Pi, OpenCode, Codex, Cursor, and other MCP agents, and describes guided review with diffs and summaries.",
+      "uncertainty": "These capabilities are described on the product page; the supplied evidence does not independently verify reliability, security beyond the page's local-listening description, or commercial demand. The agent can deliver a response, but a human must make decisions, assess annotations and review resulting changes. A student adaptation and its customer are hypothetical; it should not auto-approve code or treat agent output as verified.",
+      "first24Hours": [
+        "Read the Inbox setup steps and choose one supported agent integration to investigate.",
+        "Sketch a local prototype with one question thread, a human reply box, and a send action.",
+        "Write a manual test case that checks the reply is delivered and that a person reviews the agent's follow-up."
+      ],
+      "sourceIds": [
+        "a0c615116acf274d8ac57fdc"
+      ],
+      "productUrl": "https://plannotator.ai/inbox/"
+    },
+    {
+      "id": "d554ca3fc8b9fd3548600b86",
+      "candidateId": "d554ca3fc8b9fd3548600b86",
+      "title": "Build a small AI workflow with Dify",
+      "promise": "Prototype a workflow that uses a knowledge base and a human review step.",
+      "whatItIs": "Dify describes itself as a collaborative workspace for building agentic workflows and retrieval-augmented generation (RAG) pipelines. RAG means retrieving relevant material from a knowledge base to use with an AI model. Its site lists a visual workflow builder, a knowledge pipeline for searchable knowledge bases, and support for AI models and tools. A two-week student project could test a narrow workflow that drafts an answer from supplied reference material and asks a person to review it; that adaptation is hypothetical.",
+      "whoPays": "Hypothesis: a small team that wants to prototype an internal question-answering workflow might pay for a useful hosted or self-managed setup. The supplied source does not establish these customers or willingness to pay.",
+      "loop": [
+        "A user submits a question about a chosen set of reference documents.",
+        "The prototype workflow retrieves potentially relevant material from its knowledge base.",
+        "An AI model drafts an answer using that material.",
+        "The workflow presents the draft and its supporting material to a person for review.",
+        "The person edits or rejects the draft before sharing it with the requester.",
+        "The builder checks sample questions and incorrect answers, then revises the workflow."
+      ],
+      "evidence": "The supplied Dify page describes a visual builder for agentic workflows, a knowledge pipeline for preparing searchable knowledge bases, and a collaborative workspace with AI model and tool support. It lists cloud, VPC, and self-hosted deployment options. The particular student workflow and review loop above are a proposed adaptation, not an existing Dify product claim.",
+      "uncertainty": "The source is a product page and does not demonstrate this specific question-answering workflow or its accuracy, nor does it establish pricing or customer demand. Retrieval and drafting can be automated in the proposed prototype; a person should verify the references, correct or reject answers, and decide what may be sent. Do not use it for consequential decisions without appropriate expert review.",
+      "first24Hours": [
+        "Choose one low-stakes question type and gather a small set of reference documents you are allowed to use.",
+        "Review Dify's visual workflow builder and knowledge pipeline descriptions, then sketch the proposed draft-and-review steps.",
+        "Prepare three sample questions, including one the documents cannot answer, to check whether the human review step catches unsupported drafts."
+      ],
+      "sourceIds": [
+        "d554ca3fc8b9fd3548600b86"
+      ],
+      "productUrl": "https://dify.ai"
+    }
+  ],
+  "refusals": [
+    {
+      "candidateId": "5d63c736fb7cf98e1f5dab4c",
+      "reason": "The supplied source describes SEEDS, a game containing an emulated Linux system, and the PasRISCV emulator. It does not support a beginner post about an autonomous AI product or operation, or an evidence-backed business loop and customer. The post format therefore cannot be supported from this source."
+    }
+  ]
+}

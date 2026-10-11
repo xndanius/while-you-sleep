@@ -1,0 +1,87 @@
+{
+  "runId": "improve-38115365797-1",
+  "trialId": "ea51e4731197e1e8d077d99a",
+  "posts": [
+    {
+      "id": "027a7982ab98844766fc447f",
+      "candidateId": "027a7982ab98844766fc447f",
+      "title": "An inbox for coding agent questions",
+      "promise": "Build a small queue that collects agent questions for a person to answer.",
+      "whatItIs": "Plannotator Inbox is a local inbox where coding agents can send questions, blockers, plans, prototypes, or code changes for a person to review. A beginner-sized adaptation could collect agent questions in a simple web inbox and pass a person's reply back to the agent.",
+      "whoPays": "Hypothesis: a small software team or independent developer might pay for a hosted version that coordinates several coding agents.",
+      "loop": [
+        "An agent sends a question or work item to the inbox.",
+        "The inbox keeps the item and its context in a thread.",
+        "A person opens the thread and reviews the request or attached work.",
+        "The person writes a reply or annotations and chooses to send them.",
+        "The agent receives the reply and continues its run.",
+        "A person checks the resulting work before using or merging it."
+      ],
+      "evidence": "The supplied Plannotator source describes a local inbox for agent questions, blockers, plans, prototypes, and diffs, with replies delivered to the agent as its next turn. It says the product supports Claude Code, Pi, OpenCode, and other agents through MCP, and that threads and answers are stored as files under ~/.plannotator. The small web inbox adaptation and potential customer are hypotheses.",
+      "uncertainty": "The source documents Plannotator's described behavior, not customer demand or willingness to pay. Software can route messages and preserve context, but a person must decide what to tell the agent and review its output; the inbox does not establish that agent work is correct or safe.",
+      "first24Hours": [
+        "Sketch one inbox screen with a thread list, message view, and reply box.",
+        "Create a local prototype that stores a manually entered question and reply in a thread.",
+        "Walk through the prototype with a volunteer acting as an agent operator and note where human review is needed."
+      ],
+      "sourceIds": [
+        "a0c615116acf274d8ac57fdc"
+      ],
+      "productUrl": "https://plannotator.ai/inbox/"
+    },
+    {
+      "id": "d554ca3fc8b9fd3548600b86",
+      "candidateId": "d554ca3fc8b9fd3548600b86",
+      "title": "A visual builder for AI workflows",
+      "promise": "Prototype a workflow that connects an AI model with your own reference material.",
+      "whatItIs": "Dify describes itself as a collaborative workspace for building AI workflows and retrieval-augmented generation (RAG) pipelines, which let an AI system search provided knowledge sources. It lists a visual workflow builder, knowledge pipeline, model and tool support, and cloud, private-cloud, or self-hosted deployment options. A small student adaptation could let a user assemble a simple question-answer workflow over a few supplied documents.",
+      "whoPays": "Hypothesis: a small organization that wants to prototype an internal document question-answering tool might pay for setup or hosting help.",
+      "loop": [
+        "A user adds a small set of documents to a knowledge collection.",
+        "The user connects that collection and a model in a visual workflow.",
+        "The workflow receives a question and searches the supplied material.",
+        "The model drafts an answer using the retrieved passages.",
+        "A person checks the answer against the source documents before relying on it.",
+        "The builder adjusts the workflow when the review finds gaps."
+      ],
+      "evidence": "The supplied Dify source describes a visual builder for agentic workflows, knowledge pipelines for searchable knowledge bases, model and tool support, and cloud, VPC, or self-hosted deployment. It also describes Dify as a collaborative workspace for building workflows and RAG pipelines. The student adaptation, proposed use case, and potential customer are hypotheses.",
+      "uncertainty": "The supplied page is product marketing and does not independently verify performance, customer outcomes, or buyer demand. Workflow steps and document search can be automated, but a person must verify that answers are accurate, appropriate, and supported by the source documents; the source does not establish that generated answers are reliable without review.",
+      "first24Hours": [
+        "Choose a narrow document set and write five questions whose answers can be checked directly in it.",
+        "Sketch a workflow that accepts a question, retrieves relevant text, and drafts an answer with its source passage.",
+        "Manually compare each draft answer with the documents and record errors or missing context."
+      ],
+      "sourceIds": [
+        "d554ca3fc8b9fd3548600b86"
+      ],
+      "productUrl": "https://dify.ai"
+    },
+    {
+      "id": "5d63c736fb7cf98e1f5dab4c",
+      "candidateId": "5d63c736fb7cf98e1f5dab4c",
+      "title": "A Linux computer inside a space game",
+      "promise": "Explore a small teaching demo inspired by a game's RISC-V Linux emulator.",
+      "whatItIs": "The SEEDS game source describes a full RISC-V virtual machine running Alpine Linux for in-game tools, powered by the developers' open-source PasRISCV emulator. A beginner-sized adaptation could be a desktop demo that boots a Linux image in an emulator and guides a learner through a few safe, local commands. This is a proposed learning project, not a feature or product claim about SEEDS.",
+      "whoPays": "Hypothesis: a teacher, hobbyist, or game developer might pay for a guided educational demo about emulation and Linux.",
+      "loop": [
+        "The learner starts a supplied local virtual machine image.",
+        "The emulator boots Linux in the isolated demo environment.",
+        "A short guide asks the learner to inspect files or run a basic command.",
+        "The demo displays the command output for the learner to interpret.",
+        "A person reviews the instructions, environment boundaries, and learner's results before expanding the exercise."
+      ],
+      "evidence": "The supplied developer blog says SEEDS runs native Linux programs on an emulated 64-bit RISC-V system using Alpine Linux and the in-house PasRISCV project, which it describes as free open-source software under the zlib license. It also says the emulator supports Linux and that networking is disabled in the game for the foreseeable future. The teaching demo and possible customer are hypotheses.",
+      "uncertainty": "The source is a developer description of SEEDS and PasRISCV, not evidence of demand for a teaching product or proof that a separate beginner demo will be easy to build. Emulation can boot and run programs, but a person must review the commands, image, and environment configuration. The game's stated network restriction should not be assumed for a separate adaptation.",
+      "first24Hours": [
+        "Read the PasRISCV project documentation linked from the supplied article and note the prerequisites for running it.",
+        "Design a one-command local exercise with a harmless Linux command and a clear explanation of its output.",
+        "Review the proposed image and every command manually before asking a learner to try the exercise."
+      ],
+      "sourceIds": [
+        "6ea5c750c570a40cd5a7df7c"
+      ],
+      "productUrl": "https://againstallodds.games/blog/2026/10/03/our-risc-v-emulator-pasriscv/"
+    }
+  ],
+  "refusals": []
+}
