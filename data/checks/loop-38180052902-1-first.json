@@ -1,0 +1,88 @@
+{
+  "runId": "loop-38180052902-1",
+  "draftSha256": "4daff74a8c78ca2ab599b05c5e7aa9eaf7fff569d6478d1ffc07ebb2750a1c0c",
+  "sourceSnapshotSha256": "b409f85689c322d1e8c809ca578cfcaabb65dacb5490b860f2943bf444a6d5c6",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "28ef18e1692643accb11b312",
+      "pass": false,
+      "reasons": [
+        "Writer autonomy score 7 exceeds the evidence-supported maximum of 6: the attached page describes a template but does not verify its operation or outcomes."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The template describes a workflow that monitors Google Ads campaigns daily.",
+          "supported": true,
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "This workflow automatically monitors your Google Ads campaigns every day"
+        },
+        {
+          "claim": "The described workflow fetches clicks, impressions, conversions and costs from a Google Ads account.",
+          "supported": true,
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "it fetches all active campaign data including clicks, impressions, conversions, costs"
+        },
+        {
+          "claim": "The described workflow logs campaign data to Google Sheets and sends Slack/email reports.",
+          "supported": true,
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "Every campaign is logged to your Google Sheets dashboard with daily metrics"
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The template lists setup steps and a 15–25 minute estimate, but requires account, API, spreadsheet, Slack and SMTP credentials.",
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "Setup time: Approx. 15-25 minutes (credential configuration, dashboard setup, alert customization)"
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "A buyer is only a hypothesis: the page identifies PPC managers and agencies but reports no validated demand or student offer.",
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "Marketing agencies managing multiple client accounts needing automated performance monitoring"
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A one-account read-only report is a plausible two-week scope; authorized API access and several service credentials remain setup hurdles.",
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "Requirements: Google Ads account with active campaigns Google account with a tracking spreadsheet Slack workspace SMTP email provider"
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The documented schedule and reporting steps repeat, but the page does not verify a deployed loop and people must review findings before campaign changes.",
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "Pre-configured to run at 9 AM daily (adjust timing if needed)."
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "First-party template documentation gives concrete workflow steps and setup; it does not independently verify deployment, use or outcomes.",
+          "sourceId": "28ef18e1692643accb11b312",
+          "evidenceQuote": "Fetch Google Ads Data: Connect your Google Ads account and authorize API access."
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "One proposed post was assessed against its freshly fetched first-party template source; the autonomy score exceeds the evidence-supported maximum, so it is rejected.",
+    "contextSha256": "b09b42c28c2a50ffdc963aa7321abef6cce97f272a9ce70a1c4d393c257ee535",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "4daff74a8c78ca2ab599b05c5e7aa9eaf7fff569d6478d1ffc07ebb2750a1c0c",
+    "sourceSnapshotSha256": "b409f85689c322d1e8c809ca578cfcaabb65dacb5490b860f2943bf444a6d5c6",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
