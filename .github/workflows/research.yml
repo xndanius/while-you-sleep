@@ -53,6 +53,7 @@ jobs:
       actions: read
     outputs:
       due: ${{ steps.gate.outputs.due }}
+      committed: ${{ steps.commit.outputs.committed == 'true' || steps.evolve.outputs.committed == 'true' }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -74,7 +75,8 @@ jobs:
       - if: steps.gate.outputs.due == 'true'
         run: npm ci --ignore-scripts
       - if: steps.gate.outputs.due == 'true'
-        run: node scripts/research-snapshot.mjs "$RUN_ID"
+        run: |
+          SOURCE_HEAD_SHA="$(git rev-parse HEAD)" node scripts/research-snapshot.mjs "$RUN_ID"
         env:
           RUN_ID: ${{ steps.gate.outputs.runId }}
           SCHEDULED_JOB_KEY: ${{ steps.gate.outputs.jobKey }}
@@ -82,10 +84,17 @@ jobs:
           SCHEDULED_CLOCK_JSON: ${{ steps.gate.outputs.clock }}
           SCHEDULED_CADENCE_JSON: ${{ steps.gate.outputs.cadence }}
       - if: always() && steps.gate.outputs.due == 'true'
+        id: commit
         run: node scripts/commit-records.mjs research "$RUN_ID"
+        env:
+          RUN_ID: ${{ steps.gate.outputs.runId }}
+      - name: Review source yield and guarded discoveries once per Vilnius day
+        id: evolve
+        if: always() && steps.gate.outputs.due == 'true'
+        run: node scripts/source-registry.mjs evolve "$RUN_ID"
         env:
           RUN_ID: ${{ steps.gate.outputs.runId }}
   pages:
     needs: research
-    if: always() && needs.research.result == 'success' && needs.research.outputs.due == 'true'
+    if: always() && needs.research.outputs.committed == 'true'
     uses: ./.github/workflows/pages.yml

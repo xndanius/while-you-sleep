@@ -85,6 +85,8 @@ jobs:
     outputs:
       repo_sha: ${{ steps.trust.outputs.repo_sha }}
       rules_sha256: ${{ steps.trust.outputs.rules_sha256 }}
+      source_scan_sha256: ${{ steps.scan.outputs.source_scan_sha256 }}
+      source_scan_head_sha: ${{ steps.scan.outputs.source_scan_head_sha }}
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
     steps:
@@ -110,8 +112,21 @@ jobs:
             echo '::error::OPENAI_API_KEY is not installed. Complete secure setup, then dispatch bootstrap.'
             exit 1
           fi
-      - name: Research public sources and prepare the bounded writer
-        run: node scripts/research-snapshot.mjs "$RUN_ID" && node scripts/prepare-run.mjs writer
+      - name: Freeze the original guarded scan before model access
+        id: scan
+        env:
+          SOURCE_HEAD_SHA: ${{ steps.trust.outputs.repo_sha }}
+        run: node scripts/research-snapshot.mjs "$RUN_ID"
+      - name: Seal the original scan in a separate pre-model artifact
+        if: always() && steps.scan.outputs.source_scan_sha256 != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source-scan-${{ env.RUN_ID }}
+          path: data/source-scans/${{ env.RUN_ID }}.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Prepare the bounded writer
+        run: node scripts/prepare-run.mjs writer
       - name: Codex picks and writes
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
@@ -314,6 +329,20 @@ jobs:
         with:
           name: ${{ needs.final_check.result == 'success' && format('final-{0}', env.RUN_ID) || needs.checker.result == 'success' && format('checked-{0}', env.RUN_ID) || format('writer-{0}', env.RUN_ID) }}
           path: .staging/data/
+      - name: Fetch only the pre-model scan artifact
+        if: needs.writer.outputs.source_scan_sha256 != ''
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: source-scan-${{ env.RUN_ID }}
+          path: .staging/source-scan/
+      - name: Import the original scan through its independent trust boundary
+        if: needs.writer.outputs.source_scan_sha256 != ''
+        continue-on-error: true
+        env:
+          EXPECTED_SOURCE_SCAN_SHA: ${{ needs.writer.outputs.source_scan_sha256 }}
+          EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.source_scan_head_sha }}
+        run: node scripts/import-source-scan.mjs .staging/source-scan "$RUN_ID"
       - name: Collect only trusted CLI token usage
         if: needs.gate.outputs.run_models == 'true'
         env:
@@ -341,6 +370,14 @@ jobs:
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
           RULES_COMMIT: ${{ needs.writer.outputs.repo_sha }}
         run: node scripts/finalize-run.mjs "$RUN_ID"
+      - name: Derive source yield from the original scan and completed independent checks
+        if: always()
+        env:
+          EXPECTED_SOURCE_SCAN_SHA: ${{ needs.writer.outputs.source_scan_sha256 }}
+          EXPECTED_DRAFT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
+          RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
+        run: node scripts/record-source-attribution.mjs "$RUN_ID"
       - name: Commit research, picking, rejection and publication records separately
         if: always()
         run: node scripts/commit-records.mjs loop "$RUN_ID"

@@ -1,0 +1,40 @@
+name: Validate and bootstrap public source registry
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    outputs:
+      committed: ${{ steps.bootstrap.outputs.committed }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Validate only the fixed public seed catalog, with one reason commit per decision
+        id: bootstrap
+        env:
+          RUN_ID: source-bootstrap-${{ github.run_id }}-${{ github.run_attempt }}
+        run: node scripts/source-registry.mjs bootstrap "$RUN_ID"
+  pages:
+    needs: bootstrap
+    if: needs.bootstrap.result == 'success' && needs.bootstrap.outputs.committed == 'true'
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

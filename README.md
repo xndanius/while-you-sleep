@@ -28,9 +28,17 @@ Skipped content gates call no model, commit no work record and do not deploy. Th
 
 Real cron events exist: the 10 October 19:07 loop started at 23:01 and correctly skipped the full daily cap. This proves a trigger; checked automatic publication is a separate proof state. Clock-origin runs keep the GitHub event `workflow_dispatch` and require exact dispatch receipts plus authoritative parent metadata to distinguish them from manual diagnostics. The earlier one-hour cron trial with zero events remains an immutable historical observation. [Verification](data/scheduler/verification-20261011-052931.json).
 
+## Measured source registry
+
+[Source registry](data/sources/registry.json) records admitted public inputs, their status and how each was added. The [public source report](https://xndanius.github.io/while-you-sleep/api/sources.json) joins frozen scans with independently checked outcomes to show fetched items, candidates, passed checks, average checked score, publications and LinkedIn picks. Historical attribution remains unknown; zeros describe measured coverage after activation. Models cannot mint yield by changing an origin label or declaring a count.
+
+Each scan selects at most 20 of up to 40 active and probation sources. Five positions provide exploration; the remaining positions favour verified yield. On the first due research scan of each Vilnius date, a deterministic review can promote good probation entries, retire sufficiently sampled poor performers and check up to three new candidate sources. New admissions require public HTTPS, readable content and permission under robots rules, including redirects. Hosted bootstrap checks the requested seed expansion and records blocked or unreadable proposals as exclusions. Every actual registry transition is committed separately with its reason. Current sample thresholds, coverage and exclusions appear on the method page.
+
 ## LinkedIn relay
 
-RSS: https://xndanius.github.io/while-you-sleep/feed.xml
+All ideas RSS: https://xndanius.github.io/while-you-sleep/feed.xml
+
+LinkedIn relay RSS: https://xndanius.github.io/while-you-sleep/best.xml
 
 Each item has a permanent /p/<id>/ link, stable post-ID GUID, publication time, short plain-text description and absolute JPEG enclosure. Permanent pages contain the full checked post, sources, canonical URL and Open Graph metadata. The machine reports **Website -> RSS -> Zapier -> LinkedIn Page**. Danielius via Claude confirmed the first LinkedIn post at 11:55 Vilnius on 11 October and the active Zap; engagement metrics remain unknown. [Relay contract](docs/PLATFORMS.md).
 

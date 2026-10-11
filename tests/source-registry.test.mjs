@@ -1,0 +1,120 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {promises as fs} from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {hash,sha256,stableJSON,canonicalURL,candidateIdentity,writeJSON} from '../lib/storage.mjs';
+import {SCORING_KEYS,parseScoringPolicy} from '../lib/scoring.mjs';
+import {emptySourceRegistry,validSourceAdmission,validateSourceRegistry,applySourceTransition,registryDefinitions,createSourceScanReceipt,validateSourceScanReceipt,deriveSourceAttribution,sourceStatistics,planSourceEvolution,loadSourceRegistryState,validateSourceAttributionReceipt} from '../lib/source-registry.mjs';
+import {importSourceScan} from '../scripts/import-source-scan.mjs';
+import {recordSourceAttribution} from '../scripts/record-source-attribution.mjs';
+import {admissionDecision,discoverSourceProposals,updateSourceRegistry,transitionRecord} from '../scripts/source-registry.mjs';
+import {researchSnapshot} from '../scripts/research-snapshot.mjs';
+
+const now='2026-10-11T12:00:00.000Z',rules='# Rules\n<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n',policy=parseScoringPolicy(rules);
+function feed(n=1){const url=`https://feeds.example.org/feed-${n}`;return {id:hash(url),name:`Public source ${n}`,url,kind:'rss'};}
+function validation(url,itemCount=1){return {publicHttps:true,robotsAllowed:true,readable:true,robots:[{origin:new URL(url).origin,evaluatedUrl:url,robotsUrl:new URL('/robots.txt',url).toString(),status:404,state:'missing',allowed:true,contentType:'text/plain',fetchedAt:now,redirects:[]}],redirects:[],httpStatus:200,contentType:'application/rss+xml',resolvedUrl:url,fetchedAt:now,maxBytes:2000000,truncated:false,parserVersion:'public-sources-v1',itemCount};}
+function registry(n=1){let value=emptySourceRegistry();for(let index=1;index<=n;index++)value=applySourceTransition(value,{definition:feed(index),toStatus:'probation',reason:'Hosted guarded seed admission passed.',validation:validation(feed(index).url),howAdded:'seed',now});return value;}
+function fixture({runId='loop-101-1',value=6}={}){
+ const f=feed(),url='https://product.example.org/tool',source={id:hash(url),url,productUrl:url,text:'The product reads uploaded receipts and extracts structured fields for review. It exports parsed fields as CSV. Human approval remains required before records are sent.',fetchedAt:now,verifiedAt:now};
+ const id=candidateIdentity({productUrl:url}),criteria=Object.fromEntries(SCORING_KEYS.map(key=>[key,{value,reason:key==='profit'?'Hypothesis: receipt administration may have a buyer.':'The source supports a bounded experiment requiring review.',sourceIds:[source.id]}]));
+ const post={id,candidateId:id,title:'Receipt review assistant',promise:'Turn receipts into a draft for human review.',whatItIs:'A bounded receipt extraction experiment.',whoPays:'Hypothesis: receipt administration teams.',loop:['Upload a receipt','Review extracted fields','Export reviewed CSV'],evidence:'Extraction and export are described.',uncertainty:'Demand is unproven.',first24Hours:['Choose a format.','Extract draft fields.','Build review.'],sourceIds:[source.id],productUrl:url,scoring:{criteria}};
+ const draft={runId,posts:[post]},context={runId,assessmentContractVersion:1,rulesSha256:sha256(rules),scoringPolicy:policy,sources:[source],deterministicResults:[{postId:id,pass:true,reasons:[]}]};
+ const manifest={runId,checks:[{postId:id,pass:true,reasons:[],claimChecks:[{claim:'Extracts receipts.',supported:true,sourceId:source.id,evidenceQuote:'reads uploaded receipts and extracts structured fields'},{claim:'Exports CSV.',supported:true,sourceId:source.id,evidenceQuote:'exports parsed fields as CSV'},{claim:'Needs review.',supported:true,sourceId:source.id,evidenceQuote:'Human approval remains required before records are sent'}],scoreChecks:SCORING_KEYS.map(criterion=>({criterion,supported:true,maxSupportedScore:10,reason:criterion==='profit'?'Hypothesis: administration may have a buyer.':'Bounded capabilities require human review.',sourceId:source.id,evidenceQuote:'extracts structured fields for review'}))}]};
+ const run={id:runId,runId,type:'loop',assessmentOutcome:'completed',published:[],operationalFailures:[],githubRunUrl:`https://github.com/xndanius/while-you-sleep/actions/runs/${runId.split('-')[1]}`,startedAt:now};
+ const scan=createSourceScanReceipt({runId,registry:registry(),sources:[source],observations:[{feedId:f.id,url:f.url,status:'ok',itemCount:1,fetchedAt:now,message:'Guarded parse passed.',validation:validation(f.url)}],originMap:[{sourceId:source.id,url,productUrl:url,feedIds:[f.id]}],producer:{definitions:[f],repository:'xndanius/while-you-sleep',runId:runId.split('-')[1],runAttempt:1,workflow:'loop.yml',stage:'pre_model',headSha:'a'.repeat(40)},now});
+ const result={scan,draft,context,manifest,run,posts:[],now:new Date(now),expectedScanSha256:sha256(stableJSON(scan)),rulesSha256:context.rulesSha256};bind(result);return result;
+}
+function bind(f){f.context.draftSha256=sha256(stableJSON(f.draft));f.context.sourceSnapshotSha256=sha256(stableJSON(f.context.sources));Object.assign(f.manifest,{draftSha256:f.context.draftSha256,sourceSnapshotSha256:f.context.sourceSnapshotSha256,policySha256:policy.policySha256});f.expectedDraftSha256=f.context.draftSha256;f.expectedContextSha256=sha256(stableJSON(f.context));f.manifest.completedAssessment={schema:1,completed:true,decision:'assessed',reason:'Every proposed product was checked against fresh evidence.',contextSha256:f.expectedContextSha256,rulesSha256:f.rulesSha256,draftSha256:f.expectedDraftSha256,sourceSnapshotSha256:f.context.sourceSnapshotSha256,policySha256:policy.policySha256};f.run.checkedAssessment={schema:1,contractVersion:1,completed:true,runId:f.run.id,completedAt:now,contextSha256:f.expectedContextSha256,draftSha256:f.expectedDraftSha256,rulesSha256:f.rulesSha256,sourceSnapshotSha256:f.context.sourceSnapshotSha256,policySha256:policy.policySha256};}
+async function temp(t){const dir=await fs.mkdtemp(path.join(os.tmpdir(),'wys-registry-'));t.after(()=>fs.rm(dir,{recursive:true,force:true}));return dir;}
+
+test('guarded admissions require each actual allowed hop and complete readable parse',()=>{
+ const v=validation(feed().url);assert.equal(validSourceAdmission(v),true);
+ for(const mutate of [x=>x.robots=[],x=>x.robots[0].allowed=false,x=>x.robotsAllowed=false,x=>x.robots[0].state='available',x=>x.truncated=true,x=>x.itemCount=0,x=>x.resolvedUrl='https://other.example.org/feed',x=>x.redirects=[{next:null}],x=>x.robots[0].origin='https://forged.example.org']){const bad=structuredClone(v);mutate(bad);assert.equal(validSourceAdmission(bad),false);}
+ const result={eligible:true,sourceId:feed().id,definition:feed(),validation:v,sampleItems:[{id:hash(feed().url),url:feed().url,title:'A public fixture',text:'Literal readable content.',fetchedAt:now}]};assert.equal(admissionDecision(result,feed()),true);assert.equal(admissionDecision({...result,eligible:false},feed()),false);
+});
+
+test('new sources start probation and cap counts all non-retired entries',()=>{
+ assert.deepEqual(validateSourceRegistry(registry()),[]);assert.throws(()=>applySourceTransition(emptySourceRegistry(),{definition:feed(),toStatus:'active',reason:'Premature active seed.',validation:validation(feed().url),now}));
+ const full=registry(40);assert.throws(()=>applySourceTransition(full,{definition:feed(41),toStatus:'probation',reason:'Extra source beyond the cap.',validation:validation(feed(41).url),now}),/cap/);
+ const retired=applySourceTransition(full,{sourceId:feed(1).id,toStatus:'retired',reason:'Ten guarded access failures.',now});assert.equal(applySourceTransition(retired,{definition:feed(41),toStatus:'probation',reason:'A bounded replacement.',validation:validation(feed(41).url),now}).sources.length,41);
+});
+
+test('twenty scans reserve five exploration places while retaining measurable rank',()=>{
+ const reg=registry(30),bySource=Object.fromEntries(reg.sources.map((source,index)=>[source.id,{yield:{successfulScans:index,checkedCandidates:10,passedChecks:index,candidates:10,published:0,linkedInPicks:0,averageScore:6},lastScannedAt:now}]));
+ const selected=registryDefinitions(reg,{bySource});assert.equal(selected.length,20);assert.equal(new Set(selected.map(source=>source.id)).size,20);assert.deepEqual(new Set(selected.slice(-5).map(source=>source.id)),new Set(reg.sources.slice(0,5).map(source=>source.id)));
+});
+
+test('scan receipts reconcile item totals, original feed URL, failures and origin tuples',()=>{
+ const f=fixture();assert.deepEqual(validateSourceScanReceipt(f.scan),[]);
+ for(const mutate of [s=>s.observations[0].itemCount=200,s=>s.observations[0].itemCount=2,s=>s.observations[0].validation=validation('https://feeds.example.org/other'),s=>s.observations[0].status='failed',s=>s.originMap[0].feedIds=['unknown'],s=>s.originMap[0].url='https://changed.example.org/tool',s=>s.originMap.push(s.originMap[0])]){const bad=structuredClone(f.scan);mutate(bad);assert.ok(validateSourceScanReceipt(bad).length);}
+ const tuple=structuredClone(f.scan);tuple.originMap.push({...tuple.originMap[0],productUrl:'https://product.example.org/alternative'});tuple.observations[0].itemCount=2;tuple.observations[0].validation.itemCount=2;assert.deepEqual(validateSourceScanReceipt(tuple),[]);
+});
+
+test('source origin credit binds the exact original source ID and freshly fetched URL',()=>{
+ const f=fixture(),attributed=deriveSourceAttribution(f);assert.deepEqual(attributed.candidates[0].feedIds,[feed().id]);assert.equal(attributed.candidates[0].checkStatus,'passed');assert.deepEqual(validateSourceAttributionReceipt(attributed),[]);
+ f.context.sources[0].url='https://other.example.org/forged';bind(f);const changed=deriveSourceAttribution(f);assert.deepEqual(changed.candidates[0].feedIds,[]);assert.equal(changed.unknownCandidates,1);
+});
+
+test('missing, partial and corrupt assessments are unassessed rather than quality refusals',()=>{
+ for(const mutate of [f=>delete f.manifest.completedAssessment,f=>f.manifest.checks=[],f=>f.manifest.draftSha256='b'.repeat(64),f=>f.run.assessmentOutcome='incomplete',f=>f.run.operationalFailures=[{stage:'api'}],f=>f.run.checkedAssessment.rulesSha256='b'.repeat(64)]){const f=fixture();mutate(f);const receipt=deriveSourceAttribution(f);assert.equal(receipt.candidates[0].checkStatus,'unassessed');assert.equal(sourceStatistics({registry:registry(),scans:[f.scan],attributions:[receipt],currentPolicy:policy,now}).bySource[feed().id].yield.checkedCandidates,0);}
+ const f=fixture();f.manifest.checks[0].pass=false;f.manifest.checks[0].reasons=['The source does not support the proposed attribution.'];f.manifest.checks[0].claimChecks[0].supported=false;assert.equal(deriveSourceAttribution(f).candidates[0].checkStatus,'rejected');
+});
+
+test('retry samples count distinct canonical products, latest supported mean and actual scans',()=>{
+ const a=fixture(),b=fixture({runId:'loop-102-1',value:7});const stats=sourceStatistics({registry:registry(),scans:[a.scan,b.scan],attributions:[deriveSourceAttribution(a),deriveSourceAttribution(b)],currentPolicy:policy,now}).bySource[feed().id];assert.deepEqual(stats.yield,{scans:2,successfulScans:2,itemsFetched:2,distinctItems:1,candidates:1,checkedCandidates:1,passedChecks:1,scoreSamples:1,averageScore:7,published:0,linkedInPicks:0});assert.throws(()=>sourceStatistics({registry:registry(),scans:[a.scan,a.scan],currentPolicy:policy}),/repeated/);
+});
+
+test('coverage never retroactively attributes pre-admission scans or checks',()=>{
+ const f=fixture(),reg=applySourceTransition(emptySourceRegistry(),{definition:feed(),toStatus:'probation',reason:'Hosted admission later.',validation:validation(feed().url),now:'2026-10-11T12:01:00.000Z'});const row=sourceStatistics({registry:reg,scans:[f.scan],attributions:[deriveSourceAttribution(f)],currentPolicy:policy,now}).bySource[feed().id];assert.equal(row.yield.scans,0);assert.equal(row.yield.candidates,0);assert.equal(row.health,null);
+});
+
+test('promotions and poor retirement require age and independent sample thresholds',()=>{
+ const reg=registry(),id=feed().id,row={yield:{successfulScans:6,checkedCandidates:10,passedChecks:3,published:1,averageScore:6},consecutiveAccessFailures:0};let plans=planSourceEvolution({registry:reg,stats:{bySource:{[id]:row}},currentPolicy:policy,now:'2026-10-18T12:00:00.000Z'});assert.equal(plans[0].toStatus,'active');assert.equal(planSourceEvolution({registry:reg,stats:{bySource:{[id]:row}},currentPolicy:policy,now:'2026-10-17T12:00:00.000Z'}).length,0);row.yield.checkedCandidates=9;assert.equal(planSourceEvolution({registry:reg,stats:{bySource:{[id]:row}},currentPolicy:policy,now:'2026-10-18T12:00:00.000Z'}).length,0);row.yield={successfulScans:10,checkedCandidates:10,passedChecks:0,published:0,averageScore:null};assert.equal(planSourceEvolution({registry:reg,stats:{bySource:{[id]:row}},currentPolicy:policy,now:'2026-10-18T12:00:00.000Z'})[0].toStatus,'retired');row.consecutiveAccessFailures=10;assert.match(planSourceEvolution({registry:reg,stats:{bySource:{[id]:row}},currentPolicy:policy,now})[0].reason,/access failures/);
+});
+
+test('pre-model import accepts only one exact file with trusted producer fingerprints',async t=>{
+ const root=await temp(t),directory=path.join(root,'artifact');await fs.mkdir(directory);const f=fixture();await writeJSON(path.join(directory,f.run.id+'.json'),f.scan);const input={root,directory,runId:f.run.id,expectedSha256:f.expectedScanSha256,expectedHeadSha:'a'.repeat(40),env:{GITHUB_RUN_ID:'101',GITHUB_RUN_ATTEMPT:'1'}};assert.equal((await importSourceScan(input)).id,f.run.id);await assert.rejects(importSourceScan({...input,expectedSha256:'b'.repeat(64)}),/fingerprint/);await assert.rejects(importSourceScan({...input,expectedHeadSha:'b'.repeat(40)}),/producer/);await writeJSON(path.join(directory,'extra.json'),{});await assert.rejects(importSourceScan(input),/only/);
+});
+
+test('old in-flight publication has no new attribution requirement',async t=>{
+ const root=await temp(t);assert.equal((await recordSourceAttribution({root,runId:'loop-100-1',env:{}})).recorded,false);
+});
+
+test('discovery requires recurring checked high-score evidence and literal public feed links',async()=>{
+ const a=deriveSourceAttribution(fixture({value:7})),b=structuredClone(a);b.candidates[0].productUrl='https://product.example.org/second';const proposals=await discoverSourceProposals({registry:registry(),attributions:[a,b],currentPolicy:policy,catalog:[],fetchPage:async()=>({url:'https://product.example.org/tool',text:'<link rel="alternate" type="application/rss+xml" href="/feed.xml"><link rel="alternate" type="application/rss+xml" href="https://foreign.example.org/rss">'})});assert.ok(proposals.some(source=>source.url==='https://product.example.org/feed.xml'));assert.ok(proposals.every(source=>!source.url.includes('foreign')));assert.ok(proposals.length<=3);assert.deepEqual(await discoverSourceProposals({registry:registry(),attributions:[a],currentPolicy:policy,catalog:[],fetchPage:async()=>{throw new Error('Must not fetch a one-product domain.');}}),[]);
+});
+
+test('validated load retains unknown historical attribution and rejects forged receipt identity',async t=>{
+ const root=await temp(t);await writeJSON(path.join(root,'data','sources','registry.json'),registry());await writeJSON(path.join(root,'data','research','research-200-1.json'),{id:'research-200-1',runId:'research-200-1',createdAt:now,githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/200'});await writeJSON(path.join(root,'data','research','research-201-1.json'),{id:'loop-201-1',runId:'research-201-1',createdAt:now,githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/201'});await writeJSON(path.join(root,'data','runs','loop-202-1.json'),{id:'loop-202-1',type:'loop',startedAt:now,githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/202'});await writeJSON(path.join(root,'data','runs','loop-203-1.json'),{id:'loop-203-1',runId:'loop-999-1',type:'loop',startedAt:now,githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/203'});let view=await loadSourceRegistryState({root,currentPolicy:policy,now});assert.equal(view.unknownAttribution.legacyRuns,1);assert.equal(view.unknownAttribution.legacyScans,1);assert.equal(view.sources[0].yield.averageScore,null);assert.equal(view.sources[0].health,null);const f=fixture();await writeJSON(path.join(root,'data','source-scans','loop-999-1.json'),f.scan);await assert.rejects(loadSourceRegistryState({root,currentPolicy:policy,now}),/physical identity/);
+});
+
+test('snapshot freezes hosted checkout identity before model access while local tests cannot mint provenance',async t=>{
+ const root=await temp(t),f=fixture();await writeJSON(path.join(root,'data','sources','registry.json'),registry());const scan=async()=>({sources:f.context.sources,observations:f.scan.observations,originMap:f.scan.originMap});await fs.writeFile(path.join(root,'RULES.md'),rules);let output=await researchSnapshot({root,runId:'loop-101-1',scan,now,env:{}});assert.equal(output.receipt,null);const another=await temp(t);await writeJSON(path.join(another,'data','sources','registry.json'),registry());await fs.writeFile(path.join(root,'RULES.md'),rules);await fs.writeFile(path.join(another,'RULES.md'),rules);output=await researchSnapshot({root:another,runId:'loop-101-1',scan,now,env:{GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_RUN_ID:'101',GITHUB_RUN_ATTEMPT:'1',GITHUB_SHA:'b'.repeat(40),SOURCE_HEAD_SHA:'a'.repeat(40)}});assert.equal(output.receipt.producer.headSha,'a'.repeat(40));assert.equal(output.source_scan_sha256,sha256(stableJSON(output.receipt)));
+});
+
+
+test('supported below-threshold assessments contribute their actual mean without publication',()=>{
+ const f=fixture({value:5}),receipt=deriveSourceAttribution(f);assert.equal(receipt.candidates[0].checkStatus,'passed');const row=sourceStatistics({registry:registry(),scans:[f.scan],attributions:[receipt],currentPolicy:policy,now}).bySource[feed().id];assert.equal(row.yield.averageScore,5);assert.equal(row.yield.passedChecks,1);assert.equal(row.yield.published,0);
+});
+function g(root,...args){const result=spawnSync('git',args,{cwd:root,encoding:'utf8'});assert.equal(result.status,0,result.stderr);return result.stdout.trim();}
+async function gitRoot(t){const root=await temp(t);g(root,'init','-b','main');g(root,'config','user.name','Registry test');g(root,'config','user.email','test@example.org');await fs.writeFile(path.join(root,'RULES.md'),rules);g(root,'add','RULES.md');g(root,'commit','-m','Test baseline');return root;}
+const hosted=(runId,eventName='workflow_dispatch')=>({GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_RUN_ID:runId.split('-').at(-2),GITHUB_RUN_ATTEMPT:'1',GITHUB_EVENT_NAME:eventName});
+async function admit(source){if(source.kind==='unparsed-listing')return {checkedAt:now,eligible:false,reason:'No proven readable adapter.',code:'unparsed_listing',validation:{}};return {checkedAt:now,sourceId:source.id,definition:source,eligible:true,reason:'Explicit guarded test admission.',validation:validation(source.url),sampleItems:[{id:hash(source.url),url:source.url,title:'A literal public fixture',text:'A literal readable fixture.',fetchedAt:now}]};}
+
+test('hosted seed bootstrap records one reason commit per guarded admission or exclusion',async t=>{
+ const root=await gitRoot(t),runId='source-bootstrap-400-1',result=await updateSourceRegistry({mode:'bootstrap',runId,root,env:hosted(runId),validate:admit,now,push:false});assert.equal(result.committed,true);const reg=JSON.parse(await fs.readFile(path.join(root,'data','sources','registry.json')));assert.equal(reg.sources.length,29);assert.equal(reg.exclusions.length,1);assert.ok(reg.sources.every(source=>source.status==='probation'));assert.equal(g(root,'rev-list','--count','HEAD'),'31');const again=await updateSourceRegistry({mode:'bootstrap',runId:'source-bootstrap-401-1',root,env:hosted('source-bootstrap-401-1'),validate:()=>{throw new Error('Already attempted seeds must not be reprobed.');},now,push:false});assert.equal(again.committed,false);await assert.rejects(updateSourceRegistry({mode:'bootstrap',runId,root,env:{},validate:admit,push:false}),/trusted hosted/);
+});
+
+test('daily evolution probes at most three, holds a durable day lease and reuses current source samples',async t=>{
+ const root=await gitRoot(t);await writeJSON(path.join(root,'data','sources','registry.json'),registry());g(root,'add','data');g(root,'commit','-m','Admitted fixture source');const runId='research-410-1';let probes=0;const validate=async source=>{probes++;return admit(source);},discover=async()=>Array.from({length:6},(_,index)=>({...feed(50+index),discoveryReason:'A newly observed literal public source.'}));const result=await updateSourceRegistry({mode:'evolve',runId,root,env:hosted(runId),validate,discover,now,push:false});assert.equal(result.probes,3);assert.equal(probes,3);const day=JSON.parse(await fs.readFile(path.join(root,'data','source-evolution','source-evolution-2026-10-11.json')));assert.equal(day.probes.length,3);assert.equal(day.changeIds.length,3);assert.equal(g(root,'rev-list','--count','HEAD'),'6');const again=await updateSourceRegistry({mode:'evolve',runId:'research-411-1',root,env:hosted('research-411-1'),validate,discover,now,push:false});assert.equal(again.committed,false);assert.equal(probes,3);assert.equal((await loadSourceRegistryState({root,currentPolicy:policy,now})).lastEvolutionAt,now);
+});
+
+test('a rejected push recomputes daily discovery and commits only one final day lease',async t=>{
+ const root=await gitRoot(t),remote=path.join(await temp(t),'remote.git');g(path.dirname(remote),'init','--bare',remote);g(root,'remote','add','origin',remote);g(root,'push','origin','main');await writeJSON(path.join(root,'data','sources','registry.json'),registry());g(root,'add','data');g(root,'commit','-m','Admitted fixture source');g(root,'push','origin','main');const hook=path.join(remote,'hooks','pre-receive');await fs.writeFile(hook,'#!/bin/sh\nif [ ! -f "'+remote+'/first-rejection" ]; then touch "'+remote+'/first-rejection"; exit 1; fi\nexit 0\n');await fs.chmod(hook,0o755);let calls=0;const runId='research-420-1',result=await updateSourceRegistry({mode:'evolve',runId,root,env:hosted(runId),validate:admit,discover:async()=>{calls++;return [{...feed(99),discoveryReason:'A literal newly observed feed.'}];},now,push:true});assert.equal(result.committed,true);assert.equal(calls,2);assert.equal(g(root,'rev-list','--count','HEAD'),'4');assert.equal((await fs.readdir(path.join(root,'data','source-evolution'))).length,1);assert.equal((await fs.readdir(path.join(root,'data','source-changes'))).length,1);
+});
+
+test('workflows seal source artifacts before model access and keep daily evolution trusted',async()=>{
+ const loop=await fs.readFile(new URL('../.github/workflows/loop.yml',import.meta.url),'utf8'),research=await fs.readFile(new URL('../.github/workflows/research.yml',import.meta.url),'utf8'),bootstrap=await fs.readFile(new URL('../.github/workflows/source-bootstrap.yml',import.meta.url),'utf8');assert.ok(loop.indexOf('Seal the original scan')<loop.indexOf('Codex picks and writes'));assert.match(loop,/path: data\/source-scans\/\$\{\{ env.RUN_ID \}\}\.json/);assert.match(loop,/EXPECTED_SOURCE_SCAN_SHA: \$\{\{ needs.writer.outputs.source_scan_sha256 \}\}/);assert.ok(research.indexOf('commit-records.mjs research')<research.indexOf('source-registry.mjs evolve'));assert.match(research,/SOURCE_HEAD_SHA="\$\(git rev-parse HEAD\)"/);assert.match(research,/needs.research.outputs.committed == 'true'/);assert.ok(!bootstrap.includes('OPENAI_API_KEY'));assert.ok(!bootstrap.includes('codex-action'));assert.match(bootstrap,/group: while-you-sleep-record/);
+});

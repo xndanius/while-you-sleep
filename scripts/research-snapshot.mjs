@@ -1,14 +1,36 @@
-import { scanSources } from '../lib/research.mjs';
-import { dataPath, writeJSON, id, safeError } from '../lib/storage.mjs';
-import { trustedScheduledMetadata } from './prepare-scheduled-job.mjs';
-const runId=process.argv[2]||id('loop');
-try{
-  const health=[];const sources=await scanSources(async record=>health.push(record));
-  // Loop writers also scan sources, but their publication slot is a different
-  // job. Only dedicated research runs may complete a research schedule slot.
-  const scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?process.env:{GITHUB_EVENT_NAME:process.env.GITHUB_EVENT_NAME});
-  const snapshot={id:runId,runId,createdAt:new Date().toISOString(),sources,health,...scheduling,scheduleStatus:sources.length>=3?'completed':'failed',githubRunUrl:process.env.GITHUB_SERVER_URL&&process.env.GITHUB_REPOSITORY&&process.env.GITHUB_RUN_ID?`${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`:null};
-  await writeJSON(dataPath('research',runId),snapshot,{immutable:true});
-  console.log(JSON.stringify({runId,path:`data/research/${runId}.json`,sources:sources.length,failedFeeds:health.filter(x=>x.status==='failed').length}));
-  if(sources.length<3)process.exitCode=1;
-}catch(error){console.error(safeError(error));process.exitCode=1;}
+import {promises as fs} from 'node:fs';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {scanSourceDefinitions,sourceDefinitions} from '../lib/research.mjs';
+import {ROOT,writeJSON,id,safeError,sha256,stableJSON} from '../lib/storage.mjs';
+import {parseScoringPolicy} from '../lib/scoring.mjs';
+import {readPublicSourceRegistry,loadSourceRegistryData,registryDefinitions,createSourceScanReceipt} from '../lib/source-registry.mjs';
+import {validateCurationReceipts} from '../lib/curation.mjs';
+import {trustedScheduledMetadata} from './prepare-scheduled-job.mjs';
+
+export async function registryInput(root=ROOT,now=new Date()){
+ const currentPolicy=parseScoringPolicy(await fs.readFile(path.join(root,'RULES.md'),'utf8'));
+ const read=async directory=>{let files;try{files=await fs.readdir(path.join(root,'data',directory));}catch(error){if(error.code==='ENOENT')return [];throw error;}return Promise.all(files.filter(file=>file.endsWith('.json')).map(file=>fs.readFile(path.join(root,'data',directory,file),'utf8').then(JSON.parse)));};
+ const [posts,curations]=await Promise.all([read('posts'),read('curations')]);
+ if(validateCurationReceipts(curations,{posts}).length)throw new Error('Curation attribution input is invalid.');
+ const picks=curations.filter(receipt=>receipt.outcome==='picked').map(receipt=>receipt.pick);
+ return {...await loadSourceRegistryData({root,posts,picks,currentPolicy,now}),posts,picks,currentPolicy};
+}
+export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=scanSourceDefinitions,now=new Date()}={}){
+ const registry=await readPublicSourceRegistry(root),input=registry.initializedAt?await registryInput(root,now):null;
+ const definitions=input?registryDefinitions(registry,input.stats):sourceDefinitions.map(({id,name,url,kind})=>({id,name,url,kind}));
+ const result=await scan(definitions),sources=result.sources,health=result.observations;
+ const scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?env:{GITHUB_EVENT_NAME:env.GITHUB_EVENT_NAME});
+ const snapshot={id:runId,runId,createdAt:new Date(now).toISOString(),sources,health,...scheduling,scheduleStatus:sources.length>=3?'completed':'failed',githubRunUrl:env.GITHUB_SERVER_URL&&env.GITHUB_REPOSITORY&&env.GITHUB_RUN_ID?`${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}`:null};
+ await writeJSON(path.join(root,'data','research',runId+'.json'),snapshot,{immutable:true});
+ let receipt=null;
+ // Local tests never mint hosted provenance. Upload this exact file before Codex.
+ if(env.GITHUB_ACTIONS==='true'){
+  receipt=createSourceScanReceipt({runId,registry,...result,now,producer:{definitions,repository:env.GITHUB_REPOSITORY,runId:env.GITHUB_RUN_ID,runAttempt:Number(env.GITHUB_RUN_ATTEMPT),workflow:runId.startsWith('loop-')?'loop.yml':'research.yml',stage:runId.startsWith('loop-')?'pre_model':'research',headSha:env.SOURCE_HEAD_SHA||env.GITHUB_SHA}});
+  await writeJSON(path.join(root,'data','source-scans',runId+'.json'),receipt,{immutable:true});
+ }
+ return {snapshot,receipt,source_scan_sha256:receipt?sha256(stableJSON(receipt)):'',source_scan_head_sha:receipt?.producer.headSha||''};
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
+ try{const runId=process.argv[2]||id('loop'),result=await researchSnapshot({runId});if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,`source_scan_sha256=${result.source_scan_sha256}\nsource_scan_head_sha=${result.source_scan_head_sha}\n`);console.log(JSON.stringify({runId,path:`data/research/${runId}.json`,sources:result.snapshot.sources.length,failedFeeds:result.snapshot.health.filter(record=>record.status==='failed').length}));if(result.snapshot.sources.length<3)process.exitCode=1;}catch(error){console.error(safeError(error));process.exitCode=1;}
+}

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import vm from 'node:vm';
 import {renderMethodology} from '../lib/methodology.mjs';
 
 function fixture() {
@@ -66,7 +67,7 @@ test('source history stays unavailable until measured, and measured zero remains
   assert.equal(metric(measured,'Items fetched'),'20');
   assert.equal(metric(measured,'Candidates'),'0');
   assert.equal(metric(measured,'Passed checks'),'0');
-  assert.equal(metric(measured,'Average checked score'),'Unavailable');
+  assert.equal(metric(measured,'Average supported checked score'),'Unavailable');
   assert.equal(metric(measured,'Published'),'0');
   assert.equal(metric(measured,'LinkedIn picks'),'0');
   assert.doesNotMatch(measured,/Source evolution is not enabled yet/);
@@ -150,4 +151,111 @@ test('the renderer keeps input records unchanged and supplies canonical navigati
   assert.throws(()=>renderMethodology({baseURL:'javascript:alert(1)'}),/HTTPS base URL/);
   assert.throws(()=>renderMethodology({baseURL:'https://user:password@example.org'}),/without credentials/);
   for(const file of ['public/index.html','public/machine.html'])assert.match(await readFile(new URL('../'+file,import.meta.url),'utf8'),/<a href="method\/">The method<\/a>/);
+});
+
+const sourcePolicy = () => ({activeCap:40,scanBudget:20,explorationSlots:5,maxDiscoveriesPerDay:3,timezone:'Europe/Vilnius',review:'First due hosted research scan of each Vilnius day',promotion:{minAgeDays:7,minSuccessfulScans:6,minCheckedCandidates:10,minPassedChecks:3,minPublished:1,minimumAverageScore:'current_publish_threshold'},retirement:{minAgeDays:7,minSuccessfulScans:10,minCheckedCandidates:10,maxPassRateExclusive:0.1,consecutiveAccessFailures:10}});
+function liveSources() {
+  return {enabled:true,policy:sourcePolicy(),lastEvolutionAt:null,coverage:{startedAt:'2026-10-11T15:00:00.000Z',reason:'Only trusted registry-era joins contribute yield.',unknownAttribution:{legacyScans:6,legacyRuns:9,legacyPosts:5,legacyPicks:1,unmappedCandidates:0}},rows:[{id:'one',name:'A vetted public feed',url:'https://example.org/feed',status:'probation',howAdded:'verified_public_seed',historicalAttribution:'unknown',stats:{fetchAttempts:0,successfulFetches:0,itemsFetched:0,candidates:0,checkedCandidates:0,passedChecks:0,scoreSamples:0,averageScore:null,published:0,linkedInPicks:0},ranking:{position:1,value:0.153,basis:'Verified check yield, smoothed for small samples.',exploration:true}}],changes:[],exclusions:[]};
+}
+
+test('source evolution describes the actual daily policy and sample thresholds, including current score changes',()=>{
+  const input=fixture();input.sources=liveSources();
+  let html=section(renderMethodology(input),'method-sources');
+  assert.match(html,/At most 40 active and probation sources; up to 3 new candidate sources per day/);
+  assert.match(html,/at most 20 sources\. 5 reserved slots \(25%\)/);
+  assert.match(html,/First due hosted research scan of each Vilnius day · Europe\/Vilnius/);
+  assert.match(html,/At least 7 days old, 6 successful scans, 10 independently checked candidates, 3 passed checks and 1 published idea/);
+  assert.match(html,/average checked score must reach 6\/10/);
+  assert.match(html,/At least 7 days old, 10 successful scans and 10 independently checked candidates, with a pass rate below 10%/);
+  assert.match(html,/10 consecutive access failures can retire a source/);
+  assert.match(html,/not retired for poor yield before those sample requirements/);
+  assert.match(html,/Each registry transition is recorded in its own commit with its reason/);
+  assert.match(html,/No completed daily source review is recorded yet/);
+  input.policy.threshold=7.5;
+  input.sources.policy.promotion.minSuccessfulScans=8;
+  input.sources.policy.retirement.maxPassRateExclusive=0.2;
+  input.sources.policy.maxDiscoveriesPerDay=2;
+  input.sources.lastEvolutionAt='2026-10-12T00:23:00.000Z';
+  html=section(renderMethodology(input),'method-sources');
+  assert.match(html,/up to 2 new candidate sources per day/);
+  assert.match(html,/8 successful scans/);
+  assert.match(html,/average checked score must reach 7.5\/10/);
+  assert.match(html,/pass rate below 20%/);
+  assert.match(html,/Latest recorded source review: 12 Oct 2026, 03:23 Vilnius/);
+  assert.doesNotMatch(html,/average checked score must reach 6\/10|No completed daily source review/);
+});
+
+test('registry-era zeroes, unknown history and leaderboard position are separate quantities',()=>{
+  const input=fixture();input.sources=liveSources();
+  const html=section(renderMethodology(input),'method-sources');
+  assert.match(html,/Measured registry totals start 11 Oct 2026, 18:00 Vilnius/);
+  assert.match(html,/does not turn unknown historical outcomes into zero/);
+  assert.equal(metric(html,'Legacy posts'),'5');
+  assert.equal(metric(html,'Unmapped candidates'),'0');
+  assert.equal(metric(html,'Published'),'0');
+  assert.equal(metric(html,'Average supported checked score'),'Unavailable');
+  assert.equal(metric(html,'Verified score samples'),'0');
+  assert.match(html,/Leaderboard position 1 · Yield rank value 0.153/);
+  assert.match(html,/Historical attribution unknown/);
+  assert.match(html,/href="https:\/\/example.test\/channel\/api\/sources.json"/);
+  assert.match(html,/href="https:\/\/github.com\/xndanius\/while-you-sleep\/blob\/main\/data\/sources\/registry.json"/);
+});
+
+test('actual backend transition and exclusion fields display checked reasons without fabricating admitted sources',()=>{
+  const input=fixture();input.sources=liveSources();
+  input.sources.changes=[{createdAt:'2026-10-11T15:02:00.000Z',name:'A vetted public feed',fromStatus:'probation',toStatus:'retired',reason:'Ten consecutive guarded access failures.',runUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/456'}];
+  input.sources.exclusions=[{name:'Blocked seed <script>',url:'javascript:alert(1)',checkedAt:'2026-10-11T15:00:00.000Z',reason:'Robots disallowed / & public feed was not fetched.',robotsState:'disallowed',runUrl:'https://user:password@example.org/secret'}];
+  const html=section(renderMethodology(input),'method-sources');
+  assert.match(html,/probation → retired · 11 Oct 2026, 18:02 Vilnius/);
+  assert.match(html,/Ten consecutive guarded access failures/);
+  assert.match(html,/Excluded or not admitted/);
+  assert.match(html,/Blocked seed &lt;script&gt;/);
+  assert.match(html,/Robots disallowed \/ &amp; public feed was not fetched/);
+  assert.match(html,/robots disallowed/);
+  assert.doesNotMatch(html,/<script|href="javascript:|user:password/);
+  assert.equal((html.match(/class="method-source"/g)||[]).length,1,'An exclusion is not an admitted leaderboard entry.');
+});
+
+async function machineSourcesHarness({registry,sourceHealth=[]}) {
+  const html=await readFile(new URL('../public/machine.html',import.meta.url),'utf8'),elements=new Map();
+  for(const match of html.matchAll(/\bid="([^"]+)"/g))elements.set(match[1],{innerHTML:'',textContent:'',disabled:false,classList:{add(){},remove(){}},setAttribute(){},addEventListener(){},querySelectorAll(){return [];}});
+  const document={baseURI:'https://example.test/channel/',hidden:false,getElementById:id=>elements.get(id),querySelector:()=>({setAttribute(){}}),addEventListener(){}};
+  const data={runs:[],posts:[],stats:{},sources:registry,sourceHealth};
+  const code=(await readFile(new URL('../public/machine.js',import.meta.url),'utf8')).replace(/^import .+;\n/gm,'');
+  vm.runInNewContext(code,{document,location:new URL('https://example.test/channel/machine/'),localStorage:{getItem:()=>null,setItem(){}},loopTiming:()=>({nextPublicationAt:null,publicationTimes:[]}),nextLocalTime:()=>null,currentDaySlots:()=>[],slotPresentation:value=>value,clockTiming:()=>({state:'not_started',label:'Not started',elapsedMinutes:null}),runTriggerLabel:()=>'',publicClockRuntime:()=>null,newerClockRecord:value=>value,CLOCK_RUNTIME_REFRESH_MS:180000,CLOCK_RUNTIME_URL:'https://api.github.com/clock',fetch:async url=>({ok:true,json:async()=>data,text:async()=> '[]'}),AbortController,URL,Date,Intl,setTimeout:()=>1,clearTimeout(){},setInterval:()=>1});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.doesNotMatch(elements.get('machine-notice').textContent,/could not load/,'The full machine rendering completed.');
+  return {heading:elements.get('sources-heading').textContent,html:elements.get('source-health').innerHTML};
+}
+
+test('machine registry panel displays raw backend yields and keeps unsupported average and history unknown',async()=>{
+  const registry={schema:1,enabled:true,coverageStartedAt:'2026-10-11T15:00:00.000Z',unknownAttribution:{legacyPosts:5,unmappedCandidates:0},sources:[{id:'fixture',name:'Public seed',url:'https://example.org/feed',status:'probation',statusReason:'Hosted public format verified.',historicalAttribution:'unknown',howAdded:'seed',rank:{position:2,value:0.153,basis:'Smoothed checked yield.',exploration:true},yield:{scans:0,successfulScans:0,itemsFetched:0,candidates:0,checkedCandidates:0,passedChecks:0,scoreSamples:0,averageScore:null,published:0,linkedInPicks:0}}],recentChanges:[],exclusions:[]};
+  const result=await machineSourcesHarness({registry});
+  assert.equal(result.heading,'Source leaderboard');
+  assert.equal(metric(result.html,'Published'),'0');
+  assert.equal(metric(result.html,'Average supported checked score'),'Unavailable');
+  assert.equal(metric(result.html,'Legacy posts'),'5');
+  assert.match(result.html,/Historical attribution unknown/);
+  assert.match(result.html,/Position 2 · Yield metric 0.153/);
+  assert.match(result.html,/reserved exploration slot for the next scan/);
+  assert.match(result.html,/Source method and policy/);
+  assert.match(result.html,/class="source-stat-unavailable">Unavailable/);
+  assert.doesNotMatch(result.html,/candidates found in the recorded scan/);
+});
+
+test('machine retains old source-health view until hosted registry initialization is enabled',async()=>{
+  const result=await machineSourcesHarness({registry:{schema:1,enabled:false,sources:[],exclusions:[]},sourceHealth:[{name:'Configured public source',url:'https://example.org/feed',status:'failed',message:'Public source returned HTTP 403.'}]});
+  assert.equal(result.heading,'Source health');
+  assert.match(result.html,/Configured public source/);
+  assert.match(result.html,/Public source returned HTTP 403/);
+  assert.doesNotMatch(result.html,/Measured yield since|No admitted sources/);
+});
+
+test('machine escapes blocked admission and transition records and never treats them as yield',async()=>{
+  const result=await machineSourcesHarness({registry:{schema:1,enabled:true,sources:[],unknownAttribution:{},recentChanges:[{name:'Feed <img onerror=x>',fromStatus:'probation',toStatus:'retired',reason:'Access & robots failed.',createdAt:'2026-10-11T15:00:00.000Z'}],exclusions:[{name:'Blocked <script>',url:'javascript:alert(1)',reason:'Disallowed / & no request sent.',checkedAt:'2026-10-11T15:00:00.000Z',robotsState:'disallowed',runUrl:'https://user:password@example.org/private'}]}});
+  assert.match(result.html,/Feed &lt;img onerror=x&gt;/);
+  assert.match(result.html,/Blocked &lt;script&gt;/);
+  assert.match(result.html,/Disallowed \/ &amp; no request sent/);
+  assert.match(result.html,/No admitted sources are recorded/);
+  assert.doesNotMatch(result.html,/<img|<script|href="javascript:|user:password/);
 });

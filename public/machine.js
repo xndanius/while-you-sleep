@@ -1,7 +1,7 @@
-import {loopTiming,nextLocalTime} from './schedule.js?v=663dfaa48031';
-import {slotPresentation,currentDaySlots} from './slot-display.js?v=663dfaa48031';
-import {clockTiming,runTriggerLabel} from './clock-display.js?v=663dfaa48031';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=663dfaa48031';
+import {loopTiming,nextLocalTime} from './schedule.js?v=30c4c255f004';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=30c4c255f004';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=30c4c255f004';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=30c4c255f004';
 
 (() => {
   'use strict';
@@ -224,6 +224,27 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
   }
 
   function renderSources() {
+    const registry=data.sources;
+    if(registry?.enabled===true&&registry.schema===1&&Array.isArray(registry.sources)){
+      const sourceNumber=value=>typeof value==='number'&&Number.isFinite(value)&&value>=0?new Intl.NumberFormat('en-GB',{maximumFractionDigits:1}).format(value):'Unavailable';
+      const metric=(label,value)=>`<div><dt>${escape(label)}</dt><dd${sourceNumber(value)==='Unavailable'?' class="source-stat-unavailable"':''}>${escape(sourceNumber(value))}</dd></div>`;
+      const publicSourceLink=(url,title)=>{
+        try{const parsed=new URL(url);if(parsed.protocol==='https:'&&!parsed.username&&!parsed.password)return link(parsed.href,title);}catch{}
+        return `<span>${escape(title)}</span>`;
+      };
+      const unknown=registry.unknownAttribution||{},changes=Array.isArray(registry.recentChanges)?registry.recentChanges:[],exclusions=Array.isArray(registry.exclusions)?registry.exclusions:[];
+      $('sources-heading').textContent='Source leaderboard';
+      $('source-health').innerHTML=`<div class="source-registry-summary"><p>Measured yield since ${escape(formatDate(registry.coverageStartedAt))}. New measured zeroes are separate from unknown historical attribution.</p><dl class="source-registry-history">${metric('Legacy scans',unknown.legacyScans)}${metric('Legacy model runs',unknown.legacyRuns)}${metric('Legacy posts',unknown.legacyPosts)}${metric('Legacy LinkedIn picks',unknown.legacyPicks)}${metric('Unmapped candidates',unknown.unmappedCandidates)}</dl><div class="relay-links">${link('method/#method-sources','Source method and policy')}${link('api/sources.json','Public registry JSON')}${link('https://github.com/xndanius/while-you-sleep/blob/main/data/sources/registry.json','Registry in GitHub')}</div></div>
+      ${registry.sources.length?registry.sources.map(source=>{
+        const yieldRecord=source.yield||{},health=source.health||source.latestObservation||{},rank=source.rank||{};
+        const rankValue=typeof rank.value==='number'&&Number.isFinite(rank.value)&&rank.value>=0?new Intl.NumberFormat('en-GB',{maximumFractionDigits:3}).format(rank.value):null;
+        return `<article class="health-card source-registry-card"><div class="health-header"><h3>${publicSourceLink(source.url,plain(source.name)||source.id||'Source')}</h3>${chip(source.status,source.status==='probation'?'Probation':source.status==='retired'?'Retired':stateLabel(source.status))}</div><p class="source-registry-status">${escape(source.statusReason||'Status reason unavailable')}</p><dl class="source-registry-stats">${metric('Items fetched',yieldRecord.itemsFetched)}${metric('Candidates',yieldRecord.candidates)}${metric('Passed checks',yieldRecord.passedChecks)}${metric('Average supported checked score',yieldRecord.averageScore)}${metric('Published',yieldRecord.published)}${metric('LinkedIn picks',yieldRecord.linkedInPicks)}</dl>${source.historicalAttribution==='unknown'?'<p>Historical attribution unknown. These totals start with the registry.</p>':''}${rankValue!==null?`<p>${Number.isInteger(rank.position)&&rank.position>0?`Position ${escape(rank.position)} · `:''}Yield metric ${escape(rankValue)}${rank.exploration===true?' · reserved exploration slot for the next scan':''}.</p>`:''}<details class="source-registry-details"><summary>Source record</summary><p>${source.howAdded?'Added through '+escape(source.howAdded)+'. ':''}${source.addedAt?'Added '+escape(formatDate(source.addedAt))+'.':''}</p><dl class="source-registry-stats">${metric('Scans',yieldRecord.scans)}${metric('Successful scans',yieldRecord.successfulScans)}${metric('Checked candidates',yieldRecord.checkedCandidates)}${metric('Verified score samples',yieldRecord.scoreSamples)}</dl>${rank.basis?`<p>${escape(rank.basis)}</p>`:''}<p>Latest recorded scan: ${escape(formatDate(health.fetchedAt||source.lastScannedAt))}${health.status?' · '+escape(stateLabel(health.status)):''}. ${escape(health.message||'No fetch result is recorded yet.')}</p></details></article>`;
+      }).join(''):'<p class="muted">No admitted sources are recorded.</p>'}
+      <section class="source-registry-changes"><h3>Recent source changes</h3>${changes.length?`<ul>${changes.slice(0,4).map(change=>`<li><strong>${escape(change.name||change.sourceId||'Source')}</strong><span>${escape(change.fromStatus||'New')} → ${escape(change.toStatus||'Status unavailable')} · ${escape(formatDate(change.createdAt))}</span><p>${escape(change.reason||'Reason unavailable')}</p>${change.runUrl?publicSourceLink(change.runUrl,'Cloud run'):''}</li>`).join('')}</ul>`:'<p class="muted">No registry transitions are recorded yet.</p>'}</section>
+      <section class="source-registry-exclusions"><h3>Excluded or not admitted</h3>${exclusions.length?`<ul>${exclusions.map(exclusion=>`<li><strong>${publicSourceLink(exclusion.url,plain(exclusion.name)||exclusion.sourceId||'Source')}</strong><p>${escape(exclusion.reason||'Admission reason unavailable')}</p><span>Checked ${escape(formatDate(exclusion.checkedAt))}${exclusion.robotsState?' · robots '+escape(exclusion.robotsState):''}</span>${exclusion.runUrl?publicSourceLink(exclusion.runUrl,'Hosted admission check'):''}</li>`).join('')}</ul>`:'<p class="muted">No admission exclusions are recorded.</p>'}</section>`;
+      return;
+    }
+    $('sources-heading').textContent='Source health';
     const sources = list(data.sourceHealth);
     if (!sources.length) { $('source-health').innerHTML = '<p class="muted">No source checks have been recorded yet. The loop will log successful fetches and access failures here.</p>'; return; }
     $('source-health').innerHTML = sources.map((source) => {

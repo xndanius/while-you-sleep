@@ -14,6 +14,8 @@ import { curationStatus,validatedCurationPicks,readCurationRecords } from '../li
 import { versionBrowserAssets } from '../lib/browser-assets.mjs';
 import { sourceDefinitions } from '../lib/research.mjs';
 import { renderMethodology } from '../lib/methodology.mjs';
+import {loadSourceRegistryState} from '../lib/source-registry.mjs';
+import {normalizedSourceView} from '../lib/source-presentation.mjs';
 
 const clockDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const clockRunURL=value=>typeof value==='string'&&/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/\d+$/.test(value)?value:null;
@@ -93,13 +95,16 @@ try{
   const versionHistory=versions.length?versions.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')):[{id:INITIAL_RULES.id,createdAt:INITIAL_RULES.createdAt,status:'adopted',reason:INITIAL_RULES.reason,change:'Initial evidence-first writing and picking rules',baselineScore:null,challengerScore:null}];
   // Before registry accounting starts, old scan health can describe reported
   // availability but cannot identify which source produced a checked idea.
-  const sources={enabled:false,coverage:{reason:'Historic origin attribution was not recorded; yield accounting starts with the source registry.',trustedFetchSnapshots:trustedResearch.length},rows:sourceDefinitions.map(definition=>{
+  const fallbackSources={enabled:false,coverage:{reason:'Historic origin attribution was not recorded; yield accounting starts with the source registry.',trustedFetchSnapshots:trustedResearch.length},rows:sourceDefinitions.map(definition=>{
     const health=healthMap.get(definition.name);
     return {id:hash(definition.url),name:definition.name,url:definition.url,status:'configured',lastFetchAt:health?.fetchedAt||null,health:health?{status:health.status,message:health.message}:null,stats:{fetchAttempts:null,successfulFetches:null,itemsFetched:null,distinctItems:null,candidates:null,checkedCandidates:null,passedChecks:null,averageScore:null,published:null,linkedInPicks:null}};
   }),changes:[]};
-  const machine={...feed,clock,curation,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources,platforms,relay,metrics};
+  const registryView=await loadSourceRegistryState({root:ROOT,posts,picks,currentPolicy:currentScoringPolicy,now:new Date()});
+  const sources=registryView.enabled===true?normalizedSourceView(registryView):fallbackSources;
+  const machine={...feed,clock,curation,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources:registryView,platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);
   await writeJSON(path.join(ROOT,'public','api','machine.json'),machine);
+  await writeJSON(path.join(ROOT,'public','api','sources.json'),registryView);
   const counter=process.env.GOATCOUNTER_SITE||'';
   const validCounter=/^https:\/\/[a-z0-9-]+\.goatcounter\.com\/?$/.test(counter);
   await writeJSON(path.join(ROOT,'public','api','analytics.json'),{provider:validCounter?'goatcounter':null,site:validCounter?counter.replace(/\/$/,''):null});
