@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { ROOT, records, readJSON, writeJSON, safeError } from '../lib/storage.mjs';
+import { ROOT, records, readJSON, writeJSON, safeError, sha256 } from '../lib/storage.mjs';
 import { INITIAL_RULES, schedule, previousLocalTime } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
@@ -39,6 +39,8 @@ try{
   const posts=allPosts.filter(verifyPublishedPost).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
   if(posts.length!==allPosts.length)throw new Error('A committed post failed checker provenance or content-integrity validation.');
   const baseURL=(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'');
+  const styleVersion=sha256(await fs.readFile(path.join(ROOT,'public','styles.css'))).slice(0,12);
+  const versionStyles=html=>html.replace(/href="styles\.css(?:\?v=[a-f0-9]+)?"/g,`href="styles.css?v=${styleVersion}"`);
   // Original records must pass their publication hash before a score sidecar
   // can be joined. Derived presentation never rewrites that original record.
   const currentScoringPolicy=parseScoringPolicy(await fs.readFile(path.join(ROOT,'RULES.md'),'utf8'));
@@ -86,12 +88,15 @@ try{
   const validCounter=/^https:\/\/[a-z0-9-]+\.goatcounter\.com\/?$/.test(counter);
   await writeJSON(path.join(ROOT,'public','api','analytics.json'),{provider:validCounter?'goatcounter':null,site:validCounter?counter.replace(/\/$/,''):null});
   await fs.mkdir(path.join(ROOT,'public','machine'),{recursive:true});
-  const machineHTML=await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8');
+  const indexHTML=await fs.readFile(path.join(ROOT,'public','index.html'),'utf8');
+  await fs.writeFile(path.join(ROOT,'public','index.html'),versionStyles(indexHTML));
+  const machineHTML=versionStyles(await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8'));
+  await fs.writeFile(path.join(ROOT,'public','machine.html'),machineHTML);
   await fs.writeFile(path.join(ROOT,'public','machine','index.html'),machineHTML.replace('<base href="./">','<base href="../">'));
   await fs.writeFile(path.join(ROOT,'public','.nojekyll'),'');
   // Cards are derived artifacts. A checked backfill or accepted weight change
   // updates their score line while preserving original JSON and RSS identity.
   for(const post of scoredPosts)if(post.scoring)await fs.writeFile(path.join(ROOT,'public','cards',post.id+'.jpg'),renderCard(post));
-  await writeSiteArtifacts({root:ROOT,posts:scoredPosts,baseURL});
+  await writeSiteArtifacts({root:ROOT,posts:scoredPosts,baseURL,styleVersion});
   console.log(JSON.stringify({posts:posts.length,runs:runs.length,path:'public/api/feed.json'}));
 }catch(error){console.error(safeError(error));process.exitCode=1;}
