@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "postId": "b89af4e5c65cc81c424c080b",
+  "postContentSha256": "c8eb9de6fdf8fd53dcd5de5e6eda830ba8cc479b3810e603e95dc93b6ba38e0b",
+  "criteria": {
+    "ease": {
+      "value": 5,
+      "reason": "A small tracker can collect selected public listings, though provider formats and matching GPU configurations need manual care.",
+      "sourceIds": [
+        "e2fa4aa7ef0dd836deaac7fb"
+      ]
+    },
+    "profit": {
+      "value": 4,
+      "reason": "Hypothesis: AI teams or GPU shoppers might pay for comparable listings, but the maker asks what users would trust and need.",
+      "sourceIds": [
+        "e2fa4aa7ef0dd836deaac7fb"
+      ]
+    },
+    "feasibility": {
+      "value": 5,
+      "reason": "Tracking a few GPUs is plausible in two weeks; incomplete quotes and changing configurations limit usefulness.",
+      "sourceIds": [
+        "e2fa4aa7ef0dd836deaac7fb"
+      ]
+    },
+    "autonomy": {
+      "value": 4,
+      "reason": "Selected pages could be polled and changes recorded, but a person must confirm availability, model, and final quote.",
+      "sourceIds": [
+        "e2fa4aa7ef0dd836deaac7fb"
+      ]
+    },
+    "evidence": {
+      "value": 3,
+      "reason": "The Show HN text presents the maker’s explorer and caveats, but provides no independent demo or real-use evidence.",
+      "sourceIds": [
+        "e2fa4aa7ef0dd836deaac7fb"
+      ]
+    }
+  },
+  "assessmentPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "8f3d53614c5e594ea5af9ba198242e7572d0e5a4d87fb09ceafad1b271d1cec8",
+  "sourceSnapshotSha256": "b0dfa5b1e29d8f399a9d2f39ff20a83c8ceae4e40df614a7e0ed98988606c260",
+  "checkedAt": "2026-10-11T11:33:20.314Z",
+  "checkerRunId": "score-38135798566-1-independent-check",
+  "checker": {
+    "passed": true,
+    "postId": "b89af4e5c65cc81c424c080b",
+    "postContentSha256": "c8eb9de6fdf8fd53dcd5de5e6eda830ba8cc479b3810e603e95dc93b6ba38e0b",
+    "draftSha256": "8f3d53614c5e594ea5af9ba198242e7572d0e5a4d87fb09ceafad1b271d1cec8",
+    "sourceSnapshotSha256": "b0dfa5b1e29d8f399a9d2f39ff20a83c8ceae4e40df614a7e0ed98988606c260",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "scoreChecks": [
+      {
+        "criterion": "ease",
+        "supported": true,
+        "maxSupportedScore": 5,
+        "reason": "A small listing tracker is plausible, but source formats and GPU configurations need curation.",
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "compare GPUs"
+      },
+      {
+        "criterion": "profit",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "Hypothesis: shoppers or AI teams might value comparisons; the maker explicitly remains unsure about reliable quotes.",
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "not sure how"
+      },
+      {
+        "criterion": "feasibility",
+        "supported": true,
+        "maxSupportedScore": 5,
+        "reason": "A few public listings are a limited scope; the source describes pricing gathered across providers.",
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "pricing data from dozens"
+      },
+      {
+        "criterion": "autonomy",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "Polling selected pages can record changes, but listings do not establish reliable availability or final quotes.",
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "track how prices change"
+      },
+      {
+        "criterion": "evidence",
+        "supported": true,
+        "maxSupportedScore": 3,
+        "reason": "The source is a maker description of the explorer and does not supply a concrete demo or usage evidence.",
+        "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+        "evidenceQuote": "Flopper lets you compare"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "e2fa4aa7ef0dd836deaac7fb",
+      "title": "Show HN: Flopper is a hardware explorer for AI infrastructure and beyond",
+      "url": "https://news.ycombinator.com/item?id=50035826",
+      "publisher": "Hacker News · automation",
+      "fetchedAt": "2026-10-11T11:31:41.473Z",
+      "verifiedAt": "2026-10-11T11:31:41.473Z",
+      "text": "Show HN: Flopper is a hardware explorer for AI infrastructure and beyond | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Flopper is a hardware explorer for AI infrastructure and beyond ( flopper.io ) 2 points by triwats 16 hours ago | hide | past | favorite | discuss Hello! I built Flopper to make it easier to compare GPUs and understand the tradeoffs for workloads for AI and beyond. When researching GPUs from say Nvidia, AMD, and Huawei, I kept running into the same problem: specs were scattered across datasheets, and matching them to available configurations, vendors, and prices was cumbersome and a bit weird and frankly annoyingggg! AMD made me make an account :( So I started a place to bring that information together. Flopper lets you compare GPU specs, including TDP and compute throughput in terms of flops/tops, alongside estimates for AI workloads or other compute workloads (say, ~FP32 based) I recently added pricing data from dozens of providers to help track how prices change over time. Getting reliable quotes for systems like the NVL72 is still particularly difficult tbh, not sure how I can tell you how much that costs easily due to them being behind large procurement contracts and big multi-nationals. One thing that's become fairlyyyy clear is the interest in consumer cards and local LLMs. The bigger challenge is connecting advertised specs to real-world performance. In our testing so far, I’ve seen roughly 85% of advertised throughput, but that’s a ballpark observation for the workloads I’ve tested, not a general rule and so variable (power, cooling, workload etc). I'm considering a CLI that lets people run benchmarks and submit results, potentially using MLPerf as an automation? That way, we can all compare quoted performance with the workload, configuration etc. I'd love feedback: what information is missing, how can I improve it? And what would you need to see to trust a community-submitted benchmark? Corrections and additions also very welcome - some of the measurements are best efforts (and simple multiplications) but I hope it's of some use. Thanks for looking :) help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:"
+    }
+  ],
+  "batch": {
+    "runId": "score-38135798566-1",
+    "draftSha256": "9d61b028f1681880a283609b723b5216f7c807ed830bb997113734733968c2c4",
+    "contextSha256": "e2e2a7df450348778aa39d2e4a3949f17836d4119fee461dec7fe09ffbff76ca",
+    "rulesSha256": "169b46bc42c95ed95ff7f623badd9482ce11166fb0b96a78bc169d26d7f76624",
+    "rulesCommit": "dafcca861e8fb90db73802ffb95bca826478a85b",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38135798566"
+  },
+  "origin": "github-actions-codex-scorer"
+}
