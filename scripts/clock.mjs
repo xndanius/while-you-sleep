@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { ROOT,readJSON,writeJSON } from '../lib/storage.mjs';
 import { CLOCK_REPOSITORY,CLOCK_WAIT_MINUTES,clockAPI,clockClaim,clockRecords,clockRunURL,clockTickId,dueClockDispatches,dispatchClockWorkflow,validateClockTick,trustedClockRun } from '../lib/clock.mjs';
 import { loadClockState,persistClockRuntime,runtimeWritable } from '../lib/clock-runtime.mjs';
+import {readCurationRecords,validateCurationConfig,validateCurationReceipts} from '../lib/curation.mjs';
 
 function trustedEnvironment(env) {
   if (env.GITHUB_ACTIONS!=='true' || env.GITHUB_REPOSITORY!==CLOCK_REPOSITORY || env.GITHUB_EVENT_NAME!=='workflow_dispatch' || env.GITHUB_REF!=='refs/heads/main' || !/^\d+$/.test(env.GITHUB_RUN_ID||'') || !/^\d+$/.test(env.GITHUB_RUN_ATTEMPT||'')) throw new Error('Clock requires a trusted default-branch Actions runner.');
@@ -61,9 +62,17 @@ export async function tickClock({root=ROOT,env=process.env,now=new Date(),api=cl
   // Only bounded standalone no-model research files can complete a research slot.
   const researchDirectory=path.join(root,'data','research');let researchFiles=[];try{researchFiles=await fs.readdir(researchDirectory);}catch(error){if(error.code!=='ENOENT')throw error;}
   const trustedResearch=research.filter(record=>/^research-\d+-\d+$/.test(record.id||'')&&record.runId===record.id&&researchFiles.includes(record.id+'.json'));
-  const plans=dueClockDispatches({posts,reservations,outcomes,completions:{research:trustedResearch,measure,improve},runId:env.GITHUB_RUN_ID,now});
+  let curation=null,curationFailed=false;
+  try{
+    let config;try{config=await readJSON(path.join(root,'data','curation','config.json'));}catch(error){if(error.code!=='ENOENT')throw error;config={schema:1,enabled:false,activatedAt:null};}
+    const receipts=await readCurationRecords(root);
+    if([...validateCurationConfig(config),...validateCurationReceipts(receipts,{config})].length)throw new Error('Invalid curation gate.');
+    curation={config,receipts};
+  }catch{curationFailed=true;}
+  const plans=dueClockDispatches({posts,reservations,outcomes,completions:{research:trustedResearch,measure,improve},curation,runId:env.GITHUB_RUN_ID,now});
   const id=clockTickId(env.GITHUB_RUN_ID,env.GITHUB_RUN_ATTEMPT),tickedAt=new Date(now).toISOString();
   const receipt={id,kind:'clock-tick',chainId:state.chainId,generation:state.generation,githubRunId:String(env.GITHUB_RUN_ID),githubRunAttempt:Number(env.GITHUB_RUN_ATTEMPT),githubRunUrl:clockRunURL(env.GITHUB_RUN_ID),parentRunId:state.parentRunId,environment:'clock',waitMinutes:CLOCK_WAIT_MINUTES,claimedAt:state.claimedAt,tickedAt,dispatches:[],dispatchFailures:[],child:null};
+  if(curationFailed)receipt.dispatchFailures.push({kind:'curate',workflow:'curate.yml',jobKey:null,slotIds:[],scheduledAt:null,reason:'curation_gate_unavailable',dispatchId:`${id}-curate`,requestedAt:tickedAt,status:'planning_unverified',failure:'curation_config_or_receipts_unverified'});
   for(const plan of plans){
     if(plan.kind==='loop' && plan.reason==='reservation_in_progress_or_unknown'){
       let active=false;

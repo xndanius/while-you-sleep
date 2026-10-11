@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { ROOT, records, readJSON, writeJSON, safeError, sha256 } from '../lib/storage.mjs';
+import { ROOT, records, readJSON, writeJSON, safeError } from '../lib/storage.mjs';
 import { INITIAL_RULES, schedule, previousLocalTime } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
@@ -10,6 +10,8 @@ import { writeSiteArtifacts,publicPostURL } from '../lib/site-artifacts.mjs';
 import { trustedClockTick } from '../lib/clock-provenance.mjs';
 import { parseScoringPolicy,hydrateScoring } from '../lib/scoring.mjs';
 import { renderCard } from '../lib/card.mjs';
+import { curationStatus,validatedCurationPicks,readCurationRecords } from '../lib/curation.mjs';
+import { versionBrowserAssets } from '../lib/browser-assets.mjs';
 
 const clockDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const clockRunURL=value=>typeof value==='string'&&/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/\d+$/.test(value)?value:null;
@@ -26,7 +28,7 @@ async function hostedClockRecord(){
     return tick.id===file.slice(0,-5)&&trustedClockTick(tick)?tick:null;
   }))).filter(Boolean).sort((a,b)=>b.tickedAt.localeCompare(a.tickedAt));
   const latest=ticks[0];
-  const dispatches=(latest?.dispatches||[]).filter(record=>['loop.yml','research.yml','measure.yml','improve.yml'].includes(record.workflow)&&clockRunURL(record.githubRunUrl)===`https://github.com/xndanius/while-you-sleep/actions/runs/${record.runId}`).map(record=>({workflow:record.workflow,githubRunUrl:record.githubRunUrl,requestedAt:clockDate(record.requestedAt)}));
+  const dispatches=(latest?.dispatches||[]).filter(record=>['loop.yml','research.yml','measure.yml','improve.yml','curate.yml'].includes(record.workflow)&&clockRunURL(record.githubRunUrl)===`https://github.com/xndanius/while-you-sleep/actions/runs/${record.runId}`).map(record=>({workflow:record.workflow,githubRunUrl:record.githubRunUrl,requestedAt:clockDate(record.requestedAt)}));
   return {clock:{phase:['waiting','ticking','queued','fenced'].includes(state.phase)?state.phase:'not_started',lastTickAt:latest?.tickedAt||clockDate(state.lastTickAt),nextTickAt:clockDate(state.nextTickAt),claimedAt:clockDate(state.claimedAt),fencedAt:clockDate(state.fencedAt),runtimeUpdatedAt:clockDate(state.runtimeUpdatedAt)||clockDate(state.claimedAt)||clockDate(state.lastTickAt),runtimeSource:'committed-fallback',clockRunUrl:clockRunURL(state.clockRunUrl),lastTickRunUrl:clockRunURL(latest?.githubRunUrl),waitMinutes:Number.isInteger(state.waitMinutes)&&state.waitMinutes>0?state.waitMinutes:15,dispatches},ticks};
 }
 
@@ -39,15 +41,16 @@ try{
   const posts=allPosts.filter(verifyPublishedPost).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
   if(posts.length!==allPosts.length)throw new Error('A committed post failed checker provenance or content-integrity validation.');
   const baseURL=(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'');
-  const styleVersion=sha256(await fs.readFile(path.join(ROOT,'public','styles.css'))).slice(0,12);
-  const versionStyles=html=>html.replace(/href="styles\.css(?:\?v=[a-f0-9]+)?"/g,`href="styles.css?v=${styleVersion}"`);
+  const {styleVersion,versionHTML}=await versionBrowserAssets(ROOT);
   // Original records must pass their publication hash before a score sidecar
   // can be joined. Derived presentation never rewrites that original record.
   const currentScoringPolicy=parseScoringPolicy(await fs.readFile(path.join(ROOT,'RULES.md'),'utf8'));
+  const scoreSidecars=new Map();
   const scoredPosts=await Promise.all(posts.map(async post=>{
     publicPostURL(baseURL,post.id); // Validate the file ID before reading its sidecar.
     let sidecar=null;
     try{sidecar=await readJSON(path.join(ROOT,'data','scores',post.id+'.json'));}catch(error){if(error.code!=='ENOENT')throw error;}
+    if(sidecar)scoreSidecars.set(post.id,sidecar);
     return {...post,scoring:hydrateScoring(post,sidecar,currentScoringPolicy)};
   }));
   let metrics;try{metrics=await readJSON(path.join(ROOT,'metrics.json'));}catch(error){if(error.code==='ENOENT')metrics={site:{status:'not_connected',views:null,saves:null},social:{status:'not_connected'},measuredAt:null};else throw error;}
@@ -78,10 +81,15 @@ try{
   const feed={posts:hydrated,stats,schedule:cadence,status};
   const linkedinUrl='https://www.linkedin.com/company/whileyousleep-ai/';
   const relayStatus=await readJSON(path.join(ROOT,'data','relay','status.json'));
-  const relay={...relayStatus,path:'Website -> RSS -> Zapier -> LinkedIn Page',linkedinUrl,feedUrl:baseURL+'/feed.xml'};
+  const curationConfig=await readJSON(path.join(ROOT,'data','curation','config.json'));
+  const curationReceipts=await readCurationRecords(ROOT);
+  const picks=await validatedCurationPicks({config:curationConfig,receipts:curationReceipts,posts,sidecars:scoreSidecars});
+  const curation={...curationStatus({config:curationConfig,receipts:curationReceipts}),picks:picks.map(pick=>({...pick,title:posts.find(post=>post.id===pick.postId).title,publicUrl:publicPostURL(baseURL,pick.postId)}))};
+  const bestFeedConfirmed=relayStatus.feedPath==='best.xml'&&relayStatus.bestFeedSwitch?.state==='confirmed'&&clockDate(relayStatus.bestFeedSwitch.confirmedAt);
+  const relay={...relayStatus,path:'Website -> RSS -> Zapier -> LinkedIn Page',linkedinUrl,feedUrl:baseURL+(bestFeedConfirmed?'/best.xml':'/feed.xml'),recommendedFeedUrl:baseURL+'/best.xml'};
   const platforms=[{name:'LinkedIn',id:'linkedin',status:relay.state==='published'?'active':relay.state,provider:'Zapier RSS relay',lastPublishedAt:relay.firstPublishedAt||null,url:linkedinUrl,message:relay.message}];
   const versionHistory=versions.length?versions.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')):[{id:INITIAL_RULES.id,createdAt:INITIAL_RULES.createdAt,status:'adopted',reason:INITIAL_RULES.reason,change:'Initial evidence-first writing and picking rules',baselineScore:null,challengerScore:null}];
-  const machine={...feed,clock,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],platforms,relay,metrics};
+  const machine={...feed,clock,curation,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);
   await writeJSON(path.join(ROOT,'public','api','machine.json'),machine);
   const counter=process.env.GOATCOUNTER_SITE||'';
@@ -89,14 +97,14 @@ try{
   await writeJSON(path.join(ROOT,'public','api','analytics.json'),{provider:validCounter?'goatcounter':null,site:validCounter?counter.replace(/\/$/,''):null});
   await fs.mkdir(path.join(ROOT,'public','machine'),{recursive:true});
   const indexHTML=await fs.readFile(path.join(ROOT,'public','index.html'),'utf8');
-  await fs.writeFile(path.join(ROOT,'public','index.html'),versionStyles(indexHTML));
-  const machineHTML=versionStyles(await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8'));
+  await fs.writeFile(path.join(ROOT,'public','index.html'),versionHTML(indexHTML));
+  const machineHTML=versionHTML(await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8'));
   await fs.writeFile(path.join(ROOT,'public','machine.html'),machineHTML);
   await fs.writeFile(path.join(ROOT,'public','machine','index.html'),machineHTML.replace('<base href="./">','<base href="../">'));
   await fs.writeFile(path.join(ROOT,'public','.nojekyll'),'');
   // Cards are derived artifacts. A checked backfill or accepted weight change
   // updates their score line while preserving original JSON and RSS identity.
   for(const post of scoredPosts)if(post.scoring)await fs.writeFile(path.join(ROOT,'public','cards',post.id+'.jpg'),renderCard(post));
-  await writeSiteArtifacts({root:ROOT,posts:scoredPosts,baseURL,styleVersion});
+  await writeSiteArtifacts({root:ROOT,posts:scoredPosts,baseURL,styleVersion,picks});
   console.log(JSON.stringify({posts:posts.length,runs:runs.length,path:'public/api/feed.json'}));
 }catch(error){console.error(safeError(error));process.exitCode=1;}

@@ -123,6 +123,44 @@ test('ordinary manual diagnostics never gain bot access from a claimed clock fla
   assert.match(await readFile(auxiliary.GITHUB_OUTPUT,'utf8'),/clock_verified=false\n/);
 });
 
+test('the fixed curator dispatch requires exact first-attempt bot child identity and receipt binding',async t=>{
+  const fixture=fixtures('curate'),{env,receipt,child}=fixture,root=await fixtureRoot(t,receipt);
+  const clock=await verifyClockDispatch({kind:'curate',root,env,now,apiGet:apiFor(fixture)});
+  assert.equal(clock.workflow,'curate.yml');assert.equal(clock.dispatchId,'clock-111-1-curate');
+  assert.equal(clock.runAttempt,1);assert.equal(clock.actor,'github-actions[bot]');
+  assert.equal(clock.triggeringActor,'github-actions[bot]');
+  assert.equal(validClockProvenance(clock,{kind:'curate',runId:'222'}),true);
+  assert.equal(clockReceiptMatches(clock,receipt),true);
+  assert.equal(validClockProvenance({...clock,workflow:'arbitrary.yml'}),false);
+  for(const extra of [{path:'.github/workflows/loop.yml'},{run_attempt:2},{event:'schedule'},
+    {actor:{login:'xndanius'}},{triggering_actor:{login:'xndanius'}},
+    {head_branch:'other'},{repository:{full_name:'other/repo'}},{id:333}]){
+    await assert.rejects(verifyClockDispatch({kind:'curate',root,env,now,
+      apiGet:apiFor({...fixture,child:{...child,...extra}})}),/exact first-attempt clock child/);
+  }
+  for(const extra of [{workflow:'loop.yml'},{runId:'333'},{githubRunUrl:runURL('333')},
+    {dispatchId:'clock-111-1-arbitrary'},{requestedAt:'2026-10-11T05:14:00Z'}]){
+    await writeFile(path.join(root,'data','clock','ticks',receipt.id+'.json'),JSON.stringify({...receipt,dispatches:[{...receipt.dispatches[0],...extra}]}));
+    await assert.rejects(verifyClockDispatch({kind:'curate',root,env,now,
+      apiGet:async()=>assert.fail('A forged receipt must fail before authoritative API calls.')}),/exact dispatched run/);
+  }
+});
+
+test('curator human diagnostics remain manual and forged clock markers never authorize arbitrary targets',async()=>{
+  const {env}=fixtures('curate');
+  const apiGet=async()=>assert.fail('No API call may upgrade an ordinary human diagnostic or invalid target.');
+  const manual={...env,GITHUB_ACTOR:'xndanius',GITHUB_TRIGGERING_ACTOR:'xndanius',
+    CLOCK_TICK_RUN_ID:'',CLOCK_PARENT_ATTEMPT:'',CLOCK_DISPATCH_ID:'',CLOCK_VERIFIED:'true'};
+  assert.equal(await verifyClockDispatch({kind:'curate',env:manual,apiGet}),null);
+  for(const extra of [{GITHUB_ACTOR:'xndanius'},{GITHUB_TRIGGERING_ACTOR:'xndanius'},
+    {GITHUB_RUN_ATTEMPT:'2'},{GITHUB_EVENT_NAME:'schedule'}]){
+    await assert.rejects(verifyClockDispatch({kind:'curate',env:{...env,...extra},apiGet}),/Untrusted clock dispatch context/);
+  }
+  for(const kind of ['arbitrary','curate.yml','../curate','social']){
+    await assert.rejects(verifyClockDispatch({kind,env:{...env,CLOCK_DISPATCH_ID:`clock-111-1-${kind}`},apiGet}),/Untrusted clock dispatch context/);
+  }
+});
+
 test('clock publication proof requires its trusted loop and exact clock receipt without claiming a schedule event',async t=>{
   const fixture=fixtures(),{env,receipt}=fixture,root=await fixtureRoot(t,receipt);
   const clock=await verifyClockDispatch({kind:'loop',root,env,now,apiGet:apiFor(fixture)});

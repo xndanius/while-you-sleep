@@ -25,5 +25,9 @@ test('only trusted clock verifier output distinguishes clock dispatches while ke
   assert.equal(runTriggerLabel({...verified,id:'loop-123-2'}),'Manual rerun · original workflow_dispatch');
   assert.equal(runTriggerLabel({...verified,clock:{...verified.clock,actor:'owner'}}),'Manual dispatch · workflow_dispatch');
   assert.equal(runTriggerLabel({...verified,githubRunUrl:'https://github.com/other/repo/actions/runs/123'}),'Manual dispatch · workflow_dispatch');
+  const curator={...verified,id:'curate-123-1',clock:{...verified.clock,workflow:'curate.yml',runAttempt:1,actor:'github-actions[bot]',triggeringActor:'github-actions[bot]'}};
+  assert.equal(runTriggerLabel(curator),'Hosted clock dispatch · workflow_dispatch');
+  assert.equal(runTriggerLabel({...curator,id:'curate-123-2'}),'Manual rerun · original workflow_dispatch');
+  assert.equal(runTriggerLabel({...curator,clock:{...curator.clock,triggeringActor:'owner'}}),'Manual dispatch · workflow_dispatch');
   assert.equal(runTriggerLabel({eventName:'schedule'}),'GitHub cron · schedule');
 });

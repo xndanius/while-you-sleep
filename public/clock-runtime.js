@@ -3,7 +3,7 @@ const apiRoot=`https://api.github.com/repos/${repository}`;
 const numeric=value=>typeof value==='string'&&/^[1-9]\d{0,15}$/.test(value)&&Number.isSafeInteger(Number(value));
 const date=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const runURL=id=>`https://github.com/${repository}/actions/runs/${id}`;
-const workflows=new Set(['clock.yml','loop.yml','research.yml','measure.yml','improve.yml']);
+const workflows=new Set(['clock.yml','loop.yml','research.yml','measure.yml','improve.yml','curate.yml']);
 export const CLOCK_RUNTIME_URL=`${apiRoot}/deployments?environment=clock-runtime&per_page=1`;
 export const CLOCK_RUNTIME_REFRESH_MS=180000;
 

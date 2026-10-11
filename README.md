@@ -34,6 +34,8 @@ RSS: https://xndanius.github.io/while-you-sleep/feed.xml
 
 Each item has a permanent /p/<id>/ link, stable post-ID GUID, publication time, short plain-text description and absolute JPEG enclosure. Permanent pages contain the full checked post, sources, canonical URL and Open Graph metadata. The machine reports **Website -> RSS -> Zapier -> LinkedIn Page**. Danielius via Claude confirmed the first LinkedIn post at 11:55 Vilnius on 11 October and the active Zap; engagement metrics remain unknown. [Relay contract](docs/PLATFORMS.md).
 
+The separate [best feed](https://xndanius.github.io/while-you-sleep/best.xml) contains only recorded LinkedIn picks. At 12:17 and 18:17 Vilnius, a deterministic job chooses the highest current checked weighted score from the preceding 12 hours, at least 7, excluding previous picks and posts published before activation. It records a pick or an honest empty window, with at most two picks a day. Each RSS item freezes the score used to select it; later rule changes cannot rewrite its relay text. The current Zapier feed remains `/feed.xml` until Danielius or Claude confirms the switch. Hourly publication stays inactive until that confirmation.
+
 ## Credentials and metrics
 
 OPENAI_API_KEY is already installed in Actions through the OpenAI Developers secure flow. Keep secrets in GitHub Actions or the relay's private account UI, never chat or public files. The content models use the official action's secure API proxy.

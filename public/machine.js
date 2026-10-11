@@ -1,7 +1,7 @@
-import {loopTiming} from './schedule.js';
-import {slotPresentation,currentDaySlots} from './slot-display.js';
-import {clockTiming,runTriggerLabel} from './clock-display.js';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js';
+import {loopTiming,nextLocalTime} from './schedule.js?v=d286ac356b02';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=d286ac356b02';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=d286ac356b02';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=d286ac356b02';
 
 (() => {
   'use strict';
@@ -190,7 +190,16 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
 
   function renderRelay() {
     const relay=data.relay||{},verified=relay.state==='published';
-    $('relay').innerHTML=`<p class="relay-path">Website -&gt; RSS -&gt; Zapier -&gt; LinkedIn Page</p><p class="relay-state">${escape(verified?relay.message||'LinkedIn publication recorded':'waiting for first LinkedIn post')}</p><p class="muted">${verified?`First publication ${escape(formatDate(relay.firstPublishedAt))}, confirmed by Danielius via Claude. LinkedIn metrics are not connected.`:'The website and RSS are the relay source. LinkedIn publishing is verified only after a post receipt is recorded.'}</p><div class="relay-links">${link(relay.feedUrl||'feed.xml','Open RSS feed')}${link(relay.linkedinUrl||'https://www.linkedin.com/company/whileyousleep-ai/','Follow on LinkedIn')}${verified&&relay.postUrl?link(relay.postUrl,'View LinkedIn post'):''}</div>`;
+    const curation=data.curation||{},picks=Array.isArray(curation.picks)?curation.picks:[];
+    const switched=relay.bestFeedSwitch?.state==='confirmed'&&validDate(relay.bestFeedSwitch.confirmedAt)&&relay.feedUrl?.endsWith('/best.xml');
+    const last=curation.lastDecision;
+    const selectionTimes=Array.isArray(curation.selectionTimes)?curation.selectionTimes.map(plain).join(' · '):'Not recorded';
+    const times=new Set((curation.selectionTimes||[]).filter(value=>/^\d{2}:\d{2}$/.test(value)));
+    const nextSelectionAt=curation.enabled&&times.size?nextLocalTime(part=>times.has(`${String(part.hour).padStart(2,'0')}:${String(part.minute).padStart(2,'0')}`)):null;
+    const dueAt=validDate(curation.nextSelectionAt),dueMinutes=dueAt?Math.floor((Date.now()-dueAt.getTime())/60000):null;
+    const dueNote=curation.enabled&&dueMinutes!==null&&dueMinutes>=0?`<p class="muted">The ${escape(formatDate(curation.nextSelectionAt))} selection is ${dueMinutes>=30?'late':'due'}; no decision is recorded yet.</p>`:'';
+    const pickList=picks.length?`<ol class="relay-picks">${picks.slice(0,10).map(pick=>`<li>${link(pick.publicUrl,pick.title)}<span>Score ${typeof pick.scoring?.overall==='number'?escape(pick.scoring.overall.toFixed(1)):'unavailable'} / 10 · picked ${escape(formatDate(pick.pickedAt))}</span></li>`).join('')}</ol>`:'<p class="muted">No LinkedIn pick yet. Posts published before activation stay out of this feed.</p>';
+    $('relay').innerHTML=`<p class="relay-path">Website -&gt; RSS -&gt; Zapier -&gt; LinkedIn Page</p><p class="relay-state">${escape(verified?relay.message||'LinkedIn publication recorded':'waiting for first LinkedIn post')}</p><p class="muted">${verified?`First publication ${escape(formatDate(relay.firstPublishedAt))}, confirmed by Danielius via Claude. LinkedIn metrics are not connected.`:'The website and RSS are the relay source. LinkedIn publishing is verified only after a post receipt is recorded.'}</p><div class="relay-links">${link(relay.feedUrl||'feed.xml','Current relay feed')}${link(relay.linkedinUrl||'https://www.linkedin.com/company/whileyousleep-ai/','Follow on LinkedIn')}${verified&&relay.postUrl?link(relay.postUrl,'View LinkedIn post'):''}</div><section class="relay-selection" aria-labelledby="selection-heading"><h3 id="selection-heading">The LinkedIn picks</h3><p>The highest checked score from the last 12 hours, at least ${escape(curation.minimumScore??7)} / 10. Up to ${escape(curation.dailyCap??2)} picks a day; each idea is picked once.</p><dl class="clock-facts"><div><dt>Selection times · Vilnius</dt><dd>${escape(selectionTimes)}</dd></div><div><dt>Next planned selection</dt><dd>${nextSelectionAt?escape(formatDate(nextSelectionAt)):'Not activated'}</dd></div><div><dt>Last selection</dt><dd>${last?`${escape(formatDate(last.selectedAt))} · ${escape(human(last.status))}${last.reason?`<small>${escape(last.reason)}</small>`:''}`:'No selection recorded'}</dd></div></dl>${dueNote}${pickList}<p class="relay-switch">${switched?`Zapier feed switch confirmed ${escape(formatDate(relay.bestFeedSwitch.confirmedAt))}.`:'The best feed is ready for Claude. The Zapier switch is awaiting confirmation; the recorded relay still uses the current feed.'}</p><div class="relay-links">${link(relay.recommendedFeedUrl||'best.xml','Open best feed')}</div></section>`;
   }
 
   function renderVersions() {

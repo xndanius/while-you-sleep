@@ -25,3 +25,14 @@ test('display metadata cannot introduce workflow links outside this repository',
   const row=deployment();row.payload.receipt.dispatches=[{workflow:'loop.yml',runId:'222',requestedAt:now,githubRunUrl:'https://github.com/other/repo/actions/runs/222'},{workflow:'loop.yml',runId:'223',requestedAt:now,githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/223'}];
   assert.equal(publicClockRuntime(row,now).dispatches.length,1);
 });
+test('curator clock backup metadata and fixed dispatch links are timing records without automatic publication proof',()=>{
+  const row=deployment();row.payload.producer.workflow='curate.yml';
+  row.payload.receipt.dispatches=['curate.yml','arbitrary.yml','curate-extra.yml','clock.yml'].map((workflow,index)=>({workflow,runId:String(222+index),requestedAt:now,githubRunUrl:`https://github.com/xndanius/while-you-sleep/actions/runs/${222+index}`}));
+  const clock=publicClockRuntime(row,now);
+  assert.deepEqual(clock.dispatches,[{workflow:'curate.yml',githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/222',requestedAt:now}]);
+  assert.equal(clock.verified,undefined);assert.equal(clock.eventName,undefined);
+  assert.equal(clock.runtimeSource,'github-deployment-metadata');
+  for(const workflow of ['arbitrary.yml','curate-extra.yml','../curate.yml']){
+    assert.equal(publicClockRuntime({...row,payload:{...row.payload,producer:{...row.payload.producer,workflow}}},now),null);
+  }
+});

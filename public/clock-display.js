@@ -20,7 +20,7 @@ export function runTriggerLabel(run){
   const event=run.eventName||run.scheduling?.eventName||run.scheduling?.event;
   const clock=run.clock||run.scheduling?.clock;
   const identity=run.runId||run.id||run.scheduling?.runId||run.scheduling?.id;
-  const match=/^(loop|research|measure|improve)-(\d+)-(\d+)$/.exec(identity||'');
+  const match=/^(loop|research|measure|improve|curate)-(\d+)-(\d+)$/.exec(identity||'');
   if(match&&Number(match[3])>1)return `Manual rerun · original ${event||'trigger'}`;
   const fields=clock?[clock.runAttempt,clock.actor,clock.triggeringActor]:[];
   const actorsValid=fields.every(value=>value===undefined)||(fields[0]===1&&fields[1]==='github-actions[bot]'&&fields[2]==='github-actions[bot]');
