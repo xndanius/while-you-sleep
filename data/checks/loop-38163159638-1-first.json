@@ -1,0 +1,94 @@
+{
+  "runId": "loop-38163159638-1",
+  "draftSha256": "8033b562ada54128d3d22060540b3f765cc9f8aa4ceb12b3f8d583f74e898533",
+  "sourceSnapshotSha256": "29d9bbde0fd1462b6b635021732504b831c33ee249bd8355470c80ba0a34eda6",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "9fd4d9300ad80cb040070291",
+      "pass": false,
+      "reasons": [
+        "The evidence score of 7 exceeds the maximum 6 supported by first-party product documentation without verified real-use evidence. Feasibility is also capped at 5 because the proposed safe agent sandbox and task validation are not established as a beginner-sized two-week build."
+      ],
+      "claimChecks": [
+        {
+          "claim": "SelfBench turns merged pull requests into benchmark tasks with hidden tests and runs agents against them.",
+          "supported": true,
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "turns your merged PRs into tasks with hidden tests, runs agents and models on them"
+        },
+        {
+          "claim": "The product includes a human review step for generated evaluation tasks.",
+          "supported": true,
+          "sourceId": "9d24f51ff8767e75d5350bc5",
+          "evidenceQuote": "You then approve every eval that the agent created"
+        },
+        {
+          "claim": "SelfBench publishes live leaderboards for released open-source repositories.",
+          "supported": true,
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "gets a live leaderboard: each model, harness, and reasoning setting"
+        },
+        {
+          "claim": "The product runs selected models and sandboxes on the organization's own keys.",
+          "supported": true,
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "Models and sandboxes run on your organization's own keys"
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A one repository web workflow is documented, but it requires GitHub, task review, models, and sandbox setup; 6 is the supported ceiling for the proposed small scope.",
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "Everything happens in the web app at"
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "A team buyer is a plausible hypothesis for repository-specific comparisons, but these sources provide no paying-customer or demand evidence.",
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "Private coding-agent benchmarks built from your repository's own merged pull requests."
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "A manually bounded demo is conceivable, but the documented task pipeline, review, agent execution, and safe sandbox are substantial for a beginner two-week build.",
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "A batch takes hours; it keeps running after you close the page."
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "Batch generation continues after the page closes, while people approve tasks and choose runs; only parts of this loop operate unattended.",
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "it keeps running after you close the page"
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "First-party documentation describes the web app and public leaderboard workflow, but does not verify independent customer use or outcomes, so 7 is unsupported.",
+          "sourceId": "85c36091d9395f17a992933d",
+          "evidenceQuote": "each model, harness, and reasoning setting placed by accuracy and cost per task"
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The single proposed post was checked against freshly fetched first-party and discovery sources; it is rejected because evidence exceeds support and the two-week feasibility score is overstated.",
+    "contextSha256": "56ae0069ff8924eb99d97e246b1f9a32167e6d55447a9245511f2f05831cc342",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "8033b562ada54128d3d22060540b3f765cc9f8aa4ceb12b3f8d583f74e898533",
+    "sourceSnapshotSha256": "29d9bbde0fd1462b6b635021732504b831c33ee249bd8355470c80ba0a34eda6",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
