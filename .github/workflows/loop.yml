@@ -254,7 +254,7 @@ jobs:
             data/checks/${{ env.RUN_ID }}-first.json
           retention-days: 7
   final_check:
-    needs: [gate, writer, repair]
+    needs: [gate, writer, checker, repair]
     if: needs.repair.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 18
@@ -277,6 +277,11 @@ jobs:
         with:
           name: repaired-${{ env.RUN_ID }}
           path: data/
+      - name: Preserve every original screened decision before fresh checking
+        env:
+          EXPECTED_FIRST_DRAFT_SHA: ${{ needs.checker.outputs.draft_sha256 }}
+          EXPECTED_FIRST_CONTEXT_SHA: ${{ needs.checker.outputs.context_sha256 }}
+        run: node scripts/preserve-repair-considerations.mjs "$RUN_ID"
       - run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs final-checker
       - id: fingerprint
         run: node scripts/fingerprint-check.mjs "$RUN_ID" >> "$GITHUB_OUTPUT"
