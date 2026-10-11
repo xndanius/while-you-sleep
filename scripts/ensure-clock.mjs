@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROOT,readJSON,writeJSON } from '../lib/storage.mjs';
-import { CLOCK_REPOSITORY,CLOCK_WAIT_MINUTES,clockAPI,clockLiveness,clockRunURL,dispatchClockWorkflow,trustedClockRun } from '../lib/clock.mjs';
+import { CLOCK_REPOSITORY,CLOCK_WAIT_MINUTES,clockAPI,clockLiveness,clockRunURL,clockTickId,dispatchClockWorkflow,trustedClockRun } from '../lib/clock.mjs';
 import { commitClock } from './clock.mjs';
 
 // Invoked under while-you-sleep-record by an existing cheap backup gate. A
@@ -17,12 +17,30 @@ export async function ensureClock({root=ROOT,env=process.env,now=new Date(),api=
   }
   const live=clockLiveness(state,sourceRun,now);
   if(live.alive){console.log(JSON.stringify({restarted:false,reason:live.reason}));return {restarted:false,reason:live.reason};}
+  let blockingParent=null;
+  if(state?.parentRunId && sourceRun?.status==='queued'){
+    const receipt=await readJSON(path.join(root,'data','clock','ticks',clockTickId(state.parentRunId,state.parentRunAttempt)+'.json'));
+    if(receipt.id!==clockTickId(state.parentRunId,state.parentRunAttempt) || receipt.kind!=='clock-tick' || receipt.chainId!==state.chainId || receipt.githubRunId!==String(state.parentRunId) || receipt.githubRunAttempt!==state.parentRunAttempt || receipt.child?.runId!==String(state.expectedRunId) || receipt.child?.githubRunUrl!==clockRunURL(state.expectedRunId) || receipt.child?.generation!==state.generation)throw new Error('Clock backup parent is not bound to its expected child.');
+    const parent=await api(`repos/${CLOCK_REPOSITORY}/actions/runs/${state.parentRunId}`,{env});
+    if(!trustedClockRun(parent,state.parentRunId,state.parentRunAttempt))throw new Error('Clock backup parent run identity is untrusted.');
+    if(parent.status!=='completed')blockingParent=parent;
+  }
+  const cancel=async(run,expectedAttempt)=>{
+    if(run.status==='completed')return;
+    try{await api(`repos/${CLOCK_REPOSITORY}/actions/runs/${run.id}/cancel`,{method:'POST',env});}
+    catch{
+      // Cancellation can race natural completion after the lease was fenced.
+      const terminal=await api(`repos/${CLOCK_REPOSITORY}/actions/runs/${run.id}`,{env});
+      if(!trustedClockRun(terminal,run.id,expectedAttempt)||terminal.status!=='completed')throw new Error('Clock cancellation remains uncertain after fencing.');
+    }
+  };
   const restartedAt=new Date(now).toISOString();
   if(state){
     const fenced={...state,phase:'fenced',fencedAt:restartedAt,fencedByRunId:String(env.GITHUB_RUN_ID)};
     await writeJSON(path.join(root,'data','clock','state.json'),fenced);
     await commit({root,paths:['data/clock/state.json'],message:`clock: backup ${env.GITHUB_RUN_ID} · fence stale chain before replacement`});
-    if(sourceRun.status!=='completed')await api(`repos/${CLOCK_REPOSITORY}/actions/runs/${state.expectedRunId}/cancel`,{method:'POST',env});
+    await cancel(sourceRun,state.expectedRunAttempt);
+    if(blockingParent)await cancel(blockingParent,state.parentRunAttempt);
   }
   const chainId=`clock-restart-${env.GITHUB_RUN_ID}-${env.GITHUB_RUN_ATTEMPT}`;
   const dispatched=await dispatchClockWorkflow('clock.yml',{chain_id:chainId,parent_run_id:'',parent_run_attempt:'',generation:'0'},{api,env});

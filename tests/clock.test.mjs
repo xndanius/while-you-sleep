@@ -129,3 +129,48 @@ test('a newly claimed replacement does not inherit a stale timestamp that cancel
  const stale={...waiting,lastTickAt:'2026-10-10T20:00:00Z'};
  const claim=clockClaim({state:stale,sourceRun:source(100,'completed'),runId:'101',now});assert.equal(claim.claimed,true);assert.equal(claim.state.lastTickAt,null);assert.equal(claim.state.claimedAt,now.toISOString());assert.equal(clockLiveness(claim.state,source(101,'waiting'),now).alive,true);
 });
+
+async function blockedClockFixture(t){
+ const root=await fixture(t);
+ const state={...waiting,expectedRunId:'200',phase:'queued',generation:1,parentRunId:'100',parentRunAttempt:1,lastTickAt:'2026-10-11T05:00:00Z',clockRunUrl:clockRunURL(200)};
+ const receipt={id:'clock-100-1',kind:'clock-tick',chainId:state.chainId,githubRunId:'100',githubRunAttempt:1,child:{runId:'200',githubRunUrl:clockRunURL(200),generation:1}};
+ await saveState(root,state);await mkdir(path.join(root,'data','clock','ticks'),{recursive:true});await writeFile(path.join(root,'data','clock','ticks','clock-100-1.json'),JSON.stringify(receipt));
+ return {root,state,receipt};
+}
+
+test('stale queued child recovery fences and cancels its exact active blocking parent before replacement',async t=>{
+ const {root}=await blockedClockFixture(t);const actions=[];
+ const result=await ensureClock({root,env:{...env,GITHUB_RUN_ID:'900'},now:new Date('2026-10-11T06:00:00Z'),api:async(endpoint,options)=>{
+   if(options.method==='POST'){
+    actions.push(endpoint);
+    if(endpoint.endsWith('/cancel')){assert.equal(JSON.parse(await readFile(path.join(root,'data','clock','state.json'),'utf8')).phase,'fenced');return null;}
+    return fakeDispatch(300);
+   }
+   return endpoint.endsWith('/runs/200')?source(200,'queued'):source(100,'in_progress');
+  },commit:async value=>actions.push(value.message)});
+ assert.equal(result.restarted,true);assert.match(actions[0],/fence/);assert.ok(actions[1].endsWith('/runs/200/cancel'));assert.ok(actions[2].endsWith('/runs/100/cancel'));assert.ok(actions[3].endsWith('/clock.yml/dispatches'));
+});
+
+test('unrelated parent receipt or metadata cannot cancel a parent or create a replacement',async t=>{
+ for(const mode of ['receipt','metadata']){
+  const {root,receipt}=await blockedClockFixture(t);const before=await readFile(path.join(root,'data','clock','state.json'),'utf8');let mutations=0;
+  if(mode==='receipt')await writeFile(path.join(root,'data','clock','ticks','clock-100-1.json'),JSON.stringify({...receipt,child:{...receipt.child,runId:'999'}}));
+  await assert.rejects(ensureClock({root,env,now:new Date('2026-10-11T06:00:00Z'),api:async(endpoint,options)=>{if(options.method==='POST'){mutations++;throw new Error('Never mutate.');}return endpoint.endsWith('/runs/200')?source(200,'queued'):{...source(100,'in_progress'),head_branch:'unrelated'};},commit:async()=>mutations++}),/parent/);
+  assert.equal(mutations,0);assert.equal(await readFile(path.join(root,'data','clock','state.json'),'utf8'),before);
+ }
+});
+
+test('natural parent completion during cancellation permits safe replacement only after authoritative confirmation',async t=>{
+ const {root}=await blockedClockFixture(t);let parentReads=0;const mutations=[];
+ const result=await ensureClock({root,env:{...env,GITHUB_RUN_ID:'900'},now:new Date('2026-10-11T06:00:00Z'),api:async(endpoint,options)=>{
+   if(options.method==='POST'){
+    mutations.push(endpoint);
+    if(endpoint.endsWith('/runs/100/cancel'))throw new Error('Already completed.');
+    if(endpoint.endsWith('/cancel'))return null;
+    return fakeDispatch(300);
+   }
+   if(endpoint.endsWith('/runs/200'))return source(200,'queued');
+   parentReads++;return source(100,parentReads===1?'in_progress':'completed');
+  },commit:async()=>{}});
+ assert.equal(result.restarted,true);assert.equal(parentReads,2);assert.ok(mutations.at(-1).endsWith('/clock.yml/dispatches'));
+});
