@@ -6,10 +6,11 @@ import { verifyPublishedPost } from '../lib/validation.mjs';
 import { measuredPublication } from '../lib/publication-status.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
 import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof.mjs';
+import { publicationSlotStatus } from '../lib/slot-status.mjs';
 
 const xml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 try{
-  const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,rawUsageRecords,scheduler]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage','scheduler'].map(records));
+  const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,rawUsageRecords,scheduler,reservations,outcomes]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage','scheduler','slot-reservations','slot-outcomes'].map(records));
   const usageRecords=effectiveUsageRecords(rawUsageRecords);
   const usageByRun=new Map(usageRecords.map(record=>[record.runId,record]));
   const runs=rawRuns.map(run=>({...run,usage:usageByRun.get(run.id)||run.usage}));
@@ -20,7 +21,7 @@ try{
   const postMetrics=metrics.posts||metrics.social?.posts||[];
   const baseURL=(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'');
   const hydrated=posts.map(post=>({...post,imageUrl:`./cards/${post.id}.jpg`,publicUrl:`${baseURL}/#post-${post.id}`,metrics:{views:postMetrics.find(m=>m.postId===post.id)?.views??null,saves:postMetrics.find(m=>m.postId===post.id)?.saves??null}}));
-  const improvementRuns=versions.filter(v=>v.evaluations).map(v=>({id:v.id,type:'improve',status:v.status,startedAt:v.createdAt,finishedAt:v.createdAt,githubRunUrl:v.githubRunUrl||null,version:v.id,usage:v.usage||{inputTokens:null,outputTokens:null,costUsd:null},steps:[{stage:'improve',status:v.status,at:v.createdAt,message:`${v.change} ${v.reason}`,baselineScore:v.baselineScore,challengerScore:v.challengerScore}]}));
+  const improvementRuns=versions.filter(v=>v.evaluations).map(v=>({id:v.id,type:'improve',status:v.status,startedAt:v.startedAt||v.createdAt,finishedAt:v.createdAt,eventName:v.eventName,jobKey:v.jobKey,scheduledAt:v.scheduledAt,scheduleStatus:v.scheduleStatus,githubRunUrl:v.githubRunUrl||null,version:v.id,usage:v.usage||{inputTokens:null,outputTokens:null,costUsd:null},steps:[{stage:'improve',status:v.status,at:v.createdAt,message:`${v.change} ${(v.reasons?.length?v.reasons.join(' '):v.reason)||''}`,baselineScore:v.baselineScore,challengerScore:v.challengerScore}]}));
   const sortedRuns=[...runs,...measurements,...improvementRuns].sort((a,b)=>(b.finishedAt||b.startedAt).localeCompare(a.finishedAt||a.startedAt));
   const sortedResearch=research.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
   const healthMap=new Map();
@@ -34,8 +35,10 @@ try{
   const trustedResearch=await standaloneResearchRecords(path.join(ROOT,'data','research'));
   const proof=schedulerProof([...scheduler,...trustedResearch,...measurements,...versions],runs,posts);
   const lastLoop=runs.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
-  const status={state:posts.length?proof.state==='publication_observed'?'running':'schedule_unverified':'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastLoopAt:lastLoop?.startedAt||null,lastLoopEvent:lastLoop?.eventName||lastLoop?.scheduling?.eventName||lastLoop?.scheduling?.event||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected',scheduleVerified:proof.state==='publication_observed'};
-  const cadence={...schedule(),verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null,proof};
+  const status={state:posts.length?proof.state==='publication_observed'?'running':proof.state==='unverified'?'schedule_unverified':proof.state:'awaiting_first_cloud_run',hosted:true,engine:'GitHub Actions + official openai/codex-action',lastResearchAt:sortedResearch[0]?.createdAt||null,lastPublishedAt:posts[0]?.publishedAt||null,lastLoopAt:lastLoop?.startedAt||null,lastLoopEvent:lastLoop?.eventName||lastLoop?.scheduling?.eventName||lastLoop?.scheduling?.event||null,lastRunAt:sortedRuns[0]?.finishedAt||null,lastHostedRunUrl:sortedRuns.find(r=>r.githubRunUrl)?.githubRunUrl||null,lastMeasuredAt:metrics.measuredAt||null,measurementStatus:metrics.site?.status||'not_connected',scheduleVerified:proof.state==='publication_observed'};
+  const slots=publicationSlotStatus({posts,runs,reservations,outcomes}).map(slot=>({...slot,plannedAt:slot.scheduledAt,status:slot.state}));
+  const previousSlots=publicationSlotStatus({posts,runs,reservations,outcomes,now:new Date(Date.now()-86400000)}).map(slot=>({...slot,plannedAt:slot.scheduledAt,status:slot.state}));
+  const cadence={...schedule(),slots,previousSlots,gateEveryMinutes:20,auxiliaryGateEveryMinutes:30,verifiedHostedRunAt:sortedRuns.find(r=>r.githubRunUrl)?.finishedAt||null,proof};
   const feed={posts:hydrated,stats,schedule:cadence,status};
   const platformNames=['x','instagram','linkedin'];
   const platforms=platformNames.map(platform=>{

@@ -3,7 +3,7 @@ You are the writer and picker in the autonomous While You Sleep loop. This is a 
 Write ONLY the context.draftPath JSON file. Its exact top-level schema:
 {
   "runId": "the context.runId",
-  "targetCount": 1 or 3 from context.targetCount,
+  "targetCount": 1, 2 or 3 from context.targetCount,
   "createdAt": "ISO UTC time",
   "candidates": [{"title":"...","productUrl":"https://...","sourceIds":["..."],"scores":{"evidence":0,"novelty":0,"studentMvp":0,"autonomy":0},"reason":"why picked or rejected"}],
   "rejected": [{"title":"...","productUrl":"...","reason":"specific rejection reason"}],

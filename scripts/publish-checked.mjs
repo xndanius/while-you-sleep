@@ -4,7 +4,8 @@ import { ROOT, dataPath, readJSON, writeJSON, records, sha256, stableJSON, safeE
 import { checkApproval, deterministicCheck, contentHash } from '../lib/validation.mjs';
 import { fetchPublic, plainText } from '../lib/research.mjs';
 import { renderCard } from '../lib/card.mjs';
-import { validateLoopScheduling, dailyPublicationCount, DAILY_PUBLICATION_CAP } from '../lib/loop-schedule.mjs';
+import { localParts } from '../lib/config.mjs';
+import { validateLoopScheduling, dailyPublicationCount, DAILY_PUBLICATION_CAP, postScheduling } from '../lib/loop-schedule.mjs';
 
 const runId=process.argv[2];
 try{
@@ -26,11 +27,14 @@ try{
   if(scheduling&&draft.targetCount!==targetCount)throw new Error('Writer target count differs from the trusted slot reservation.');
   const previous=await records('posts');
   const todayCount=dailyPublicationCount(previous);
-  if(scheduling&&previous.some(post=>post.scheduling?.slotId===scheduling.slotId))throw new Error('This publication slot already has a committed post.');
+  if(scheduling&&localParts(new Date()).day!==scheduling.localDate)throw new Error('Reserved publication date ended; only the current Vilnius day can catch up.');
+  const reservedSlots=scheduling?.slots||[scheduling].filter(Boolean);
+  if(scheduling&&!scheduling.bootstrap&&previous.some(post=>reservedSlots.some(slot=>post.scheduling?.slotId===(slot.id?.startsWith('publish-')?slot.id:slot.slotId))))throw new Error('A reserved publication slot already has a committed post.');
   const results=checkApproval(draft,context,manifest),published=[],rejected=[...(draft.rejected||[])],steps=[...(draft.steps||[])];
   await writeJSON(dataPath('candidates',runId),{runId,createdAt:research.createdAt,candidates:draft.candidates||[],picked:draft.posts.map(p=>({id:p.id,title:p.title,sourceIds:p.sourceIds})),rejected:draft.rejected||[]},{immutable:true});
   const publishedUrls=[];
   for(const result of results){
+    if(scheduling&&localParts(new Date()).day!==scheduling.localDate)throw new Error('Reserved publication date ended during publication.');
     const post=draft.posts.find(p=>p.id===result.postId);
     const reasons=[...result.reasons,...deterministicCheck(post,[...research.sources,...context.sources],previous)];
     if(todayCount+published.length>=DAILY_PUBLICATION_CAP){steps.push({stage:'publish',status:'skipped',at:new Date().toISOString(),message:'Daily cap reached: three posts are already public for this Vilnius date.'});break;}
@@ -47,13 +51,14 @@ try{
     }
     if(reasons.length){rejected.push({postId:post.id,title:post.title,reason:[...new Set(reasons)].join(' ')});continue;}
     const publishedAt=new Date().toISOString();
+    if(scheduling&&localParts(publishedAt).day!==scheduling.localDate)throw new Error('Reserved publication date ended while checking sources.');
     const rulesSha256=process.env.RULES_SHA256||null;
     const record={...post,publishedAt,version:rulesSha256?`rules-${rulesSha256.slice(0,12)}`:draft.version||'v1',rulesSha256,rulesCommit:process.env.RULES_COMMIT||null,origin:process.env.GITHUB_ACTIONS==='true'?'github-actions-codex-loop':'local-checked-publication',runId,githubRunUrl:research.githubRunUrl||null,sources:context.sources.filter(s=>post.sourceIds.includes(s.id)).map(({id,title,url,publisher,fetchedAt,verifiedAt})=>({id,title,url,publisher,fetchedAt,verifiedAt})),imageUrl:`./cards/${post.id}.jpg`,checker:{passed:true,checkedAt:manifest.checkedAt||context.createdAt,checkerRunId:manifest.checkerRunId||`${runId}-independent-check`,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,claimChecks:result.check.claimChecks}};
     delete record.sourceIds;
     delete record.triggerEvent;
     record.githubRunUrl=scheduling?.githubRunUrl||research.githubRunUrl||null;
     record.eventName=scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown';
-    if(scheduling)record.scheduling=scheduling;
+    if(scheduling)record.scheduling=postScheduling(scheduling,published.length);
     record.contentSha256=contentHash(record);
     await fs.mkdir(path.join(ROOT,'public','cards'),{recursive:true});
     try{await fs.writeFile(path.join(ROOT,'public','cards',post.id+'.jpg'),renderCard(record),{flag:'wx'});}

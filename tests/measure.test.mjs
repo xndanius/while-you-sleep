@@ -2,12 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { measureGoatCounter, measurementPeriod, goatCounterSite, sanitizeSocial, latestSocialRecords } from '../scripts/measure.mjs';
+import { measureGoatCounter, measurementPeriod, goatCounterSite, sanitizeSocial, latestSocialRecords, collectMetrics } from '../scripts/measure.mjs';
 
 const now = new Date('2026-10-10T18:30:00.000Z');
 const env = {GOATCOUNTER_SITE:'https://while-you-sleep.goatcounter.com',GOATCOUNTER_API_TOKEN:'a-secret-that-must-stay-private'};
 const posts = [{id:'public-post-1'},{id:'public-post-2'}];
 const response = data => ({ok:true,status:200,json:async () => data});
+
+test('website and LinkedIn relay scope never queries the retired posting service',async () => {
+  let requests=0;
+  const result=await collectMetrics({posts,now,env:{POSTIZ_API_KEY:'unused-private-value'},fetch:async()=>{requests++;throw new Error('unexpected request');}});
+  assert.equal(requests,0);
+  assert.equal(result.social.provider,'zapier');
+  assert.equal(result.social.status,'not_connected');
+  assert.deepEqual(result.social.posts,[]);
+  assert.ok(!JSON.stringify(result).includes('unused-private-value'));
+});
 
 test('missing counter access stays null without making a request',async () => {
   let requests = 0;

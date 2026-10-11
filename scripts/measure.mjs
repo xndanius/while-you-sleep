@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, records, writeJSON, validId } from '../lib/storage.mjs';
-import { measureSocial } from '../integrations/social.mjs';
 import { trustedScheduledMetadata } from './prepare-scheduled-job.mjs';
 
 const PROJECT_START = '2026-10-10T00:00:00.000Z';
@@ -139,10 +138,9 @@ export function latestSocialRecords(publications) {
 }
 
 export async function collectMetrics({posts = [],publications = [],env = process.env,now = new Date(),fetch:fetcher,noDelay = false} = {}) {
-  const [site,social] = await Promise.all([
-    measureGoatCounter(posts,env,{now,fetch:fetcher,noDelay}),
-    measureSocial(latestSocialRecords(publications),env,{now,fetch:fetcher}).then(result => sanitizeSocial(result,now)).catch(() => ({provider:'postiz',status:'unavailable',measuredAt:new Date(now).toISOString(),posts:[],channels:[]})),
-  ]);
+  const site = await measureGoatCounter(posts,env,{now,fetch:fetcher,noDelay});
+  const social = {provider:'zapier',status:'not_connected',measuredAt:new Date(now).toISOString(),posts:[],channels:[],
+    reason:'LinkedIn Page posting is relayed from RSS. LinkedIn metrics have not been connected.'};
   return {schemaVersion:1,measuredAt:new Date(now).toISOString(),site:site.site,posts:site.posts,social,
     privacy:'Aggregate counts only. No provider response bodies, IP addresses, referrers, session identifiers, or credentials are committed.'};
 }

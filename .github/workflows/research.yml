@@ -1,7 +1,7 @@
 name: Public source research
 on:
   schedule:
-    - cron: '23 */3 * * *'
+    - cron: '23,53 * * * *'
       timezone: Europe/Vilnius
   workflow_dispatch:
 permissions:
@@ -26,12 +26,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci --ignore-scripts
       - id: gate
         name: Select the latest elapsed research slot
         run: node scripts/prepare-scheduled-job.mjs research
         env:
           RUN_ID: research-${{ github.run_id }}-${{ github.run_attempt }}
+      - if: steps.gate.outputs.due == 'true'
+        run: npm ci --ignore-scripts
       - if: steps.gate.outputs.due == 'true'
         run: node scripts/research-snapshot.mjs "$RUN_ID"
         env:

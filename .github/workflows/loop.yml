@@ -1,7 +1,7 @@
 name: Codex autonomous loop
 on:
   schedule:
-    - cron: '7 8,13,19 * * *'
+    - cron: '7,27,47 * * * *'
       timezone: Europe/Vilnius
   workflow_dispatch:
     inputs:
@@ -43,15 +43,14 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci --ignore-scripts
-      - name: Select and reserve the latest elapsed publication slot
+      - name: Select and reserve every due publication slot of the Vilnius day
         id: slot
         env:
           GH_TOKEN: ${{ github.token }}
           LOOP_TRIGGER_CRON: ${{ github.event.schedule || '' }}
         run: node scripts/prepare-loop.mjs
-      - name: Persist the trusted decision before any model runs
+      - name: Persist the trusted reservation before any model runs
+        if: steps.slot.outputs.run_models == 'true'
         id: commit
         run: |
           node scripts/commit-records.mjs gate "$RUN_ID"
@@ -259,7 +258,7 @@ jobs:
           retention-days: 7
   record:
     needs: [gate, writer, checker, repair, final_check]
-    if: always() && needs.gate.result == 'success'
+    if: always() && needs.gate.result == 'success' && needs.gate.outputs.run_models == 'true'
     runs-on: ubuntu-latest
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
@@ -303,7 +302,7 @@ jobs:
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
           RULES_COMMIT: ${{ needs.writer.outputs.repo_sha }}
         run: node scripts/import-artifact.mjs .staging/data "$RUN_ID"
-      - name: Record skipped slots or finalize checked publication and settle the reservation
+      - name: Finalize checked publication and settle every reserved slot
         if: always()
         env:
           EXPECTED_DRAFT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
@@ -322,13 +321,3 @@ jobs:
       contents: read
       pages: write
       id-token: write
-  social:
-    needs: pages
-    if: needs.pages.result == 'success'
-    uses: ./.github/workflows/social.yml
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
-    secrets:
-      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}

@@ -1,46 +1,33 @@
 # Hosted scheduling and its evidence
 
-GitHub Actions owns the schedule on this repository's default branch, `main`. Every job runs on hosted infrastructure. The public machine page distinguishes a configured schedule, a real scheduled trigger, a publication-loop attempt, and a checked post actually published from that scheduled run. A successful manual run proves the cloud pipeline works; it retains `workflow_dispatch` and cannot prove unattended scheduling.
+The v3 scope is the website and the LinkedIn Page RSS relay. GitHub Actions remains the hosted clock and Codex runtime; no new scheduling account is needed. All schedules use Europe/Vilnius, including daylight-saving changes.
 
-The normal schedules use `timezone: Europe/Vilnius`:
-
-| Job | Local time | Cron |
+| Work | Planned slots | Cheap gate |
 | --- | --- | --- |
-| Publication loop | Daily 08:07, 13:07, 19:07 | `7 8,13,19 * * *` |
-| Public-source research | 00:23, 03:23, 06:23, 09:23, 12:23, 15:23, 18:23, 21:23 | `23 */3 * * *` |
-| Measurement | Daily 21:37 | `37 21 * * *` |
-| Improvement evaluation | Daily 22:13 | `13 22 * * *` |
-| Weekly checked social/digest job | Monday 08:17 | `17 8 * * 1` |
+| Publish | Daily 08:07, 13:07, 19:07 | Every 20 minutes at :07, :27, :47 |
+| Research | Every three hours at :23 | Every 30 minutes at :23, :53 |
+| Measure | Daily 21:37 | Every 30 minutes at :13, :43 |
+| Improve | Daily 22:13 | Every 30 minutes at :13, :43 |
 
-The times deliberately avoid the start of each hour. GitHub documents possible schedule delays and dropped jobs under high load, default-branch execution, and IANA timezone support. These are scheduling constraints, not evidence of the cause of this repository's missing events. [Official GitHub schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+A scheduled gate that has no due work calls no model, commits no record, and does not deploy Pages. Frequency reduces dependence on a single missed cron event; it does not guarantee an on-time start. GitHub documents that scheduled jobs may start late or be dropped under load. The observed delays do not establish the underlying cause. [Official schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
 
-Before any publication model runs, a trusted gate reads committed posts and selects the latest elapsed publication slot. A delayed event catches up that slot once; it does not replay every historical slot or blindly generate a batch. Earlier unfulfilled slots on that slot's local date are recorded in `missedSlots`. A committed post for the selected slot suppresses a repeat. Older launch records without slot metadata can fulfil an elapsed slot through their actual publication time. Attempts without a published post do not fulfil a slot.
+The publication gate considers every elapsed slot of the **current Vilnius day**, earliest first. It reserves all unfulfilled eligible slots up to the remaining three-post daily cap. Completed slots cannot repeat. Launch posts count toward the same cap. A batch produces one independently checked post per reserved slot; partial publication fulfils only the slots actually published. Yesterday's missed publication slots are not carried into a new day.
 
-The gate commits immutable `data/scheduling/<runId>.json` and, when eligible, `data/slot-reservations/<runId>.json` before calling Codex. Its SHA-256 and frozen repository commit pass through trusted job outputs. The writer's target count, final publisher's slot and count, and publication provenance must match that decision. Model artifacts cannot replace it. The separate checker and deterministic source/hash gates still apply. Normal attempts target one post; the cap remains three published posts per Vilnius date, including launch posts. Bootstrap can only fill the first three posts within the same cap.
+Before any model runs, immutable scheduling and reservation records are committed. Their fingerprint, target count and frozen repository revision bind the writer, fresh checker and deterministic publisher. Each checked post receives its own reserved slot identity. A batch cannot publish after its reserved Vilnius date ends. The model has no repository write credential; the publisher has no model access.
 
-The trusted record job writes a final run and immutable `data/slot-outcomes/<reservationId>.json`. A published outcome completes the slot. A known failure with no committed post may retry after 10 minutes, then 20, 40, and at most 60 minutes between further attempts. An unfinished or unknown reservation stays held. Time alone never clears it: recovery requires authoritative GitHub metadata showing that exact repository's `main` loop run is terminal, plus the current committed post state. An unavailable metadata request holds the reservation. A terminal run with committed posts completes it; a terminal run without posts records a retryable failure. Shared record-job serialization and the loop's own workflow queue prevent concurrent reservations and publication races.
+Reservations with unknown outcomes stay held. Recovery requires authoritative GitHub metadata proving that the exact repository's main-branch loop run is terminal, plus committed post state. Failed slots with no publication retry after 10, 20, 40 and at most 60 minutes. Partial batch outcomes retain per-slot results, so a published slot cannot repeat during recovery. Workflow serialization prevents concurrent batches.
 
-Research, measurement and improvement use their own trusted slot keys. A successful scheduled completion suppresses the same slot; a failed slot remains eligible. Manual diagnostics retain their real event and do not pretend to complete a scheduled slot.
+Research, measure and improve retain trusted daily/three-hour slot keys. A successful scheduled completion suppresses a repeated tick. Manual diagnostic runs keep their real event name. Expected improver rejection is a terminal completed evaluation with a reason; it does not trigger repeated proposal spending. Operational failure remains eligible for retry.
 
-The machine page computes timing from the current browser clock and the shared Europe/Vilnius schedule, rather than a frozen build timestamp. If no publication-loop attempt is recorded at or after the latest slot, it shows **Waiting** for the first 30 minutes, **Late** from 30 to under 60 minutes, and **Missed** from 60 minutes onward. A no-model gate skip does not advance `lastLoopAt` or count as a model run. **Recorded** describes an attempt and does not imply successful publication.
+The machine page separates planned slot time, attempt time, actual checked publication time and delay. Future slots stay planned; elapsed unfulfilled slots become waiting, late or missed, or show an active reservation, rejection or cap skip. A cheap gate skip never advances the last model loop time.
 
-The proof states are intentionally separate:
-
-| State | Required evidence |
+| Proof state | Evidence |
 | --- | --- |
-| `unverified` | No recorded real `schedule` event. Active cron definitions and manual hosted runs are insufficient. |
-| `trigger_observed` | A real scheduled event reaches a hosted job, including a cheap probe or a cap skip. |
-| `loop_observed` | A scheduled publication-loop attempt is recorded beyond a no-model gate skip. This does not establish model completion or publication. |
-| `publication_observed` | A public checked post belongs to the matching scheduled run's published IDs and shares its run ID and trusted GitHub run URL. |
+| unverified | No real schedule event is recorded. |
+| trigger_observed | A real GitHub schedule event reached a hosted job, even if it skipped at the cap. |
+| loop_observed | A real scheduled publication loop reached model work. |
+| publication_observed | A checked public post matches that scheduled run's committed published IDs, run identity and GitHub URL. |
 
-The temporary UTC control cron was `3,13,23,33,43,53 * 10 10 *`, with no timezone override, on the publication loop and a separate cheap probe. Its runtime deadline was **10 October 2026, 13:58 UTC / 16:58 Europe/Vilnius**. The loop rejects this control at or after the deadline, including a delayed invocation or a later year; normal schedules are unaffected. The probe never generates or publishes posts. Its success could establish only `trigger_observed`.
+The one-hour UTC trial on 10 October ended at 16:58 Vilnius with zero schedule events; its [immutable result](../data/scheduler/verification-20261010-1358.json) remains historical evidence. GitHub subsequently fired five scheduled runs. The [11 October verification](../data/scheduler/verification-20261011-052931.json) records them. The 19:07 publication job started at **23:01 on 10 October** and correctly skipped because that day's three launch posts filled the cap. This proves the trigger, not unattended checked publication. The temporary probe and social publishing workflow are disabled.
 
-The [committed diagnosis](../data/scheduler/diagnosis-20261010.json), checked at **13:01:55 UTC on 10 October 2026**, records **zero** GitHub `event=schedule` runs, Actions enabled, default branch `main`, and active workflow metadata. The schedule inventory remained empty during this documentation review. These are observations, not an established GitHub outage, disabled scheduler, timezone defect, or another underlying cause.
-
-The [hosted guard test](https://github.com/xndanius/while-you-sleep/actions/runs/38055146700) completed successfully as a **manual dispatch** on 10 October. The trusted gate recorded `daily_cap_reached` with today's three launch posts; every Codex model job was skipped, the audit was committed, and Pages deployed. This validates the hosted no-model guard path without changing the cap or claiming scheduled publication. The deadline outcome and any later real schedule evidence are reported separately in the repository's current status.
-
-The [final authoritative verification](../data/scheduler/verification-20261010-1358.json) at **13:58:38 UTC / 16:58 Vilnius** still found **zero scheduled events**, after the full one-hour trial. Both controls were active during that trial. The temporary loop cron was then removed, the probe intentionally disabled, and all eight normal workflows remained active. No configuration defect or underlying cause was established. Unattended publishing remains unproven; the [external-clock setup](EXTERNAL_TRIGGER.md) requires owner-provided service access and exact callback evidence before claiming a scheduled publication.
-
-The [manual hosted research catch-up](https://github.com/xndanius/while-you-sleep/actions/runs/38057259822) also passed and deployed 133 source records for the latest elapsed **15:23** slot. Its event remains `workflow_dispatch`; it cannot count as scheduled evidence or suppress a future automatic slot as a manual diagnostic.
-
-Danielius's subsequent decision keeps **three total posts on 10 October 2026**, including launch posts; there is no launch exemption. The 19:07 slot is therefore subject to the same daily cap. An automatic trigger test today may record a cap skip, while proof of automatic checked publication must wait until 11 October or later. The external service remains undecided pending an explanation and owner account access. A ten-minute watchdog may catch up the previous evening's missed slot after midnight when the publication-date cap resets; the existing latest-slot logic does not promise that tomorrow's first publication waits until 08:07.
+Danielius chose three total posts on 10 October without a launch exemption. The new day has its own three-post cap. The website and RSS remain the publication record; LinkedIn relay completion is reported only after a confirmed LinkedIn post.
