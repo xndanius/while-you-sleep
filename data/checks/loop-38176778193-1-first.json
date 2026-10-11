@@ -1,0 +1,94 @@
+{
+  "runId": "loop-38176778193-1",
+  "draftSha256": "63a74c0ca782afb0ee0469543d8b2e19fc75b142f4dc6cd25e3effa7b5f609a9",
+  "sourceSnapshotSha256": "455fba33c7651621fc95eee96acd191e61180571670ac7a0fb648b50bdb7ee70",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "7702a7ece50174c78fb9c1bc",
+      "pass": false,
+      "reasons": [
+        "Writer evidence score 7 exceeds the supported maximum of 6: the source documents a template example but does not establish concrete real use."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The n8n page documents a workflow template using Subworkflow.ai and Gemini for large-document OCR.",
+          "supported": true,
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "Process large documents with OCR using SubworkflowAI and Gemini"
+        },
+        {
+          "claim": "The described workflow uploads files through the Extract API and tracks an asynchronous job by polling the Jobs endpoint.",
+          "supported": true,
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "Poll Subworkflow.ai 's Jobs endpoint and keep polling until the job is finished."
+        },
+        {
+          "claim": "The example retrieves document dataset items and sends pages through a multimodal model to parse markdown.",
+          "supported": true,
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "In this example, all pages are retrieved and run through a multimodal LLM to parse into markdown."
+        },
+        {
+          "claim": "The template page says an API key is required to use the Subworkflow.ai service.",
+          "supported": true,
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "You'll need a Subworkflow.ai API key to use the Subworkflow.ai service."
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The page gives an importable workflow and concrete API steps, though setup requires external service credentials.",
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "You'll need a Subworkflow.ai API key to use the Subworkflow.ai service."
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "Buyer and willingness to pay remain a hypothesis; the template supplies no customer evidence.",
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "Subworkflow.ai is a third party API service to help AI developers work with documents too large for context windows and runtime memory."
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A narrow student workflow is plausible from documented upload, polling, retrieval and conversion steps, with API setup required.",
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "Upload it to the Subworkflow.ai service via the Extract API using the HTTP node."
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "Polling and retrieval are repeatable automation steps; the source does not establish unattended operation of a business.",
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "Poll Subworkflow.ai 's Jobs endpoint and keep polling until the job is finished."
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The page documents a working workflow example, but provides no attributable real-use evidence that would support 7.",
+          "sourceId": "7702a7ece50174c78fb9c1bc",
+          "evidenceQuote": "In this example, all pages are retrieved and run through a multimodal LLM to parse into markdown."
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The single proposed post was fully checked against its freshly fetched template source; its evidence score exceeds the rubric-supported maximum.",
+    "contextSha256": "4b49fbe52a5d6cf8a40a853324e71e8e906f8ae77a0ce66f3b5c183bb1da12b6",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "63a74c0ca782afb0ee0469543d8b2e19fc75b142f4dc6cd25e3effa7b5f609a9",
+    "sourceSnapshotSha256": "455fba33c7651621fc95eee96acd191e61180571670ac7a0fb648b50bdb7ee70",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
