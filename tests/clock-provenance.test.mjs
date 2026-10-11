@@ -35,11 +35,22 @@ test('clock inputs alone never prove automation; exact receipt and authoritative
   for(const extra of [{GITHUB_RUN_ID:'333'},{CLOCK_DISPATCH_ID:'clock-111-1-research'},{GITHUB_EVENT_NAME:'schedule'},{GITHUB_REF:'refs/heads/other'},{GITHUB_ACTIONS:'false'},{CLOCK_PARENT_ATTEMPT:'2'}]) {
     await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env:{...env,...extra},now,apiGet}));
   }
-  for(const extra of [{head_branch:'other'},{path:'.github/workflows/loop.yml'},{run_attempt:2},{event:'schedule'},{status:'waiting'},{head_repository:{full_name:'other/repo'}}]) {
+  for(const extra of [{head_branch:'other'},{path:'.github/workflows/loop.yml'},{run_attempt:2},{event:'schedule'},{status:'unknown'},{head_repository:{full_name:'other/repo'}}]) {
     await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet:async()=>JSON.stringify({...parent,...extra})}),/GitHub did not verify/);
   }
   await writeFile(path.join(root,'data','clock','ticks',receipt.id+'.json'),JSON.stringify({...receipt,tickedAt:'2026-10-11T05:01:00Z'}));
   await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet}),/parent tick/);
+});
+
+test('a committed exact clock dispatch remains verified while its parent waits for a later Pages job',async t=>{
+  const {env,receipt,parent}=fixtures(),root=await fixtureRoot(t,receipt);
+  for(const status of ['queued','requested','pending','waiting','in_progress','completed']) {
+    const clock=await verifyClockDispatch({kind:'loop',root,env,now,apiGet:async()=>JSON.stringify({...parent,status})});
+    assert.equal(clock.verified,true,status);
+    assert.equal(clockReceiptMatches(clock,receipt),true,status);
+  }
+  await writeFile(path.join(root,'data','clock','ticks',receipt.id+'.json'),JSON.stringify({...receipt,tickedAt:'2026-10-11T05:01:00Z'}));
+  await assert.rejects(()=>verifyClockDispatch({kind:'loop',root,env,now,apiGet:async()=>JSON.stringify({...parent,status:'waiting'})}),/parent tick/);
 });
 
 test('clock-launched auxiliary gates retain workflow_dispatch and suppress completed work instead of forcing diagnostics',async t=>{
