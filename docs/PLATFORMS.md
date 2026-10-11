@@ -6,8 +6,10 @@ Relay: **Website -> RSS -> Zapier -> LinkedIn Page**. Danielius connects Zapier 
 
 RSS URL: **https://xndanius.github.io/while-you-sleep/feed.xml**.
 
-One RSS item represents one independently checked published post. GUID is the stable post ID with isPermaLink=false. Items are newest first; link and canonical URL use /p/<id>/. The description is plain text under 600 characters containing the promise, a who-pays hypothesis, first-24-hours steps and “Sources on the page”. The image is an absolute 1080x1350 JPEG URL in enclosure and media:content; enclosure length is the actual byte size.
+One RSS item represents one independently checked published post. GUID is the stable post ID with isPermaLink=false. Items are newest first; link and canonical URL use /p/<id>/. The description is plain text of at most 1,000 characters in three paragraphs: the promise, “Who might pay:” with one explicit hypothesis label, and “First 24 hours:” with up to three numbered steps on separate lines. Blank lines survive XML parsing. Complete sentences are retained or dropped; an individually overlong sentence ends at a word boundary with an ellipsis. The relay adds the source-link line, so the RSS description has no trailing source reminder.
 
-The post page contains the complete checked post and source links. Static Open Graph tags provide title, description, image, 1080x1350 dimensions, URL and article type. A summary_large_image card and canonical link use the same public URL.
+RSS titles and descriptions exclude LinkedIn markup characters: parentheses, square and curly brackets, angle brackets, at signs, hash signs, asterisks, underscores, tildes, vertical bars and backslashes. The full website article retains its original checked text. The image is an absolute 1080x1350 JPEG URL in enclosure and media:content; enclosure length is the actual byte size.
+
+The post page contains the complete checked post and source links. Static Open Graph tags provide title, description, image, 1080x1350 dimensions, URL and article type. The meta description, og:description and twitter:description share a one-line summary of at most 300 characters ending at a sentence or word boundary. A summary_large_image card and canonical link use the same public URL.
 
 Until an actual LinkedIn Page post is confirmed, the public relay state remains **waiting for first LinkedIn post**. RSS availability and successful website publication do not establish LinkedIn publication or measured engagement. No LinkedIn metric is fabricated as zero.

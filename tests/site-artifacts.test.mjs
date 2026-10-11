@@ -5,20 +5,95 @@ import path from 'node:path';
 import os from 'node:os';
 import { XMLParser,XMLValidator } from 'fast-xml-parser';
 import jpeg from 'jpeg-js';
-import { LINKEDIN_PAGE_URL,publicPostURL,rssDescription,renderPostPage,writeSiteArtifacts } from '../lib/site-artifacts.mjs';
+import { LINKEDIN_PAGE_URL,publicPostURL,rssTitle,rssDescription,metaDescription,renderPostPage,writeSiteArtifacts } from '../lib/site-artifacts.mjs';
 import { slotPresentation,currentDaySlots } from '../public/slot-display.js';
 
 const baseURL='https://example.test/while-you-sleep';
 const post=(id='one',publishedAt='2026-10-11T05:20:00.000Z')=>({id,publishedAt,title:'Ideas & evidence <checked>',promise:'A useful promise & a clear limit.',whatItIs:'The complete description, including <untrusted> text.',whoPays:'Teams who need a small tool.',loop:['Research & gather','Check <claims>','Publish'],evidence:'An attributed observation with no invented numbers.',uncertainty:'Unknown adoption and reliability.',first24Hours:['Build a tiny form.','Test it with one real user.'],sources:[{title:'The maker & product',url:'https://example.org/product?a=one&b=two',publisher:'Example'},{title:'Never execute',url:'javascript:alert(1)'}]});
 const parser=new XMLParser({ignoreAttributes:false,parseTagValue:false,parseAttributeValue:false});
+const relayMarkup=/[()[\]{}<>@#*_~|\\]/u;
 
-test('relay descriptions remain plaintext under 600 characters with every required field',()=>{
-  const description=rssDescription({...post(),promise:'<b>'+('promise '.repeat(100))+'</b>',whoPays:'buyers '.repeat(100),first24Hours:['first action '.repeat(100)]});
-  assert.ok(description.length<600);
-  assert.doesNotMatch(description,/<\/?b>/);
-  assert.match(description,/Who pays: buyers/);
-  assert.match(description,/First 24 hours: first action/);
-  assert.ok(description.endsWith('Sources on the page.'));
+test('LinkedIn description has three plaintext paragraphs and up to three numbered steps',()=>{
+  const content={...post(),first24Hours:['Build a tiny form.','Test it with one real user.','Record the result.','This fourth step is not relayed.']};
+  const description=rssDescription(content),paragraphs=description.split('\n\n');
+  assert.equal(paragraphs.length,3);
+  assert.equal(paragraphs[0],content.promise);
+  assert.equal(paragraphs[1],'Who might pay: Hypothesis: '+content.whoPays);
+  assert.equal(paragraphs[2],'First 24 hours:\n1. Build a tiny form.\n2. Test it with one real user.\n3. Record the result.');
+  assert.ok(description.length<=1000);
+  assert.doesNotMatch(description,/Sources on the page|fourth step|\r|\n\n\n/);
+});
+
+test('existing buyer labels normalize to one explicit hypothesis without changing the website body',()=>{
+  for(const buyer of ['Teams who need a small tool.','Hypothesis: Teams who need a small tool.','Who pays: Hypothesis: Teams who need a small tool.','Hypothesis: Hypothesis: Teams who need a small tool.','Who might pay: Hypothesis: Teams who need a small tool.']){
+    const content={...post(),whoPays:buyer};
+    const paragraph=rssDescription(content).split('\n\n')[1];
+    assert.equal(paragraph,'Who might pay: Hypothesis: Teams who need a small tool.');
+    assert.equal((paragraph.match(/Hypothesis/gi)||[]).length,1);
+    const html=renderPostPage(content,baseURL);
+    assert.ok(html.includes(`<p>${buyer}</p>`),'Original buyer text remains on the website.');
+  }
+});
+
+test('multi-sentence shortening drops complete sentences instead of leaving clipped fragments',()=>{
+  const sentences=['A small tool can route a support request to a checked workflow.','The first version should stay narrow enough for one student to test with a real customer before adding any further automated handoffs or paid service integrations.','A separate checker can reject unsupported claims and preserve the reason in a public record for later review instead of inventing a successful result.','The buyer must still decide whether that narrow workflow saves enough time to justify paying for it.'];
+  const content={...post(),promise:sentences.join(' '),whoPays:sentences.join(' '),first24Hours:[sentences.join(' '),sentences.join(' '),sentences.join(' ')]};
+  const description=rssDescription(content),paragraphs=description.split('\n\n');
+  assert.ok(description.length<=1000);
+  assert.ok(paragraphs[0].startsWith(sentences[0]));
+  assert.doesNotMatch(description,/…/,'Every individual sentence is small enough to retain whole.');
+  const fields=[paragraphs[0],paragraphs[1].replace(/^Who might pay: Hypothesis: /,''),...paragraphs[2].split('\n').slice(1).map(line=>line.replace(/^\d+\. /,''))];
+  for(const field of fields){
+    let remainder=field;
+    for(const sentence of sentences)if(remainder.startsWith(sentence))remainder=remainder.slice(sentence.length).trimStart();
+    assert.equal(remainder,'','Only complete original sentences remain in each field.');
+  }
+});
+
+test('a single overlong sentence ends at a word boundary with an ellipsis',()=>{
+  const sentence='A starter can '+('connect careful workflows with repeatable checks '.repeat(90))+'before deployment.';
+  const description=rssDescription({...post(),promise:sentence}),promise=description.split('\n\n')[0];
+  assert.ok(description.length<=1000);
+  assert.ok(promise.endsWith('…'));
+  const prefix=promise.slice(0,-1).trimEnd();
+  assert.ok(sentence.startsWith(prefix));
+  assert.equal(sentence[prefix.length],' ','The next original character is a word boundary.');
+  assert.ok(description.includes('Who might pay: Hypothesis:'));
+  assert.ok(description.includes('\n\nFirst 24 hours:\n1.'));
+});
+
+test('relay text removes API markup characters while retaining Unicode and original website copy',()=>{
+  const content={...post(),title:'Café (AI) [checked] {tool} <demo> @team #tag *bold* _item_ ~note~ | path\\test',promise:'Žalgiris 🚀 helps (a team) [safely] {today} <now> @home #topic *small* _steps_ ~soon~ | here\\there.',whoPays:'Hypothesis: Café teams (with time pressure) [may pay].',first24Hours:['Build (one) [form] {first} <today> @home #one *now* _clean_ ~it~ | then\\test.']};
+  const title=rssTitle(content.title),description=rssDescription(content);
+  assert.doesNotMatch(title,relayMarkup);
+  assert.doesNotMatch(description,relayMarkup);
+  assert.ok(title.includes('Café'));
+  assert.ok(description.includes('Žalgiris 🚀'));
+  assert.equal(Buffer.from(description,'utf8').toString('utf8'),description);
+  const longUnicode=rssDescription({...content,promise:('Žalgiris 🚀 café workflows '.repeat(100))+'finish.'});
+  assert.equal(Buffer.from(longUnicode,'utf8').toString('utf8'),longUnicode);
+  assert.ok(longUnicode.length<=1000);
+  const html=renderPostPage(content,baseURL);
+  assert.match(html,/<h1 id="post-title">Café \(AI\) \[checked\] \{tool\} &lt;demo&gt; @team #tag \*bold\* _item_ ~note~ \| path\\test<\/h1>/);
+});
+
+test('metadata descriptions stay one line, at most 300 characters and identical across all description tags',()=>{
+  const sentence='Café teams can '+('review careful workflows before deployment '.repeat(30))+'today.';
+  const content={...post(),promise:sentence,whoPays:'Hypothesis: A team may pay.\nA buyer has not been verified.'};
+  const description=metaDescription(content);
+  assert.ok(description.length<=300);
+  assert.doesNotMatch(description,/[\r\n]/);
+  assert.equal(Buffer.from(description,'utf8').toString('utf8'),description);
+  const prefix=description.split('…')[0].trimEnd();
+  assert.ok(sentence.startsWith(prefix));
+  assert.equal(sentence[prefix.length],' ','Short metadata also stops at a whole word.');
+  const html=renderPostPage(content,baseURL),tags=[];
+  for(const attribute of ['name="description"','property="og:description"','name="twitter:description"']){
+    const tag=html.match(new RegExp(`<meta ${attribute} content="([^"]*)">`));
+    assert.ok(tag);
+    tags.push(parser.parse(`<value>${tag[1]}</value>`).value);
+  }
+  assert.deepEqual(tags,[description,description,description]);
 });
 
 test('RSS parses as RSS 2.0, sorts newest first, and exposes exact card bytes and stable per-post URLs',async t=>{
@@ -42,9 +117,14 @@ test('RSS parses as RSS 2.0, sorts newest first, and exposes exact card bytes an
     const id=item.guid['#text'];
     assert.equal(item.guid['@_isPermaLink'],'false');
     assert.equal(item.link,`${baseURL}/p/${id}/`);
-    assert.equal(item.title,posts[0].title);
+    assert.equal(item.title,rssTitle(posts[0].title));
+    assert.doesNotMatch(item.title,relayMarkup);
     assert.ok(Number.isFinite(Date.parse(item.pubDate)));
-    assert.ok(item.description.length<600);
+    assert.ok(item.description.length<=1000);
+    assert.equal(item.description,rssDescription(posts.find(post=>post.id===id)),'XML preserves paragraph and step newlines exactly.');
+    assert.equal(item.description.split('\n\n').length,3);
+    assert.match(item.description,/\n\nFirst 24 hours:\n1\. /);
+    assert.doesNotMatch(item.description,relayMarkup);
     assert.equal(item.enclosure['@_url'],`${baseURL}/cards/${id}.jpg`);
     assert.equal(item.enclosure['@_type'],'image/jpeg');
     assert.equal(Number(item.enclosure['@_length']),image.length);
@@ -60,7 +140,7 @@ test('static post page contains the complete post, sources and required sharing 
   const content=post();
   const html=renderPostPage(content,baseURL);
   assert.match(html,/<meta property="og:title" content="Ideas &amp; evidence &lt;checked&gt;">/);
-  for(const [name,value] of [['og:description',rssDescription(content)],['og:image',baseURL+'/cards/one.jpg'],['og:url',baseURL+'/p/one/'],['og:type','article'],['og:image:width','1080'],['og:image:height','1350']]){
+  for(const [name,value] of [['og:description',metaDescription(content)],['og:image',baseURL+'/cards/one.jpg'],['og:url',baseURL+'/p/one/'],['og:type','article'],['og:image:width','1080'],['og:image:height','1350']]){
     const tag=html.match(new RegExp(`<meta property="${name}" content="([^"]*)">`));
     assert.ok(tag,`${name} is present`);
     const decoded=parser.parse(`<value>${tag[1]}</value>`).value;
