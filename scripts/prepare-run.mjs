@@ -1,6 +1,9 @@
 import {mkdir,writeFile,readFile,rm} from 'node:fs/promises';
 import {readJSON,dataPath,sha256,stableJSON,records} from '../lib/storage.mjs';
 import {validateLoopScheduling} from '../lib/loop-schedule.mjs';
+import {candidateHistory,writerResearchView} from '../lib/candidate-input.mjs';
+import {ROOT} from '../lib/storage.mjs';
+import {parseScoringPolicy} from '../lib/scoring.mjs';
 import {checkerOutputSchema} from '../lib/checker-output.mjs';
 const runId=process.env.RUN_ID||`loop-${Date.now()}`;
 if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
@@ -11,8 +14,15 @@ const targetCount=scheduling?.targetCount||(process.env.BOOTSTRAP==='true'?3:1);
 const role=process.argv[2]||'writer';
 const context={runId,targetCount,maxBatchSize:scheduling?.maxBatchSize||3,rulesSha256:sha256(await readFile('RULES.md','utf8')),role,researchPath:`data/research/${runId}.json`,draftPath:`data/drafts/${runId}.json`,checkContextPath:`data/check-context/${runId}.json`,checkPath:`data/checks/${runId}.json`,priorPostsPath:'.run/prior-posts.json',githubRunUrl:process.env.GITHUB_REPOSITORY?`https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`:null};
 if(scheduling){context.scheduling={slotId:scheduling.slotId,scheduledAt:scheduling.scheduledAt,eventName:scheduling.eventName,targetCount,slots:scheduling.slots||[],dailyCap:scheduling.dailyCap,maxBatchSize:scheduling.maxBatchSize||3,cadence:scheduling.cadence};context.assessmentContractVersion=scheduling.assessmentContractVersion||null;}
+context.scoringPolicy=parseScoringPolicy(await readFile('RULES.md','utf8'));
 if(role==='repair')context.repairFeedbackPath='.run/repair-feedback.json';
 await mkdir('.run',{recursive:true});await mkdir('data/drafts',{recursive:true});await mkdir('data/checks',{recursive:true});
+if(['writer','repair'].includes(role)){
+ const history=await candidateHistory(ROOT);context.recentRejectionsPath='.run/recent-rejections.json';
+ await writeFile(context.recentRejectionsPath,JSON.stringify(history.rejections,null,2));
+ const snapshot=await readJSON(dataPath('research',runId));context.originalResearchPath=context.researchPath;context.researchPath='.run/writer-research.json';
+ await writeFile(context.researchPath,JSON.stringify(writerResearchView(snapshot),null,2));
+}
 const previous=await records('posts');
 await writeFile(context.priorPostsPath,JSON.stringify(previous.map(({id,candidateId,title,productUrl,promise,whatItIs,loop})=>({id,candidateId,title,productUrl,promise,whatItIs,loop})),null,2));
 if(['checker','final-checker'].includes(role)){

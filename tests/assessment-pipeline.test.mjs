@@ -190,3 +190,11 @@ test('legacy cap-three reservations retain their original checker contract and r
  const positive=await execute(t,{legacy:true});assert.equal(positive.execution.status,0,positive.execution.stderr);assert.equal((await positive.record('runs')).published.length,1);assert.equal((await positive.record('runs')).checkedAssessment,undefined);
  const refusal=await execute(t,{legacy:true,mutate:f=>{for(const rating of Object.values(f.draft.posts[0].scoring.criteria))rating.value=5;}});assert.equal((await refusal.record('slot-outcomes')).status,'failed_retryable');assert.equal((await refusal.record('runs')).checkedAssessment,undefined);
 });
+
+test('writer receives selected evidence, recent provisional decisions and the exact unchanged scoring policy',async t=>{
+ const result=await execute(t,{count:0,script:'prepare-run'});
+ const execution=spawnSync(process.execPath,['scripts/prepare-run.mjs','writer'],{cwd:result.root,env:result.env,encoding:'utf8'});assert.equal(execution.status,0,execution.stderr);
+ const context=JSON.parse(await readFile(path.join(result.root,'.run','context.json'),'utf8'));
+ assert.deepEqual(context.scoringPolicy,parseScoringPolicy(rules));assert.equal(context.scoringPolicy.threshold,6);assert.equal(context.originalResearchPath,`data/research/${runId}.json`);assert.equal(context.researchPath,'.run/writer-research.json');assert.deepEqual(JSON.parse(await readFile(path.join(result.root,context.recentRejectionsPath),'utf8')),[]);
+ const view=JSON.parse(await readFile(path.join(result.root,context.researchPath),'utf8'));assert.deepEqual(view.sources,result.f.context.sources);
+});

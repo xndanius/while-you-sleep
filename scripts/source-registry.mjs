@@ -5,7 +5,7 @@ import {spawnSync} from 'node:child_process';
 import {ROOT,hash,sha256,stableJSON,canonicalURL,writeJSON,safeError} from '../lib/storage.mjs';
 import {localParts} from '../lib/config.mjs';
 import {sourceSeedCatalog,normalizeSourceDefinition,validateSource,fetchPublic,extractPublicFeedLinks,inferSourceKind} from '../lib/research.mjs';
-import {readPublicSourceRegistry,readBoundedJSON,validSourceAdmission,validateSourceRegistry,applySourceTransition,sourceDefinitionReasons,sourceRunURL,SOURCE_POLICY,planSourceEvolution} from '../lib/source-registry.mjs';
+import {readPublicSourceRegistry,readBoundedJSON,validSourceAdmission,validateSourceRegistry,applySourceTransition,sourceDefinitionReasons,sourceRunURL,SOURCE_POLICY,planSourceEvolution,dailyDiscoveryBudget} from '../lib/source-registry.mjs';
 import {weightedOverall} from '../lib/scoring.mjs';
 import {registryInput} from './research-snapshot.mjs';
 
@@ -30,7 +30,7 @@ export async function discoverSourceProposals({registry,attributions,currentPoli
  return proposals.slice(0,SOURCE_POLICY.maxDiscoveriesPerDay);
 }
 function git(root,args,optional=false){const result=spawnSync('git',args,{cwd:root,encoding:'utf8'});if(result.status!==0&&!optional)throw new Error(`Registry git operation failed: ${args[0]}`);return result;}
-async function persistRegistry(root,registry,record,directory,message){await writeJSON(path.join(root,'data','sources','registry.json'),registry);await writeJSON(path.join(root,'data',directory,record.id+'.json'),record,{immutable:true});git(root,['add','--','data/sources/registry.json',`data/${directory}/${record.id}.json`]);git(root,['commit','-m',message]);}
+async function persistRegistry(root,registry,record,directory,message,discovery=null){await writeJSON(path.join(root,'data','sources','registry.json'),registry);await writeJSON(path.join(root,'data',directory,record.id+'.json'),record,{immutable:true});const paths=['data/sources/registry.json',`data/${directory}/${record.id}.json`];if(discovery){await writeJSON(path.join(root,'data','source-discovery',discovery.id+'.json'),discovery,{immutable:true});paths.push(`data/source-discovery/${discovery.id}.json`);}git(root,['add','--',...paths]);git(root,['commit','-m',message]);}
 function trustedExecution(env,mode,runId){const match=runId.match(/^(source-bootstrap|research)-([1-9]\d{0,15})-([1-9]\d{0,3})$/);if(env.GITHUB_ACTIONS!=='true'||env.GITHUB_REPOSITORY!=='xndanius/while-you-sleep'||!match||match[2]!==env.GITHUB_RUN_ID||Number(match[3])!==Number(env.GITHUB_RUN_ATTEMPT)||match[1]!== (mode==='bootstrap'?'source-bootstrap':'research')||mode==='bootstrap'&&env.GITHUB_EVENT_NAME!=='workflow_dispatch')throw new Error('Source evolution runs only in its fixed trusted hosted workflow.');}
 export async function updateSourceRegistry({mode,runId,root=ROOT,env=process.env,validate=validateSource,discover=discoverSourceProposals,now=new Date(),push=true}){
  if(!['bootstrap','evolve'].includes(mode))throw new Error('Unknown source registry operation.');trustedExecution(env,mode,runId);
@@ -40,25 +40,31 @@ export async function updateSourceRegistry({mode,runId,root=ROOT,env=process.env
  for(let attempt=0;attempt<3;attempt++){
   const base=git(root,['rev-parse','HEAD']).stdout.trim();let registry=await readPublicSourceRegistry(root);const changeIds=[],probes=[];
   const day=localParts(now).day,dayFile=path.join(root,'data','source-evolution',`source-evolution-${day}.json`);
-  if(mode==='evolve'){try{await readBoundedJSON(dayFile);return {committed:false,reason:'This Vilnius day already has its durable source review.'};}catch(error){if(error.code!=='ENOENT')throw error;}if(!registry.initializedAt)return {committed:false,reason:'Hosted seed bootstrap has not admitted the initial registry.'};}
+  if(mode==='evolve'&&!registry.initializedAt)return {committed:false,reason:'Hosted seed bootstrap has not admitted the initial registry.'};
   const input=mode==='evolve'?await registryInput(root,now):null;
-  if(mode==='evolve'){
+  const budget=mode==='evolve'?dailyDiscoveryBudget({day,...input}):null;
+  if(budget?.review&&budget.remaining===0)return {committed:false,reason:'The three guarded discovery probes for this Vilnius day are already recorded.'};
+  if(mode==='evolve'&&!budget.review){
    for(const plan of planSourceEvolution({...input,now})){
     const before=registry;registry=applySourceTransition(registry,{...plan,now});const record=transitionRecord({before,after:registry,sourceId:plan.sourceId,reason:plan.reason,runId,statistics:plan.statistics,now});
     await persistRegistry(root,registry,record,'source-changes',`source: ${record.name} · ${plan.toStatus} · ${plan.reason}`);changeIds.push(record.id);committed=true;
    }
+   const record={schema:1,id:`source-evolution-${day}`,type:'source-evolution',day,runId,runUrl:sourceRunURL(runId),createdAt:at(now),statisticsSha256:sha256(stableJSON(input.stats)),policySha256:input.currentPolicy.policySha256,probes:[],changeIds:[...changeIds]};await writeJSON(dayFile,record,{immutable:true});git(root,['add','--',`data/source-evolution/${record.id}.json`]);git(root,['commit','-m',`source review: ${day} · ${changeIds.length} reasoned transitions; discovery budget retained`]);committed=true;budget.review=record;
   }
-  const proposals=mode==='bootstrap'?sourceSeedCatalog.filter(raw=>!registry.sources.some(item=>item.url===canonicalURL(raw.url))&&!registry.exclusions.some(item=>item.url===canonicalURL(raw.url))):(await discover({...input,registry})).slice(0,SOURCE_POLICY.maxDiscoveriesPerDay);
-  for(const raw of proposals){const source=definition(raw),result=await validate(source,{now}),eligible=admissionDecision(result,source)&&sourceDefinitionReasons(source).length===0;
-   probes.push({sourceId:source.id,url:source.url,checkedAt:result.checkedAt,eligible,reason:result.reason,validation:result.validation,code:result.code||null});
-   if(eligible&&registry.sources.filter(item=>item.status!=='retired').length<SOURCE_POLICY.activeCap){
-    const reason=(mode==='bootstrap'?'Guarded hosted seed validation admitted a readable public source on probation. ':raw.discoveryReason+' ').trim().slice(0,500),before=registry;registry=applySourceTransition(registry,{definition:source,toStatus:'probation',reason,validation:result.validation,howAdded:mode==='bootstrap'?'seed':'discovery',now});const record=transitionRecord({before,after:registry,sourceId:source.id,reason,runId,validation:result.validation,now});await persistRegistry(root,registry,record,'source-changes',`source: ${source.name} · probation · ${reason}`);changeIds.push(record.id);committed=true;
+  const proposed=mode==='bootstrap'?sourceSeedCatalog:(await discover({...input,registry}));
+  const attempted=new Set([...registry.sources,...registry.exclusions,...(budget?.receipts||[]).map(receipt=>receipt.probe)].map(item=>canonicalURL(item.url))),proposals=[];
+  for(const raw of proposed){const source=definition(raw);if(attempted.has(source.url))continue;attempted.add(source.url);proposals.push(raw);if(mode==='evolve'&&proposals.length>=budget.remaining)break;}
+  const discoveryFor=(probe,changeId,exclusionId)=>{if(mode!=='evolve')return null;const number=budget.used+1,previous=budget.receipts.at(-1);return {schema:1,id:`source-discovery-${day}-${number}`,type:'source-discovery',day,probeNumber:number,runId,runUrl:sourceRunURL(runId),createdAt:at(now),evolutionId:budget.review.id,evolutionSha256:sha256(stableJSON(budget.review)),previousSha256:previous?sha256(stableJSON(previous)):null,quotaBefore:SOURCE_POLICY.maxDiscoveriesPerDay-budget.used,quotaAfter:SOURCE_POLICY.maxDiscoveriesPerDay-number,statisticsSha256:sha256(stableJSON(input.stats)),policySha256:input.currentPolicy.policySha256,probe,changeId,exclusionId};};
+  for(const raw of proposals){const source=definition(raw),result=await validate(source,{now}),eligible=admissionDecision(result,source)&&sourceDefinitionReasons(source).length===0,admitted=eligible&&registry.sources.filter(item=>item.status!=='retired').length<SOURCE_POLICY.activeCap;
+   const rejected=eligible&&!admitted?{...result,eligible:false,code:'REGISTRY_CAP',reason:'The forty-source non-retired cap is already full.'}:result;
+   const probe={sourceId:source.id,url:source.url,checkedAt:at(result.checkedAt||now),eligible:admitted,reason:String(rejected.reason||'Guarded admission refused this source.').replace(/[\r\n]/g,' ').slice(0,500),validation:result.validation||{},code:rejected.code||null};probes.push(probe);
+   let discovery;
+   if(admitted){
+    const reason=(mode==='bootstrap'?'Guarded hosted seed validation admitted a readable public source on probation. ':raw.discoveryReason+' ').trim().slice(0,500),before=registry;registry=applySourceTransition(registry,{definition:source,toStatus:'probation',reason,validation:result.validation,howAdded:mode==='bootstrap'?'seed':'discovery',now});const record=transitionRecord({before,after:registry,sourceId:source.id,reason,runId,validation:result.validation,now});discovery=discoveryFor(probe,record.id,null);await persistRegistry(root,registry,record,'source-changes',`source: ${source.name} · probation · ${reason}`,discovery);changeIds.push(record.id);committed=true;
    }else{
-    const rejected=eligible?{...result,eligible:false,code:'REGISTRY_CAP',reason:'The forty-source non-retired cap is already full.'}:result,record=exclusionRecord({result:rejected,definition:source,runId,proposedBy:mode==='bootstrap'?'seed':'discovery'});registry={...registry,exclusions:[...registry.exclusions,record].slice(-64)};if(registry.initializedAt)registry.updatedAt=at(now);if(validateSourceRegistry(registry).length)throw new Error('Blocked source exclusion invalidated the registry.');await persistRegistry(root,registry,record,'source-exclusions',`source excluded: ${source.name} · ${record.reason}`);committed=true;
+    const record=exclusionRecord({result:{...rejected,checkedAt:probe.checkedAt,reason:probe.reason},definition:source,runId,proposedBy:mode==='bootstrap'?'seed':'discovery'});registry={...registry,exclusions:[...registry.exclusions,record].slice(-64)};if(registry.initializedAt)registry.updatedAt=at(now);if(validateSourceRegistry(registry).length)throw new Error('Blocked source exclusion invalidated the registry.');discovery=discoveryFor(probe,null,record.id);await persistRegistry(root,registry,record,'source-exclusions',`source excluded: ${source.name} · ${record.reason}`,discovery);committed=true;
    }
-  }
-  if(mode==='evolve'){
-   const record={schema:1,id:`source-evolution-${day}`,type:'source-evolution',day,runId,runUrl:sourceRunURL(runId),createdAt:at(now),statisticsSha256:sha256(stableJSON(input.stats)),policySha256:input.currentPolicy.policySha256,probes,changeIds};await writeJSON(dayFile,record,{immutable:true});git(root,['add','--',`data/source-evolution/${record.id}.json`]);git(root,['commit','-m',`source review: ${day} · ${changeIds.length} reasoned transitions, ${probes.length} guarded discovery probes`]);committed=true;
+   if(discovery){budget.receipts.push(discovery);budget.used++;budget.remaining--;}
   }
   if(!committed||!push)return {committed,changeIds,probes:probes.length};
   if(git(root,['push','origin','HEAD:main'],true).status===0)return {committed,changeIds,probes:probes.length};

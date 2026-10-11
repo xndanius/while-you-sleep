@@ -8,6 +8,7 @@ import {readPublicSourceRegistry,loadSourceRegistryData,registryDefinitions,crea
 import {validateCurationReceipts} from '../lib/curation.mjs';
 import {trustedScheduledMetadata} from './prepare-scheduled-job.mjs';
 import {enrichProductLeads} from '../lib/product-evidence.mjs';
+import {candidateHistory} from '../lib/candidate-input.mjs';
 
 export async function registryInput(root=ROOT,now=new Date()){
  const currentPolicy=parseScoringPolicy(await fs.readFile(path.join(root,'RULES.md'),'utf8'));
@@ -29,7 +30,8 @@ export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=sca
  }
  // The feed receipt fingerprints exactly the original scan. Added documentation
  // never changes its feed item counts, original IDs, URLs or attribution tuples.
- const enriched=enrich?await enrich({sources:originalSources,originMap:result.originMap,previous:input?.posts||[],now:()=>Date.now()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
+ const history=enrich?await candidateHistory(root,now):{recentAssessments:[]};
+ const enriched=enrich?await enrich({sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,now:()=>Date.now()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
  const sources=enriched.sources,scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?env:{GITHUB_EVENT_NAME:env.GITHUB_EVENT_NAME});
  const enrichmentFailed=enrich&&enriched.enrichment.status==='failed';
  const snapshot={id:runId,runId,createdAt:new Date(now).toISOString(),sources,health,enrichment:enriched.enrichment,...scheduling,scheduleStatus:originalSources.length>=3&&!enrichmentFailed?'completed':'failed',githubRunUrl:env.GITHUB_SERVER_URL&&env.GITHUB_REPOSITORY&&env.GITHUB_RUN_ID?`${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}`:null};

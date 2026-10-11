@@ -10,7 +10,7 @@ function page(text,url='https://example.com/feed',contentType='text/html'){
 const rss=(url='https://product.example.com/one')=>`<?xml version="1.0"?><rss version="2.0"><channel><title>Public</title><item><title>Receipt parser</title><link>${url}</link><description><![CDATA[Extracts receipts &amp; exports CSV. Human review is required.]]></description></item></channel></rss>`;
 
 test('all original and requested seeds have canonical fixed IDs; no source is locally pre-admitted',()=>{
- assert.equal(sourceDefinitions.length,13);assert.equal(sourceSeedCatalog.length,30);assert.equal(new Set(sourceSeedCatalog.map(value=>value.id)).size,30);
+ assert.equal(sourceDefinitions.length,13);assert.equal(sourceSeedCatalog.length,33);assert.equal(new Set(sourceSeedCatalog.map(value=>value.id)).size,sourceSeedCatalog.length);
  for(const value of sourceSeedCatalog){assert.equal(value.id,hash(canonicalURL(value.url)));assert.ok(value.reason);assert.equal(value.eligible,undefined);}
  for(const name of ['SaaS','microsaas','indiehackers','automation','LocalLLaMA','ChatGPTCoding'])assert.ok(sourceSeedCatalog.some(value=>value.name===`Reddit · r/${name}`));
  assert.ok(sourceSeedCatalog.some(value=>value.kind==='unparsed-listing'));assert.ok(sourceSeedCatalog.some(value=>value.url==='https://github.com/trending'));
