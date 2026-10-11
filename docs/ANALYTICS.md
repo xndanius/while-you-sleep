@@ -17,9 +17,9 @@ A post view means its article entered the viewport. Saves are observed save even
 
 ## The daily record
 
-**Measure the loop** is scheduled for 21:37 in `Europe/Vilnius` and can also be dispatched manually. GitHub's time zone setting follows daylight saving time; hosted schedules can be delayed or dropped. The active timer is unproven until real `event=schedule` evidence appears. [GitHub scheduling](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+**Measure the loop** has a planned slot at 21:37 in `Europe/Vilnius`, with cheap gates every 30 minutes at :13 and :43. It can also be dispatched manually. A completed slot suppresses repeated automatic work. Real scheduled events have been observed, including a delayed measurement; scheduled publication is verified separately. [Timing and evidence](SCHEDULER.md).
 
-The job calls the read-only GoatCounter API with its Actions secret and pulls Postiz analytics with `POSTIZ_API_KEY`. It commits only aggregate counts, public post IDs, measurement timestamps, range/status metadata, and a run record. No model is called. The site token is available only to the measurement step.
+When configured, the job calls the read-only GoatCounter API with its Actions secret. LinkedIn relay metrics remain unavailable until a supported measurement connection exists; RSS readiness is not an engagement measurement. It commits only aggregate counts, public post IDs, measurement timestamps, range/status metadata, and a run record. No model is called. The site token is available only to the measurement step.
 
 GoatCounter requests cover the project start through the last complete hour. Feed visits exclude `/machine` and events. Post views and saves include only known published post IDs. Pagination must finish before save totals are published. The job preserves an independently measured feed-view total if event retrieval later fails. [API endpoints and response fields](https://www.goatcounter.com/api.html).
 
