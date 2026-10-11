@@ -6,10 +6,10 @@ import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {hash,sha256,stableJSON,canonicalURL,candidateIdentity,writeJSON} from '../lib/storage.mjs';
 import {SCORING_KEYS,parseScoringPolicy} from '../lib/scoring.mjs';
-import {emptySourceRegistry,validSourceAdmission,validateSourceRegistry,applySourceTransition,registryDefinitions,createSourceScanReceipt,validateSourceScanReceipt,deriveSourceAttribution,sourceStatistics,planSourceEvolution,loadSourceRegistryState,validateSourceAttributionReceipt} from '../lib/source-registry.mjs';
+import {emptySourceRegistry,validSourceAdmission,validateSourceRegistry,applySourceTransition,registryDefinitions,createSourceScanReceipt,validateSourceScanReceipt,deriveSourceAttribution,sourceStatistics,planSourceEvolution,loadSourceRegistryState,validateSourceAttributionReceipt,sourceRegistryView} from '../lib/source-registry.mjs';
 import {importSourceScan} from '../scripts/import-source-scan.mjs';
 import {recordSourceAttribution} from '../scripts/record-source-attribution.mjs';
-import {admissionDecision,discoverSourceProposals,updateSourceRegistry,transitionRecord} from '../scripts/source-registry.mjs';
+import {admissionDecision,discoverSourceProposals,updateSourceRegistry,transitionRecord,exclusionRecord} from '../scripts/source-registry.mjs';
 import {researchSnapshot} from '../scripts/research-snapshot.mjs';
 
 const now='2026-10-11T12:00:00.000Z',rules='# Rules\n<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n',policy=parseScoringPolicy(rules);
@@ -33,6 +33,14 @@ test('guarded admissions require each actual allowed hop and complete readable p
  const v=validation(feed().url);assert.equal(validSourceAdmission(v),true);
  for(const mutate of [x=>x.robots=[],x=>x.robots[0].allowed=false,x=>x.robotsAllowed=false,x=>x.robots[0].state='available',x=>x.truncated=true,x=>x.itemCount=0,x=>x.resolvedUrl='https://other.example.org/feed',x=>x.redirects=[{next:null}],x=>x.robots[0].origin='https://forged.example.org']){const bad=structuredClone(v);mutate(bad);assert.equal(validSourceAdmission(bad),false);}
  const result={eligible:true,sourceId:feed().id,definition:feed(),validation:v,sampleItems:[{id:hash(feed().url),url:feed().url,title:'A public fixture',text:'Literal readable content.',fetchedAt:now}]};assert.equal(admissionDecision(result,feed()),true);assert.equal(admissionDecision({...result,eligible:false},feed()),false);
+});
+
+test('an explicit robots denial stays disallowed in fresh and legacy public exclusion records',()=>{
+ const record=exclusionRecord({result:{checkedAt:now,reason:'Robots rules refuse this public source.',code:'robots_disallowed',validation:{allowed:false,evaluatedUrl:feed().url}},definition:feed(),runId:'source-bootstrap-400-1',proposedBy:'seed'});
+ assert.equal(record.robotsState,'disallowed');
+ const reg=registry();reg.exclusions=[{...record,robotsState:'unavailable'}];
+ const before=stableJSON(reg),view=sourceRegistryView({registry:reg,stats:sourceStatistics({registry:reg,currentPolicy:policy,now})});
+ assert.equal(view.exclusions[0].robotsState,'disallowed');assert.equal(stableJSON(reg),before);
 });
 
 test('new sources start probation and cap counts all non-retired entries',()=>{

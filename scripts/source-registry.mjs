@@ -16,7 +16,7 @@ export function admissionDecision(result,expected){
 }
 export function exclusionRecord({result,definition:source,runId,proposedBy}){
  const reason=String(result?.reason||'Guarded public validation did not produce a readable, complete source.').replace(/[\r\n]/g,' ').slice(0,500),checkedAt=at(result?.checkedAt||new Date());
- return {schema:1,id:`source-exclusion-${hash(runId+source.id+checkedAt)}`,sourceId:source.id,name:source.name,url:source.url,kind:source.kind,checkedAt,reason,code:String(result?.code||'ADMISSION_REFUSED').slice(0,100),robotsState:result?.validation?.robots?.some(record=>record.allowed===false)?'disallowed':result?.validation?.robots?.length?'checked':'unavailable',runId,runUrl:sourceRunURL(runId),proposedBy};
+ return {schema:1,id:`source-exclusion-${hash(runId+source.id+checkedAt)}`,sourceId:source.id,name:source.name,url:source.url,kind:source.kind,checkedAt,reason,code:String(result?.code||'ADMISSION_REFUSED').slice(0,100),robotsState:result?.code==='robots_disallowed'||result?.validation?.robots?.some(record=>record.allowed===false)?'disallowed':result?.validation?.robots?.length?'checked':'unavailable',runId,runUrl:sourceRunURL(runId),proposedBy};
 }
 export function transitionRecord({before,after,sourceId,reason,runId,validation=null,statistics=null,now}){
  const source=after.sources.find(item=>item.id===sourceId),previous=before.sources.find(item=>item.id===sourceId),createdAt=at(now);
