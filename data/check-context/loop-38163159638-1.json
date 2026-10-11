@@ -1,0 +1,97 @@
+{
+  "runId": "loop-38163159638-1",
+  "createdAt": "2026-10-11T18:20:49.364Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "818b2c10f3924c6dcf728b2910bca9dbe8cc42dfa775173154babfe314f7f043",
+  "sourceSnapshotSha256": "b12bb2d86de9285ea7bbd5f38c81bd3c1cc75700041d3f5d222ce19c40886e54",
+  "sources": [
+    {
+      "id": "85c36091d9395f17a992933d",
+      "url": "https://raw.githubusercontent.com/mupt-ai/self-bench/main/README.md",
+      "title": "Show HN: Self-bench – benchmark coding agents on real-world software · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "SelfBench Find the best models for your repo. Private coding-agent benchmarks built from your repository's own merged pull requests. Public benchmarks tell you how a model does on someone else's code. SelfBench tells you how it does on yours: it turns your merged PRs into tasks with hidden tests, runs agents and models on them, and plots accuracy against cost. ## Results Every open-source repository released on **[selfbench.dev](https://selfbench.dev)** gets a live leaderboard: each model, harness, and reasoning setting placed by accuracy and cost per task, with the Pareto frontier drawn through the settings nothing else beats on both. **Browse the leaderboards:** [vercel/next.js](https://selfbench.dev/vercel/next.js) · [supabase/supabase](https://selfbench.dev/supabase/supabase) · [earendil-works/pi](https://selfbench.dev/earendil-works/pi) · [getsentry/sentry](https://selfbench.dev/getsentry/sentry) · [PostHog/posthog](https://selfbench.dev/PostHog/posthog) · [pingdotgg/t3code](https://selfbench.dev/pingdotgg/t3code) · [vercel/vercel](https://selfbench.dev/vercel/vercel) · **[all repositories →](https://selfbench.dev)** ## How it works For each merged PR, SelfBench rebuilds the task from the commit before the change: the PR's own request becomes the instruction, and an authoring agent writes hidden tests and a reference solution. A task is accepted only if the tests fail without a solution, pass with the original implementation, pass again on a rerun, and survive an independent review. Every accepted task is a native [Harbor](https://harborframework.com/) task. ## Using SelfBench Everything happens in the web app at [app.selfbench.dev](https://app.selfbench.dev): 1. **Sign in** with GitHub and **connect a repository**. 2. **Batch Generation**: choose how many easy, medium, and hard tasks to build, or use **Add PRs** on the Dataset page to build one task from each pull request you pick. A batch takes hours; it keeps running after you close the page. 3. **Dataset**: inspect each task (instruction, environment, hidden tests, reference patch, pipeline artifacts) and approve or reject it. 4. **Run**: pick models, harnesses, and a sandbox, and run them on the approved tasks. 5. **Results**: compare accuracy against cost, and open any trial's transcript and scores. 6. **Releases**: publish a public repository's results to [selfbench.dev](https://selfbench.dev). Models and sandboxes run on your organization's own keys under **Credentials**. Read released results through the [Public Results API](docs/api-reference/overview.mdx), or automate your workspace with an [API key](docs/api-reference/workspace.mdx). ## Self-hosting SelfBench's reference deployment runs on GCP: Cloud Run serves the API, while GKE Autopilot runs the Temporal workflow worker and KEDA-scaled Harbor jobs, with Cloud SQL and GCS. A Cloud Run worker pool remains available as an alternative. 1. Provision a GCP project, billing, Terraform state bucket, and GitHub Actions Workload Identity Federation. 2. Configure Terraform inputs and store each runtime secret value in its own Secret Manager secret. 3. Apply the environment with Terraform, or configure the protected GitHub `dev` and `prod` environments to deploy through Actions. 4. Point your domain at the provisioned load balancer and configure GitHub OAuth for the app URL. For prerequisites, exact Terraform commands, runtime configuration, GitHub Actions setup, and GKE worker setup, see the [self-hosting and infrastructure guide](infra/README.md). ## Development Requires [Bun](https://bun.sh/) 1.3.14+ and Docker with Compose. ```bash bun install --frozen-lockfile bun run validate ``` Run the whole stack (API serving the app, worker, Temporal, Postgres, local Docker sandboxes) from a checkout: ```bash cp .env.example .env # GitHub OAuth app, session secret, credential key, managed keys SELFBENCH_PUBLIC_URL=https://your-tunnel.example docker compose --profile sandbox up -d --build docker compose port api 8080 ``` Compose names the project after the checkout directory and publishes ephemeral host ports, so worktrees run side by side. Set `SELFBENCH_PUBLIC_URL` to the origin the browser opens (a tunnel or reverse proxy) before `up`, and register ` /auth/github/callback` on the OAuth app. For frontend work, `bun run dev:site` runs the API and Vite with hot reload (secrets in `.env.site`; see `scripts/dev-site.ts`). ## Documentation - [Mintlify docs](docs/): guides, public results API, and workspace API (`cd docs && npm ci && npm run dev`) - [How it works](docs/concepts/task-generation.mdx): the pipeline and what makes a task valid - [Public Results API](docs/api-reference/overview.mdx) · [Workspace API](docs/api-reference/workspace.mdx) - [Infrastructure](infra/README.md) ## License [MIT](LICENSE) © 2026 Mupt AI.",
+      "fetchedAt": "2026-10-11T18:20:49.221Z",
+      "productUrl": "https://github.com/mupt-ai/self-bench",
+      "originSourceIds": [
+        "9d24f51ff8767e75d5350bc5"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T18:17:32.695Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/mupt-ai/self-bench/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/mupt-ai/self-bench/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T18:20:49.221Z"
+    },
+    {
+      "id": "9d24f51ff8767e75d5350bc5",
+      "title": "Show HN: Self-bench – benchmark coding agents on real-world software",
+      "url": "https://news.ycombinator.com/item?id=49967408",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Self-bench – benchmark coding agents on real-world software | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Self-bench – benchmark coding agents on real-world software ( github.com/mupt-ai ) 4 points by avyayv 6 days ago | hide | past | favorite | discuss Hey HN, Today, we're launching selfbench.dev, an open-source tool that lets you create and run evals automatically from your PRs. Every benchmark with sufficient trust eventually gets benchmaxxed (Goodhart's law) - the labs are incentivized to maximize their scores on that benchmark, which isn't predictive on whether it'll actually work within your setup. This has been a time-consuming process that only the largest companies can afford to do, so we built self-bench to fix this. Self-bench uses agents to author / review Harbor environments generated from your PRs. You then approve every eval that the agent created, and can model/harness evals concurrently on sandboxes. To save you money, we also allow you to connect your OpenAI and Claude subscriptions so you don't have to pay raw token costs. We ran evals on several large codebases like - Posthog ( https://selfbench.dev/PostHog/posthog ) - Next.js ( https://selfbench.dev/vercel/next.js ) - Sentry ( https://selfbench.dev/getsentry/sentry ) - Pi ( https://selfbench.dev/earendil-works/pi ) - as well as other fantastic open-source projects (all on selfbench.dev) From our evals: - Kimi K3 and GLM 5.3 are almost always more expensive, yet less performant than models like GPT-6.1 Sol and Claude Opus 5.5, due to token efficiency. - GPT-6 Luna is almost always the most effective \"cost-efficient\" model we've tested, not open-source models. We'd love for you to try this on your codebase and let us know what you think! help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T18:20:49.363Z",
+      "productUrl": "https://github.com/mupt-ai/self-bench",
+      "discoveredAt": "2026-10-05T16:58:47Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T18:20:49.363Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [],
+  "assessmentContractVersion": 1,
+  "considerationEvidence": [
+    {
+      "title": "SelfBench repository agent benchmarks",
+      "productUrl": "https://github.com/mupt-ai/self-bench",
+      "sourceIds": [
+        "85c36091d9395f17a992933d",
+        "9d24f51ff8767e75d5350bc5"
+      ],
+      "availableSourceIds": [
+        "85c36091d9395f17a992933d",
+        "9d24f51ff8767e75d5350bc5"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
