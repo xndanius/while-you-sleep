@@ -6,8 +6,8 @@ import { verifyPublishedPost } from '../lib/validation.mjs';
 import { effectiveUsageRecords } from '../lib/usage.mjs';
 import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof.mjs';
 import { publicationSlotStatus } from '../lib/slot-status.mjs';
+import { writeSiteArtifacts,publicPostURL } from '../lib/site-artifacts.mjs';
 
-const xml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 try{
   const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,rawUsageRecords,scheduler,reservations,outcomes]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage','scheduler','slot-reservations','slot-outcomes'].map(records));
   const usageRecords=effectiveUsageRecords(rawUsageRecords);
@@ -20,7 +20,7 @@ try{
   if(metrics.social?.provider!=='zapier')metrics={...metrics,social:{provider:'zapier',status:'not_connected',posts:[],channels:[],measuredAt:metrics.measuredAt||null,reason:'LinkedIn relay metrics have not been connected.'}};
   const postMetrics=metrics.posts||metrics.social?.posts||[];
   const baseURL=(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'');
-  const hydrated=posts.map(post=>({...post,imageUrl:`./cards/${post.id}.jpg`,publicUrl:`${baseURL}/#post-${post.id}`,metrics:{views:postMetrics.find(m=>m.postId===post.id)?.views??null,saves:postMetrics.find(m=>m.postId===post.id)?.saves??null}}));
+  const hydrated=posts.map(post=>({...post,imageUrl:`./cards/${post.id}.jpg`,publicUrl:publicPostURL(baseURL,post.id),metrics:{views:postMetrics.find(m=>m.postId===post.id)?.views??null,saves:postMetrics.find(m=>m.postId===post.id)?.saves??null}}));
   const improvementRuns=versions.filter(v=>v.evaluations).map(v=>({id:v.id,type:'improve',status:v.status,startedAt:v.startedAt||v.createdAt,finishedAt:v.createdAt,eventName:v.eventName,jobKey:v.jobKey,scheduledAt:v.scheduledAt,scheduleStatus:v.scheduleStatus,githubRunUrl:v.githubRunUrl||null,version:v.id,usage:v.usage||{inputTokens:null,outputTokens:null,costUsd:null},steps:[{stage:'improve',status:v.status,at:v.createdAt,message:`${v.change} ${(v.reasons?.length?v.reasons.join(' '):v.reason)||''}`,baselineScore:v.baselineScore,challengerScore:v.challengerScore}]}));
   const sortedRuns=[...runs,...measurements,...improvementRuns].sort((a,b)=>(b.finishedAt||b.startedAt).localeCompare(a.finishedAt||a.startedAt));
   const sortedResearch=research.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
@@ -54,10 +54,6 @@ try{
   const machineHTML=await fs.readFile(path.join(ROOT,'public','machine.html'),'utf8');
   await fs.writeFile(path.join(ROOT,'public','machine','index.html'),machineHTML.replace('<base href="./">','<base href="../">'));
   await fs.writeFile(path.join(ROOT,'public','.nojekyll'),'');
-  const items=posts.map(post=>`<item><title>${xml(post.title)}</title><link>${xml(baseURL+'/#post-'+post.id)}</link><guid isPermaLink="false">${xml(post.id)}</guid><pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate><description>${xml([post.promise,post.whatItIs,'Who pays: '+post.whoPays,'Evidence: '+post.evidence,'Limits: '+post.uncertainty,'Loop: '+post.loop.join(' → '),'First 24 hours: '+post.first24Hours.join(' '),'Sources: '+post.sources.map(s=>s.url).join(' ')].join('\n\n'))}</description><enclosure url="${xml(baseURL+'/cards/'+post.id+'.jpg')}" type="image/jpeg" length="0"/></item>`);
-  // File sizes are required by RSS enclosure; replace them from the actual JPEGs.
-  for(let i=0;i<items.length;i++){const stat=await fs.stat(path.join(ROOT,'public','cards',posts[i].id+'.jpg'));items[i]=items[i].replace('length="0"',`length="${stat.size}"`);}
-  const rss=`<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>While You Sleep</title><link>${xml(baseURL)}</link><description>Real autonomous AI projects, evidence, and small first steps. Published by a checked Codex cloud loop.</description><language>en</language>${items.join('')}</channel></rss>\n`;
-  await fs.writeFile(path.join(ROOT,'public','feed.xml'),rss);
+  await writeSiteArtifacts({root:ROOT,posts,baseURL});
   console.log(JSON.stringify({posts:posts.length,runs:runs.length,path:'public/api/feed.json'}));
 }catch(error){console.error(safeError(error));process.exitCode=1;}

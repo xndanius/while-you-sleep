@@ -58,6 +58,7 @@ try{
     delete record.triggerEvent;
     record.githubRunUrl=scheduling?.githubRunUrl||research.githubRunUrl||null;
     record.eventName=scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown';
+    record.publicUrl=`${(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'')}/p/${post.id}/`;
     if(scheduling)record.scheduling=postScheduling(scheduling,published.length);
     record.contentSha256=contentHash(record);
     await fs.mkdir(path.join(ROOT,'public','cards'),{recursive:true});
