@@ -1,0 +1,684 @@
+{
+  "runId": "loop-38183226436-1",
+  "createdAt": "2026-10-11T23:11:43.589Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "7cfd594436b4a3addf189d03fbb703a7046ddcb832436756c988420179806b86",
+  "sourceSnapshotSha256": "cda57752fc85cc0dde3f85ac4b7a35509c70ed5f731357436773ec6513760161",
+  "sources": [
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VendIQ – AI agent for vendor follow-ups and ops automation ( rishailabs.com ) 1 point by rishailabs 2 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T23:11:39.310Z",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "discoveredAt": "2026-10-09T09:33:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T23:11:39.310Z"
+    },
+    {
+      "id": "ec35ab793ce165435ac16218",
+      "url": "https://raw.githubusercontent.com/linuztx/alter-zero/main/README.md",
+      "title": "Show HN: Alter Zero – RAM-efficient agent for coding, security and automation · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# Alter Zero ### Give your terminal a coding agent. Read, build, debug, and review code with an agent that works alongside you. Use the same tools for cybersecurity research, technical investigation, and everyday automation. [Quick start](#quick-start) · [Features](#features) · [Model providers](#model-providers) · [Commands & shortcuts](#commands--shortcuts) · [Support](#support-the-project) · [Acknowledgements](#acknowledgements) Watch the video demo on YouTube --- ## Why Alter Zero Alter Zero is an open-source AI coding agent written in Rust. It works directly in your project: reading files, making edits, running commands, and checking results while you follow along in your terminal. Coding is its focus, with the flexibility to investigate security issues, explore unfamiliar systems, and automate tasks using your existing tools. | What you get | Why it matters | | --- | --- | | **Work you can follow** | Live command output, readable diffs, and a task checklist make progress easy to inspect. | | **Control over execution** | Choose a permission mode, review proposed changes, and steer the agent while it works. | | **Your choice of model** | Connect with a supported subscription or API key, or run local models with Ollama. | | **Room to extend** | Add specialist subagents, reusable skills, lifecycle hooks, and MCP servers to fit your workflow. | | **A native terminal experience** | A single Rust binary with persistent sessions, inline images, and keyboard-driven controls. | ## Quick start Alter Zero runs on **Linux** (x86_64, arm64) and **macOS** (Intel, Apple silicon) in a modern terminal. ### Install One line on Linux or macOS: ```bash curl -fsSL https://raw.githubusercontent.com/linuztx/alter-zero/main/install.sh | sh ``` It picks the build for your machine, verifies its SHA-256 against the checksum published with the release, installs `alter-zero` into `~/.local/bin`, and tells you if that directory is not on your `PATH`. Or install the same build with npm: ```bash npm install -g @linuztx/alter-zero ``` Install options Set `ALTER_ZERO_INSTALL_DIR` to install somewhere else, or `ALTER_ZERO_VERSION=vX.Y.Z` to pin a release. [`CHANGELOG.md`](CHANGELOG.md) records what changed between versions. ```bash ALTER_ZERO_INSTALL_DIR=\"$HOME/bin\" ALTER_ZERO_VERSION=v0.1.0 \\ sh -c \"$(curl -fsSL https://raw.githubusercontent.com/linuztx/alter-zero/main/install.sh)\" ``` For a manual install, each release's notes list every archive with its SHA-256, so you can download, verify, and extract one by hand. Run it in a Kali Linux container `docker/` builds a small headless Kali Rolling image around the latest release, with a working set of command-line tools, for Docker or Podman. One command builds it and starts a container on a folder of yours: ```bash docker/build.sh ~/projects/site # add --engine podman for Podman docker exec -it -e TERM -e COLORTERM -e TERM_PROGRAM -e KITTY_WINDOW_ID -e TMUX \\ alter-zero-kali alter-zero ``` Outside a multiplexer, the `-e` flags hand over your terminal's identity so pictures render as real images rather than half-blocks. The [container guide](docker/README.md) covers workspaces, the published ports, pasting images, and adding tools. Inside tmux, enable `allow-passthrough` on the host and explicitly select the outer terminal's image protocol for that `docker exec`; the [tmux instructions](docker/README.md#pictures-in-your-terminal) include a ready-to-run Podman example. ### Build from source You need [rustup](https://rustup.rs) and a C compiler. The repository pins the Rust toolchain, which rustup installs automatically. ```bash git clone https://github.com/linuztx/alter-zero.git cd alter-zero cargo install --path . alter-zero ``` Without a configured provider, Alter Zero opens an offline demo with scripted turns so you can explore the interface. To work on your own tasks: 1. Run **`/login`** and choose a supported subscription, API provider, or local model server. Follow the prompts to connect. 2. Run **`/model`** to choose a model. Alter Zero remembers your selection for this directory. 3. Describe a task, review any approval prompts, and follow the work as it happens. Sign-ins added through `/login` are saved to `~/.alter-zero/.env`, outside your repository. Use `/` to browse commands or `?` in an empty composer to see shortcuts. Connect with environment variables You can also select your provider before launch. Set its API key variable and provider ID, then start the app. For example, with OpenRouter: ```bash export OPENROUTER_API_KEY=\"your-api-key\" export ALTER_ZERO_PROVIDER=openrouter alter-zero ``` Choose a model with `/model`, or set `ALTER_ZERO_MODEL` to its model ID before launching. ## Put it to work Start with a concrete task and let the agent work through it with you. | Use case | Try asking | | --- | --- | | **Coding and debugging** | \"Find why this test fails, fix the cause, and run the relevant tests.\" | | **Cybersecurity research** | \"Review this repository for security vulnerabilities. Trace each finding to the code and suggest a fix.\" | | **Technical investigation** | \"Trace how authentication works in this project and explain where access checks happen.\" | | **Automation** | \"Write a script that summarises these logs and flags recurring errors.\" | ## Model providers Connect to a supported subscription service, API provider, or local model server. Use `/login` to connect and `/model` to choose your model. | Provider | How you connect | Good to know | | --- | --- | --- | | **Agent Zero API** | API key. | Accesses Venice.ai models through the Agent Zero proxy, with a free daily quota for [A0T](https://www.agent-zero.ai/p/token/) token holders. | | **Venice** | API key. | Venice.ai's private, uncensored models straight from [Venice's own API](https://venice.ai/settings/api) — the same catalog the Agent Zero API proxies, reached with your own account. | | **GitHub Copilot** | Subscription, using a one-time device code. | Model capabilities, including context window, vision, and reasoning levels, come from Copilot. | | **ChatGPT Codex** | Subscription, with a ChatGPT Plus or Pro account: a browser sign-in, or a one-time device code on a headless machine. | Uses the account sign-in flow; no API key to paste. | | **Anthropic** | API key or account sign-in through the Anthropic Console. | Usage is billed to your API organisation with either method. | | **OpenRouter** | API key. | Access models from multiple providers through one account. | | **Ollama** | Point Alter Zero at your local server; no key required. | Run inference on your own machine with locally hosted models. | | **Ollama Cloud** | API key. | Use open models hosted by Ollama. | The footer shows your active model, thinking mode, speed tier and context usage. **Ctrl+T** cycles the model's supported reasoning levels, a ChatGPT model that lists speed tiers gets a command per tier (**`/fast`**, `/ultrafast`) that switches it to that processing (faster replies at increased plan usage), vision support is checked before sending images, and requests support prompt caching where the provider allows it. ## Features ### Follow the work as it happens - **Readable file changes.** Numbered, syntax-highlighted file views and diffs highlight the characters that changed, so edits are easy to review. - **Live commands and task progress.** Command output streams into the conversation, long results collapse into expandable previews, and a checklist tracks multi-step work. - **Parallel and background work.** Tool batches are announced before execution. Move a running command to the background with **Ctrl+B**, then use **Down** from an empty composer to inspect or stop it. - **Decisions in context.** Inline questions support multiple-choice and free-text answers. Send a message with **Enter** to steer the running turn, or use **Tab** to queue a follow-up. ### Choose how much control to keep - **Review at the approval prompt.** Inspect proposed file content, diffs, and commands before approving them. Approve once, allow a session rule, or reject with instructions using **Tab**. **Ctrl+E** asks for a command explanation. - **Four permission modes.** `manual` asks before file changes and commands; `edit` allows file changes; `auto` adds a reviewer for routine commands; `master` runs unattended. Cycle modes with **Shift+Tab** and keep rules per project. - **Checkpoints and rewind.** Enable checkpoints per directory to snapshot your working files in a separate store. **Esc Esc** returns to an earlier message and, when a checkpoint is available, restores the files with it. - **Project trust.** Review project-defined agents, hooks, and MCP servers with `/trust` before they can run. ### Give the agent the right tools - **Subagents.** Delegate focused work to agents with their own context, model, and tool access. Built-in `general-purpose` and `explore` agents are editable, and you can open a running agent's session to chat, send follow-up work, or stop it — while the main agent does the same by each agent's id: checks its progress, sends a finished agent a follow-up with its context intact, or stops it. - **Skills.** Add reusable `SKILL.md` folders, mention one with `$`, or browse them with `/skills`. Built-in `skill-creator` helps you write your own; `jina-reader` reads public webpages and PDFs through Jina Reader; `yt-dlp` guides media downloads with the separately installed CLI. - **MCP servers.** Connect tools over stdio, HTTP, or SSE, including remote servers with OAuth. Manage connections with `/mcp` or `alter-zero mcp`. - **Hooks and project instructions.** Use `hooks.json` to approve, reject, or adjust tool calls and supply context. `AGENTS.md` files carry your project's conventions; `/init` helps create one. ### Pick up where you left off - **Saved conversations.** `/resume` opens a searchable session picker. Use `--continue` for the latest session in this directory or `--resume ` for a specific one. - **Settings that stay with the project.** Model choices, permissions, skills, and appearance are remembered per directory, and every saved conversation resumes on the model it was using. Input history carries across sessions and is searchable with **Ctrl+R**. - **Managed context.** `/compact` summarises long conversations, with automatic compaction as the context window fills. A session scratchpad holds temporary scripts and notes outside your project. ### Make the terminal yours - **Rich output.** Stream Markdown, tables, highlighted code, and collapsible reasoning blocks, with clickable URLs and file paths in supported terminals. - **Inline images.** Paste screenshots with **Ctrl+V**. Images render natively in kitty, iTerm2, and sixel terminals, with a character-based fallback elsewhere. - **Inspect the session.** **Ctrl+O** opens the expanded transcript; **Ctrl+D** shows the context sent to the model. Start a line with `!` for a shell command or use `@` to pick a file. - **Live customisation.** Preview eleven themes with `/theme`, six mascots with `/mascot`, and nine spinner styles with `/spinner`. `/settings` brings the remaining controls together in a searchable menu. - **Works with herdr.** In a [herdr](https://herdr.dev) pane, the sidebar shows when the agent is working, waiting on your approval, or done, and a restarted herdr resumes the conversation. There is nothing to set up. ## Commands & shortcuts The essentials are always one keystroke away: `/` opens commands, and `?` in an empty composer shows shortcuts. Slash commands | Command | What it does | | --- | --- | | `/help` | List the available commands | | `/clear` | Clear the conversation | | `/copy` | Copy the last response to the clipboard | | `/export` | Copy or save the conversation as plain text | | `/diff` | Review staged, unstaged, and untracked Git changes in a full-screen viewer | | `/init` | Create an `AGENTS.md` contributor guide | | `/compact` | Summarise the conversation to free up context | | `/resume` | Resume a saved chat | | `/model` | Switch the active model | | `/fast`, `/ultrafast`, … | Switch the model's speed tier — one command per tier its listing names, shown only on a model that lists it | | `/login` | Add or update a provider sign-in | | `/settings` | Open the settings menu | | `/theme` | Choose the colour theme | | `/mascot` | Choose the banner mascot | | `/spinner` | Choose the status spinner style | | `/hooks` | Browse the configured lifecycle hooks | | `/skills` | Browse skills and enable or disable each one | | `/mcp` | Manage MCP servers | | `/trust` | Review and approve this project's config | | `/donate` | Support the project with a crypto donation | | `/secrets` | Store credentials the agent uses by placeholder, ` `, without ever seeing the value | | `/quit` | Exit the app | Keyboard shortcuts | Key | Action | | --- | --- | | `Enter` | Send, or hand a message to the running turn | | `Tab` | Queue a follow-up turn | | `Alt+↑` | Pull a queued message back to edit | | `Shift+Enter` / `Ctrl+J` | Insert a newline | | `↑` / `↓` | Recall input history | | `Ctrl+R` | Search input history | | `Esc` | Interrupt the running turn | | `Esc Esc` | Step back to a previous message and rewind | | `Ctrl+O` | Open the full transcript | | `Ctrl+D` | Show the context sent to the model | | `Ctrl+T` | Cycle the thinking mode | | `Shift+Tab` | Cycle the permission mode | | `Ctrl+B` | Move a running command or agent to the background | | `↓` (empty composer) | Manage background shells and agents | | `Ctrl+V` | Paste an image | | `!` | Run a shell command | | `@` | Pick a file path | | `$` | Mention a skill | | `/` | Open the command palette | | `Ctrl+W` / `Ctrl+U` / `Ctrl+K` | Delete the previous word, to the start of the line, to the end of the line | | `Ctrl+C` | Clear the draft, then quit | Command-line options ```text Usage: alter-zero [OPTIONS] [PROMPT] alter-zero mcp alter-zero update Arguments: [PROMPT] Send this message as the first turn Options: -c, --continue Continue the most recent conversation in this directory -r, --resume [ID] Resume a conversation by id, or pick one from a list -h, --help Print help -V, --version Print version ``` Start a task directly, or continue the work from your last session: ```bash alter-zero \"fix the failing test\" alter-zero -c \"now review the changes\" ``` Run `alter-zero mcp --help` for MCP server management commands, and `alter-zero update` to install the newest release over the binary you are running (an npm install updates with `npm install -g @linuztx/alter-zero@latest`). ## Where things live Your sign-ins, saved sessions, input history, and per-directory settings live under `~/.alter-zero/`. Keep shared extensions there, or add project-specific ones alongside your code. Configuration and extension paths | Location | Contents | | --- | --- | | `~/.alter-zero/.env` | Keys and tokens saved through `/login` | | `~/.alter-zero/agents/` and `~/.alter-zero/skills/` | Your shared agent definitions and skills | | `~/.alter-zero/hooks.json` and `~/.alter-zero/mcp.json` | Your shared hooks and MCP servers | | `.alter-zero/` in a project | Project-specific `agents/`, `skills/`, `hooks.json`, and `mcp.json` | | `AGENTS.md` | Project instructions read by the agent | Claude Code-style `.claude/skills/` and `.mcp.json` files are also supported. Project-defined agents, hooks, and MCP servers require approval through `/trust`. ## Support the project Alter Zero is free and open source. If it earns a place in your terminal, a donation keeps the work going. `/donate` shows these addresses inside the app, each in a copyable box. | Coin | Supported network(s) | Address | | --- | --- | --- | | BTC (Bitcoin) | Bitcoin Native SegWit | `bc1qhwamfrwuhz64pk00l75ykfff2ang22ns64chf7` | | ETH (Ethereum) | Ethereum, Linea, Base, Arbitrum, BNB Chain, OP, Polygon | `0xEAf6fbabB9DBE7a23BfE22A7A6c4aCe02063524b` | | SOL (Solana) | Solana | `Gwhv5c6uAa6aAz1MjwzV9QJpbm7CJWy2kuCeZ75mFc94` | > **Important:** Send only on a network listed for that address. Confirm that the asset and selected network match before sending. An address may look valid on another network, but funds sent on an unlisted or mismatched network may be unrecoverable. Thank you. ## License Alter Zero is released under the [Apache License 2.0](LICENSE). Copyright 2026 [linuztx](https://github.com/linuztx). ## Acknowledgements Alter Zero is made possible by the people, projects, and communities behind it: - [Agent Zero](https://agent-zero.ai) and its team for supporting the development of Alter Zero, including the free [A0T](https://www.agent-zero.ai/p/token/) inference credits used during testing. - [Claude Code](https://claude.com/claude-code) and [Codex CLI](https://github.com/openai/codex) for the interaction patterns that helped shape Alter Zero. - [ratatui](https://ratatui.rs) and [crossterm](https://github.com/crossterm-rs/crossterm) for the foundation of the terminal UI. See the additional [technical credits](docs/credits.md).",
+      "fetchedAt": "2026-10-11T23:11:39.586Z",
+      "productUrl": "https://github.com/linuztx/alter-zero",
+      "originSourceIds": [
+        "99c1d2a2b9c07dfc1b27af64"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T23:10:15.373Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/linuztx/alter-zero/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/linuztx/alter-zero/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T23:11:39.586Z"
+    },
+    {
+      "id": "99c1d2a2b9c07dfc1b27af64",
+      "title": "Show HN: Alter Zero – RAM-efficient agent for coding, security and automation",
+      "url": "https://news.ycombinator.com/item?id=49903249",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Alter Zero – RAM-efficient agent for coding, security and automation | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Alter Zero – RAM-efficient agent for coding, security and automation ( github.com/linuztx ) 1 point by linuztx 11 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T23:11:39.649Z",
+      "productUrl": "https://github.com/linuztx/alter-zero",
+      "discoveredAt": "2026-09-30T01:25:53Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T23:11:39.649Z"
+    },
+    {
+      "id": "498030eadd312a222ba1e7e0",
+      "title": "Apple discloses deal to hire team and license tech from personalized podcast startup Huxe · product evidence",
+      "url": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe",
+      "publisher": "techcrunch.com",
+      "text": "Apple discloses deal to hire team and license tech from personalized podcast startup Huxe | TechCrunch –:–:–:– Last day to exhibit your breakthrough to 10,000+ tech leaders at Disrupt is on Oct 2 . Book Exhibit Table Now. Disrupt doors open Oct. 13. Get your pass and bring someone with you at 50% off. REGISTER NOW. Close TechCrunch Desktop Logo TechCrunch Mobile Logo Latest Startups Venture Apple Security AI Apps Disrupt 2026 Events Podcasts Newsletters Search Submit Site Search Toggle Mega Menu Toggle Topics Latest AI Amazon Apps Biotech & Health Climate Cloud Computing Commerce Crypto Enterprise EVs Fintech Fundraising Gadgets Gaming Google Government & Policy Hardware Instagram Layoffs Media & Entertainment Meta Microsoft Privacy Robotics Security Social Space Startups TikTok Transportation Venture More from TechCrunch Staff Events Startup Battlefield StrictlyVC Newsletters Podcasts Videos Partner Content TechCrunch Brand Studio Contact Us Image Credits: Primakov / Shutterstock (opens in a new window) AI Apple discloses deal to hire team and license tech from personalized podcast startup Huxe Anthony Ha 12:50 PM PDT · October 10, 2026 Apple revealed in a regulatory filing that it has reached an agreement to bring on team members and technology from personalized audio startup Huxe, in what’s commonly known as a reverse acqui-hire deal. As first reported in MacRumors , Apple disclosed to the European Commission that it has agreed to make employment offers to “certain employees of Huxe AI,” and to “receive a non-exclusive license to Huxe’s intellectual property rights.” Reverse acqui-hires emerged in recent years as a way for larger companies to hire key team members and license technology from startups without acquiring the startups outright — presumably allowing them to build up AI talent and tech without drawing as much antitrust scrutiny. (Confusingly, these deals have both been referred to as “reverse acqui-hires” and as plain old “acqui-hires.” ) In the case of Huxe, the startup was founded by developers who’d previously worked on the AI-generated podcast features in NotebookLM (recently renamed Gemini Notebook ). But Huxe announced on May 21 that it was shutting down , with the team posting on the Huxe website that the company would be removing its app from the Apple and Google stores, halting service, and deleting user data. “The team is moving on to new things, and we won’t be continuing development of the product,” the company said. It also thanked its users, saying, “The fact that you used it, told friends about it, sent us your suggestions and your ideas, made it feel like we built it together.” On June 9, shortly after Huxe’s announcement, Apple notified the European Commission of its deal. The filing does not say who received employment offers or if they accepted. Nor does it disclose anything about Apple’s plans. Possibly related: Huxe’s shutdown announcement came just a day after Spotify unveiled AI-powered podcast generation features of its own , so Apple could be hoping to add similar functionality to its Podcasts app. Tech executives seem enamored with the idea that personalized audio can replace regular podcasts (and maybe even parent-child interaction ?), though it’s not clear how many normal listeners agree. Topics AI , Apple , Huxe , Media & Entertainment , Startups When you purchase through links in our articles, we may earn a small commission . This doesn’t affect our editorial independence. Anthony Ha Anthony Ha is TechCrunch’s weekend editor. Previously, he worked as a tech reporter at Adweek, a senior editor at VentureBeat, a local government reporter at the Hollister Free Lance, and vice president of content at a VC firm. He lives in New York City. You can contact or verify outreach from Anthony by emailing [email protected] . View Bio October 13 – 15 San Francisco Get 50% off a second pass The Disrupt experience is meant to be shared. Get your pass and bring a colleague, partner, or peer at 50% off. Cover more ground by making connections, building momentum, and discovering what’s next in the startup ecosystem. BOOK NOW Most Popular Elon Musk intensifies attack on Ambani over Starlink India launch delay Jagmeet Singh Remember Orkut? Its founder wants to bring it back Jagmeet Singh US bars Microsoft, Adobe, and major IT firms from green card program for skilled foreign workers Aisha Malik Elon Musk questions Ambani’s influence as Starlink India launch stalls Jagmeet Singh Cal AI’s 19-year-old founder just raised $10M for his new AI startup Julie Bort Google releases a new local-first Granola competitor Ivan Mehta At 19, founder raises $11M for Ghost, maker of a $3,499 computer for personal AI Dominic-Madori Davis Loading the next article Error loading the next article X LinkedIn Facebook Instagram youTube Mastodon Threads Bluesky TechCrunch Staff Contact Us Advertise Site Map Terms of Service Privacy Policy RSS Terms of Use Code of Conduct Voice AI Anthropic Flock Startup Battlefield Disrupt 2026 Tech Layoffs ChatGPT © 2026 TechCrunch Media LLC.",
+      "fetchedAt": "2026-10-11T23:11:39.967Z",
+      "discoveredAt": "Sat, 10 Oct 2026 19:50:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ],
+      "productUrl": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe",
+      "originSourceIds": [
+        "498030eadd312a222ba1e7e0"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T23:10:11.492Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T23:10:11.492Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [
+          {
+            "url": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe",
+            "status": 301,
+            "next": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=UTF-8",
+        "resolvedUrl": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Is Apple hoping to get into the AI-generated podcast business?",
+      "verifiedAt": "2026-10-11T23:11:39.967Z"
+    },
+    {
+      "id": "b9a73099ecdc883dd555f687",
+      "title": "PitchMonster BOOSTED · product evidence",
+      "url": "https://betalist.com/startups/pitchmonster",
+      "publisher": "betalist.com",
+      "text": "PitchMonster: Practice sales calls with AI buyers and get | BetaList BetaList Home Browse Newsletter Search FAQ Advertise Support Startup Jobs Vision Pro apps Home Browse Newsletter Search FAQ Advertise Support theme#toggle\" class=\" size-9 rounded-full hover:bg-gray-100 flex items-center justify-center dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 \" title=\"Toggle theme\" > Log in Submit Startup Back to all startups PitchMonster BOOSTED Practice sales calls with AI buyers and get instant coaching PitchMonster helps sales teams practice real conversations, analyze live calls, and get AI coaching before and after every deal. The platform simulates buyers that match your ICP in 29 languages, challenges reps with objections, and scores performance against your playbooks. Teams create scenarios from documents, calls, and CRM data, integrate with Salesforce and Gong, and track improvement with clear analytics. Enterprises use it to cut ramp time and standardize coaching at scale. Visit Site Visit Site Makers PitchMonster Topics Training Simulation Sales Enablement Coaching Revenue Operation Featured September 12, 2026 Request changes Get your badge Report this startup Manage collections Discover startups similar to PitchMonster FreeDAST SPONSOR Scan your live site for risks and get a clear security grade SPONSOR RepEdge.ai Analyze sales calls and coach reps with real-time AI insights PitchMit Win more Upwork jobs with AI that learns your winning patterns FreeDAST BOOSTED Scan your live site for risks and get a clear security grade BOOSTED AvairAI AI agents book meetings while you close deals Pitch31.ai Turn your APIs into AI agents implo.ai Buy ready-to-deploy AI prompts, workflows, agents, and templates Whacka BOOSTED Turn any idea into your own mobile app with no code from your phone BOOSTED Pondeo Sell more with smart account intelligence",
+      "fetchedAt": "2026-10-11T23:11:40.278Z",
+      "productUrl": "https://betalist.com/startups/pitchmonster",
+      "originFeedIds": [
+        "498a696b45de80618b28713d"
+      ],
+      "originSourceIds": [
+        "b9a73099ecdc883dd555f687"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://betalist.com",
+            "robotsUrl": "https://betalist.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-11T23:10:12.298Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 99,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://betalist.com/startups/pitchmonster",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://betalist.com/startups/pitchmonster",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "PitchMonster BOOSTED. Practice sales calls with AI buyers and get instant coaching Public startup listing; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-11T23:11:40.278Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-11T23:11:40.506Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-11T23:11:40.506Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T23:11:40.691Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-11T23:11:40.691Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T23:11:40.749Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-11T23:11:40.749Z"
+    },
+    {
+      "id": "ca6a664d20bd48cf57145f2e",
+      "title": "PDF Invoice Data Extraction & Tracking with Google Drive, Claude AI & Telegram · product evidence",
+      "url": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "publisher": "n8n.io",
+      "text": "PDF invoice data extraction & tracking with Google Drive, Claude AI & Telegram | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Google Sheets No Operation, do nothing Telegram +8 PDF invoice data extraction & tracking with Google Drive, Claude AI & Telegram Use for free Created by Automate With Marc Last update Last update 8 months ago Categories Invoice Processing AI Summarization Share 📥 Invoice Intake & Notification Workflow This automated n8n workflow monitors a Google Drive folder for newly uploaded invoice PDFs, extracts essential information (like client name, invoice number, amount, due date), logs the data into a Google Sheet for recordkeeping, and sends a formatted Telegram message to notify the billing team. For step-by-step video build of workflows like this: https://www.youtube.com/@automatewithmarc ✅ What This Workflow Does 🕵️ Watches a Google Drive folder for new invoice files 📄 Extracts data from PDF invoices using AI (LangChain Information Extractor) 📊 Appends extracted data into a structured Google Sheet 💬 Notifies the billing team via Telegram with invoice details 🤖 Optionally uses Claude Sonnet AI model to format human-friendly summaries ⚙️ How It Works – Step-by-Step Trigger: Workflow starts when a new PDF invoice is added to a specific Google Drive folder. Download & Parse: The file is downloaded and its content extracted. Data Extraction: AI-powered extractor pulls invoice details (invoice number, client, date, amount, etc.). Log to Google Sheets: All extracted data is appended to a predefined Google Sheet. AI Notification Formatting: An Anthropic Claude model formats a clear invoice notification message. Telegram Alert: The formatted summary is sent to a Telegram channel or group to alert the billing team. 🧠 AI & Tools Used Google Drive Trigger & File Download PDF Text Extraction Node LangChain Information Extractor Google Sheets Node (Append Data) Anthropic Claude (Telegram Message Formatter) Telegram Node (Send Notification) 🛠️ Setup Instructions Google Drive: Set up OAuth2 credentials and specify the folder ID to watch. Google Sheets: Link the workflow to your invoice tracking sheet. Telegram: Set up your Telegram bot and obtain the chat ID. Anthropic & OpenAI: Add your Claude/OpenAI credentials if formatting is enabled. 💡 Use Cases Automated bookkeeping and invoice tracking Real-time billing alerts for accounting teams AI-powered invoice ingestion and summary Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-11T23:11:41.565Z",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T23:10:11.573Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "PDF Invoice Data Extraction & Tracking with Google Drive, Claude AI & Telegram Automate With Marc ⋅ a year ago ⋅ Free 📥 Invoice Intake & Notification Workflow This automated n8n workflow monitors a Google Drive folder for newly uploaded invoice PDFs, extracts essential information (like client name, invoice number, amount, due date), logs the data into a Google Sheet for recordkeeping, and sends a formatted Telegram message to notify the billing... Google Sheets Telegram Google Drive +4",
+      "verifiedAt": "2026-10-11T23:11:41.565Z"
+    },
+    {
+      "id": "eb08bb526b3fe0ba957f00c2",
+      "title": "Financial Document Extraction from Gmail to Google Sheets · product evidence",
+      "url": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "publisher": "n8n.io",
+      "text": "Financial document extraction from Gmail to Google Sheets | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Google Sheets If Edit Fields (Set) +10 Financial document extraction from Gmail to Google Sheets Use for free Created by Gtaras Last update Last update 8 months ago Categories Invoice Processing AI Summarization Share Overview Manual financial reconciliation is tedious and prone to error. This workflow functions as an AI Financial Controller, automatically monitoring your inbox for invoices, receipts, and bills, extracting the data using OCR, and syncing it to Google Sheets for approval. Unlike simple scrapers, this workflow uses a \"Guardrail\" AI agent to filter out non-financial emails (like newsletters) before they are processed, ensuring only actual transactions are recorded. Who is it for? Finance Teams: To automate the collection of vendor invoices. Freelancers: To track expenses and receipts for tax season. Operations Managers: To monitor budget spend and categorize costs automatically. How it works Ingest: The workflow watches a specific Gmail label (e.g., \"INBOX\") for new emails. Guardrail: A Gemini-powered AI agent analyzes the email text to determine if it is a valid financial transaction. If not, the workflow stops. Extraction (OCR): If an attachment exists: An AI Agent (GPT-4o) extracts data from the PDF. If no attachment: An AI Agent extracts data directly from the email body. Validation: Code nodes check for missing fields or invalid amounts. Business Logic: The system automatically assigns General Ledger (GL) categories (e.g., \"Uber\" -> \"Travel\") and sets approval statuses based on amount thresholds. Sync: Validated data is logged to Google Sheets, and a confirmation email is sent. Errors are logged to a separate error sheet. How to set up Google Sheets: Copy this Google Sheet template to your drive. It contains the necessary tabs (Invoices, Error Logs, Success Metrics). Configure Workflow: Open the node named \"Configuration: User Settings\" . Paste your Google Sheet ID (found in the URL of your new sheet). Enter the Admin Email address where you want to receive error notifications. Credentials: Connect your Gmail account. Connect your Google Sheets account. Connect your OpenAI (for OCR) and Google Gemini/PaLM (for Guardrails) accounts. Requirements n8n version 1.0 or higher. Gmail account. OpenAI API Key. Google Gemini (PaLM) API Key. Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-11T23:11:42.149Z",
+      "productUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "eb08bb526b3fe0ba957f00c2"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T23:10:11.573Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Financial Document Extraction from Gmail to Google Sheets Gtaras ⋅ 10 months ago ⋅ Free Overview Manual financial reconciliation is tedious and prone to error. This workflow functions as an AI Financial Controller, automatically monitoring your inbox for invoices, receipts, and bills, extracting the data using OCR, and syncing it to Google Sheets for approval. Unlike simple scrapers, this workflow uses a \"Guardrail\" ... Google Sheets Gmail Code +4",
+      "verifiedAt": "2026-10-11T23:11:42.149Z"
+    },
+    {
+      "id": "a521fe936c5585ded468cfbf",
+      "url": "https://raw.githubusercontent.com/kubezap/kubezap-operator/main/README.md",
+      "title": "Show HN: KubeZap – Declarative workflow automation for Kubernetes · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "[![CI](https://github.com/kubezap/kubezap-operator/actions/workflows/ci.yml/badge.svg)](https://github.com/kubezap/kubezap-operator/actions/workflows/ci.yml) **Declarative workflow automation for Kubernetes.** Define event-driven automations as CRDs — no web UI, no proprietary runtime, no vendor lock-in. Trigger on webhooks, Kafka messages, cron schedules, or Kubernetes resource events. Execute multi-step flows with HTTP calls, data transforms, conditional branching, timed waits, and retry policies — all declared in YAML and version-controlled alongside your infrastructure. --- ## Why KubeZap **Credentials never leave the cluster's trust boundary.** The controller resolves secrets in-memory and hands a fully-substituted request to a dedicated, low-privilege HTTP executor pod — no Kubernetes API access, no secrets RBAC, independent SSRF protection. Your API keys are never written to etcd and never stored in a separate workflow database. **One model, not a system of systems.** A workflow is `Trigger → Flow → FlowRun` — three CRDs, one mental model, from event to result. Every execution is a real Kubernetes object you can `kubectl get` end to end: what fired it, what each step did, and why. --- ## Install ### Prerequisites - Kubernetes 1.27+ (or k3s / OpenShift 4.12+) - `kubectl` configured against your cluster - `kustomize` v5+ (or `kubectl` 1.27+ which bundles it) ### Raw manifests (available now) ```bash # Install CRDs kubectl apply -k config/crd # Deploy the operator kubectl apply -k config/default ``` The controller starts in `kubezap-system`. Verify it is running: ```bash kubectl get pods -n kubezap-system ``` ### Helm chart ```bash helm install kubezap oci://ghcr.io/kubezap/charts/kubezap-operator \\ --namespace kubezap-system --create-namespace ``` See [docs/overview.md](docs/overview.md#helm-recommended) for install-mode options (OwnNamespace, SingleNamespace, MultiNamespace) and image-override examples. ### OperatorHub / OLM KubeZap is listed on the [community OperatorHub](https://operatorhub.io/operator/kubezap) (`k8s-operatorhub/community-operators`, for vanilla Kubernetes). Install via the OperatorHub.io \"Install\" button, which generates the Subscription for your target namespace. ### Local development See [docs/contributing.md](docs/contributing.md) for build instructions, local k3s setup, and how to run unit and e2e tests. --- ## Quick start Once the operator is running, define a Trigger and a Flow: ```yaml # trigger.yaml apiVersion: automation.kubezap.io/v1alpha1 kind: Trigger metadata: name: my-webhook namespace: default spec: type: webhook enabled: true webhook: path: /hooks/my-webhook method: POST flowRef: name: my-flow --- # flow.yaml apiVersion: automation.kubezap.io/v1alpha1 kind: Flow metadata: name: my-flow namespace: default spec: steps: - name: call-api action: type: http http: url: https://httpbin.org/post method: POST body: '{\"event\": \"$(trigger.body.event)\"}' ``` ```bash kubectl apply -f trigger.yaml -f flow.yaml # Send a test event curl -X POST http:// :8080/hooks/my-webhook \\ -H 'Content-Type: application/json' \\ -d '{\"event\": \"hello\"}' # Inspect the execution kubectl get flowruns -n default kubectl get flowrun -o jsonpath='{.status.phase}' ``` For a full walkthrough see [examples/order-router/](examples/order-router/). --- ## Documentation | Document | Description | | --------------------------------------------------- | -------------------------------------------------------------- | | [Overview](docs/overview.md) | Architecture, core concepts, CRD reference | | [Getting Started](examples/order-router/) | Step-by-step guide: webhook → transform → conditional notify | | [Examples](examples/) | Runnable examples with manifests and step-by-step instructions | | [Flow CRD](docs/api/flow.md) | Full step action reference (http, transform, publish, wait) | | [FlowRun CRD](docs/api/flowrun.md) | Execution model, GC, status fields | | [Integration CRD](docs/api/integration.md) | Kafka, plugin protocol | | [Webhook Security](docs/guides/webhook-security.md) | HMAC, bearer, OIDC, API-key, IP allowlist, mTLS | | [Observability](docs/guides/observability.md) | Prometheus metrics, OpenTelemetry traces, access logs | --- ## Features - **Trigger types**: webhook (HTTP), cron, Kafka pub/sub, AMQP (beta), NATS JetStream (beta), Kubernetes resource events (alpha) - **Step actions**: HTTP calls, data transforms (CEL), conditional branching, timed waits, Kafka publish - **Execution**: dependency-ordered DAG, per-step retry with exponential backoff, step + flow timeouts - **FlowRun GC**: TTL-based cleanup, `kubezap.io/retain` annotation, max FlowRun cap per Trigger - **Webhook auth**: HMAC, bearer token, OIDC/JWT, API-key header, IP allowlist, mTLS - **Observability**: Prometheus metrics, OpenTelemetry traces (OTLP/gRPC), structured JSON access logs - **CLI**: `kubezap` command — `watch`, `history`, `triggers`, `flows` subcommands - **Multi-namespace**: `WATCH_NAMESPACES` supports MultiNamespace, SingleNamespace, OwnNamespace - **OLM**: OwnNamespace, SingleNamespace, and MultiNamespace supported in the CSV bundle - **Security**: distroless images, non-root, read-only root FS, restricted SCC compliant, credentials resolved in-memory and never persisted to etcd or a workflow database --- ## Getting Help Have a question, an idea, or want to show off what you built? Use [GitHub Discussions](https://github.com/kubezap/kubezap-operator/discussions) — it's the place for Q&A, feature ideas, and community show-and-tell. Found a bug? Open an [issue](https://github.com/kubezap/kubezap-operator/issues) instead. --- ## License Apache 2.0",
+      "fetchedAt": "2026-10-11T23:11:42.286Z",
+      "productUrl": "https://github.com/kubezap/kubezap-operator",
+      "originSourceIds": [
+        "0204dd8fa35cf70ed16191b6"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T23:10:15.373Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/kubezap/kubezap-operator/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/kubezap/kubezap-operator/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T23:11:42.286Z"
+    },
+    {
+      "id": "0204dd8fa35cf70ed16191b6",
+      "title": "Show HN: KubeZap – Declarative workflow automation for Kubernetes",
+      "url": "https://news.ycombinator.com/item?id=49947309",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: KubeZap – Declarative workflow automation for Kubernetes | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: KubeZap – Declarative workflow automation for Kubernetes ( github.com/kubezap ) 4 points by borfswitch 8 days ago | hide | past | favorite | 2 comments help whiskey-one 7 days ago [–] This is really cool! Once you’ve gone to the trouble to be in k8s universe, might as well get some higher-layer primitives for the business logic as well. The only weird part is the need to stand up a cluster to test individual trigger/flows function. reply borfswitch 7 days ago | parent [–] Thanks! Your comment gave me a great idea for an update to the CLI to allow dry running flows outside or a k8s cluster. reply Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-11T23:11:42.483Z",
+      "productUrl": "https://github.com/kubezap/kubezap-operator",
+      "discoveredAt": "2026-10-03T20:07:37Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-11T23:11:42.483Z"
+    },
+    {
+      "id": "d460d0dfa07bd5c37c1d64f6",
+      "url": "https://raw.githubusercontent.com/AysanZ/alidade/main/README.md",
+      "title": "Show HN: Alidade – an open-source Web-GIS where the map is one JSON document · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# Alidade **An open-source Web-GIS platform.** PostGIS vector tiles, satellite imagery, full symbology, 3D models on the terrain, and a real-time asset layer. No API keys anywhere. [![ci](https://github.com/aysanz/alidade/actions/workflows/ci.yml/badge.svg)](https://github.com/aysanz/alidade/actions/workflows/ci.yml) [![licence](https://img.shields.io/badge/licence-Apache--2.0-blue.svg)](LICENSE) [![no api keys](https://img.shields.io/badge/API%20keys-none-brightgreen.svg)](#no-api-keys) **[▶ Live demo](https://alidade.aysanz.dev)** --- ## What it is The map is one JSON document. The core diffs two versions of it and emits a list of operations; an adapter applies those operations to MapLibre. Editing the document changes the map — and swapping the basemap does not destroy your layers. That one decision is why undo is sixty whole documents deep, why a drawing survives a basemap swap, and why the renderer could be replaced without touching the model. ``` packages/core the arithmetic · knows nothing about any renderer packages/maplibre the only folder that knows MapLibre exists packages/three the only folder that knows three.js exists apps/studio React client services/api FastAPI: ingest, vector tiles, imagery, WMS, live feed ``` ## Features | | | |---|---| | **Data in** | Drop a GeoJSON, zipped Shapefile, GeoPackage, KML or GPX — reprojected by ogr2ogr into PostGIS and served back as vector tiles in the same request. Or paste a link and GDAL reads it over HTTP. Or point at a WMS and pick a layer from GetCapabilities. | | **Imagery** | GeoTIFFs converted once to Cloud-Optimised GeoTIFFs and indexed by their real footprint. Tiles are mosaicked on demand under a rule you choose — newest, closest to a date, sharpest, best covering, or one locked image — with band selection, stretch and band maths as query parameters rather than as decisions frozen at import. | | **Symbology** | Single, graduated and categorised, with markers, labels and per-layer scale ranges. | | **Filters** | A filter is a structure, not a string, so one filter compiles two ways: a renderer expression and parameterised SQL. The inspector will show you the SQL. | | **Identify** | Click a feature for its attributes, or the imagery for the pixel values under the cursor. The attribute table pages, searches, sorts and hides columns, and highlights on the map what you select in it. | | **2D · 2.5D · 3D** | Three projections including a real globe, terrain and hillshade from open elevation tiles, and OSM building footprints raised to their real height. | | **3D models** | glTF placed the way a surveyor states it — position, height, bearing, scale — standing on the terrain, lit by the real sun for a real instant, casting real shadows. One model can be placed at every point of a layer. | | **Live assets** | Positions over a WebSocket as an ordinary row in the table of contents. Assets that go quiet are drawn hollow, not deleted. A model can stand in for one and take its heading, climb and bank from the reports. | | **Drawing** | Geodesic measurement, buffers, snapping, vertex editing. Exports to GeoJSON, KML, GPX, CSV or WKT — and reads all of them back. | | **Chrome** | Graticule, UTM and metric grids, overview map, scale bar in three unit systems, coordinate readout in DD, DMS or UTM, bookmarks. | ## What it looks like Layers, styled. Markers, outlines and a legend that follows what you set, over data loaded from a link a minute earlier. Ask it things. Click a feature for what it is; the table pages, searches and finds the same row. A real globe , not a picture of one — and a sphere at every zoom if you ask for one. 3D buildings from OpenStreetMap. Footprints extruded to their real height, lit from where the sun actually was. Fly a landing. The aircraft banks because it is turning, not because a keyframe said so. A live fleet over a WebSocket , with a connection light, because a stopped feed and a still fleet look identical. Imagery. A schematic rather than a screenshot: what is on the map is whatever you loaded. See the imagery notes . Basemaps, none of which need a key. Swapping one does not disturb your layers. ## Run it ```bash cp .env.example .env # --env-file matters: compose looks for .env next to the compose file, not here. docker compose --env-file .env -f deploy/docker-compose.yml up -d --build # Install from the repository root. The studio depends on two workspace packages, # so installing inside apps/studio cannot see them. pnpm install pnpm dev ``` - Studio — - API health — - Live feed — `ws://localhost:8000/api/live/assets`, switched on from the **Live assets** row - Postgres — host port **5433**, because 5432 is usually already taken The database ships **empty**. There is no seeded demo layer: one cannot be deleted from the studio, it comes back on every fresh volume, and it makes an install that has nothing in it look like it already has data. Get data in through **Add data**, or load straight into PostGIS: ```bash ./data/seed.sh wards.gpkg ``` Two things live on volumes rather than in the database, because they are files: uploaded `.glb` models and converted imagery. A single satellite scene is a couple of hundred megabytes, so give the imagery volume room before loading a folder of them. For a server rather than a laptop, `deploy/docker-compose.prod.yml` runs images built in CI instead of building anything locally, and publishes nothing but Caddy. See [deployment](docs/deployment.md). ## No API keys Nothing here needs one, and that is a constraint rather than a boast: a demo that dies when someone's free tier changes is worse than a demo with fewer basemaps. The canvases and the buildings are [OpenFreeMap](https://openfreemap.org), the imagery and terrain styles are Esri, and the elevation is Mapzen terrarium. ## Tests ```bash pnpm test # 585 tests in 37 files, Node only: no browser, no WebGL pnpm typecheck pnpm build cd services/api && pytest # 70 more; 55 of them want no database at all ``` CI runs the API twice on purpose: once with nothing but Python, for the parsing, the naming rules, the live feed and every imagery decision that is arithmetic on a `gdalinfo` document; and once against a real PostGIS with `data/init/` loaded, for the tiles and the registry. Core tests assert on the operation array the reconciler emits for a given pair of project states, so slot ordering, classification, filter compilation and the imagery rules are all tested without rendering anything. Adapter tests use a fake renderer that records calls and refuses the same things a real one refuses. Nothing in the suite touches a GPU. `packages/core/tests/regressions.test.ts` holds one test per defect that has been fixed, named after the symptom rather than the cause. ## Documentation - **[Design notes](docs/design-notes.md)** — why each subsystem is built the way it is, at length: the document model, geodesic drawing, the sun, the live feed's contract. - **[Imagery](docs/imagery.md)** — the GeoTIFF catalogue, footprints, dates, mosaic rules and band maths, and what the endpoints answer. - **[Imagery prior art](docs/imagery-prior-art.md)** — TiTiler, STAC, mosaic datasets and EO Browser: what the field already does, what was taken from it, and what is left. - **[Deployment](docs/deployment.md)** — production on a small VPS: images built in CI, Caddy for TLS, tile caching, and the parts that only fail once you are live. - **[Contributing](CONTRIBUTING.md)** ## Licence Apache-2.0.",
+      "fetchedAt": "2026-10-11T23:11:42.609Z",
+      "productUrl": "https://github.com/AysanZ/alidade",
+      "originSourceIds": [
+        "8eab0af476c34cad1244c829"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-11T23:10:15.373Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/AysanZ/alidade/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/AysanZ/alidade/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-11T23:11:42.609Z"
+    },
+    {
+      "id": "0e57074ba292834ef1e52cd0",
+      "title": "Munito AI Y Combinator Logo F2026 • Active • 1 employees • Paris, France · product evidence",
+      "url": "https://www.ycombinator.com/companies/munito-ai",
+      "publisher": "www.ycombinator.com",
+      "text": "Munito AI: Open-model inference provider for Europe, private by default. | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Munito AI Munito AI Open-model inference provider for Europe, private by default. Y Combinator Logo Fall 2026 Active Artificial Intelligence Enterprise Infrastructure Company Jobs 0 https://munito.ai Open-model inference provider for Europe, private by default. Munito is an open-model inference provider for Europe, private by default. Its API lets users choose their models and keep inference and storage in the EU. Founded by the former inference lead at Mistral AI, Munito is built on one belief: open and independent intelligence, both models and inference, is key to economic growth and prosperity. Active Founders Alexey Eryshev Founder/CEO Founder at Munito AI. I led inference at Mistral AI, where my team built its API and inference products, and I built Le Chat's Deep Research. Before that, I spent five years at Airbnb, where I built Hosting Services from scratch and grew it to a global product. Alexey Eryshev Founder/CEO Founder at Munito AI. I led inference at Mistral AI, where my team built its API and inference products, and I built Le Chat's Deep Research. Before that, I spent five years at Airbnb, where I built Hosting Services from scratch and grew it to a global product. YC Photos Hear from the founders How did your company get started? (i.e., How did the founders meet? How did you come up with the idea? How did you decide to be a founder?) I led inference at Mistral AI, where my team built its API and inference products, and I built Le Chat's Deep Research. Before that, I spent five years at Airbnb, where I built Hosting Services from scratch and grew it to become a global product. At Mistral, we built everything in-house, because no independent European provider could handle our scale. I kept seeing the same thing: in Europe, inference is a side product. Cloud providers sell it next to their VMs, and model labs sell it for their own models. At the same time, open models became really good. This is why I started Munito: the best open models, run in Europe, behind an API you already know how to use. What is the core problem you are solving? Why is this a big problem? What made you decide to work on it? Companies in Europe want to use the best open models at scale, but they also need privacy and control over where their data is processed. Today it's hard to get both. Most large providers are not European, and EU processing is quite often an extra option instead of the default. There are few European providers, and many of them can't handle real scale. And this problem grows every month. More and more sensitive data goes through AI models in products, agents and internal tools. Users and regulators ask where it's processed and stored, and companies don't want their AI to depend on one cloud or one model lab. I saw this from inside at Mistral, where we had to build everything in-house. Munito gives companies open models at scale, with inference and storage in the EU and privacy by default: no data retention, no training on their data. Sovereignty, without running your own GPUs. What is your long-term vision? If you truly succeed, what will be different about the world? I believe that open and independent intelligence, both models and inference, is key to economic growth and prosperity in the world and the region. If Munito succeeds, anyone building with AI can run the best open models privately, in the region they choose, without depending on one cloud or one model lab. Munito rents GPUs across many vetted data centers and clouds, and we’re building a self-improving inference stack, so running open models gets faster and cheaper over time. Munito AI Founded: 2026 Batch: Fall 2026 Team Size: 1 Status: Active Location: Paris, France Primary Partner: Aaron Epstein Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-11T23:11:43.588Z",
+      "productUrl": "https://www.ycombinator.com/companies/munito-ai",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "0e57074ba292834ef1e52cd0"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-11T23:10:12.056Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/munito-ai",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/munito-ai",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Munito AI Y Combinator Logo F2026 • Active • 1 employees • Paris, France. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-11T23:11:43.588Z"
+    }
+  ],
+  "health": [
+    {
+      "sourceId": "8eab0af476c34cad1244c829",
+      "url": "https://news.ycombinator.com/item?id=49737256",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    }
+  ],
+  "deterministicResults": [],
+  "assessmentContractVersion": 1,
+  "considerationEvidence": [
+    {
+      "title": "VendIQ — vendor follow-up agent",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Alter Zero — terminal coding agent",
+      "productUrl": "https://github.com/linuztx/alter-zero",
+      "sourceIds": [
+        "ec35ab793ce165435ac16218",
+        "99c1d2a2b9c07dfc1b27af64"
+      ],
+      "availableSourceIds": [
+        "ec35ab793ce165435ac16218",
+        "99c1d2a2b9c07dfc1b27af64"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Huxe personalized audio",
+      "productUrl": "https://techcrunch.com/2026/10/10/apple-discloses-deal-to-hire-team-and-license-tech-from-personalized-podcast-startup-huxe",
+      "sourceIds": [
+        "498030eadd312a222ba1e7e0"
+      ],
+      "availableSourceIds": [
+        "498030eadd312a222ba1e7e0"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "PitchMonster — AI sales-call practice",
+      "productUrl": "https://betalist.com/startups/pitchmonster",
+      "sourceIds": [
+        "b9a73099ecdc883dd555f687"
+      ],
+      "availableSourceIds": [
+        "b9a73099ecdc883dd555f687"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice agent Space",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dooza Desk — AI support inbox",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Lumro — customer support and sales agents",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice intake and Telegram alert workflow",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "sourceIds": [
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "availableSourceIds": [
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Financial email extraction to Sheets",
+      "productUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "sourceIds": [
+        "eb08bb526b3fe0ba957f00c2"
+      ],
+      "availableSourceIds": [
+        "eb08bb526b3fe0ba957f00c2"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "KubeZap — Kubernetes workflow operator",
+      "productUrl": "https://github.com/kubezap/kubezap-operator",
+      "sourceIds": [
+        "a521fe936c5585ded468cfbf",
+        "0204dd8fa35cf70ed16191b6"
+      ],
+      "availableSourceIds": [
+        "a521fe936c5585ded468cfbf",
+        "0204dd8fa35cf70ed16191b6"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Alidade — open-source Web GIS",
+      "productUrl": "https://github.com/AysanZ/alidade",
+      "sourceIds": [
+        "d460d0dfa07bd5c37c1d64f6",
+        "8eab0af476c34cad1244c829"
+      ],
+      "availableSourceIds": [
+        "d460d0dfa07bd5c37c1d64f6"
+      ],
+      "unavailableSourceIds": [
+        "8eab0af476c34cad1244c829"
+      ]
+    },
+    {
+      "title": "Munito AI — European model inference",
+      "productUrl": "https://www.ycombinator.com/companies/munito-ai",
+      "sourceIds": [
+        "0e57074ba292834ef1e52cd0"
+      ],
+      "availableSourceIds": [
+        "0e57074ba292834ef1e52cd0"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
