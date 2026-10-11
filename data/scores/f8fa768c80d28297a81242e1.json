@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "postId": "f8fa768c80d28297a81242e1",
+  "postContentSha256": "5714807553b841b8015218bc6bcb2cf30950e140693526008934093727f7eee9",
+  "criteria": {
+    "ease": {
+      "value": 6,
+      "reason": "The source names detectable documentation signals and a reference checker, supporting a narrow URL audit; interpretation still needs care.",
+      "sourceIds": [
+        "776ffe3f52323ea0078899b9"
+      ]
+    },
+    "profit": {
+      "value": 4,
+      "reason": "Hypothesis: documentation teams might pay for recurring access checks, but the source gives no buyer validation or demand.",
+      "sourceIds": [
+        "c1d509e3f4e25ec41804035e"
+      ]
+    },
+    "feasibility": {
+      "value": 6,
+      "reason": "A one-site checker for a few public signals is bounded; broad scoring and false-positive handling remain obstacles.",
+      "sourceIds": [
+        "c1d509e3f4e25ec41804035e"
+      ]
+    },
+    "autonomy": {
+      "value": 5,
+      "reason": "Scheduled checks and score recording can repeat, while an owner must verify issues and choose fixes.",
+      "sourceIds": [
+        "776ffe3f52323ea0078899b9"
+      ]
+    },
+    "evidence": {
+      "value": 5,
+      "reason": "The official page describes the checker and reference implementation, but this snapshot has no independent trial or use evidence.",
+      "sourceIds": [
+        "776ffe3f52323ea0078899b9"
+      ]
+    }
+  },
+  "assessmentPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "0493d07960ae23ad9773d90ea47fd8c253f98eb775e57e3aedf3ca20a1e362fc",
+  "sourceSnapshotSha256": "1041fe78c836a65bb50137bda12968fbb45ee4a4a8df58bebd0daff94cbbb9d7",
+  "checkedAt": "2026-10-11T11:33:20.314Z",
+  "checkerRunId": "score-38135798566-1-independent-check",
+  "checker": {
+    "passed": true,
+    "postId": "f8fa768c80d28297a81242e1",
+    "postContentSha256": "5714807553b841b8015218bc6bcb2cf30950e140693526008934093727f7eee9",
+    "draftSha256": "0493d07960ae23ad9773d90ea47fd8c253f98eb775e57e3aedf3ca20a1e362fc",
+    "sourceSnapshotSha256": "1041fe78c836a65bb50137bda12968fbb45ee4a4a8df58bebd0daff94cbbb9d7",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "scoreChecks": [
+      {
+        "criterion": "ease",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "A narrow URL audit is plausible because the official page identifies measurable page limits.",
+        "sourceId": "776ffe3f52323ea0078899b9",
+        "evidenceQuote": "50K character budgets"
+      },
+      {
+        "criterion": "profit",
+        "supported": true,
+        "maxSupportedScore": 4,
+        "reason": "Hypothesis: documentation teams could be a buyer, but the maker describes a problem and tool without buyer validation.",
+        "sourceId": "c1d509e3f4e25ec41804035e",
+        "evidenceQuote": "This tool scores any docs URL"
+      },
+      {
+        "criterion": "feasibility",
+        "supported": true,
+        "maxSupportedScore": 6,
+        "reason": "One-site checks for a few named signals fit a bounded experiment; broad scoring remains harder.",
+        "sourceId": "c1d509e3f4e25ec41804035e",
+        "evidenceQuote": "soft 404s, pages too big"
+      },
+      {
+        "criterion": "autonomy",
+        "supported": true,
+        "maxSupportedScore": 5,
+        "reason": "Checks can run repeatedly, while interpretation and any repairs remain human decisions.",
+        "sourceId": "776ffe3f52323ea0078899b9",
+        "evidenceQuote": "checks take care of themselves"
+      },
+      {
+        "criterion": "evidence",
+        "supported": true,
+        "maxSupportedScore": 5,
+        "reason": "The official page identifies a reference implementation, giving first-party product evidence without independent use verification.",
+        "sourceId": "776ffe3f52323ea0078899b9",
+        "evidenceQuote": "reference implementation"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "c1d509e3f4e25ec41804035e",
+      "title": "Show HN: Check how readable your docs are to AI agents",
+      "url": "https://news.ycombinator.com/item?id=50030369",
+      "publisher": "Hacker News · Show HN",
+      "fetchedAt": "2026-10-11T11:31:41.493Z",
+      "verifiedAt": "2026-10-11T11:31:41.493Z",
+      "text": "Show HN: Check how readable your docs are to AI agents | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Check how readable your docs are to AI agents ( veludocs.com ) 1 point by _aravindc 1 day ago | hide | past | favorite | discuss Hi HN, I'm Aravind. We build Velu, a docs platform. Coding agents increasingly read docs before humans do, but most docs sites are hard for them: client-rendered pages, no llms.txt, no markdown versions, soft 404s, pages too big for a context window. This tool scores any docs URL against the open Agent-Friendly Documentation Spec (agentdocsspec.com), using its reference implementation, afdocs. help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:"
+    },
+    {
+      "id": "776ffe3f52323ea0078899b9",
+      "title": "Check whether docs work for AI agents · official product",
+      "url": "https://www.veludocs.com/agent-friendly-documentation/",
+      "publisher": "www.veludocs.com",
+      "fetchedAt": "2026-10-11T11:31:42.021Z",
+      "verifiedAt": "2026-10-11T11:31:42.021Z",
+      "text": "Agent-Friendly Documentation: Score Your Docs | Velu Skip to content Velu Product FEATURES AI-native platform Docs for humans and agents Agent V Answers with citations Search Intent search across your docs Components Prebuilt blocks for every page Writing & editor Author pages in MDX or the browser AUTOMATION Self-updating docs Changes arrive as pull requests Writing with AI Use Claude Code, Codex or any AI tool Publishing Push to main, Velu builds AGENT SURFACE llms.txt & markdown export Discovery, auto-maintained skill.md Agents that can act on your docs MCP server Your docs as callable tools Context menu One click into their AI tools Agent-friendly docs Score your docs against the spec Solutions USE CASES Developer documentation Docs that follow your code Product documentation Docs level with every release Internal knowledge base Private docs for your team INDUSTRIES SaaS Docs that ship with every release AI companies Docs humans and agents can read Developer tools Self-updating docs-as-code Resources LEARN Documentation Guides, components, and setup Blog Guides and comparisons SEE VELU'S THEMES Vepa Nila Thulir Aalam Kadhir Pricing Login Get Started → MENU ✕ , so it opens with a tap, a keyboard or a screen reader and needs no script. --> Product FEATURES AI-native platform Docs for humans and agents Agent V Answers with citations Search Intent search across your docs Components Prebuilt blocks for every page Writing & editor Author pages in MDX or the browser AUTOMATION Self-updating docs Changes arrive as pull requests Writing with AI Use Claude Code, Codex or any AI tool Publishing Push to main, Velu builds AGENT SURFACE llms.txt & markdown export Discovery, auto-maintained skill.md Agents that can act on your docs MCP server Your docs as callable tools Context menu One click into their AI tools Agent-friendly docs Score your docs against the spec Solutions USE CASES Developer documentation Docs that follow your code Product documentation Docs level with every release Internal knowledge base Private docs for your team INDUSTRIES SaaS Docs that ship with every release AI companies Docs humans and agents can read Developer tools Self-updating docs-as-code Resources LEARN Documentation Guides, components, and setup Blog Guides and comparisons SEE VELU'S THEMES Vepa Nila Thulir Aalam Kadhir Pricing Log in AGENT-FRIENDLY DOCUMENTATION How agent-friendly is your documentation? See your docs the way an agent does. 23 checks across 7 categories, scored against an open standard. Score my docs → Open standard. No signup. Share your score with a link when you are done. 〉 WHAT GETS MEASURED Seven categories, twenty-three checks. — / 100 SHARE YOUR SCORE Post it to X, LinkedIn, or Reddit. Copy link Post on X LinkedIn Reddit 7 CHECKS Content Discoverability llms.txt: whether it exists, is validly structured, stays under size, and whether your pages point to it. View checks + 2 CHECKS Markdown Availability Markdown at .md URLs, and a server that honours Accept: text/markdown. View checks + 4 CHECKS Page Size and Truncation Server-rendered content, 50K character budgets, and where your content starts. View checks + 3 CHECKS Content Structure Tabs that serialise, headers that stand alone, code fences that close. View checks + 2 CHECKS URL Stability Real 4xx codes instead of soft 404s, and same-host HTTP redirects. View checks + 3 CHECKS Observability Sitemap coverage, markdown that matches the HTML, and cache headers. View checks + 2 CHECKS Authentication and Access Pages that open without a login, or a documented alternative path. View checks + Scored against the Agent-Friendly Documentation Spec ↗ , an open community standard, using its MIT-licensed reference implementation. 〉 AGENT-READABLE BY DEFAULT Publish on Velu and the checks take care of themselves. Everything measured above is part of what publishing does, not a project you schedule after the fact. Your pages go out human-readable and machine-readable at the same time, and they stay that way as you add to them. 01 Auto llms.txt and llms-full.txt Generated from your published docs and regenerated as pages are added, so agents always get a current index rather than one somebody remembered to update. /llms.txt /llms-full.txt /page.md 02 Markdown on every URL Append .md to any page and get clean markdown back, without the navigation and layout markup an agent has to wade through. 03 Server-rendered pages Real content in the HTTP response. Nothing that needs JavaScript to appear, which is what most agents cannot execute. 04 Managed hosting Status codes, redirects, and cache headers handled by the platform, so URLs stay stable and updates get through. 05 Public by default Docs reachable without an interactive login, so an agent is not stopped at the door. 06 MCP server and skill.md One endpoint agents can search, read, and cite through, beyond what the spec asks for today. agent → mcp.search() → your docs → cited answer The fine print, in plain English. 01 What is agent-friendly documentation? + Agent-friendly documentation is documentation a model or agent can reliably find, fetch, parse, and act on. In practice that means pairing the human-readable pages with machine-readable artefacts: a discovery file like llms.txt, markdown versions of every page, server-rendered content that fits inside a context window, and stable URLs. Human readers can work around a gap by inferring or clicking around. Agents cannot, so they guess instead, and they do it confidently. 02 What is llms.txt? + A plain-text index at the root of your docs that tells an agent what exists and where to read it. The convention is an H1 title, a blockquote summary, and headed sections of markdown links. It is the single highest-weighted item in the spec, because an agent that cannot discover your docs never reaches any of the other twenty-two checks. 03 How is the score calculated? + By the Agent-Friendly Documentation Spec, an open community standard maintained at agentdocsspec.com. It defines 23 checks across 7 weighted categories. This page runs them with afdocs, the spec’s MIT-licensed reference implementation, against a sample of your pages, and reports exactly what it returns without adjustment. 04 Is this just SEO under a new name? + No, and they can pull in opposite directions. SEO optimises how a page is ranked and presented to a human who will click, skim, and judge. This optimises whether a machine can retrieve the content at all, parse it without HTML noise, and fit it in a context window. A page can rank first on Google and still be unreadable to an agent, usually because it is client-rendered or buried under navigation markup. 05 What happens to the URL I enter? + It is fetched, scored, and cached for fifteen minutes so repeat checks are fast. There is no signup and results are not published to a leaderboard. If you share your score, the link carries a signed summary of the result so others can open the same scorecard. 06 Can I share my score? + Yes. After a run, copy the short link or share it to X, LinkedIn, or Reddit. Anyone with the link sees the same score, and the preview image shows the grade and overall score. Keep your docs agent-ready. Publish a page and the machine-readable half comes with it, on every release. Get started for free → Talk to founder MADE FOR HUMANS & AGENTS · AI-NATIVE FROM DAY ONE Velu AI-native documentation for humans and agents, in one place. Made by humans who care about docs. PRODUCT Features Pricing RESOURCES Migrate from Mintlify Blog Documentation Changelog COMPANY Why Velu? About Contact LinkedIn COMPARE Mintlify review GitBook review ALTERNATIVES Mintlify alternatives GitBook alternatives Docusaurus alternatives MkDocs alternatives © 2026 · VELU · ALL RIGHTS RESERVED PRIVACY · TERMS velu. Cookie Preferences We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. Accept All Decline All"
+    }
+  ],
+  "batch": {
+    "runId": "score-38135798566-1",
+    "draftSha256": "9d61b028f1681880a283609b723b5216f7c807ed830bb997113734733968c2c4",
+    "contextSha256": "e2e2a7df450348778aa39d2e4a3949f17836d4119fee461dec7fe09ffbff76ca",
+    "rulesSha256": "169b46bc42c95ed95ff7f623badd9482ce11166fb0b96a78bc169d26d7f76624",
+    "rulesCommit": "dafcca861e8fb90db73802ffb95bca826478a85b",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38135798566"
+  },
+  "origin": "github-actions-codex-scorer"
+}
