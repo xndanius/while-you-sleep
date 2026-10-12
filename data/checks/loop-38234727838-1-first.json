@@ -1,0 +1,115 @@
+{
+  "runId": "loop-38234727838-1",
+  "draftSha256": "95c2f2a9f3c8f82a04376074e55a362cbe3a56cd6d8acd64032a4262962fbde4",
+  "sourceSnapshotSha256": "45f2d0cd3f66e99055c2f37516dbd2372fd20d81c5e58e88d96e6ea48072e75f",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "d8897b3d1b9980fb9cfbbe66",
+      "pass": false,
+      "reasons": [
+        "Rejected: the writer's ease score 7 exceeds the independently supported maximum 6; API billing and OAuth setup are required.",
+        "Rejected: the writer's feasibility score 7 exceeds the independently supported maximum 6; a useful two-week prototype remains plausible but requires credential setup and accuracy testing."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The listed template creates a chatbot for analyzing Google Sheets data with GPT-5 Mini.",
+          "supported": true,
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "This n8n workflow template creates an intelligent data analysis chatbot that can answer questions about data stored in Google Sheets using OpenAI's GPT-5 Mini model."
+        },
+        {
+          "claim": "The workflow provides a conversational interface and maintains context for follow-up questions.",
+          "supported": true,
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "Memory Buffer : Maintains conversation context for follow-up questions"
+        },
+        {
+          "claim": "The setup requires an OpenAI API key and billing funds.",
+          "supported": true,
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "Visit the OpenAI API Keys page. Go to OpenAI Billing . Add funds to your billing account."
+        },
+        {
+          "claim": "The example sheet expects column names in its first row and data in rows 2–100.",
+          "supported": true,
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "First row contains column names. Data should be in rows 2–100 ."
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": false,
+          "maxSupportedScore": 6,
+          "reason": "The free template is a concrete start, but OpenAI billing/API credentials and Google Sheets OAuth are prerequisites; this does not support 7.",
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "Add funds to your billing account. Copy your API key into your OpenAI credentials in n8n"
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "The buyer and willingness to pay remain a hypothesis; this product page gives setup and use examples, not demand evidence.",
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "You can ask natural language questions to analyze your marketing data, such as:"
+        },
+        {
+          "criterion": "feasibility",
+          "supported": false,
+          "maxSupportedScore": 6,
+          "reason": "A narrow one-sheet prototype is plausible, but credential setup and the need to test answer accuracy limit support for 7.",
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "Log in using OAuth , then select your workbook and sheet."
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "Chat, sheet access, column detection, and memory automate parts of querying; the page does not establish autonomous verification or action.",
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "The system automatically analyzes your spreadsheet data and provides insights through natural language conversations."
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "The first-party page documents the workflow, setup, and examples, but supplies no attributable customer outcome for this template.",
+          "sourceId": "d8897b3d1b9980fb9cfbbe66",
+          "evidenceQuote": "This n8n workflow template creates an intelligent data analysis chatbot"
+        }
+      ],
+      "noveltyCheck": {
+        "recentPostsSha256": "a5770461692548e187a4d8626edd357648b7b4f9d5c76210db0557d2700effd6",
+        "windowDays": 14,
+        "comparedPostCount": 7,
+        "product": {
+          "distinct": true,
+          "closestPostId": "e20bcacf021524725d3fc275",
+          "reason": "The nearest n8n reference is its general workflow builder; this is a separate Google Sheets template/product, not the support-inbox product or workflow."
+        },
+        "workflow": {
+          "distinct": true,
+          "closestPostId": "f8fa768c80d28297a81242e1",
+          "reason": "The closest data-oriented loop audits documentation URLs and reports access issues; this post answers questions against a prepared spreadsheet, a different input and output."
+        },
+        "customer": {
+          "distinct": true,
+          "closestPostId": "1b30245f8580f86bcc4685c8",
+          "reason": "The post hypothesizes a team repeatedly checking its own spreadsheet; the nearest small-team buyer handles staging-page feedback and coding-agent handoff, a different paying task and actor."
+        }
+      }
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The single proposed post was checked against fresh first-party evidence and all seven frozen novelty records; its ease and feasibility ratings exceed supported maxima.",
+    "contextSha256": "b3242e1e8e38763d3a9ad4c9b6b8f7e198af9ba3439ff3bbc69128c392f20c0a",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "95c2f2a9f3c8f82a04376074e55a362cbe3a56cd6d8acd64032a4262962fbde4",
+    "sourceSnapshotSha256": "45f2d0cd3f66e99055c2f37516dbd2372fd20d81c5e58e88d96e6ea48072e75f",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
