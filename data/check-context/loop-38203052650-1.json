@@ -1,0 +1,83 @@
+{
+  "runId": "loop-38203052650-1",
+  "createdAt": "2026-10-12T04:19:15.477Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "1bb8daa8b6fec976eadb3f6065f8a6b5460c607b8c10b16214eeccbbdb73deae",
+  "sourceSnapshotSha256": "fc691284c3d05ec52374f7a3a4129ce8536a42b020d3c1a618643ad619e88682",
+  "sources": [
+    {
+      "id": "e217176e7f773dab20cceb18",
+      "title": "Automated Daily Financial Analysis from Loyverse POS with Google Sheets & Email · product evidence",
+      "url": "https://n8n.io/workflows/10420-automated-daily-financial-analysis-from-loyverse-pos-with-google-sheets-and-email",
+      "publisher": "n8n.io",
+      "text": "Automated daily financial analysis from Loyverse POS with Google Sheets & email | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 207,024 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Send Email Google Sheets HTTP Request +4 Automated daily financial analysis from Loyverse POS with Google Sheets & email Use for free Created by Nik B. Last update Last update 8 months ago Categories Document Extraction Share Automatically fetches daily sales, shifts, and receipts from Loyverse. Calculates gross profit, net operating profit, other key metrics, saves them to a Google Sheet and sends out a daily report via email. Who’s it for This template is for any business owner, manager, or analyst using Loyverse POS who needs more advanced financial reporting. If you're a restaurant, bar, or retail owner who wants to automatically track daily net profit, compare sales to historical averages, and build a custom financial dashboard in Google Sheets, this workflow is for you. How it works / What it does This workflow runs automatically on a daily schedule. It fetches all sales data and receipts from your Loyverse account for the previous business day, defined by your custom shift times (even past midnight). A powerful Code node then processes all the data to calculate the metrics that Loyverse either doesn't provide at all, or only spreads out across several separate reports instead of in one consolidated place. Already set up are metrics like... -Total Revenue, Gross Profit, and Net Operating Profit Cash handling differences (over/under) Average spend per receipt (ATV) 30-day rolling Net Operating Profit (NOP) Performance vs. your historical weekday average Finally, it appends the single, calculated row of daily metrics to a Google Sheet and sends an easily customizable summary report to your email. How to set up This workflow includes detailed Sticky Notes to guide you through the setup process. Because every business has a unique POS configuration (different POS devices, categories, and payment types), you'll need to set up a few things manually before executing the workflow. I've tried to make this as easy as possible to follow, and the entire setup should only take about 15 minutes. Preparations & Credential setup Subscribe to \"Integrations\" Add-on in Loyverse ($9 / month) to gain API access. Create an Access token in Loyverse Create Credentials: In your n8n instance, create credentials for Loyverse (use \"Generic\" > \"Bearer Auth\"), Google Sheets (OAuth2), and your Email (SMTP or other). Make a copy of a prep-configured Google Spreadsheet (Link in the second sticky note inside the workflow). Fill MASTER CONFIG: Open the MASTER CONFIG node. Follow the comments inside to add your Google Sheet ID, Sheet Names, business hours, timezone, and Loyverse IDs (for POS devices, payment types, and categories). Configure Google Sheet Nodes Configure Read Historical Data: Open this node. Follow the instructions in the nearby Sticky Note to paste the expressions for your Document ID and Sheet Name. Configure Save Product List: Open this node. Paste in the expressions for Document ID and Sheet Name. The column mapper will load; map your sheet columns (e.g., item_name) to the data on the left (e.g., {{ $json.item_name }}). Configure Save Latest Sales Data: Open this node. Paste in the expressions for Document ID and Sheet Name. Save and run the workflow. After that, the column mapper will load. This is the most important step: map your sheet's column names (e.g., \"Total Revenue\") to the calculated metrics from the Calculate All Metrics node (e.g., {{ $json.totalGrossRevenue }}). Activate the workflow. 🫡 Requirements Loyverse Integrations Subscription Loyverse Access Token Credentials for Loyverse (Bearer Auth) Credentials for Google Sheets (OAuth2) Credentials for Email/SMTP sender How to customize the workflow This template is designed to be highly flexible. Central Configuration: Almost all customization (POS devices, categories, payment types, sheet names) is done in the MASTER CONFIG node. You don't need to dig through other nodes. Add/Remove Metrics: The Calculate All Metrics node has additional metrics already set up, just add the relevant collumns to the SalesData sheet or even add your own calculations to the node. Any new metric you add (e.g., metrics.myNewMetric = 123) will be available to map in the Save Latest Sales Data node. Email Body: You can easily edit the Send email node to change the text or add new metrics from the Calculate All Metrics node. Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-12T04:19:15.467Z",
+      "productUrl": "https://n8n.io/workflows/10420-automated-daily-financial-analysis-from-loyverse-pos-with-google-sheets-and-email",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "e217176e7f773dab20cceb18"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T04:15:59.106Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/10420-automated-daily-financial-analysis-from-loyverse-pos-with-google-sheets-and-email",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/10420-automated-daily-financial-analysis-from-loyverse-pos-with-google-sheets-and-email",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Automated Daily Financial Analysis from Loyverse POS with Google Sheets & Email Nik B. ⋅ a year ago ⋅ Free Automatically fetches daily sales, shifts, and receipts from Loyverse. Calculates gross profit, net operating profit, other key metrics, saves them to a Google Sheet and sends out a daily report via email. Who’s it for This template is for any business owner, manager, or analyst using Loyverse POS who needs more advanced financial... Send Email Google Sheets HTTP Request +1",
+      "verifiedAt": "2026-10-12T04:19:15.467Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [
+    {
+      "postId": "e217176e7f773dab20cceb18",
+      "pass": true,
+      "reasons": []
+    }
+  ],
+  "assessmentContractVersion": 1
+}
