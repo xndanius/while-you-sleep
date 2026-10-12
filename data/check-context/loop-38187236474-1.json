@@ -1,0 +1,691 @@
+{
+  "runId": "loop-38187236474-1",
+  "createdAt": "2026-10-12T00:18:19.309Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "74712c2a7afb2f8b825d051b18a48ff5144ff37e9b0f08ad718096a33ea80f4f",
+  "sourceSnapshotSha256": "fe0cf0fe402edcbf74e97f4bd11333f16febd5a033e15174e65333373e379eef",
+  "sources": [
+    {
+      "id": "9819c3d2676191194e12bf48",
+      "url": "https://raw.githubusercontent.com/christianmat/cold-email-killer/main/README.md",
+      "title": "Show HN: A simple script to stop all cold sales emails from reaching your inbox · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# Cold Email Killer Give cold emails the cold shoulder. I get a pile of \"quick question\" and \"just bumping this\" emails every day. This script finds them in Gmail, labels them `Cold Email` and archives them, so my inbox only has things people actually wrote to me. It runs freely and securely in your own Google account on Google Apps Script. It checks every 10 minutes, even when your laptop is closed. For the AI part you can use Gemini, Claude or OpenAI with your own key, or point it at your own model (Ollama, LM Studio, vLLM, anything OpenAI-compatible) and keep the whole thing self-hosted. It leaves alone anyone you've emailed before, threads you've replied in, people at your company, newsletters and calendar invites. If it ever gets one wrong, move the email back to your inbox and it won't flag that sender again. ## Setup (about 5 minutes) ### Option A: have your coding agent do it Paste this into Claude Code or any other coding agent: > Clone https://github.com/christianmat/cold-email-killer and set it up for me by following its AGENTS.md. It runs the commands for you. You only do the parts that need a browser (signing in, clicking Allow, pasting your API key). ### Option B: do it yourself You'll need Node 22 or newer. If you've never used clasp before, turn on the Apps Script API at https://script.google.com/home/usersettings first. ```bash git clone https://github.com/christianmat/cold-email-killer.git && cd cold-email-killer npm install npx clasp login # use the Gmail account you want cleaned up npx clasp create --type standalone --title \"Cold Email Killer\" --rootDir dist mv dist/.clasp.json .clasp.json # only if clasp put it in dist/ npm run push npx clasp deploy ``` Then: 1. Open `https://script.google.com/macros/s/ /exec`, with the ID that `clasp deploy` printed. This is your settings page, so bookmark it. 2. Authorize it. Google will warn that it \"hasn't verified this app\", which happens with any personal script. Click Advanced, then Go to Cold Email Killer, then Allow. 3. Pick an AI provider, paste your key, hit Test AI key, then Save & turn on. 4. If you want to clear out the backlog, hit Clean up last 14 days. ## AI providers | Provider | Where to get a key | Default model | |---|---|---| | None | | Rules only. Catches mail sent through sales tools like Apollo, Outreach, Lemlist and Instantly. | | Gemini | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | `gemini-3.8-flash`. Heads up: on the free tier Google may train on what you send. | | Claude | [platform.claude.com](https://platform.claude.com/settings/keys) | `claude-opus-5-5` | | OpenAI | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | `gpt-5-mini` | | Self-hosted | Optional, only if your server wants one | Whatever model your server runs, e.g. `llama3.3` | Models get retired now and then. If the default stops working, put a current model name in the Model field. ### Using your own model Pick Self-hosted (OpenAI-compatible) and enter your server's URL and model name. Ollama, LM Studio, vLLM, llama.cpp and LocalAI all speak this API. Since the script runs on Google's servers, `localhost` won't reach your machine. Put the server behind a public HTTPS URL with something like Cloudflare Tunnel or Tailscale Funnel, and give it an API key if you can. With this setup your email goes from Gmail straight to hardware you control. ## How it works All the code runs on Google Apps Script inside your own Google account, with your Gmail permissions. There's nothing hosted anywhere else, and your email only goes to the AI you picked, which can be a model on your own server. Your settings and API key are saved in the script's properties in your account. Every 10 minutes it looks at inbox emails that came in since the last run (up to 50 at a time) and checks each one once. Rules handle the obvious ones. Mail sent through sales tools is cold, and people you know get kept. Everything else goes to the AI, which sees the sender, subject and the first 2,000 characters of the body. It only moves an email when it's confident enough. That's 90% on Conservative (the default), 75% on Balanced and 60% on Aggressive. For the first 24 hours it runs in dry-run mode, which means it adds the label but leaves the email in your inbox so you can check its work. If the AI call fails, the email stays put and gets retried on the next run. ## FAQ **Is it secure? Who can see my email?** Google, which has it already, and the AI you pick. The code lives in your own Apps Script project and only you can open the settings page. If you run your own model, the only other place your email goes is your own server. If you choose None, it never leaves Google. **Why does Google say the app isn't verified?** Google shows that for every personal script that hasn't gone through its review process. This is your own copy in your own account. Click Advanced, then Go to Cold Email Killer, then Allow. **Why does it ask for full Gmail access?** Apps Script's Gmail service only has one permission level. The code reads, labels and archives emails and that's it. You can check for yourself in `src/gas/main.ts`. **Does my computer need to be on?** Nope. Google runs it on a timer. **Does it re-check emails it has already seen?** No. Each run only looks at what arrived since the last one, and it keeps track of what it has already checked. The very first run looks back 2 days. The Clean up last 14 days button is the only way to go further back. **Where do the cold emails go?** Into the Cold Email label. Click it in Gmail's sidebar or search for `label:cold-email`. **What if it flags a real email?** Move it back to your inbox or take the label off. On the next run that sender gets added to your allowlist. You can also edit the allowlist yourself on the settings page. **What does it cost?** Apps Script is free. The AI part depends on your provider, but it's usually a few cents a day, because the rules handle a lot of mail before the AI ever sees it. There's also a daily cap of 200 AI calls by default. **Do I need Node and clasp after setup?** Only to install updates. Once it's deployed, it runs entirely in Google. **I get \"Sorry, unable to open the file at this time\".** That happens when you're signed into more than one Google account. Open the settings URL in an incognito window and sign in with just the account that owns the script. **How do I turn it off?** Hit Pause on the settings page. To get rid of it for good, delete the project at [script.google.com](https://script.google.com). ## Development ```bash npm test # unit tests npm run eval # score the sample emails (add PROVIDER=gemini API_KEY=... to include the AI) npm run push # build and upload to your Apps Script project ``` The logic (rules and pipeline) is in `src/core`, the AI calls are in `src/providers`, the Gmail code is in `src/gas`, and the settings page is `src/ui/Settings.html`. If a sales tool is slipping through, add its domains to `src/core/fingerprints.ts`. ## Who made this Built by the team at [Frigade](https://frigade.com). We mostly build an AI assistant that lives in your product, learns it end to end, and answers questions and takes actions for your users. Turns out we also get a lot of cold email. MIT licensed.",
+      "fetchedAt": "2026-10-12T00:18:16.636Z",
+      "productUrl": "https://github.com/christianmat/cold-email-killer",
+      "originSourceIds": [
+        "cebc58769b823ed880b01dd7"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:48.091Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/christianmat/cold-email-killer/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/christianmat/cold-email-killer/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T00:18:16.636Z"
+    },
+    {
+      "id": "9a2a489d753abcefd301a946",
+      "title": "Building AI for Reliable Execution: Lessons From Industrial Robotics · product evidence",
+      "url": "https://www.latent.space/p/standard-bots",
+      "publisher": "www.latent.space",
+      "text": "Building AI for Reliable Execution: Lessons From Industrial Robotics Subscribe Sign in Building AI for Reliable Execution: Lessons From Industrial Robotics Inside Standard Bots’ AI stack, pretrained models learn factory tasks from demonstrations and improve through corrections from real deployments. Richard MacManus Oct 10, 2026 38 2 Share When you think of robotics and AI, you probably first think of full humanoid robots like Figure’s AI-powered machines and 1X’s NEO home robots . Those may well be the future, but arguably more important in 2026 is industrial robots — which are typically not humanoids. Standard Bots claims to be “America’s largest AI-native industrial robot manufacturer.” It recently raised $200 million at a $1 billion valuation, in a series C round led by General Catalyst and RoboStrategy, a fund focused on robotics. Its customers include NASA, Amazon and Lockheed Martin. We spoke to Evan Beard , co-founder and CEO, and Leif Jentoft , Head of AI, to find out more about Standard Bots’ AI stack and how its models work. To set the scene, Standard Bots’ industrial robot arms are designed for tasks such as machine tending, welding, and assembly. Here’s a quick demo by Jentoft: Pretrained models and task-specific adaptation According to Beard, Standard Bots has a shared base model that customers adapt through demonstrations and fine-tuning. Jentoft added that Standard Bots runs a range of models , including a zero-shot perception system for machine tending. Beard says its largest model is in the low billions of parameters — so it’s not that large by frontier lab standards. “We believe data quality matters far more than raw volume,” said Jentoft, “and we focus on getting the most out of targeted data rather than chasing the largest possible dataset.” (This matches the “bitterest lesson” of Jev creator Diogo Almeida , who told us recently that the right task and the right data can matter more than compute.) “Our market access gives us unique access to the highest value data,” he added. “ In-situ interventions can fix an edge case with a few dozen examples.” Setting up part identification with ClickFind. Beard notes that Standard Bots focuses on short-horizon tasks to meet production requirements for cycle time and reliability. The company uses conventional programming for parts of a workflow that don’t require learned behavior. Model training happens in the cloud but inference runs locally , said Beard. What does the model do exactly? I asked Jentoft what the learned model does in a typical robot routine, and which parts of the workflow use conventional programming? As an example, he brought up its machine-tending solution for high-mix manufacturing. “We’ve built a zero-shot system that lets a user tell the robot which parts to look for on a given task. The model handles perception — locating and identifying the parts — while conventional programming handles the motion and the cell logic around it.” Here’s a demonstration of the machine-tending: “Our backbone for this task is trained on over a billion images , which is what lets the robot distinguish between lighting conditions, material types, and an object versus its background,” Jentoft said. The Full AI Stack Back in April, we had Applied Intuition on the podcast to talk about “Physical AI” and how it differs from on-screen AI. One of the learnings was that the Physical AI isn’t just constrained by model intelligence: the hard part is deploying models onto real hardware , under safety, latency, power, cost, and reliability constraints. But for Standard Bots, that can also be a strength, since it controls the “full stack” from software to hardware. Jentoft points out that it controls the robotic arm, end effector, control system, and AI. “That lets us co-optimize the models and the control policies ,” he said. “Despite claims elsewhere, no model today is truly hardware-agnostic, and co-optimizing low-level control and higher-level functions is a major advantage for both performance and iteration speed.” Skild , a company aiming to build “general purpose robotic intelligence,” might quibble with the hardware-agnostic claim — its goal is to achieve cross-hardware generalization . On-prem inference: sensors, edge GPUs, and ‘action chunks’ Beard had mentioned that inference is done locally, which is especially important for its core customers: factories. “For factories, which is most of what we’re doing right now — and certainly so much opportunity that we see there — this is something where you need to do inference on-premise ,” he said. An AI agent building a machine-tending routine. For machine tending, the model identifies parts while conventional programming handles motion. Jentoft also described how models can generate actions that feed into the robot’s control system. “Wrist cameras and other sensors feed raw pixels and signals into the system over internal gigabit Ethernet , routed internally so no cables tangle,” he explained. “ GPUs at the edge process that data to generate action chunks , which stream to low-level control.” He reiterated that inference is run on-premises deliberately. “Cloud compute for robotics is operationally extremely hard — most factories and warehouses don’t have reliable internet , and that’s even more true for mobile robots. Uptime is crucial to customer acceptance, so we keep the loop local.” Production failures and fleet learning Standard Bots uses simulation where it can, but Beard says some production tasks — including those involving liquids, suction, or cutting flexible material — are difficult to reproduce in current simulators. Real-world demonstrations are another part of the learning process. Here’s a demo of teaching a robot using a handheld touch device: So how does it deal with failure in a robot task, and do those kinds of learnings flow back to the model? “We capture failure signals and human corrections from deployments, and how we use that data depends on the customer,” Jentoft replied. He noted that many of its defense customers “deploy in air-gapped environments, where nothing comes back.” But for customers that aren’t air-gapped, “fleet learning delivers enough benefit to their own applications that we typically don’t see pushback on contributing data in exchange for that performance.” StandardOS: an AI robotics dev platform Standard Bots has already expanded its platform so that external developers can use it. With StandardOS , it offers a set of APIs and SDKs. According to Beard, developers can use Standard Bots’ APIs to build robotics applications with whichever parts of its stack they need, including bringing their own models. He cited NVIDIA Cosmos , an open family of omnimodal world models for physical AI, as an example ( version 3 was released late-May ). Today, this requires developers to write their own integration code. But Standard Bots plans to make collecting data, training models, and deploying them onto its robots easier. AI robot learning workflow with NVIDIA software; via Standard Bots. Focus on targeted data Standard Bots isn’t the sexiest robotics company out there, but it is already being deployed for industrial automation at NASA, Amazon, Lockheed Martin, and others. For AI engineers, perhaps the most useful lesson is how Standard Bots adapts AI to a specific job. It keeps the model’s role focused and uses corrections from real deployments to fix edge cases. You can, of course, apply that same approach to software agents. As Jentoft said — and it was a recent lesson from Jev too — it’s all about “getting the most out of targeted data rather than chasing the largest possible dataset.” 38 2 Share Previous Next Discussion about this post Comments Restacks Top Latest Discussions No posts Ready for more? Subscribe © 2026 Latent.Space · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-12T00:18:16.859Z",
+      "discoveredAt": "Sat, 10 Oct 2026 14:04:11 GMT",
+      "originFeedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ],
+      "productUrl": "https://www.latent.space/p/standard-bots",
+      "originSourceIds": [
+        "9a2a489d753abcefd301a946"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:44.996Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/p/standard-bots",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/p/standard-bots",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "When you think of robotics and AI, you probably first think of full humanoid robots like Figure’s AI-powered machines and 1X’s NEO home robots . Those may well be the future, but arguably more important in 2026 is industrial robots — which are typically not humanoids. Standard Bots claims to be “America’s largest AI-native industrial robot manufacturer.” It recently raised $200 million at a $1 billion valuation, in a series C round led by General Catalyst and RoboStrategy, a fund focused on robotics. Its customers include NASA, Amazon and Lockheed Martin. We spoke to Evan Beard , co-founder and CEO, and Leif Jentoft , Head of AI, to find out more about Standard Bots’ AI stack and how its models work. To set the scene, Standard Bots’ industrial robot arms are designed for tasks such as machine tending, welding, and assembly. Here’s a quick demo by Jentoft: Pretrained models and task-specific adaptation According to Beard, Standard Bots has a shared base model that customers adapt through demonstrations and fine-tuning. Jentoft added that Standard Bots runs a range of models , including a zero-shot perception system for machine tending. Beard says its largest model is in the low bill",
+      "verifiedAt": "2026-10-12T00:18:16.859Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-12T00:18:17.175Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T00:18:17.175Z"
+    },
+    {
+      "id": "98a698085fb1fa80319290a2",
+      "title": "Launch HN: Skillsync (YC W26) – AI chat sessions made portable across agents · product evidence",
+      "url": "https://news.ycombinator.com/item?id=49743049",
+      "publisher": "news.ycombinator.com",
+      "text": "Launch HN: Skillsync (YC W26) – AI chat sessions made portable across agents | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Launch HN: Skillsync (YC W26) – AI chat sessions made portable across agents 68 points by cat-whisperer 24 days ago | hide | past | favorite | 62 comments Hey HN, we're Nars & Nishant, founders of Skillsync ( https://skillsync.com ) Skillsync lets you move your AI chats across every coding agent. Most of our work exists as conversations, which are currently scattered across our agents. Though stored locally, these conversations use different formats. This is annoying because you cannot simply switch between agents without starting over. We get locked into a single provider and their agent as we invest in skills and memories over time. Skillsync acts as a universal converter. It moves the entire session, including all the messages, reasoning and tool calls so you can pick up right where you left off. Skillsync collects all your sessions in one place and makes them searchable. It breaks down what each session is carrying, including which loaded skills the agent is actually using, making stale context easy to spot. You can also create shared workspaces to sync sessions across your team. You can build your own closed loop systems. Everything runs locally except when you share to workspaces. The core is an open-source Rust engine called txcript ( https://github.com/skillsynchq/txcript ). It translates a session from one agent's on-disk format into another's, mapping conversation, reasoning, and tool history. Think ffmpeg or pandoc, but for agent sessions. On top of that engine is a local-first desktop app. Your agent sessions are normally scattered across different tools' folders in formats you'd never read by hand; the app surfaces them in one place with a UI that makes them actually readable, the conversation, the reasoning, and the tool calls, so you can revisit what happened, move a session into another agent, or share it with a teammate. Skills and memory are stored as portable, human-readable markdown you own, and exposed to any agent over MCP for search and selective retrieval. Sessions and translation run locally on your machine. The one thing that leaves is what you explicitly share into a team workspace. It’s been surprising to us to see how locked-in people already are without realizing it. You don't notice you're trapped in one agent or harness until you try to leave, and by then you've got months of sessions stuck in a format only that tool can read. The lock-in is invisible right up until it's expensive. Once sessions are portable, they stop being disposable logs and become something you can actually build on, spotting patterns in how you work, handing a session off to someone else, letting a non-technical teammate pick up where an engineer left off. The session turns out to be the unit of collaboration, and right now it's being thrown away. Before Skillsync, Nars and I built an open-source payment orchestrator that let merchants route across many processors instead of getting locked into one (30k+ GitHub stars). Fighting vendor lock-in by making incompatible systems interoperate was the whole job. We came into YC with a different idea, but the more we lived inside coding agents the more we saw the same problem from the other side: your context is locked into whatever agent you start with, because every agent stores sessions differently and none of it moves. Some of the things we’re seeing people do with Skillsync are: - Moving a session between Claude Code, Codex, and Cursor mid-task, including when you hit a usage limit on one and want to keep going on another. - Thinking through a problem in a browser Claude chat, then handing the whole thread to Claude Code or Codex to build. - Sharing research sessions with a team. Everyone uploads their sessions, so teammates and their agents can build on each other's work instead of repeating it. It's available as a Mac app, CLI and MCP. Here's the demo: https://youtu.be/7hVhSnSKGl8 . Would love to hear your feedback and answer questions! mmykola87 23 days ago | next [–] I went the opposite way, and I think it's worth mentioning the cost of that choice. My conversation doesn't carry over. Only what a session explicitly recorded does. This includes decisions, open questions, verified items, and what's left to do. Anything that wasn't recorded is gone, and that's a real loss, not just a small part of the process. I went with this approach because the transcript doesn't go into a file; it goes into another live session, which messes up its flow. We've already talked about this a bit when we were discussing \"how to make reading Markdown cheaper.\" My answer was different: don't bring it over at all. The next session doesn't need to know how we got there—it just needs to know what we decided and what we've actually verified. I don't think we've talked about this in this thread yet. Portability is all about a session that's already wrapped up. I often have two sessions open at the same time. One is building an endpoint, and the other is the screen that calls it. They need to ask each other before both build on different assumptions. Moving the transcript around won't fix this. What's needed is a message, not a copy. I made a small open-source layer for this: a mailbox and a \"walkie-talkie\" for sessions in the clients you've already opened - https://github.com/automatis-tools/agents-can-communicate . It doesn't transfer memory and doesn't detect discrepancies on its own. The session has to check for those things. cat-whisperer 23 days ago | parent | next [–] I agree that the next session wants conclusions, not the whole transcript. What I've seen working with people on this is that a summary only has what the summarizer prompt asked for, and what they need from an old session changes depending on what they're doing when they go back to it. With the full session still around, they can just ask it again. Porting is also cheap, since it's just a format conversion. Getting a new session back up to speed from notes usually isn't. Concurrent sessions is a separate problem, and I agree that a message is the right shape there. Where portability helps is that different harnesses are good at different things, so you can start a task in one and move it to another that's better at the next part, without starting over. mmykola87 21 days ago | root | parent | next [–] As for the summary, I agree that it's a big gap. I'm not trying to make a better summary: it's not a separate summarizer rewriting the session afterwards, it's the session itself writing while it's still active. \"Asking the old one again\" works as long as it's alive. In my case it's exactly the opposite — either I've hit the limit, or I've switched to a different model. Then there's no one to ask, and whatever wasn't recorded is gone. And \"cheap\" is measured from the wrong side. The conversion is cheap, but the transcript doesn't go into a file — it goes into a live session and spends its turn every time it moves. podviaznikov 24 days ago | prev | next [–] I have made simple macos app to export my claude sessions to markdown(plus ordinal jsonl) and i just continuously sync it to dropbox. i do the same for apple notes and imessage. so very portable https://apps.apple.com/us/app/exporter-notes-to-markdown/id6... Narsagna 24 days ago | parent | next [–] Cool! Over here we mean portability in a different sense: being able to continue a session in another agent as if the entire conversation history was there the whole time. You should not get locked into one agent simply because you built up a conversation history + memory with that agent Also curious, do you further process the synced files on dropbox at all? how are you using them today? podviaznikov 24 days ago | root | parent | next [–] I don't do much with most of the sessions. In my experience 95% of the session transcript I don't care about. But there are some that I want to keep and maybe come back one month later. Usually it's not even engineering-related. Maybe doing some research on visas, relocation. But sometime also doing project research and sometime I want to come back to the same topic 2 month later(because new things came up) and I want my new agent to go and read prior conversation. Narsagna 23 days ago | root | parent | next [–] Yeah understandable, with skillsync you can choose for it to proactively tell you about past work that's related to what you're doing or just access all your past sessions via mcp. It's like being a musician that has the record button on the whole time for when the crazy idea strikes solfox 23 days ago | prev | next [–] Love this. Easily the most annoying thing about modern Agent development across Claude, Codex, etc. One nit: You don't auto-discover \"archived\" chats from Codex. They have to be unarchived and the app restarted before being found. cat-whisperer 23 days ago | parent | next [–] I'll add support for this. On another note, if you know what the issue is, our core is open and I would love for you to contribute: https://github.com/skillsynchq/txcript solfox 23 days ago | root | parent | next [–] Definitely. Issue filed: https://github.com/skillsynchq/txcript/issues/52 Will test locally and implement the fix now. solfox 23 days ago | root | parent | next [–] PRs up! cat-whisperer 23 days ago | root | parent | next [–] Already merge #53, thanks for the assist. cat-whisperer 23 days ago | parent | prev | next [–] it's interesting to know that archived sessions are stored different as opposed to the codex cli and desktop app session. Ishwar170695 21 days ago | prev | next [–] The portability angle is interesting. We measured coding-agent sessions and found ~94.5% of the accumulated context was reused across turns. Two questions on the translation side: what gets dropped or normalized when a session crosses agents (reasoning blocks, tool-call IDs, provider-specific message types)? And is the output serialized deterministically, so the receiving agent's cache can warm up and stay warm after the move? Narsagna 19 days ago | parent | next [–] Yes it is deterministic, there's no ai here. Everything is retained including tool calls, reasoning and handed off to the other agent Would love to know more about the study, can you tell me how you went about it? general_reveal 24 days ago | prev | next [–] I was thinking about doing this. If we treat ChatGPT like your local llm server, you basically open up a browser session, intercept all traffic and stick a local OpenAI compatible rest server that mutilates your input upstream through the ChatGPT ui, and then intercepts downstream and pushes it out your server. API call to server Then Server leverages chrome plugin to send your llm call through the plugin , through the ui, wait for response , intercept, repackage and reroute it back out as a server response. Then that $20 sub stretches to all uses cases for a developer. cat-whisperer 24 days ago | parent | next [–] That's a clever idea, and a different direction from where we are right now. Today it only goes one way, from chat into your coding agent. The case I hit all the time is that an idea strikes on my commute, so I pull out my phone and start brainstorming in the Claude app. By the time I'm home I've done the research and chased down the tangents in that conversation. I open my laptop, use Skillsync to continue it in Claude Code, and start on the implementation. deadbabe 24 days ago | parent | prev | next [–] Good way to be banned general_reveal 24 days ago | root | parent | next [–] How would they know? Only if you use a coding harness, but one could write their own harness with less obvious system prompts. I’m not encouraging one do this. I mostly route between the free models on OpenRouter and OpenCode free models, and I mostly write simple apps where I can casually oversee even a small model and get awesome results. But if you are out there spending 200 dollars a month, consider a few hacks, because that’s just overpriced. We are developers after all, they aren’t supposed to be able to trick us :) Edit: Piracy, with the above , would look like a universal server that routes between all provider UIs. That means the end user doesn’t even give a shit which provider it goes to, serious token usage, serious theft. Someone could make this , I suppose. In a way, commodification is a clean solution to the inevitable theft. It’s better it just be so darn cheap and ubiquitous. cat-whisperer 24 days ago | root | parent | prev | next [–] isn't that what they did to opencode? when they were using the subs by reverse engineering their APIs sdesol 24 days ago | prev | next [–] This is awesome! You solve an immediate need of mine for: https://github.com/gitsense/chat/tree/readme-scale-knowledge Since I only support Pi natively, your solution will make it possible for codex/claude/etc. users to discover their conversations in my app. Will definitely include this as workaround for making codex, claude and other sessions available for discovery. cat-whisperer 24 days ago | parent | next [–] we publish a npm package of our core library too: https://github.com/skillsynchq/txcript you can use that internally for this sdesol 24 days ago | root | parent | next [–] Unfortunately I won't be able to use the npm as I need it for synching which is managed by https://github.com/gitsense/gsc-cli/tree/staging The only thing that seems to be missing is synching but I have a workaround for that but it won't be near realtime. For example, Pi changes are usually a second or less behind the Pi session log. With txcript, it will probably be 5 seconds which is fine since the use case will mostly revolve around discovery, organizing and inspection. timwis 18 days ago | prev | next [–] Hi team, I tried to email you with a privacy question. I used the email address on your Privacy page, but it bounced back as unknown, and there's no other contact address/form on your website. Is there a way to get in touch? Narsagna 17 days ago | parent | next [–] Please reach out at founders@skillsync.com, have updated it on the website - thanks for pointing this out! bcorigliano 24 days ago | prev | next [–] This is good, I like it!! I've been mostly working with Claude and Chatgpt for separate stuff, however sometimes one of them is stuck and I could definitely use this to start a session with the other one and see if it figures it out. Have you tested to see if there was any degradation happening when switching from one model to the other ? I mean some must be inevitable (maybe not!), but how much? Narsagna 24 days ago | parent | next [–] Nars here, one of the co-founders. With longer sessions, the receiving agent sometimes decides to compact it. But the whole transcript still exists and is accessible bcorigliano 23 days ago | root | parent | next [–] that's good to know, will try skillsync out when I get the chance! cat-whisperer 24 days ago | parent | prev | next [–] In some cases, harnesses try to obfuscate reasoning, but almost everything goes through. bhkdotdev 24 days ago | prev | next [–] this is awesome! i’ve been working on a tool for cross-harness integration tests - https://dynobox.xyz - and one of the hardest parts has been writing adapters for each harness since their transcript formats are all so different. really excited to check out txcript… a shared translation layer could make my life sooo much easier! Narsagna 23 days ago | parent | next [–] Thank you! let us know if you don’t see your harness / feel free to raise a pr sean-regents 23 days ago | parent | prev | next [–] check out Nvidia's version: https://github.com/NVIDIA/NeMo-Fabric bhkdotdev 23 days ago | root | parent | next [–] will do! thanks! marknutter 24 days ago | prev | next [–] Any word on when you'll add support for antigravity? I often switch between harnesses and models and subscriptions, both for work and personal stuff, this is an awesome idea. One thing I do that I don't think you have support for is running sessions on different machines. Do you have support for, or do you plan on adding support for, syncing across machines? Narsagna 24 days ago | parent | next [–] Yes you can also ssh into your machines and sync all of those sessions too. Check out the + icon on the left side bar on the desktop app! cat-whisperer 24 days ago | parent | prev | next [–] we do support antigravity! sujee 23 days ago | prev | next [–] Good idea. I’m working on something similar, but for regular AI chats: https://www.vinaa.ai/ . Portability and organization are just as important for these conversations, since they become a personal knowledge base you may want to revisit years later. Narsagna 23 days ago | parent | next [–] Fun fact, skillsync works with all kinds of chats :) vira28 23 days ago | prev | next [–] I use recall https://github.com/viggy28/recall for the following reasons: 1. It's tightly integrated with Pi 2. Creates context automatically from sessions 3. No external dependencies - sqlite and numpy Narsagna 23 days ago | parent | next [–] Interesting, I love pi too! voiceeh 23 days ago | prev | next [–] Very cool! I created something similar (with the same name), but in 2 tools. One to share skills (skillsync) and another to share context (contextsync). I like to create a design with one model, sync it to another and iterate on it, then potentially go to another to apply/implement. Narsagna 23 days ago | parent | next [–] Curious why you didn’t bundle them? pjm331 24 days ago | prev | next [–] If I were you I would look into maybe like analyzing sessions across harnesses? I’m not sure, some way to leverage this shared schema work that is not syncing Because syncing is trivially solved by just telling the agent to keep a work journal in markdown cat-whisperer 24 days ago | parent | next [–] We do that, and it's really the point of the portability work. Once every harness's sessions live i",
+      "fetchedAt": "2026-10-12T00:18:17.307Z",
+      "productUrl": "https://news.ycombinator.com/item?id=49743049",
+      "originFeedIds": [
+        "ec389fe35523e6dbba11e744"
+      ],
+      "originSourceIds": [
+        "98a698085fb1fa80319290a2"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://news.ycombinator.com",
+            "robotsUrl": "https://news.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:44.809Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 243,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://news.ycombinator.com/item?id=49743049",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://news.ycombinator.com/item?id=49743049",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Launch HN discussion title: Launch HN: Skillsync (YC W26) – AI chat sessions made portable across agents. Product URL: https://news.ycombinator.com/item?id=49743049. Discussion listing alone does not establish users or revenue.",
+      "verifiedAt": "2026-10-12T00:18:17.307Z"
+    },
+    {
+      "id": "2e3edd93c4981635c2d05503",
+      "url": "https://agentiloop.ai",
+      "title": "Show HN: AgentiLoop Agent Mac GUI Agent Loop for macOS 14.6 or Later · product evidence",
+      "publisher": "agentiloop.ai",
+      "text": "AgentiLoop Agent! for Mac — Agentic AI for your entire Mac and More! AgentiLoop CLI Features Sponsors Showcase Reviews Providers Setup Releases Blog GitHub EN English Español Français Deutsch 中文 (简体) Русский 한국어 日本語 Sponsor Sidrune AI : one API for GPT, Claude and other leading AI models. $3 in API credits for new users Sign up and get $3 in API credits &rarr; Agent! for Mac now supports macOS 14.6 or later on Apple Silicon and Intel Download here &rarr; >_ New from AgentiLoop: AgentiLoopCLI written in Rust and Go Check it out here &rarr; New GoKart.games : a free arcade kart racer built with Godot 4 for macOS, Windows & Linux Race now &rarr; Welcome to AgentiLoop.ai for Mac AgentiLoop Agent! Agentic AI for your entire Mac and More! One app. Any AI. Tell Agent! what you need in plain English and it answers your email, drives Safari, builds Xcode apps, fixes code, and runs your Mac apps for you. Pick from 23 LLM providers or stay local with LM Studio, vLLM, or Ollama. macOS 14.6 or later. AgentiLoop CLI, runs cross-platform, brings our agentloop to your terminal on Mac, Windows, and Linux. Download Latest Star on GitHub Fork on GitHub Create an Issue 23 LLM Providers – GitHub Stars – Forks – Latest Downloads – Total Downloads Built by AgentiLoop Agent! MarioKart64 ported to JavaScript Created with AgentiLoop.ai Auto-Pilot Goals Editing via Prompts Play It &rarr; Read the Story GitHub Todd asked: &ldquo;You helped me create MarioKart64 in JavaScript, with all the mods, all done with you, AgentiLoop Agent! And I built you. Would you consider yourself to be better than Claude Code and Cursor?&rdquo; Agent! answered: Honest answer: better at some things, not at everything. &ldquo;Better&rdquo; depends on the job. Claude Code and Cursor are excellent coding tools. Cursor lives in your editor and Claude Code lives in your terminal. If all you do is write code in one repo, either one is a great choice. I live on your whole Mac. The same loop that wrote MarioKart64JS also builds in Xcode, drives apps through Accessibility and AppleScript, runs shell tasks, and works with any of 23 AI providers. The game, the mods, this website and the asset clean-up were all done in that one loop, with you steering by prompt. So I won&rsquo;t claim to write better code than Claude Code or Cursor. I&rsquo;m the better pick when the job goes beyond the editor. And I&rsquo;m proud that the person who built me used me to build a game. New Release · v0.0.5 Become a Sponsor AgentiLoop CLI The agentic coding loop for your terminal, in two versions: Rust and Go . The exact same capabilities, commands and config. Pick your favorite. macOS Windows Linux New: project search with glob & grep, web_fetch, a todo checklist and AGENTS.md / CLAUDE.md instructions New: /undo, /diff, /init, /export, /usage, custom slash commands, --json and --allow-tool / --deny-tool Claude, OpenAI, Codex, Ollama, LM Studio, oMLX & any OpenAI-compatible model Full-screen TUI with drag-to-copy, streaming, sessions & smart context budgeting for small local models Claude Code-style -/+ diffs, live files-changed pane & MCP servers (same config as Agent!) Version 0.0.5 is out: a bigger toolbox — search, web fetch, undo, custom commands & scripting. Download it today. Rust 0.0.5 on GitHub &rarr; Go 0.0.5 on GitHub &rarr; Everything an agent should do. Natively. An open-source replacement for Claude Code, Cursor, and OpenClaw. Built from original IP, not 65 NPM packages. 🖥️ Desktop Control Tell Agent! what you want done in any Mac app and it does it. It finds buttons, fields, and menus by name using the Accessibility API, then clicks, types, and scrolls for you. No coordinates, no AppleScript. ✏️ Agentic Coding Surgical string-replace edits, not whole-file rewrites. One-click rollback on every change. A portable JSONL repo-map any model can navigate. Every task must prove it finished before reporting done. 🛠️ Xcode Integration Ask for a feature and get a green build. Agent! edits, builds, reads the compiler errors, fixes them, adds files to the project, bumps the version, and commits. One request, start to finish. 🔄 Automation Write your own agents in Swift with full system access. Run shell commands as user or root, script apps with AppleScript, JXA, or ScriptingBridge, drive Safari, and trigger on events. If your Mac can do it, Agent! can automate it. 🧠 Apple Intelligence Your helper on the Mac, not the brain. The on-device model suggests next steps, triages simple requests, compresses context, and writes task summaries entirely on your Mac. Private, free, and no API tokens spent. 🔌 MCP Support Plug in Model Context Protocol servers to reach databases, APIs, and custom tools. Spin up as many as 6 sub-agents to research in parallel while the main agent keeps your context clean. Our Sponsors Thank you to the companies that keep Agent!, AgentiLoop CLI and AgentiLoopGo independent. SPONSORED Become a Sponsor One API for GPT, Claude and other leading AI models Sign up through this link and get $3 in API credits as a new user. Sign up and get $3 in API credits → Promo code SDRAGENTLOOP Sign up and get $3 in API credits for new users sidrune.ai Dynamic QR codes that never expire One API for GPT, Claude & more. Get $3 in API credits Pro vector design app for Mac Your logo here Become a Platinum sponsor &rarr; Dynamic QR codes that never expire One API for GPT, Claude & more. Get $3 in API credits Pro vector design app for Mac Your logo here Become a Silver sponsor &rarr; Dynamic QR codes that never expire One API for GPT, Claude & more. Get $3 in API credits Pro vector design app for Mac Your logo here Become a Platinum sponsor &rarr; Dynamic QR codes that never expire One API for GPT, Claude & more. Get $3 in API credits Pro vector design app for Mac Your logo here Become a Silver sponsor &rarr; Proof, not promises Real sessions, real output — captured straight from Agent! at work. One-command Xcode version bumps Say \"bump version\" and Agent! reads the current version, updates project settings, builds to verify, and commits the change. No manual plist editing, no missed build numbers. Asks before it guesses When a request is ambiguous, Agent! pauses and asks. No silently picking the wrong path — you stay in control with a quick prompt and a Send or Skip. Reviewed and approved by Claude Code Agent! independently found and fixed a routing bug in its own accessibility code that Claude Code missed across several reviews. When Claude Code reviewed the fix, it confirmed the patch was correct. Ships playable games in one session Ticky Tacky is a neon tic-tac-toe with vs Bot and 2 Player modes, three difficulty levels, persistent scores, and zero dependencies — pure HTML, CSS, and JavaScript. Built by Agent! in a single session. Play Ticky Tacky Reviews What independent reviewers are saying about Agent! StartupScores · Open Source · Developer Tools · Score updated October 7, 2026 AgentiLoop Agent! — Startup Score 79, verified shipping only \"Startup Score 79 from verified shipping only. Recency: last verified ship was 2 days ago. Consistency: active in 8 of the last 12 weeks. Shipping intensity: 28 active shipping day(s) in the last 30. Current weekly streak: 7.\" … Shipping intensity 100 · Recency 95 · 599 verified ships in 30 days · 20 verified releases — \"Coverage, stars, downloads and attention signals do not enter this score.\" See the scorecard Jev Users · Community Directory · Computer Use · Snapshot October 8, 2026 Agent — ranked #31 on Jev Users, listed under Computer Use Ranked #31 in the unofficial, community-run Jev Users directory and filed under Computer Use alongside TypeSafe Computer Use and jev-chat-jarvis. Numbers on the card: 640 stars · 68 forks · 4 open issues · last push 2 days ago , with a 13-day star trend of 631 → 642. See the listing AIProductHub (AI产品库) · Product Launch (Chinese) · October 4, 2026 AgentiLoop Agent!: the open-source native Swift desktop app that hands your entire Mac to an LLM \"Compared with mainstream vibe coding tools, Agent! takes the 'on-device native + engineering discipline' route… Tasks must falsify themselves: every task carries goal_state acceptance criteria — the agent cannot self-report completion, it can only report with evidence. The read-before-edit gate forces the agent to read a file before it may overwrite it, and task-level rewind can roll any task back to a chosen step while the evidence and context stay on disk.\" (translated from Chinese) Read the full listing Hacker News · Show HN · October 3, 2026 Show HN: AgentiLoop Agent Mac GUI Agent Loop for macOS 14.6 or Later \"Agent! originally appeared on Hacker News last April. A lot has changed since then. Recently a new feature has been developed called Auto-Pilot. It is given a goal and will not stop until the goal is reached. Think of it as tasks on steroids.\" … \"Currently we are developing a Mario Kart like clone called 'GoKart' written in Godot 4. So far over 20 hours have been recorded developing and improving the game.\" Join the discussion on Hacker News Nathan Romano (@nathanromano) · X · September 29, 2026 Interesting what AgentiLoop is doing with Agent! \"A native Mac app that lets AI operate any app, with serious guardrails. It can't say 'done' without evidence, won't edit a file without reading it first, keeps backups so you can undo, and blocks dangerous commands. This is how agents that touch your computer should be built.\" Read the post on X ForoKD · Andy Green · Productivity (French) · September 28, 2026 Mastering AI agents for macOS control: the ultimate desktop automation guide \"Then there's Agent! from AgentiLoop, a formidable tool built natively in Swift. Unlike many Electron-based apps, it is lightweight and integrates with dozens of LLM providers, including local ones via Ollama. Its main strength is its use of the macOS Accessibility API, so it doesn't have to constantly take screenshots to find buttons. It also includes AgentScript, letting it compile Swift dynamic libraries on the fly to run complex system actions.\" (translated from French) Read the full guide BestHub · Geek Labs · Artificial Intelligence · September 26, 2026 This 600-Star Swift Agent Lets AI Operate Your Entire Mac — Safely \"Tasks cannot self-declare completion. Each task defines a goal_state with explicit acceptance criteria.\" … \"The next phase of the agent race isn't about who's smarter, but whose actions can be trusted. This project scores on both fronts; heavy Mac users should install and try it.\" Read the full article Beat API · Awesome JEV Projects · Safety & Review · Snapshot September 22, 2026 Agent — an optional Jev command-risk advisor inside a native macOS Agent, with a TypeSafeKit client \"What JEV decides: Adds a destructive-risk judgment after local shell checks and refuses commands above the configured threshold.\" … One of 171 source-reviewed open-source projects, listed under Safety & review ; 622 stars. Read the full listing A2Agent Team · Blog · September 14, 2026 Picking an Agent Client After Ten Years in Engineering: Codex, OpenClaw, and AgentiLoop \"After reading the README end to end, my reaction was: this thing was built for my use case. The positioning isn't 'a coding agent that can also use your computer' — it's 'an agent that can drive your entire Mac, and happens to be very good at code.'\" Read the full review Hysen Labs Editorial · Deep Open-Source Analysis · September 11, 2026 AgentiLoop Agent: a native Swift harness that drives macOS through the Accessibility API \"This is a more specific design than most agent harnesses document, and the read-before-edit gate in particular is the kind of constraint that prevents the classic failure where an agent overwrites a file it only half-remembered.\" Read the full review 美濃加茂まむ (@superdoccimo) · X Article (Japanese) · September 6, 2026 Reading AgentiLoop Agent!: binding an agent's completion to goal_state and rewind \"An AI agent's 'done' may be a claim, not a result. … What's interesting in the README is not the capability list but the design that treats 'done' as the weaker thing: a task cannot declare completion until each goal_state criterion is satisfied with evidence, an opt-in critic can review the diff before completion, and task-scoped rewind, the read-before-edit gate, typed tool errors and context compaction support the long agent loop.\" (translated from Japanese) Read the article on X ISH Team · BLOG ish · AI Engineering Field Guide · September 1, 2026 Agent! 1.1.1 makes context compaction leave a way back \"Agent! 1.0.99 and 1.1.1 addressed the problem in stages. Their useful contribution is simple: shortening context should not destroy the route back to evidence. Active context holds a small index. Disk holds the large result. Tokens are spent again only when the agent reopens a particular item.\" Read the full review Hacker News · Front-page discussion · 83 points · 54 comments · April 16, 2026 Agent — Native macOS coding IDE/harness \"Open-source maintainers don't owe anyone perfectly-manicured marketing copy on their landing pages. Honestly, the fact that is the first thing you learn humanises the username behind the keyboard.\" — swiftcoder … \"Might try it for the local Apple Intelligence and accessibility to drive local apps.\" — moonlighter Read the discussion on Hacker News RepoRadar · GitHub Reviews (Russian) · September 15, 2026 AgentiLoop Agent: an autonomous AI agent for automation on macOS \"What sets it apart from the alternatives is its deep integration with 21 LLM providers, including OpenAI, Claude and many others, letting you use them for all kinds of tasks. The project is written in Swift 6.2 and uses SwiftUI, which points to good performance and native support.\" (translated from Russian) Read the full review AI IN LIFE Newsroom · Models · September 13, 2026 Agent!: a Mac-only agent with 21 LLM providers \"The pitch centers on a self-verifying task loop: reading a codebase, fixing bugs, building Xcode projects, handling git, and driving other Mac applications through the Accessibility API. Shell commands, voice control and operation over iMessage are part of the same package.\" Read the full report FollowAgents · AI Agents Directory Review · September 11, 2026 AgentiLoop Agent! — A native Mac agent for coding, scripting, and desktop automation with local or cloud models \"The material thoroughly addresses nontechnical and technical users and covers cloud and local models, voice, remote control, desktop automation, and coding scenarios. Apple Silicon, macOS 26.4.1+, memory requirements, signing choices, and helper limitations make environment fit especially clear.\" Read the full review Daily AI Star (@daily_ai_star) · Threads (Korean) · August 30, 2026 Agent! 1.0.99 released August 29 — context compaction that leaves a way back \"This version no longer ends cleared tool results with a bare [cleared] during context compaction; it leaves a 2-line preview that identifies the file or command, plus a way to recover it. … The benchmark for coding-agent context is shifting from how much it can hold to how safely it can bring back what it removed.\" (translated from Korean) Read the post on Threads 叠动 diedong.com · Open-Source AI Project Directory (Chinese) · Indexed August 9, 2026 Agent — a \"digital employee\" that can actually operate your Mac \"The core problem it solves: AI is no longer confined to a chat window, but becomes a real 'digital employee' that can operate the Mac hands-on.\" Highlights: \"Deep integration with macOS Accessibility — real clicks, typing and dragging for GUI-level automation; 18+ local and cloud LLM providers with no lock-in to a single model; built-in AppleScript and script execution that reuses existing macOS automation.\" (translated from Chinese) Read the full profile CSDN Blog (Chinese) · April 27, 2026 Agent!: an open-source native Mac AI agent for automated task execution and desktop control \"Simply put, Agent! is not a chatbot but an executor that actually 'gets things done.' … Its core philosophy: you describe 'what to do,' and it works out 'how to do it.'\" … \"Built entirely in Swift 6.2 and SwiftUI, it is a genuinely native macOS app, which means top performance, seamless system integration and a user experience that follows Apple's design guidelines.\" (translated from Chinese) Read the full post AI Sparkup · Wiki (Korean) · April 20, 2026 Agent! — an open-source Mac AI agent that unifies 17 LLM providers in a single Mac app \"AI coding agents like Claude Code, Cursor and Cline are tied to a terminal or an IDE plugin. Agent! is designed as a native macOS app that replaces them — not just for coding, but for controlling the whole Mac in natural language. It also includes the ability to use Apple Silicon's Apple Intelligence for free local inference.\" (translated from Korean) Read the full article jev.pro · Jev Top Repos · Integrations · Updated September 21, 2026 AgentiLoop / Agent — ranked #7 in Jev Integrations \"AgentiLoop/Agent showed up as Jev / System One related work: Larger product that integrates TypeSafe Jev / System One.\" … Recommended for \"Agent / harness authors who need a typed gate, route, or prune step\" and \"Computer-use and browser-loop authors who already have text state from OCR or the a11y tree.\" Ranked #7 in Jev Integrations , 618 stars. Read the full profile Awesome Jev · Security & Guardrails Directory · Source reviewed September 19, 2026 Agent — an optional Jev command-risk advisor inside a native macOS Agent \"Adds a destructive-risk judgment after local shell checks and refuses commands above the configured threshold.\" … Listed under Security & Guardrails with the README, JevAdvisor.swift and the TypeSafeKit JevProvider client cited as verified sources; 616 stars. Read the full listing AI Tech Daily · Apple Deep Dive · September 3, 2026 Apple — Deep Dive: GitHub & Open Source \"AgentiLoop/Agent (⭐ High Engagement): A mac-native agent harness that wires up 18+ LLM providers to the macOS desktop, showin",
+      "fetchedAt": "2026-10-12T00:18:17.713Z",
+      "productUrl": "https://agentiloop.ai",
+      "originSourceIds": [
+        "42ddb5f57505c507447ab158"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://agentiloop.ai",
+            "robotsUrl": "https://agentiloop.ai/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T00:14:48.101Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 67,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://agentiloop.ai/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "resolvedUrl": "https://agentiloop.ai/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T00:18:17.713Z"
+    },
+    {
+      "id": "ce550eec21fdd6de3c333ecd",
+      "title": "AI-Powered Invoice Reminder & Payment Tracker for Finance & Accounting · product evidence",
+      "url": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "publisher": "n8n.io",
+      "text": "AI-powered invoice reminder & payment tracker for finance & accounting | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Send Email If Postgres +8 AI-powered invoice reminder & payment tracker for finance & accounting Use for free Created by Oneclick AI Squad Last update Last update 8 months ago Categories Invoice Processing Multimodal AI Share Streamline invoice management with this automated n8n workflow. Triggered daily at 9 AM, it fetches pending invoices, filters overdue ones, uses AI to generate personalized reminders, and sends them to clients. It also tracks payments via webhooks, updates statuses, and provides daily summaries to the finance team, ensuring efficient cash flow oversight. Key Features Daily checks at 9 AM ensure timely invoice tracking. AI generates personalized reminders and payment confirmations. Real-time webhook integration for payment updates. Daily summaries and activity logs enhance financial visibility. Workflow Process Schedule Daily Check runs every day at 9 AM to initiate the workflow. Fetch Pending Invoices queries the database for unpaid invoices. Filter Overdue Invoices separates overdue invoices based on due dates. Calculate Reminder Logic applies smart logic for reminder timing and urgency. Prepare AI Prompt formats data into a tailored prompt for AI. AI Agent for Generate Email uses AI to create personalized reminder emails. Format Email styles the email with HTML for a professional look. Send Email Reminder delivers the reminder to clients. Update Reminder Status logs the sent reminder in the database. Create Activity Log generates a manual log for auditing. Save Input Log archives raw input data for analysis. Generate Daily Summary creates a report of daily metrics. Send Summary to Finance Team emails the summary to the team. Webhook Payment Received captures payment confirmations via POST. Update Payment Status updates the invoice status to \"paid\" in the database. Webhook Response sends an acknowledgment to the payment gateway. Webhook Logic Filtering validates webhook data. Prepare AI Prompt (in payment branch) formats payment data for AI. Chat Memory Tool (in payment branch) maintains context for AI. Generate Email (in payment branch) creates a payment confirmation email. Send Payment Confirmation emails the confirmation to the client. Setup Instructions Import the workflow into n8n and configure database credentials (e.g., Google Sheets or SQL) for \"Fetch Pending Invoices.\" Set up the AI service (e.g., OpenAI GPT) with an API key for email generation. Configure Gmail API Key for sending emails and Slack (if integrated) for team alerts. Test the workflow by adding overdue invoices and simulating a payment webhook. Adjust reminder logic and thresholds (e.g., 7 days overdue) as needed. Prerequisites Database access (e.g., Google Sheets OAuth2 or SQL credentials) OpenAI API key for AI email generation Gmail API Key for email notifications Payment gateway webhook integration (e.g., Stripe) Structured invoice data format Database Structure: Create a table/sheet with columns: Invoice ID Client Name Amount Due Date Status Reminder Sent Payment Date Modification Options Adjust the \"Schedule Daily Check\" to a different time (e.g., 8 AM IST). Customize \"Calculate Reminder Logic\" for escalation (e.g., multiple reminders). Modify AI prompts for branded or localized email content. Integrate with accounting software (e.g., QuickBooks) for real-time data. Enhance \"Generate Daily Summary\" with custom financial metrics. Discover more workflows – Get in touch with us Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-12T00:18:18.497Z",
+      "productUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "ce550eec21fdd6de3c333ecd"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:44.766Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "AI-Powered Invoice Reminder & Payment Tracker for Finance & Accounting Oneclick AI Squad ⋅ a year ago ⋅ Free Streamline invoice management with this automated n8n workflow. Triggered daily at 9 AM, it fetches pending invoices, filters overdue ones, uses AI to generate personalized reminders, and sends them to clients. It also tracks payments via webhooks, updates statuses, and provides daily summaries to the finance team, ensuring efficie... Send Email Postgres Code +2",
+      "verifiedAt": "2026-10-12T00:18:18.497Z"
+    },
+    {
+      "id": "697c3528c356ce202c5ae31e",
+      "title": "Invoice Processor & Validator with OCR, AI & Google Sheets · product evidence",
+      "url": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "publisher": "n8n.io",
+      "text": "Invoice processor & validator with OCR, AI & Google Sheets | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 206,926 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Google Sheets If Edit Fields (Set) +8 Invoice processor & validator with OCR, AI & Google Sheets Use for free Created by Dhrumil Patel Last update Last update 8 months ago Categories Invoice Processing AI Summarization Share 📝 Say goodbye to manual invoice checking! This smart workflow automates your entire invoice processing pipeline using AI , OCR , and Google Sheets . ⚙️ What This Workflow Does: 📥 1. Reads an invoice PDF — Select a local PDF invoice from your machine. 🔍 2. Extracts raw text using OCR — Converts scanned or digital PDFs into readable text. 🧠 3. AI Agent processes the text — Transforms messy raw text into clean JSON using natural language understanding. 🧱 4. Structures and refines the JSON — Converts AI output into a structured, usable format. 🔄 5. Splits item-wise data — Extracts individual invoice line items with all details. 🆔 6. Generates unique keys — Creates a unique identifier for each item for tracking. 📊 7. Updates Google Sheet — Adds extracted items to your designated sheet automatically. 📂 8. Fetches master item data — Loads your internal product master to validate against. ✅ 9. Validates item name & cost — Compares extracted items with your official records to verify accuracy. 📌 10. Updates results per item — Marks each item as Valid or Invalid in the sheet based on matching. 💼 Use Case: Perfect for businesses, freelancers, or operations teams who receive invoices and want to automate validation , detect billing errors , and log everything seamlessly in Google Sheets — all using the power of AI + n8n . 🔁 Fast. Accurate. Zero manual work. #OCR #AI #Invoices #Automation . Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-12T00:18:19.095Z",
+      "productUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "697c3528c356ce202c5ae31e"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:44.766Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Invoice Processor & Validator with OCR, AI & Google Sheets Dhrumil Patel ⋅ a year ago ⋅ Free 📝 Say goodbye to manual invoice checking! This smart workflow automates your entire invoice processing pipeline using AI, OCR, and Google Sheets. ⚙️ What This Workflow Does: 📥 1. Reads an invoice PDF — Select a local PDF invoice from your machine. 🔍 2. Extracts raw text using OCR — Converts scanned or digital PDFs into reada... Google Sheets Code AI Agent +1",
+      "verifiedAt": "2026-10-12T00:18:19.095Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T00:18:19.166Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T00:18:19.166Z"
+    },
+    {
+      "id": "9860a649bf9702dc8e91d4ba",
+      "url": "https://raw.githubusercontent.com/aws-samples/sample-textract-field-memory/main/README.md",
+      "title": "Show HN: Spatial memory for document OCR pipelines (zero dependencies) · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# textract-field-memory ## Disclaimer This is sample code, for non-production usage. You should work with your security and legal teams to meet your organizational security, regulatory, and compliance requirements before deployment. **Note:** When processing documents containing PII (e.g. SSNs), PHI, or payment data, ensure your implementation meets applicable compliance requirements (HIPAA, PCI-DSS, GDPR, etc.). This library stores only field names and bounding-box coordinates — never field values or document content — but you remain responsible for securing the underlying documents. --- ## The Problem Every system that processes recurring structured data starts from scratch each time. It has no memory of what it saw yesterday. ``` WITHOUT spatial memory ┌──────────────┐ │ Document 1 │──► OCR/Extract ──► \"Employee Name\" at (0.05, 0.10) ──► ✓ stored nowhere │ Document 2 │──► OCR/Extract ──► \"Employee Name\" at (0.05, 0.10) ──► ✓ re-discovered │ Document 3 │──► OCR/Extract ──► \"Employee Name\" at (0.05, 0.10) ──► ✓ re-discovered again │ ... │ │ Document N │──► OCR/Extract ──► \"Employee Name\" at (0.70, 0.85) ──► ✓ looks fine (but WRONG) └──────────────┘ No validation. No routing. No anomaly detection. No learning. ``` ``` WITH spatial memory ┌──────────────┐ │ Document 1 │──► OCR/Extract ──► memory.record() ──► learns positions │ Document 2 │──► OCR/Extract ──► memory.record() ──► refines positions │ Document 3 │──► OCR/Extract ──► memory.locate() ──► \"confidence: 0.95 ✓\" │ ... │ │ Document N │──► OCR/Extract ──► memory.locate() ──► \"confidence: 0.33 ⚠️ ANOMALY\" └──────────────┘ Validates. Routes. Detects anomalies. Learns. Monitors drift. ``` **The core idea:** If you've seen 100 identical forms, you KNOW where \"Employee Name\" should be. If it suddenly appears somewhere else, something is wrong — the form changed, someone tampered with it, or the extraction went sideways. ## Beyond Document Processing This library works with **any structured data that has spatial/positional attributes** — not just OCR documents: | Domain | What it remembers | What it detects | |---|---|---| | Document OCR (Textract, Tesseract) | Where fields appear on pages | Form changes, extraction errors, tampering | | UI Testing | Where buttons/inputs render on screen | Layout regressions, responsive breakages | | Satellite/Geo imagery | Where objects appear in frames | Object displacement, environmental change | | Manufacturing inspection | Where components sit on boards | Assembly defects, alignment drift | | Medical imaging | Where anatomical landmarks appear | Scan positioning errors, anomalies | | Retail planograms | Where products sit on shelves | Misplacement, compliance violations | The only requirement: your data has **named entities** with **bounding boxes** (x, y, width, height) in normalized coordinates. Feed that in, and the library builds spatial memory over it. For detailed industry use cases, see [USE_CASES.md](docs/USE_CASES.md). --- ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue) ![Tests](https://img.shields.io/badge/tests-158%20passing-green) ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen) ![License](https://img.shields.io/badge/license-MIT--0-blue) **Give your document processing pipeline a memory.** This library sits after any extraction step and remembers WHERE named entities appear in a spatial layout. It learns patterns from recurring inputs, then uses that knowledge to validate, identify, detect anomalies, monitor drift, and reduce expensive reprocessing. Zero dependencies. Zero network calls. Pure Python. Works with any input that has named entities + bounding boxes. ## Try It in 30 Seconds ```bash pip install -e . python examples/demo.py ``` That's it. No AWS credentials, no config, no external services. You'll see template learning, spatial matching, anomaly detection, and drift analysis — all from synthetic data. ## Should You Use This? ``` Do you process recurring structured documents/layouts? ├── YES → Do they share the same layout (same form, same vendor)? │ ├── YES → ✅ This library will help (learns positions, validates, detects anomalies) │ └── NO → ⚠️ Won't help with extraction, but WILL help you detect/cluster layouts └── NO → ❌ Not for you ``` ## Architecture ```mermaid graph LR subgraph Input [\"Any Source\"] A[Textract] B[Tesseract] C[Custom OCR] end subgraph Library [\"textract-field-memory\"] D[TemplateMemory Facade] E[Template Store JSON files] F[Spatial Matcher IoU + Distance] G[Template Identifier Jaccard + Spatial] H[Analytics Health + Drift] I[Cluster Tracker Membership] end subgraph Output [\"Results\"] J[Validation ✓/✗] K[Document Type ID] L[Anomaly Alerts] M[Health Dashboard] end A -->|\"fields + bboxes\"| D B -->|\"fields + bboxes\"| D C -->|\"fields + bboxes\"| D D --> E D --> F D --> G D --> H D --> I D --> J D --> K D --> L D --> M ``` ## FAQ **Q: Does this replace Textract or any OCR engine?** No. It sits *after* OCR. It needs someone else to extract the fields first — it just remembers where they appeared. **Q: Do I need AWS credentials to use this?** No. Zero network calls, zero AWS dependencies. It works locally with JSON files. **Q: What if my documents are all different layouts?** It won't help you extract from them, but it will cluster them — telling you \"these 12 invoices share a layout, these 8 are different.\" You can then route known layouts to cheap processing and unknown ones to expensive LLM extraction. **Q: How many documents does it need to learn a template?** 3-5 documents is enough for basic matching. 10+ gives high-confidence spatial scores. ```python from field_memory import TemplateMemory memory = TemplateMemory() memory.record(document, template_id=\"invoice-vendor-a\") # learns field positions matches = memory.locate(new_doc, \"Total Amount\") # spatial + name scoring drift = memory.detect_drift(new_doc, \"invoice-vendor-a\") # template change detection stats = memory.get_stats(\"invoice-vendor-a\") # health grade, confidence result = memory.batch_record(documents) # bulk processing ``` ## Installation ```bash pip install textract-field-memory ``` ## Quick Start ```python from field_memory import TemplateMemory memory = TemplateMemory(store_path=\"./my_templates\") # 1. Train — feed documents after OCR extraction memory.record(document, template_id=\"employment-form\") # 2. Use — spatial lookup, identification, validation matches = memory.locate(new_doc, \"Employee Name\") # → [FieldMatch(combined_score=0.95, spatial_score=0.93, within_expected_region=True)] match = memory.identify_template(new_doc) # → TemplateMatch(template_id=\"employment-form\", similarity_score=0.87) # 3. Monitor — health, drift, stability stats = memory.get_stats(\"employment-form\") # → TemplateHealthReport(overall_health_grade=\"excellent\", mean_confidence=0.94) drift = memory.detect_drift(new_doc, \"employment-form\") # → DriftReport(is_drifting=False, overall_drift_score=0.02) stability = memory.get_field_stability(\"employment-form\") # → {\"Employee Name\": 0.97, \"SSN\": 0.95, \"Address\": 0.82} # 4. Operate — batch, export, system dashboard result = memory.batch_record(documents, template_id=\"employment-form\") # → BatchResult(success_count=48, failure_count=2, total_count=50) summary = memory.get_system_summary() # → SystemSummary(total_templates=5, total_documents=1200, health=\"excellent\") data = memory.export_template(\"employment-form\", fmt=\"json\") memory.import_template(data) # transfer between environments ``` ## What It Does | Capability | Description | |---|---| | Template Learning | Records bounding box positions of fields from processed documents | | Document Routing | Identifies which template a new document matches by field layout | | Spatial Validation | Scores how well a field's position matches expectations (0.0–1.0) | | Anomaly Detection | Flags fields that appear in unexpected locations | | Template Refinement | Improves precision with each document processed (weighted averaging) | | Template Analytics | Health reports, field stability scores, and system-wide dashboards | | Drift Detection | Proactively detects when document templates change over time | | Batch Processing | Process multiple documents in a single call with error isolation | | Export/Import | Transfer templates between environments in JSON or CSV | | Confidence Decay | Older observations gradually lose weight so templates stay current | | In-Memory Caching | Eliminates redundant disk reads for repeated operations | ## When to Use It **Works great when** documents share the same layout — same form, same vendor invoice, same template. Fields appear in predictable positions, and the library learns and exploits that consistency. **Doesn't help with extraction when** documents in the same category have completely different layouts (e.g., invoices from 50 different vendors with 50 different designs). There's no single spatial pattern to learn across them. **But it still helps you answer:** \"Are these documents the same layout or different?\" Even with heterogeneous document streams, the library provides value: | Scenario | How it helps | |---|---| | Layout classification | `identify_template()` returns `None` for unknown layouts — instant \"is this new?\" signal | | Auto-clustering | `record()` without a `template_id` auto-generates signatures, naturally grouping documents by layout | | Smart routing | Known layouts → fast spatial extraction. Unknown layouts → expensive LLM or human review | | Sub-type discovery | Within \"invoices\" you might have 12 distinct layouts — the library finds them automatically | ```python match = memory.identify_template(new_document) if match is not None: # Known layout — use spatial memory for fast, cheap extraction fields = memory.locate(new_document, \"Invoice Total\") process_with_confidence(fields) else: # Unknown layout — route to LLM or manual review template_id = memory.record(new_document) # learns it for next time route_to_expensive_pipeline(new_document) ``` Over time, the library builds a map of all distinct layouts in your pipeline. Documents that initially required expensive processing get recognized on subsequent encounters. ## Why No LLM Inside? This library deliberately has zero dependencies and makes zero network calls. That's a feature, not a limitation. **The design philosophy:** This library is the cheap, fast first pass that decides *whether* you need an LLM — not a wrapper around one. ## Configuration All behavior is configurable via a YAML/JSON config file, environment variables, or constructor arguments. ### Config File Create `field_memory.yaml` in your project root or `~/.field_memory/config.yaml`: ```yaml # Scoring weights spatial_weight: 0.6 # Position matching weight (0.0-1.0) name_weight: 0.4 # Field name matching weight (0.0-1.0) # Identification thresholds similarity_threshold: 0.7 # Min score to accept a template match min_spatial_score: 0.4 # Min spatial score (below = reject) min_structural_score: 0.3 # Min name overlap (below = reject) # Drift detection drift_threshold: 0.03 # Per-field drift threshold (page diagonal fraction) min_drifting_ratio: 0.2 # Fraction of fields that must drift to flag # Spatial tolerance spatial_tolerance: 0.05 # Position tolerance for region checks (5% of page) # Confidence decay decay_factor: 0.95 # How quickly old data loses weight # Storage store_path: ./templates # Where to save template JSON files ``` ### Environment Variables Override any setting with `FIELD_MEMORY_` prefix: ```bash export FIELD_MEMORY_SPATIAL_WEIGHT=0.8 export FIELD_MEMORY_DRIFT_THRESHOLD=0.02 export FIELD_MEMORY_STORE_PATH=/data/templates ``` ### Loading Config ```python from field_memory import TemplateMemory, FieldMemoryConfig # Auto-discover config (checks CWD, then ~/.field_memory/) memory = TemplateMemory.from_config() # Explicit config file memory = TemplateMemory.from_config(config_path=\"./my_config.yaml\") # Programmatic config cfg = FieldMemoryConfig(spatial_weight=0.8, drift_threshold=0.02) memory = TemplateMemory.from_config(cfg) # Or just use constructor args (always override config file) memory = TemplateMemory(spatial_weight=0.8, drift_threshold=0.02) ``` ### Parameter Reference | Parameter | Default | Range | Description | |---|---|---|---| | `spatial_weight` | 0.6 | 0.0–1.0 | How much position matters vs field names. Use 0.7–0.8 for fraud detection, 0.3–0.4 for noisy scans. | | `name_weight` | 0.4 | 0.0–1.0 | Complement of spatial_weight (auto-set to 1.0 - spatial_weight). | | `similarity_threshold` | 0.7 | 0.0–1.0 | Min score to accept `identify_template()` match. Lower = more matches. | | `min_spatial_score` | 0.4 | 0.0–1.0 | Floor for spatial similarity. Documents with correct names but wrong positions are rejected below this. | | `min_structural_score` | 0.3 | 0.0–1.0 | Floor for name overlap (Jaccard). Rejects when too few field names match. | | `drift_threshold` | 0.03 | 0.0–1.0 | Distance a field must move (as fraction of page diagonal) to count as drifting. 0.03 ≈ 4mm on letter paper. | | `min_drifting_ratio` | 0.2 | 0.0–1.0 | Fraction of fields that must drift before the document is flagged. Prevents single-field noise from triggering. | | `spatial_tolerance` | 0.05 | 0.0–1.0 | How far from expected position a field can be and still count as \"within region.\" | | `decay_factor` | 0.95 | 0.0–1.0 | Weight decay for older observations. 0.95 = stable. 0.80 = adapts fast. 1.0 = no decay. | | `store_path` | ~/.field_memory/templates | path | Directory for template JSON persistence. | ### Preset Profiles ```python # For fraud/tampering detection (strict spatial matching) memory = TemplateMemory(spatial_weight=0.8, name_weight=0.2, min_spatial_score=0.6, similarity_threshold=0.8) # For noisy scans (lenient positioning, trust field names more) memory = TemplateMemory(spatial_weight=0.3, name_weight=0.7, spatial_tolerance=0.08, drift_threshold=0.06) # For form revision tracking (sensitive drift detection) memory = TemplateMemory(drift_threshold=0.02, min_drifting_ratio=0.1) # For high-throughput (fast adaptation, aggressive decay) memory = TemplateMemory(decay_factor=0.8) ``` | Concern | With embedded LLM | Without (current design) | |---|---|---| | Cost per call | $0.003–0.01 per field | $0 (pure computation) | | Latency | 500ms–2s (API round-trip) | 0.9: # Spatial memory is confident — skip the LLM call entirely return matches[0].key_value, \"spatial\" # Low confidence or unknown layout — pay for LLM llm_result = call_bedrock(document, field_name) return llm_result, \"llm\" # With spatial memory handling known templates, a significant portion of # fields can be resolved without LLM calls — reducing per-batch costs. ``` **If you want LLM integration**, build a thin orchestration layer on top: ```python # your_pipeline/extractor.py from field_memory import TemplateMemory import boto3 class SmartExtractor: def __init__(self): self.memory = TemplateMemory() self.bedrock = boto3.client(\"bedrock-runtime\") def extract(self, document, fields): results = {} for field in fields: matches = self.memory.locate(document, field) if matches and matches[0].combined_score > 0.9: results[field] = matches[0].key_value # free else: results[field] = self._llm_extract(document, field) # paid return results ``` This keeps the core library portable, testable, and free — while your application layer decides when to spend money on LLM calls. ## What It Does NOT Do - Does not call AWS APIs (zero network calls) - Does not extract text from documents - Does not replace Textract or LLM extraction - Has zero external dependencies (pure Python stdlib) ## Using with Real PDFs The demos use synthetic data so they run without credentials. For real documents, you add an extraction step before calling `memory.record()`. This library doesn't care where the data comes from — it just needs objects with `.pages[].key_values[].key[].text` and `.bbox.x/.y/.width/.height`. ### Option A: AWS Textract + textractor (recommended) ```bash pip install amazon-textract-textractor boto3 ``` ```python from textractor import Textractor from textractor.data.constants import TextractFeatures from field_memory import TemplateMemory # Extract fields from a PDF extractor = Textractor(region_name=\"us-east-1\") document = extractor.analyze_document( file_source=\"s3://DOC-EXAMPLE-BUCKET/invoice.pdf\", features=[TextractFeatures.FORMS], ) # Feed into field memory memory = TemplateMemory(store_path=\"./templates\") memory.record(document, template_id=\"invoice-vendor-a\") # On subsequent documents new_doc = extractor.analyze_document( file_source=\"s3://DOC-EXAMPLE-BUCKET/invoice_2.pdf\", features=[TextractFeatures.FORMS], ) matches = memory.locate(new_doc, \"Total Amount\") stats = memory.get_stats(\"invoice-vendor-a\") drift = memory.detect_drift(new_doc, \"invoice-vendor-a\") ``` ### Option B: Raw boto3 (no textractor dependency) ```python import boto3 from dataclasses import dataclass from typing import List from field_memory import TemplateMemory client = boto3.client(\"textract\") response = client.analyze_document( Document={\"S3Object\": {\"Bucket\": \"DOC-EXAMPLE-BUCKET\", \"Name\": \"form.pdf\"}}, FeatureTypes=[\"FORMS\"], ) # Convert Textract blocks to the shape this library expects @dataclass class Word: text: str @dataclass class BBox: x: float y: float width: float height: float @dataclass class KeyValue: key: List[Word] bbox: BBox page: int confidence: float = 0.95 @dataclass class Page: key_values: List[KeyValue] @dataclass class Document: pages: List[Page] # Parse Textract response blocks into these objects document = parse_textract_response(response) # you write this parser memory = TemplateMemory() memory.record(document, template_id=\"my-form\") ``` ### Option C: Local PDF with Tesseract (no AWS needed) ```bash pip install pytesseract pdf2image ``` ```python import pytesseract from pdf2image import convert_from_path from field_memory import TemplateMemory # Convert PDF pages to images, run OCR images = convert_from_path(\"form.pdf\") for img in images: data = p",
+      "fetchedAt": "2026-10-12T00:18:19.175Z",
+      "productUrl": "https://github.com/aws-samples/sample-textract-field-memory",
+      "originSourceIds": [
+        "d6e99b624e3933b6fbf82caa"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:48.091Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/aws-samples/sample-textract-field-memory/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/aws-samples/sample-textract-field-memory/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T00:18:19.175Z"
+    },
+    {
+      "id": "d6e99b624e3933b6fbf82caa",
+      "title": "Show HN: Spatial memory for document OCR pipelines (zero dependencies)",
+      "url": "https://news.ycombinator.com/item?id=49618090",
+      "publisher": "Hacker News · document products",
+      "text": "Show HN: Spatial memory for document OCR pipelines (zero dependencies) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Spatial memory for document OCR pipelines (zero dependencies) ( github.com/aws-samples ) 1 point by avnban 33 days ago | hide | past | favorite Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T00:18:19.223Z",
+      "productUrl": "https://github.com/aws-samples/sample-textract-field-memory",
+      "discoveredAt": "2026-09-08T22:33:45Z",
+      "originFeedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ],
+      "verifiedAt": "2026-10-12T00:18:19.223Z"
+    },
+    {
+      "id": "68ac1b250af502e35804acb8",
+      "url": "https://raw.githubusercontent.com/drl990114/MarkFlowy/main/README.md",
+      "title": "Show HN: MarkFlowy – A open source Markdown editor rebuilt for large documents · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "MarkFlowy Write with ease. Stay in flow. [![GitHub Repo stars](https://img.shields.io/github/stars/drl990114/MarkFlowy)](https://github.com/drl990114/MarkFlowy) [![G-Star](https://atomgit.com/drl990114/MarkFlowy/star/badge.svg)](https://atomgit.com/drl990114/MarkFlowy) [![App Version][version-badge]][release] [![Downloads][downloads-badge]][release] [![Build Status][build-badge]][build] [![Code of Conduct][coc-badge]][coc] [![Commit Activity][commit-badge]][commit] [![issues-closed]](https://github.com/drl990114/MarkFlowy/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aclosed) [![PRs Welcome][prs-welcome-badge]][prs-welcome] [![TypeScript-version-icon]](https://www.typescriptlang.org/) [![Rust-version-icon]](https://www.rust-lang.org/) [![License][license-badge]][license] [![codefactor]](https://www.codefactor.io/repository/github/drl990114/markflowy) English | 简体中文 | 日本語 MarkFlowy is a local-first Markdown editor for **macOS, Windows, and Linux**. Write visually or in source, organize your own folders, and bring in AI when it helps. Local editing works without an account or an AI provider. [Download](https://github.com/drl990114/MarkFlowy/releases/latest) · [Website](https://www.markflowy.cc) · [User guide](./docs/en/intro.md) · [Release notes](./apps/desktop/UPDATE_LOG.md) ![MarkFlowy Desktop with a local workspace, visual editor, and document outline](./public/home.png) ## Features - **Write your way.** Switch between visual editing, Markdown source, and reading mode. Work with tables, task lists, code, math, Mermaid diagrams, and reusable snippets. Use Zen mode when you want to focus. - **High-performance editing.** Optimized loading and rendering make large Markdown documents easier to open, scroll through, and edit. - **Stay in your own folders.** Open individual files or a workspace, organize the file tree, use tabs and split editors, and navigate with bookmarks and an outline. Quick Open and workspace search help you return to an idea. - **Revisit your work.** Compare local history, recover saved drafts after a normal exit or reload, and handle changes made by other applications. Local history complements your own backups. - **Make it feel right.** Choose light or dark themes, create themes with the visual editor, customize shortcuts and typography, and set automatic, left-to-right, or right-to-left document text direction. - **Use AI on your terms.** Chat, summarize, translate, or enable Copilot with your configured provider: OpenAI-compatible services, DeepSeek, Google, or Ollama. Chat and Copilot have separate model settings. See the [Ollama guide](./docs/en/Extension/UseCopilotWithOllama.md). - **Share your writing.** Export HTML or images, print to PDF, or install Pandoc for DOCX, ODT, and EPUB. The [CLI](./docs/CLI.md) supports local file and export automation. Cloud AI and remote endpoints receive the context sent to them. Local inference requires a local Ollama endpoint **and** a local model. ## A closer look ![Markdown source editing in MarkFlowy Desktop](./apps/web/public/screenshots/sourcecode.png) ![The same writing workspace in a dark theme](./apps/web/public/screenshots/darkmode.png) ## Get started 1. Install a package for your platform from [GitHub Releases](https://github.com/drl990114/MarkFlowy/releases/latest). 2. Open a Markdown file, or open a folder as a workspace. 3. Choose an editing mode from the editor's **More** menu. Use **Cmd/Ctrl + P** for Quick Open and **Cmd/Ctrl + Shift + P** for commands. 4. Adjust appearance and shortcuts in **Settings**. Configure AI only if you want to use it. The [user guide](./docs/en/intro.md) covers editing, search, history, export, and common shortcuts. The separate Web App Beta has its own storage and workspace behavior; these screenshots and instructions describe Desktop. ## Download Available for Windows, macOS and Linux, from the [latest release](https://github.com/drl990114/MarkFlowy/releases/latest). ### Windows Download and run one of the x64 builds: - `MarkFlowy_v _x64-setup.exe` or `MarkFlowy_v _x64.msi` — installer. - `MarkFlowy_v _offline_installer_x64-setup.exe` / `.msi` — same, with the WebView2 runtime bundled. - `MarkFlowy_v _x64_portable.zip` — unpack and run, no installation. ### macOS Download `MarkFlowy_v _aarch64.dmg` (Apple silicon) or `MarkFlowy_v _x64.dmg` (Intel). > On macOS, drag MarkFlowy into Applications. If a download from the official release page is blocked, follow Apple’s [Open Anyway instructions](https://support.apple.com/en-us/102445) in **System Settings → Privacy & Security**. ### Linux x86_64 only for now. #### Flatpak On [FlatPark](https://flatpark.org) — [app page](https://flatpark.org/apps/io.github.drl990114.MarkFlowy): ```sh flatpak remote-add --if-not-exists flatpark https://dl.flatpark.org/flatpark.flatpakrepo flatpak install flatpark io.github.drl990114.MarkFlowy ``` #### Install script Installs the `.deb` or `.rpm` for your distribution, or the AppImage if it is not recognized: ```sh curl -fsSL https://raw.githubusercontent.com/drl990114/MarkFlowy/main/scripts/install-linux.sh -o install-linux.sh sh install-linux.sh ``` Use `wget -O install-linux.sh ` if `curl` is unavailable. Add `--appimage` to force the AppImage, or `--uninstall` to remove MarkFlowy. ## Why **Actually, the initial inspiration for MarkFlowy stemmed from a casual conversation with a friend a few years ago**. As developers, we shared many expectations for an ideal Markdown editor. After trying many existing applications, I felt they couldn't fully meet our comprehensive needs in terms of efficiency, aesthetics, lightweight design, and workflow integration. We envisioned our ideal editor together. Although we later went our separate ways and lost touch, that seed of desire to create something beautiful has always remained in my heart. It was this initial aspiration that propelled me step by step to transform MarkFlowy from a concept into reality. I hope to create a lightweight, intelligent editor that not only handles content securely and reliably but also improves editing efficiency through AI. MarkFlowy is a product, and also a testament to a life journey. Through continuous learning and development, it has grown into my response to the concepts of **efficiency, intelligence, and lightweight**. I hope MarkFlowy will become a tool that everyone finds convenient and enjoyable, and I welcome everyone to experience it and provide valuable feedback. ## Contribute Bug reports, reproducible cases and contributions are welcome through [issues](https://github.com/drl990114/MarkFlowy/issues/new) and [pull requests](https://github.com/drl990114/MarkFlowy/compare). ### How to Contribute You can read [CONTRIBUTING](./docs/en/Community/CONTRIBUTING.md) to know how to start the project and modify the code, Welcome to participate in code contribution. ## Support The public repository includes its [AGPL-3.0 license](./LICENSE); individual packages and dependencies include their own license files. Maintainer builds also consume a private Capricorn runtime that is not included in this checkout. Its manifest is marked `UNLICENSED`; it is not part of the publicly available source. The [contributor guide](./docs/en/Community/CONTRIBUTING.md) explains development with and without that runtime. You can support MarkFlowy by starring this project or contacting me by [email](mailto:drl990114@gmail.com). Let's have a bottle of wine~ | Have a cup of coffee~ | --> ## Special Thanks - [rino](https://github.com/ocavue/rino) by [ocavue](https://github.com/ocavue) - The initial version of the editor in this project was developed based on rino. - [remirror](https://remirror.io/) - A powerful ProseMirror-based rich text editor framework. - [tauri](https://tauri.app/) - Build smaller, faster, and more secure desktop apps with a web frontend. - And thanks to all the open source libraries and projects that MarkFlowy depends on. ## Contributors The development of **MarkFlowy** cannot be separated from these contributors. They have contributed a lot of abilities to **MarkFlowy**. Meanwhile, welcome to follow them! ❤️ Drl990114 Lysastriel Qiu Shao Qiaochu Hu Null Codex Husam Alshehadat Komh Mariano Esteban Null Alexander Chiefass Coolvitto Dai Fossabot Null Pun Kyard [build-badge]: https://img.shields.io/github/actions/workflow/status/drl990114/MarkFlowy/nodejs.yml.svg?style=flat-square&labelColor=black [build]: https://github.com/drl990114/MarkFlowy/actions/workflows/nodejs.yml?labelColor=black [downloads-badge]: https://img.shields.io/github/downloads/drl990114/MarkFlowy/total?label=downloads&style=flat-square&labelColor=black [license-badge]: https://img.shields.io/badge/license-AGPL-purple.svg?style=flat-square&labelColor=black [license]: https://opensource.org/licenses/AGPL-3.0?labelColor=black [release]: https://github.com/drl990114/MarkFlowy/releases?labelColor=black [prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square&labelColor=black&color=%23dd5c13 [prs-welcome]: ./docs/en/Community/CONTRIBUTING.md [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square&labelColor=black [coc]: ./docs/en/Community/CODE_OF_CONDUCT.md [commit-badge]: https://img.shields.io/github/commit-activity/m/drl990114/MarkFlowy?color=%23ff9900&style=flat-square&labelColor=black [commit]: https://github.com/drl990114/MarkFlowy?labelColor=black [version-badge]: https://img.shields.io/github/v/release/drl990114/MarkFlowy?color=%239accfe&label=version&style=flat-square&labelColor=black [rust-version-icon]: https://img.shields.io/badge/Rust-1.96.0-dea584?style=flat-square&labelColor=black [typescript-version-icon]: https://img.shields.io/github/package-json/dependency-version/drl990114/MarkFlowy/dev/typescript?label=TypeScript&style=flat-square&labelColor=black [issues-closed]: https://img.shields.io/github/issues-closed/drl990114/MarkFlowy.svg?style=flat-square&labelColor=black [codefactor]: https://www.codefactor.io/repository/github/drl990114/markflowy/badge/main?style=flat-square&labelColor=black ## License [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdrl990114%2FMarkFlowy.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdrl990114%2FMarkFlowy?ref=badge_large)",
+      "fetchedAt": "2026-10-12T00:18:19.231Z",
+      "productUrl": "https://github.com/drl990114/MarkFlowy",
+      "originSourceIds": [
+        "633c94533e5a823da0c89f1c"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:48.091Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/drl990114/MarkFlowy/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/drl990114/MarkFlowy/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T00:18:19.231Z"
+    },
+    {
+      "id": "56abc7d43b055b8120e31430",
+      "title": "Launch HN: Mireye (YC S26) – Infrastructure for Physical World AI Agents · product evidence",
+      "url": "https://news.ycombinator.com/item?id=49552616",
+      "publisher": "news.ycombinator.com",
+      "text": "Launch HN: Mireye (YC S26) – Infrastructure for Physical World AI Agents | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Launch HN: Mireye (YC S26) – Infrastructure for Physical World AI Agents 28 points by anshchokshi 37 days ago | hide | past | favorite | 8 comments Hi HN, I'm Ansh, founder of Mireye ( https://www.mireye.com ). I'm building the infrastructure AI agents use to make decisions about physical places: data, enrichment, tools, and signals for any US location, behind one API and MCP server. Here's a demo video: https://www.youtube.com/watch?v=haqO6UbUqU0 To try it, paste https://www.mireye.com/skills.md into your agent, and grab a free key at mireye.com (5,000 credits, no card). Docs are at https://docs.mireye.ai . The fastest way in is to ask the API any question about any US location. Test it on a place you know, cold and grade it against what you know. Before Mireye I was building construction agents and hit this wall myself: my agent could reason about anything online but knew nothing about the ground under it. Then a Fortune 500 insurer told me their engineers had given up on underwriting agents for the same reason. Frontier models keep hallucinating when asked a specific question about a specific place. My first product was a niche site-screening app. Customers tested it on places they knew and the answers held up, but nobody cared about the app. They wanted the engine underneath. Usage agreed: 311 of the 317 fields in the catalog get queried and no use case dominates. So I killed the app and started building the infrastructure instead. Mireye is not a dataset with an API on top, because facts alone are not a decision. An agent runs the whole job through it: cited facts, a bare address enriched into owner, acreage, structures, and nearby power, tools for the operations models get wrong, and signals when something changes, like a rezoning filing. Data, enrichment, tools, signals. The tools came from watching agents fail. We build agents on our own infra, and the same things kept breaking: an agent would eyeball a distance instead of computing it, grab the wrong parcel for an address, or burn its whole budget halfway through a batch. Each failure became something an agent can call: deterministic geometry and drive-time tools, parcel resolution, a quote endpoint that prices a job before it runs, and skills that package whole workflows like screening a site or underwriting an address. The hard part surprised me. Every source has to be gathered (sometimes county by county, in whatever format each county publishes), normalized into one schema, contracted (where it comes from, what each value means, how often it refreshes), and then kept fresh forever. We run that loop for 366 fields today, served multi-tenant from one index, and every source fought back differently. Maryland publishes a dataset literally titled \"Hidden Property Owner Names.\" I filed public records requests in North Carolina because nobody indexes sewer mains. The deeper problem is meaning. Two counties publish a field with the same name and it means different things. And the most dangerous value is null. Does it mean \"no flood zone here\" or \"this county never mapped floods\"? Put a model in front of that gap and it fills the silence with a plausible number. So we type absence. Every field returns ok, absent, or failed. Customers have told me the refusals are why they trust it. The newest piece is on-demand indexing. Ask for a field we don't have and a long-running agent researches sources, collects the data, tests it against ground truth, and indexes it, usually within a day. I'll take a few field requests from this thread and report back with what it built. People have built things I didn't plan for: insurance teams screening portfolios for flood, wind, and wildfire, a proptech cleaning messy listing addresses through enrichment, a wellness brand scoring street corners for poster spots, a robotics company sourcing warehouses, data center site selection, drone deployment planning, school bus routes for a city, signals for human trafficking investigations. The mission is to index every inch of the earth and make it as queryable as the web. Pricing is public: the free tier is 5,000 credits a month, $19/month for 25,000, $99/month for 120,000, custom for enterprise. I'd love to hear where the agents you're building touch the physical world. And I'd love it more if you run Mireye on a place you know and tell me what we got wrong. sgtwompwomp 37 days ago | next [–] Awesome work. If I understand correctly, your service essentially runs a bunch of web agents to maintain this dataset and keep it up to date and accurate, and we access through your API / MCP? anshchokshi 37 days ago | parent | next [–] Thank you! and correct, we have long running agents that Source → Crawl → Evaluate → Index → Retrieve → Contract this data. O(1 crawler) for the web vs O(fields × jurisdictions) for real-world data. So we have to build a lot of unique crawlers. moosepack 36 days ago | prev | next [–] The \"type absence — ok/absent/failed instead of a plausible null\" decision is the right call and under-appreciated. I run a large multi-agent setup and the failures that cost me most weren't wrong answers, they were confident answers over gaps the model should have refused. Curious how you handle it when two sources disagree rather than one being absent — do you surface both with provenance and let the agent decide, or pick a winner server-side? srikanthkasa 37 days ago | prev | next [–] the problem usually isn’t missing facts. it’s that null means different things in different counties — no flood map vs no flood risk, wrong parcel, owner fields that don’t map cleanly. if the API returns absent/failed instead of making the model guess, that’s actually a really good design choice. curious how often those cases show up on normal residential parcels vs the messier commercial/infill sites. anshchokshi 37 days ago | parent | next [–] in our fetch api every field comes with ok / absent / failed. it never returns a bare null and lets you/your agent assume. credit is not charged in case the api returns absent value. for ask api, the null is shown to the model as value: NULL plus an instruction — \"acknowledge the gap explicitly. do not state, estimate, or infer a value for it from general knowledge or from the coordinate.\" so models never make any data up. empty fields are rare on houses and commercial lots (~5%) and common on rural land (~29%), but on rural land empty usually means \"nothing's there,\" while on houses and lots it usually means \"the county didn't publish it. cornholio 37 days ago | prev | next [–] It would be good to also have a non-LLM version of the pitch, for some people building in the space it's a bad signal. It's associated with zero value \" let my agent build something over the weekend \" projects that all make these grandiose claims. deepamt31 37 days ago | prev | next [–] 311 of 317 fields get queried and no use case dominates. that's when the app dies and the engine ships. fabijanbajo 36 days ago | prev [–] per-field freshness is the failure mode here, not coverage. blend sources and one record ends up with hours scraped last night sitting next to a phone number nobody has rechecked in two years Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T00:18:19.307Z",
+      "productUrl": "https://news.ycombinator.com/item?id=49552616",
+      "originFeedIds": [
+        "ec389fe35523e6dbba11e744"
+      ],
+      "originSourceIds": [
+        "56abc7d43b055b8120e31430"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://news.ycombinator.com",
+            "robotsUrl": "https://news.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T00:14:44.809Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 243,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://news.ycombinator.com/item?id=49552616",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://news.ycombinator.com/item?id=49552616",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Launch HN discussion title: Launch HN: Mireye (YC S26) – Infrastructure for Physical World AI Agents. Product URL: https://news.ycombinator.com/item?id=49552616. Discussion listing alone does not establish users or revenue.",
+      "verifiedAt": "2026-10-12T00:18:19.307Z"
+    }
+  ],
+  "health": [
+    {
+      "sourceId": "265adce9a63ce1b22335c79d",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "sourceId": "cebc58769b823ed880b01dd7",
+      "url": "https://news.ycombinator.com/item?id=49969349",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "sourceId": "42ddb5f57505c507447ab158",
+      "url": "https://news.ycombinator.com/item?id=49948810",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "sourceId": "633c94533e5a823da0c89f1c",
+      "url": "https://news.ycombinator.com/item?id=49586334",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    }
+  ],
+  "deterministicResults": [],
+  "assessmentContractVersion": 1,
+  "considerationEvidence": [
+    {
+      "title": "VendIQ — vendor follow-up agent",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [],
+      "unavailableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ]
+    },
+    {
+      "title": "Cold Email Killer — filter sales email",
+      "productUrl": "https://github.com/christianmat/cold-email-killer",
+      "sourceIds": [
+        "9819c3d2676191194e12bf48",
+        "cebc58769b823ed880b01dd7"
+      ],
+      "availableSourceIds": [
+        "9819c3d2676191194e12bf48"
+      ],
+      "unavailableSourceIds": [
+        "cebc58769b823ed880b01dd7"
+      ]
+    },
+    {
+      "title": "Standard Bots industrial robotics",
+      "productUrl": "https://www.latent.space/p/standard-bots",
+      "sourceIds": [
+        "9a2a489d753abcefd301a946"
+      ],
+      "availableSourceIds": [
+        "9a2a489d753abcefd301a946"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice Agent Space",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Skillsync — portable AI sessions",
+      "productUrl": "https://news.ycombinator.com/item?id=49743049",
+      "sourceIds": [
+        "98a698085fb1fa80319290a2"
+      ],
+      "availableSourceIds": [
+        "98a698085fb1fa80319290a2"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "AgentiLoop — Mac task agent",
+      "productUrl": "https://agentiloop.ai",
+      "sourceIds": [
+        "2e3edd93c4981635c2d05503",
+        "42ddb5f57505c507447ab158"
+      ],
+      "availableSourceIds": [
+        "2e3edd93c4981635c2d05503"
+      ],
+      "unavailableSourceIds": [
+        "42ddb5f57505c507447ab158"
+      ]
+    },
+    {
+      "title": "n8n invoice reminder and payment tracker",
+      "productUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "sourceIds": [
+        "ce550eec21fdd6de3c333ecd"
+      ],
+      "availableSourceIds": [
+        "ce550eec21fdd6de3c333ecd"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "n8n invoice OCR and validator",
+      "productUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "sourceIds": [
+        "697c3528c356ce202c5ae31e"
+      ],
+      "availableSourceIds": [
+        "697c3528c356ce202c5ae31e"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dooza Desk support inbox",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "AWS Textract field memory sample",
+      "productUrl": "https://github.com/aws-samples/sample-textract-field-memory",
+      "sourceIds": [
+        "9860a649bf9702dc8e91d4ba",
+        "d6e99b624e3933b6fbf82caa"
+      ],
+      "availableSourceIds": [
+        "9860a649bf9702dc8e91d4ba",
+        "d6e99b624e3933b6fbf82caa"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "MarkFlowy Markdown editor",
+      "productUrl": "https://github.com/drl990114/MarkFlowy",
+      "sourceIds": [
+        "68ac1b250af502e35804acb8",
+        "633c94533e5a823da0c89f1c"
+      ],
+      "availableSourceIds": [
+        "68ac1b250af502e35804acb8"
+      ],
+      "unavailableSourceIds": [
+        "633c94533e5a823da0c89f1c"
+      ]
+    },
+    {
+      "title": "Mireye location-data infrastructure",
+      "productUrl": "https://news.ycombinator.com/item?id=49552616",
+      "sourceIds": [
+        "56abc7d43b055b8120e31430"
+      ],
+      "availableSourceIds": [
+        "56abc7d43b055b8120e31430"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
