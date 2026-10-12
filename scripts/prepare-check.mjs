@@ -6,6 +6,7 @@ import path from 'node:path';
 import { parseScoringPolicy } from '../lib/scoring.mjs';
 import { validateLoopScheduling } from '../lib/loop-schedule.mjs';
 import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
+import {createNoveltyContext} from '../lib/novelty.mjs';
 const runId=process.argv[2];
 try{
   const draft=await readJSON(dataPath('drafts',runId));const research=await readJSON(dataPath('research',runId));
@@ -25,6 +26,7 @@ try{
     }
   }
   const previous=await records('posts'),sources=[],health=[];
+  const noveltyContext=createNoveltyContext(previous);
   const sameProduct=(source,url)=>{try{return [source.url,source.productUrl].filter(Boolean).some(value=>canonicalURL(value)===canonicalURL(url));}catch{return false;}};
   // Primary enrichment is evidence for a discovered product, not a new model-
   // invented origin. Retain matching original discovery IDs before hashing.
@@ -60,6 +62,25 @@ try{
     try{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source)),text=plainText(page.text).slice(0,18000);if(text.length<100)throw new Error('Evidence source contained too little readable text.');sources.push({...source,text,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});}
     catch(error){health.push({sourceId:source.id,url:source.url,status:'failed',message:safeError(error)});}
   }
+  const primaryFetchDiagnostics=[];
+  const sameURL=(left,right)=>{try{return canonicalURL(left)===canonicalURL(right);}catch{return false;}};
+  // Earlier enrichment crossed the writer workspace and is not independent
+  // evidence of a failed request. Re-fetch each exact known candidate product
+  // here so empty-batch exclusions have current guarded diagnostics too.
+  if(!draft.posts.length)for(const item of considerationEvidence){
+    const requestedAt=new Date().toISOString(),existing=sources.find(source=>sameURL(source.url,item.productUrl));
+    const denied=health.find(entry=>sameURL(entry.url,item.productUrl));
+    if(existing){primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId:existing.id,reason:'The candidate product URL was independently re-fetched in this check context.'});continue;}
+    if(denied){primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'failed',sourceId:null,reason:denied.message});continue;}
+    try{
+      const page=await fetchPublic(item.productUrl,{maxBytes:2000000,complete:true}),text=plainText(page.text).slice(0,18000);
+      if(text.length<100)throw new Error('Primary product page contained too little readable evidence.');
+      const url=canonicalURL(page.url),sourceId=hash(url);
+      if(!sources.some(source=>source.id===sourceId))sources.push({id:sourceId,url,productUrl:item.productUrl,title:item.title+' · independently fetched product',publisher:new URL(url).hostname,text,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt,enriched:true,evidenceKind:'product-page',evidenceFetch:{maxBytes:2000000,complete:true}});
+      item.sourceIds=[...new Set([...item.sourceIds,sourceId])];
+      primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId,reason:'The candidate product URL was independently re-fetched with public HTTPS, DNS and robots guards.'});
+    }catch(error){const reason=safeError(error);health.push({url:item.productUrl,status:'failed',message:reason});primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'failed',sourceId:null,reason});}
+  }
   if(!draft.posts.length&&!sources.length)throw new Error('An empty assessment needs at least one successfully re-fetched public research source.');
   for(const post of draft.posts){
     const product=research.sources.find(s=>s.productUrl===post.productUrl||s.url===post.productUrl);
@@ -67,10 +88,10 @@ try{
     try{const page=await fetchPublic(post.productUrl),text=plainText(page.text).slice(0,18000);if(text.length<100)continue;const sourceId=hash(post.productUrl);sources.push({id:sourceId,url:post.productUrl,title:post.title+' · official product',publisher:new URL(post.productUrl).hostname,text,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});post.sourceIds=[...new Set([...(post.sourceIds||[]),sourceId])].slice(0,4);}
     catch(error){health.push({url:post.productUrl,status:'failed',message:safeError(error)});}
   }
-  const sameBatch=new Set();
-  const deterministicResults=draft.posts.map(post=>{const reasons=deterministicCheck(post,[...research.sources,...sources],previous,{scoringPolicy});if(sameBatch.has(post.id))reasons.push('Duplicate product in this writer batch.');sameBatch.add(post.id);if(post.sourceIds?.some(sourceId=>!sources.some(s=>s.id===sourceId)))reasons.push('Attached evidence source could not be re-fetched.');return {postId:post.id,pass:reasons.length===0,reasons};});
+  const sameBatch=new Set(),earlierProposals=[];
+  const deterministicResults=draft.posts.map(post=>{const reasons=deterministicCheck(post,[...research.sources,...sources],[...previous,...earlierProposals],{scoringPolicy,noveltyNow:new Date(noveltyContext.asOf)});if(sameBatch.has(post.id))reasons.push('Duplicate product in this writer batch.');sameBatch.add(post.id);earlierProposals.push({...post,publishedAt:noveltyContext.asOf});if(post.sourceIds?.some(sourceId=>!sources.some(s=>s.id===sourceId)))reasons.push('Attached evidence source could not be re-fetched.');return {postId:post.id,pass:reasons.length===0,reasons};});
   await writeJSON(dataPath('drafts',runId),draft);
-  const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
+  const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
   await writeJSON(dataPath('check-context',runId),context);
   console.log(JSON.stringify({runId,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,results:deterministicResults}));
 }catch(error){console.error(safeError(error));process.exitCode=1;}

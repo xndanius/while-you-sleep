@@ -1,6 +1,6 @@
 // Build records contain receipts; the browser clock only ages an unfilled slot.
 // A run attempt never becomes a publication time.
-import {publicationSlots,localParts,schedule} from './schedule.js?v=33ebd896a74f';
+import {publicationSlots,localParts,schedule} from './schedule.js?v=fb937f9d5d94';
 const validTime=value=>value&&Number.isFinite(new Date(value).getTime());
 const covers=(run,id)=>{
   const scheduling=run.scheduling||{};
@@ -47,7 +47,7 @@ export function currentDaySlots(data={},now=new Date()){
     const attemptedAt=attempt?.scheduling?.requestedAt||attempt?.startedAt||receipt.attemptedAt||null;
     let state='scheduled',reason;
     if(!actualAt&&clock>=new Date(slot.scheduledAt)){
-      if(['no_post','retry_exhausted'].includes(receipt.state||receipt.status)){state=receipt.state||receipt.status;reason=receipt.reason;}
+      if(['no_post','no_post_unverified','retry_exhausted'].includes(receipt.state||receipt.status)){state=receipt.state||receipt.status;reason=receipt.reason;}
       else if(atCap){state='cap_reached';reason=`The ${cap}-post cap is already reached for this Vilnius day.`;}
       else if(receipt.state==='running'||receipt.status==='running'||attempt&&!validTime(attempt.finishedAt)&&attempt.status==='running'){
         state='running';reason='A trusted reservation is held; publication is not complete.';

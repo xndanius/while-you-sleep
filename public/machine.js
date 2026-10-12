@@ -1,7 +1,7 @@
-import {loopTiming,nextLocalTime} from './schedule.js?v=33ebd896a74f';
-import {slotPresentation,currentDaySlots} from './slot-display.js?v=33ebd896a74f';
-import {clockTiming,runTriggerLabel} from './clock-display.js?v=33ebd896a74f';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=33ebd896a74f';
+import {loopTiming,nextLocalTime} from './schedule.js?v=fb937f9d5d94';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=fb937f9d5d94';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=fb937f9d5d94';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=fb937f9d5d94';
 
 (() => {
   'use strict';
@@ -37,10 +37,10 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
     const state = plain(value).toLowerCase();
     if (['success','succeeded','completed','complete','published','healthy','ok','active','live','connected','adopted','shipped','passed','available','enabled'].includes(state)) return 'good';
     if (['failed','failure','error','unhealthy','unavailable'].includes(state)) return 'bad';
-    if (['running','pending','pending_setup','awaiting_first_cloud_run','awaiting_access','awaiting_connection','restricted','partial','degraded','skipped','not_connected','disabled','dry_run','rejected','late','missed','cap_reached','waiting_for_first_linkedin_post','stalled','waiting','not_started','unverified','recovering'].includes(state)) return 'warning';
+    if (['running','pending','pending_setup','awaiting_first_cloud_run','awaiting_access','awaiting_connection','restricted','partial','degraded','skipped','not_connected','disabled','dry_run','rejected','late','missed','cap_reached','waiting_for_first_linkedin_post','stalled','waiting','not_started','unverified','recovering','no_post_unverified','completed_with_unverified'].includes(state)) return 'warning';
     return '';
   };
-  const stateLabel = (state) => ({awaiting_key:'Awaiting model access',awaiting_first_cloud_run:'Awaiting the first cloud run',awaiting_access:'Needs access',awaiting_connection:'Needs connection',pending_setup:'Needs setup',not_connected:'Not connected',dry_run:'Dry run',succeeded:'Completed',success:'Completed',ok:'Available',enabled:'Connected'}[state] || human(state) || 'Not recorded');
+  const stateLabel = (state) => ({no_post_unverified:'No post this hour · unverified',completed_no_post:'No post this hour',no_post:'No post this hour',completed_with_unverified:'Published checked posts · remainder unverified',awaiting_key:'Awaiting model access',awaiting_first_cloud_run:'Awaiting the first cloud run',awaiting_access:'Needs access',awaiting_connection:'Needs connection',pending_setup:'Needs setup',not_connected:'Not connected',dry_run:'Dry run',succeeded:'Completed',success:'Completed',ok:'Available',enabled:'Connected'}[state] || human(state) || 'Not recorded');
   const chip = (state, label) => `<span class="status-chip ${stateClass(state)}">${escape(label || stateLabel(state))}</span>`;
   const link = (url, title) => safeURL(url) ? `<a href="${escape(safeURL(url))}" target="_blank" rel="noopener noreferrer">${escape(title)} <span aria-hidden="true">↗</span></a>` : '';
   let fetching = false;
@@ -73,13 +73,23 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
   function renderTiming() {
     if (!data) return;
     renderClock();
+    renderFreeze();
     const latestLoop=data.runs?.filter(run=>run.type==='loop'&&run.modelExecuted!==false).sort((a,b)=>(b.startedAt||'').localeCompare(a.startedAt||''))[0];
     const cadence=loopTiming(data.status?.lastLoopAt||latestLoop?.startedAt);
     $('next-published').textContent=formatDate(cadence.nextPublicationAt);
     const slots=currentDaySlots(data);
     const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1)||slots[0];
-    $('loop-slot-state').textContent=latest?`${latest.state==='cap_reached'?'Daily cap reached':latest.state==='scheduled'?'Upcoming':human(latest.state)} · ${shortTime(latest.plannedAt)}${latest.actualAt?` · published ${shortTime(latest.actualAt)}`:''}`:'No slot recorded';
+    $('loop-slot-state').textContent=latest?`${latest.state==='cap_reached'?'Daily cap reached':latest.state==='scheduled'?'Upcoming':stateLabel(latest.state)} · ${shortTime(latest.plannedAt)}${latest.actualAt?` · published ${shortTime(latest.actualAt)}`:''}`:'No slot recorded';
     renderPublicationSlots(slots);
+  }
+
+  function renderFreeze(){
+    const target=$('code-freeze'),freeze=data?.freeze;
+    if(!target)return;
+    if(!validDate(freeze?.startsAt)||!validDate(freeze?.endsAt)){target.innerHTML='<p class="muted">No freeze window recorded.</p>';return;}
+    const now=Date.now(),active=now>=Date.parse(freeze.startsAt)&&now<Date.parse(freeze.endsAt);
+    const state=active?'Freeze active':now<Date.parse(freeze.startsAt)?'Freeze scheduled':'Freeze ended';
+    target.innerHTML=`<p><strong>${escape(state)}</strong> · ${escape(formatDate(freeze.startsAt))} to ${escape(formatDate(freeze.endsAt))} Vilnius.</p><p class="muted">Code deployments and rule adoption stop during this window. The hosted clock, hourly assessments, content and source records, and website/RSS publishing continue.</p><div class="relay-links">${link('https://github.com/xndanius/while-you-sleep/blob/main/data/maintenance/code-freeze-2026-10-12.json','Sealed code baseline')}</div>`;
   }
 
   function renderClock(){
@@ -118,14 +128,14 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
       const attemptDelay=validDate(slot.attemptedAt)&&validDate(slot.plannedAt)?Math.max(0,Math.floor((validDate(slot.attemptedAt).getTime()-validDate(slot.plannedAt).getTime())/60000)):null;
       const attempt=slot.attemptedAt?`<small>Run started ${escape(formatDate(slot.attemptedAt))}${attemptDelay!==null?` · ${number(attemptDelay)} min late`:''} · ${escape(runTriggerLabel(slot))}</small>`:'';
       const url=link(slot.githubRunUrl,'View run');
-      const stateLabel=slot.state==='cap_reached'?'Daily cap reached':slot.state==='scheduled'?'Upcoming':human(slot.state);
+      const slotLabel=slot.state==='cap_reached'?'Daily cap reached':slot.state==='scheduled'?'Upcoming':stateLabel(slot.state);
       const elapsed=validDate(slot.plannedAt)?Math.max(0,Math.floor((Date.now()-validDate(slot.plannedAt).getTime())/60000)):null;
       const delay=slot.actualAt?`${number(slot.delayMinutes)} min`:['late','missed'].includes(slot.state)&&elapsed!==null?`${number(elapsed)} min overdue`:'—';
-      return `<tr><td><time datetime="${escape(slot.plannedAt)}">${escape(formatDate(slot.plannedAt))}</time></td><td>${escape(actual)}${attempt}${url?`<small>${url}</small>`:''}</td><td>${escape(delay)}</td><td>${chip(slot.state,stateLabel)}${slot.reason?`<small>${escape(slot.reason)}</small>`:''}${slot.postId?`<small><a href="p/${escape(encodeURIComponent(slot.postId))}/">Read post ↗</a></small>`:''}</td></tr>`;
+      return `<tr><td><time datetime="${escape(slot.plannedAt)}">${escape(formatDate(slot.plannedAt))}</time></td><td>${escape(actual)}${attempt}${url?`<small>${url}</small>`:''}</td><td>${escape(delay)}</td><td>${chip(slot.state,slotLabel)}${slot.reason?`<small>${escape(slot.reason)}</small>`:''}${slot.postId?`<small><a href="p/${escape(encodeURIComponent(slot.postId))}/">Read post ↗</a></small>`:''}</td></tr>`;
     }).join('')}</tbody></table></div>`:'';
     const pastDays=new Map();
     for(const slot of previous){const date=day(slot.plannedAt);if(!pastDays.has(date))pastDays.set(date,[]);pastDays.get(date).push(slot);}
-    $('publication-slots').innerHTML=table(slots)+[...pastDays.values()].reverse().map(table).join('')+`<p class="schedule-footnote">Publication times come from committed posts. Run starts and their delays are shown separately. Delayed gates catch up unfinished slots within the same Vilnius day, up to ${escape(data.schedule?.dailyCap||3)} posts. A completed check with no qualifying idea settles its slot without a post. Source failures and incomplete checks stay retryable, with at most three attempts per slot.</p>`;
+    $('publication-slots').innerHTML=table(slots)+[...pastDays.values()].reverse().map(table).join('')+`<p class="schedule-footnote">Publication times come from committed posts. Run starts and their delays are shown separately. Delayed gates catch up unfinished slots within the same Vilnius day, up to ${escape(data.schedule?.dailyCap||3)} posts. A completed check with no qualifying idea settles its slot without a post. An unverified hour also closes without publishing, with its reason recorded; it is not a completed independent assessment. Older operational failures retain their original bounded retry history.</p>`;
   }
 
   function runTitle(type) {

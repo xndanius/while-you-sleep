@@ -4,6 +4,7 @@ import { ROOT,dataPath,readJSON,writeJSON,sha256,safeError } from '../lib/storag
 import { evaluateImprovement } from '../lib/improvement.mjs';
 import { proposalTrialReadiness,isCompletedProposalRejection } from '../lib/improvement-runtime.mjs';
 import { trustedScheduledMetadata } from './prepare-scheduled-job.mjs';
+import {codeFreezeActive} from '../lib/code-freeze.mjs';
 
 const runId=process.argv[2];
 let decision={adopted:false,reasons:[],baselineScore:null,challengerScore:null,evaluations:[]},input,proposal,grade,completedProposalRejection=false;
@@ -22,6 +23,7 @@ try{
     const current=await fs.readFile(path.join(ROOT,'RULES.md'),'utf8');
     decision=evaluateImprovement(input,proposal,labels,blind,grade);
     if(sha256(current)!==input.rulesSha256){decision.adopted=false;decision.reasons.push('RULES.md changed while the improvement trial was running; refusing a stale overwrite.');}
+    if(decision.adopted&&codeFreezeActive()){decision.adopted=false;decision.reasons.push('Code and RULES are frozen until Tuesday 13 October 15:00 Vilnius; the evaluated proposal was not adopted.');}
     if(decision.adopted)await fs.writeFile(path.join(ROOT,'RULES.md'),proposal.newRules);
   }
 }catch(error){decision.adopted=false;decision.reasons.push(safeError(error));}

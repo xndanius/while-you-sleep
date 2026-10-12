@@ -16,6 +16,7 @@ import { sourceDefinitions } from '../lib/research.mjs';
 import { renderMethodology } from '../lib/methodology.mjs';
 import {loadSourceRegistryState} from '../lib/source-registry.mjs';
 import {normalizedSourceView} from '../lib/source-presentation.mjs';
+import {codeFreezeStatus} from '../lib/code-freeze.mjs';
 
 const clockDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const clockRunURL=value=>typeof value==='string'&&/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/\d+$/.test(value)?value:null;
@@ -101,7 +102,7 @@ try{
   }),changes:[]};
   const registryView=await loadSourceRegistryState({root:ROOT,posts,picks,currentPolicy:currentScoringPolicy,now:new Date()});
   const sources=registryView.enabled===true?normalizedSourceView(registryView):fallbackSources;
-  const machine={...feed,clock,curation,runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources:registryView,platforms,relay,metrics};
+  const machine={...feed,clock,curation,freeze:codeFreezeStatus(),runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources:registryView,platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);
   await writeJSON(path.join(ROOT,'public','api','machine.json'),machine);
   await writeJSON(path.join(ROOT,'public','api','sources.json'),registryView);

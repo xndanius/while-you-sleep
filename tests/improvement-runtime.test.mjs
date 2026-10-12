@@ -272,6 +272,32 @@ test('trusted runtime records a missing grader as an immutable rejection with un
   assert.equal(await readFile(path.join(directory, 'RULES.md'), 'utf8'), rules);
 });
 
+test('a qualifying independent rules trial is recorded green but cannot adopt during the lecture freeze', async t => {
+  const { input, proposal, blind, labels, grade } = fixtures();
+  assert.equal(evaluateImprovement(input,proposal,labels,blind,grade).adopted,true);
+  for(const [now,frozen] of [['2026-10-12T15:00:00.000Z',true],['2026-10-13T12:00:00.000Z',false]]) {
+    const directory=await mkdtemp(path.join(tmpdir(),'wys-freeze-improver-'));
+    t.after(()=>rm(directory,{recursive:true,force:true}));
+    await mkdir(path.join(directory,'scripts'),{recursive:true});
+    await mkdir(path.join(directory,'data','improvements'),{recursive:true});
+    await Promise.all([
+      cp(path.join(repository,'lib'),path.join(directory,'lib'),{recursive:true}),
+      ...['apply-improvement.mjs','prepare-scheduled-job.mjs'].map(script=>cp(path.join(repository,'scripts',script),path.join(directory,'scripts',script))),
+      cp(path.join(repository,'public'),path.join(directory,'public'),{recursive:true,filter:source=>source===path.join(repository,'public')||['schedule.js','cadence-config.js'].some(file=>source===path.join(repository,'public',file))}),
+      symlink(path.join(repository,'node_modules'),path.join(directory,'node_modules'),'dir'),
+      writeFile(path.join(directory,'RULES.md'),rules),
+      ...[['-input',input],['',proposal],['-blind',blind],['-labels',labels],['-grade',grade]].map(([suffix,value])=>writeFile(path.join(directory,'data','improvements',input.runId+suffix+'.json'),JSON.stringify(value))),
+    ]);
+    const preload=path.join(directory,'time.mjs');
+    await writeFile(preload,`const NativeDate=Date;globalThis.Date=class extends NativeDate{constructor(...args){super(...(args.length?args:[${JSON.stringify(now)}]));}static now(){return NativeDate.parse(${JSON.stringify(now)});}};`);
+    await execute(process.execPath,['--import',preload,path.join(directory,'scripts','apply-improvement.mjs'),input.runId],{cwd:directory,env:{},timeout:10000});
+    const record=JSON.parse(await readFile(path.join(directory,'data','versions',input.runId+'.json'),'utf8'));
+    assert.equal(record.adopted,!frozen);assert.equal(record.scheduleStatus,'completed');assert.equal(record.evaluationStatus,'evaluated');
+    assert.equal(await readFile(path.join(directory,'RULES.md'),'utf8'),frozen?rules:proposal.newRules);
+    if(frozen)assert.match(record.reason,/frozen until Tuesday/);
+  }
+});
+
 test('model jobs receive only their assigned isolated artifacts and skip Git checkout', async () => {
   const workflow = await readFile(new URL('../.github/workflows/improve.yml', import.meta.url), 'utf8');
   const job = name => {

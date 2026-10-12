@@ -87,6 +87,7 @@ jobs:
       rules_sha256: ${{ steps.trust.outputs.rules_sha256 }}
       source_scan_sha256: ${{ steps.scan.outputs.source_scan_sha256 }}
       source_scan_head_sha: ${{ steps.scan.outputs.source_scan_head_sha }}
+      model_completed: ${{ steps.model.outcome == 'success' }}
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
     steps:
@@ -114,6 +115,7 @@ jobs:
           fi
       - name: Freeze the original guarded scan before model access
         id: scan
+        continue-on-error: true
         env:
           SOURCE_HEAD_SHA: ${{ steps.trust.outputs.repo_sha }}
         run: node scripts/research-snapshot.mjs "$RUN_ID"
@@ -126,8 +128,14 @@ jobs:
           if-no-files-found: error
           retention-days: 30
       - name: Prepare the bounded writer
+        id: prepare
+        if: steps.scan.outcome == 'success'
+        continue-on-error: true
         run: node scripts/prepare-run.mjs writer
       - name: Codex picks and writes
+        id: model
+        if: steps.prepare.outcome == 'success'
+        continue-on-error: true
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
@@ -150,13 +158,17 @@ jobs:
           retention-days: 7
   checker:
     needs: [gate, writer]
-    if: needs.writer.result == 'success'
+    if: needs.writer.result == 'success' && needs.writer.outputs.model_completed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
     outputs:
       repair: ${{ steps.verdict.outputs.repair }}
+      verified: ${{ steps.accept.outputs.verified }}
+      unverified_code: ${{ steps.accept.outputs.unverified_code }}
+      unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
+      model_completed: ${{ steps.model.outcome == 'success' }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
       context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
     steps:
@@ -173,10 +185,17 @@ jobs:
         with:
           name: writer-${{ env.RUN_ID }}
           path: data/
-      - run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs checker
+      - id: prepare
+        continue-on-error: true
+        run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs checker
       - id: fingerprint
+        if: steps.prepare.outcome == 'success'
+        continue-on-error: true
         run: node scripts/fingerprint-check.mjs "$RUN_ID" >> "$GITHUB_OUTPUT"
       - name: Independent Codex checker
+        id: model
+        if: steps.fingerprint.outcome == 'success'
+        continue-on-error: true
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
@@ -190,11 +209,15 @@ jobs:
           output-schema-file: .run/checker-output-schema.json
           codex-args: '["--ephemeral", "--json"]'
       - name: Accept only a fresh independent output bound to the frozen context
+        id: accept
+        if: always()
         env:
           EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
         run: node scripts/accept-check-output.mjs "$RUN_ID"
       - name: Determine whether one repair is needed
+        if: steps.accept.outputs.verified == 'true' && steps.model.outcome == 'success'
+        continue-on-error: true
         id: verdict
         run: node scripts/check-verdict.mjs "$RUN_ID"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -208,8 +231,10 @@ jobs:
             data/checks/${{ env.RUN_ID }}.json
           retention-days: 7
   repair:
+    outputs:
+      model_completed: ${{ steps.model.outcome == 'success' }}
     needs: [gate, writer, checker]
-    if: needs.checker.outputs.repair == 'true'
+    if: needs.checker.outputs.verified == 'true' && needs.checker.outputs.repair == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
@@ -228,8 +253,13 @@ jobs:
         with:
           name: checked-${{ env.RUN_ID }}
           path: data/
-      - run: node scripts/save-first-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs repair
+      - id: prepare
+        continue-on-error: true
+        run: node scripts/save-first-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs repair
       - name: Codex repairs once
+        id: model
+        if: steps.prepare.outcome == 'success'
+        continue-on-error: true
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
@@ -255,12 +285,16 @@ jobs:
           retention-days: 7
   final_check:
     needs: [gate, writer, checker, repair]
-    if: needs.repair.result == 'success'
+    if: needs.repair.result == 'success' && needs.repair.outputs.model_completed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
     outputs:
+      verified: ${{ steps.accept.outputs.verified }}
+      unverified_code: ${{ steps.accept.outputs.unverified_code }}
+      unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
+      model_completed: ${{ steps.model.outcome == 'success' }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
       context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
     steps:
@@ -278,14 +312,24 @@ jobs:
           name: repaired-${{ env.RUN_ID }}
           path: data/
       - name: Preserve every original screened decision before fresh checking
+        id: preserve
+        continue-on-error: true
         env:
           EXPECTED_FIRST_DRAFT_SHA: ${{ needs.checker.outputs.draft_sha256 }}
           EXPECTED_FIRST_CONTEXT_SHA: ${{ needs.checker.outputs.context_sha256 }}
         run: node scripts/preserve-repair-considerations.mjs "$RUN_ID"
-      - run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs final-checker
+      - id: prepare
+        if: steps.preserve.outcome == 'success'
+        continue-on-error: true
+        run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs final-checker
       - id: fingerprint
+        if: steps.prepare.outcome == 'success'
+        continue-on-error: true
         run: node scripts/fingerprint-check.mjs "$RUN_ID" >> "$GITHUB_OUTPUT"
       - name: Fresh Codex checker after the single repair
+        id: model
+        if: steps.fingerprint.outcome == 'success'
+        continue-on-error: true
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
@@ -299,6 +343,8 @@ jobs:
           output-schema-file: .run/checker-output-schema.json
           codex-args: '["--ephemeral", "--json"]'
       - name: Accept only the new final independent output
+        id: accept
+        if: always()
         env:
           EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
@@ -346,7 +392,7 @@ jobs:
         if: needs.gate.outputs.run_models == 'true'
         continue-on-error: true
         with:
-          name: ${{ needs.final_check.result == 'success' && format('final-{0}', env.RUN_ID) || needs.checker.result == 'success' && format('checked-{0}', env.RUN_ID) || format('writer-{0}', env.RUN_ID) }}
+          name: ${{ needs.final_check.result != 'skipped' && format('final-{0}', env.RUN_ID) || needs.checker.result != 'skipped' && format('checked-{0}', env.RUN_ID) || format('writer-{0}', env.RUN_ID) }}
           path: .staging/data/
       - name: Fetch only the pre-model scan artifact
         if: needs.writer.outputs.source_scan_sha256 != ''
@@ -374,8 +420,8 @@ jobs:
         if: needs.gate.outputs.run_models == 'true'
         continue-on-error: true
         env:
-          EXPECTED_DRAFT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
-          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
+          EXPECTED_DRAFT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
           RULES_COMMIT: ${{ needs.writer.outputs.repo_sha }}
         run: node scripts/import-artifact.mjs .staging/data "$RUN_ID"
@@ -384,8 +430,8 @@ jobs:
         if: always()
         env:
           MODEL_JOB_RESULTS: ${{ toJSON(needs) }}
-          EXPECTED_DRAFT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
-          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
+          EXPECTED_DRAFT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
           RULES_COMMIT: ${{ needs.writer.outputs.repo_sha }}
         run: node scripts/finalize-run.mjs "$RUN_ID"
@@ -393,8 +439,8 @@ jobs:
         if: always()
         env:
           EXPECTED_SOURCE_SCAN_SHA: ${{ needs.writer.outputs.source_scan_sha256 }}
-          EXPECTED_DRAFT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
-          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.result == 'success' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
+          EXPECTED_DRAFT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
         run: node scripts/record-source-attribution.mjs "$RUN_ID"
       - name: Commit research, picking, rejection and publication records separately

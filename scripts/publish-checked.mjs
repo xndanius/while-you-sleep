@@ -9,6 +9,7 @@ import { validateLoopScheduling, dailyPublicationCount, DAILY_PUBLICATION_CAP, p
 import { weightedOverall,publishedScoring } from '../lib/scoring.mjs';
 import { readRelayStatus,relayPublicationReady } from '../lib/relay.mjs';
 import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
+import {unverifiedAssessment} from '../lib/checker-output.mjs';
 
 const runId=process.argv[2];
 try{
@@ -84,6 +85,7 @@ try{
     record.checker.scoreChecks=result.check.scoreChecks;
     record.checker.scoreSources=context.sources;
     record.checker.scoringPolicy=context.scoringPolicy;
+    if(context.noveltyContractVersion===1)record.checker.noveltyCheck=result.check.noveltyCheck;
     delete record.sourceIds;
     delete record.triggerEvent;
     record.githubRunUrl=scheduling?.githubRunUrl||research.githubRunUrl||null;
@@ -110,9 +112,10 @@ try{
   }
   for(let i=0;i<rejected.length;i++)await writeJSON(dataPath('rejections',`${runId}-${String(i).padStart(3,'0')}`),{...rejected[i],runId,at:new Date().toISOString()},{immutable:true});
   const completed=contract&&!operationalFailures.length;
-  const run={id:runId,type:'loop',status:operationalFailures.length?(published.length?'completed_with_failure':'failed_closed'):published.length>=targetCount?'completed':todayCount>=dailyCap?'skipped_daily_cap':published.length?'completed_with_rejections':completed?'completed_no_post':'rejected',startedAt:research.createdAt,finishedAt:new Date().toISOString(),candidatesFound:draft.candidates?.length||0,picked:draft.posts.length,rejected,published,steps:[{stage:'research',status:'completed',at:research.createdAt,message:`Fetched ${research.sources.length} live source records; ${(research.health||[]).filter(h=>h.status==='failed').length} feeds reported failure.`},{stage:'write',status:'completed',at:context.createdAt,message:`Codex CLI wrote ${draft.posts.length} proposed posts.`},{stage:'check',status:results.every(r=>r.pass)?'passed':'rejected',at:manifest.checkedAt||context.createdAt,message:'Separate Codex checker decisions bound to exact draft and evidence hashes.'},...steps,...operationalFailures.map(failure=>({stage:failure.stage,status:'failed',at:new Date().toISOString(),message:failure.reason}))],githubRunUrl:research.githubRunUrl||null,version:process.env.RULES_SHA256?`rules-${process.env.RULES_SHA256.slice(0,12)}`:draft.version||'v1',rulesSha256:process.env.RULES_SHA256||null,rulesCommit:process.env.RULES_COMMIT||null,usage:trustedUsage,engine:'official openai/codex-action',sourceSnapshotSha256:context.sourceSnapshotSha256};
+  const run={id:runId,type:'loop',status:operationalFailures.length?(contract?published.length?'completed_with_unverified':'no_post_unverified':published.length?'completed_with_failure':'failed_closed'):published.length>=targetCount?'completed':todayCount>=dailyCap?'skipped_daily_cap':published.length?'completed_with_rejections':completed?'completed_no_post':'rejected',startedAt:research.createdAt,finishedAt:new Date().toISOString(),candidatesFound:draft.candidates?.length||0,picked:draft.posts.length,rejected,published,steps:[{stage:'research',status:'completed',at:research.createdAt,message:`Fetched ${research.sources.length} live source records; ${(research.health||[]).filter(h=>h.status==='failed').length} feeds reported failure.`},{stage:'write',status:'completed',at:context.createdAt,message:`Codex CLI wrote ${draft.posts.length} proposed posts.`},{stage:'check',status:results.every(r=>r.pass)?'passed':'rejected',at:manifest.checkedAt||context.createdAt,message:'Separate Codex checker decisions bound to exact draft and evidence hashes.'},...steps,...operationalFailures.map(failure=>({stage:failure.stage,status:contract?'unverified':'failed',at:new Date().toISOString(),message:failure.reason}))],githubRunUrl:research.githubRunUrl||null,version:process.env.RULES_SHA256?`rules-${process.env.RULES_SHA256.slice(0,12)}`:draft.version||'v1',rulesSha256:process.env.RULES_SHA256||null,rulesCommit:process.env.RULES_COMMIT||null,usage:trustedUsage,engine:'official openai/codex-action',sourceSnapshotSha256:context.sourceSnapshotSha256};
   if(contract){
-    run.assessmentOutcome=completed?'completed':'incomplete';run.operationalFailures=operationalFailures;
+    run.assessmentOutcome=completed?'completed':'unverified';run.operationalFailures=operationalFailures;
+    if(!completed)run.unverifiedAssessment=unverifiedAssessment(scheduling,{...operationalFailures[0],reason:operationalFailures.map(failure=>failure.reason).join(' ')},run.finishedAt);
     if(completed){
       const assessedRefusals=rejected.filter(rejection=>results.some(result=>result.postId===rejection.postId));
       const reason=!draft.posts.length?manifest.completedAssessment.reason:assessedRefusals.length?assessedRefusals.map(rejection=>`${rejection.title}: ${rejection.reason}`).join(' ').slice(0,500):`Assessment completed with ${published.length} checked publications; no further supported candidate was proposed. ${manifest.completedAssessment.reason}`.slice(0,500);
@@ -125,5 +128,5 @@ try{
   if(scheduling)run.scheduling=scheduling;
   await writeJSON(dataPath('runs',runId),run,{immutable:true});
   console.log(JSON.stringify({runId,status:run.status,published,rejected:rejected.length}));
-  if(operationalFailures.length||!completed&&published.length<targetCount&&todayCount<dailyCap)process.exitCode=1;
+  if(!contract&&(operationalFailures.length||!completed&&published.length<targetCount&&todayCount<dailyCap))process.exitCode=1;
 }catch(error){console.error(safeError(error));process.exitCode=1;}

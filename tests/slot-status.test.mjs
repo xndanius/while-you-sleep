@@ -62,3 +62,9 @@ test('terminal checked refusals and exhausted failures remain honest in build an
  const aged=currentDaySlots({schedule:{slots:rows}},new Date('2026-10-11T19:00:00Z'));
  assert.equal(aged[0].state,'no_post');assert.equal(aged[0].reason,rows[0].reason);assert.equal(aged[1].state,'retry_exhausted');
 });
+
+test('an unverified no-post slot remains terminal as the browser clock advances and exposes its reason',()=>{
+ const slot={id:slots[0],plannedAt:'2026-10-11T05:07:00.000Z',state:'no_post_unverified',status:'no_post_unverified',actualAt:null,reason:'Final public evidence fetch returned HTTP 429; no independent completion is claimed.'};
+ const rows=currentDaySlots({schedule:{slots:[slot]}},new Date('2026-10-11T19:00:00Z'));
+ assert.equal(rows[0].state,'no_post_unverified');assert.equal(rows[0].actualAt,null);assert.equal(rows[0].reason,slot.reason);
+});

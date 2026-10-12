@@ -5,6 +5,7 @@ import {candidateHistory,writerResearchView} from '../lib/candidate-input.mjs';
 import {ROOT} from '../lib/storage.mjs';
 import {parseScoringPolicy} from '../lib/scoring.mjs';
 import {checkerOutputSchema} from '../lib/checker-output.mjs';
+import {createNoveltyContext} from '../lib/novelty.mjs';
 const runId=process.env.RUN_ID||`loop-${Date.now()}`;
 if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
 let scheduling;
@@ -24,10 +25,13 @@ if(['writer','repair'].includes(role)){
  await writeFile(context.researchPath,JSON.stringify(writerResearchView(snapshot),null,2));
 }
 const previous=await records('posts');
-await writeFile(context.priorPostsPath,JSON.stringify(previous.map(({id,candidateId,title,productUrl,promise,whatItIs,loop})=>({id,candidateId,title,productUrl,promise,whatItIs,loop})),null,2));
+await writeFile(context.priorPostsPath,JSON.stringify(previous.map(({id,candidateId,title,productUrl,promise,whatItIs,whoPays,loop,publishedAt})=>({id,candidateId,title,productUrl,promise,whatItIs,whoPays,loop,publishedAt})),null,2));
+context.recentPostsPath='.run/recent-posts.json';
+let noveltyContext=createNoveltyContext(previous);
 if(['checker','final-checker'].includes(role)){
  const frozen=await readJSON(dataPath('check-context',runId)),draft=await readJSON(dataPath('drafts',runId));
  context.checkContextSha256=sha256(stableJSON(frozen));context.rulesSha256=frozen.rulesSha256;context.assessmentContractVersion=frozen.assessmentContractVersion||null;
+ noveltyContext=frozen.noveltyContext||noveltyContext;context.noveltyContractVersion=frozen.noveltyContractVersion||null;
  context.checkerOutputSchemaPath='.run/checker-output-schema.json';context.checkerResponsePath='.run/checker-response.json';
  await rm(dataPath('checks',runId),{force:true});await rm(context.checkerResponsePath,{force:true});
  await writeFile(context.checkerOutputSchemaPath,JSON.stringify(checkerOutputSchema(draft,frozen),null,2));
@@ -35,5 +39,7 @@ if(['checker','final-checker'].includes(role)){
  context.checkerTemplatePath='.run/checker-template.json';
  await writeFile(context.checkerTemplatePath,JSON.stringify({runId,draftSha256:frozen.draftSha256,sourceSnapshotSha256:frozen.sourceSnapshotSha256,policySha256:frozen.scoringPolicy.policySha256,checks:[],...(frozen.assessmentContractVersion===1?{completedAssessment:stamp}: {})},null,2));
 }
+context.noveltyWindowDays=noveltyContext.windowDays;
+await writeFile(context.recentPostsPath,JSON.stringify(noveltyContext,null,2));
 await writeFile('.run/context.json',JSON.stringify(context,null,2));
 console.log(`Prepared ${role} for ${runId}, target ${targetCount}.`);
