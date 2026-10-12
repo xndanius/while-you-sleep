@@ -57,6 +57,11 @@ test('freeze refuses rollback code mutations at or after 18:00 Vilnius before re
 test('safety workflow has no model or dispatch authority and shares the record lock',async()=>{
  const workflow=await fs.readFile(new URL('../.github/workflows/v5-safety.yml',import.meta.url),'utf8');assert.match(workflow,/workflow_run:/);assert.match(workflow,/workflows: \[Codex autonomous loop\]/);assert.match(workflow,/group: while-you-sleep-record/);assert.match(workflow,/actions: read/);assert.doesNotMatch(workflow,/actions: write|codex-action@|OPENAI_API_KEY|workflow_dispatch/);assert.match(workflow,/uses: \.\/\.github\/workflows\/pages.yml/);
 });
+test('Pages checks retain the morning commit required by the actual rollback inventory test',async()=>{
+ const workflow=await fs.readFile(new URL('../.github/workflows/pages.yml',import.meta.url),'utf8');
+ assert.match(workflow,/fetch-depth: 0/);
+ assert.match(workflow,/npm run check && npm test && npm run build/);
+});
 test('terminal first-two proof prevents every later API query and commit, but never conceals a corrupt result',async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'wys-v5-terminal-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await write(root,'data/v5-safety/config.json',config);
  const results=['123','124'].map((id,index)=>({schema:1,id:`loop-${id}-1`,type:'v5-safety-result',activatedAt:config.activatedAt,ordinal:index+1,githubRunId:id,githubRunUrl:`https://github.com/xndanius/while-you-sleep/actions/runs/${id}`,startedAt:`2026-10-12T${index?13:12}:10:00Z`,conclusion:'success',proof:'pre_model_selection_and_reserved_gate',checkedAt:'2026-10-12T14:00:00.000Z'}));
