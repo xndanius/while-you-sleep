@@ -1,0 +1,41 @@
+name: Verify first two demand-first automatic loops
+on:
+  workflow_run:
+    workflows: [Codex autonomous loop]
+    types: [completed]
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.event.workflow_run.repository.full_name == 'xndanius/while-you-sleep' && github.event.workflow_run.head_repository.full_name == 'xndanius/while-you-sleep' && github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      rollback: ${{ steps.verify.outputs.rollback }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - id: verify
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/verify-v5-safety.mjs
+  pages:
+    needs: verify
+    if: needs.verify.result == 'success' && needs.verify.outputs.rollback == 'true'
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

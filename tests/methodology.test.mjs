@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 import {renderMethodology} from '../lib/methodology.mjs';
+import {renderLearningHTML} from '../public/learning-display.js';
 
 function fixture() {
   return {
@@ -222,7 +223,7 @@ async function machineSourcesHarness({registry,sourceHealth=[]}) {
   const document={baseURI:'https://example.test/channel/',hidden:false,getElementById:id=>elements.get(id),querySelector:()=>({setAttribute(){}}),addEventListener(){}};
   const data={runs:[],posts:[],stats:{},sources:registry,sourceHealth};
   const code=(await readFile(new URL('../public/machine.js',import.meta.url),'utf8')).replace(/^import .+;\n/gm,'');
-  vm.runInNewContext(code,{document,location:new URL('https://example.test/channel/machine/'),localStorage:{getItem:()=>null,setItem(){}},loopTiming:()=>({nextPublicationAt:null,publicationTimes:[]}),nextLocalTime:()=>null,currentDaySlots:()=>[],slotPresentation:value=>value,clockTiming:()=>({state:'not_started',label:'Not started',elapsedMinutes:null}),runTriggerLabel:()=>'',publicClockRuntime:()=>null,newerClockRecord:value=>value,CLOCK_RUNTIME_REFRESH_MS:180000,CLOCK_RUNTIME_URL:'https://api.github.com/clock',fetch:async url=>({ok:true,json:async()=>data,text:async()=> '[]'}),AbortController,URL,Date,Intl,setTimeout:()=>1,clearTimeout(){},setInterval:()=>1});
+  vm.runInNewContext(code,{renderLearningHTML,document,location:new URL('https://example.test/channel/machine/'),localStorage:{getItem:()=>null,setItem(){}},loopTiming:()=>({nextPublicationAt:null,publicationTimes:[]}),nextLocalTime:()=>null,currentDaySlots:()=>[],slotPresentation:value=>value,clockTiming:()=>({state:'not_started',label:'Not started',elapsedMinutes:null}),runTriggerLabel:()=>'',publicClockRuntime:()=>null,newerClockRecord:value=>value,CLOCK_RUNTIME_REFRESH_MS:180000,CLOCK_RUNTIME_URL:'https://api.github.com/clock',fetch:async url=>({ok:true,json:async()=>data,text:async()=> '[]'}),AbortController,URL,Date,Intl,setTimeout:()=>1,clearTimeout(){},setInterval:()=>1});
   await new Promise(resolve=>setImmediate(resolve));
   assert.doesNotMatch(elements.get('machine-notice').textContent,/could not load/,'The full machine rendering completed.');
   return {heading:elements.get('sources-heading').textContent,html:elements.get('source-health').innerHTML};

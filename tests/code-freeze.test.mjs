@@ -4,7 +4,7 @@ import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
-import {CODE_FREEZE,codeFreezeActive,codeFreezeStatus,isFrozenCodePath,codeSnapshot,assertCodeFreeze} from '../lib/code-freeze.mjs';
+import {CODE_FREEZE,codeFreezeActive,codeFreezeStatus,isFrozenCodePath,codeSnapshot,assertCodeFreeze,sealCodeFreeze} from '../lib/code-freeze.mjs';
 
 test('the Vilnius lecture freeze starts at Monday 18:00 and ends Tuesday 15:00 exactly',()=>{
   assert.equal(codeFreezeActive('2026-10-12T14:59:59.999Z'),false);
@@ -15,6 +15,20 @@ test('the Vilnius lecture freeze starts at Monday 18:00 and ends Tuesday 15:00 e
   assert.equal(codeFreezeStatus('2026-10-12T16:00:00Z').state,'active');
   assert.equal(codeFreezeStatus(CODE_FREEZE.endsAt).state,'ended');
   assert.throws(()=>codeFreezeActive('unknown'),/valid clock/);
+});
+
+test('only an explicit replacement before the freeze can reseal authorized code',async t=>{
+ const root=await mkdtemp(path.join(os.tmpdir(),'wys-seal-freeze-'));t.after(()=>rm(root,{recursive:true,force:true,maxRetries:3}));
+ assert.equal(spawnSync('git',['init','-q'],{cwd:root}).status,0);
+ await writeFile(path.join(root,'RULES.md'),'Unchanged 6/10 rules.');
+ const first=await sealCodeFreeze({root,now:'2026-10-12T08:00:00Z'});
+ await assert.rejects(sealCodeFreeze({root,now:'2026-10-12T12:00:00Z'}),/explicit/);
+ await mkdir(path.join(root,'lib'));await writeFile(path.join(root,'lib','demand.mjs'),'export const demand=true;');
+ const next=await sealCodeFreeze({root,now:'2026-10-12T12:00:00Z',replaceBeforeFreeze:true});
+ assert.notEqual(next.codeSha256,first.codeSha256);assert.equal(next.replaces.codeSha256,first.codeSha256);
+ assert.equal((await assertCodeFreeze({root,now:CODE_FREEZE.startsAt})).codeSha256,next.codeSha256);
+ await assert.rejects(sealCodeFreeze({root,now:CODE_FREEZE.startsAt,replaceBeforeFreeze:true}),/before 18:00/);
+ await assert.rejects(sealCodeFreeze({root,now:CODE_FREEZE.endsAt,replaceBeforeFreeze:true}),/before 18:00/);
 });
 
 test('code includes workflows, prompts, rules and assets while content and source records may continue',()=>{

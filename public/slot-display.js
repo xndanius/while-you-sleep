@@ -1,6 +1,6 @@
 // Build records contain receipts; the browser clock only ages an unfilled slot.
 // A run attempt never becomes a publication time.
-import {publicationSlots,localParts,schedule} from './schedule.js?v=fb937f9d5d94';
+import {publicationSlots,localParts,schedule} from './schedule.js?v=c43b6f368cb6';
 const validTime=value=>value&&Number.isFinite(new Date(value).getTime());
 const covers=(run,id)=>{
   const scheduling=run.scheduling||{};

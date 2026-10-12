@@ -17,6 +17,7 @@ import { renderMethodology } from '../lib/methodology.mjs';
 import {loadSourceRegistryState} from '../lib/source-registry.mjs';
 import {normalizedSourceView} from '../lib/source-presentation.mjs';
 import {codeFreezeStatus} from '../lib/code-freeze.mjs';
+import {loadLearningState} from '../lib/learning.mjs';
 
 const clockDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const clockRunURL=value=>typeof value==='string'&&/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/\d+$/.test(value)?value:null;
@@ -102,10 +103,13 @@ try{
   }),changes:[]};
   const registryView=await loadSourceRegistryState({root:ROOT,posts,picks,currentPolicy:currentScoringPolicy,now:new Date()});
   const sources=registryView.enabled===true?normalizedSourceView(registryView):fallbackSources;
-  const machine={...feed,clock,curation,freeze:codeFreezeStatus(),runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources:registryView,platforms,relay,metrics};
+  const registry=await readJSON(path.join(ROOT,'data','sources','registry.json'));
+  const learning=await loadLearningState({root:ROOT,registry,posts,now:new Date()});
+  const machine={...feed,clock,curation,learning,freeze:codeFreezeStatus(),runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources:registryView,platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);
   await writeJSON(path.join(ROOT,'public','api','machine.json'),machine);
   await writeJSON(path.join(ROOT,'public','api','sources.json'),registryView);
+  await writeJSON(path.join(ROOT,'public','api','learning.json'),learning);
   const counter=process.env.GOATCOUNTER_SITE||'';
   const validCounter=/^https:\/\/[a-z0-9-]+\.goatcounter\.com\/?$/.test(counter);
   await writeJSON(path.join(ROOT,'public','api','analytics.json'),{provider:validCounter?'goatcounter':null,site:validCounter?counter.replace(/\/$/,''):null});
@@ -116,7 +120,7 @@ try{
   await fs.writeFile(path.join(ROOT,'public','machine.html'),machineHTML);
   await fs.writeFile(path.join(ROOT,'public','machine','index.html'),machineHTML.replace('<base href="./">','<base href="../">'));
   await fs.mkdir(path.join(ROOT,'public','method'),{recursive:true});
-  await fs.writeFile(path.join(ROOT,'public','method','index.html'),renderMethodology({baseURL,styleVersion,generatedAt:new Date().toISOString(),policy:currentScoringPolicy,schedule:cadence,clock,curation,relay,sources,versions:versionHistory,picks:curation.picks}));
+  await fs.writeFile(path.join(ROOT,'public','method','index.html'),renderMethodology({baseURL,styleVersion,generatedAt:new Date().toISOString(),policy:currentScoringPolicy,schedule:cadence,clock,curation,relay,sources,learning,versions:versionHistory,picks:curation.picks}));
   await fs.writeFile(path.join(ROOT,'public','.nojekyll'),'');
   // Cards are derived artifacts. A checked backfill or accepted weight change
   // updates their score line while preserving original JSON and RSS identity.

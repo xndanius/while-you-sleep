@@ -29,6 +29,7 @@ concurrency:
   queue: max
 env:
   RUN_ID: loop-${{ github.run_id }}-${{ github.run_attempt }}
+  DEMAND_CONTRACT_VERSION: '1'
   BOOTSTRAP: ${{ inputs.bootstrap || false }}
   PUBLIC_BASE_URL: https://xndanius.github.io/while-you-sleep
 jobs:
@@ -87,7 +88,10 @@ jobs:
       rules_sha256: ${{ steps.trust.outputs.rules_sha256 }}
       source_scan_sha256: ${{ steps.scan.outputs.source_scan_sha256 }}
       source_scan_head_sha: ${{ steps.scan.outputs.source_scan_head_sha }}
+      learning_selection_sha256: ${{ steps.scan.outputs.learning_selection_sha256 }}
       model_completed: ${{ steps.model.outcome == 'success' }}
+      privacy_safe: ${{ steps.privacy.outputs.safe }}
+      scan_privacy_safe: ${{ steps.scan_privacy.outputs.safe }}
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
     steps:
@@ -119,17 +123,30 @@ jobs:
         env:
           SOURCE_HEAD_SHA: ${{ steps.trust.outputs.repo_sha }}
         run: node scripts/research-snapshot.mjs "$RUN_ID"
+      - name: Verify scan privacy before any model or source artifact upload
+        id: scan_privacy
+        if: always()
+        continue-on-error: true
+        run: node scripts/guard-private-artifacts.mjs "$RUN_ID" scan
       - name: Seal the original scan in a separate pre-model artifact
-        if: always() && steps.scan.outputs.source_scan_sha256 != ''
+        if: always() && steps.scan.outputs.source_scan_sha256 != '' && steps.scan_privacy.outputs.safe == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: source-scan-${{ env.RUN_ID }}
           path: data/source-scans/${{ env.RUN_ID }}.json
           if-no-files-found: error
           retention-days: 30
+      - name: Seal the customer selection before any model access
+        if: always() && steps.scan.outputs.learning_selection_sha256 != '' && steps.scan_privacy.outputs.selection_safe == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: learning-selection-${{ env.RUN_ID }}
+          path: data/learning-selection/${{ env.RUN_ID }}.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Prepare the bounded writer
         id: prepare
-        if: steps.scan.outcome == 'success'
+        if: steps.scan.outcome == 'success' && steps.scan_privacy.outputs.safe == 'true'
         continue-on-error: true
         run: node scripts/prepare-run.mjs writer
       - name: Codex picks and writes
@@ -146,8 +163,13 @@ jobs:
           effort: low
           prompt-file: .github/codex/prompts/writer.md
           codex-args: '["--ephemeral", "--json"]'
-      - name: Carry only data records to the independent checker
+      - name: Verify privacy before uploading model-written content
+        id: privacy
         if: always()
+        continue-on-error: true
+        run: node scripts/guard-private-artifacts.mjs "$RUN_ID" writer
+      - name: Carry only data records to the independent checker
+        if: always() && steps.privacy.outputs.safe == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: writer-${{ env.RUN_ID }}
@@ -158,13 +180,15 @@ jobs:
           retention-days: 7
   checker:
     needs: [gate, writer]
-    if: needs.writer.result == 'success' && needs.writer.outputs.model_completed == 'true'
+    if: needs.writer.result == 'success' && needs.writer.outputs.model_completed == 'true' && needs.writer.outputs.privacy_safe == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
+      EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
     outputs:
       repair: ${{ steps.verdict.outputs.repair }}
+      privacy_safe: ${{ steps.privacy.outputs.safe }}
       verified: ${{ steps.accept.outputs.verified }}
       unverified_code: ${{ steps.accept.outputs.unverified_code }}
       unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
@@ -185,6 +209,17 @@ jobs:
         with:
           name: writer-${{ env.RUN_ID }}
           path: data/
+      - name: Fetch the sealed pre-model customer selection
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: learning-selection-${{ env.RUN_ID }}
+          path: .staging/learning-selection/
+      - name: Import only the fingerprinted customer selection
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        env:
+          EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.source_scan_head_sha }}
+        run: node scripts/import-learning-selection.mjs .staging/learning-selection "$RUN_ID"
       - id: prepare
         continue-on-error: true
         run: node scripts/prepare-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs checker
@@ -208,9 +243,14 @@ jobs:
           output-file: .run/checker-response.json
           output-schema-file: .run/checker-output-schema.json
           codex-args: '["--ephemeral", "--json"]'
+      - name: Verify independent-output privacy before accepting or uploading it
+        id: privacy
+        if: always()
+        continue-on-error: true
+        run: node scripts/guard-private-artifacts.mjs "$RUN_ID" checker
       - name: Accept only a fresh independent output bound to the frozen context
         id: accept
-        if: always()
+        if: always() && steps.privacy.outputs.safe == 'true'
         env:
           EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
@@ -221,7 +261,7 @@ jobs:
         id: verdict
         run: node scripts/check-verdict.mjs "$RUN_ID"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        if: always()
+        if: always() && steps.privacy.outputs.safe == 'true'
         with:
           name: checked-${{ env.RUN_ID }}
           path: |
@@ -233,12 +273,14 @@ jobs:
   repair:
     outputs:
       model_completed: ${{ steps.model.outcome == 'success' }}
+      privacy_safe: ${{ steps.privacy.outputs.safe }}
     needs: [gate, writer, checker]
-    if: needs.checker.outputs.verified == 'true' && needs.checker.outputs.repair == 'true'
+    if: needs.checker.outputs.verified == 'true' && needs.checker.outputs.repair == 'true' && needs.checker.outputs.privacy_safe == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
+      EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -253,6 +295,17 @@ jobs:
         with:
           name: checked-${{ env.RUN_ID }}
           path: data/
+      - name: Fetch the original customer selection for the bounded repair
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: learning-selection-${{ env.RUN_ID }}
+          path: .staging/learning-selection/
+      - name: Import the sealed customer selection before repair access
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        env:
+          EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.source_scan_head_sha }}
+        run: node scripts/import-learning-selection.mjs .staging/learning-selection "$RUN_ID"
       - id: prepare
         continue-on-error: true
         run: node scripts/save-first-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs repair
@@ -270,8 +323,13 @@ jobs:
           effort: low
           prompt-file: .github/codex/prompts/writer.md
           codex-args: '["--ephemeral", "--json"]'
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - name: Verify repaired-content privacy before its artifact upload
+        id: privacy
         if: always()
+        continue-on-error: true
+        run: node scripts/guard-private-artifacts.mjs "$RUN_ID" repair
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always() && steps.privacy.outputs.safe == 'true'
         with:
           name: repaired-${{ env.RUN_ID }}
           path: |
@@ -285,13 +343,15 @@ jobs:
           retention-days: 7
   final_check:
     needs: [gate, writer, checker, repair]
-    if: needs.repair.result == 'success' && needs.repair.outputs.model_completed == 'true'
+    if: needs.repair.result == 'success' && needs.repair.outputs.model_completed == 'true' && needs.repair.outputs.privacy_safe == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
+      EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
     outputs:
       verified: ${{ steps.accept.outputs.verified }}
+      privacy_safe: ${{ steps.privacy.outputs.safe }}
       unverified_code: ${{ steps.accept.outputs.unverified_code }}
       unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
       model_completed: ${{ steps.model.outcome == 'success' }}
@@ -311,6 +371,17 @@ jobs:
         with:
           name: repaired-${{ env.RUN_ID }}
           path: data/
+      - name: Fetch the same sealed customer selection for the fresh checker
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: learning-selection-${{ env.RUN_ID }}
+          path: .staging/learning-selection/
+      - name: Import the unchanged pre-model customer selection
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        env:
+          EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.source_scan_head_sha }}
+        run: node scripts/import-learning-selection.mjs .staging/learning-selection "$RUN_ID"
       - name: Preserve every original screened decision before fresh checking
         id: preserve
         continue-on-error: true
@@ -342,15 +413,20 @@ jobs:
           output-file: .run/checker-response.json
           output-schema-file: .run/checker-output-schema.json
           codex-args: '["--ephemeral", "--json"]'
+      - name: Verify final independent-output privacy before accepting it
+        id: privacy
+        if: always()
+        continue-on-error: true
+        run: node scripts/guard-private-artifacts.mjs "$RUN_ID" final_check
       - name: Accept only the new final independent output
         id: accept
-        if: always()
+        if: always() && steps.privacy.outputs.safe == 'true'
         env:
           EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
         run: node scripts/accept-check-output.mjs "$RUN_ID"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        if: always()
+        if: always() && steps.privacy.outputs.safe == 'true'
         with:
           name: final-${{ env.RUN_ID }}
           path: |
@@ -408,6 +484,20 @@ jobs:
           EXPECTED_SOURCE_SCAN_SHA: ${{ needs.writer.outputs.source_scan_sha256 }}
           EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.source_scan_head_sha }}
         run: node scripts/import-source-scan.mjs .staging/source-scan "$RUN_ID"
+      - name: Fetch the immutable pre-model learning choice
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: learning-selection-${{ env.RUN_ID }}
+          path: .staging/learning-selection/
+      - name: Import learning selection outside model-owned records
+        if: needs.writer.outputs.learning_selection_sha256 != ''
+        continue-on-error: true
+        env:
+          EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
+          EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.source_scan_head_sha }}
+        run: node scripts/import-learning-selection.mjs .staging/learning-selection "$RUN_ID"
       - name: Collect only trusted CLI token usage
         if: needs.gate.outputs.run_models == 'true'
         env:
@@ -443,6 +533,15 @@ jobs:
           EXPECTED_CONTEXT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
         run: node scripts/record-source-attribution.mjs "$RUN_ID"
+      - name: Record verified demand learning or an explicit unknown result
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
+          EXPECTED_SOURCE_SCAN_SHA: ${{ needs.writer.outputs.source_scan_sha256 }}
+          EXPECTED_DRAFT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
+          EXPECTED_CONTEXT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
+        run: node scripts/record-learning.mjs "$RUN_ID"
       - name: Commit research, picking, rejection and publication records separately
         if: always()
         run: node scripts/commit-records.mjs loop "$RUN_ID"

@@ -1,5 +1,6 @@
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
+import {privateArtifactReasons} from './guard-private-artifacts.mjs';
 const from=path.resolve(process.argv[2]||'.staging/data');
 const runId=process.argv[3];
 if(!/^[a-zA-Z0-9_-]+$/.test(runId||''))throw new Error('A bounded run ID is required');
@@ -14,7 +15,8 @@ async function visit(relative=''){
   if(![`${runId}.json`,`${runId}-first.json`].includes(entry.name))throw new Error('Artifact belongs to a different run');
   const bytes=await fs.readFile(path.join(from,next));
   if(bytes.length>2500000)throw new Error('Artifact record is too large');
-  const text=bytes.toString('utf8');JSON.parse(text);
+  const text=bytes.toString('utf8'),record=JSON.parse(text);
+  if(privateArtifactReasons(record).length)throw new Error('Privacy guard rejected the incoming content artifact; no personal data may be archived or published.');
   if(/\bsk-(?:proj-)?[A-Za-z0-9_-]{30,}/.test(text))throw new Error('Possible credential found in data; publication blocked');
   await fs.mkdir(path.join('data',parts[0]),{recursive:true});
   await fs.writeFile(path.join('data',next),bytes);

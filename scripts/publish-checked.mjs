@@ -2,13 +2,15 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { ROOT, dataPath, readJSON, writeJSON, records, sha256, stableJSON, safeError, hash } from '../lib/storage.mjs';
 import { checkApproval, deterministicCheck, contentHash,frozenScoringPolicyReasons,completedAssessmentReasons,assessmentJobReasons } from '../lib/validation.mjs';
-import { fetchPublic, plainText } from '../lib/research.mjs';
+import { fetchPublic, plainText,sourceRole,fetchDemandEvidence } from '../lib/research.mjs';
 import { renderCard } from '../lib/card.mjs';
 import { localParts } from '../lib/config.mjs';
 import { validateLoopScheduling, dailyPublicationCount, DAILY_PUBLICATION_CAP, postScheduling } from '../lib/loop-schedule.mjs';
 import { weightedOverall,publishedScoring } from '../lib/scoring.mjs';
 import { readRelayStatus,relayPublicationReady } from '../lib/relay.mjs';
 import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
+import {demandContextReasons} from '../lib/demand.mjs';
+import {validSourceAdmission} from '../lib/source-registry.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
 
 const runId=process.argv[2];
@@ -19,6 +21,9 @@ try{
   if(scheduling?.decision!=='run'&&scheduling)throw new Error('The scheduling gate did not reserve model publication.');
   if(scheduling){const reservation=await readJSON(dataPath('slot-reservations',runId));if(reservation.schedulingSha256!==process.env.LOOP_SCHEDULING_SHA||reservation.slotId!==scheduling.slotId||reservation.runId!==runId)throw new Error('Publication reservation changed.');}
   const draft=await readJSON(dataPath('drafts',runId)),context=await readJSON(dataPath('check-context',runId)),manifest=await readJSON(dataPath('checks',runId)),research=await readJSON(dataPath('research',runId));
+  if(process.env.DEMAND_CONTRACT_VERSION==='1'&&context.demandContractVersion!==1)throw new Error('Demand-first publication requires the new independent fixed-registry demand contract.');
+  const demandFailures=demandContextReasons(context);if(demandFailures.length)throw new Error(demandFailures.join(' '));
+  const demandRegistry=context.demandContractVersion===1?await readJSON(path.join(ROOT,'data','sources','registry.json')):null;
   let trustedUsage;try{trustedUsage=await readJSON(dataPath('usage',runId));}catch{trustedUsage={inputTokens:null,outputTokens:null,costUsd:null};}
   if(process.env.GITHUB_ACTIONS==='true'){
     if(!process.env.EXPECTED_DRAFT_SHA||!process.env.EXPECTED_CONTEXT_SHA)throw new Error('Trusted pre-check fingerprints are missing.');
@@ -54,7 +59,7 @@ try{
     if(operationalFailures.some(failure=>failure.stage==='model_jobs'))break;
     if(scheduling&&localParts(new Date()).day!==scheduling.localDate)throw new Error('Reserved publication date ended during publication.');
     const post=draft.posts.find(p=>p.id===result.postId);
-    const reasons=[...result.reasons,...deterministicCheck(post,[...research.sources,...context.sources],previous,{scoringPolicy:context.scoringPolicy})];
+    const reasons=[...result.reasons,...deterministicCheck(post,[...research.sources,...context.sources],previous,{scoringPolicy:context.scoringPolicy,demandContext:context,demandRequired:context.demandContractVersion===1})];
     if(!reasons.length && weightedOverall(post.scoring.criteria,context.scoringPolicy.weights)<context.scoringPolicy.threshold)reasons.push(`Overall score is below the frozen publish threshold of ${context.scoringPolicy.threshold}.`);
     if(todayCount+published.length>=dailyCap){steps.push({stage:'publish',status:'skipped',at:new Date().toISOString(),message:`Daily cap reached: ${dailyCap} posts are already public for this Vilnius date.`});break;}
     if(published.length>=targetCount)break;
@@ -67,7 +72,14 @@ try{
       for(const sourceId of post.sourceIds){
         const source=context.sources.find(s=>s.id===sourceId);
         try{
-          const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source)),text=plainText(fetched.text);
+          const authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===sourceId);
+          let text;
+          if(authority?.role==='demand'){
+            const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&validSourceAdmission(entry.validation));
+            if(!definition||sourceRole(definition)!=='demand')throw new Error('The demand feed is no longer admitted in the fixed registry.');
+            const fresh=await fetchDemandEvidence(source,{definition});text=fresh.text;
+            if(!text.includes(post.demandEvidence.evidenceQuote)||!text.includes(result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
+          }else{const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));text=plainText(fetched.text);}
           if(text.length<100)throw new Error('Live source contains too little readable evidence.');
           for(const claim of [...result.check.claimChecks,...result.check.scoreChecks].filter(c=>c.sourceId===sourceId)){
             const occurs=claim.criterion?text.includes(claim.evidenceQuote):text.toLowerCase().includes(plainText(claim.evidenceQuote).toLowerCase());
@@ -86,6 +98,7 @@ try{
     record.checker.scoreSources=context.sources;
     record.checker.scoringPolicy=context.scoringPolicy;
     if(context.noveltyContractVersion===1)record.checker.noveltyCheck=result.check.noveltyCheck;
+    if(context.demandContractVersion===1){record.demandContractVersion=1;record.checker.demandCheck=result.check.demandCheck;record.checker.demandContextSha256=context.demandContextSha256;}
     delete record.sourceIds;
     delete record.triggerEvent;
     record.githubRunUrl=scheduling?.githubRunUrl||research.githubRunUrl||null;
@@ -105,7 +118,15 @@ try{
   if(contract&&!draft.posts.length){
     let available=0;
     for(const source of context.sources){
-      try{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));if(plainText(page.text).length<100)throw new Error('Live source contains too little readable evidence.');available++;}
+      try{
+        const authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===source.id);
+        if(authority?.role==='demand'){
+          const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&validSourceAdmission(entry.validation));
+          if(!definition||sourceRole(definition)!=='demand')throw new Error('The demand feed is no longer admitted in the fixed registry.');
+          await fetchDemandEvidence(source,{definition});
+        }else{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));if(plainText(page.text).length<100)throw new Error('Live source contains too little readable evidence.');}
+        available++;
+      }
       catch(error){operationalFailures.push({stage:'live_source',code:'empty_assessment_evidence_unavailable',sourceId:source.id,url:source.url,reason:safeError(error)});}
     }
     if(!available&&!operationalFailures.length)operationalFailures.push({stage:'live_source',code:'empty_assessment_evidence_unavailable',reason:'No fresh public evidence was available for the empty assessment.'});

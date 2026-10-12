@@ -1,7 +1,8 @@
-import {loopTiming,nextLocalTime} from './schedule.js?v=fb937f9d5d94';
-import {slotPresentation,currentDaySlots} from './slot-display.js?v=fb937f9d5d94';
-import {clockTiming,runTriggerLabel} from './clock-display.js?v=fb937f9d5d94';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=fb937f9d5d94';
+import {loopTiming,nextLocalTime} from './schedule.js?v=c43b6f368cb6';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=c43b6f368cb6';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=c43b6f368cb6';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=c43b6f368cb6';
+import {renderLearningHTML} from './learning-display.js?v=c43b6f368cb6';
 
 (() => {
   'use strict';
@@ -287,6 +288,10 @@ import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClock
       renderRelay();
       renderVersions();
       renderSources();
+      $('learning').innerHTML=renderLearningHTML(data.learning);
+      if(!loaded&&location.hash){
+        try{$(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({block:'start',behavior:'instant'});}catch{}
+      }
       loaded = true;
       $('machine-notice').classList.remove('visible');
       $('machine-notice').textContent = '';

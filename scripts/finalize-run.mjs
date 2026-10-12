@@ -24,8 +24,9 @@ if(child.status!==0){
   const published=(await records('posts')).filter(post=>post.runId===runId).map(post=>post.id);
   let jobs;try{jobs=JSON.parse(process.env.MODEL_JOB_RESULTS||'{}');}catch{jobs={};}
   const lastCheck=jobs.final_check?.outputs?.verified==='false'?jobs.final_check:jobs.checker?.outputs?.verified==='false'?jobs.checker:null;
-  const reason=safeError({message:lastCheck?.outputs?.unverified_reason||child.error?.message||child.stderr.trim()||'Research, model, independent check or deterministic publication gate did not complete.'}).replace(/[\r\n]/g,' ');
-  const failure={stage:lastCheck?'check':'publication',code:lastCheck?.outputs?.unverified_code||'publication_pipeline_incomplete',reason};
+  const privacyHeld=['writer','checker','repair','final_check'].some(name=>jobs[name]?.outputs?.privacy_safe==='false'||jobs[name]?.outputs?.scan_privacy_safe==='false');
+  const reason=privacyHeld?'Privacy verification withheld the content; unsafe artifacts were discarded and no post was approved.':safeError({message:lastCheck?.outputs?.unverified_reason||child.error?.message||child.stderr.trim()||'Research, model, independent check or deterministic publication gate did not complete.'}).replace(/[\r\n]/g,' ');
+  const failure={stage:privacyHeld?'privacy':lastCheck?'check':'publication',code:privacyHeld?'content_privacy_unverified':lastCheck?.outputs?.unverified_code||'publication_pipeline_incomplete',reason};
   const terminal=scheduling?.assessmentContractVersion===1;
   const finishedAt=new Date().toISOString();
   await writeJSON(dataPath('runs',runId),{id:runId,type:'loop',status:terminal?published.length?'completed_with_unverified':'no_post_unverified':published.length?'completed_with_failure':'failed_closed',assessmentOutcome:terminal?'unverified':'incomplete',operationalFailures:[failure],...(terminal?{unverifiedAssessment:unverifiedAssessment(scheduling,failure,finishedAt)}:{}),startedAt:scheduling?.requestedAt||research?.createdAt||finishedAt,finishedAt,eventName:scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown',...(scheduling?{scheduling}:{}),modelExecuted:!!research,published,rejected:[{reason}],steps:[{stage:'check',status:terminal?'unverified':'failed',message:reason}],githubRunUrl:scheduling?.githubRunUrl||research?.githubRunUrl||null,engine:'official openai/codex-action',usage},{immutable:true});
