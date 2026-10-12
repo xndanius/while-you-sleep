@@ -3,7 +3,7 @@ import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {ROOT,stableJSON,sha256,safeError} from '../lib/storage.mjs';
 import {githubApiGet} from '../lib/usage.mjs';
-import {validateV5SafetyConfig,v5RunEligibility,safetyDecision,rollbackV5} from '../lib/v5-safety.mjs';
+import {validateV5SafetyConfig,trustedSafetyClockCaller,v5RunEligibility,safetyDecision,rollbackV5} from '../lib/v5-safety.mjs';
 
 const repository='xndanius/while-you-sleep';
 async function optional(file){try{return JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if(error.code==='ENOENT')return null;throw error;}}
@@ -24,10 +24,14 @@ export async function verifiedCompletion({root,config}){
  return {state:'verified',runs,rollback:false,committed:false,completionId:completion.id};
 }
 export async function verifyV5Safety({root=ROOT,env=process.env,apiGet=githubApiGet,now=new Date(),push=true}={}){
- if(env.GITHUB_ACTIONS!=='true'||env.GITHUB_REPOSITORY!==repository||env.GITHUB_EVENT_NAME!=='workflow_run')throw new Error('V5 safety only runs in its trusted workflow_run job.');
+ const clockCall=env.GITHUB_EVENT_NAME==='workflow_dispatch';
+ if(env.GITHUB_ACTIONS!=='true'||env.GITHUB_REPOSITORY!==repository||!['workflow_run','workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)||clockCall&&(env.GITHUB_REF!=='refs/heads/main'||!/^[1-9]\d{0,15}$/.test(env.GITHUB_RUN_ID||'')||env.GITHUB_RUN_ATTEMPT!=='1'||env.GITHUB_ACTOR!=='github-actions[bot]'||env.GITHUB_TRIGGERING_ACTOR!=='github-actions[bot]'))throw new Error('V5 safety requires its workflow_run job or an exact first-attempt hosted clock caller.');
  const config=await optional(path.join(root,'data','v5-safety','config.json'));if(!config)return {state:'not_activated',committed:false,rollback:false};validateV5SafetyConfig(config);
  const completed=await verifiedCompletion({root,config});if(completed)return completed;
  const get=async endpoint=>{const body=await apiGet(`repos/${repository}/${endpoint}`,{maxBytes:4*1024*1024,env});return typeof body==='string'?JSON.parse(body):body;};
+ // A completed proof grants no new mutation. Every incomplete clock call must
+ // independently verify the real caller before listing or recording results.
+ if(clockCall&&!trustedSafetyClockCaller(await get(`actions/runs/${env.GITHUB_RUN_ID}`),env))throw new Error('The reusable safety caller is not the authoritative first-attempt bot clock on main.');
  const query=`actions/workflows/loop.yml/runs?per_page=100&created=${encodeURIComponent('>='+config.activatedAt)}`,listed=await get(query),rows=[];
  if(!Array.isArray(listed.workflow_runs)||listed.total_count>100)throw new Error('The bounded first-two V5 run listing is unavailable or incomplete.');
  for(const listedRun of listed.workflow_runs){

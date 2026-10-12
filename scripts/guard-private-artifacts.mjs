@@ -2,15 +2,8 @@ import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ROOT,validId} from '../lib/storage.mjs';
-import {personalDataReasons} from '../lib/demand.mjs';
-
-const sensitiveKeys=new Set(['email','email_address','phone','telephone','mobile','contact','contactpoint','contact_point','personal_name','personname','first_name','last_name','firstname','lastname','ssn','patient','patient_id','applicant','profile','employer','person_id','author']);
-export function privateArtifactReasons(value){
- const reasons=personalDataReasons(value);
- function visit(item){if(!item||typeof item!=='object')return;if(Array.isArray(item)){for(const child of item)visit(child);return;}for(const [key,child] of Object.entries(item)){if(sensitiveKeys.has(key.toLowerCase()))reasons.push('Personal/contact/profile fields are forbidden in stored content artifacts.');visit(child);}}
- visit(value);if(/\bsk-(?:proj-)?[A-Za-z0-9_-]{30,}/.test(JSON.stringify(value)))reasons.push('Possible credential found in stored content artifact.');
- return [...new Set(reasons)];
-}
+import {privateArtifactReasons} from '../lib/privacy.mjs';
+export {privateArtifactReasons} from '../lib/privacy.mjs';
 
 // No redacted artifact can acquire an approval for changed text. An unsafe
 // phase loses its complete artifact set and returns a neutral unverified signal.

@@ -2,7 +2,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { ROOT,readJSON,writeJSON } from '../lib/storage.mjs';
+import { ROOT,readJSON,writeJSON,safeError } from '../lib/storage.mjs';
 import { CLOCK_REPOSITORY,CLOCK_WAIT_MINUTES,clockAPI,clockClaim,clockRecords,clockRunURL,clockTickId,dueClockDispatches,dispatchClockWorkflow,validateClockTick,trustedClockRun } from '../lib/clock.mjs';
 import { loadClockState,persistClockRuntime,runtimeWritable } from '../lib/clock-runtime.mjs';
 import {readCurationRecords,validateCurationConfig,validateCurationReceipts} from '../lib/curation.mjs';
@@ -108,5 +108,5 @@ export async function tickClock({root=ROOT,env=process.env,now=new Date(),api=cl
 
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
   const action=process.argv[2];
-  (action==='claim'?claimClock():action==='tick'?tickClock():Promise.reject(new Error('Unknown clock action.'))).catch(()=>{console.error('Trusted clock stopped before an uncertain or invalid action.');process.exitCode=1;});
+  (action==='claim'?claimClock():action==='tick'?tickClock():Promise.reject(new Error('Unknown clock action.'))).catch(error=>{console.error('Trusted clock stopped before an uncertain or invalid action: '+safeError(error));process.exitCode=1;});
 }

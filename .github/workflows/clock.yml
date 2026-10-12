@@ -97,6 +97,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/clock.mjs tick
+  safety:
+    needs: tick
+    if: needs.tick.result == 'success' && needs.tick.outputs.ticked == 'true'
+    uses: ./.github/workflows/v5-safety.yml
+    permissions:
+      contents: write
+      actions: read
+      pages: write
+      id-token: write
   pages:
     needs: tick
     if: needs.tick.outputs.ticked == 'true' && needs.tick.outputs.committed == 'true'
