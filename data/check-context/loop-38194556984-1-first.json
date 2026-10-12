@@ -1,0 +1,83 @@
+{
+  "runId": "loop-38194556984-1",
+  "createdAt": "2026-10-12T02:09:06.394Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "d7c9630b7b65d973fb6f46d27fc2bd402e1c1b8ccd4d3afe01dfbaf4f9bf9447",
+  "sourceSnapshotSha256": "7a74e5ee7df183aa56b5f433382164d4af422a53e04853147c5c48906e824443",
+  "sources": [
+    {
+      "id": "0f1e1c9ed7c9b88df76447ab",
+      "title": "Automated Invoice Processing with Telegram, GPT-4o, OCR and SAP Integration · product evidence",
+      "url": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "publisher": "n8n.io",
+      "text": "Automated invoice processing with Telegram, GPT-4o, OCR and SAP integration | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 207,024 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Google Sheets HTTP Request Merge +12 Automated invoice processing with Telegram, GPT-4o, OCR and SAP integration Use for free Created by Raquel Giugliano Last update Last update 8 months ago Categories Invoice Processing AI Summarization Share ++HOW IT WORKS:++ This workflow automates the processing of invoices sent via Telegram. It extracts the data using LlamaIndex OCR, logs it in Google Sheets, and optionally pushes the structured data to SAP Business One 🔹 1. Receive Invoice via Telegram: A user sends a PDF of an invoice through Telegram A Telegram Trigger node listens for incoming messages and captures the file and metadata The document is downloaded and prepared for OCR 🔹 2. OCR with LlamaIndex: The file is uploaded to the LlamaIndex OCR API. The workflow polls the API until the processing status returns SUCCESS Once ready, the parsed content is fetched in Markdown format 🔹 3. Data Extraction via LLM (editable): The Markdown content is sent to a language model (LLM) using LangChain A Structured Output Parser transforms the result into a clean, structured editable JSON 🔹 4. Save to Google Sheets: The structured JSON is split into: Header (main invoice metadata) Detail (individual line items) Each part is stored in a dedicated tab within a connected Google Sheets file 🔹 5. Ask for SAP Confirmation: The bot replies to the user via Telegram: \"Do you want to send the data to SAP?\" If the user clicks \"Yes\", the next automation path is triggered. 🔹 6. Push Data to SAP B1: A connection is made to SAP Business One's Service Layer API Header and detail data are fetched from Google Sheets The invoice structure is rebuilt as required by SAP (DocumentLines, CardCode, etc.) A POST request creates the Purchase Invoice in SAP A confirmation message with the created DocEntry is sent back to the user on Telegram ++SET UP STEPS:++ Follow these steps to properly configure the workflow before execution: 1️⃣ Create Required Credentials: Go to Credentials > + New Credential and create the following: Telegram API (set your bot token get it from BotFather) Google Sheets OpenAI 2️⃣ Set Up Environment Variables (Optional but Recommended): LLAMAINDEX_API_KEY SAP_USER SAP_PASSWORD SAP_COMPANY_DB SAP_URL 3️⃣ Prepare Google Sheets: Ensure your Google Spreadsheet has the following: ➤ Sheet 1: Header ➤ Sheet 2: Details Contains columns for invoice lines Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-12T02:09:06.386Z",
+      "productUrl": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "0f1e1c9ed7c9b88df76447ab"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T02:07:53.619Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Automated Invoice Processing with Telegram, GPT-4o, OCR and SAP Integration Raquel Giugliano ⋅ a year ago ⋅ Free ++HOW IT WORKS:++ This workflow automates the processing of invoices sent via Telegram. It extracts the data using LlamaIndex OCR, logs it in Google Sheets, and optionally pushes the structured data to SAP Business One 🔹 1. Receive Invoice via Telegram:** A user sends a PDF of an invoice through Telegram A Telegram Trigger node l... Google Sheets HTTP Request Telegram +4",
+      "verifiedAt": "2026-10-12T02:09:06.386Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [
+    {
+      "postId": "0f1e1c9ed7c9b88df76447ab",
+      "pass": true,
+      "reasons": []
+    }
+  ],
+  "assessmentContractVersion": 1
+}
