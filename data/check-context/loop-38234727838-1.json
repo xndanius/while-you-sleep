@@ -1,0 +1,980 @@
+{
+  "runId": "loop-38234727838-1",
+  "createdAt": "2026-10-12T10:15:59.671Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "5ca027441d0394e6d13bcba6a856debd3d86d43daf1f49fc250733ee84172d6d",
+  "sourceSnapshotSha256": "d7f11af85f3794aec0c3770614db30cc80d264f641159fa735d88b62953127d7",
+  "sources": [
+    {
+      "id": "d8897b3d1b9980fb9cfbbe66",
+      "title": "Talk to Your Google Sheets Using ChatGPT-5 · product evidence",
+      "url": "https://n8n.io/workflows/7639-talk-to-your-google-sheets-using-chatgpt-5",
+      "publisher": "n8n.io",
+      "text": "Talk to your Google Sheets using ChatGPT-5 | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 207,056 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates Sticky Note AI Agent OpenAI Chat Model +2 Talk to your Google Sheets using ChatGPT-5 Use for free Created by Robert Breen Last update Last update 8 months ago Categories Document Extraction AI RAG Share This n8n workflow template creates an intelligent data analysis chatbot that can answer questions about data stored in Google Sheets using OpenAI's GPT-5 Mini model. The system automatically analyzes your spreadsheet data and provides insights through natural language conversations. What This Workflow Does Chat Interface : Provides a conversational interface for asking questions about your data Smart Data Analysis : Uses AI to understand column structures and data relationships Google Sheets Integration : Connects directly to your Google Sheets data Memory Buffer : Maintains conversation context for follow-up questions Automated Column Detection : Automatically identifies and describes your data columns 🚀 Try It Out! 1. Set Up OpenAI Connection Get Your API Key Visit the OpenAI API Keys page. Go to OpenAI Billing . Add funds to your billing account. Copy your API key into your OpenAI credentials in n8n (or your chosen platform). 2. Prepare Your Google Sheet Connect Your Data in Google Sheets Data must follow this format: Sample Marketing Data First row contains column names. Data should be in rows 2–100 . Log in using OAuth , then select your workbook and sheet. 3. Ask Questions of Your Data You can ask natural language questions to analyze your marketing data, such as: Total spend across all campaigns. Spend for Paid Search only . Month-over-month changes in ad spend. Top-performing campaigns by conversion rate. Cost per lead for each channel. 📬 Need Help or Want to Customize This? 📧 [email protected] 🔗 LinkedIn 🔗 n8n Automation Experts Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-12T10:15:53.148Z",
+      "productUrl": "https://n8n.io/workflows/7639-talk-to-your-google-sheets-using-chatgpt-5",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "d8897b3d1b9980fb9cfbbe66"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T10:11:46.771Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/7639-talk-to-your-google-sheets-using-chatgpt-5",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/7639-talk-to-your-google-sheets-using-chatgpt-5",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Talk to Your Google Sheets Using ChatGPT-5 Robert Breen ⋅ a year ago ⋅ Free This n8n workflow template creates an intelligent data analysis chatbot that can answer questions about data stored in Google Sheets using OpenAI's GPT-5 Mini model. The system automatically analyzes your spreadsheet data and provides insights through natural language conversations. What This Workflow Does Chat Interface**: Provi... AI Agent OpenAI Chat Model Simple Memory",
+      "verifiedAt": "2026-10-12T10:15:53.148Z"
+    },
+    {
+      "id": "344ba058f725a2efb47b036d",
+      "url": "https://azurade.com/developers",
+      "title": "Show HN: Azurade, image and video generation with MCP, credits never expire · product evidence",
+      "publisher": "azurade.com",
+      "text": "One API Key for Veo 3.1, Seedance and Nano Banana | Azurade AI A zurade AI Features Pricing FAQ Blog Get Started Features Pricing FAQ Blog Get Started Home Developers One API key for Veo 3.1, Seedance and Nano Banana Pay as you go for 38 image and video models, from a REST API or from an MCP server that Claude, ChatGPT, Cursor and Codex connect to with one sign-in. It's the credit balance you use in the web app, at the same prices. MCP server https://azurade.com/mcp REST API /api/v2 , keys as Bearer tokens. Reference Billing A credit costs $0.02 to $0.04 , no subscription. 4 free on signup. Credits Never expire. Replicate's prepaid credit lasts a year, fal.ai's 365 days ( compared ). Failed generations Refunded to the balance automatically, no ticket. Watch Claude and Codex connect to Azurade in two clicks. The steps for every other client are below. Connect an MCP client Claude ChatGPT Claude Code Codex Gemini CLI Cursor VS Code Claude (web and desktop) Open Customize > Connectors. Click +, then Add custom connector. Paste the URL. On Team and Enterprise an owner adds it first under Organization settings > Connectors. The free plan allows one custom connector. https://azurade.com/mcp ChatGPT Turn on Developer mode in Settings > Security and login. Press + on the Plugins page and create an app with the URL. Pick it from the Developer mode tool in a chat. Developer mode is on Plus, Pro, Business, Enterprise and Edu, on the web. https://azurade.com/mcp Claude Code Add the server. Run /mcp in a session and pick azurade to sign in. claude mcp add --transport http azurade https://azurade.com/mcp Codex Add the server. Sign in with codex mcp login azurade. codex mcp add azurade --url https://azurade.com/mcp Gemini CLI Add the server. Run /mcp auth azurade in a session. gemini mcp add --transport http azurade https://azurade.com/mcp Cursor Use Add to Cursor, or put this in ~/.cursor/mcp.json. {\"mcpServers\": {\"azurade\": {\"url\": \"https://azurade.com/mcp\"}}} Add to Cursor VS Code Run MCP: Open User Configuration, or edit .vscode/mcp.json. Add this server entry. {\"servers\": {\"azurade\": {\"type\": \"http\", \"url\": \"https://azurade.com/mcp\"}}} On first use the client opens an Azurade page where you sign in and click Allow, and it's connected without you copying a key. A client that cannot sign in sends a key from your profile page instead: claude mcp add --transport http azurade https://azurade.com/mcp --header \"Authorization: Bearer sk-...\" Then ask for a picture in Claude : A teal dragon breathing a stream of photos into the night sky, painterly estimate_generation model: \"nano-banana-pro\", resolution: \"2K\", aspect_ratio: \"4:5\" ← cost: 9 , balance: 240 , affordable: true create_generation same arguments ← status: \"completed\", cost: 9 outputs[0].url: https://azurade.com /api/files/output_result_files/r8f2k1x0q9m4b7d/dragon.png Here it is. That took 9 credits; 231 left. Made with Nano Banana Pro on Azurade REST API Create a key on your profile page. GET /api/v2/models is public; everything else takes the key. POST /api/v2/generations/estimate takes the same body and returns the cost and whether your balance covers it. It starts nothing. The create call answers 202 with an id. Poll GET /api/v2/generations/<id> until the status is failed , or completed with files in outputs . The MCP tools call the same code, so prices, refunds, content screening and error codes match. Download links need no authentication: anyone you share one with can open the file. Full contract: the OpenAPI document , generated from the running code and browsable at /swagger/ . Agents that read skills can start from SKILL.md . Request curl -X POST https://azurade.com/api/v2/generations \\ -H \"Authorization: Bearer $AZURADE_API_KEY\" \\ -H \"Content-Type: application/json\" \\ -d '{\"model\": \"nano-banana\", \"prompt\": \"a lighthouse at dusk\"}' Response, then the poll 202 Accepted {\"id\": \"r8f2k1x0q9m4b7d\", \"model\": \"nano-banana\", \"type\": \"image\", \"status\": \"pending\", \"cost\": 2} GET /api/v2/generations/r8f2k1x0q9m4b7d { \"id\": \"r8f2k1x0q9m4b7d\", \"status\": \"completed\", \"cost\": 2, \"outputs\": [{ \"url\": \"https://azurade.com/api/files/output_result_files/.../lighthouse.png\", \"content_type\": \"image/png\" }] } What the agent can do Eleven tools. A finished image comes back with its download link and a small inline preview, so the agent can look at what it made before deciding to try again. Choose a model list_models Every model with its type and the credit price of a default request. get_model One model's parameters: names, defaults, allowed values. estimate_generation The exact credit cost of a request. Free, starts nothing. Generate create_generation Starts an image or video and waits up to about 50 seconds for it. get_generation Status and file links; waits again while the job runs. list_generations Your history, newest first. create_upload_url A one-off link the agent's shell uploads a local file to with curl. Prompts enhance_prompt Rewrites a short prompt using the target model's prompting guide. moderate_prompt Runs the content-policy screen on a prompt without generating. Account get_account Your credit balance. buy_credits A card checkout link for a credit pack, for you to pay when the balance runs out. Models and prices Credits for a request that sends only a prompt, the figure estimate_generation returns for it. † marks a model whose price changes with resolution, duration or inputs; estimate those before you submit. A credit costs $0.02 to $0.04 depending on the pack or plan . Image models 23 Model id Best for Takes Credits nano-banana Quick image edits and blending several reference images text, image 2 nano-banana-2.1 Images up to 4K with clean text and characters that stay the same across edits text, image 2 † , price varies qwen-image-2.1 Generating and editing in one model, with transparent backgrounds text, image 2 † , price varies recraft-crisp-upscale Upscaling an image with crisp edges and text image 2 remove-background Cutting the subject out onto a transparent background image 2 flux-dev General-purpose images with control over steps, guidance and seed text, image 3 † , price varies gpt-image-2.5 Photorealistic images with precise text up to 4K, and tighter edits text, image 3 † , price varies qwen-image Images and edits with clean in-image text in Chinese or English text, image 3 † , price varies qwen-image-edit Editing one image with a text instruction text, image 3 qwen-image-edit-plus Edits that combine several input images, such as swapping outfits text, image 3 qwen-image-edit-plus-lora Image edits in the style of a custom LoRA text, image 3 seedream-3 Photoreal images at up to 2048 px text 3 seedream-4 Up to 6 images per request, and edits with up to 10 references text, image 3 † , price varies seedream-4.5 Detailed images up to 4K, and edits with up to 14 references text, image 3 wan-2.7-image Images and sets of up to 12 related images, up to 4K on Pro text, image 3 † , price varies flux-kontext-pro Editing an image with a text instruction while the rest stays put text, image 4 nano-banana-2 Images up to 4K with legible text, many references and web search text, image 4 † , price varies nano-banana-2-lite Fast, cheap drafts and quick edits at 1K text, image 4 restore-image Repairing old, scratched or faded photos image 4 gpt-image-2 Photorealism and exact text in images, such as posters and UI mockups text, image 6 imagen-4-ultra Detailed photorealistic images from a text prompt text 6 nano-banana-pro High-fidelity images up to 4K with accurate text and compositing text, image 9 † , price varies qwen-image-layered Splitting an image into separate transparent layers for editing text, image 11 † , price varies Video models 15 Model id Best for Takes Credits wan-2.2 Low-cost short clips, with LoRA support text, image 1 † , price varies seedance-2-mini Lower-cost video with a soundtrack from text or images, up to 15 s text, image, video, audio 20.5 † , price varies 4.1 per second motion-control Making a character from a photo copy the moves in a reference video text, image, video 27.5 † , price varies 5.5 per second veo3.1 8 s video with native sound from text, first and last frames, or references text, image 30 † , price varies wan-3.0 Clips up to 30 s at 1080p with sound, from text, frames or image, video and audio references text, image, video, audio 40 † , price varies 8 per second wan-2.6 Multi-shot video from text or an image, 5 to 15 s at up to 1080p text, image, video 53 † , price varies wan-2.7 Video from text or images, continuing a clip, or editing a video text, image, video, audio 60 † , price varies wan-3.0-prime Faster clips up to 30 s at 1080p with sound, from text, frames or image, video and audio references text, image, video, audio 63 † , price varies 12.6 per second seedance-pro 1080p video from a prompt, 2 to 12 s text 75 † , price varies 15 per second seedance-2 Video with a soundtrack from text or images, up to 15 s, with a fast tier text, image, video, audio 102.5 † , price varies 20.5 per second veo3-fast Faster, cheaper 8 s video with native sound text 120 seedance-2.5 Clips up to 30 s at 1080p, steered by image, video or audio references text, image, video, audio 160 † , price varies 32 per second hunyuan Text-to-video with control over frame count, size and steps text 250 veo2 Short clips from a prompt or a first-frame image text, image 250 † , price varies 50 per second veo3 8 s video with native sound and dialogue at up to 1080p text 320 Questions Can one API key call Veo 3.1, Seedance and Nano Banana? Yes. A key from your profile page calls every model in the table below, veo3.1, the seedance models and the nano-banana models included, and each call bills the same credit balance. There's no plan to buy first and no per-model signup. Do API credits expire? No, the balance never expires and never resets. Replicate's prepaid credit, for comparison, is valid for a year from purchase and fal.ai's expires after 365 days. Do I need an API key to use the MCP server? Not with a client that supports MCP authorization, which covers Claude, ChatGPT, Claude Code, Codex, Gemini CLI, Cursor and VS Code. The client opens an Azurade page, you sign in and click Allow, and it's connected. A client without OAuth support sends a key from your profile page as Authorization: Bearer sk-... How do I disconnect a client? Each connection is a key named after the client, for example \"Claude (connected app)\", on your profile page. Delete it and the client loses access at once. What does a generation cost through the API? The same credits as in the web app. There's no separate developer plan or per-seat fee. A failed generation is refunded to your balance automatically. Why does create_generation sometimes answer pending? Most MCP clients give up on a tool call after 60 seconds, so the server returns after about 50 with the job's id. The agent calls get_generation, which waits another 50 seconds. Images usually finish inside the first call; a video can take a few. Can the agent use an image from my computer? Yes. create_upload_url gives the agent a link and a curl command; it uploads the file from your machine and passes the returned URL to the model. The link works for 15 minutes and needs no key. A file that is already online needs no upload. What happens when the agent runs out of credits? It calls buy_credits and hands you a checkout link for a credit pack. You pay by card on the checkout page, which shows the price, and the credits land on your balance at once. The agent cannot pay by itself. Can an agent without a key sign itself up? It can ask for a key, but you approve it. The agent gives you a link and a six-digit code; you sign in, type the code, and the agent receives a key named \"Agent\" on your account. Delete that key on your profile page to cut it off. © 2026 Azurade AI . Dubir Group LTD HE 394277 All rights reserved. Azurade AI is an independent product and is not affiliated with or endorsed by Google, OpenAI, ByteDance, Alibaba or any other AI model provider. Model names identify third-party models we integrate. English Português (Brasil) Main Pages AI Food Photography AI Real Estate Photo Editing Virtual Staging AI Photo Animation Influencer Creation Compare AI Generators API and MCP Server Blog Special Tools Background Removal from Images Nano Banana 2 Nano Banana 2.1 Nano Banana 2 Lite Azurade Editor Free Tools All Tools Image Converter Image Compressor Photo Resizer Card Collage Maker Text on Photo Legal Information Privacy Policy Terms of Use Security Acceptable Use Policy",
+      "fetchedAt": "2026-10-12T10:15:54.237Z",
+      "productUrl": "https://azurade.com/developers",
+      "originSourceIds": [
+        "70d35dfa28480c1f3ffc1add"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://azurade.com",
+            "robotsUrl": "https://azurade.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T10:11:50.255Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 2572,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://azurade.com/developers",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://azurade.com",
+            "robotsUrl": "https://azurade.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T10:11:50.255Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 2572,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://azurade.com/developers/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [
+          {
+            "url": "https://azurade.com/developers",
+            "status": 308,
+            "next": "https://azurade.com/developers/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://azurade.com/developers/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T10:15:54.237Z"
+    },
+    {
+      "id": "70d35dfa28480c1f3ffc1add",
+      "title": "Show HN: Azurade, image and video generation with MCP, credits never expire",
+      "url": "https://news.ycombinator.com/item?id=49978155",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Azurade, image and video generation with MCP, credits never expire | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Azurade, image and video generation with MCP, credits never expire ( azurade.com ) 2 points by delneg 5 days ago | hide | past | favorite | discuss Hi HN, I was frustrated with expiring credits, subscriptions and generally BS approach in image&video generation space (which is now universally useful and basically a commodity) so I've built Azurade, a hosted service where you have 35+ models (Veo3.1, Seedance 2.5, Wan 3.0, Nano Banana, GPT Image2.5 etc.) behind one non-expiring, fully agent native balance. I care about billing, that's why credits are prepaid and never expire, a failed generation is refunded automatically, and you can buy a pack without a subscription. I got tired of monthly credits (or usage) that vanish at the end of the month This post is mainly about it's remote MCP server, because that's how I and my friends mostly use it now (via Claude or Codex) You can add https://azurade.com/mcp in Claude or Codex (or claude code), sign in once through OAuth and the LLM will be able to generate / get all info about models and account / upload files and all that. I've ran it through oblivious evaluator agent for 8 times to reach good agent ergonomics. After all, if I want to build an agent-native service the users (agent) should evaluate and correct it. Please feel free to point your agents at it and send me the nitpicks and gotchas they encounter. Humans are also welcome :) Demo video (1m40s, cute dog included): https://youtu.be/tX29WLffXCk P.S. the stack is Go and Pocketbase, official GO MCP SDK, and the frontend is statically rendered NextJS. The access token is an API key named after the client, so revoking an agent means deleting that key on your profile page. It also works like REST API with an OpenAPI spec. help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T10:15:54.756Z",
+      "productUrl": "https://azurade.com/developers",
+      "discoveredAt": "2026-10-06T13:29:38Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T10:15:54.756Z"
+    },
+    {
+      "id": "debd09bbbba9d1efc4e8f5c1",
+      "title": "Pomerado Y Combinator Logo F2026 • Active • 2 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/pomerado",
+      "publisher": "www.ycombinator.com",
+      "text": "Pomerado: Turn any website into an MCP for your agents, in minutes | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Pomerado Pomerado Turn any website into an MCP for your agents, in minutes Y Combinator Logo Fall 2026 Active Artificial Intelligence Developer Tools B2B Workflow Automation API San Francisco Company Jobs 0 https://www.pomerado.ai Turn any website into an MCP for your agents, in minutes Pomerado turns any website into an API / MCP in minutes. Empower your agents to use previously inaccessable consumer websites, legacy portals, and internal tools. You or your agent describe a task, Pomerado asks a few clarifying questions, and then delivers an integration. We manage hosting, permissioning, testing, and maintenance, so you can focus on building. As consultants at McKinsey and Scale AI, we saw that legacy systems were the true blocker to agentic workflows. Pomerado connects those systems to agents. Active Founders Akshay Manglik Founder/CEO Co-founder & CEO at Pomerado (YC F26). Previously Applied AI Engineer at Scale AI, building frontier agents for enterprises in telecom, finance, and healthcare. Led Scale's research on agentic trace analysis for automated agent optimization. Prior ML research at Johns Hopkins APL, Columbia, and Stanford, published in Nature Communications. Akshay Manglik Founder/CEO Co-founder & CEO at Pomerado (YC F26). Previously Applied AI Engineer at Scale AI, building frontier agents for enterprises in telecom, finance, and healthcare. Led Scale's research on agentic trace analysis for automated agent optimization. Prior ML research at Johns Hopkins APL, Columbia, and Stanford, published in Nature Communications. Alan Ma Founder Co-founder at Pomerado (YC F26). Previously Business Analyst at McKinsey, setting Data and AI strategy for F500 companies. Mathematics and Computer Science at Columbia Alan Ma Founder Co-founder at Pomerado (YC F26). Previously Business Analyst at McKinsey, setting Data and AI strategy for F500 companies. Mathematics and Computer Science at Columbia Pomerado Founded: 2026 Batch: Fall 2026 Team Size: 2 Status: Active Location: San Francisco Primary Partner: Aaron Epstein Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T10:15:55.340Z",
+      "productUrl": "https://www.ycombinator.com/companies/pomerado",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "debd09bbbba9d1efc4e8f5c1"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T10:11:47.506Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/pomerado",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/pomerado",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Pomerado Y Combinator Logo F2026 • Active • 2 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T10:15:55.340Z"
+    },
+    {
+      "id": "1548d84a95f99fd18cc9b7d0",
+      "title": "MemoryPlugin BOOSTED · product evidence",
+      "url": "https://betalist.com/startups/memoryplugin",
+      "publisher": "betalist.com",
+      "text": "MemoryPlugin: Long term memory for ALL your AI tools | BetaList BetaList Home Browse Newsletter Search FAQ Advertise Support Startup Jobs Vision Pro apps Home Browse Newsletter Search FAQ Advertise Support theme#toggle\" class=\" size-9 rounded-full hover:bg-gray-100 flex items-center justify-center dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 \" title=\"Toggle theme\" > Log in Submit Startup Back to all startups MemoryPlugin BOOSTED Long term memory for ALL your AI tools MemoryPlugin is long-term memory for all your favourite AI tools. AI tools are incredible, but they suffer from amnesia and generic responses. MemoryPlugin is the cure. MemoryPlugin allows AI tools to remember key facts, and use your conversation history to make AI more personalised and helpful over time. With the browser extension, custom GPT, MCP server, TypingMind Plugin, and a public OpenAPI spec, MemoryPlugin is designed to work with ALL your AI tools, with dozens already supported. Memory is shared across your tools and features like Buckets help you organize memories for work, personal, or project contexts. BetaList community gets 15% off the first year of subscription with code BETALIST Visit Site Visit Site Makers Asad Dhamani Topics Web Tools SaaS Artificial Intelligence Productivity Software Featured November 18, 2025 Request changes Get your badge Report this startup Manage collections Discover startups similar to MemoryPlugin FreeDAST SPONSOR Scan your live site for risks and get a clear security grade SPONSOR Recallio - AI Memory Bank Supercharge your AI: Scoped, persistent memory for any app or agent Memora Replicating the Human Memory for every Personalized AI FreeDAST BOOSTED Scan your live site for risks and get a clear security grade BOOSTED ArcBrain Add persistent local memory to your AI coding assistant Lumi Give your AI permanent memory across Claude, ChatGPT, and Gemini CLI MemoKee Save anything from the web and find it instantly with AI Whacka BOOSTED Turn any idea into your own mobile app with no code from your phone BOOSTED LongTerMemory Turn your study materials into quizzes with AI and spaced repetition",
+      "fetchedAt": "2026-10-12T10:15:55.634Z",
+      "productUrl": "https://betalist.com/startups/memoryplugin",
+      "originFeedIds": [
+        "498a696b45de80618b28713d"
+      ],
+      "originSourceIds": [
+        "1548d84a95f99fd18cc9b7d0"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://betalist.com",
+            "robotsUrl": "https://betalist.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T10:11:47.503Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 99,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://betalist.com/startups/memoryplugin",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://betalist.com/startups/memoryplugin",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "MemoryPlugin BOOSTED. Long term memory for ALL your AI tools Public startup listing; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T10:15:55.634Z"
+    },
+    {
+      "id": "0300916b911fbe76cc9315db",
+      "title": "Inside-Out AI: Rebuilding Airbnb Behind the Scenes and Across the Guest Experience · product evidence",
+      "url": "https://www.latent.space/p/airbnb",
+      "publisher": "www.latent.space",
+      "text": "Inside-Out AI: Rebuilding Airbnb Behind the Scenes and Across the Guest Experience Subscribe Sign in Inside-Out AI: Rebuilding Airbnb Behind the Scenes and Across the Guest Experience After leading Meta’s Llama models, Ahmad Al-Dahle is now transforming Airbnb with AI — from how its teams develop products to how it serves guests. Richard MacManus Oct 02, 2026 50 2 2 Share Prior to joining Airbnb as CTO in January, Ahmad Al-Dahle was head of generative AI at Meta and led the launch of its open source Llama models over 2023-2025. Now Al-Dahle is in charge of turning Airbnb into an “AI-native company”. What that means in practice is using AI internally to speed up product development, then using those same capabilities to transform the customer experience . We’re calling this an “inside-out AI” approach and in this article we’ll dig into the details. An example of inside-out AI: Airbnb used a custom internal tool called Everest to help accelerate the launch of a new external service. (Diagram by Latent Space) Al-Dahle spoke with Latent Space about Airbnb’s AI transformation. We began by asking him why he made the shift from building frontier models at Meta to deploying them at Airbnb . “Fundamentally, I like to chase where I believe the hard frontiers live ,” he replied, pun perhaps intended. “We kind of knew [at Meta] what the flywheel looks like, we understood how to improve the model capabilities, generation on generation.” Al-Dahle’s tweet in January on joining Airbnb from Meta The next challenge, Al-Dahle thinks, is deploying models at scale. At Airbnb, his goals are to “ push people to work differently , because these tools are transforming how you work,” and to “ take these systems and deploy them in production , in creative ways that actually add value to a core user experience.” Jumping to prototypes, code is the artifact From its launch in 2008, Airbnb has been considered a technology company operating in the hospitality industry. The company went public in 2020 and now has a market capitalization of approximately $93 billion (at time of writing). So it’s a big operation to try and make “AI-native.” Al-Dahle reeled off a few statistics to show that Airbnb is AI-pilled now: 60% of its code is now AI-authored , it has shipped nearly 80% more features and improvements year over year, and pull-request throughput for the average engineer is up about 1.6x . But how exactly has Airbnb done all this? Firstly, he said it’s about changing the organizational process for software engineering . Traditionally, you might do product requirements, then design work in Figma, then engineering implementation, and eventually production testing. In the past, these would’ve required handoffs from one team to another. But now, Airbnb has its product, design and engineering teams move directly to working with prototypes . “Breaking that time down is actually one of the biggest savings that a lot of traditional software companies have to make the leap to do,” said Al-Dahle. “And so we made that leap and it actually ended up adding a ton of tailwind to our product development process.” A byproduct of this change is that teams deal directly with code , rather than dealing with “artifacts” like a product requirements document. “We moved away from excessive artifact generation to the code being the artifact that we reason upon, and prototypes ,” he said. AI resolves roughly half of support tickets Al-Dahle told us that customer support was the first user-facing area that it introduced AI into. He described it as “the hardest problem to deploy,” because “the stakes and the consequences of a mistake are really high.” Roughly half of Airbnb’s support tickets are now resolved purely by AI , said Al-Dahle (this is in line with the company’s Q2 results , which put the figure at nearly 45%). The key to this, he says, is using synthetic data to thoroughly test the system before taking it to production. “We start with: build a model, build the agent, and begin to generate a battery of synthetic data before you ever go into production.” He notes that although agents handle about half of customer support queries, they are careful about what requires human assistance — with safety issues, for example. “So while we solve 50% of the tickets, we’re actually deliberate about the tickets we don’t choose to solve yet [with agents].” Everest, Airbnb’s AI context graph Two Airbnb Services projects you may not be familiar with yet are grocery deliveries and airport pickups (the grocery service has just been expanded to more cities ). Both were launched earlier this year, thanks in part to Airbnb’s inside-out AI approach. It was an internal organizational context graph called Everest that helped bring these products to market quickly. Al-Dahle said that Everest uses technologies such as LLMs, embeddings and AI-based retrieval to build and query the graph. He explained that the grocery delivery and airport pickup services are “kind of similar services — API integrations with partner services [external companies] that integrated onto our platform.” Airbnb’s new grocery delivery service The grocery service was built first, and learnings from it were made available in Everest. That enabled the airport pickup team to do its project much more quickly. In its Q2 earnings report , Airbnb states that “groceries took eight months, nine months and airport pickups took about six weeks to develop.” Additionally, using Everest means its developers don’t necessarily need specialist knowledge to work on projects. “Because of this context graph that exists across the codebase,” said Al-Dahle, “we’re able to have generalists work across very specialist parts of the code .” Both of the new services were highlighted by CEO Brian Chesky at Airbnb’s 2026 Summer Release in May. Brian Chesky @ bchesky Introducing the Airbnb 2026 Summer Release 7:14 PM · May 20, 2026 · 782K Views 327 Replies · 172 Reposts · 3.51K Likes Choosing which models to use and customizing open models To give more of a sense of Airbnb’s internal AI usage, Al-Dahle described it as a “multi-model company” and says it deploys “a lot of different models” in its production systems. Airbnb uses a mixture of frontier and open models, but conducts most of its own post-training and reinforcement learning on open models . Al-Dahle said the company deploys at least 10 customized models for production use cases. It also evaluates models along a Pareto frontier for cost, performance and latency , selecting a different trade-off for each application. “We run evals specifically for each use case,” he explained. “So if we’re using a model for search, we have a set of search queries that are sampled from production that we measure against. If we’re doing customer support, we also sample all the production queries that we care most about — including edge cases.” “We try to use the right tool for the right job,” he added. For example, coding can tolerate more latency but mistakes are expensive. So they prefer to use the strongest available frontier model for coding tasks. “It makes sense to use the absolute most frontier coding model , because for every defect that a model produces, it could easily cost us a lot more.” On the other hand, search is used at scale by Airbnb’s users and so is very latency-sensitive. So for that job, they prefer smaller specialized models. Al-Dahle claimed that smaller, post-trained models sometimes out-perform frontier models. “For narrow use cases, we’ve been able to take really small, really nimble models that are very fast and cheap and post-train them beyond the frontier.” Async agents: the next big shift Like other AI-native companies , Airbnb has created an internal agent — in its case called AirChat . “We have our own internal agent that we call AirChat, which [includes] basically all the necessary MCP organizational context,” said Al-Dahle. But Airbnb is also starting to implement what Al-Dahle sees as the next development in agents: asynchronous agents running in containers and activated by events. “A lot of our teams are starting to basically automate their on-calls,” he explained. “So if something trips, if a Grafana limit or whatever monitoring system that you use trips, agents spin up to then triage and run your on-call , your initial on-call.” A human engineer can review a PR proposed by the agent, while the agent may close the incident itself if it determines that the alert was flaky. This process reminds us of how open source projects like Vercel’s AI SDK, Astro, Flue and tldraw use software factories — teams of agents — to apply fixes and features . Al-Dahle sees this approach eventually being used across its entire marketplace platform; for example to monitor fraud, “trust violations,” marketplace quality, and software defects. “My vision is large amounts of asynchronous agents that are helping automate and manage the marketplace.” Maintaining the craft of software engineering Al-Dahle believes that organizing teams around outcomes rather than features is key to becoming an AI-native company. “If you’re a company that organizes by feature development, you’re going to struggle in the age of AI,” he said. “If you’re a company that organizes by objectives and missions and results that you’re trying to achieve, you’re going to be fine.” That said, there’s one thing Al-Dahle worries about during this AI-native transition: whether junior engineers are developing their craft and judgement , given that AI is able to do so much work for them now. Senior engineers, he says, have acquired their judgement through many years of shipping systems and operating software in production — including the mistakes they made along the way. Part of the solution, Al-Dahle says, is ensuring all of their engineers can explain the work AI does for them. “One of the things I’m pushing very strongly is that every engineer must be able to explain, even if an AI generated the PR, must be able to explain what they built. I think if that fundamental premise remains true, then more junior engineers will learn the craft of interface design and architecture, and the importance of testing and unit testing and integration tests. So we’re trying to keep our craft really high.” 50 2 2 Share Previous Next Discussion about this post Comments Restacks Soshi Nemoto 5d Edited Good read. Agree with the point about organizing by objectives and results rather than features. What struck me is that we are starting to talk about AI agents the same way. With software the first question was always \"what features?\"; with agents it is more often \"what is it for and what did it deliver?\" Feels like the agent's work is being measured the way we measure a person's. Reply Share ash 7d Really good article. I found this quiet interesting as going through similar things in my org. I would say however that I would have liked to see a bit more details overall, like what type of tools were used for the internal context graph, and whether they're using frontier models for the async agents. Reply Share Top Latest Discussions No posts Ready for more? Subscribe © 2026 Latent.Space · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-12T10:15:56.731Z",
+      "discoveredAt": "Fri, 02 Oct 2026 14:04:49 GMT",
+      "originFeedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ],
+      "productUrl": "https://www.latent.space/p/airbnb",
+      "originSourceIds": [
+        "0300916b911fbe76cc9315db"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T10:11:47.188Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/p/airbnb",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/p/airbnb",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Prior to joining Airbnb as CTO in January, Ahmad Al-Dahle was head of generative AI at Meta and led the launch of its open source Llama models over 2023-2025. Now Al-Dahle is in charge of turning Airbnb into an “AI-native company”. What that means in practice is using AI internally to speed up product development, then using those same capabilities to transform the customer experience . We’re calling this an “inside-out AI” approach and in this article we’ll dig into the details. An example of inside-out AI: Airbnb used a custom internal tool called Everest to help accelerate the launch of a new external service. (Diagram by Latent Space) Al-Dahle spoke with Latent Space about Airbnb’s AI transformation. We began by asking him why he made the shift from building frontier models at Meta to deploying them at Airbnb . “Fundamentally, I like to chase where I believe the hard frontiers live ,” he replied, pun perhaps intended. “We kind of knew [at Meta] what the flywheel looks like, we understood how to improve the model capabilities, generation on generation.” Al-Dahle’s tweet in January on joining Airbnb from Meta The next challenge, Al-Dahle thinks, is deploying models at scale. At A",
+      "verifiedAt": "2026-10-12T10:15:56.731Z"
+    },
+    {
+      "id": "7e720aeda47f0a423402183f",
+      "title": "Deno is joining Cloudflare · product evidence",
+      "url": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "publisher": "simonwillison.net",
+      "text": "Deno is joining Cloudflare Simon Willison’s Weblog Newsletter Sponsored by: Pomerium &mdash; Static OAuth scopes won't stop AI agent breakouts. Upgrade to Pomerium's agentic access management trusted by NVIDIA and OpenAI 9th October 2026 - Link Blog Deno is joining Cloudflare ( via ) The Deno team released the first version of celld back in August - their open source implementation of the Durable Objects pattern from Cloudflare Workers. Today, Cloudflare are acquiring Deno outright, with the goal of building on celld to \"make workerd self-hosting a first-class supported way to build and run apps using the Workers programming model\" (see the Cloudflare blog .) The bad news is that Deno itself will not be maintained by Cloudflare beyond the next year: We will support the Deno runtime for another year with monthly releases containing bug fixes and security updates. After that year we will end our development of the Deno runtime. Deno will remain open source, and we welcome others who want to continue its development. Deno (and Node.js) creator Ryan Dahl explained that decision in a comment on Hacker News: It's a joint decision and I agree with it. I'm most invested in its success and have put the most work into it - and I no longer think it's where I can do the most important work. There are some good ideas in Deno and it's well engineered - but it ultimately is not solving big problems. It has been sucked into the gravity well of node compatibility, which forces it to behave exactly as Node does. Why reimplement Node? It works. Marginal performance or UX or security benefits are not enough. I'm interested in building powerful new abstractions. celld has been working remarkably well, depending only on object storage for coordination and persistence. It is not just a slightly different API to interact with the file system or network - it's an entirely new model for server development. My favorite feature of Deno has long been the permissions system, where you can run a Deno script and specify exactly which files and folders it can read and write to, and which network hosts it can access. Node.js has a similar permissions model these days, added in Node v20.0.0 in April 2023 and declared stable in Node v22.13.0 in January 2025. They don't yet support allow-listing specific network hosts though - networking is either on or off. Posted 9th October 2026 at 10:48 pm Recent articles A new feature for my blog, built using my voice - 9th October 2026 Claude Haiku 5.5 - 7th October 2026 We're going to need default hard budget caps on pretty much everything - 3rd October 2026 OpenAI DevDay 2026 live blog - 29th September 2026 This is a link post by Simon Willison, posted on 9th October 2026 . cloudfront 5 javascript 766 nodejs 69 ryan-dahl 9 sandboxing 57 deno 28 Monthly briefing Sponsor me for $10/month and get a curated email digest of the month's most important LLM developments. Pay me to send you less! Sponsor & subscribe Disclosures Colophon &copy; 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 2025 2026",
+      "fetchedAt": "2026-10-12T10:15:56.822Z",
+      "discoveredAt": "2026-10-09T22:48:37+00:00",
+      "originFeedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ],
+      "productUrl": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "originSourceIds": [
+        "7e720aeda47f0a423402183f"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T10:11:47.195Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T10:11:47.195Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [
+          {
+            "url": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+            "status": 301,
+            "next": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "<p><strong><a href=\"https://deno.com/blog/cloudflare\">Deno is joining Cloudflare</a></strong></p> The Deno team released the first version of <a href=\"https://github.com/denoland/celld\">celld</a> back in August - their open source implementation of the Durable Objects pattern from Cloudflare Workers.</p> <p>Today, Cloudflare are acquiring Deno outright, with the goal of building on <code>celld</code> to \"make workerd self-hosting a first-class supported way to build and run apps using the Workers programming model\" (see <a href=\"https://blog.cloudflare.com/deno-joins-cloudflare/\">the Cloudflare blog</a>.)</p> <p>The bad news is that Deno itself will not be maintained by Cloudflare beyond the next year:</p> <blockquote> <p>We will support the <a href=\"https://github.com/denoland/deno\">Deno runtime</a> for another year with monthly releases containing bug fixes and security updates. After that year we will end our development of the Deno runtime. Deno will remain open source, and we welcome others who want to continue its development.</p> </blockquote> <p>Deno (and Node.js) creator Ryan Dahl explained that decision in <a href=\"https://news.ycombinator.com/item?id=50019911#50023277\">a",
+      "verifiedAt": "2026-10-12T10:15:56.822Z"
+    },
+    {
+      "id": "40a9913f55937995275810d8",
+      "title": "Fable 5.1 · product evidence",
+      "url": "https://www.bensbites.com/p/fable-51",
+      "publisher": "www.bensbites.com",
+      "text": "Fable 5.1 - Ben's Bites Subscribe Sign in Fable 5.1 where do my tokens go? Sep 03, 2026 73 Share Hey folks, I said Tuesday I was going on a bit of a tear with building stuff… I scraped the OpenRouter website to build this, which constantly updates bentossell.com/realtime-tokens</a> \",\"username\":\"bentossell\",\"name\":\"Ben Tossell\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1878086921726943233/vOx1kjeP_normal.jpg\",\"date\":\"2026-09-01T15:02:11.000Z\",\"photos\":[{\"img_url\":\"https://substackcdn.com/image/fetch/$s_!hkk6!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2094802922680852480.jpg\",\"link_url\":\"https://t.co/Q4yWWcJEdH\"}],\"quoted_tweet\":{},\"reply_count\":10,\"retweet_count\":7,\"like_count\":64,\"impression_count\":13889,\"expanded_url\":null,\"video_url\":\"https://video.twimg.com/amplify_video/2094802922680852480/vid/avc1/1170x720/RUNetSHmJHPTYSY4.mp4\",\"video_preview_media_key\":\"13_2094802922680852480\",\"belowTheFold\":false}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Ben Tossell @bentossell 53.5 million tokens per second are moving through OpenRouter’s top 20 apps right now. I scraped their public usage pages to show which models are being used bentossell.com/realtime-tokens 3:02 PM · Sep 1, 2026 · 13.9K Views 10 Replies · 7 Reposts · 64 Likes I also got an email that remove.bg - which removes backgrounds on images - is being shut down in December after being acquired by Canva, so I one-shot my own version with Fable 5.1 Ben Tossell @bentossell remove .bg is being sunset so fable made me my own (you can clone it) 3:31 PM · Sep 2, 2026 · 32.7K Views 30 Replies · 5 Reposts · 309 Likes People have pointed out you can do this natively on a Mac (I didn’t actually know that), but so what? remove.bg was a business, it got acquired for money, people use these kinds of things. I’m not building these for anyone specifically or to make money with them. I just like building. I like new things. I’m doing it because I can. It’s fun. And I learn a lot about how to build by actually doing it. Building any idea helps you have more ideas. In tomorrow’s session breakdown, I’ll be going through (at least) one build - where I scraped 105 million rows of public government information to see where they spend our tax money… I used 2 billion tokens 😳. With all my builds I’ll make them open-source so you can clone/remix them. This is what my agent usage is like btw: @nazzari</span> \",\"username\":\"bentossell\",\"name\":\"Ben Tossell\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1878086921726943233/vOx1kjeP_normal.jpg\",\"date\":\"2026-09-01T22:54:03.000Z\",\"photos\":[{\"img_url\":\"https://pbs.substack.com/media/HRKoO6bW4AAz7a6.jpg\",\"link_url\":\"https://t.co/ETTyV69HNb\"}],\"quoted_tweet\":{},\"reply_count\":6,\"retweet_count\":1,\"like_count\":17,\"impression_count\":2324,\"expanded_url\":null,\"video_url\":null,\"video_preview_media_key\":null,\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Ben Tossell @bentossell @nazzari 10:54 PM · Sep 1, 2026 · 2.32K Views 6 Replies · 1 Repost · 17 Likes This is also a tool I’ll be adding to my site that you can clone 😊 stay tuned tomorrow… p.s. I’m out of my Fable weekly usage already 🥹 Ben’s Bites is brought to you by Adobe If you already use ChatGPT to brainstorm, research and solve problems, you can now take those conversations further with the Adobe plugin in ChatGPT. Just describe the outcome you want & the plugin draws on 70+ Adobe tools to create and edit images, videos, designs and documents. Get started today. Headlines Claude Fable 5.1 is out . It is the best model you can use right now. Instead of a clear quality jump, I found it faster and easier to talk to in my use over the last 24 hours. It has a new system prompt that bans it from repeating song lyrics, copyrighted logos and tweaks its response style. Things people are building with Fable: Mario & GTA-style games 3D rendering of a house (using code in Blender) Anthropic also reduced the cost of caching inputs for Fable by 75%, making API usage about 25% cheaper than before. OpenAI’s Astra is also coming soon (rumours say today). Two more new models: Gemini 3.8 Flash and Muse Spark 1.3 . Both are impressive, have the same base price and similar performance. But the question is: who can subsidise more tokens? Flash 3.8 comes at 50% off for the rest of the year. Meta is giving a 90% cut, in exchange for your data. Another new model from Meta - Muse Voice transcribe looks really insane for transcription use cases. I wish it were open-source. Gemini models can now decide which bits of a video are worth watching . Instead of sampling a video at a fixed frame rate, it searches across frames, audio and transcripts for the moments it needs. 88% fewer tokens used, up to 66% cheaper and a minor bump in accuracy on benchmarks. Inworld built Realtime TTS-2 for the next wave of consumer apps. That takes three things: text-based voice design, sub-100ms latency at P99, and one voice identity across 200+ languages. Learn how to give your AI apps a voice . * Share Ben's Bites My feed Claude Code/Cowork can now use your computer in the background, while you do your other work, just like Codex. Previously, Claude would take over the computer, making it unusable for you while Claude worked. WebMCP adds tools (that agents can use) for any action you can take on a website (vs having to use the UI). Vercel’s agent-browser now uses WebMCP if present and then falls back to clicking around on the UI. Generate up to a minute of 1440p video from 1-6 images, with pixel-perfect camera control. A prompt to stop Claude from speaking in Parseltongue . A 0.8B model beat GPT-5.6 Sol xhigh on one narrow task for Shopify. They open-sourced the infra to build these small models - Tangle . Did you think AI was terrible at design? Not anymore . Burp - AI editor in your browser for videos & motion design. Diiverge - An infinite, point-and-click adventure game. Click anything in a picture and create a story. Stanford scrapped 85% of its software course for agents, taste and real OSS PRs GitHub is exploring multiplayer planning with agents . zoah - design and code together. (waitlist only) Draw a shape, move it while recording, and tldraw flash turns it into an animation . 32 weird little creative tools . Subscribe Afters Bella @nazzari if you are non-technical and your github looks like this I want to be friends and I want to hire you 3:22 PM · Sep 1, 2026 · 159K Views 628 Replies · 18 Reposts · 1.21K Likes Sam Altman @sama Over the summer, we have been sprinting on safety priorities; it's more important than ever for capabilities and safeguards to advance together. We have more to do but have made a lot of progress. We are also going to be launching our next model soon. There is an obvious tension… 11:45 PM · Sep 1, 2026 · 1.45M Views 1.21K Replies · 764 Reposts · 12.4K Likes bb @get_bb_app New plugin alert: watch all of your agents work inside of a pixel art office! 7:24 PM · Sep 2, 2026 · 3.31K Views 4 Replies · 5 Reposts · 63 Likes @saranormous</span>), founder of Conviction.\\n\\nSarah's been early to many of this generation's defining companies, and is constantly ranked at the top of the managers LPs most want to invest with.\\n\\nShe knows the small group of 250 people pushing the …\",\"username\":\"patrick_oshag\",\"name\":\"Patrick OShaughnessy\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1964115465065664512/ZFQbGjIU_normal.jpg\",\"date\":\"2026-09-01T14:00:00.000Z\",\"photos\":[{\"img_url\":\"https://substackcdn.com/image/fetch/$s_!bvAS!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2094500067646345216.jpg\",\"link_url\":\"https://t.co/eyIJQ7iWDq\"}],\"quoted_tweet\":{},\"reply_count\":36,\"retweet_count\":53,\"like_count\":617,\"impression_count\":496562,\"expanded_url\":null,\"video_url\":\"https://video.twimg.com/amplify_video/2094500067646345216/vid/avc1/1280x720/7ErpPF42rcpLT1a_.mp4\",\"video_preview_media_key\":\"13_2094500067646345216\",\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Patrick OShaughnessy @patrick_oshag My second conversation with Sarah Guo ( @saranormous ), founder of Conviction. Sarah's been early to many of this generation's defining companies, and is constantly ranked at the top of the managers LPs most want to invest with. She knows the small group of 250 people pushing the … 2:00 PM · Sep 1, 2026 · 497K Views 36 Replies · 53 Reposts · 617 Likes @paper</span> + fable make variant sheets \",\"username\":\"Shpigford\",\"name\":\"Josh Pigford\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/2010446308608290816/w6Bt7Vgc_normal.jpg\",\"date\":\"2026-09-02T12:30:00.000Z\",\"photos\":[{\"img_url\":\"https://pbs.substack.com/media/HRNi4lAXQAEKHQE.jpg\",\"link_url\":\"https://t.co/9RpXIycosA\"}],\"quoted_tweet\":{},\"reply_count\":11,\"retweet_count\":1,\"like_count\":81,\"impression_count\":6436,\"expanded_url\":null,\"video_url\":null,\"video_preview_media_key\":null,\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Josh Pigford @Shpigford loving have @paper + fable make variant sheets 12:30 PM · Sep 2, 2026 · 6.44K Views 11 Replies · 1 Repost · 81 Likes neal.fun/unusual-suspec…</a> \",\"username\":\"nealagarwal\",\"name\":\"Neal Agarwal\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1658146153609699328/tHIP8VQA_normal.jpg\",\"date\":\"2026-09-02T15:00:42.000Z\",\"photos\":[{\"img_url\":\"https://substackcdn.com/image/fetch/$s_!oJkn!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2095158472916819968.jpg\",\"link_url\":\"https://t.co/grXhFT6ZUp\"}],\"quoted_tweet\":{},\"reply_count\":165,\"retweet_count\":1316,\"like_count\":21417,\"impression_count\":1432959,\"expanded_url\":null,\"video_url\":\"https://video.twimg.com/amplify_video/2095158472916819968/vid/avc1/1080x720/q2zKCzRxepuAXZCT.mp4\",\"video_preview_media_key\":\"13_2095158472916819968\",\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Neal Agarwal @nealagarwal Made a sketch artist game where you have to draw the character based on witness testimony neal.fun/unusual-suspec… 3:00 PM · Sep 2, 2026 · 1.43M Views 165 Replies · 1.32K Reposts · 21.4K Likes Find me on X , Linkedin , or YouTube Read about me and Ben’s Bites 📷 thumbnail via @keshavatearth * sponsors who make this newsletter possible :) Wanna partner with us for the next quarter? Email us at shanice@bensbites.com or k@bensbites.com Ben's Bites is a reader-supported publication. To receive new posts and support my work, consider becoming a free or paid subscriber. Subscribe 73 Share Previous Next Discussion about this post Comments Restacks Top Latest Discussions No posts Ready for more? Subscribe © 2026 Ben's Bites Ltd · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-12T10:15:56.997Z",
+      "discoveredAt": "Thu, 03 Sep 2026 13:03:56 GMT",
+      "originFeedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ],
+      "productUrl": "https://www.bensbites.com/p/fable-51",
+      "originSourceIds": [
+        "40a9913f55937995275810d8"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.bensbites.com",
+            "robotsUrl": "https://www.bensbites.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T10:11:47.315Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 595,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.bensbites.com/p/fable-51",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.bensbites.com/p/fable-51",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Hey folks, I said Tuesday I was going on a bit of a tear with building stuff… I scraped the OpenRouter website to build this, which constantly updates bentossell.com/realtime-tokens \",\"username\":\"bentossell\",\"name\":\"Ben Tossell\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/1878086921726943233/vOx1kjeP_normal.jpg\",\"date\":\"2026-09-01T15:02:11.000Z\",\"photos\":[{\"img_url\":\"https://substackcdn.com/image/fetch/$s_!hkk6!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2094802922680852480.jpg\",\"link_url\":\"https://t.co/Q4yWWcJEdH\"}],\"quoted_tweet\":{},\"reply_count\":10,\"retweet_count\":7,\"like_count\":64,\"impression_count\":13889,\"expanded_url\":null,\"video_url\":\"https://video.twimg.com/amplify_video/2094802922680852480/vid/avc1/1170x720/RUNetSHmJHPTYSY4.mp4\",\"video_preview_media_key\":\"13_2094802922680852480\",\"belowTheFold\":false}\" data-component-name=\"Twitter2ToDOM\"> I also got an email that remove.bg - which removes backgrounds on images - is being shut down in December after being acquired by Canva, so I one-shot my own version wit",
+      "verifiedAt": "2026-10-12T10:15:56.997Z"
+    },
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VendIQ – AI agent for vendor follow-ups and ops automation ( rishailabs.com ) 1 point by rishailabs 3 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T10:15:57.157Z",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "discoveredAt": "2026-10-09T09:33:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T10:15:57.157Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T10:15:57.216Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T10:15:57.216Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-12T10:15:57.503Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T10:15:57.503Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T10:15:57.563Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T10:15:57.563Z"
+    },
+    {
+      "id": "bc697cf9bffa88f2d189de58",
+      "title": "Mohamad5577/invoice-agent",
+      "url": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by Mohamad5577 Spaces Mohamad5577 / invoice-agent Like 0 Running App Files Files Community Refreshing",
+      "fetchedAt": "2026-10-12T10:15:57.609Z",
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "discoveredAt": "2026-09-28T11:15:46.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T10:15:57.609Z"
+    }
+  ],
+  "health": [
+    {
+      "url": "https://vendiq.rishailabs.com",
+      "status": "failed",
+      "message": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "url": "https://www.doozadesk.com",
+      "status": "failed",
+      "message": "Public source returned HTTP 404."
+    },
+    {
+      "url": "https://www.lumro.co",
+      "status": "failed",
+      "message": "getaddrinfo ENOTFOUND www.lumro.co"
+    }
+  ],
+  "deterministicResults": [],
+  "noveltyContractVersion": 1,
+  "noveltyContext": {
+    "version": 1,
+    "windowDays": 14,
+    "asOf": "2026-10-12T10:15:52.628Z",
+    "cutoff": "2026-09-28T10:15:52.628Z",
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "title": "A small AI support inbox loop",
+        "productUrl": "https://auxx.ai",
+        "promise": "Triage one kind of ticket, draft a sourced reply, and leave approval to a person.",
+        "whatItIs": "Auxx describes a support CRM where an agent can read tickets, retrieve relevant customer records and knowledge, draft replies, and update records. A beginner version could handle one narrow ticket type using a small sample inbox and a written procedure, rather than rebuilding the full CRM.",
+        "whoPays": "Hypothesis: a small online shop or support team with repetitive questions might pay for less routine inbox work. The supplied page does not establish paying customers or demand.",
+        "loop": [
+          "A new test ticket or scheduled run starts the workflow.",
+          "The system finds the relevant customer record and approved policy text.",
+          "A written procedure routes the ticket to one supported category.",
+          "The model drafts a reply using retrieved material and marks uncertain cases.",
+          "A person reviews the draft and decides whether to send it.",
+          "The workflow records the category and outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:auxx.ai",
+            "brand:auxx"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers",
+            "support_staff"
+          ]
+        }
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "title": "A human checked support inbox loop",
+        "productUrl": "https://n8n.io/ai",
+        "promise": "Sort incoming questions and prepare reply drafts for a person to review.",
+        "whatItIs": "n8n is a workflow builder that connects services and can include AI steps. A small student version could take incoming support messages, label them by topic, and prepare a draft reply for review. A workflow is a set of connected steps that runs when an event occurs.",
+        "whoPays": "Hypothesis: a small online shop with a recurring support inbox might pay for setup or maintenance; the supplied page does not establish demand for this student service.",
+        "loop": [
+          "A new test support email triggers the workflow.",
+          "Rules remove obvious junk and pass the message to a classifier.",
+          "The classifier assigns a topic and priority.",
+          "The workflow retrieves an approved answer note and drafts a reply.",
+          "A person reviews and sends the draft, correcting uncertain cases.",
+          "The workflow records the outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:n8n.io"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers"
+          ]
+        }
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "title": "Track GPU prices and specs in one view",
+        "productUrl": "https://flopper.io/",
+        "promise": "Collect a small set of public GPU prices and compare them with published specifications.",
+        "whatItIs": "Flopper is a GPU hardware explorer. Its maker says it combines GPU specifications, workload estimates, and prices from dozens of providers. The maker also notes that reliable quotes for some large systems are difficult to obtain, so listings are not complete procurement quotes. A student version could track a few consumer GPUs and public provider pages, showing dated prices beside basic specifications. Small AI teams or hardware shoppers might pay for such a comparison, but this customer and willingness to pay are hypotheses. The automated part is checking selected pages and recording changes. A person should confirm the exact model, configuration, availability, and final price before relyin",
+        "whoPays": "Hypothesis: small AI teams or individuals comparing hardware may pay for a focused price and specification tracker; the source establishes no customers or revenue.",
+        "loop": [
+          "Keep a manually reviewed list of GPU models and public provider pages.",
+          "Fetch the selected pages on a schedule and extract visible price and configuration text.",
+          "Store each observation with its URL and timestamp.",
+          "Compare new observations with prior ones and flag changes or missing prices.",
+          "Show a comparison with the published hardware specifications.",
+          "Have a person verify configuration, availability, and quote details before purchase."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:flopper.io",
+            "brand:flopper"
+          ],
+          "workflowKeys": [],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "title": "Catch failures in production AI agents",
+        "productUrl": "https://github.com/tessaryai/tessary",
+        "promise": "Turn agent traces into grouped findings and a human-reviewed root-cause report.",
+        "whatItIs": "Tessary is an open-source tool for teams running AI agents in production. Its repository describes receiving traces (records of an agent’s operations), checking them with classifiers, grouping related findings into cases, and investigating likely causes using trace evidence and, when connected, repository code. A small student project could accept test traces, apply a few simple checks, group matching alerts, and prepare a report for a developer. Teams operating AI agents are a plausible customer, but the sources do not establish who pays. The repeating work is trace checking and case preparation; a person still needs to confirm whether a finding is a real problem and choose any fix.",
+        "whoPays": "Hypothesis: teams operating production AI agents may pay for help finding and investigating failures; the repository does not establish paying customers or revenue.",
+        "loop": [
+          "Receive an agent trace through an instrumentation endpoint.",
+          "Normalize the trace into a consistent format.",
+          "Run enabled classifiers and open findings when checks trigger.",
+          "Group related findings into a case.",
+          "Investigate the case using trace evidence and connected repository code when available.",
+          "Send the findings and explanation to a human owner, who decides whether and how to fix the system."
+        ],
+        "profile": {
+          "productKeys": [
+            "github:tessaryai/tessary",
+            "brand:tessary"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "title": "Test AI phone agents with repeatable calls",
+        "productUrl": "https://voicegremlin.com/",
+        "promise": "Run a scripted call against a phone agent and receive a reviewable pass or fail result.",
+        "whatItIs": "VoiceGremlin is described by its maker as an API for testing AI systems that answer phone calls. A user supplies a phone number and a test case, such as checking whether the agent performs a requested behavior. The service calls the agent, has the two bots converse, and uses an LLM judge—a language model asked to assess the result—to return pass or fail for a software pipeline. A small student version could run one scripted scenario against a test phone agent and save the call outcome. Teams building voice agents are a plausible customer, but the source does not establish who pays or whether customers use it. The repeated loop can run without a person placing each test call, while a human st",
+        "whoPays": "Hypothesis: companies building AI phone agents may pay to check that their agents keep meeting defined behaviors; the source provides no customer or revenue evidence.",
+        "loop": [
+          "An operator defines a test case and supplies a test phone number.",
+          "The API places a call to the phone agent being checked.",
+          "The test bot speaks with the phone agent about the scenario.",
+          "An LLM judge compares the conversation with the requested behavior.",
+          "The system returns a pass or fail result to a software pipeline.",
+          "A developer reviews unclear failures and updates the test or phone agent."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:voicegremlin.com",
+            "brand:voicegremlin"
+          ],
+          "workflowKeys": [
+            "voice_agent_tests"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "title": "Check whether docs work for AI agents",
+        "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+        "promise": "Scan a documentation URL for common access and format problems, then review a scorecard.",
+        "whatItIs": "Velu's agent-friendly documentation checker is described as scoring a documentation URL against the open Agent-Friendly Documentation Spec, using the spec's reference implementation called afdocs. The Show HN post names issues the spec is concerned with: pages rendered only in the browser, missing llms.txt or Markdown versions, soft 404 pages, and pages too large for an agent's context window. A beginner could build a small scheduled checker for one documentation site that records the score and lists detectable problems. Documentation teams are a plausible customer, but the source does not establish who pays. This is an audit and reporting loop, not an automatic documentation repair service.",
+        "whoPays": "Hypothesis: teams maintaining developer documentation may pay for recurring checks; the source does not establish customers or revenue.",
+        "loop": [
+          "Read a configured documentation site URL.",
+          "Check pages for supported agent access and format signals.",
+          "Run the reference checker and save its score.",
+          "Compare the result with the previous scan.",
+          "Send a report when the score or detected issues change.",
+          "A documentation owner verifies findings and chooses any fix."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:veludocs.com",
+            "brand:veludocs"
+          ],
+          "workflowKeys": [
+            "agent_documentation_audit",
+            "website_change_monitor"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "title": "Route visual feedback to a coding agent",
+        "productUrl": "https://circleit.ai",
+        "promise": "Turn a marked-up staging page into an agent task with a reviewable status trail.",
+        "whatItIs": "CircleIt is described as a Chrome extension plus a Claude Code or Codex plugin. A teammate can mark an area on a page, explain the requested change, and send the screenshot, comment, and page metadata to a running coding agent. The source says the system matches the page address to a repository and reports status back in the sender's browser. A small student version could capture one staging page and open a proposed task for a developer's agent. Small product teams are a plausible customer, but that is a hypothesis. The loop handles intake and handoff; a human still needs to judge whether the requested change is correct and review code before release.",
+        "whoPays": "Hypothesis: small software teams that collect frequent website feedback may pay; no customer or payment evidence is given.",
+        "loop": [
+          "A teammate opens a staging page and marks a visible issue.",
+          "Capture the screenshot, comment, page address, and relevant metadata.",
+          "Match the page address to a configured repository.",
+          "Send the feedback to the team's running coding agent after any required approval.",
+          "Show the sender the agent's status and response.",
+          "A developer reviews code changes and decides whether to merge."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:circleit.ai",
+            "brand:circleit"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      }
+    ],
+    "postsSha256": "a5770461692548e187a4d8626edd357648b7b4f9d5c76210db0557d2700effd6"
+  },
+  "assessmentContractVersion": 1,
+  "primaryFetchDiagnostics": [
+    {
+      "productUrl": "https://n8n.io/workflows/7639-talk-to-your-google-sheets-using-chatgpt-5",
+      "requestedAt": "2026-10-12T10:15:57.609Z",
+      "status": "fetched",
+      "sourceId": "d8897b3d1b9980fb9cfbbe66",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://azurade.com/developers",
+      "requestedAt": "2026-10-12T10:15:57.610Z",
+      "status": "fetched",
+      "sourceId": "344ba058f725a2efb47b036d",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.ycombinator.com/companies/pomerado",
+      "requestedAt": "2026-10-12T10:15:57.610Z",
+      "status": "fetched",
+      "sourceId": "debd09bbbba9d1efc4e8f5c1",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://betalist.com/startups/memoryplugin",
+      "requestedAt": "2026-10-12T10:15:57.610Z",
+      "status": "fetched",
+      "sourceId": "1548d84a95f99fd18cc9b7d0",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.latent.space/p/airbnb",
+      "requestedAt": "2026-10-12T10:15:57.610Z",
+      "status": "fetched",
+      "sourceId": "0300916b911fbe76cc9315db",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "requestedAt": "2026-10-12T10:15:57.610Z",
+      "status": "fetched",
+      "sourceId": "7e720aeda47f0a423402183f",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.bensbites.com/p/fable-51",
+      "requestedAt": "2026-10-12T10:15:57.610Z",
+      "status": "fetched",
+      "sourceId": "40a9913f55937995275810d8",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://vendiq.rishailabs.com",
+      "requestedAt": "2026-10-12T10:15:57.610Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "productUrl": "https://www.doozadesk.com",
+      "requestedAt": "2026-10-12T10:15:57.868Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "Public source returned HTTP 404."
+    },
+    {
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "requestedAt": "2026-10-12T10:15:59.636Z",
+      "status": "fetched",
+      "sourceId": "1dd03891d1e36345e3123c1a",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.lumro.co",
+      "requestedAt": "2026-10-12T10:15:59.636Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "getaddrinfo ENOTFOUND www.lumro.co"
+    },
+    {
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "requestedAt": "2026-10-12T10:15:59.670Z",
+      "status": "fetched",
+      "sourceId": "bc697cf9bffa88f2d189de58",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    }
+  ],
+  "considerationEvidence": [
+    {
+      "title": "Ask questions about a Google Sheet",
+      "productUrl": "https://n8n.io/workflows/7639-talk-to-your-google-sheets-using-chatgpt-5",
+      "sourceIds": [
+        "d8897b3d1b9980fb9cfbbe66"
+      ],
+      "availableSourceIds": [
+        "d8897b3d1b9980fb9cfbbe66"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Use one API for image and video generation",
+      "productUrl": "https://azurade.com/developers",
+      "sourceIds": [
+        "344ba058f725a2efb47b036d",
+        "70d35dfa28480c1f3ffc1add"
+      ],
+      "availableSourceIds": [
+        "344ba058f725a2efb47b036d",
+        "70d35dfa28480c1f3ffc1add"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Turn websites into agent integrations",
+      "productUrl": "https://www.ycombinator.com/companies/pomerado",
+      "sourceIds": [
+        "debd09bbbba9d1efc4e8f5c1"
+      ],
+      "availableSourceIds": [
+        "debd09bbbba9d1efc4e8f5c1"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Share long-term memory across AI tools",
+      "productUrl": "https://betalist.com/startups/memoryplugin",
+      "sourceIds": [
+        "1548d84a95f99fd18cc9b7d0"
+      ],
+      "availableSourceIds": [
+        "1548d84a95f99fd18cc9b7d0"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Build internal AI workflows at Airbnb",
+      "productUrl": "https://www.latent.space/p/airbnb",
+      "sourceIds": [
+        "0300916b911fbe76cc9315db"
+      ],
+      "availableSourceIds": [
+        "0300916b911fbe76cc9315db"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Deno and celld server platform",
+      "productUrl": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "sourceIds": [
+        "7e720aeda47f0a423402183f"
+      ],
+      "availableSourceIds": [
+        "7e720aeda47f0a423402183f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Cloneable background-removal demo",
+      "productUrl": "https://www.bensbites.com/p/fable-51",
+      "sourceIds": [
+        "40a9913f55937995275810d8"
+      ],
+      "availableSourceIds": [
+        "40a9913f55937995275810d8"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Vendor follow-up operations agent",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dooza Desk support inbox",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice agent demo",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Lumro support and sales agents",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Second invoice agent demo",
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "sourceIds": [
+        "bc697cf9bffa88f2d189de58"
+      ],
+      "availableSourceIds": [
+        "bc697cf9bffa88f2d189de58"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
