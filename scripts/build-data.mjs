@@ -3,7 +3,7 @@ import path from 'node:path';
 import { ROOT, records, readJSON, writeJSON, safeError,hash } from '../lib/storage.mjs';
 import { INITIAL_RULES, schedule, previousLocalTime } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
-import { effectiveUsageRecords } from '../lib/usage.mjs';
+import { effectiveUsageRecords,effectiveModelExecution } from '../lib/usage.mjs';
 import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof.mjs';
 import { publicationSlotStatus } from '../lib/slot-status.mjs';
 import { writeSiteArtifacts,publicPostURL } from '../lib/site-artifacts.mjs';
@@ -42,7 +42,7 @@ try{
   const [allPosts,rawRuns,research,rawVersions,rejections,publications,measurements,rawUsageRecords,scheduler,reservations,outcomes]=await Promise.all(['posts','runs','research','versions','rejections','publications','measurements','usage','scheduler','slot-reservations','slot-outcomes'].map(records));
   const usageRecords=effectiveUsageRecords(rawUsageRecords);
   const usageByRun=new Map(usageRecords.map(record=>[record.runId,record]));
-  const runs=rawRuns.map(run=>({...run,usage:usageByRun.get(run.id)||run.usage}));
+  const runs=rawRuns.map(run=>{const usage=usageByRun.get(run.id)||run.usage;return {...run,modelExecuted:effectiveModelExecution(run,usage),usage};});
   const versions=rawVersions.map(version=>({...version,usage:usageByRun.get(version.id)||version.usage}));
   const posts=allPosts.filter(verifyPublishedPost).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
   if(posts.length!==allPosts.length)throw new Error('A committed post failed checker provenance or content-integrity validation.');

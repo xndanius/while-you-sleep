@@ -90,6 +90,7 @@ jobs:
       source_scan_head_sha: ${{ steps.scan.outputs.source_scan_head_sha }}
       learning_selection_sha256: ${{ steps.scan.outputs.learning_selection_sha256 }}
       model_completed: ${{ steps.model.outcome == 'success' }}
+      model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       privacy_safe: ${{ steps.privacy.outputs.safe }}
       scan_privacy_safe: ${{ steps.scan_privacy.outputs.safe }}
     env:
@@ -193,6 +194,7 @@ jobs:
       unverified_code: ${{ steps.accept.outputs.unverified_code }}
       unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
       model_completed: ${{ steps.model.outcome == 'success' }}
+      model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
       context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
     steps:
@@ -273,6 +275,7 @@ jobs:
   repair:
     outputs:
       model_completed: ${{ steps.model.outcome == 'success' }}
+      model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       privacy_safe: ${{ steps.privacy.outputs.safe }}
     needs: [gate, writer, checker]
     if: needs.checker.outputs.verified == 'true' && needs.checker.outputs.repair == 'true' && needs.checker.outputs.privacy_safe == 'true'
@@ -355,6 +358,7 @@ jobs:
       unverified_code: ${{ steps.accept.outputs.unverified_code }}
       unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
       model_completed: ${{ steps.model.outcome == 'success' }}
+      model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
       context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
     steps:

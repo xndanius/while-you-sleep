@@ -4,6 +4,7 @@ import {appendFile} from 'node:fs/promises';
 import {validateLoopScheduling} from '../lib/loop-schedule.mjs';
 import {settleLoop} from './settle-loop.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
+import {deriveModelExecution} from '../lib/usage.mjs';
 const runId=process.argv[2];
 let scheduling;
 if(process.env.LOOP_SCHEDULING_SHA)scheduling=validateLoopScheduling(await readJSON(dataPath('scheduling',runId)),{runId,expectedSha256:process.env.LOOP_SCHEDULING_SHA,eventName:process.env.GITHUB_EVENT_NAME});
@@ -29,7 +30,9 @@ if(child.status!==0){
   const failure={stage:privacyHeld?'privacy':lastCheck?'check':'publication',code:privacyHeld?'content_privacy_unverified':lastCheck?.outputs?.unverified_code||'publication_pipeline_incomplete',reason};
   const terminal=scheduling?.assessmentContractVersion===1;
   const finishedAt=new Date().toISOString();
-  await writeJSON(dataPath('runs',runId),{id:runId,type:'loop',status:terminal?published.length?'completed_with_unverified':'no_post_unverified':published.length?'completed_with_failure':'failed_closed',assessmentOutcome:terminal?'unverified':'incomplete',operationalFailures:[failure],...(terminal?{unverifiedAssessment:unverifiedAssessment(scheduling,failure,finishedAt)}:{}),startedAt:scheduling?.requestedAt||research?.createdAt||finishedAt,finishedAt,eventName:scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown',...(scheduling?{scheduling}:{}),modelExecuted:!!research,published,rejected:[{reason}],steps:[{stage:'check',status:terminal?'unverified':'failed',message:reason}],githubRunUrl:scheduling?.githubRunUrl||research?.githubRunUrl||null,engine:'official openai/codex-action',usage},{immutable:true});
+  const githubRunUrl=scheduling?.githubRunUrl||research?.githubRunUrl||null;
+  const modelExecuted=deriveModelExecution({runId,githubRunUrl,jobResults:process.env.MODEL_JOB_RESULTS,usage});
+  await writeJSON(dataPath('runs',runId),{id:runId,type:'loop',status:terminal?published.length?'completed_with_unverified':'no_post_unverified':published.length?'completed_with_failure':'failed_closed',assessmentOutcome:terminal?'unverified':'incomplete',operationalFailures:[failure],...(terminal?{unverifiedAssessment:unverifiedAssessment(scheduling,failure,finishedAt)}:{}),startedAt:scheduling?.requestedAt||research?.createdAt||finishedAt,finishedAt,eventName:scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown',...(scheduling?{scheduling}:{}),modelExecuted,published,rejected:[{reason}],steps:[{stage:'check',status:terminal?'unverified':'failed',message:reason}],githubRunUrl,engine:'official openai/codex-action',usage},{immutable:true});
  }
  console.log(scheduling?.assessmentContractVersion===1?'No post for this hour: the verification did not complete. No independent approval was created.':'Loop recorded its rejection/failure; its reserved slot remains eligible for a bounded retry.');
 }

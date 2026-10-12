@@ -4,8 +4,10 @@ import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import {spawnSync} from 'node:child_process';
+import {EventEmitter} from 'node:events';
+import {PassThrough} from 'node:stream';
 import {ROOT,sha256,stableJSON} from '../lib/storage.mjs';
-import {V5_BASELINE,trustedSafetyClockCaller,trustedAutomaticLoop,v5RunEligibility,safetyDecision,rollbackV5} from '../lib/v5-safety.mjs';
+import {V5_BASELINE,safetyApiGet,trustedSafetyClockCaller,trustedAutomaticLoop,v5RunEligibility,safetyDecision,rollbackV5} from '../lib/v5-safety.mjs';
 import {verifyV5Safety} from '../scripts/verify-v5-safety.mjs';
 const config={schema:1,id:'v5-2026-10-12',state:'active',activatedAt:'2026-10-12T12:00:00.000Z',baselineCommit:V5_BASELINE,morningCodePath:'data/maintenance/v5-morning-code.json',morningSourcesPath:'data/maintenance/v5-morning-sources.json'};
 function sample(id='123'){
@@ -63,6 +65,21 @@ test('safety workflow has no model or dispatch authority and shares the record l
 });
 const clockEnv={GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_EVENT_NAME:'workflow_dispatch',GITHUB_REF:'refs/heads/main',GITHUB_RUN_ID:'99',GITHUB_RUN_ATTEMPT:'1',GITHUB_ACTOR:'github-actions[bot]',GITHUB_TRIGGERING_ACTOR:'github-actions[bot]'};
 function clockCaller(){return {id:99,repository:{full_name:'xndanius/while-you-sleep'},head_repository:{full_name:'xndanius/while-you-sleep',fork:false},head_branch:'main',path:'.github/workflows/clock.yml',event:'workflow_dispatch',run_attempt:1,actor:{login:'github-actions[bot]'},triggering_actor:{login:'github-actions[bot]'},html_url:'https://github.com/xndanius/while-you-sleep/actions/runs/99'};}
+function fakeSafetyProcess(value,{code=0,idle=false,onSpawn=()=>{},onKill=()=>{}}={}){return (command,args,options)=>{onSpawn(command,args,options);const child=new EventEmitter();child.stdout=new PassThrough();child.stderr=new PassThrough();child.kill=()=>onKill();if(!idle)queueMicrotask(()=>{child.stdout.write(typeof value==='string'?value:JSON.stringify(value));child.stderr.write('Private transport diagnostics must stay hidden.');child.emit('close',code);});return child;};}
+test('real safety transport accepts exactly bounded main loop listing and numeric run reads using GET only',async()=>{
+ const query=`repos/xndanius/while-you-sleep/actions/workflows/loop.yml/runs?per_page=100&branch=main&created=${encodeURIComponent('>='+config.activatedAt)}`,calls=[];
+ const options={env:{GH_TOKEN:'not-a-real-test-token',GH_DEBUG:'api'},spawnProcess:fakeSafetyProcess({total_count:0,workflow_runs:[]},{onSpawn:(command,args,options)=>calls.push({command,args,options})})};
+ assert.equal(JSON.parse(await safetyApiGet(query,options)).total_count,0);await safetyApiGet('repos/xndanius/while-you-sleep/actions/runs/99',options);assert.equal(calls.length,2);
+ for(const call of calls){assert.equal(call.command,'gh');assert.equal(call.args[call.args.indexOf('--method')+1],'GET');assert.equal(call.args[call.args.indexOf('--hostname')+1],'github.com');assert.equal(call.options.env.GH_PROMPT_DISABLED,'1');assert.equal(call.options.env.GH_DEBUG,undefined);assert.ok(!call.args.includes('not-a-real-test-token'));assert.ok(!call.args.includes('--input'));}
+ for(const endpoint of [query.replace('branch=main','branch=other'),query.replace('per_page=100','per_page=101'),query+'&page=2',query.replace('xndanius/while-you-sleep','other/repo'),query.replace('loop.yml','improve.yml'),query.replace(/created=.*/, 'created=invalid'),'repos/xndanius/while-you-sleep/actions/runs/99/cancel','https://api.github.com/'+query])assert.throws(()=>safetyApiGet(endpoint,options),/Unsupported safety/);
+ assert.equal(calls.length,2,'untrusted paths never launch gh');
+});
+test('safety transport bounds response bytes and time without exposing subprocess errors',async()=>{
+ const endpoint='repos/xndanius/while-you-sleep/actions/runs/99';let killed=0;
+ await assert.rejects(safetyApiGet(endpoint,{maxBytes:16,spawnProcess:fakeSafetyProcess('x'.repeat(32),{onKill:()=>killed++})}),/size limit/);assert.equal(killed,1);
+ await assert.rejects(safetyApiGet(endpoint,{timeoutMs:5,spawnProcess:fakeSafetyProcess(null,{idle:true,onKill:()=>killed++})}),/timed out/);assert.equal(killed,2);
+ await assert.rejects(safetyApiGet(endpoint,{spawnProcess:fakeSafetyProcess(null,{code:1})}),/^Error: Safety API request unavailable\.$/);
+});
 test('reusable safety accepts only the authoritative current bot clock and matching first-attempt environment',()=>{
  assert.equal(trustedSafetyClockCaller(clockCaller(),clockEnv),true);
  for(const change of [v=>v.run.id=100,v=>v.run.path='.github/workflows/loop.yml',v=>v.run.repository.full_name='other/repo',v=>v.run.head_repository.full_name='other/repo',v=>v.run.head_repository.fork=true,v=>v.run.head_branch='other',v=>v.run.run_attempt=2,v=>v.run.event='schedule',v=>v.run.actor.login='xndanius',v=>v.run.triggering_actor.login='xndanius',v=>v.run.html_url+='0',v=>v.env.GITHUB_RUN_ATTEMPT='2',v=>v.env.GITHUB_TRIGGERING_ACTOR='xndanius',v=>v.env.GITHUB_RUN_ID='100',v=>v.env.GITHUB_REF='refs/heads/other']){const v={run:clockCaller(),env:{...clockEnv}};change(v);assert.equal(trustedSafetyClockCaller(v.run,v.env),false);}
@@ -73,6 +90,7 @@ test('incomplete reusable safety proves the caller before listing any loop and n
  const result=await verifyV5Safety(input);assert.equal(result.state,'awaiting_first_two');assert.equal(result.committed,false);assert.equal(result.rollback,false);assert.equal(calls.length,2);assert.equal(calls[0],'repos/xndanius/while-you-sleep/actions/runs/99');assert.match(calls[1],/actions\/workflows\/loop.yml\/runs/);
  for(const change of [v=>v.path='.github/workflows/loop.yml',v=>v.head_repository.fork=true,v=>v.run_attempt=2,v=>v.triggering_actor.login='xndanius']){calls.length=0;const forged=clockCaller();change(forged);await assert.rejects(verifyV5Safety({...input,apiGet:async endpoint=>{calls.push(endpoint);return forged;}}),/authoritative/);assert.equal(calls.length,1);}
  calls.length=0;await assert.rejects(verifyV5Safety({...input,env:{...clockEnv,GITHUB_ACTOR:'xndanius'}}),/hosted clock caller/);assert.equal(calls.length,0);await assert.rejects(fs.stat(path.join(root,'data/v5-safety/results')),{code:'ENOENT'});
+ const actualPaths=[];const realTransport=await verifyV5Safety({...input,apiGet:(endpoint,options)=>safetyApiGet(endpoint,{...options,spawnProcess:fakeSafetyProcess(endpoint.endsWith('/runs/99')?clockCaller():{total_count:0,workflow_runs:[]},{onSpawn:(_command,args)=>actualPaths.push(args.at(-1))})})});assert.equal(realTransport.state,'awaiting_first_two');assert.equal(realTransport.committed,false);assert.equal(actualPaths.length,2);assert.match(actualPaths[1],/\?per_page=100&branch=main&created=%3E%3D2026/);
 });
 test('Pages checks retain the morning commit required by the actual rollback inventory test',async()=>{
  const workflow=await fs.readFile(new URL('../.github/workflows/pages.yml',import.meta.url),'utf8');

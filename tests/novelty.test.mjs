@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {noveltyMatches,noveltyReasons,recentPublishedPosts,createNoveltyContext,noveltyAssessmentReasons,noveltyApprovalReasons,noveltyContextReasons} from '../lib/novelty.mjs';
+import {noveltyProfile,noveltyMatches,noveltyReasons,recentPublishedPosts,createNoveltyContext,noveltyAssessmentReasons,noveltyApprovalReasons,noveltyContextReasons} from '../lib/novelty.mjs';
 import {deterministicCheck,verifyPublishedPost,checkApproval} from '../lib/validation.mjs';
 import {candidateIdentity,sha256,stableJSON} from '../lib/storage.mjs';
+import {privateArtifactReasons} from '../lib/privacy.mjs';
 
 const now=new Date('2026-10-12T07:30:00Z'),publishedAt='2026-10-11T18:00:00Z';
 const idea=(changes={})=>({id:'prior-1',title:'Triage a support inbox',productUrl:'https://alpha-kit.ai',promise:'Categorize incoming customer questions and draft replies.',whatItIs:'A small helpdesk loop.',whoPays:'Hypothesis: an online shop with recurring questions.',loop:['Read new support tickets.','Classify each message by topic.','Draft a reply for approval.'],publishedAt,...changes});
@@ -14,6 +15,17 @@ test('the actual historical support posts are duplicates in both directions and 
  const b=JSON.parse(await readFile(new URL('../data/posts/98b4f6281cc3de4ecdfa95f6.json',import.meta.url),'utf8'));
  for(const [post,prior] of [[a,b],[b,a]]){const match=dimensions(post,[prior]);assert.equal(match.has('product'),false);assert.equal(match.has('workflow'),true);assert.equal(match.has('customer'),true);}
  assert.equal(verifyPublishedPost(a),true);assert.equal(verifyPublishedPost(b),true);
+});
+test('real historical novelty context is privacy-safe and retains the exact semantic signals and frozen hash',async()=>{
+ const posts=await Promise.all(['e20bcacf021524725d3fc275','98b4f6281cc3de4ecdfa95f6'].map(id=>readFile(new URL(`../data/posts/${id}.json`,import.meta.url),'utf8').then(JSON.parse)));
+ const memory=createNoveltyContext(posts,{now});assert.equal(memory.version,1);assert.equal(memory.windowDays,14);assert.equal(memory.posts.length,2);assert.deepEqual(privateArtifactReasons(memory),[]);assert.equal(memory.postsSha256,sha256(stableJSON(memory.posts)));
+ for(const entry of memory.posts){assert.equal(Object.hasOwn(entry,'profile'),false);assert.deepEqual(entry.noveltySignals,noveltyProfile(posts.find(post=>post.id===entry.id)));}
+ const context={noveltyContractVersion:1,noveltyContext:memory};assert.deepEqual(noveltyContextReasons(context),[]);memory.posts[0].noveltySignals.workflowKeys.push('changed-after-freezing');assert.ok(noveltyContextReasons(context).length);
+});
+test('legacy frozen profile-named signals remain readable without changing their bytes or weakening bindings',()=>{
+ const {context,check}=noveltyFixture();for(const post of context.noveltyContext.posts){post.profile=post.noveltySignals;delete post.noveltySignals;}context.noveltyContext.postsSha256=sha256(stableJSON(context.noveltyContext.posts));check.noveltyCheck.recentPostsSha256=context.noveltyContext.postsSha256;
+ const before=stableJSON(context);assert.deepEqual(noveltyContextReasons(context),[]);assert.deepEqual(noveltyApprovalReasons(check,context),[]);assert.equal(stableJSON(context),before);assert.ok(privateArtifactReasons(context).length);
+ const stale=structuredClone(check);stale.noveltyCheck.recentPostsSha256='0'.repeat(64);assert.ok(noveltyAssessmentReasons(stale,context).length);
 });
 test('a same specific customer is a duplicate even when products and workflows differ',()=>{
  const a=idea({title:'Review low stock',promise:'Find stock shortages.',loop:['Read item counts.','Flag products below stock limits.','Prepare a replenishment plan.']});

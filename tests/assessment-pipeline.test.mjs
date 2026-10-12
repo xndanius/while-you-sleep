@@ -17,6 +17,19 @@ const now='2026-10-11T12:20:00.000Z',runId='loop-123-1';
 const rules='# Rules\n<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n';
 const text='The product reads uploaded receipts and extracts structured fields for review. It exports parsed fields as CSV. Human approval remains required before records are sent.';
 const jobs={writer:{result:'success'},checker:{result:'success'},repair:{result:'skipped'},final_check:{result:'skipped'}};
+
+test('a privacy hold before model access truthfully records no model execution',async t=>{
+ const result=await execute(t,{missing:'research',mutate:f=>{f.jobs={writer:{result:'success',outputs:{scan_privacy_safe:'false',model_attempted:'false',model_completed:'false'}},checker:{result:'skipped'},repair:{result:'skipped'},final_check:{result:'skipped'}};}});
+ assert.equal(result.execution.status,0,result.execution.stderr);const run=await result.record('runs');assert.equal(run.modelExecuted,false);assert.equal(run.assessmentOutcome,'unverified');assert.deepEqual(run.published,[]);assert.equal(run.operationalFailures[0].code,'content_privacy_unverified');
+});
+test('privacy withholding after actual model attempts does not erase their execution or create an approval',async t=>{
+ const result=await execute(t,{missing:'research',mutate:f=>{f.jobs={writer:{result:'success',outputs:{model_attempted:'true',model_completed:'true'}},checker:{result:'success',outputs:{model_attempted:'true',model_completed:'true',privacy_safe:'false'}},repair:{result:'skipped'},final_check:{result:'skipped'}};}});
+ assert.equal(result.execution.status,0,result.execution.stderr);const run=await result.record('runs');assert.equal(run.modelExecuted,true);assert.equal(run.assessmentOutcome,'unverified');assert.deepEqual(run.published,[]);assert.equal(run.checkedAssessment,undefined);assert.equal(run.operationalFailures[0].code,'content_privacy_unverified');
+});
+test('inconclusive failed model outcomes remain unknown even if research exists',async t=>{
+ const result=await execute(t,{missing:'checks',mutate:f=>{f.jobs={writer:{result:'failure'},checker:{result:'skipped'},repair:{result:'skipped'},final_check:{result:'skipped'}};}});
+ assert.equal(result.execution.status,0,result.execution.stderr);const run=await result.record('runs');assert.equal(run.modelExecuted,null);assert.equal(run.assessmentOutcome,'unverified');assert.deepEqual(run.published,[]);assert.equal(run.checkedAssessment,undefined);
+});
 function bind(fixture){
  fixture.context.draftSha256=sha256(stableJSON(fixture.draft));
  fixture.context.sourceSnapshotSha256=sha256(stableJSON(fixture.context.sources));

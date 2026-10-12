@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm, writeFile, chmod } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import { collectUsage, effectiveUsageRecords, estimateTokenCost, githubApiGet, modelJobNames, parseCodexUsage, parseModelJobResults, usageCountersComplete } from '../lib/usage.mjs';
+import { collectUsage, effectiveUsageRecords, estimateTokenCost, githubApiGet, modelJobNames, parseCodexUsage, parseModelJobResults, usageCountersComplete,deriveModelExecution,effectiveModelExecution } from '../lib/usage.mjs';
+import {sha256,stableJSON} from '../lib/storage.mjs';
 import { runCollector } from '../scripts/collect-usage.mjs';
 
 const usage={input_tokens:10000,cached_input_tokens:6000,cache_write_input_tokens:1000,output_tokens:1000,reasoning_output_tokens:100};
@@ -11,6 +12,28 @@ const start='Running: /usr/bin/sudo "-n" "/opt/codex" "exec" "--skip-git-repo-ch
 const logFor=(value=usage,extra=[])=>[start,JSON.stringify({type:'thread.started',thread_id:'test-thread'}),JSON.stringify({type:'turn.started'}),...extra,JSON.stringify({type:'turn.completed',usage:value})].map(line=>'2026-10-10T18:00:00.1234567Z '+line).join('\n');
 const context={kind:'loop',runId:'loop-123-2',repository:'owner/while-you-sleep',githubRunId:'123',attempt:2,model:'gpt-6-luna'};
 const job=(name,id,conclusion='success')=>({name,id,run_id:123,run_attempt:2,status:'completed',conclusion});
+const executionContext={...context,repository:'xndanius/while-you-sleep'},executionRun={id:context.runId,githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/123',modelExecuted:false};
+const omittedJobs=()=>Object.fromEntries(modelJobNames('loop').map(name=>[name,{result:'skipped'}]));
+async function executionUsage({observed=['writer'],unknown=[]}={}){const jobs=modelJobNames('loop').map((name,index)=>job(name,index+1,observed.includes(name)||unknown.includes(name)?'success':'skipped'));return collectUsage(executionContext,{apiGet:async endpoint=>{if(endpoint.includes('/attempts/'))return JSON.stringify({total_count:4,jobs});const id=Number(endpoint.match(/jobs\/(\d+)/)[1]),name=modelJobNames('loop')[id-1];if(unknown.includes(name))throw Error('Log unavailable.');return logFor();}});}
+
+test('model execution is true only from trusted attempted/completed outputs, false from explicit omissions, otherwise unknown',()=>{
+ const args={runId:executionRun.id,githubRunUrl:executionRun.githubRunUrl};assert.equal(deriveModelExecution({...args,jobResults:omittedJobs()}),false);
+ const held={...omittedJobs(),writer:{result:'success',outputs:{model_attempted:'false',model_completed:'false',scan_privacy_safe:'false'}}};assert.equal(deriveModelExecution({...args,jobResults:held}),false);
+ for(const outputs of [{model_attempted:'true',model_completed:'false'},{model_completed:'true'},{model_attempted:true}])assert.equal(deriveModelExecution({...args,jobResults:{...omittedJobs(),writer:{result:'failure',outputs}}}),true);
+ assert.equal(deriveModelExecution({...args,jobResults:{...omittedJobs(),writer:{result:'failure'}}}),null);assert.equal(deriveModelExecution({...args,jobResults:{...omittedJobs(),writer:{result:'success',outputs:{model_completed:'false'}}}}),null);assert.equal(deriveModelExecution({...args,jobResults:'malformed'}),null);assert.equal(deriveModelExecution({...args,jobResults:{writer:{result:'success'}}}),null);assert.equal(deriveModelExecution({...args,githubRunUrl:'https://github.com/other/repo/actions/runs/123',jobResults:{writer:{outputs:{model_completed:'true'}}}}),null);
+});
+test('exact observed usage proves execution even when privacy withheld research; partial logs do not fabricate failure',async()=>{
+ const record=await executionUsage();assert.equal(effectiveModelExecution(executionRun,record),true);assert.equal(deriveModelExecution({runId:executionRun.id,githubRunUrl:executionRun.githubRunUrl,jobResults:omittedJobs(),usage:record}),true);
+ const partial=await executionUsage({observed:['writer'],unknown:['checker']});assert.equal(partial.status,'partial');assert.equal(effectiveModelExecution(executionRun,partial),true);
+ const never=await executionUsage({observed:[]});assert.equal(effectiveModelExecution({...executionRun,modelExecuted:true},never),false);
+ const unknown=await executionUsage({observed:[],unknown:['writer']});assert.equal(effectiveModelExecution({...executionRun,modelExecuted:null},unknown),null);
+});
+test('stale, unrelated or malformed usage cannot overwrite an immutable execution flag',async()=>{
+ const record=await executionUsage();for(const mutate of [value=>value.id='loop-123-1',value=>value.runId='loop-123-1',value=>value.workflowKind='improve',value=>value.source='model_reported',value=>value.runAttempt=1,value=>value.githubRunId='456',value=>value.githubRunUrl=value.githubRunUrl.replace('xndanius','other'),value=>value.jobs[0].githubJobUrl=value.jobs[0].githubJobUrl.replace('/runs/123/','/runs/456/'),value=>value.jobs[0].inputTokens=-1,value=>value.jobs[0].cachedInputTokens=value.jobs[0].inputTokens+1,value=>value.jobs[0].name='record',value=>value.jobs.push(value.jobs[0]),value=>value.coverage.observedModelJobs=0,value=>value.status='unknown']){const changed=structuredClone(record);mutate(changed);assert.equal(effectiveModelExecution(executionRun,changed),false);assert.equal(deriveModelExecution({runId:executionRun.id,githubRunUrl:executionRun.githubRunUrl,usage:changed}),null);}
+});
+test('a reconciled execution receipt must bind the embedded immutable original exactly',async()=>{
+ const original=await executionUsage({observed:[],unknown:['writer']}),record=await executionUsage();Object.assign(record,{id:record.runId+'-reconciled',supersedes:original.id,supersedesSha256:sha256(stableJSON(original))});assert.equal(effectiveModelExecution({...executionRun,usage:original},record),true);assert.equal(effectiveModelExecution(executionRun,record),false);record.supersedesSha256='a'.repeat(64);assert.equal(effectiveModelExecution({...executionRun,usage:original},record),false);
+});
 
 test('trusted CLI framing counts real usage and ignores nested fake tool/agent events',()=>{
   const fake=JSON.stringify({type:'turn.completed',usage:{input_tokens:999999,cached_input_tokens:0,output_tokens:999999}});
