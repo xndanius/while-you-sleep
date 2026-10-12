@@ -1,0 +1,94 @@
+{
+  "runId": "loop-38194556984-1",
+  "draftSha256": "d7c9630b7b65d973fb6f46d27fc2bd402e1c1b8ccd4d3afe01dfbaf4f9bf9447",
+  "sourceSnapshotSha256": "7a74e5ee7df183aa56b5f433382164d4af422a53e04853147c5c48906e824443",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "0f1e1c9ed7c9b88df76447ab",
+      "pass": false,
+      "reasons": [
+        "Writer scores exceed the fresh evidence-supported maxima for profit (5>4), feasibility (7>6), autonomy (7>6), and evidence (7>5); the source documents a template but no customer outcomes or independent deployed-runtime evidence."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The documented workflow receives invoices sent through Telegram.",
+          "supported": true,
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "This workflow automates the processing of invoices sent via Telegram."
+        },
+        {
+          "claim": "It sends invoice files to LlamaIndex OCR for processing.",
+          "supported": true,
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "The file is uploaded to the LlamaIndex OCR API."
+        },
+        {
+          "claim": "It stores invoice header and line item data in separate Google Sheets tabs.",
+          "supported": true,
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "Each part is stored in a dedicated tab within a connected Google Sheets file"
+        },
+        {
+          "claim": "Sending structured data to SAP requires user confirmation in the documented flow.",
+          "supported": true,
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "The bot replies to the user via Telegram: \"Do you want to send the data to SAP?\""
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A published connected-app template gives a concrete starting flow, while credentials and several external services add setup work.",
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "create the following: Telegram API (set your bot token get it from BotFather) Google Sheets OpenAI"
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "A bookkeeping buyer is a hypothesis; this template page provides no evidence of demand, paying customers, or revenue.",
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "Created by Raquel Giugliano Last update Last update 8 months ago Categories Invoice Processing"
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A sheet-only prototype is plausible in two weeks, but OCR, model, Telegram, and spreadsheet setup make a 7 unsupported.",
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "The Markdown content is sent to a language model (LLM) using LangChain"
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "Receipt through extraction and logging is repeatable, but a person reviews errors and confirms any accounting submission.",
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "If the user clicks \"Yes\", the next automation path is triggered."
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "The first-party page documents a template and setup, but it does not verify independent runtime or customer outcomes.",
+          "sourceId": "0f1e1c9ed7c9b88df76447ab",
+          "evidenceQuote": "This workflow automates the processing of invoices sent via Telegram."
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The fresh first-party template source supports the described workflow, but four writer scores exceed the evidence-supported maxima.",
+    "contextSha256": "edbd72ce37847a43859bbe717e2d0cb80c4e81a3765cb2faf9e137fb898b39d0",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "d7c9630b7b65d973fb6f46d27fc2bd402e1c1b8ccd4d3afe01dfbaf4f9bf9447",
+    "sourceSnapshotSha256": "7a74e5ee7df183aa56b5f433382164d4af422a53e04853147c5c48906e824443",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
