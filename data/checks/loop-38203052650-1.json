@@ -1,0 +1,100 @@
+{
+  "runId": "loop-38203052650-1",
+  "draftSha256": "1bb8daa8b6fec976eadb3f6065f8a6b5460c607b8c10b16214eeccbbdb73deae",
+  "sourceSnapshotSha256": "fc691284c3d05ec52374f7a3a4129ce8536a42b020d3c1a618643ad619e88682",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "e217176e7f773dab20cceb18",
+      "pass": false,
+      "reasons": [
+        "The evidence score is 6, above the source-supported maximum of 5; the page documents a template and setup, but provides no independently verified usage or outcomes. The checked score mean is 5.4, below the frozen threshold of 6."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The template automatically fetches daily Loyverse sales, shifts, and receipts.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Automatically fetches daily sales, shifts, and receipts from Loyverse."
+        },
+        {
+          "claim": "The workflow calculates gross profit and net operating profit.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Calculates gross profit, net operating profit, other key metrics"
+        },
+        {
+          "claim": "The workflow appends results to Google Sheets and emails a report.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "appends the single, calculated row of daily metrics to a Google Sheet and sends an easily customizable summary report to your email."
+        },
+        {
+          "claim": "Its intended users include business owners, managers, or analysts using Loyverse.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "This template is for any business owner, manager, or analyst using Loyverse POS"
+        },
+        {
+          "claim": "Live setup requires a Loyverse integration subscription and credentials for Loyverse, Google Sheets, and email.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Requirements Loyverse Integrations Subscription Loyverse Access Token Credentials for Loyverse (Bearer Auth) Credentials for Google Sheets (OAuth2) Credentials for Email/SMTP sender"
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "A sample-data start is approachable, but the documented live setup needs a paid integration add-on, API token, and multiple service credentials.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Subscribe to \"Integrations\" Add-on in Loyverse ($9 / month) to gain API access."
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "A customer group and reporting need are identified, but willingness to pay remains a hypothesis without demand evidence.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "This template is for any business owner, manager, or analyst using Loyverse POS who needs more advanced financial reporting."
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A sample-data report is a plausible bounded two-week project; replicating the live integrations and validating accounting metrics adds setup work.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Because every business has a unique POS configuration (different POS devices, categories, and payment types), you'll need to set up a few things manually before executing the workflow."
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 7,
+          "reason": "The documented daily schedule fetches, calculates, writes, and emails; a person must configure the account and validate financial formulas.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "This workflow runs automatically on a daily schedule. It fetches all sales data and receipts from your Loyverse account"
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "The first-party page documents a functioning template and its steps, but offers no independently verified customer use or outcomes.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Save and run the workflow. After that, the column mapper will load."
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The sole proposal was checked against an available first-party workflow page and passes deterministic gates, but its evidence score exceeds the supported maximum and its checked mean is below threshold.",
+    "contextSha256": "d54a4dd223994d91e9e7817367dee21675d7d50d3d4f12b4dcef6b53a1521399",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "1bb8daa8b6fec976eadb3f6065f8a6b5460c607b8c10b16214eeccbbdb73deae",
+    "sourceSnapshotSha256": "fc691284c3d05ec52374f7a3a4129ce8536a42b020d3c1a618643ad619e88682",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}

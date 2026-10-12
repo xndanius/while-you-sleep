@@ -1,0 +1,94 @@
+{
+  "runId": "loop-38203052650-1",
+  "draftSha256": "0704c31911f216736478f056022516385ed2d1ece496cdf98d5550c5fee9a66a",
+  "sourceSnapshotSha256": "e902522eb179957dfe128b266c2c56844d3f07ca7324db9dcade236fcdba60a1",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "e217176e7f773dab20cceb18",
+      "pass": false,
+      "reasons": [
+        "Writer evidence score 7 exceeds the supported maximum of 6: the attached source is first-party template documentation and provides no concrete independently verified real-use evidence."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The n8n template automatically fetches Loyverse daily sales, shifts, and receipts.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Automatically fetches daily sales, shifts, and receipts from Loyverse."
+        },
+        {
+          "claim": "The template is intended for business owners, managers, or analysts using Loyverse POS.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "This template is for any business owner, manager, or analyst using Loyverse POS who needs more advanced financial reporting."
+        },
+        {
+          "claim": "Live setup requires a Loyverse Integrations add-on subscription and other credentials.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Subscribe to \"Integrations\" Add-on in Loyverse ($9 / month) to gain API access."
+        },
+        {
+          "claim": "The template calculates sales metrics and saves a daily row to Google Sheets before emailing a report.",
+          "supported": true,
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Calculates gross profit, net operating profit, other key metrics, saves them to a Google Sheet and sends out a daily report via email."
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "Setup guidance is described, but live use requires a paid Loyverse API add-on, credentials, and per-business configuration.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "Subscribe to \"Integrations\" Add-on in Loyverse ($9 / month) to gain API access."
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "Profit remains a hypothesis: intended users are named, but the page gives no evidence of willingness to pay or demand.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "This template is for any business owner, manager, or analyst using Loyverse POS who needs more advanced financial reporting."
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A sample-data report is a bounded student experiment; live POS access needs subscription, credentials, and configuration.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "the entire setup should only take about 15 minutes."
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 7,
+          "reason": "The bounded daily fetch, calculation, sheet update, and email loop runs on schedule; people configure and verify it.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "This workflow runs automatically on a daily schedule."
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "First-party template documentation shows a working workflow description, but no concrete independently verified user outcomes.",
+          "sourceId": "e217176e7f773dab20cceb18",
+          "evidenceQuote": "How it works / What it does This workflow runs automatically on a daily schedule."
+        }
+      ]
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The sole post is checked against fresh first-party documentation and deterministic gates; reject it because the evidence score exceeds the rubric-supported maximum.",
+    "contextSha256": "4d88ca0a01878713960944a2795f723d7d3f4a1722058bf2d0485147d3e72a42",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "draftSha256": "0704c31911f216736478f056022516385ed2d1ece496cdf98d5550c5fee9a66a",
+    "sourceSnapshotSha256": "e902522eb179957dfe128b266c2c56844d3f07ca7324db9dcade236fcdba60a1",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
