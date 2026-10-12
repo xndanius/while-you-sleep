@@ -1,0 +1,891 @@
+{
+  "runId": "loop-38241534798-1",
+  "createdAt": "2026-10-12T11:17:59.637Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "3d61daaaedf4e85498c4b7666719d98448a0f8224b7306701c20b997893f0a9d",
+  "sourceSnapshotSha256": "57b6832d625088fc183a66a52ad86912b3d6c553744eb45a712689b56c58c42f",
+  "sources": [
+    {
+      "id": "00059247e34d84ef1ea8d4e0",
+      "url": "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/README.md",
+      "title": "Alishahryar1 / free-claude-code · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-2e7d32.svg?style=for-the-badge)](https://github.com/Alishahryar1/free-claude-code/blob/main/LICENSE) [![Python 3.14](https://img.shields.io/badge/python-3.14-3776ab.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/) [![Package Manager: uv](assets/package-manager-uv.svg)](https://github.com/astral-sh/uv) [![Testing: Pytest](https://img.shields.io/badge/Testing-Pytest-ad1457.svg?style=for-the-badge)](https://github.com/Alishahryar1/free-claude-code/actions/workflows/tests.yml) [![Type Checker: Ty](https://img.shields.io/badge/Type%20Checker-ty-fdd835.svg?style=for-the-badge)](https://pypi.org/project/ty/) [![Formatter: Ruff](https://img.shields.io/badge/Formatter-ruff-bf4b00.svg?style=for-the-badge)](https://github.com/astral-sh/ruff) [![Logging: Loguru](https://img.shields.io/badge/logging-loguru-00695c.svg?style=for-the-badge)](https://github.com/Delgan/loguru) [Quick Start](#quick-start) · [Providers](#choose-a-provider) · [Clients](#connect-your-client) · [Integrations](#optional-integrations) · [Manage](#manage-your-installation) Independent open-source project. Not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic. ## What You Get - **61 ToS-friendly providers. 1.3B+ free tokens every month.** Use free, paid, subscription, and local models from one searchable UI without putting your account at risk. FCC follows provider terms and removes integrations if they stop being allowed. - **11 coding agents. One model catalog.** Run [Claude Code](https://code.claude.com/docs/en/overview), [Codex](https://github.com/openai/codex), [Pi](https://github.com/earendil-works/pi), [OpenCode](https://github.com/anomalyco/opencode), [Cline](https://github.com/cline/cline), [Hermes](https://github.com/NousResearch/hermes-agent), [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), [Grok Build](https://github.com/xai-org/grok-build), [Muse Code](https://research.meta.ai/blog/introducing-muse-code-and-muse-spark-1-2/), [Aider](https://aider.chat/), or [VS Code Chat](https://code.visualstudio.com/) with your FCC models. - **Keep coding through provider outages.** After retries are exhausted, FCC automatically tries your next configured model without making you restart the turn. This works across every client. - **Up to 90% lower token usage.** Optional [RTK](https://github.com/rtk-ai/rtk) filters common command output, and [Headroom](https://github.com/headroomlabs-ai/headroom) compresses tool results. Five FCC optimizations handle quota probes, command-prefix detection, titles, suggestions, and filepaths without calling a provider. - **Native Code sessions in your browser.** Choose a folder and run Codex in the browser with real-time and background support. Freely switch providers/models in the same session. Support for switching harnesses in the same session coming soon! - **Terminal, desktop, IDE, or phone.** Work through native launchers, [VS Code](https://code.visualstudio.com/), [Codex App](https://learn.chatgpt.com/docs/app), [JetBrains](https://www.jetbrains.com/), [Discord](https://discord.com/), or [Telegram](https://telegram.org/). - **Voice notes in. Code out.** Talk to your agent using local [Whisper](https://github.com/openai/whisper) or [NVIDIA NIM](https://docs.nvidia.com/nim/speech/latest/asr/deploy-asr-models/whisper.html) transcription. - **Agent capabilities stay intact.** Stream responses, use tools, preserve native interleaved thinking for maximum performance, send images, and route [Fable](https://www.anthropic.com/claude/fable), [Opus](https://www.anthropic.com/claude/opus), [Sonnet](https://www.anthropic.com/claude/sonnet), and [Haiku](https://www.anthropic.com/claude/haiku) independently with compatible models. Free-tier availability and limits are controlled by each provider and may change. Claude Code running with FCC. A native Codex session in FCC's browser UI. ## Quick Start ### 1. Install macOS/Linux: ```bash curl -fsSL \"https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.sh\" | sh ``` Windows PowerShell: ```powershell & ([scriptblock]::Create((irm \"https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.ps1\"))) ``` When prompted, choose at least one coding agent and optionally enable [RTK](https://github.com/rtk-ai/rtk) + [Headroom](https://github.com/headroomlabs-ai/headroom) token optimization for supported agents. You can review the installers before running them: [install.sh](scripts/install.sh) and [install.ps1](scripts/install.ps1). ### 2. Start FCC #### Windows Open **Free Claude Code** from your desktop or Start menu. #### macOS Open **Free Claude Code** from your desktop or Applications folder. #### Linux Run: ```bash fcc-server ``` FCC opens the Admin UI after starting. On Windows and macOS, use the tray or menu-bar icon to open Admin, restart, or quit. When using `fcc-server`, keep its terminal open. ### 3. Configure NVIDIA NIM 1. Create an API key at [build.nvidia.com/settings/api-keys](https://build.nvidia.com/settings/api-keys). 2. Open the Admin UI URL from the server log. 3. Open NVIDIA NIM in **Providers**, click **Add key**, paste the key, and click **Save**. 4. Leave `MODEL` on the default `nvidia_nim/nvidia/nemotron-3-super-120b-a12b`, or search the model dropdown and select another model. 5. Click **Apply** to save your model selection. To protect the local proxy with a bearer token, enable **Proxy Authentication** in Admin. ### 4. Run Your Coding Agent Claude Code: ```bash fcc-claude ``` Codex: ```bash fcc-codex ``` Pi: ```bash fcc-pi ``` OpenCode 2: ```bash fcc-opencode ``` Cline: ```bash fcc-cline ``` Hermes: ```bash fcc-hermes ``` DeepSeek Harness Web: ```bash fcc-dsh ``` Grok Build: ```bash fcc-grok ``` Muse Code: ```bash fcc-muse ``` Aider: ```bash fcc-aider ``` Select an FCC model from Claude Code's native /model picker. ## Choose A Provider 1. Open a provider link below for its key, models, or setup instructions. 2. In the Admin UI, configure the listed setting. For OpenAI / ChatGPT subscription access, use **Providers → OAuth providers** instead. 3. Search the `MODEL` dropdown and select a model. If the provider cannot list models, enter ` / ` manually. 4. Click **Apply**. Optional: add an ordered **Fallback Models** list under **Model Config**. It applies to every connected client. A failed request may reach and consume usage from more than one provider before succeeding. Provider modals support numbered API keys. Use **Add key**, remove rows, or drag their handles to reorder them. FCC uses key 1. Saving checks every key, blocks confirmed invalid keys, and shows warnings for keys it cannot verify. The same API key environment variable also accepts a JSON array: ```dotenv NVIDIA_NIM_API_KEY='[\"your-first-key\",\"your-second-key\"]' ``` For another API endpoint, open **Providers → Custom providers → Add provider**. Enter its API base URL, optional keys, and API format. Leave **Model IDs** empty to discover models automatically, or enter one upstream model ID per line. Save, then select a model in **Model Config**. Provider catalog | Provider | Admin UI setting | Example `MODEL` | | --- | --- | --- | | [NVIDIA NIM](https://build.nvidia.com/settings/api-keys) | `NVIDIA_NIM_API_KEY` | `nvidia_nim/nvidia/nemotron-3-super-120b-a12b` | | [OpenRouter](https://openrouter.ai/keys) | `OPENROUTER_API_KEY` | `open_router/openrouter/free` | | [Groq](https://console.groq.com/keys) | `GROQ_API_KEY` | `groq/llama-3.3-70b-versatile` | | [ClinePass](https://docs.cline.bot/getting-started/clinepass) | `CLINE_API_KEY` | `cline_pass/cline-pass/kimi-k3` | | [OpenAI / ChatGPT](https://learn.chatgpt.com/docs/auth) | Connect ChatGPT in the Admin UI | `openai/ ` | | [OpenAI API](https://platform.openai.com/api-keys) | `OPENAI_API_KEY` | `openai_api/gpt-5.6-sol` | | [GitHub Copilot](https://docs.github.com/en/copilot/how-tos/copilot-sdk/auth/authenticate) | Connect GitHub Copilot in the Admin UI | `github_copilot/ ` | | [xAI (Grok)](https://console.x.ai/team/default/api-keys) | `XAI_API_KEY` | `xai/grok-4.5` | | [Alibaba Cloud](https://www.alibabacloud.com/help/en/model-studio/get-api-key) | `ALIBABA_CLOUD_API_KEY` | `alibaba_cloud/ ` | | [QwenCloud Token Plan](https://home.qwencloud.com/api-keys) | `QWENCLOUD_API_KEY` | `qwencloud/qwen3.7-plus` | | [QwenCloud Coding Plan](https://home.qwencloud.com/api-keys) | `QWENCLOUD_CODING_API_KEY` | `qwencloud_coding/qwen3.7-plus` | | [Together AI](https://api.together.ai/settings/api-keys) | `TOGETHER_API_KEY` | `together/zai-org/GLM-5.2` | | [DeepInfra](https://deepinfra.com/dash/api_keys) | `DEEPINFRA_API_KEY` | `deepinfra/deepseek-ai/DeepSeek-V4-Flash` | | [SiliconFlow](https://cloud.siliconflow.com/account/ak) | `SILICONFLOW_API_KEY` | `siliconflow/Qwen/Qwen3-32B` | | [Nebius Token Factory](https://tokenfactory.nebius.com/project/api-keys) | `NEBIUS_API_KEY` | `nebius/Qwen/Qwen3-30B-A3B` | | [Chutes](https://chutes.ai/docs/getting-started/authentication) | `CHUTES_API_KEY` | `chutes/Qwen/Qwen3-32B-TEE` | | [Featherless AI](https://featherless.ai/account/api-keys) | `FEATHERLESS_API_KEY` | `featherless/Qwen/Qwen3-32B` | | [Agnes AI](https://agnes-ai.com/) | `AGNES_API_KEY` | `agnes/agnes-2.0-flash` | | [ZenMux](https://zenmux.ai/platform/pay-as-you-go) | `ZENMUX_API_KEY` | `zenmux/deepseek/deepseek-v4-flash-free` | | [W&B Inference](https://wandb.ai/settings) | `WANDB_API_KEY` | `wandb/openai/gpt-oss-20b` | | [Anthropic](https://platform.claude.com/settings/keys) | `ANTHROPIC_API_KEY` | `anthropic/ ` | | [Azure OpenAI](https://learn.microsoft.com/azure/foundry/openai/how-to/chatgpt) | `AZURE_OPENAI_API_KEY` and `AZURE_OPENAI_BASE_URL` | `azure_openai/ ` | | [Google AI Studio (Gemini)](https://aistudio.google.com/apikey) | `GEMINI_API_KEY` | `gemini/models/gemini-3.1-flash-lite` | | [Google Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/start/openai) | `VERTEX_PROJECT_ID` + ADC | `vertex/google/gemini-3.5-flash` | | [DeepSeek](https://platform.deepseek.com/api_keys) | `DEEPSEEK_API_KEY` | `deepseek/deepseek-chat` | | [Mistral La Plateforme](https://console.mistral.ai/) | `MISTRAL_API_KEY` | `mistral/devstral-small-latest` | | [Mistral Codestral](https://console.mistral.ai/) | `CODESTRAL_API_KEY` | `mistral_codestral/codestral-latest` | | [OpenCode Zen](https://opencode.ai/auth) | `OPENCODE_API_KEY` | `opencode_zen/gpt-5.3-codex` | | [OpenCode Go](https://opencode.ai/auth) | `OPENCODE_API_KEY` | `opencode_go/minimax-m2.7` | | [Vercel AI Gateway](https://vercel.com/docs/ai-gateway/models-and-providers) | `AI_GATEWAY_API_KEY` | `vercel/openai/gpt-5.5` | | [Amazon Bedrock](https://console.aws.amazon.com/bedrock/) | `AWS_BEARER_TOKEN_BEDROCK` | `bedrock/openai.gpt-oss-120b` | | [Hugging Face Inference Providers](https://huggingface.co/settings/tokens) | `HUGGINGFACE_API_KEY` | `huggingface/Qwen/Qwen3-Coder-480B-A35B-Instruct:fastest` | | [Cohere](https://dashboard.cohere.com/api-keys) | `COHERE_API_KEY` | `cohere/command-a-plus-05-2026` | | [Wafer](https://wafer.ai/) | `WAFER_API_KEY` | `wafer/DeepSeek-V4-Pro` | | [Kimi API](https://platform.moonshot.ai/console/api-keys) | `KIMI_API_KEY` | `kimi/kimi-k2.5` | | [Kimi Code](https://www.kimi.com/code/console) | `KIMI_CODE_API_KEY` | `kimi_code/k3` | | [MiniMax](https://platform.minimax.io/user-center/basic-information/interface-key) | `MINIMAX_API_KEY` | `minimax/MiniMax-M3` | | [Cerebras Inference](https://cloud.cerebras.ai/) | `CEREBRAS_API_KEY` | `cerebras/gpt-oss-120b` | | [SambaNova](https://cloud.sambanova.ai/apis) | `SAMBANOVA_API_KEY` | `sambanova/Meta-Llama-3.3-70B-Instruct` | | [Kilo.ai](https://kilo.ai) | `KILO_API_KEY` | `kilo/kilo-auto/free` | | [Fireworks AI](https://fireworks.ai/account/api-keys) | `FIREWORKS_API_KEY` | `fireworks/accounts/fireworks/models/llama-v3p3-70b-instruct` | | [Novita AI](https://novita.ai/settings/key-management) | `NOVITA_API_KEY` | `novita/deepseek/deepseek-v4-flash-0731` | | [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) | `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` | `cloudflare/@cf/moonshotai/kimi-k2.6` | | [Z.ai Coding Plan](https://z.ai/manage-apikey/apikey-list) | `ZAI_API_KEY` | `zai/glm-5.2` | | [Z.ai API (pay as you go)](https://z.ai/manage-apikey/apikey-list) | `ZAI_API_KEY` | `zai_api/glm-4.7-flash` | | [TokenRouter](https://www.tokenrouter.com/) | `TOKENROUTER_API_KEY` | `tokenrouter/moonshotai/kimi-k3-free` | | [NaraRoute](https://router.bynara.id/) | `NARAROUTE_API_KEY` | `nararoute/kimi-k3-free` | | [Poolside AI](https://platform.poolside.ai/) | `POOLSIDE_API_KEY` | `poolside/poolside/laguna-s-2.1` | | [LLM7.io](https://dash.llm7.io/) | `LLM7_API_KEY` | `llm7/default` | | [Scaleway](https://console.scaleway.com/iam/api-keys) | `SCW_SECRET_KEY` | `scaleway/deepseek/deepseek-v4-flash` | | [Lightning AI](https://lightning.ai/) | `LIGHTNING_API_KEY` | `lightning/lightning-ai/Qwen3.8-27B` | | [Experiential Labs](https://platform.experientiallabs.ai/) | `EXPLABS_API_KEY` | `experiential/union-alpha` | | [Cheaper Inference](https://cheaperinference.com/signup) | `CHEAPER_INFERENCE_API_KEY` | `cheaperinference/gpt-5.4-mini` | | [OrcaRouter](https://www.orcarouter.ai/) | `ORCAROUTER_API_KEY` | `orcarouter/deepseek/deepseek-v4-flash-free` | | [Atlas Cloud](https://console.atlascloud.ai/api-keys) | `ATLASCLOUD_API_KEY` | `atlascloud/deepseek-ai/deepseek-v4-flash` | | [xKiro](https://xkiro.com/) | `XKIRO_API_KEY` | `xkiro/qwen/qwen3.7-flash:free` | | [Opper](https://platform.opper.ai/) | `OPPER_API_KEY` | `opper/claude-sonnet-4-6` | | [Ollama Cloud](https://ollama.com/settings/keys) | `OLLAMA_API_KEY` | `ollama_cloud/qwen3-coder:480b` | | [LM Studio](https://lmstudio.ai/) | `LM_STUDIO_BASE_URL` | `lmstudio/ ` | | [llama.cpp](https://github.com/ggml-org/llama.cpp) | `LLAMACPP_BASE_URL` | `llamacpp/ ` | | [Ollama](https://ollama.com/) | `OLLAMA_BASE_URL` | `ollama/ ` | Provider-specific setup - OpenAI / ChatGPT uses your ChatGPT subscription rather than an API key. Connect from **Providers → OAuth providers → OpenAI / ChatGPT → Connect** in the Admin UI and finish signing in through your browser. Restart an already-running agent after connecting. - Anthropic uses a separately billed API key. Add it under **Providers → Cloud providers → Anthropic → Configure**, then choose a discovered model. Multi-workspace keys also require `ANTHROPIC_WORKSPACE_ID`. Messages requests use Anthropic's native tools and the client's thinking controls. FCC local web tools and prompt optimizations apply to other routes. Native requests can fall back only to other Anthropic models. Anthropic tool access and charges apply. - OpenAI API uses a separate Platform API key. Enter it under **Providers → Cloud providers → OpenAI API → Configure**. The model list may include IDs that cannot handle coding requests. Choose a text-generation model. - GitHub Copilot uses your signed-in GitHub account and subscription. Install [Copilot CLI 1.0.83](https://github.com/github/copilot-cli/releases/tag/v1.0.83) on PATH, then choose **Providers → OAuth providers → GitHub Copilot → Connect**. Finish signing in, then select a `github_copilot/ ` from the model picker. Available models and quotas depend on your subscription and organization policies. Restart an already-running agent after connecting. - Azure OpenAI uses the deployment names from your resource. Set `AZURE_OPENAI_BASE_URL` to its complete v1 endpoint, such as `https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1/`, and select a deployment that supports Chat Completions. Enter the deployment name as a custom model slug if it does not appear in the model dropdown. - Mistral Codestral uses a separate key from Mistral La Plateforme. - Kimi Code subscription keys use `kimi_code/`. Kimi API credit keys use `kimi/`. Kimi Code plans are for personal interactive coding-agent use under [Kimi's community guidelines](https://www.kimi.com/code/docs/en/kimi-code/community-guidelines.html). - Alibaba Cloud uses a Model Studio pay-as-you-go key and defaults to Singapore. For another region or workspace, set `ALIBABA_CLOUD_BASE_URL` to its [OpenAI-compatible endpoint](https://www.alibabacloud.com/help/en/model-studio/base-url) ending in `/compatible-mode/v1`. The key and endpoint must use the same region. - QwenCloud Coding Plan keys use `qwencloud_coding/`. QwenCloud Token Plan keys use `qwencloud/`. The keys and endpoints are not interchangeable. Coding Plan is for local, personal, interactive coding-agent use under the [Coding Plan terms](https://www.alibabacloud.com/help/en/model-studio/coding-plan). - OpenCode Zen and OpenCode Go share `OPENCODE_API_KEY` but use the explicit `opencode_zen/` and `opencode_go/` model prefixes. - For Amazon Bedrock, set `BEDROCK_BASE_URL` to the URL for the same region as the API key and select one of the listed models. - Vertex AI uses Google Application Default Credentials instead of an API key. Locally, run `gcloud auth application-default login` once. Service-account files and attached service accounts also work. Set `VERTEX_PROJECT_ID`, and optionally change `VERTEX_LOCATION` from its `global` default. - Cloudflare requires both its API token and account ID. - For Ollama Cloud, use the exact model IDs shown in the model picker. Local Ollama uses the separate `ollama/` prefix. - Prefer tool-capable models for coding agents. Local models also need enough context for the agent's system prompt and tool definitions. Local provider setup ### LM Studio Start LM Studio's local server, load a tool-capable model, and use the model identifier shown by LM Studio with the `lmstudio/` prefix. The default URL is `http://localhost:1234/v1`. ### llama.cpp Start `llama-server` with its OpenAI-compatible Chat Completions API and enough context for the model. Use the local model ID with the `llamacpp/` prefix. `LLAMACPP_",
+      "fetchedAt": "2026-10-12T11:17:52.436Z",
+      "productUrl": "https://github.com/Alishahryar1/free-claude-code",
+      "originSourceIds": [
+        "9d67ce648f6a891927c40000"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T11:16:31.805Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T11:17:52.436Z"
+    },
+    {
+      "id": "9d67ce648f6a891927c40000",
+      "title": "Alishahryar1 / free-claude-code",
+      "url": "https://github.com/Alishahryar1/free-claude-code",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - Alishahryar1/free-claude-code: Use Claude Code, Codex, VSCode, Pi, and OpenCode (and 6 other harnesses) for free (1.3B+ free tokens) from your terminal, app, IDE, or phone, and now from the browser with native browser sessions (multi-harness + multi-model) like OpenClaw (voice supported + ToS friendly) · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} Alishahryar1 free-claude-code Repository navigation Code Issues 225 ( 225 ) Pull requests 75 ( 75 ) Discussions Actions Projects Security and quality Insights More items free-claude-code Public Notifications You must be signed in to change notification settings Fork 9.3k ( 9.3k ) Star 58.2k ( 58.2k ) You must be signed in to star a repository About Use Claude Code, Codex, VSCode, Pi, and OpenCode (and 6 other harnesses) for free (1.3B+ free tokens) from your terminal, app, IDE, or phone, and now from the browser with native browser sessions (multi-harness + multi-model) like OpenClaw (voice supported + ToS friendly) Resources Readme License Contributing Contributing Activity Stars 58.2k stars Watchers 397 watching Forks 9.3k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 1,188 Commits 1,188 Commits Folders and files Name Name Last commit message Last commit date .github .github assets assets e2e e2e scripts scripts smoke smoke src/ free_claude_code src/ free_claude_code tests tests .gitattributes .gitattributes .gitignore .gitignore CONTRIBUTING.md CONTRIBUTING.md LICENSE LICENSE README.md README.md pyproject.toml pyproject.toml uv.lock uv.lock View all files Repository files navigation README Contributing License More items <img src=\"https://camo.githubusercontent.com/c5756a65bbd0d33c5856fe91c9ebf6f7ea750a00a382c",
+      "fetchedAt": "2026-10-12T11:17:52.930Z",
+      "productUrl": "https://github.com/Alishahryar1/free-claude-code",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-12T11:17:52.930Z"
+    },
+    {
+      "id": "b2a40c43029e9a0c8ac0bd59",
+      "url": "https://raw.githubusercontent.com/mksglu/context-mode/main/README.md",
+      "title": "mksglu / context-mode · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# Context Mode **The other half of the context problem.** [![users](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmksglu%2Fcontext-mode%40main%2Fstats.json&query=%24.message&label=users&color=brightgreen)](https://www.npmjs.com/package/context-mode) [![npm](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmksglu%2Fcontext-mode%40main%2Fstats.json&query=%24.npm&label=npm&color=blue)](https://www.npmjs.com/package/context-mode) [![marketplace](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmksglu%2Fcontext-mode%40main%2Fstats.json&query=%24.marketplace&label=marketplace&color=blue)](https://github.com/mksglu/context-mode) [![GitHub stars](https://img.shields.io/github/stars/mksglu/context-mode?style=flat&color=yellow)](https://github.com/mksglu/context-mode/stargazers) [![GitHub forks](https://img.shields.io/github/forks/mksglu/context-mode?style=flat&color=blue)](https://github.com/mksglu/context-mode/network/members) [![Last commit](https://img.shields.io/github/last-commit/mksglu/context-mode?color=green)](https://github.com/mksglu/context-mode/commits) [![License: ELv2](https://img.shields.io/badge/License-ELv2-blue.svg)](LICENSE) [![Discord](https://img.shields.io/discord/1478479412700909750?label=Discord&logo=discord&color=5865f2)](https://discord.gg/DCN9jUgN5v) [![Hacker News #1](https://img.shields.io/badge/Hacker%20News-%231%20%E2%80%A2%20570%2B%20points-ff6600?logo=ycombinator&logoColor=white)](https://news.ycombinator.com/item?id=47193064) Used across teams at ## The Problem Every MCP tool call dumps raw data into your context window. A Playwright snapshot costs 56 KB. Twenty GitHub issues cost 59 KB. One access log — 45 KB. After 30 minutes, 40% of your context is gone. And when the agent compacts the conversation to free space, it forgets which files it was editing, what tasks are in progress, and what you last asked for. On top of that, the agent wastes output tokens on filler, pleasantries, and verbose explanations — burning context from both sides. ### How Context Mode Solves It Context Mode is an MCP server that solves all four sides of this problem: 1. **Context Saving** — Sandbox tools keep raw data out of the context window. 315 KB becomes 5.4 KB. 98% reduction. 2. **Session Continuity** — Every file edit, git operation, task, error, and user decision is tracked in SQLite. When the conversation compacts, context-mode doesn't dump this data back into context — it indexes events into FTS5 and retrieves only what's relevant via BM25 search. The model picks up exactly where you left off. If you don't `--continue`, previous session data is deleted immediately — a fresh session means a clean slate. 3. **Think in Code** — The LLM should program the analysis, not compute it. Instead of reading 50 files into context to count functions, the agent writes a script that does the counting and `console.log()`s only the result. One script replaces ten tool calls and saves 100x context. This is a mandatory paradigm across all 17 supported clients, plus the OpenClaw gateway integration: stop treating the LLM as a data processor, treat it as a code generator. ```js // Before: 47 × Read() = 700 KB. After: 1 × ctx_execute() = 3.6 KB. ctx_execute(\"javascript\", ` const files = fs.readdirSync('src').filter(f => f.endsWith('.ts')); files.forEach(f => console.log(f + ': ' + fs.readFileSync('src/'+f,'utf8').split('\\\\n').length + ' lines')); `); ``` 4. **No prose-style enforcement** — context-mode keeps raw data out of context but never dictates how the model writes its final answer. Brevity, completeness, formatting — your model's call (or yours via your own `CLAUDE.md` / `AGENTS.md`). Aggressive brevity prompts have been shown to degrade coding/reasoning benchmarks ([Moonshot AI on `kimi-k2.5`](https://github.com/anomalyco/opencode/issues/20258)) — the routing block stays focused on *where data goes*, not on *how the model talks*. ## Install Platforms are grouped by install complexity. Hook-capable platforms get automatic routing enforcement. Non-hook platforms need a one-time routing file copy. Claude Code — plugin marketplace, fully automatic **Prerequisites:** Claude Code v1.0.33+ (`claude --version`). If `/plugin` is not recognized, update first: `brew upgrade claude-code` or `npm update -g @anthropic-ai/claude-code`. **Install:** ```bash /plugin marketplace add mksglu/context-mode /plugin install context-mode@context-mode ``` Restart Claude Code (or run `/reload-plugins`). **Verify:** ``` /context-mode:ctx-doctor ``` All checks should show `[x]`. The doctor validates runtimes, hooks, FTS5, and plugin registration. **Routing:** Automatic. The SessionStart hook injects routing instructions at runtime — no file is written to your project. The plugin registers all hooks (PreToolUse, PostToolUse, UserPromptSubmit, PreCompact, SessionStart, Stop) and 11 MCP tools — six sandbox tools (`ctx_batch_execute`, `ctx_execute`, `ctx_execute_file`, `ctx_index`, `ctx_search`, `ctx_fetch_and_index`) plus five meta-tools (`ctx_stats`, `ctx_doctor`, `ctx_upgrade`, `ctx_purge`, `ctx_insight`). | Slash Command | What it does | |---|---| | `/context-mode:ctx-stats` | Context savings — per-tool breakdown, tokens consumed, savings ratio. | | `/context-mode:ctx-doctor` | Diagnostics — runtimes, hooks, FTS5, plugin registration, versions. | | `/context-mode:ctx-index` | Index a local file or directory into the persistent FTS5 knowledge base. | | `/context-mode:ctx-search` | Search previously indexed content. | | `/context-mode:ctx-upgrade` | Pull latest, rebuild, migrate cache, fix hooks. | | `/context-mode:ctx-purge` | Permanently delete all indexed content from the knowledge base. | | `/context-mode:ctx-insight` | Opens the hosted Insight dashboard ([context-mode.com/insight](https://context-mode.com/insight)) in your browser — org analytics for AI-assisted engineering teams. | > **Note:** Slash commands are a Claude Code plugin feature. On other platforms, type `ctx stats`, `ctx doctor`, `ctx index`, `ctx search`, `ctx upgrade`, or `ctx insight` in the chat — the model calls the MCP tool automatically. See [Utility Commands](#utility-commands). **Status line (optional):** Claude Code's plugin manifest cannot declare a status line, so this is a one-time manual edit to `~/.claude/settings.json`: ```json { \"statusLine\": { \"type\": \"command\", \"command\": \"context-mode statusline\" } } ``` After saving, restart Claude Code. The bar shows `$ saved this session · $ saved across sessions · % efficient` so you can see savings accumulate in real time. The wiring is path-free — `context-mode statusline` resolves through the bundled CLI regardless of where the plugin cache lives. Alternative — MCP-only install (no hooks or slash commands) ```bash claude mcp add context-mode -- npx -y context-mode ``` This gives you all 11 MCP tools without automatic routing. The model can still use them — it just won't be nudged to prefer them over raw Bash/Read/WebFetch. Good for trying it out before committing to the full plugin. Gemini CLI — one config file, hooks included **Prerequisites:** Node.js >= 22.5 (or Bun), Gemini CLI installed. **Install:** 1. Install context-mode globally: ```bash npm install -g context-mode ``` 2. Add the following to `~/.gemini/settings.json`. This single file registers the MCP server and all four hooks: ```json { \"mcpServers\": { \"context-mode\": { \"command\": \"context-mode\" } }, \"hooks\": { \"BeforeTool\": [ { \"matcher\": \"run_shell_command|read_file|read_many_files|grep_search|search_file_content|web_fetch|activate_skill|mcp__plugin_context-mode|mcp__context-mode|mcp__(?!.*context-mode)\", \"hooks\": [{ \"type\": \"command\", \"command\": \"context-mode hook gemini-cli beforetool\" }] } ], \"AfterTool\": [ { \"matcher\": \"\", \"hooks\": [{ \"type\": \"command\", \"command\": \"context-mode hook gemini-cli aftertool\" }] } ], \"PreCompress\": [ { \"matcher\": \"\", \"hooks\": [{ \"type\": \"command\", \"command\": \"context-mode hook gemini-cli precompress\" }] } ], \"SessionStart\": [ { \"matcher\": \"\", \"hooks\": [{ \"type\": \"command\", \"command\": \"context-mode hook gemini-cli sessionstart\" }] } ] } } ``` 3. Restart Gemini CLI. **Verify:** ``` /mcp list ``` You should see `context-mode: ... - Connected`. **Routing:** Automatic via SessionStart hook. Optionally copy routing instructions for full model awareness: ```bash cp node_modules/context-mode/configs/gemini-cli/GEMINI.md ./GEMINI.md ``` > **Why the BeforeTool matcher?** It targets only tools that produce large output (`run_shell_command`, `read_file`, `read_many_files`, `grep_search`, `search_file_content`, `web_fetch`, `activate_skill`) plus context-mode's own tools (`mcp__plugin_context-mode`). This avoids unnecessary hook overhead on lightweight tools while intercepting every tool that could flood your context window. Full config reference: [`configs/gemini-cli/settings.json`](configs/gemini-cli/settings.json) VS Code Copilot — hooks with SessionStart **Prerequisites:** Node.js >= 22.5 (or Bun), VS Code with Copilot Chat v0.32+. **Install:** 1. Install context-mode globally: ```bash npm install -g context-mode ``` 2. Create `.vscode/mcp.json` in your project root: ```json { \"servers\": { \"context-mode\": { \"command\": \"context-mode\" } } } ``` 3. Create `.github/hooks/context-mode.json`: ```json { \"hooks\": { \"PreToolUse\": [ { \"type\": \"command\", \"command\": \"context-mode hook vscode-copilot pretooluse\" } ], \"PostToolUse\": [ { \"type\": \"command\", \"command\": \"context-mode hook vscode-copilot posttooluse\" } ], \"SessionStart\": [ { \"type\": \"command\", \"command\": \"context-mode hook vscode-copilot sessionstart\" } ] } } ``` 4. Restart VS Code. **Verify:** Open Copilot Chat and type `ctx stats`. Context-mode tools should appear and respond. **Routing:** Automatic via SessionStart hook. Optionally copy routing instructions for full model awareness: ```bash cp node_modules/context-mode/configs/vscode-copilot/copilot-instructions.md .github/copilot-instructions.md ``` Full hook config including PreCompact: [`configs/vscode-copilot/hooks.json`](configs/vscode-copilot/hooks.json) JetBrains Copilot — hooks with SessionStart **Prerequisites:** Node.js >= 22.5 (or Bun), JetBrains IDE with GitHub Copilot plugin v1.5.57+. **Install:** 1. Install context-mode globally: ```bash npm install -g context-mode ``` 2. Add MCP server via Settings UI: **Settings > Tools > AI Assistant > Model Context Protocol (MCP) > Add Server**: - **Name:** `context-mode` - **Command:** `context-mode` 3. Create `.github/hooks/context-mode.json`: ```json { \"hooks\": { \"PreToolUse\": [ { \"type\": \"command\", \"command\": \"context-mode hook jetbrains-copilot pretooluse\" } ], \"PostToolUse\": [ { \"type\": \"command\", \"command\": \"context-mode hook jetbrains-copilot posttooluse\" } ], \"SessionStart\": [ { \"type\": \"command\", \"command\": \"context-mode hook jetbrains-copilot sessionstart\" } ] } } ``` 4. Restart the JetBrains IDE. **Verify:** Open Copilot Chat and type `ctx stats`. Context-mode tools should appear and respond. **Routing:** Automatic via SessionStart hook. Optionally copy routing instructions for full model awareness: ```bash cp node_modules/context-mode/configs/jetbrains-copilot/copilot-instructions.md .github/copilot-instructions.md ``` Full hook config including PreCompact: [`configs/jetbrains-copilot/hooks.json`](configs/jetbrains-copilot/hooks.json) Full setup guide: [`docs/jetbrains-copilot.md`](docs/jetbrains-copilot.md) GitHub Copilot CLI — MCP + hooks **Prerequisites:** Node.js >= 22.5 (or Bun), GitHub Copilot CLI (`copilot`) installed. Set `COPILOT_HOME` first if you use an isolated Copilot home. **Install — Option A (plugin, one command — recommended):** ```bash npm install -g context-mode # the plugin's MCP server runs the global binary copilot plugin install mksglu/context-mode:configs/copilot-cli # registers MCP + hooks + routing skill ``` The bundle's `.mcp.json` pins `CONTEXT_MODE_PLATFORM=copilot-cli`, so context-mode self-identifies as Copilot — `ctx_upgrade` and platform detection resolve `copilot-cli` even when Claude Code is co-installed (whose `~/.claude/` would otherwise win). No `context-mode upgrade` / agent call needed. To try it from a local clone before it lands on the default branch, point Copilot at the bundle directory: `copilot --plugin-dir /path/to/context-mode/configs/copilot-cli`. **Install — Option B (manual, no plugin):** 1. Install context-mode globally: ```bash npm install -g context-mode ``` 2. Register the MCP server with Copilot CLI's built-in command (writes `~/.copilot/mcp-config.json` for you): ```bash copilot mcp add context-mode -- context-mode ``` 3. Configure hooks in `~/.copilot/hooks/context-mode.json` (or `$COPILOT_HOME/hooks/context-mode.json`). The config uses flat `{ \"type\": \"command\", \"command\": \"...\" }` entries; context-mode also writes a top-level `\"version\": 1`, but that field is **optional** — the Copilot CLI accepts hook configs that omit it (it is pinned only for self-documentation). Copilot CLI fires six events context-mode uses: ```json { \"version\": 1, \"hooks\": { \"preToolUse\": [{ \"type\": \"command\", \"command\": \"context-mode hook copilot-cli pretooluse\" }], \"postToolUse\": [{ \"type\": \"command\", \"command\": \"context-mode hook copilot-cli posttooluse\" }], \"preCompact\": [{ \"type\": \"command\", \"command\": \"context-mode hook copilot-cli precompact\" }], \"sessionStart\": [{ \"type\": \"command\", \"command\": \"context-mode hook copilot-cli sessionstart\" }], \"userPromptSubmitted\": [{ \"type\": \"command\", \"command\": \"context-mode hook copilot-cli userpromptsubmit\" }], \"agentStop\": [{ \"type\": \"command\", \"command\": \"context-mode hook copilot-cli stop\" }] } } ``` Or let context-mode write **this hooks file** for you: `context-mode upgrade` (run from a Copilot CLI context, or with `CONTEXT_MODE_PLATFORM=copilot-cli`). `upgrade` writes the **hooks file only** — register the MCP server with `copilot mcp add` in step 2. 4. Restart Copilot CLI. > **Plugins:** Option A above uses Copilot CLI's plugin system, which registers MCP servers (`.mcp.json`), hooks (`hooks.json`), and skills (`skills/`) together — not just skills/agents. The shipped bundle is `configs/copilot-cli/`; `copilot plugin install owner/repo:path` installs it in one command (no clone). Option B is the equivalent without a plugin. > **Version note:** the hook commands run the **global** `context-mode` (`context-mode hook copilot-cli …`), so they need a context-mode version with Copilot CLI support. On an older global the hooks are inert (no routing/capture) until you upgrade — but they do **not** block your tools (context-mode fails open). Upgrade with `npm install -g context-mode@latest`. **Verify:** In a Copilot CLI session, type `ctx stats`. Context-mode tools should appear and respond. Run `context-mode doctor` to confirm hook + MCP registration. **Routing:** Automatic via hooks (PreToolUse interception + SessionStart routing block). Auto-detected via MCP `clientInfo.name` (`GitHub Copilot CLI`) or, in a bare shell, a context-mode-written marker (`~/.copilot/mcp-config.json` or `~/.copilot/hooks/context-mode.json`) — not a bare `~/.copilot/` dir, so a co-installed-but-unconfigured Copilot CLI is not mis-detected as context-mode-on-copilot. See [`docs/platform-support.md`](docs/platform-support.md#github-copilot-cli) for the full reference. Tracking: [#775](https://github.com/mksglu/context-mode/issues/775). Cursor — hooks with stop support **Prerequisites:** Node.js >= 22.5 (or Bun), Cursor with agent mode. > **🚧 Work in progress** — the Marketplace plugin is **awaiting Cursor team review**. Until it's listed, install via the local-folder path described in Option A. Tracking in [#485](https://github.com/mksglu/context-mode/issues/485) / [#489](https://github.com/mksglu/context-mode/pull/489). ### Option A — Marketplace plugin (recommended once published) After Cursor lists context-mode in the [Marketplace](https://cursor.com/marketplace), install with one click. The plugin auto-registers MCP, hooks (`preToolUse`, `postToolUse`, `sessionStart`, `stop`, `afterAgentResponse`), rules, and skills. No manual config required. **Until then, use the local-folder path:** **Windows (PowerShell)** — Cursor does not follow Windows symlinks/junctions, so use `robocopy`: ```powershell git clone https://github.com/mksglu/context-mode.git cd context-mode robocopy . \"$env:USERPROFILE\\.cursor\\plugins\\local\\context-mode\" /MIR ` /XD node_modules .git build web tests scripts .vscode ` /XF *.log .gitignore *.bundle.mjs.map ``` **macOS / Linux:** ```bash git clone https://github.com/mksglu/context-mode.git ln -s \"$PWD/context-mode\" ~/.cursor/plugins/local/context-mode ``` Restart Cursor. The plugin appears in **Settings → Plugins** as \"Context Mode (Local)\". To pull updates, re-run the same `robocopy` / `ln -s` line. > **Note:** if `.cursor/hooks.json` already contains context-mode entries from a prior `Option B` install, `context-mode doctor` will warn about duplicate hook firings. Remove one configuration to keep events single-fire. ### Option B — Manual install (existing path) 1. Install context-mode globally: ```bash npm install -g context-mode ``` 2. Create `.cursor/mcp.json` in your project root (or `~/.cursor/mcp.json` for global): ```json { \"mcpServers\": { \"context-mode\": { \"command\": \"context-mode\" } } } ``` 3. Create `.cursor/hooks.json` (or `~/.cursor/hooks.json` for global): ```json { \"version\": 1, \"hooks\": { \"preToolUse\": [ { \"command\": \"context-mode hook cursor pretooluse\", \"matcher\": \"Shell|Read|Grep|WebFetch|Task|MCP:ctx_execute|MCP:ctx_execute_file|MCP:ctx_batch_execute\" } ], \"postToolUse\": [ { \"command\": \"context-mode hook cursor posttooluse\" } ], \"stop\": [ { \"command\": \"context-mode hook cursor stop\" } ] } } ``` The `preToolUse` matcher is optional — without it, the hook fires on all tools. The `stop` hook fires when the agent turn ends and can send a followup message to continue the loop. `afterAgentResponse` is also availa",
+      "fetchedAt": "2026-10-12T11:17:53.003Z",
+      "productUrl": "https://github.com/mksglu/context-mode",
+      "originSourceIds": [
+        "cfe6b1639c3c3094f26f16ce"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T11:16:31.805Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/mksglu/context-mode/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/mksglu/context-mode/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T11:17:53.003Z"
+    },
+    {
+      "id": "cfe6b1639c3c3094f26f16ce",
+      "title": "mksglu / context-mode",
+      "url": "https://github.com/mksglu/context-mode",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - mksglu/context-mode: Context window optimization for AI coding agents. Sandboxes tool output (98% reduction), persists session memory, and enforces routing across 17 platforms via MCP + hooks. · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} mksglu context-mode Repository navigation Code Issues 173 ( 173 ) Pull requests 172 ( 172 ) Actions Security and quality Insights More items {\"payload\":{\"codeViewRepoRoute\":{\"path\":\"/\",\"refInfo\":{\"name\":\"main\",\"listCacheKey\":\"v0:1782757099.0\",\"canEdit\":false,\"refType\":\"branch\",\"currentOid\":\"abb104847cbb66c2182816a72bb69455bc778b5e\"},\"tree\":{\"items\":[{\"name\":\".agents/plugins\",\"path\":\".agents/plugins\",\"contentType\":\"directory\",\"hasSimplifiedPath\":true},{\"name\":\".claude-plugin\",\"path\":\".claude-plugin\",\"contentType\":\"directory\"},{\"name\":\".claude\",\"path\":\".claude\",\"contentType\":\"directory\"},{\"name\":\".codex-plugin\",\"path\":\".codex-plugin\",\"contentType\":\"directory\"},{\"name\":\".cursor-plugin\",\"path\":\".cursor-plugin\",\"contentType\":\"directory\"},{\"name\":\".github\",\"path\":\".github\",\"contentType\":\"directory\"},{\"name\":\".openclaw-plugin\",\"path\":\".openclaw-plugin\",\"contentType\":\"directory\"},{\"name\":\".pi/extensions/context-mode\",\"path\":\".pi/extensions/context-mode\",\"contentType\":\"directory\",\"hasSimplifiedPath\":true},{\"name\":\"bin\",\"path\":\"bin\",\"contentType\":\"directory\"},{\"name\":\"configs\",\"path\":\"configs\",\"contentType\":\"directory\"},{\"name\":\"docs\",\"path\":\"docs\",\"contentType\":\"directory\"},{\"name\":\"hooks\",\"path\":\"hooks\",\"contentType\":\"directory\"},{\"name\":\"scripts\",\"path\":\"scripts\",\"contentType\":\"directory\"},{\"name\":\"skills\",\"path\":\"skills\",\"contentType\":\"directory\"},{\"name\":\"src\",\"path\":\"src\",\"contentType\":\"directory\"},{\"name\":\"tests\",\"path\":\"tests\",\"contentType\":\"directory\"},{\"name\":\"web\",\"path\":\"web\",\"contentType\":\"directory\"},{\"name\":\".gitattributes\",\"path\":\".gitattributes\",\"contentType\":\"file\"},{\"name\":\".gitignore\",\"path\":\".gitignore\",\"contentType\":\"file\"},{\"name\":\".mcp.json.codex.example\",\"path\":\".mcp.json.codex.example\",\"contentType\":\"file\"},{\"name\":\".mcp.json.example\",\"path\":\".mcp.json.example\",\"contentType\":\"file\"},{\"name\":\".npmignore\",\"path\":\".npmignore\",\"contentType\":\"file\"},{\"name\":\"BENCHMARK.md\",\"path\":\"BENCHMARK.md\",\"contentType\":\"file\"},{\"name\":\"CLAUDE.md\",\"path\":\"CLAUDE.md\",\"contentType\":\"file\"},{\"name\":\"CONTRIBUTING.md\",\"path\":\"CONTRIBUTING.md\",\"contentType\":\"file\"},{\"name\":\"LICENSE\",\"path\":\"LICENSE\",\"contentType\":\"file\"},{\"name\":\"README.md\",\"path\":\"README.md\",\"contentType\":\"file\"},{\"name\":\"bun.lock\",\"path\":\"bun.lock\",\"contentType\":\"file\"},{\"name\":\"cli.bundle.mjs\",\"path\":\"cli.bundle.mjs\",\"contentType\":\"file\"},{\"name\":\"openclaw.plugin.json\",\"path\":\"openclaw.plugin.json\",\"contentType\":\"file\"},{\"name\":\"package.json\",\"path\":\"package.json\",\"contentType\":\"file\"},{\"name\":\"server.bundle.mjs\",\"path\":\"server.bundle.mjs\",\"contentType\":\"file\"},{\"name\":\"start.mjs\",\"path\":\"start.mjs\",\"contentType\":\"file\"},{\"name\":\"stats.json\",\"path\":\"stats.json\",\"contentType\":\"file\"},{\"name\":\"tsconfig.json\",\"path\":\"tsconfig.json\",\"contentType\":\"file\"},{\"name\":\"vitest.config.ts\",\"path\":\"vitest.config.ts\",\"contentType\":\"file\"}],\"totalCount\":36,\"templateDirectorySuggestionUrl\":null,\"readme\":null,\"showBranchInfobar\":false},\"userNameDisplayConfiguration\":null,\"treeExpanded\":false,\"symbolsExpanded\":false,\"copilotSWEAgentEnabled\":false,\"copilotAccessAllowed\":false,\"isOverview\":true,\"overview\":{\"banners\":{\"shouldRecommendReadme\":false,\"isPersonalRepo\":false,\"showUseActionBanner\":false,\"actionSlug\":null,\"actionId\":null,\"showProtectBranchBanner\":false,\"requiredCustomPropertyValuesMissingCount\":0,\"transactionalMessageBanner\":null,\"publishBannersInfo\":{\"dismissActionNoticePath\":\"/settings/dismiss-notice/publish_action_from_repo\",\"releasePath\":\"/mksglu/context-mode/releases/new?marketplace=true\",\"showPublishActionBanner\":false},\"interactionLimitBanner\":null,\"showInvitationBanner\":false,\"inviterName\":null,\"actionsMigrationBannerInfo\":{\"releaseTags\":[],\"showImmutableActionsMigrationBanner\":false,\"initialMigrationStatus\":null},\"copilotSurveyBanner\":null,\"showSpammyBanner\":false,\"blockedContributorsBanner\":null,\"codespacesSurveyBanner\":null},\"codeButton\":{\"contactPath\":\"/contact\",\"isEnterprise\":false,\"local\":{\"protocolInfo\":{\"httpAvailable\":true,\"sshAvailable\":null,\"httpUrl\":\"https://github.com/mksglu/context-mode.git\",\"showCloneWarning\":null,\"sshUrl\":null,\"sshCertificatesRequired\":null,\"sshCertificatesAvailable\":null,\"ghCliUrl\":\"gh repo clone mksglu/context-mode\",\"defaultProtocol\":\"http\",\"newSshKeyUrl\":\"/settings/ssh/new\",\"setProtocolPath\":\"/users/set_protocol?protocol_type=clone\"},\"platformInfo\":{\"cloneUrl\":\"https://desktop.github.com\",\"showVisualStudioCloneButton\":false,\"visualStudioCloneUrl\":\"https://windows.github.com\",\"showXcodeCloneButton\":false,\"xcodeCloneUrl\":\"xcode://clone?repo=https%3A%2F%2Fgithub.com%2Fmksglu%2Fcontext-mode\",\"zipballUrl\":\"/mksglu/context-mode/archive/refs/heads/main.zip\"}},\"newCodespacePath\":\"/codespaces/new?hide_repo_select=true\\u0026repo=1164477708\"},\"popovers\":{\"rename\":null,\"renamedParentRepo\":null},\"commitCount\":\"2,228\",\"overviewFiles\":[{\"displayName\":\"README.md\",\"repoName\":\"context-mode\",\"refName\":\"main\",\"path\":\"README.md\",\"preferredFileType\":\"readme\",\"tabName\":\"README\",\"richText\":\"\\u003carticle class=\\\"markdown-body entry-content container-lg\\\" itemprop=\\\"text\\\"\\u003e\\u003cdiv class=\\\"markdown-heading\\\" dir=\\\"auto\\\"\\u003e\\u003ch1 tabindex=\\\"-1\\\" class=\\\"heading-element\\\" dir=\\\"auto\\\"\\u003eContext Mode\\u003c/h1\\u003e\\u003ca id=\\\"user-content-context-mode\\\" class=\\\"anchor\\\" aria-label=\\\"Permalink: Context Mode\\\" href=\\\"#context-mode\\\"\\u003e\\u003csvg data-component=\\\"Octicon\\\" class=\\\"octicon octicon-link\\\" viewBox=\\\"0 0 16 16\\\" version=\\\"1.1\\\" width=\\\"16\\\" height=\\\"16\\\" aria-hidden=\\\"true\\\"\\u003e\\u003cpath d=\\\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\\\"\\u003e\\u003c/path\\u003e\\u003c/svg\\u003e\\u003c/a\\u003e\\u003c/div\\u003e\\n\\u003cp dir=\\\"auto\\\"\\u003e\\u003cstrong\\u003eThe other half of the context problem.\\u003c/strong\\u003e\\u003c/p\\u003e\\n\\u003cp dir=\\\"auto\\\"\\u003e\\u003ca href=\\\"https://www.npmjs.com/package/context-mode\\\" rel=\\\"nofollow\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/d729672e7cdaad2c6b6c867cd057d3575a66ebfb0fc56354b6dd62fcc1f11d7c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f64796e616d69632f6a736f6e3f75726c3d687474707325334125324625324663646e2e6a7364656c6976722e6e657425324667682532466d6b73676c75253246636f6e746578742d6d6f64652534306d61696e25324673746174732e6a736f6e2671756572793d2532342e6d657373616765266c6162656c3d757365727326636f6c6f723d627269676874677265656e\\\" alt=\\\"users\\\" data-canonical-src=\\\"https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmksglu%2Fcontext-mode%40main%2Fstats.json\\u0026amp;query=%24.message\\u0026amp;label=users\\u0026amp;color=brightgreen\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e \\u003ca href=\\\"https://www.npmjs.com/package/context-mode\\\" rel=\\\"nofollow\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/dd858b7c302cc6b2b7711e9331ca595125cd5ded1f60209c4f0c1eeb11607d01/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f64796e616d69632f6a736f6e3f75726c3d687474707325334125324625324663646e2e6a7364656c6976722e6e657425324667682532466d6b73676c75253246636f6e746578742d6d6f64652534306d61696e25324673746174732e6a736f6e2671756572793d2532342e6e706d266c6162656c3d6e706d26636f6c6f723d626c7565\\\" alt=\\\"npm\\\" data-canonical-src=\\\"https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmksglu%2Fcontext-mode%40main%2Fstats.json\\u0026amp;query=%24.npm\\u0026amp;label=npm\\u0026amp;color=blue\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e \\u003ca href=\\\"https://github.com/mksglu/context-mode\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/4c9cae0002c3cce7d0556144be3b6d8139e2ebd7c542205e724dc42ca1bcf092/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f64796e616d69632f6a736f6e3f75726c3d687474707325334125324625324663646e2e6a7364656c6976722e6e657425324667682532466d6b73676c75253246636f6e746578742d6d6f64652534306d61696e25324673746174732e6a736f6e2671756572793d2532342e6d61726b6574706c616365266c6162656c3d6d61726b6574706c61636526636f6c6f723d626c7565\\\" alt=\\\"marketplace\\\" data-canonical-src=\\\"https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmksglu%2Fcontext-mode%40main%2Fstats.json\\u0026amp;query=%24.marketplace\\u0026amp;label=marketplace\\u0026amp;color=blue\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e \\u003ca href=\\\"https://github.com/mksglu/context-mode/stargazers\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/2bae5169835ffe6ceb43f23947db06adffbc7fb98ee5f5928a91defdd42eb7cc/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f6d6b73676c752f636f6e746578742d6d6f64653f7374796c653d666c617426636f6c6f723d79656c6c6f77\\\" alt=\\\"GitHub stars\\\" data-canonical-src=\\\"https://img.shields.io/github/stars/mksglu/context-mode?style=flat\\u0026amp;color=yellow\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e \\u003ca href=\\\"https://github.com/mksglu/context-mode/network/members\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/42328ef0bf3c5a2be4efb871d93910a35a5661a39d00f30f6d9c05838c0392b8/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f666f726b732f6d6b73676c752f636f6e746578742d6d6f64653f7374796c653d666c617426636f6c6f723d626c7565\\\" alt=\\\"GitHub forks\\\" data-canonical-src=\\\"https://img.shields.io/github/forks/mksglu/context-mode?style=flat\\u0026amp;color=blue\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e \\u003ca href=\\\"https://github.com/mksglu/context-mode/commits\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/b95e69e8919ed7e656e04a250f43bc73355afd403b51af9ebdd6d5f8c850e2b7/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f6d6b73676c752f636f6e746578742d6d6f64653f636f6c6f723d677265656e\\\" alt=\\\"Last commit\\\" data-canonical-src=\\\"https://img.shields.io/github/last-commit/mksglu/context-mode?color=green\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e \\u003ca href=\\\"/mksglu/context-mode/blob/main/LICENSE\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/095d8668989dcd08489c4f2349a568de97ec9c321db6938233ce3979bebc2469/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d454c76322d626c75652e737667\\\" alt=\\\"License: ELv2\\\" data-canonical-src=\\\"https://img.shields.io/badge/License-ELv2-blue.svg\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"https://discord.gg/DCN9jUgN5v\\\" rel=\\\"nofollow\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/da76fb92750d84ae83d834dc24fbdfd0129fb5ef05997026d89f610aef62857d/68747470733a2f2f696d672e736869656c64732e696f2f646973636f72642f313437383437393431323730303930393735303f6c6162656c3d446973636f7264266c6f676f3d646973636f726426636f6c6f723d353836356632\\\" alt=\\\"Discord\\\" data-canonical-src=\\\"https://img.shields.io/discord/1478479412700909750?label=Discord\\u0026amp;logo=discord\\u0026amp;color=5865f2\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"https://news.ycombinator.com/item?id=47193064\\\" rel=\\\"nofollow\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/3656b1b400f8a04787403102ac89e6d3632654b3d6a301a906291eca12df649b/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4861636b65722532304e6577732d25323331253230254532253830254132253230353730253242253230706f696e74732d6666363630303f6c6f676f3d79636f6d62696e61746f72266c6f676f436f6c6f723d7768697465\\\" alt=\\\"Hacker News #1\\\" data-canonical-src=\\\"https://img.shields.io/badge/Hacker%20News-%231%20%E2%80%A2%20570%2B%20points-ff6600?logo=ycombinator\\u0026amp;logoColor=white\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\u003c/p\\u003e\\n\\u003cp align=\\\"center\\\" dir=\\\"auto\\\"\\u003e\\n\\u003csub\\u003eUsed across teams at\\u003c/sub\\u003e\\n\\u003cbr\\u003e\\u003cbr\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/740df7f99396943c78fd78cdeb789289d9ea6b1b1339528a5e8f752a40469f41/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4d6963726f736f66742d3134313431343f7374796c653d666c6174\\\" alt=\\\"Microsoft\\\" data-canonical-src=\\\"https://img.shields.io/badge/Microsoft-141414?style=flat\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/e36cea40517ef9410012ea71e0dc4fb908f4c27e9269c21bb56115880f482e84/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f476f6f676c652d3134313431343f7374796c653d666c6174266c6f676f3d676f6f676c65266c6f676f436f6c6f723d7768697465\\\" alt=\\\"Google\\\" data-canonical-src=\\\"https://img.shields.io/badge/Google-141414?style=flat\\u0026amp;logo=google\\u0026amp;logoColor=white\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/6b76e8aedf518ed29a60f3b0a56c3c7408a2f0848adfe64f894fce71c51df548/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4d6574612d3134313431343f7374796c653d666c6174266c6f676f3d6d657461266c6f676f436f6c6f723d7768697465\\\" alt=\\\"Meta\\\" data-canonical-src=\\\"https://img.shields.io/badge/Meta-141414?style=flat\\u0026amp;logo=meta\\u0026amp;logoColor=white\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/0b3469c879d09423f17d47a645bc23feb75d9cab289e915800172129b431decc/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f416d617a6f6e2d3134313431343f7374796c653d666c6174\\\" alt=\\\"Amazon\\\" data-canonical-src=\\\"https://img.shields.io/badge/Amazon-141414?style=flat\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/eb064356c850114bc265f65f4c88c97438ff8b6bfe8f3d3c9dc5aeea6d6f93b0/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f49424d2d3134313431343f7374796c653d666c6174\\\" alt=\\\"IBM\\\" data-canonical-src=\\\"https://img.shields.io/badge/IBM-141414?style=flat\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/a6d059a59003b7d490278648968ed8887cf7898c3d81bba7b2569cca2ef447a4/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4e56494449412d3134313431343f7374796c653d666c6174266c6f676f3d6e7669646961266c6f676f436f6c6f723d7768697465\\\" alt=\\\"NVIDIA\\\" data-canonical-src=\\\"https://img.shields.io/badge/NVIDIA-141414?style=flat\\u0026amp;logo=nvidia\\u0026amp;logoColor=white\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/6dd7aeca0326f5c57e50873f620396d88890a950a04dbda3eebca28ab55c6c85/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4279746544616e63652d3134313431343f7374796c653d666c6174266c6f676f3d6279746564616e6365266c6f676f436f6c6f723d7768697465\\\" alt=\\\"ByteDance\\\" data-canonical-src=\\\"https://img.shields.io/badge/ByteDance-141414?style=flat\\u0026amp;logo=bytedance\\u0026amp;logoColor=white\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/66cfde4a81a131a9910f5894bd3731574f9af6492c3f8153cafe245bd8a94373/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f5374726970652d3134313431343f7374796c653d666c6174266c6f676f3d737472697065266c6f676f436f6c6f723d7768697465\\\" alt=\\\"Stripe\\\" data-canonical-src=\\\"https://img.shields.io/badge/Stripe-141414?style=flat\\u0026amp;logo=stripe\\u0026amp;logoColor=white\\\" style=\\\"max-width: 100%;\\\"\\u003e\\u003c/a\\u003e\\n\\u003ca href=\\\"#\\\"\\u003e\\u003cimg src=\\\"https://camo.githubusercontent.com/f747ac23a89b38f8f616f1e8a10a89b290e713b11f675e97cb03a5cc705acd92/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4461",
+      "fetchedAt": "2026-10-12T11:17:53.430Z",
+      "productUrl": "https://github.com/mksglu/context-mode",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-12T11:17:53.430Z"
+    },
+    {
+      "id": "a885dcb535b7db4d6a108510",
+      "url": "https://raw.githubusercontent.com/open-webui/open-webui/main/README.md",
+      "title": "open-webui / open-webui · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "# Open WebUI 👋 ![GitHub stars](https://img.shields.io/github/stars/open-webui/open-webui?style=social) ![GitHub forks](https://img.shields.io/github/forks/open-webui/open-webui?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/open-webui/open-webui?style=social) ![GitHub repo size](https://img.shields.io/github/repo-size/open-webui/open-webui) ![GitHub language count](https://img.shields.io/github/languages/count/open-webui/open-webui) ![GitHub top language](https://img.shields.io/github/languages/top/open-webui/open-webui) ![GitHub last commit](https://img.shields.io/github/last-commit/open-webui/open-webui?color=red) [![Discord](https://img.shields.io/badge/Discord-Open_WebUI-blue?logo=discord&logoColor=white)](https://discord.gg/5rJgQTnV4s) [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/open-webui) Open WebUI is **a home for AI**, a self-hosted AI platform that's **[extensible](https://docs.openwebui.com/features/extensibility/plugin/)**, **[feature-rich](https://docs.openwebui.com/features/)**, user-friendly, and built to run **[entirely offline](https://openwebui.com/sovereign-ai)**. With support for **Ollama** and **OpenAI-compatible APIs**, it gives you a powerful, provider-agnostic interface for both local and cloud-based models. Passionate about open-source AI? [Join our team →](https://careers.openwebui.com/) ![Open WebUI Demo](./demo.png) > [!TIP] > **Looking for an [Enterprise Plan](https://docs.openwebui.com/enterprise)?** – **[Speak with Our Sales Team Today!](https://docs.openwebui.com/enterprise)** For more information, be sure to check out our [Open WebUI Documentation](https://docs.openwebui.com/). ## Key Features of Open WebUI ⭐ - 🚀 **Effortless Setup**: Install seamlessly via pip, uv, Docker, or Kubernetes (kubectl, kustomize, or helm), with `:ollama` and `:cuda` tagged images available for container deployments. - 🤝 **Broad Model & API Integration**: Connect any OpenAI-compatible API alongside local Ollama models. Point the API URL at **LMStudio, GroqCloud, Mistral, OpenRouter, vLLM, and more** to mix and match providers freely. - 🔐 **Granular RBAC & User Groups**: Administrators define detailed roles, groups, and permissions, giving each user exactly the access they need. Secure by default, with tailored experiences per group. - 🧩 **Plugin Support**: Extend Open WebUI with **Filters**, **Actions**, **Pipes**, **Tools**, and **Skills**. Connect external services through **MCP**, **MCPO**, and **OpenAPI tool servers**. Build custom integrations, rate limits, approval flows, data connections, and more. - 🤖 **Models & Agents**: Wrap any base model with custom instructions, tools, and knowledge to build specialized agents. Supports dynamic variables, per-user/group access control, and community preset imports via [Open WebUI Community](https://openwebui.com/). - ⚡ **Agentic Execution with [Open Terminal](https://github.com/open-webui/open-terminal)**: Give your agents a terminal and filesystem to carry out multi-step tasks. Let them analyze data, run scripts, fix errors, and produce files directly in chat. Scale to teams with **[Terminals (Enterprise)](https://github.com/open-webui/terminals)** for per-user isolated environments, resource limits, and automatic lifecycle management. - 📝 **Notes**: A dedicated workspace for content outside conversations. Draft with a rich editor, use AI to rewrite selected text, and attach notes to any chat for full-context injection. - 📢 **Channels**: Real-time shared spaces where your team and AI models collaborate in one timeline. Tag models to draft or critique, with threads, reactions, pins, and access control. - 🧠 **Persistent Memory**: The AI remembers facts about you across conversations, carrying context from one chat to the next. - ✅ **Live Workflow & Message Flow**: Watch the AI build and work through checklists in real time. Queue messages while the AI is still responding; they send automatically when it's ready. - 📅 **Calendar & AI Scheduling**: Built-in personal and shared calendars with month/week/day views, recurring events, color coding, attendees, and reminders. Models manage your schedule conversationally through native function calling. - ⏱️ **Automations**: Schedule prompts to run on recurring schedules, with runs surfaced on your calendar and each completed run linking back to the chat it produced. - 📱 **Responsive Design & PWA**: Seamless experience across desktop, laptop, and mobile, with a Progressive Web App for native app-like feel and offline access on localhost. - ✒️🔢 **Full Markdown and LaTeX Support**: Comprehensive Markdown and LaTeX capabilities for enriched interaction. - 🎤📹 **Hands-Free Voice/Video Call**: Integrated voice and video calls with multiple Speech-to-Text providers (Local Whisper, OpenAI, Deepgram, Azure) and Text-to-Speech engines (Azure, ElevenLabs, OpenAI, Transformers, WebAPI). - 💾 **Persistent Artifact Storage**: Built-in key-value storage API for artifacts, enabling journals, trackers, leaderboards, and collaborative tools with personal and shared data scopes. - 📚 **Local RAG Integration**: Retrieval Augmented Generation backed by 9 vector databases and multiple content-extraction engines (Tika, Docling, Document Intelligence, Mistral OCR, PaddleOCR-vl, external loaders). Supports hybrid search (BM25 + vector) with reranking and full-context mode. Load documents into chat or pull them from your library with the `#` command. - 🔍 **Web Search for RAG**: Search the web through dozens of providers including `SearXNG`, `Google PSE`, `Brave Search`, `Kagi`, `Mojeek`, `Tavily`, `Perplexity`, `Firecrawl`, `serpstack`, `serper`, `Serply`, `DuckDuckGo`, `SearchApi`, `SerpApi`, `Bing`, `Jina`, `Exa`, `Sougou`, `Azure AI Search`, and `Ollama Cloud`, injecting results directly into the conversation. - 🌐 **Web Browsing Capability**: Pull websites into chat with the `#` command followed by a URL, or let the model fetch them on its own when needed. - 🎨 **Image Generation & Editing**: Create and edit images with multiple engines including OpenAI DALL·E, Gemini, ComfyUI (local), and AUTOMATIC1111 (local), supporting both generation and prompt-based editing. - ⚙️ **Multi-Model Conversations**: Engage several models at once, harnessing their individual strengths in parallel for the best possible responses. - 📊 **Usage Analytics & Model Evaluation**: Admin dashboards track message volume, token consumption, and cost across users and models. Evaluate models with a built-in arena, A/B testing, and ELO-based leaderboards. - 🗄️ **Flexible Database & Storage**: Choose SQLite (with optional encryption) or PostgreSQL, and store files locally or on S3, Google Cloud Storage, or Azure Blob Storage. - 🧬 **Advanced Vector Database Support**: Pick from 9 vector databases: ChromaDB, PGVector, Qdrant, Milvus, Elasticsearch, OpenSearch, Pinecone, S3Vector, and Oracle 23ai. - 🪪 **Enterprise Authentication & Provisioning**: Full LDAP/Active Directory integration, SSO via trusted headers and OAuth providers, and SCIM 2.0 automated provisioning for identity providers like Okta, Azure AD, and Google Workspace. - ☁️ **Cloud-Native File Integration**: Native Google Drive and OneDrive/SharePoint file picking for seamless document import from enterprise cloud storage. - 🔭 **Production Observability**: Built-in OpenTelemetry support for traces, metrics, and logs, plugging into your existing monitoring stack. - ⚖️ **Horizontal Scalability**: Redis-backed session management and WebSocket support for multi-worker, multi-node deployments behind load balancers. - 🌐🌍 **Multilingual Support**: Use Open WebUI in your preferred language with i18n support. We're actively seeking contributors to expand language coverage! - 🌟 **Continuous Updates**: We're committed to improving Open WebUI with regular updates, fixes, and new features. - 🛡️ **Transparent Security Process**: Security reports are triaged, fixed, and published as open advisories through a documented responsible-disclosure process. See our [Security Policy](https://github.com/open-webui/open-webui/security). Want to learn more about Open WebUI's features? Check out our [Open WebUI documentation](https://docs.openwebui.com/features) for a comprehensive overview! ## The Open WebUI Ecosystem 🌐 Open WebUI is the core, surrounded by companion apps and infrastructure that extend what your AI can do, where it can reach, and how you run it: - 💻 **Open WebUI Computer** ([open-webui/computer](https://github.com/open-webui/computer)): A standalone, mobile-first computer and coding agent that runs on the machine you own. Files, terminal, and git in a browser tab, reachable from your phone. Connect it into Open WebUI as a model, or reach it from Telegram, WhatsApp, and more. - ⚡ **Open Terminal** and **Terminals (Enterprise)** ([open-webui/open-terminal](https://github.com/open-webui/open-terminal) & [open-webui/terminals](https://github.com/open-webui/terminals)): A self-hosted computing environment that plugs into Open WebUI, giving the AI a place to write code, run it, read output, fix errors, and iterate inside the chat. Terminals gives you per-user isolated containers with separate credentials, resource limits, and network rules. Automatic lifecycle management on Docker or Kubernetes. - 🔄 **oikb** ([open-webui/oikb](https://github.com/open-webui/oikb)): Feed your Knowledge Bases from 45+ sources (GitHub, Confluence, ServiceNow, Salesforce, Jira, Slack, SharePoint, Notion, and more), keeping the tools your team already uses continuously in sync. - 🖥️ **Native Desktop App** ([open-webui/desktop](https://github.com/open-webui/desktop)): Run Open WebUI as a native app on macOS, Windows, and Linux. System-wide Spotlight chat bar with screenshot capture, push-to-talk voice, and optional fully-local inference via a built-in llama.cpp engine. Want to learn more? Check out our [Open WebUI documentation](https://docs.openwebui.com) for more details! --- We are incredibly grateful for the generous support of our sponsors. Their contributions help us to maintain and improve our project, ensuring we can continue to deliver quality work to our community. Thank you! ## How to Install 🚀 ### Installation via Python pip 🐍 Open WebUI can be installed using pip, the Python package installer. Before proceeding, ensure you're using **Python 3.11** to avoid compatibility issues. 1. **Install Open WebUI**: Open your terminal and run the following command to install Open WebUI: ```bash pip install open-webui ``` 2. **Running Open WebUI**: After installation, you can start Open WebUI by executing: ```bash open-webui serve ``` This will start the Open WebUI server, which you can access at [http://localhost:8080](http://localhost:8080) ### Quick Start with Docker 🐳 > [!NOTE] > Please note that for certain Docker environments, additional configurations might be needed. If you encounter any connection issues, our detailed guide on [Open WebUI Documentation](https://docs.openwebui.com/) is ready to assist you. > [!WARNING] > When using Docker to install Open WebUI, make sure to include the `-v open-webui:/app/backend/data` in your Docker command. This step is crucial as it ensures your database is properly mounted and prevents any loss of data. > [!TIP] > If you wish to utilize Open WebUI with Ollama included or CUDA acceleration, we recommend utilizing our official images tagged with either `:cuda` or `:ollama`. To enable CUDA, you must install the [Nvidia CUDA container toolkit](https://docs.nvidia.com/dgx/nvidia-container-runtime-upgrade/) on your Linux/WSL system. ### Installation with Default Configuration - **If Ollama is on your computer**, use this command: ```bash docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main ``` - **If Ollama is on a Different Server**, use this command: To connect to Ollama on another server, change the `OLLAMA_BASE_URL` to the server's URL: ```bash docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=https://example.com -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main ``` - **To run Open WebUI with Nvidia GPU support**, use this command: ```bash docker run -d -p 3000:8080 --gpus all --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:cuda ``` ### Installation for OpenAI API Usage Only - **If you're only using OpenAI API**, use this command: ```bash docker run -d -p 3000:8080 -e OPENAI_API_KEY=your_secret_key -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main ``` ### Installing Open WebUI with Bundled Ollama Support This installation method uses a single container image that bundles Open WebUI with Ollama, allowing for a streamlined setup via a single command. Choose the appropriate command based on your hardware setup: - **With GPU Support**: Utilize GPU resources by running the following command: ```bash docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama ``` - **For CPU Only**: If you're not using a GPU, use this command instead: ```bash docker run -d -p 3000:8080 -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama ``` Both commands facilitate a built-in, hassle-free installation of both Open WebUI and Ollama, ensuring that you can get everything up and running swiftly. After installation, you can access Open WebUI at [http://localhost:3000](http://localhost:3000). Enjoy! 😄 ### Other Installation Methods We offer various installation alternatives, including non-Docker native installation methods, Docker Compose, Kustomize, and Helm. Visit our [Open WebUI Documentation](https://docs.openwebui.com/getting-started/) or join our [Discord community](https://discord.gg/5rJgQTnV4s) for comprehensive guidance. ### Troubleshooting Encountering connection issues? Our [Open WebUI Documentation](https://docs.openwebui.com/troubleshooting/) has got you covered. For further assistance and to join our vibrant community, visit the [Open WebUI Discord](https://discord.gg/5rJgQTnV4s). #### Open WebUI: Server Connection Error If you're experiencing connection issues, it’s often due to the WebUI docker container not being able to reach the Ollama server at 127.0.0.1:11434 (host.docker.internal:11434) inside the container . Use the `--network=host` flag in your docker command to resolve this. Note that the port changes from 3000 to 8080, resulting in the link: `http://localhost:8080`. **Example Docker Command**: ```bash docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main ``` ### Keeping Your Docker Installation Up-to-Date Check our Updating Guide available in our [Open WebUI Documentation](https://docs.openwebui.com/getting-started/updating). ### Using the Dev Branch 🌙 > [!WARNING] > The `:dev` branch contains the latest unstable features and changes. Use it at your own risk as it may have bugs or incomplete features. If you want to try out the latest bleeding-edge features and are okay with occasional instability, you can use the `:dev` tag like this: ```bash docker run -d -p 3000:8080 -v open-webui:/app/backend/data --name open-webui --add-host=host.docker.internal:host-gateway --restart always ghcr.io/open-webui/open-webui:dev ``` ### Offline Mode If you are running Open WebUI in an offline environment, you can set the `HF_HUB_OFFLINE` environment variable to `1` to prevent attempts to download models from the internet. ```bash export HF_HUB_OFFLINE=1 ``` ## What's Next? 🌟 Discover upcoming features on our roadmap in the [Open WebUI Documentation](https://docs.openwebui.com/roadmap/). ## License 📜 This project contains code under multiple licenses. The current codebase includes components licensed under the Open WebUI License with an additional requirement to preserve the \"Open WebUI\" branding, as well as prior contributions under their respective original licenses. For a detailed record of license changes and the applicable terms for each section of the code, please refer to [LICENSE_HISTORY](./LICENSE_HISTORY). For complete and updated licensing details, please see the [LICENSE](./LICENSE) and [LICENSE_HISTORY](./LICENSE_HISTORY) files. ## Support 💬 If you have any questions, suggestions, or need assistance, please open an issue or join our [Open WebUI Discord community](https://discord.gg/5rJgQTnV4s) to connect with us! 🤝 ## Security 🛡️ If you believe you've found a security vulnerability, or something that shouldn't be disclosed publicly, please [reach out confidentially through our responsible disclosure program on GitHub](https://github.com/open-webui/open-webui/security). We accept reports only through GitHub, not through any other platform. Thank you for helping us keep Open WebUI secure! ## Star History --- Created by [Timothy Jaeryang Baek](https://github.com/tjbck) - Let's make Open WebUI even more amazing together! 💪",
+      "fetchedAt": "2026-10-12T11:17:53.535Z",
+      "productUrl": "https://github.com/open-webui/open-webui",
+      "originSourceIds": [
+        "7c94eb734f17ebfcce723006"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T11:16:31.805Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/open-webui/open-webui/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/open-webui/open-webui/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T11:17:53.535Z"
+    },
+    {
+      "id": "7c94eb734f17ebfcce723006",
+      "title": "open-webui / open-webui",
+      "url": "https://github.com/open-webui/open-webui",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - open-webui/open-webui: User-friendly AI Interface (Supports Ollama, OpenAI API, ...) · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} open-webui open-webui Repository navigation Code Issues 157 ( 157 ) Pull requests 11 ( 11 ) Discussions Actions Security and quality 165 ( 165 ) Insights More items open-webui Public Sponsor Notifications You must be signed in to change notification settings Fork 22.6k ( 22.6k ) Star 154k ( 154k ) You must be signed in to star a repository About User-friendly AI Interface (Supports Ollama, OpenAI API, ...) openwebui.com Topics ai llm llm-ui llm-webui llms mcp ollama ollama-webui open-webui openai openapi rag self-hosted ui webui Resources Readme License Code of conduct Code of conduct Security policy Security policy Activity Custom properties Stars 154.4k stars Watchers 675 watching Forks 22.6k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 19,303 Commits 19,303 Commits Folders and files Name Name Last commit message Last commit date .github .github backend backend docs docs scripts scripts src src static static test/ test_files/ image_gen test/ test_files/ image_gen .dockerignore .dockerignore .env.example .env.example .eslintignore .eslintignore .eslintrc.cjs .eslintrc.cjs .gitattributes .gitattributes .gitignore .gitignore .npmrc .npmrc .pre-commit-config.yaml .pre-commit-config.yaml .prettierignore .prettierignore .prettierrc .prettierrc CHANGELOG.md CHANGELOG.md CODE_OF_CONDUCT.md CODE_OF_CONDUCT.md CONTRIBUTOR_LICENSE_AGREEMENT CONTRIBUTOR_LICENSE_AGREEMENT Dockerfile Dockerfile LICENSE LICENSE LICENSE_HISTORY LICENSE_HISTORY LICENSE_NOTICE LICENSE_NOTICE Makefile Makefile README.md README.md TROUBLESHOOTING.md TROUBLESHOOTING.md banner.png banner.png <path d=\"M2 1.75C2 .784 2",
+      "fetchedAt": "2026-10-12T11:17:54.018Z",
+      "productUrl": "https://github.com/open-webui/open-webui",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-12T11:17:54.018Z"
+    },
+    {
+      "id": "015ccf980c076bf61e279865",
+      "title": "[AINews] Gemini 4 Argon: GDM’s answer to Astra/Fable, with 1M output · product evidence",
+      "url": "https://www.latent.space/p/ainews-gemini-4-argon-gdms-answer",
+      "publisher": "www.latent.space",
+      "text": "[AINews] Gemini 4 Argon: GDM’s answer to Astra/Fable, with 1M output Subscribe Sign in AINews: Weekday Roundups [AINews] Gemini 4 Argon: GDM’s answer to Astra/Fable, with 1M output ... but you can’t try it yet unless you are “government users and trusted cyber defenders in the Fairwind Program” Oct 01, 2026 ∙ Paid 55 Share GDM last shipped a larger-than-Flash model in February ( 3.1 Pro ), and after successive incremental 3.x Flash versions and the big GDM management shakeup last month, the largest question for GDM was when they would catch up to peers who have in the meantime launched Fable and Astra class models. Well, Argon’s here , with VERY respectable benchmarks (SOTA in 13 of 19 credible benchmarks)… but only accessible in limited cybersecurity preview, though access is promised “ as soon as possible ”: Google DeepMind @ GoogleDeepMind Introducing Gemini 4 Argon – our new frontier model. It’s built for complex workflows across coding, enterprise knowledge work, and cybersecurity defense – rolling out today to a set of trusted testers through our Fairwind Program. 8:03 PM · Sep 30, 2026 · 3.42M Views 1.18K Replies · 2.81K Reposts · 26.4K Likes We like the experimental Long Decode Continuation , which increases output tokens up to 1M as an industry first. AI News for 9/29/2026-9/30/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap Gemini 4 Argon: Google Returns to the Frontier Launch : Google DeepMind introduced Gemini 4 Argon for coding, enterprise knowledge work and cyber defense ( @GoogleDeepMind , @sundarpichai ). Availability : Access starts with government users and trusted cyber defenders in the Fairwind Program. Google says it will refine guardrails before opening access to developers, enterprises and consumers ( @Google , @demishassabis ). Output limit : Google cites an industry-leading 1M-token output limit, up from 64K ( @GoogleAI , @TheRundownAI ). Measurement note : Vals lists 262K max output. Artificial Analysis reached 1M output tokens through Long Decode Continuation, a new API feature that pauses long responses and resumes them across calls ( @ValsAI , @ArtificialAnlys ). Pricing : Standard pricing is $4/$20 per 1M input/output tokens. A 50% introductory discount brings it to $2/$10, with no end date announced. Cached input gets a 95% discount ( @_philschmid , @ArtificialAnlys ). Google’s claimed results : Argon takes first place on 13 of 19 published benchmarks against GPT-6 Astra and Claude Opus 5.5. On DeepSWE it scores 77.9%, versus 74.2% for Opus 5.5 and 74.1% for Astra ( @TheRundownAI ). Internal deployments : Google reports that Argon agents freed more than 300 TiB of data-center memory and are migrating more than 800K lines of C/C++ kernel code to Rust ( @kimmonismus ). Video decoder : Agents replaced 32K lines of SIMD code with safe Rust, making the existing Rust port 2.7x faster with identical output. Research use : The team says internal agent loops built on Argon helped complete the CK conjecture ( @mirrokni ). Artificial Analysis evaluation : Argon scores 53 on the Intelligence Index, matching GPT-6 Astra (53) and edging GPT-6.1 Sol (52) ( @ArtificialAnlys ). Cost per task : At discounted pricing it costs $1.99 per task versus $3.26 for Astra; standard pricing would raise this to $3.98. Token use : The savings come from price, not efficiency. Argon averages 62K output tokens per task against Astra’s 27K. Agentic work : It ranks #1 on AutomationBench-AA at 77.5% and scores 57% on Terminal Bench 4, behind Sonnet 5.5, Opus 5.5 and Astra. Hallucination : Its 15% rate on AA-Omniscience compares with 51% for Astra. The tradeoff is lower accuracy: 50% versus Astra’s 63% ( @aipulseda1ly ). Vals evaluation : Argon is #1 on the Vals Index at 68.9%, at an average $15.68 per task ( @ValsAI , @ValsAI ). Coding : It built 30 Vibe Code Bench apps perfectly, against 25 for Opus 5 and 24 for Astra ( @ValsAI ). Terminal and security : Terminal-Bench 4.0 rose from 19.0% to 57.6%. It scores 70% on CyberBench proof-of-concept tasks and 100% on IOI 2024–2026 ( @ValsAI ). Efficiency : It uses about a quarter of Sonnet 5.5’s output tokens on Vals Index tasks ( @ValsAI ). Arena and other evals : Argon is #1 in Text Arena at 1525 and #8 in Code Arena WebDev at 1679 ( @arena ). Agent Arena : It ranks #8 overall and #1 for steerability on a preliminary 3K sessions ( @arena ). PostTrainBench : It scores 45.3%, up from 21.99% for Gemini 3.1 Pro ( @karinanguyen ). Skepticism : Some observers questioned the published numbers. Legal benchmark : Argon’s reported 19.6% on Harvey’s legal benchmark trails Muse Spark 1.2’s listed 25.42% ( @BlackHC ). Other critiques : Commentators raised possible preference-data benchmaxxing and objected to some figures, including DeepSWE ( @teortaxesTex , @teortaxesTex ). GPT-6.1 Sol and OpenAI’s DevDay Agent Stack Independent evals : GPT-6.1 Sol is the new #1 on MathArena ( @j_dekoninck ). Code Arena : It ranks #3 on WebDev at 1759, 70 points above GPT-6 Sol for the same $2/$10 pricing ( @arena ). Cost per task : Artificial Analysis measures $0.72 per task at max effort, versus $3.26 for Astra and $1.04 for GPT-6 Sol ( @ArtificialAnlys ). Source of savings : Sol uses fewer turns and has a lower cache-read price ( @ArtificialAnlys ). Luna bug fix : OpenAI fixed an image-encoding bug, adding 1 Intelligence Index point to GPT-6 Luna. Ultrafast inference : OpenAI quotes up to 300 tok/s. SemiAnalysis reports it runs on NVIDIA GPUs at low batch sizes, not on Cerebras ( @kimmonismus ). Hands-on report : Generation is about 8x faster, but end-to-end agent tasks speed up only 2–4x because tool latency dominates ( @sayashk ). Computer use : Gains are largest here, since UI actions respond in milliseconds. Cost : The tester exhausted a weekly limit in about 2 hours. Product layer : DevDay introduced dots (persistent agents with their own cloud computers), a Decisions API and computer use ( @latentspacepod ). Sites : ChatGPT Sites can now host MCP servers and turn them into installable plugins ( @mxstbr ). Usage limits : Users report one-off credits worth about $2,500. Others complain that usage limits were cut ( @kimmonismus , @kimmonismus ). Other Releases: Embeddings, Image/Video and Open Models Perplexity contextual embeddings : pplx-embed-v2-context-9b-preview is open on Hugging Face ( @perplexity_ai ). Method : The model encodes the whole document once and pools chunk vectors afterward. Training distills relevance from a context-compression model instead of using single gold-chunk labels ( @denisyarats ). Results : It sets a new state of the art on ConTEB. On turbopuffer’s private context-bench it beats voyage-context-4 by 14.4 points in answer recall@10, using 1 KB int8 vectors against 8 KB ( @turbopuffer ). Cohere Embed 5 : The family has Pro and Fast variants in a shared embedding space, so you can index with one and retrieve with the other ( @cohere ). Fast tier : Cohere says it beats other fast-tier models by at least 6 points at a third less cost than Pro. Evaluation uses its new RCP-nDCG@10 metric ( @cohere ). Ideogram 4.5 : The editing model targets artifact-free multi-turn edits, with open weights promised ( @ideogram_ai ). Edit fidelity : Over ten consecutive edits, 94–99% of untouched content stays identical ( @fal ). Ranking : It is #18 in Image Edit Arena at 1351 ( @arena ). Video benchmark : Artificial Analysis launched AA-Video-T2V v2.0, judged at 1080p with more than 68K human votes ( @ArtificialAnlys ). Leaders : Wan 3.0 is #1 at $12/min. Seedance 2.5 is #2 at $34.12/min, and MiniMax H3 is statistically tied at $4.80/min. Utopai X : This post-train of MiniMax H3 debuts at #2 ( @ArtificialAnlys ). Open and small models : Ling-3.1-flash : A 500B model reported close to GPT-5.6 Sol and Opus 5 ( @kimmonismus ). It ranks #2 among open-weight models in Mobile App Arena ( @DesignArena ). Praxis-1 : Runway released an open-weight world-action model and says robotics policy performance scales predictably with third-person video ( @agermanidis ). Solar Mini 4 : Upstage reports 35B total / 3B active parameters. It scores 24 on the Intelligence Index at $0.10/$0.40 ( @ArtificialAnlys ). Caching penalty : It still costs about 5x Luna per task, because only 48% of its repeated context hits cache versus 99% for Luna ( @ArtificialAnlys ). Agent Research, Inference and Systems Context Language Models (Meta) : CLMs treat context as an editable file rather than an append-only log, with context-management policies learned in the weights and no external harness ( @RulinShao ). Result : They score 65% higher with the same compute on a 24-hour multi-repository agent-swarm task ( @arankomatsuzaki , @natolambert ). Adaptive reasoning compute : TaH2 : Lookahead depth supervision teaches the model which hard tokens deserve another loop ( @ZhihuFrontier ). Gains : It reports +3.4pp accuracy at matched test-time compute and a 53% steeper scaling slope. Serving : A MiniSGL integration batches requests at different loop depths together. AutoBenchmark (Meta) : The project automates benchmark creation. Human feedback at the ideation stage beats agents working alone, and difficulty transfers to held-out solvers ( @jaseweston ). Stratego : A Nature paper presents the first superhuman Stratego AI, built on RL and test-time compute under imperfect information ( @ssokota ). Prefill/decode disaggregation : A steady-state analysis argues that disaggregation raises mean interactivity by about 1/(decode-time fraction) at equal batch size and throughput ( @ekzhang1 , @cHHillee ). Implication : It helps prefill-heavy workloads, not decode-bound low-latency serving. Compilers and hardware : DeepSeek on Huawei : DeepSeek released an open-source Ascend toolkit with TileLang optimized for Ascend 950 ( @kimmonismus ). AI as compiler : A model translates Triton directly to PTX, with a verifier checking correctness, races and deadlocks. Speedups on B200 reach 1.37x on FlashAttention ( @Azaliamirh ). Vera Rubin : Cognition is the first customer on Vera Rubin via CoreWeave, reporting about 4.8x the token throughput of GB200 at the same decode speed ( @cognition ). DFlash drafts : New draft models for Ornith-1.5 give up to 2.54x lossless speedups ( @ornith_ ). Agent sandboxes : Cloudflare rebuilt Containers for agents, with p50 time-to-interactive of 648 ms (6x faster) and snapshots in beta ( @mgamache ). AutoRouter : Cloudflare’s model router showed about 30% lower spend in internal tests ( @ashleypeacock ). Safety, Security and Eval Integrity Reasoning extraction : OpenAI attributes a core part of a hidden-reasoning extraction campaign to individuals linked to Moonshot AI ( @kimmonismus ). Scale : OpenAI recorded 16,000 attempts from more than 4,000 users in two days, with related activity across more than 15,000 users. External researchers : Their attacks kept working on Astra until this week. Patches were hard to propagate across product versions and third-party hosts ( @JSchaeff3r , @jonasgeiping ). Criticism : Nathan Lambert argues the vulnerability is the API provider’s responsibility ( @natolambert ). Distillation defenses : Defenses evaluated without later RL give a false sense of security. RL makes simple attacks effective ( @shidan_javaheri ). Embedded evaluations : Apollo Research published principles for outside evaluators who receive employee-like access to frontier labs ( @ApolloResearch ). Cyber evals : On CyberGym-E2E-AA, some frontier models are safety-blocked on more than 85% of tasks ( @ArtificialAnlys ). Cost : GPT-6 Luna or MiMo-V2.6-Pro can run about 100 bug hunts in a 1M-line codebase for roughly $20. Provenance and transparency : SynthID Bio : Watermarking for AI-generated proteins is published in Nature, with open-sourced tools ( @demishassabis ). AI-detector evasion : Opus 5.5 and Astra can rewrite more than 50% of a document without Pangram flagging it ( @ValsAI ). Agent reports : A new preprint asks how transparent LLM-written reports on agent work actually are ( @jennyihuang ). Industry and Policy Factory vs Cognition : Factory removed advisor Chris Degnan, alleging he was confiding in Cognition while attending its board meetings ( @matanSF ). Hire : Cognition announced Degnan as its CRO the same day ( @cognition ). Denial : Cognition’s CEO says no Factory information was shared and that Degnan had resigned as an advisor on Monday ( @ScottWu46 ). Political spending : Greg Brockman dropped a promised second $25M donation to the Leading the Future super PAC ( @teddyschleifer ). Follow-up question : Alex Bores asked whether this also covers anti-regulation groups that don’t disclose donors ( @AlexBores ). OpenAI finances : NYT reports OpenAI is near $70B in annualized revenue and in talks to raise $30B at a $1.4T valuation, with its IPO pushed to next year ( @srimuppidi ). Funding : Flow, which builds AI tooling for hardware engineering, raised a $50M Series B at a $750M valuation ( @parisingh ). Top tweets (by engagement) Gemini 4 Argon introduced; trusted-tester rollout via Fairwind — 44.6K Google: Argon with 1M output limit — 36.5K Factory terminates advisor over Cognition conduct — 6.4K Artificial Analysis: Argon matches Astra at 53 — 4.5K Cognition CEO disputes Factory’s allegations — 3.8K Argon agents freed 300 TiB of memory and drive Rust migrations — 3.7K Ideogram 4.5 for precise multi-turn editing — 3.2K Arena: Argon #1 in Text Arena — 3.0K AI Reddit Recap /r/LocalLlama + /r/localLLM Recap 1. GLM-5.3 Cyber Risk and Local Inference Support GLM-5.3 and the Spread of Advanced Cyber Capabilities \\ Anthropic (Activity: 785): Anthropic reports that Zhipu/Z.ai’s open-weight GLM-5.3 crosses a notable threshold for autonomous cyber capability: 50/410 end-to-end V8 exploits on ExploitBench, close to Claude Mythos Preview’s 56/410 , plus full control-flow hijacks on 4% of Anthropic’s internal binary exploitation tasks where prior models were near zero. Anthropic frames the risk as capability + accessibility : GLM-5.3 is widely downloadable, relatively cheap, and weakly refusal-tuned, with simple jailbreaks reportedly succeeding 64–100% of the time and “abliteration” dropping refusals to low single digits with little measured capability degradation. Top comments were largely hostile to Anthropic’s framing, arguing the post reads as an attempt to suppress a cheaper/open Chinese model near Anthropic’s frontier. One commenter emphasized legitimate defensive use, saying GLM-5.3 is their only practical tool for security testing and improving their own software. Commenters highlight GLM-5.3 as a low-cost, less-restricted model perceived to be close to frontier capability, with one user framing it as useful for “security testing and improvements on my own software” rather than inherently malicious. The technical concern raised is that restrictions by providers like Anthropic could limit defensive cybersecurity workflows that require models willing to analyze potentially sensitive exploit or vulnerability patterns. One commenter references prior GLM-5.2 models as having helped mitigate a Hugging Face attack , contrasting that with Claude allegedly refusing assistance. The substantive point is that refusal policies may reduce utility in incident response or vulnerability remediation scenarios, while more permissive models can be operationally useful for defensive security tasks. add GLM-5.3-Flash (GLM5-Next) support by timkhronos · Pull Request #27773 · ggml-org/llama.cpp (Activity: 348): Merged ggml-org/llama.cpp#27773 adds GLM-5.3-Flash / GLM5-Next support to llama.cpp , enabling local inference for the 320B hybrid text+vision model. The implementation adds GLM-specific DSA indexing/pooling, hybrid indexed memory, and a new glm5v vision preprocessing/tower path, while reusing Kimi-K3 KDA layers, DeepSeek-style MoE/mHC helpers, MLA-only attention, and DSV4-style SwigLU clamping; validation reports random-model logits matching Transformers across prefill/ubatching/decode and vision embedding agreement around 1e-5 , with some precision-sensitive tensors left unquantized. Commenters were concerned that llama.cpp model support is lagging behind the pace of new experimental architectures, with one noting the effective bottleneck appears to be maintainer availability. A technical compatibility issue was also raised: existing Unsloth quantizations reportedly use glm5next while mainline expects glm5-next , so current mainline may fail to load those quants. Commenters noted a compatibility issue between the Unsloth quantization PR and the mainline llama.cpp PR: one identifies the architecture/model type as glm5next while the other uses glm5-next , meaning mainline llama.cpp may fail to load existing Unsloth GLM-5.3-Flash quants without conversion or metadata fixes. There was concern that llama.cpp support is lagging behind the pace of new model releases, especially as newer models increasingly use experimental architectures that require bespoke loader/runtime changes before inference and optimization work can land. One commenter framed GLM-5.3-Flash support as taking roughly “another month” after model release, with progress depending heavily on a small number of maintainers. Keep reading with a 7-day free trial Subscribe to Latent.Space to keep reading this post and get 7 days of free access to the full post archives. Start trial Already a paid subscriber? Sign in Previous Next © 2026 Latent.Space · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-12T11:17:54.225Z",
+      "discoveredAt": "Thu, 01 Oct 2026 06:45:05 GMT",
+      "originFeedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ],
+      "productUrl": "https://www.latent.space/p/ainews-gemini-4-argon-gdms-answer",
+      "originSourceIds": [
+        "015ccf980c076bf61e279865"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T11:16:29.422Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/p/ainews-gemini-4-argon-gdms-answer",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/p/ainews-gemini-4-argon-gdms-answer",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "GDM last shipped a larger-than-Flash model in February ( 3.1 Pro ), and after successive incremental 3.x Flash versions and the big GDM management shakeup last month, the largest question for GDM was when they would catch up to peers who have in the meantime launched Fable and Astra class models. Well, Argon’s here , with VERY respectable benchmarks (SOTA in 13 of 19 credible benchmarks)… but only accessible in limited cybersecurity preview, though access is promised “ as soon as possible ”: We like the experimental Long Decode Continuation , which increases output tokens up to 1M as an industry first. AI News for 9/29/2026-9/30/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap Gemini 4 Argon: Google Returns to the Frontier Launch : Google DeepMind introduced Gemini 4 Argon for coding, enterprise knowledge work and cyber defense ( @GoogleDeepMind , @sundarpichai ). Availability : Access starts with government users and trusted cyber defenders in the Fairwind Program. Google says it will refine guardra",
+      "verifiedAt": "2026-10-12T11:17:54.225Z"
+    },
+    {
+      "id": "9efb8fad9944e0510ae97b9f",
+      "title": "Composal Y Combinator Logo F2026 • Active • 3 employees • London · product evidence",
+      "url": "https://www.ycombinator.com/companies/composal",
+      "publisher": "www.ycombinator.com",
+      "text": "Composal: Swarms of agents acting like users to find bugs before release | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Composal Composal Swarms of agents acting like users to find bugs before release Y Combinator Logo Fall 2026 Active Artificial Intelligence Developer Tools DevSecOps Cloud Computing Company Jobs 0 https://composal.ai Swarms of agents acting like users to find bugs before release Check features, not code. Composal sends a swarm of agents to use your product like your users do. They test real flows and edge cases to show you what works, what breaks, and if it’s ready to ship. Active Founders Pandelis Zembashis Founder/CEO I'm co-founder and CEO of Composal. We help engineering teams continually test and validate what they build: our agents use the product, check real user flows and discover bugs before release. Previously, as CTO at Cosine, I built AI coding agents and the infrastructure behind them, including one of the first CLI harnesses, sandboxed execution from scratch and large-scale repository mirroring for data generation and model training. Now I help teams validate software at scale. Pandelis Zembashis Founder/CEO I'm co-founder and CEO of Composal. We help engineering teams continually test and validate what they build: our agents use the product, check real user flows and discover bugs before release. Previously, as CTO at Cosine, I built AI coding agents and the infrastructure behind them, including one of the first CLI harnesses, sandboxed execution from scratch and large-scale repository mirroring for data generation and model training. Now I help teams validate software at scale. Jonathan Davies Founder/CTO Co-Founder and CTO of Composal. Previously Senior Software Engineer at PapayaDash. Before that built software for Telefonica, Mitie, and Vodafone Jonathan Davies Founder/CTO Co-Founder and CTO of Composal. Previously Senior Software Engineer at PapayaDash. Before that built software for Telefonica, Mitie, and Vodafone Jan Moehlmann Founder Founder at composal.ai (YC F26). Previously built commercial functions at 11x, Encord, Tractable Jan Moehlmann Founder Founder at composal.ai (YC F26). Previously built commercial functions at 11x, Encord, Tractable YC Photos Composal Founded: 2026 Batch: Fall 2026 Team Size: 3 Status: Active Location: London, United Kingdom Primary Partner: Pete Koomen Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T11:17:54.720Z",
+      "productUrl": "https://www.ycombinator.com/companies/composal",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "9efb8fad9944e0510ae97b9f"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T11:16:29.649Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/composal",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/composal",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Composal Y Combinator Logo F2026 • Active • 3 employees • London. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T11:17:54.720Z"
+    },
+    {
+      "id": "a1c7049082ab313fa17d114e",
+      "title": "UXDuck Y Combinator Logo F2026 • Active • 1 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/uxduck",
+      "publisher": "www.ycombinator.com",
+      "text": "UXDuck: Android for drones | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › UXDuck UXDuck Android for drones Y Combinator Logo Fall 2026 Active Artificial Intelligence Developer Tools Hardware San Francisco Company Jobs 0 https://uxduck.com Android for drones Starting with a modern interface for drones that users can build on and adapt. Works with planes, copters, rovers, boats and submarines. Active Founders Ben Butterworth Founder/CEO 12th employee at Helsing (~£18B AI defence company) - built C2 and edge AI applications. Then became tech lead at stealth defense startup, joining as SWE #1. Scaled company to 70 people and 1000+ drones/month, used operationally with success. Works closely with soldiers from various countries. CS from Imperial College London and MIT. Ben Butterworth Founder/CEO 12th employee at Helsing (~£18B AI defence company) - built C2 and edge AI applications. Then became tech lead at stealth defense startup, joining as SWE #1. Scaled company to 70 people and 1000+ drones/month, used operationally with success. Works closely with soldiers from various countries. CS from Imperial College London and MIT. YC Photos UXDuck Founded: 2026 Batch: Fall 2026 Team Size: 1 Status: Active Location: San Francisco Primary Partner: Nicolas Dessaigne Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T11:17:54.891Z",
+      "productUrl": "https://www.ycombinator.com/companies/uxduck",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "a1c7049082ab313fa17d114e"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T11:16:29.649Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/uxduck",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/uxduck",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "UXDuck Y Combinator Logo F2026 • Active • 1 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T11:17:54.891Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T11:17:55.285Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T11:17:55.285Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-12T11:17:55.517Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T11:17:55.517Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T11:17:55.577Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T11:17:55.577Z"
+    },
+    {
+      "id": "4e16162c586f22929d9e95b2",
+      "title": "Show HN: Botzilla – Web automation using visual scripting",
+      "url": "https://news.ycombinator.com/item?id=49805820",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Botzilla – Web automation using visual scripting | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Botzilla – Web automation using visual scripting ( botzilla.dev ) 1 point by btzll 19 days ago | hide | past | favorite | 1 comment I have been working on this project for quite some time, it's a web automation software/platform that runs on Windows. Free beta version for now which will allow local bot development, but in the future, one will have the ability to run these bots in the cloud and get the results through the web interface. No need for Playwright or Selenium, you can use Botzilla to extract data, automate actions, do testing and more. New actions will be constantly added into the library, that will eventually connect to different platforms, similar to n8n. Tech wise it might surprise some of you, as it's made with C# WinForms (so it's Windows only), and web app is Blazor. Trying it out is as simple as creating an account (just needs an email) and then once logged in downloading the app. Happy to answer questions! lfdo0870 18 days ago [–] For that there's Python: with 30 lines you can automate this task. If you want I can send you the script I use. DM me if interested. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T11:17:55.697Z",
+      "productUrl": "https://www.botzilla.dev",
+      "discoveredAt": "2026-09-22T18:20:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T11:17:55.697Z"
+    }
+  ],
+  "health": [
+    {
+      "sourceId": "265adce9a63ce1b22335c79d",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "sourceId": "3b5e6a21a146de8d66b131be",
+      "url": "https://news.ycombinator.com/item?id=49827478",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "url": "https://www.doozadesk.com",
+      "status": "failed",
+      "message": "Public source returned HTTP 404."
+    },
+    {
+      "url": "https://www.lumro.co",
+      "status": "failed",
+      "message": "getaddrinfo ENOTFOUND www.lumro.co"
+    },
+    {
+      "url": "https://vendiq.rishailabs.com",
+      "status": "failed",
+      "message": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "url": "https://www.botzilla.dev",
+      "status": "failed",
+      "message": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "url": "https://app.cubelv.com",
+      "status": "failed",
+      "message": "Primary product page contained too little readable evidence."
+    }
+  ],
+  "deterministicResults": [],
+  "noveltyContractVersion": 1,
+  "noveltyContext": {
+    "version": 1,
+    "windowDays": 14,
+    "asOf": "2026-10-12T11:17:52.254Z",
+    "cutoff": "2026-09-28T11:17:52.254Z",
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "title": "A small AI support inbox loop",
+        "productUrl": "https://auxx.ai",
+        "promise": "Triage one kind of ticket, draft a sourced reply, and leave approval to a person.",
+        "whatItIs": "Auxx describes a support CRM where an agent can read tickets, retrieve relevant customer records and knowledge, draft replies, and update records. A beginner version could handle one narrow ticket type using a small sample inbox and a written procedure, rather than rebuilding the full CRM.",
+        "whoPays": "Hypothesis: a small online shop or support team with repetitive questions might pay for less routine inbox work. The supplied page does not establish paying customers or demand.",
+        "loop": [
+          "A new test ticket or scheduled run starts the workflow.",
+          "The system finds the relevant customer record and approved policy text.",
+          "A written procedure routes the ticket to one supported category.",
+          "The model drafts a reply using retrieved material and marks uncertain cases.",
+          "A person reviews the draft and decides whether to send it.",
+          "The workflow records the category and outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:auxx.ai",
+            "brand:auxx"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers",
+            "support_staff"
+          ]
+        }
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "title": "A human checked support inbox loop",
+        "productUrl": "https://n8n.io/ai",
+        "promise": "Sort incoming questions and prepare reply drafts for a person to review.",
+        "whatItIs": "n8n is a workflow builder that connects services and can include AI steps. A small student version could take incoming support messages, label them by topic, and prepare a draft reply for review. A workflow is a set of connected steps that runs when an event occurs.",
+        "whoPays": "Hypothesis: a small online shop with a recurring support inbox might pay for setup or maintenance; the supplied page does not establish demand for this student service.",
+        "loop": [
+          "A new test support email triggers the workflow.",
+          "Rules remove obvious junk and pass the message to a classifier.",
+          "The classifier assigns a topic and priority.",
+          "The workflow retrieves an approved answer note and drafts a reply.",
+          "A person reviews and sends the draft, correcting uncertain cases.",
+          "The workflow records the outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:n8n.io"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers"
+          ]
+        }
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "title": "Track GPU prices and specs in one view",
+        "productUrl": "https://flopper.io/",
+        "promise": "Collect a small set of public GPU prices and compare them with published specifications.",
+        "whatItIs": "Flopper is a GPU hardware explorer. Its maker says it combines GPU specifications, workload estimates, and prices from dozens of providers. The maker also notes that reliable quotes for some large systems are difficult to obtain, so listings are not complete procurement quotes. A student version could track a few consumer GPUs and public provider pages, showing dated prices beside basic specifications. Small AI teams or hardware shoppers might pay for such a comparison, but this customer and willingness to pay are hypotheses. The automated part is checking selected pages and recording changes. A person should confirm the exact model, configuration, availability, and final price before relyin",
+        "whoPays": "Hypothesis: small AI teams or individuals comparing hardware may pay for a focused price and specification tracker; the source establishes no customers or revenue.",
+        "loop": [
+          "Keep a manually reviewed list of GPU models and public provider pages.",
+          "Fetch the selected pages on a schedule and extract visible price and configuration text.",
+          "Store each observation with its URL and timestamp.",
+          "Compare new observations with prior ones and flag changes or missing prices.",
+          "Show a comparison with the published hardware specifications.",
+          "Have a person verify configuration, availability, and quote details before purchase."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:flopper.io",
+            "brand:flopper"
+          ],
+          "workflowKeys": [],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "title": "Catch failures in production AI agents",
+        "productUrl": "https://github.com/tessaryai/tessary",
+        "promise": "Turn agent traces into grouped findings and a human-reviewed root-cause report.",
+        "whatItIs": "Tessary is an open-source tool for teams running AI agents in production. Its repository describes receiving traces (records of an agent’s operations), checking them with classifiers, grouping related findings into cases, and investigating likely causes using trace evidence and, when connected, repository code. A small student project could accept test traces, apply a few simple checks, group matching alerts, and prepare a report for a developer. Teams operating AI agents are a plausible customer, but the sources do not establish who pays. The repeating work is trace checking and case preparation; a person still needs to confirm whether a finding is a real problem and choose any fix.",
+        "whoPays": "Hypothesis: teams operating production AI agents may pay for help finding and investigating failures; the repository does not establish paying customers or revenue.",
+        "loop": [
+          "Receive an agent trace through an instrumentation endpoint.",
+          "Normalize the trace into a consistent format.",
+          "Run enabled classifiers and open findings when checks trigger.",
+          "Group related findings into a case.",
+          "Investigate the case using trace evidence and connected repository code when available.",
+          "Send the findings and explanation to a human owner, who decides whether and how to fix the system."
+        ],
+        "profile": {
+          "productKeys": [
+            "github:tessaryai/tessary",
+            "brand:tessary"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "title": "Test AI phone agents with repeatable calls",
+        "productUrl": "https://voicegremlin.com/",
+        "promise": "Run a scripted call against a phone agent and receive a reviewable pass or fail result.",
+        "whatItIs": "VoiceGremlin is described by its maker as an API for testing AI systems that answer phone calls. A user supplies a phone number and a test case, such as checking whether the agent performs a requested behavior. The service calls the agent, has the two bots converse, and uses an LLM judge—a language model asked to assess the result—to return pass or fail for a software pipeline. A small student version could run one scripted scenario against a test phone agent and save the call outcome. Teams building voice agents are a plausible customer, but the source does not establish who pays or whether customers use it. The repeated loop can run without a person placing each test call, while a human st",
+        "whoPays": "Hypothesis: companies building AI phone agents may pay to check that their agents keep meeting defined behaviors; the source provides no customer or revenue evidence.",
+        "loop": [
+          "An operator defines a test case and supplies a test phone number.",
+          "The API places a call to the phone agent being checked.",
+          "The test bot speaks with the phone agent about the scenario.",
+          "An LLM judge compares the conversation with the requested behavior.",
+          "The system returns a pass or fail result to a software pipeline.",
+          "A developer reviews unclear failures and updates the test or phone agent."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:voicegremlin.com",
+            "brand:voicegremlin"
+          ],
+          "workflowKeys": [
+            "voice_agent_tests"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "title": "Check whether docs work for AI agents",
+        "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+        "promise": "Scan a documentation URL for common access and format problems, then review a scorecard.",
+        "whatItIs": "Velu's agent-friendly documentation checker is described as scoring a documentation URL against the open Agent-Friendly Documentation Spec, using the spec's reference implementation called afdocs. The Show HN post names issues the spec is concerned with: pages rendered only in the browser, missing llms.txt or Markdown versions, soft 404 pages, and pages too large for an agent's context window. A beginner could build a small scheduled checker for one documentation site that records the score and lists detectable problems. Documentation teams are a plausible customer, but the source does not establish who pays. This is an audit and reporting loop, not an automatic documentation repair service.",
+        "whoPays": "Hypothesis: teams maintaining developer documentation may pay for recurring checks; the source does not establish customers or revenue.",
+        "loop": [
+          "Read a configured documentation site URL.",
+          "Check pages for supported agent access and format signals.",
+          "Run the reference checker and save its score.",
+          "Compare the result with the previous scan.",
+          "Send a report when the score or detected issues change.",
+          "A documentation owner verifies findings and chooses any fix."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:veludocs.com",
+            "brand:veludocs"
+          ],
+          "workflowKeys": [
+            "agent_documentation_audit",
+            "website_change_monitor"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "title": "Route visual feedback to a coding agent",
+        "productUrl": "https://circleit.ai",
+        "promise": "Turn a marked-up staging page into an agent task with a reviewable status trail.",
+        "whatItIs": "CircleIt is described as a Chrome extension plus a Claude Code or Codex plugin. A teammate can mark an area on a page, explain the requested change, and send the screenshot, comment, and page metadata to a running coding agent. The source says the system matches the page address to a repository and reports status back in the sender's browser. A small student version could capture one staging page and open a proposed task for a developer's agent. Small product teams are a plausible customer, but that is a hypothesis. The loop handles intake and handoff; a human still needs to judge whether the requested change is correct and review code before release.",
+        "whoPays": "Hypothesis: small software teams that collect frequent website feedback may pay; no customer or payment evidence is given.",
+        "loop": [
+          "A teammate opens a staging page and marks a visible issue.",
+          "Capture the screenshot, comment, page address, and relevant metadata.",
+          "Match the page address to a configured repository.",
+          "Send the feedback to the team's running coding agent after any required approval.",
+          "Show the sender the agent's status and response.",
+          "A developer reviews code changes and decides whether to merge."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:circleit.ai",
+            "brand:circleit"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      }
+    ],
+    "postsSha256": "a5770461692548e187a4d8626edd357648b7b4f9d5c76210db0557d2700effd6"
+  },
+  "assessmentContractVersion": 1,
+  "primaryFetchDiagnostics": [
+    {
+      "productUrl": "https://github.com/Alishahryar1/free-claude-code",
+      "requestedAt": "2026-10-12T11:17:55.757Z",
+      "status": "fetched",
+      "sourceId": "9d67ce648f6a891927c40000",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://github.com/mksglu/context-mode",
+      "requestedAt": "2026-10-12T11:17:55.757Z",
+      "status": "fetched",
+      "sourceId": "cfe6b1639c3c3094f26f16ce",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://github.com/open-webui/open-webui",
+      "requestedAt": "2026-10-12T11:17:55.757Z",
+      "status": "fetched",
+      "sourceId": "7c94eb734f17ebfcce723006",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.latent.space/p/ainews-gemini-4-argon-gdms-answer",
+      "requestedAt": "2026-10-12T11:17:55.757Z",
+      "status": "fetched",
+      "sourceId": "015ccf980c076bf61e279865",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.ycombinator.com/companies/composal",
+      "requestedAt": "2026-10-12T11:17:55.757Z",
+      "status": "fetched",
+      "sourceId": "9efb8fad9944e0510ae97b9f",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.ycombinator.com/companies/uxduck",
+      "requestedAt": "2026-10-12T11:17:55.757Z",
+      "status": "fetched",
+      "sourceId": "a1c7049082ab313fa17d114e",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.doozadesk.com",
+      "requestedAt": "2026-10-12T11:17:55.757Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "Public source returned HTTP 404."
+    },
+    {
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "requestedAt": "2026-10-12T11:17:57.737Z",
+      "status": "fetched",
+      "sourceId": "1dd03891d1e36345e3123c1a",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.lumro.co",
+      "requestedAt": "2026-10-12T11:17:57.737Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "getaddrinfo ENOTFOUND www.lumro.co"
+    },
+    {
+      "productUrl": "https://vendiq.rishailabs.com",
+      "requestedAt": "2026-10-12T11:17:57.796Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "productUrl": "https://www.botzilla.dev",
+      "requestedAt": "2026-10-12T11:17:58.153Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "productUrl": "https://app.cubelv.com",
+      "requestedAt": "2026-10-12T11:17:59.077Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "Primary product page contained too little readable evidence."
+    }
+  ],
+  "considerationEvidence": [
+    {
+      "title": "Free Claude Code model-routing toolkit",
+      "productUrl": "https://github.com/Alishahryar1/free-claude-code",
+      "sourceIds": [
+        "00059247e34d84ef1ea8d4e0",
+        "9d67ce648f6a891927c40000"
+      ],
+      "availableSourceIds": [
+        "00059247e34d84ef1ea8d4e0",
+        "9d67ce648f6a891927c40000"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Context Mode context-management server",
+      "productUrl": "https://github.com/mksglu/context-mode",
+      "sourceIds": [
+        "b2a40c43029e9a0c8ac0bd59",
+        "cfe6b1639c3c3094f26f16ce"
+      ],
+      "availableSourceIds": [
+        "b2a40c43029e9a0c8ac0bd59",
+        "cfe6b1639c3c3094f26f16ce"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Open WebUI model interface",
+      "productUrl": "https://github.com/open-webui/open-webui",
+      "sourceIds": [
+        "a885dcb535b7db4d6a108510",
+        "7c94eb734f17ebfcce723006"
+      ],
+      "availableSourceIds": [
+        "a885dcb535b7db4d6a108510",
+        "7c94eb734f17ebfcce723006"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Gemini 4 Argon model roundup",
+      "productUrl": "https://www.latent.space/p/ainews-gemini-4-argon-gdms-answer",
+      "sourceIds": [
+        "015ccf980c076bf61e279865"
+      ],
+      "availableSourceIds": [
+        "015ccf980c076bf61e279865"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Composal agent-based app testing",
+      "productUrl": "https://www.ycombinator.com/companies/composal",
+      "sourceIds": [
+        "9efb8fad9944e0510ae97b9f"
+      ],
+      "availableSourceIds": [
+        "9efb8fad9944e0510ae97b9f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "UXDuck drone interface",
+      "productUrl": "https://www.ycombinator.com/companies/uxduck",
+      "sourceIds": [
+        "a1c7049082ab313fa17d114e"
+      ],
+      "availableSourceIds": [
+        "a1c7049082ab313fa17d114e"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dooza Desk customer support",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice Agent Space",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Lumro customer support and lead agents",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "VendIQ vendor follow-ups",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [],
+      "unavailableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ]
+    },
+    {
+      "title": "Botzilla visual web automation",
+      "productUrl": "https://www.botzilla.dev",
+      "sourceIds": [
+        "4e16162c586f22929d9e95b2"
+      ],
+      "availableSourceIds": [
+        "4e16162c586f22929d9e95b2"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "CubeLV automation designer",
+      "productUrl": "https://app.cubelv.com",
+      "sourceIds": [
+        "3b5e6a21a146de8d66b131be"
+      ],
+      "availableSourceIds": [],
+      "unavailableSourceIds": [
+        "3b5e6a21a146de8d66b131be"
+      ]
+    }
+  ]
+}
