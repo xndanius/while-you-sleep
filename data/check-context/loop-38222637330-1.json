@@ -1,0 +1,915 @@
+{
+  "runId": "loop-38222637330-1",
+  "createdAt": "2026-10-12T08:19:12.012Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "eca845c98786f7c45f17fe68fcfe78b6c216e397b3c81bd262e2a38d47066537",
+  "sourceSnapshotSha256": "e4d6fb85d26ebc8ef104f405972546fdc0a8834a2816da6cc0933dab90ac0d8a",
+  "sources": [
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VendIQ – AI agent for vendor follow-ups and ops automation ( rishailabs.com ) 1 point by rishailabs 2 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T08:19:04.452Z",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "discoveredAt": "2026-10-09T09:33:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T08:19:04.452Z"
+    },
+    {
+      "id": "137cfe2b70b12ea36bfbbe8f",
+      "url": "https://raw.githubusercontent.com/SaarthurR/atticus-mac/main/README.md",
+      "title": "Show HN: Atticus – Hold-to-talk voice assistant for macOS that runs on Claude -p · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "Hold ⌃ control ⌥ option space , say what you need, let go. Atticus moves your windows, finds your files, reads your screen and gets it done. ⚡ Fast · 🔑 No API key · 🧠 Remembers you · Free and open source - **Fast.** Simple asks skip the AI: an app opens in 0.08 s. Ask for an action once and Atticus learns it, so next time it runs in a blink, with no AI and for free. - **No API key.** It runs on the Claude Pro or Max plan you already have, through Claude Code. Nothing to sign up for, no key to paste, no extra bill. - **Remembers you.** Say \"remember…\" and every ask after that knows it. It picks up who you are (your name, your apps) and fixes its own mistakes when you correct it. https://github.com/user-attachments/assets/e3444422-02e8-4dd7-bb44-d39f2b0f2bef ## Just ask | You say | Atticus | |---|---| | *\"Code on my big screen, Chrome and Terminal on the laptop.\"* | Arranges three windows across two displays. | | *\"Open Spotify.\"* · *\"Terminal on the left.\"* | Runs instantly, with no AI at all. | | *\"Find my notes about the Tokyo trip.\"* | Searches your files by what's inside them, opens the match on your other screen. | | *\"What's wrong with this code?\"* | Looks at your screen and answers in a line. | | *\"Summarize this article in three bullets.\"* | Reads the page for you. | | *\"Reply: sounds good, see you at 7.\"* | Types it into the app you're in. It never sends. | | *\"Play my late night coding playlist on Spotify.\"* | Plays it in a second, no clicks. Any song, artist or playlist. | | *\"When I say focus mode, close Slack and open my to-do list.\"* | Remembers it. Next time, two words do it all. | ## Why Atticus Fast Opening apps and sites, moving windows, web searches and music skip the AI entirely (an app opens in 0.08 s). Actions you ask for once (opening apps, moving windows, playing music) become learned shortcuts: \"Open Calculator and Chess\" went from 5.5 s to 0.4 s, with no AI. No API key Runs on the Claude plan you already have, through claude -p . About 0.14¢ of plan usage per ask (~700 asks for $1 at API list rates). Atticus itself is free. Remembers you \"Remember: open means bring it to the front.\" Saved rules go with every ask. It learns lasting facts about you (name, city, favorite apps), and when you correct it, it saves a rule so it gets it right next time. Edit all of it in Settings. Private ears Apple's on-device speech turns your voice into text. Audio never leaves your Mac. Your whole Mac Apps, windows, files, settings, the web and the screen, with Peekaboo for clicking inside any app. Safe by default Safe mode runs the AI's commands in Claude Code's sandbox: they can only write to a scratch folder. Before anything deletes, sends, buys or changes a file, Atticus asks you first. rm , sudo , disk tools and shutdown are always blocked. Every exact command is in the ask log. How the shortcut and the box work Choose **Hold to talk** or **Press to toggle** in Settings → General → Shortcut behavior. Hold mode sends when you release. Toggle mode starts on the first press and sends on the second; pauses keep listening. Pressing the shortcut while Atticus answers stops it; during spoken playback it stops the voice. Esc cancels listening without sending. Toggle recordings reach a review screen after 60 seconds, rather than sending automatically. Closing the overlay or pausing Atticus stops its microphone, workers and voice. Click any answer to copy it, including earlier answers still shown in the box. Click your request to edit and ask again, or press ↑ in an empty typing box to recall the latest request. The overlay stays within your display when resized and respects Reduce Motion. Apple's final transcript confirms each voice request before AI tools or learned shortcuts run. AI reasoning can start during a pause, but its tools wait for confirmation. If speech finalization takes too long, Atticus offers the partial text for review. Instant commands still skip the AI entirely. Supported built-in commands run mid-sentence, before you send, with Instant commands and Act while I’m talking on (Settings → Intelligence). Learned shortcuts wait for confirmed words. ## Install You need: - **macOS 26** or later (Atticus uses Apple's new on-device speech) - **A paid Claude plan** (Pro or Max) and [Claude Code](https://claude.com/claude-code). No Claude Code yet? The setup window installs it and signs you in. - Apple's command line tools: `xcode-select --install` - Optional: [Peekaboo](https://github.com/openclaw/Peekaboo) (see its install steps) so Atticus can click inside apps Paste this in Terminal: ``` curl -fsSL https://raw.githubusercontent.com/SaarthurR/atticus-mac/main/install.sh | bash ``` It checks your Mac, downloads Atticus to `~/.atticus`, builds `~/Applications/Atticus.app`, and opens it. Atticus starts at login and updates itself from there (turn that off in Settings → About & Updates). Working on the code instead? Clone the repo anywhere and run `./build.sh` after each change. The first launch opens a setup window. It checks your Claude plan, then asks for each macOS permission. After that, Atticus lives in the menu bar. Open it from Spotlight (⌘Space, \"Atticus\") for Settings: shortcut, sounds, model, speed, screen, memory and usage. If you sign out of Claude later, the setup window comes back by itself. To see it again: `defaults delete com.atticus.app onboarded`, then restart the app. Test: `python3 atticus.py --selftest` on macOS, plus `python3 -m unittest discover -s tests -v` for offline regressions. After building, `~/Applications/Atticus.app/Contents/MacOS/Atticus --selftest` checks native transcript matching without opening the app. Node, when installed, also checks embedded JavaScript syntax. For the UI interaction checks, run `python3 -m http.server 8765 --bind 127.0.0.1` from the repo and open `http://127.0.0.1:8765/tests/ui.html`; it uses a mock native bridge and makes no Mac actions or AI calls. Remove: `launchctl bootout gui/$(id -u)/com.atticus.app`, then delete `~/Applications/Atticus.app`, `~/.atticus`, `~/.config/atticus` (your settings and history) and `~/Library/LaunchAgents/com.atticus.app.plist`. ## Watch for me Say \"tell me when Codex is done\" or \"watch this page until it says shipped\". Atticus sets it up once, then checks every 5 seconds on your Mac with no AI, so waiting is free. When it fires you get a notification, and it runs a follow-up if you asked for one. A window must stay open on this desktop (covered is fine). Coding agents like Codex are watched through their own log, with no screen at all. Say \"stop watching\" to cancel. ## Budget Atticus has to stay fast and nearly free, so new features must fit under these limits: - Instant commands: no AI, $0. - AI asks: median under $0.002 and 6 s over the last 50 (Oct 10, 2026: $0.00095, 5.0 s). Check with `python3 atticus.py --budget`. - System prompt: under 10,000 characters with every option on. Every ask pays for it, and a test enforces it. - Anything that waits or runs in the background: $0 while it waits. AI only to set it up and to act at the end. ## Usage count Once a day, Atticus sends one random ID (made on your Mac, not tied to you) to PostHog, so I can see how many people use it. It never sends your name, your asks or your screen. Turn it off in Settings → Account & Access → Count me as a user. ## Files - `Atticus.swift`: the app (hotkey, speech, overlay, onboarding window) - `atticus.py`: the brain (fast commands, system prompt, helpers for windows, web and screen) - `ui/ui.html`, `ui/onboarding.html`, `ui/settings.html`: the overlay, the welcome flow, and Settings - `ui/AppIcon.icns`: the app icon - `ui/orbs.js`: the [thinking-orbs](https://github.com/Jakubantalik/thinking-orbs) engine (MIT, Jakub Antalik) ## License MIT. See `LICENSE`. `ui/orbs.js` is from [thinking-orbs](https://github.com/Jakubantalik/thinking-orbs), also MIT. ## Contributing Run regressions with a scratch `ATTICUS_DIR` and use `tests/ui.html` and `tests/settings.html` for mock-bridge UI checks. Keep personal agent settings, credentials and runtime state out of commits. Anonymous usage telemetry is disabled unless `ATTICUS_POSTHOG_KEY` is supplied through the environment; no key is embedded in the source.",
+      "fetchedAt": "2026-10-12T08:19:04.578Z",
+      "productUrl": "https://github.com/SaarthurR/atticus-mac",
+      "originSourceIds": [
+        "2c21fb1647b1840a93749780"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T08:17:43.752Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/SaarthurR/atticus-mac/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/SaarthurR/atticus-mac/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T08:19:04.578Z"
+    },
+    {
+      "id": "2c21fb1647b1840a93749780",
+      "title": "Show HN: Atticus – Hold-to-talk voice assistant for macOS that runs on Claude -p",
+      "url": "https://news.ycombinator.com/item?id=50049588",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Atticus – Hold-to-talk voice assistant for macOS that runs on Claude -p | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Atticus – Hold-to-talk voice assistant for macOS that runs on Claude -p ( github.com/saarthurr ) 21 points by SaarthRanka 1 hour ago | hide | past | favorite | discuss Hi HN! I'm Saarth. I'm in 9th grade, and I built Atticus. Atticus is an incredibly fast and cheap Mac assistant that can do tasks for you. You hold down Control-Option-Space, speak or type your task, be it complex or a simple browser search, and Atticus will get on it. The interesting part is that simple tasks, like opening apps, playing a Spotify playlist, or web queries, don't touch AI, and instead are processed locally and typically finish in under a second. For example, prompting Atticus to open apps takes around 0.08 seconds, sometimes even finishing before you finish your sentence, sort of like Jev. Any tasks that are more complicated will be sent to Claude via claude -p, meaning you never need an API key and Atticus will run on your existing Claude Pro or Max plan. By using this approach, costs are also cut down immensely, with, on average, tasks costing a fraction of a cent. To achieve Atticus' speed, it remembers shortcuts from each task it completes. When it does a task right for the first time, it saves its steps and replays them the next time without AI. For example, a workflow of creating a new meeting took about 30 seconds the first time around. Atticus then logs the exact steps to memory and takes 5-8 seconds on the next pass. To add to this, Atticus also learns about you as you use it more and from what's on your computer, including your name, your apps, and things you want it to remember, personalizing its answers to you. To combat the safety concerns over giving an AI unrestricted access to your device, Atticus has toggleable restrictions, so before anything is deleted, sent, bought, or written to a file, the user is prompted before that action. Some features I'm currently working on include a meeting copilot that capitalizes on Atticus' speed, allowing Atticus to listen in on meetings and answer questions in real time as they come in, personalized to the context of the meeting and what it knows about you. To run Atticus, macOS 26 or higher is required for its voice transcription features. The voice transcription is also done locally by macOS. Atticus is free, open source, and also very fresh, and I'm completely aware of its many rough edges, which is why I'd love to hear from everyone about what breaks and what you guys would like to see Atticus do! help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T08:19:04.641Z",
+      "productUrl": "https://github.com/SaarthurR/atticus-mac",
+      "discoveredAt": "2026-10-12T00:15:12Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ],
+      "verifiedAt": "2026-10-12T08:19:04.641Z"
+    },
+    {
+      "id": "417c3a0572d8db4597000019",
+      "title": "[AINews] Reflection Beam - 501B-A23B American Open Model · product evidence",
+      "url": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "publisher": "www.latent.space",
+      "text": "[AINews] Reflection Beam - 501B-A23B American Open Model Subscribe Sign in AINews: Weekday Roundups [AINews] Reflection Beam - 501B-A23B American Open Model A small win for US open source Oct 06, 2026 ∙ Paid 61 3 Share It’s been over a year since Reflection launched with us with big goals on coding (and hinted about their RL approach ): But they stayed “stealth” longer than Thinking Machines and it was not clear we would ever get a model launch out of them, as the broader open model ecosystem did not slow down one bigt for them. Well, we did : They compare themselves to Inkling, Nemotron, and GLM 5.2, but the SOTA GLM 5.3, Kimi K3, Qwen 3.8 Max, and DeepSeek V4.1 Flash are generally ahead. Still, since this is US-trained from scratch, there’s a segment of the market that has been eagerly waiting for more options here, and more importantly, Reflection has now announced its arrival as a functional neolab! AI News for 10/03/2026-10/5/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap Reflection’s Beam Leads a Wave of Open-Weight Releases Beam launch : Reflection announced Beam, a text-only 501B-total / 23B-active MoE for coding, agentic and scientific work. It was trained from scratch, and full weights under Apache 2.0 are due this month ( announcement , Laskin ). Training scale : Team posts cite 23.8T pretraining tokens, partly from an OCR pipeline over hundreds of millions of PDFs ( data lead ). They also describe a stable RL/OPD run on 10K GB300s with more than 100M rollouts across ~1M tasks ( Damos ). Claimed results : A summary of Reflection’s claims gives 80.9 on SWE-bench Verified, 3–4x the inference efficiency of GLM 5.2, and four weeks each of pretraining and RL on ~10,500 GB300s ( summary ). A tech report and OSS integrations are promised ( Polozov ). Context : Axios reported the launch ahead of time. It said Reflection pays $150M/month for Colossus compute plus a $1B Nebius deal, and that other unnamed US labs will ship open models this month ( Curran ). Independent and critical reads : Artificial Analysis has early access and expects Beam to be among the most token-efficient open models for its intelligence ( AA ). MFU and architecture : Elie Bakouch estimates only ~12% BF16 MFU in pretraining. He reads the architecture as 3:1 interleaved global/sliding-window attention and notes better held-out code perplexity than DSv4 ( analysis ). Compute comparison : Teortaxes calls Beam an iso-FLOP replication of DeepSeek V3 ( post ). He infers ~1.3B RL sandboxes over 4 weeks, with up to 170K running at once ( sandboxes ). Positioning : Observers place Beam around GLM-5.2 level ( iScienceLuvr ) and below DSv4 Flash on some benchmarks ( critique ). Nathan Lambert groups it with Nvidia and Thinking Machines as strong US releases that still trail Chinese counterparts ( Lambert ). Other open and specialized models : Aleph Alpha Kolibri : 78B total / 3.46B active, Apache 2.0, built for German and English. Self-reported scores are 96.9% AIME 2025, 84.3% GPQA Diamond and 66.4% SWE-Bench Verified ( summary ). The dataset is unreleased, and agentic evals sit well below Qwen ( Jitsev ). Reka Rho-1 : A 19B omni model that understands and generates text, images, video and robot actions, trained from scratch on 320 H100s in ~3 months ( announcement , compute ). Decision models : Command Code’s Agr (31B) and Agr-flash (360M) skip text generation and return typed values with per-option probabilities for tool calls and routing ( Agr ). SemiAnalysis explains that TypeSafe’s Jev uses the same no-decode approach and displaces frontier models mainly in router roles ( explainer ). Smaller releases : Upstage’s Solar Mini 4 (35B / 3B active, 512K context) is free on Nous Portal for two weeks ( Nous ). Eleven v4 Turbo tops AA’s Provider Voice TTS arena at half the price of v4 ( AA ). OpenAI vs Anthropic: Subscription Value, Speed and Evals SemiAnalysis limit testing : SemiAnalysis tested plans from Anthropic, OpenAI, Meta, SpaceXAI, MiniMax, Moonshot, Cursor, Cognition and others. It found that Claude subscriptions deliver 5x+ more API-equivalent value than OpenAI plans ( report ). Methodology : Value depends on the credit cost of each model and token type, not on list API prices ( thread ). Task-cost adjustment : Adjusting for task cost narrows Claude’s edge to 1.3–2.9x ( scaling01 ). Unverified compute estimate : One analyst claims Anthropic spends 42% of inference compute on subscriptions that earn ~10% of revenue ( chart ). OpenAI capacity squeeze : Users report that new $200 sign-ups were paused and that usage limits were effectively halved across plans. GPT-6.1 Sol was positioned as the efficient alternative ( analysis ). Theo describes a reversal in coding-model preference between July and September ( post ). OpenAI response : Codex lead Tibo pledged a meaningful improvement or a full reset every day for 28 days ( pledge ). Day 1 speedup : Default speed for GPT-6 Astra and GPT-6.1 Sol rose ~50%, from ~30 to ~50 TPS. The change covers all subscription surfaces and Sign in with ChatGPT partners such as OpenCode, Pi, Amp and Devin ( day 1 , TPS ). Friction : Banked Codex resets expire without timezone adjustment ( report ). The always-on dots agent is limited to $100+ Pro plans ( criticism ). Enterprise demand (reported) : The Information reports that Microsoft cut projected internal Anthropic spend by more than a third. It also reports Meta’s Claude Code users fell from ~60K to ~30K, largely because of a push to Meta’s own tools ( summary ). Leaderboards : Agent Arena : Anthropic holds #1 in Code, Work and Chat. Fable 5.1 leads Code and Work, while GPT-6 Astra places #2 in Code ( Arena ). Design Arena : GPT-6 Astra is #1 in 3D Design, Frontend, Full Stack and Image-to-HTML ( Design Arena ). Hallucination : On AA-Omniscience, Gemini 4 Argon guesses wrong on 15% of questions it doesn’t know, versus 29% for the next best model. GPT-6 Astra has the highest accuracy at 61% ( data ). Agent Harnesses, RL Environments and Developer Tooling Multi-harness RL (Hugging Face) : A capture proxy speaks the OpenAI Chat, OpenAI Responses, Anthropic and Gemini formats. It forwards calls to vLLM and records exact token IDs and logprobs for TRL, so 10 unmodified harnesses become RL environments ( Delangue , explainer ). Results : The same weights score 62% under Mini-SWE-Agent and 33% under Claude Code. Training LFM2.5-2.6B across 4 harnesses lifts first-attempt solves from 42% to 54%, and a tool-call bonus cuts calls by 31%. SFT on 3,189 rollouts plateaus at 47.5%. Caveats : The run used one task family and one seed. Environment hosting : RL environments are now hosted and versioned on the HF Hub like datasets ( blog ). Pi Durable : Earendil’s harness is built around a small task-based workflow engine, so long-running, multiplayer agents can suspend and resume anywhere ( Pi ). Design : The core is ~15K lines of TypeScript with SQLite/JSONL storage and runs on Bun or Cloudflare Durable Objects. Control is separated from execution environments ( review ). Effect.ts : The authors explain they skipped Effect because it does not provide durability ( Zechner ). Agent memory : Cognition launched Devin “Dreaming,” which prunes and links a memory graph overnight. It is open-sourcing the git- and markdown-backed format as Agent Memory Repo ( launch , format ). Cursor SDK : The update adds mid-run steering, background subagents that report back to the parent, replaceable system prompts, and MCP readOnlyHint and destructiveHint annotations on custom tools ( steering , annotations ). DeepSeek Harness : An experimental Claude Code Mods compatibility layer in v0.2.1-alpha.1 tests whether DSH’s “everything is a plugin” architecture is a superset of Claude Code’s extension points ( team post ). Routing and access : Cline : Its Pareto 26.10 Preview routes across models and grades answers, claiming $0.24 versus $13.41 per task at equal DeepSWE score ( Cline ). Cline also paused its free DeepSeek-V4.1-Flash promotion over abuse ( notice ). ChatGPT : Custom MCP servers no longer require developer mode ( post ). Agent and Training Research Verification over sampling : NVIDIA mid-harness : The method samples candidate shell commands and verifies them before running one. A GPT-5.6 Sol verifier choosing among 8 actions lifts TerminalBench-Lite Pass@1 from 50% to 68%, while weak verifiers add little ( summary ). Google VeriHarness : The method challenges claims that all rollouts agree on and resolves disagreements against workspace evidence. It adds +6.2 points with Gemini 3.5 Flash and +6.4 with Opus 4.8, and ~26K rollouts are released ( summary ). Context management : UT Austin compression study : Across ~35K runs, compression that uses a third of the tokens can be 20–80% slower than full context. Threshold triggers beat step triggers, and the best policy varies by model ( summary ). PAIR : The method replays an agent from the same state to isolate harmful compressions. It then rewrites the compression prompt and comes close to no-compression performance ( paper ). CorpusMap : Precomputed entity pages for document collections raise answer quality 6.4–11.7 points while cutting input tokens 34–57% ( paper ). Self-improving harnesses : SelfSearch : The method reaches a claimed 82.0% on Terminal-Bench 2.1 with DeepSeek V4 Flash, matching Codex, for $4.03 in search cost ( paper ). EverMind Raven : Its evolved research harness hits 69.3% on BrowseComp ( paper ). Optimization and architecture : Dust : A zeroth-order method using activation-perturbation “virtual populations” approaches, and sometimes exceeds, backprop on transformer pretraining. It claims to be 1,000–10,000x more compute-efficient than EGGROLL ( thread ). LOOM : Looped MoEs train stably at 9–12 loops, and a 700M model is best at 5 loops at iso-FLOP ( thread ). Policy gradient on ImageNet : Ian Osband shows exact policy gradient reaches 4% on ImageNet versus 62% for cross-entropy, arguing that RL-loss failures are not just exploration problems ( post ). RL dynamics : Base Labs finds RL updates are less low-rank than claimed ( rollout ). Datalab reports RL alone eliminates tool-call loops at temperature 0, versus a 92% loop rate for SFT ( writeup ). AI for science : Vals AI reports that 90+ Opus 5.5 agents ran DFT simulations over 3 days and flagged two room-temperature magnetic semiconductor candidates, one synthesized back in 1999. The results are predictions only, with a public ledger ( thread , caveats ). Agent spend : Epoch estimates OpenAI researchers’ coding-agent spend, valued at API prices, has doubled roughly monthly. The median researcher was at ~$600/day by mid-August ( Epoch ). Inference Systems and Hardware OpenRouter pricing distortion : Horace He shows GLM 5.3 priced at $0.08/M input but $5.00/M output on inference.net. He attributes this to OpenRouter’s inverse-square price routing and apparent overweighting of input price ( thread , routing ). llama.cpp : Speculative decoding on Metal : New kernels make speculative decoding up to 3.4x faster than plain decoding on an M3 Ultra (110 vs 32.1 tok/s) ( qvac ). v0.6.0 : Adds Clef text and vision support, Qwen3.8-Flash-Next, and a new llama_batch_ext API ( Gerganov ). Agentic kernel work : Baseten reports an engine built in a week of mostly autonomous agent work, with 90% faster decoding and 57% lower TTFT than the open-source baseline ( blog ). Communications : NCCL and PyTorch symmetric memory speed up small-to-medium collectives ( Bekman ). Chinese accelerators : Alibaba T-Head’s Zhenwu V900 has 216 GB of memory and 1,200 GB/s interconnect, claims 3x the M890, and ships Q1 2027 ( SemiAnalysis ). Safety, Policy and Industry OpenAI text watermarking : OpenAI will add invisible statistical watermarks to eligible ChatGPT and Codex text in the EU under the AI Act, with an opt-in API toggle worldwide ( announcement ). Limits : Rewriting or translation removes the watermark, and only approved researchers get the detector ( limits ). Robustness figure : One cited test shows 25% synonym replacement dropping detection from ~92% to 17% ( critique ). Agent incidents and safety governance : Bengio op-ed : In the FT, Bengio argues recent agent hacks are not merely sandbox problems ( op-ed ). He also cites a Quinnipiac poll in which 86% back independent safety standards ( poll ). HF incident : Neel Nanda calls the OpenAI x Hugging Face incident the most striking alignment failure so far ( Nanda ). Systems safety : Ryan Lowe calls for nuclear-style layered systems safety at the labs ( Lowe ). Shutdown resistance : An OpenAI alignment post documents what one researcher calls the most realistic precursor shutdown-resistance behavior seen so far ( link ). Policy voices : Autonomous weapons : Former OpenAI researcher Joshua Achiam called for bans on certain autonomous weapons akin to chemical weapons ( post ). He is joining IFP and FAI as a fellow ( announcement ). Expert survey : The LEAP panel of 250+ experts most supports an international body with US and China membership and pre-release authorization power, and opposes federal preemption ( FRI ). Altman on trade-offs : Sam Altman told Politico that “the world should accept some bad things happening” for the technology’s benefits ( Politico ). Compute access in China : Tencent lease (reported) : Per the FT, Tencent leased ~100K advanced chips in Oracle’s Southeast Asian data centers for ~$7B over five years ( summary ). Smuggling charge : US prosecutors charged a California reseller with smuggling more than $300M of GPU servers to China ( report ). Consolidation : AMD and World Labs (reported) : AMD reportedly bought World Labs for $8.2B ( DL Weekly ). NVIDIA neutrality : SemiAnalysis questions NVIDIA’s hardware neutrality after its SchedMD/SLURM and Hugging Face acquisitions ( SemiAnalysis ). Top tweets (by engagement) Tibo: a Codex improvement or reset every day for 28 days — 30.9K GPT-6 Astra and 6.1 Sol ~50% faster across subscriptions — 22.2K Achiam: ban certain autonomous weapons — 11.2K OpenAI EU text watermarking — 7.7K Reflection introduces Beam — 7.4K Vals AI: Opus 5.5 agents find magnetic semiconductor candidates — 5.8K Theo: Anthropic vs OpenAI for coding, July vs September — 5.2K HF: coding harnesses as RL environments — 2.5K AI Reddit Recap /r/LocalLlama + /r/localLLM Recap 1. Local LLM Hardware at Extreme Scale Keep reading with a 7-day free trial Subscribe to Latent.Space to keep reading this post and get 7 days of free access to the full post archives. Start trial Already a paid subscriber? Sign in Previous Next © 2026 Latent.Space · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-12T08:19:04.893Z",
+      "discoveredAt": "Tue, 06 Oct 2026 06:28:43 GMT",
+      "originFeedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ],
+      "productUrl": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "originSourceIds": [
+        "417c3a0572d8db4597000019"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T08:17:40.437Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "It’s been over a year since Reflection launched with us with big goals on coding (and hinted about their RL approach ): But they stayed “stealth” longer than Thinking Machines and it was not clear we would ever get a model launch out of them, as the broader open model ecosystem did not slow down one bigt for them. Well, we did : They compare themselves to Inkling, Nemotron, and GLM 5.2, but the SOTA GLM 5.3, Kimi K3, Qwen 3.8 Max, and DeepSeek V4.1 Flash are generally ahead. Still, since this is US-trained from scratch, there’s a segment of the market that has been eagerly waiting for more options here, and more importantly, Reflection has now announced its arrival as a functional neolab! AI News for 10/03/2026-10/5/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap Reflection’s Beam Leads a Wave of Open-Weight Releases Beam launch : Reflection announced Beam, a text-only 501B-total / 23B-active MoE for coding, agentic and scientific work. It was trained from scratch, and full weights under Apache 2.0 ",
+      "verifiedAt": "2026-10-12T08:19:04.893Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-12T08:19:05.139Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T08:19:05.139Z"
+    },
+    {
+      "id": "bb661e23e12d03ecc74d7c56",
+      "title": "HyperProbe Y Combinator Logo S2026 • Active • 8 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/hyperprobe",
+      "publisher": "www.ycombinator.com",
+      "text": "HyperProbe: AI engineer that debugs and fixes production incidents in realtime | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › HyperProbe HyperProbe AI engineer that debugs and fixes production incidents in realtime Y Combinator Logo Summer 2026 Active AIOps Artificial Intelligence Developer Tools SaaS DevOps San Francisco Company Jobs 0 https://hyperprobe.co AI engineer that debugs and fixes production incidents in realtime With tools like Cursor and Claude Code, writing software is no longer the bottleneck. Debugging is. Agents cannot fix production crashes using logs and traces that were sized for human eyeballs. The gap is missing data. HyperProbe allows agents to debug live software autonomously. Our SDK drops non-breaking probes straight into running services to read exact variable states from memory at the moment of failure, instead of reasoning backwards from flat logs. Zero redeploys. Under 1% CPU overhead. Automatic PII redaction. We turn 4-hour production war rooms into 10-minute automated resolutions. As agents write and operate more of the world's software, HyperProbe is the runtime observability layer that lets them understand what they built. Active Founders Shailendra Singh Founder/CEO Founder at HyperProbe. Also founded HyperTest. Previously headed and scaled engineering and product functions at a unicorn and few small startups. Shailendra Singh Founder/CEO Founder at HyperProbe. Also founded HyperTest. Previously headed and scaled engineering and product functions at a unicorn and few small startups. Karan Raina Founder/CTO Founder and CTO at HyperTest (YC S26) MS CS Georgia Tech 2nd time founder Previously led a 50 member engineering team at Limetray Karan Raina Founder/CTO Founder and CTO at HyperTest (YC S26) MS CS Georgia Tech 2nd time founder Previously led a 50 member engineering team at Limetray Company Launches Hyperprobe: On-call Agent for engineering teams See original launch post **** TL;DR: AI writes most of our code now. Debugging it when it breaks in production is still slow, because the value that explains the failure was never logged. HyperProbe is an on-call agent for engineering teams. It takes an open incident to a confirmed root cause by dropping read-only probes into your running service and capturing the exact variable state logs don't have. No redeploys, no restarting the app. 📹 Launch Video: https://youtu.be/QtaZrQ8_Uk8 🚧 The Problem Team ships faster than ever with agents that write most of our code. This is already shrinking the useful context engineers need to debug AI written code. Not helped by the limited telemetry added in the same code by AI. So when something breaks in prod, the first instinct for engineers is to open logs or throw them to agents. But if the line you are looking for is not there, agents will start guessing the root cause on limited data, forcing engineers to collect more logs by redeploys. The result: our best engineers become our on-call team, incidents stay open longer, and patches come from data that never capture production context, so issues recur. You can see where that leads. In September last year, a public fintech in India paid out $5 million after failed transactions were incorrectly marked successful. NYSE the same year miscalculated price bands for 40 symbols, printing trades so wrong they had to be reversed. Same pattern: the code ran clean, wrote the wrong state, and neither logs nor traces could show it. ✅ What Hyperprobe does HyperProbe gives engineering teams an on-call agent that works the incident and takes it to a confirmed root cause, live in production. Plan: the agent picks up the alert from PagerDuty, Datadog, or Slack, then reads your logs and traces to locate the file and line. The easy incidents resolve right here. Probe: logs not enough? places read-only virtual breakpoints on the suspect lines and captures the exact variable state live, across services. No redeploys, no restarts. Confirm: the diagnosis is verified against real captured evidence, not a guess. Your engineer gets a confirmed RCA and commits the fix. There are two pieces. An SDK that runs inside your service, and an MCP server your coding agent talks to. The SDK is what makes setting probes (virtual breakpoints, log or metric) possible without a redeploy. 🔍 A few examples An intermittent 500 that won't reproduce locally: catch it live with full variable state A third-party API misbehaving: see the exact payload and response A function returns a wrong value with no error: see what it computed and why Anything that only happens in prod: stop redeploying with console.logs 🚀 The team We've both lived this problem. Shailendra ran production at scale. Karan was a senior architect at a SaaS company. Before this, both spent three years building production SDKs for a testing product, learning the hard parts of pulling real runtime state out of a running service without breaking it. Every incident we watched came down to the same question: what was the actual value at the moment it broke. Nobody built it for the way engineers debug with coding agents now. So we did. 🎁 Why now For thirty years the expensive part of software was writing it, and every tool got built for that. Generation is now nearly free, but the cost didn't disappear. It moved downstream, to figuring out why the generated code broke in production. And that system is now mostly code no human wrote or holds in their head. When it breaks, the engineer has less context than ever, and their first move is already to hand it to the coding agent. That agent only has your logs and traces, so it guesses. We give it the evidence instead, captured live from the running code at the point of failure. 🙏 Our ask If you're an engineer tired of the redeploy loop, debugging code you didn't write at 2 AM, try it on your own service. , first investigation in 10 min: https://docs.hyperprobe.co/quickstart If your best engineers have become your on-call team and you want that fixed, let us work one real incident from your stack, free: https://calendly.com/shailendra-hyperprobe/30min HyperProbe Founded: 2026 Batch: Summer 2026 Team Size: 8 Status: Active Location: San Francisco Primary Partner: Brad Flora Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T08:19:06.046Z",
+      "productUrl": "https://www.ycombinator.com/companies/hyperprobe",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "bb661e23e12d03ecc74d7c56"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T08:17:41.015Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/hyperprobe",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/hyperprobe",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "HyperProbe Y Combinator Logo S2026 • Active • 8 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T08:19:06.046Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T08:19:06.159Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T08:19:06.159Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T08:19:06.221Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T08:19:06.221Z"
+    },
+    {
+      "id": "3c824018da122cca44ea7bde",
+      "title": "Create Custom PDF Documents from Templates with Gemini & Google Drive · product evidence",
+      "url": "https://n8n.io/workflows/5808-create-custom-pdf-documents-from-templates-with-gemini-and-google-drive",
+      "publisher": "n8n.io",
+      "text": "Create custom PDF documents from templates with Gemini & Google Drive | n8n workflow template n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 207,024 Sign in Get Started See llms.txt for all machine-readable content. Back to Templates HTTP Request If Edit Fields (Set) +12 Create custom PDF documents from templates with Gemini & Google Drive Use for free Created by Ozgur Karateke Last update Last update 8 months ago Categories Document Extraction AI Chatbot Share This workflow contains community nodes that are only compatible with the self-hosted version of n8n. 1 — What Does It Do / Which Problem Does It Solve? This workflow turns Google Docs-based contract & form templates into ready-to-sign PDFs in minutes —all from a single chat flow. Automates repetitive document creation. Instead of copying a rental, sales, or NDA template and filling it by hand every time, the bot asks for the required values and fills them in. Eliminates human error. It lists every mandatory field so nothing is missed, and removes unnecessary clauses via conditional blocks. Speeds up approvals. The final draft arrives as a direct PDF link—one click to send for signing. One template → unlimited variations. Every new template you drop in Drive is auto-listed with **zero workflow edits—**it scales effortlessly. 100 % no-code. Runs on n8n + Google Apps Script—no extra backend, self-hosted or cloud. 2 — How It Works (Detailed Flow) 📝 Template Discovery 📂 The TemplateList node scans the Drive folder you specify via the ?mode=meta endpoint and returns an id / title / desc list. The bot shows this list in chat. 🎯 Selection & Metadata Fetch The user types a template name. 🔍 GetMetaData opens the chosen Doc, extracts META_JSON , placeholders, and conditional blocks, then lists mandatory & optional fields. 🗣 Data-Collection Loop The bot asks for every placeholder value. For each conditional block it asks 🟢 Yes / 🔴 No . Answers are accumulated in a data JSON object. ✅ Final Confirmation The bot summarizes the inputs → when the user clicks Confirm , the DocProcess sub-workflow starts. ⚙️ DocProcess Sub-Workflow 🔧 Step Node Task 1 User Choice Match Check Verifies name–ID match; throws if wrong 2 GetMetaData (renew) Gets the latest placeholder list 3 Validate JSON Format Checks for missing / unknown fields 4 CopyTemplate Copies the Doc via Drive API 5 FillDocument Apps Script fills placeholders & removes blocks 6 Generate PDF Link Builds an export?format=pdf URL 📎 Delivery The master agent sends 🔗 Download PDF & ✏️ Open Google Doc links. 🚫 Error Paths status:\"ERROR\", missing:[…] → bot lists missing fields and re-asks. unknown:[…] → template list is outdated; rerun TemplateList . Any Apps Script error → the returned message is shown verbatim in chat. 3 — 🚀 Setup Steps (Full Checklist) Goal: Get a flawless PDF on the first run. Mentally tick the ☑️ in front of every line as you go. ☁️ A. Google Drive Preparation Step Do This Watch Out For 1 Create a Templates/ folder → put every template Doc inside Exactly one folder; no sub-folders 2 Placeholders in every Doc are {{UPPER_CASE}} No Turkish chars or spaces 3 Wrap optional clauses with [[BLOCK_NAME:START]]…[[BLOCK_NAME:END]] The START tag must have a blank line above 4 Add a META_JSON block at the very end Script deletes it automatically after fill 5 Right-click Doc > Details ▸ Description = 1-line human description Shown by the bot in the list 6 Create a second Generated/ folder (for copies) Keeps Drive tidy 🔑 Folder ID (long alphanumerical) = <TEMPLATE_PARENT_ID> We’ll paste this into the TemplateList node next. Simple sample template → Template Link 🛠 B. Import the Workflow into n8n Settings ▸ Import Workflow ▸ DocAgent.json If nodes look Broken afterwards → no community-node problem; you only need to select credentials. 📑 C. Customize the TemplateList Node Open Template List node ⚙️ → replace '%3CYOUR_PARENT_ID%3E' in parents with the real folder ID in the URL . Right-click node > Execute Node . Copy the entire JSON response. In the editor paste it into: DocAgent → System Prompt (top) User Choice Match Check → System Prompt (top) Save. ⚠️ Why manual? Caching the list saves LLM tokens. Whenever you add a template, rerun the node and update the prompts. 🔗 D. Deploy the Apps Script Step Screen Note 1 Open Gist files GetMetaData.gs + FillDocument.gs → File ▸ Make a copy Both files may live in one project 2 Project Settings > enable Google Docs API ✔️ & Google Drive API ✔️ Otherwise you’ll see 403 errors 3 Deploy ▸ New deployment ▸ Web app • Execute as Me • Who has access Anyone 4 On the consent screen allow scopes:• …/auth/documents • …/auth/drive Click Advanced › Go if Google warns 5 Copy the Web App URL (e.g. https://script.google.com/macros/s/ABC123/exec ) If this URL changes, update n8n Apps Script source code → Notion Link 🔧 E. Wire the Script URL in n8n Node Field Action GetMetaData URL <WEB_APP_URL>?mode=meta&id={{ $json[\"id\"] }} FillDocument URL <WEB_APP_URL> 💡 Prefer using an .env file? Add GAS_WEBAPP_URL=… and reference it as {{ $env.GAS_WEBAPP_URL }}. 🔐 F. Add Credentials Google Drive OAuth2 → Drive API (v3) Full Access Google Docs OAuth2 → same account LLM key (OpenAI / Gemini) (Optional) Postgres Chat Memory credential for the corresponding node 🧪 G. First Run (Smoke Test) Switch the workflow Active . In the chat panel type /start . Bot lists templates → pick one. Fill mandatory fields, optionally toggle blocks → Confirm . 🔗 Download PDF link appears → ☑️ setup complete. ❌ H. Common Errors & Fixes 🆘 Error Likely Cause Remedy 403: Apps Script permission denied Web app access set to User Redeploy as Anyone , re-authorize scopes placeholder validation failed Missing required field Provide the listed values → rerun DocProcess unknown placeholders: … Template vs. agent mismatch Check placeholder spelling (UPPER_CASE ASCII) Template ID not found Prompt list is old Rerun TemplateList → update both prompts Cannot find META_JSON No meta block / wrong tag Add [[META_JSON_START]] … [[META_JSON_END]] , retry ✅ Final Checklist [ ] Drive folder structure & template rules ready [ ] Workflow imported, folder ID set in node [ ] TemplateList output pasted into both prompts [ ] Apps Script deployed, URL set in nodes [ ] OAuth credentials & LLM key configured [ ] /start test passes, PDF link received 🙋‍♂️ Need Help with Customizations? Reach out for consulting & support on LinkedIn: Özgür Karateke Full Documentation → Notion Simple sample template → Template Link Apps Script source code → Notion Link Build complex workflows that other tools can't . I used other tools before. I got to know the N8N and I say it properly: it is better to do everything on the n8n! Congratulations on your work, you are a star! Igor Fediczko @igordisco Thank you to the n8n community . I did the beginners course and promptly took an automation WAY beyond my skill level. Robin Tindall @robm n8n is a beast for automation. self-hosting and low-code make it a dev’s dream. if you’re not automating yet, you’re working too hard. Anderoav @Anderoav n8n accelerated our development , we were able to release the solution before the rest of the market even realized what we were building. Luiza Vidal @Luiza Vidal I've said it many times. But I'll say it again. n8n is the GOAT . Anything is possible with n8n. You just need some technical knowledge + imagination. I'm actually looking to start a side project. Just to have an excuse to use n8n more 😅 Maxim Poulsen @maximpoulsen n8n was the big unlock. Tools like ChatGPT and Claude are great, but n8n is the thing that allows you to integrate AI into your work and your processes in a safe and controlled way. Ollie Scheers @olliescheers It blows my mind. I was hating on no-code tools my whole life, but n8n changed everything. Made a Slack agent that can basically do everything, in half an hour. Felix Leber @felixleber I just have to say, n8n's integration with third-party services is absolutely mind-blowing . It's like having a Swiss Army knife for automation. So many tasks become a breeze, and I can quickly validate and implement my ideas without any hassle. Nanbing @1ronben Found the holy grail of automation yesterday... Yesterday I tried n8n and it blew my mind 🤯 What would've taken me 3 days to code from scratch? Done in 2 hours. The best part? If you still want to get your hands dirty with code (because let's be honest, we developers can't help ourselves 😅), you can just drop in custom code nodes. Zero restrictions. Francois Laßl @francois-laßl Anything is possible with n8n . I think @n8n_io Cloud version is great, they are doing amazing stuff and I love that everything is available to look at on Github. Jodie M @jodiem Simple enough to see. Powerful enough to ship. Join the teams building AI automation they can actually explain. Start building n8n.io Automate without limits Careers Hiring Contact Merch Press Legal In The Loop Oct 2026 Case Studies AI agent report AI benchmark n8n alternatives Events n8n on SAP Partners Affiliate program Hire an expert Join user tests, get a gift Brand guidelines Education Imprint Security Privacy Report a vulnerability © 2026 n8n | All rights reserved.",
+      "fetchedAt": "2026-10-12T08:19:07.147Z",
+      "productUrl": "https://n8n.io/workflows/5808-create-custom-pdf-documents-from-templates-with-gemini-and-google-drive",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "529fe252f6662aa1472475a1"
+      ],
+      "originSourceIds": [
+        "3c824018da122cca44ea7bde"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T08:17:40.079Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/5808-create-custom-pdf-documents-from-templates-with-gemini-and-google-drive",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/5808-create-custom-pdf-documents-from-templates-with-gemini-and-google-drive",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Create Custom PDF Documents from Templates with Gemini & Google Drive Ozgur Karateke ⋅ a year ago ⋅ Free This workflow contains community nodes that are only compatible with the self-hosted version of n8n. 1 — What Does It Do / Which Problem Does It Solve? This workflow turns Google Docs-based contract & form templates into ready-to-sign PDFs in minutes—all from a single chat flow. Automates repetitive document creation.** Instead ... HTTP Request Google Drive Code +6",
+      "verifiedAt": "2026-10-12T08:19:07.147Z"
+    },
+    {
+      "id": "193164099a406e74ebd731c3",
+      "title": "Trope Y Combinator Logo S2026 • Active • 2 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/trope",
+      "publisher": "www.ycombinator.com",
+      "text": "Trope: AI FDE that deploys custom AI agents into ERPs | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Trope Trope AI FDE that deploys custom AI agents into ERPs Y Combinator Logo Summer 2026 Active Artificial Intelligence SaaS B2B San Francisco Company Jobs 0 https://trope.ai AI FDE that deploys custom AI agents into ERPs Trope deploys custom AI agents into ERPs for mid-market companies. Every ERP is heavily customized, so useful agents need custom deployment too. Trope’s AI FDE learns each business and ERP, then builds and deploys agents, turning the last mile from services into software. Active Founders Matthew Chow Founder Co-Founder at Trope. Safety critical firmware for the Tesla Cybertruck. Autonomous drone manufacturing at Zipline. Industrial software at Schneider Electric in Japan. UBC computer engineering grad. Matthew Chow Founder Co-Founder at Trope. Safety critical firmware for the Tesla Cybertruck. Autonomous drone manufacturing at Zipline. Industrial software at Schneider Electric in Japan. UBC computer engineering grad. Victor Vannara Founder Co-Founder at Trope. Built the first AI customer support agent at Amazon Payments. Learned to code at 13 by building Discord bots used by 400k users. UBC computer science grad. Victor Vannara Founder Co-Founder at Trope. Built the first AI customer support agent at Amazon Payments. Learned to code at 13 by building Discord bots used by 400k users. UBC computer science grad. Company Launches Trope - Modernize ERP implementations with AI See original launch post Hey everyone! We're Matthew and Victor - cofounders of Trope . We’re building the AI-native platform for ERP services. TLDR After buying an ERP, companies spend over $50B a year on consulting services to get the software implemented 70% of ERP implementations fail to meet budget, timelines, or targets Trope deploys agents to help ERP implementation teams deliver projects on time and on budget from one AI-native platform Launch Video: https://www.youtube.com/watch?v=mhDiw0nKB34 ❌ Problem Companies buy an ERP expecting it to become the most powerful software in their stack. It runs finance, inventory, procurement, operations, reporting, and the workflows the business depends on. Buying an ERP is easy. Implementing it is hard and requires labour heavy consultant work where: Requirements get missed Workflows get configured differently than agreed Data issues get discovered too late Testing reveals the system does not match how the business actually works End-user adoption suffers For implementation teams, the challenge is managing hundreds of stakeholders across concurrent projects, with thousands of documents, decisions, and system dependencies to track. That is why so many ERP projects miss their budget, timeline, and targets, and why companies spend billions on implementation services. ✅ Solution Trope is the AI-native platform that deploys agents to deliver successful implementations faster. Using Trope is like having a project manager, consultant, and developer working 24/7, so you can spend more time on the design and decisions. Trope connects to the systems where project work already lives. It compares what was promised with what is actually being built, then flags gaps across scope, configuration, data, testing, training, and documentation before they become expensive. Trope takes action by turning meetings into action items, scanning ERP configurations programmatically, and keeping documents, configurations, and stakeholders in sync. The Team We grew up in Vancouver and met at the University of British Columbia. We built operations and AI software at Tesla, Amazon, Zipline, and Schneider Electric. After speaking with ERP veterans who had built and sold practices, the pattern was clear: everyone knew the traditional services model was going to change, but no one knew how. Trope is defining the AI-native model for ERP services. Our Ask If you know anyone who works on ERP implementations (ie, consulting, system integration, or professional services) we’d love an intro. Email me at matthew@trope.ai . Take care, Matthew & Victor Trope Founded: 2026 Batch: Summer 2026 Team Size: 2 Status: Active Location: San Francisco Primary Partner: Jon Xu Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T08:19:07.471Z",
+      "productUrl": "https://www.ycombinator.com/companies/trope",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "193164099a406e74ebd731c3"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T08:17:41.015Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/trope",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/trope",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Trope Y Combinator Logo S2026 • Active • 2 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T08:19:07.471Z"
+    },
+    {
+      "id": "52cd6f64afa8aaf328ee7f97",
+      "title": "Who let the agents in · product evidence",
+      "url": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "publisher": "www.bensbites.com",
+      "text": "Who let the agents in - Ben's Bites Subscribe Sign in Who let the agents in It’s you, and it’s getting easier Aug 27, 2026 76 1 1 Share Hey folks, Most agents now use a browser to complete tasks for you. But a lot of the websites you want them to visit are behind a login page. There are a couple of ways around this. You could type in your details in the browser yourself. Fine, but annoying, and not always possible. Or you could paste the password or an API token into the chat. We’ve all done that, but that’s not secure now, is it? ChatGPT Work has a new sign-in flow that sits between the two. I think they picked it up from Grok Bot. When Work reaches a login page, it pauses and shows you a widget/form. You enter your username, password and 2FA code there. They don’t go into the chat. Work passes them along directly to the cloud browser on your behalf. Once the website signs that browser in, the agent carries on. The session can stay signed in for later tasks, and you can clear it in settings. Much easier. Still maybe don’t start with your bank (though Elon will make you whole if you do it with Grok Bot). Ben’s Bites is brought to you by Gravitee 🕵️ We know what your AI agents did last night. Gravitee is the platform built to make AI agents accountable. We give every agent a verified identity, enforce exactly what they can access, and record exactly what they did, so enterprises never have to ask their agents, “Where were you last night?” Headlines Claude Chat and Cowork now share their memory . I’m not sure that’s a good thing. You don’t want your frustration with a colleague (that you mentioned to Claude in a random chat) to change the tone of your emails with them (written via Cowork). It’s still separate from Claude Code’s memory, but that's not great either. Theo made a video about it: Turn off Claude Code’s memory. Despite everyone’s attempts to get Memory right, it keeps saving irrelevant stuff to memory or referring to it unnecessarily. I touched a bit on my current memory setup in last Friday’s post . Three new-ish models to look at: GLM-5.3-Flash - The reveal of the Ox Alpha secret. It’s a great open-source alternative for GPT-5.6-Luna. Muse Image is now in Meta’s API. Generate or edit images at $0.01 per image. Gemini 3.5 Transcribe - New model from Google for audio transcription. It’s quite pricey, but makes way fewer errors than other models. OpenAI’s new chip Jalapeño beats Nvidia’s Blackwell chips on both speed and efficiency. Across three open models, its first inference chip delivered 1.5-1.9x more work per watt and 1.7-3.6x lower latency. It starts deploying by year-end. Also, remember when an OpenAI model hacked Hugging Face? They completed the investigation into it and released a report . Btw, Nvidia is buying Hugging Face for $12.9B (via The Information). Looks like a toxic love triangle between these three. Share Ben's Bites My feed fuck cancer - skill for agents to help patients and caregivers. A $50k hackathon to help one kid fight a rare disease. Claude now has its own built-in browser in Cowork . Scheduled tasks in ChatGPT can now also run from a trigger like a Slack message, new email, etc. Search and spot trends in over 130,000 actively transcribed podcasts. ( examples ) Patterns in how people use Claude from 250k anonymised chats. screendrop - Open source alternative to Loom and Screen Studio, downloadable as a Mac app. Edit a song section by section with ElevenLabs Composer. Cosy listening room so you can flip through & play your Spotify albums. Using Codex to automate repetitive eval work . ( Hamel’s notes ) The latest personal agent making investors go crazy (already valued at $2.5B). opencomputer.dev - Deploy your agents as functions, with a Linux computer for each one. Fully local version of Perplexity Computer, built to run on Nvidia DGX Spark. Teach a robot new tasks from just one video. Robot-training dataset with 16M videos from 100+ countries. Subscribe Afters Brian Armstrong @brian_armstrong One solution is to train the AI to write like you. Specifically: 1. Ask your agent to assemble everything you've ever written. Docs + Slack + X + Other. 2. Then have it write a markdown profile on you, your style and beliefs. 3. Then when it writes, ask it to pull specific Jeff Stein @jstein_notus New - Billionaire Stanley Druckenmiller tells me \"of course\" he used AI to write op-ed on Bessent & bond market \"There's a reason I moved from an English major to being an economics major,\" he says, \"I'm not embarrassed by it\" No response from WSJ https://t.co/9j0tkH2qFe 8:40 PM · Aug 25, 2026 · 302K Views 152 Replies · 78 Reposts · 1.26K Likes @brian_armstrong</span> You can go further than this to get even better writing output. Create a little script to analyze your corpus' usage of punctuation, p90 sentence and pargraph length, quotes per 1000 words, comma usage, triplets, negation, etc. (add as many numerical graders as you want). Then\",\"username\":\"jaredpalmer\",\"name\":\"Jared Palmer\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/2086435077102194688/SBiUJqKt_normal.jpg\",\"date\":\"2026-08-26T20:47:14.000Z\",\"photos\":[],\"quoted_tweet\":{},\"reply_count\":0,\"retweet_count\":0,\"like_count\":45,\"impression_count\":2112,\"expanded_url\":null,\"video_url\":null,\"video_preview_media_key\":null,\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> Jared Palmer @jaredpalmer @brian_armstrong You can go further than this to get even better writing output. Create a little script to analyze your corpus' usage of punctuation, p90 sentence and pargraph length, quotes per 1000 words, comma usage, triplets, negation, etc. (add as many numerical graders as you want). Then 8:47 PM · Aug 26, 2026 · 2.11K Views 45 Likes Developers @XDevelopers Introducing 𝕏 Chat Agents powered by our new 𝕏 Chat API & Chat XDK. 9:45 PM · Aug 26, 2026 · 301K Views 68 Replies · 146 Reposts · 1.37K Likes openai.com/build-week</a>\",\"username\":\"OpenAIDevs\",\"name\":\"OpenAI Developers\",\"profile_image_url\":\"https://pbs.substack.com/profile_images/2022002720971096064/l3Kyt4qt_normal.jpg\",\"date\":\"2026-08-25T21:38:52.000Z\",\"photos\":[],\"quoted_tweet\":{},\"reply_count\":49,\"retweet_count\":42,\"like_count\":678,\"impression_count\":85673,\"expanded_url\":{\"url\":\"https://openai.com/build-week\",\"title\":\"OpenAI Build Week\",\"description\":\"A week for exploring what’s possible with Codex.\",\"domain\":\"openai.com\",\"image\":\"https://pbs.substack.com/news_img/2092368642834878464/XbC5suuA?format=jpg&name=orig\"},\"video_url\":null,\"video_preview_media_key\":null,\"belowTheFold\":true}\" class=\"pencraft pc-display-flex pc-flexDirection-column pc-gap-12 pc-padding-16 pc-reset bg-primary-j62Gac outline-detail-Yl5oYx pc-borderRadius-md sizing-border-box-LGXObM pressable-lg-bfeQpw font-text-a4IB2X tweet-fWkQfo twitter-embed\"> OpenAI Developers @OpenAIDevs We’re excited to announce the OpenAI Build Week winners 🥁 Meet the builders behind the eight winning projects and see what they shipped with Codex. openai.com/build-week openai.com OpenAI Build Week 9:38 PM · Aug 25, 2026 · 85.7K Views 49 Replies · 42 Reposts · 678 Likes Jeff Stein @jstein_notus New - Billionaire Stanley Druckenmiller tells me \"of course\" he used AI to write op-ed on Bessent & bond market \"There's a reason I moved from an English major to being an economics major,\" he says, \"I'm not embarrassed by it\" No response from WSJ notus.org Billionaire Stanley Druckenmiller’s WSJ Op-Ed Criticizing Bessent Was Written With AI 2:53 PM · Aug 25, 2026 · 2.15M Views 186 Replies · 397 Reposts · 3.25K Likes Find me on X , Linkedin , or YouTube Read about me and Ben’s Bites 📷 thumbnail via @keshavatearth * sponsors who make this newsletter possible :) Wanna partner with us for the next quarter? Email us at shanice@bensbites.com or k@bensbites.com Ben's Bites is a reader-supported publication. To receive new posts and support my work, consider becoming a free or paid subscriber. Subscribe 76 1 1 Share Previous Next Discussion about this post Comments Restacks Josh Woodruff Aug 28 Keeping the password out of the chat is a real improvement, and it moves the problem rather than closing it. Once that cloud browser holds a live session that sticks around for later tasks, everything it does shows up in the site's log as you, and nobody reading that log later can tell which turns you were actually present for. The clear-it toggle in settings is the only kill switch, and it's buried where nobody looks. Does Work show you anywhere what a signed-in session did after the fact? Reply Share Top Latest Discussions No posts Ready for more? Subscribe © 2026 Ben's Bites Ltd · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-12T08:19:07.775Z",
+      "discoveredAt": "Thu, 27 Aug 2026 13:03:42 GMT",
+      "originFeedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ],
+      "productUrl": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "originSourceIds": [
+        "52cd6f64afa8aaf328ee7f97"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.bensbites.com",
+            "robotsUrl": "https://www.bensbites.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T08:17:40.746Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 595,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.bensbites.com/p/who-let-the-agents-in",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.bensbites.com/p/who-let-the-agents-in",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Hey folks, Most agents now use a browser to complete tasks for you. But a lot of the websites you want them to visit are behind a login page. There are a couple of ways around this. You could type in your details in the browser yourself. Fine, but annoying, and not always possible. Or you could paste the password or an API token into the chat. We’ve all done that, but that’s not secure now, is it? ChatGPT Work has a new sign-in flow that sits between the two. I think they picked it up from Grok Bot. When Work reaches a login page, it pauses and shows you a widget/form. You enter your username, password and 2FA code there. They don’t go into the chat. Work passes them along directly to the cloud browser on your behalf. Once the website signs that browser in, the agent carries on. The session can stay signed in for later tasks, and you can clear it in settings. Much easier. Still maybe don’t start with your bank (though Elon will make you whole if you do it with Grok Bot). Ben’s Bites is brought to you by Gravitee 🕵️ We know what your AI agents did last night. Gravitee is the platform built to make AI agents accountable. We give every agent a verified identity, enforce exactly what ",
+      "verifiedAt": "2026-10-12T08:19:07.775Z"
+    },
+    {
+      "id": "bc697cf9bffa88f2d189de58",
+      "title": "Mohamad5577/invoice-agent",
+      "url": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by Mohamad5577 Spaces Mohamad5577 / invoice-agent Like 0 Running App Files Files Community Refreshing",
+      "fetchedAt": "2026-10-12T08:19:07.841Z",
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "discoveredAt": "2026-09-28T11:15:46.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T08:19:07.841Z"
+    },
+    {
+      "id": "702c3f24c909e329aee6f2a8",
+      "url": "https://github.com/SaarthurR/atticus-mac",
+      "productUrl": "https://github.com/SaarthurR/atticus-mac",
+      "title": "Atticus Mac voice assistant · independently fetched product",
+      "publisher": "github.com",
+      "text": "GitHub - SaarthurR/atticus-mac: Fast, free voice assistant for your Mac. No API key: runs on your Claude Pro or Max plan. Remembers you and learns your shortcuts. Hold ⌃⌥Space and talk. · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} SaarthurR atticus-mac Repository navigation Code Issues Pull requests Actions Projects Security and quality Insights More items atticus-mac Public Notifications You must be signed in to change notification settings Fork 2 ( 2 ) Star 28 ( 28 ) You must be signed in to star a repository About Fast, free voice assistant for your Mac. No API key: runs on your Claude Pro or Max plan. Remembers you and learns your shortcuts. Hold ⌃⌥Space and talk. saarthurr.github.io/atticus-mac/ Topics claude claude-code macos menubar-app open-source productivity speech-recognition swift voice-assistant Resources Readme MIT license Activity Stars 28 stars Watchers 0 watching Forks 2 forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 39 Commits 39 Commits Folders and files Name Name Last commit message Last commit date .github/ workflows .github/ workflows docs docs tests tests ui ui .gitignore .gitignore Atticus.swift Atticus.swift LICENSE LICENSE README.md README.md atticus.py atticus.py build.sh build.sh install.sh install.sh View all files Repository files navigation README MIT license More items Hold ⌃ control ⌥ option space , say what you need, let go. Atticus moves your windows, finds your files, reads your screen and gets it done. ⚡ Fast · 🔑 No API key · 🧠 Remembers you · Free and open source Fast. Simple asks skip the AI: an app opens in 0.08 s. Ask for an action once and Atticus learns it, so next time it runs in a blink, with no AI and for free. No API key. It runs on the Claude Pro or Max plan you already have, through Claude Code. Nothing to sign up for, no key to paste, no extra bill. Remembers you. Say \"remember…\" and every ask after that knows it. It picks up who you are (your name, your apps) and fixes its own mistakes when you correct it. atticus-film.mp4 Just ask You say Atticus \"Code on my big screen, Chrome and Terminal on the laptop.\" Arranges three windows across two displays. \"Open Spotify.\" · \"Terminal on the left.\" Runs instantly, with no AI at all. \"Find my notes about the Tokyo trip.\" Searches your files by what's inside them, opens the match on your other screen. \"What's wrong with this code?\" Looks at your screen and answers in a line. \"Summarize this article in three bullets.\" Reads the page for you. \"Reply: sounds good, see you at 7.\" Types it into the app you're in. It never sends. \"Play my late night coding playlist on Spotify.\" Plays it in a second, no clicks. Any song, artist or playlist. \"When I say focus mode, close Slack and open my to-do list.\" Remembers it. Next time, two words do it all. Why Atticus Fast Opening apps and sites, moving windows, web searches and music skip the AI entirely (an app opens in 0.08 s). Actions you ask for once (opening apps, moving windows, playing music) become learned shortcuts: \"Open Calculator and Chess\" went from 5.5 s to 0.4 s, with no AI. No API key Runs on the Claude plan you already have, through claude -p . About 0.14¢ of plan usage per ask (~700 asks for $1 at API list rates). Atticus itself is free. Remembers you \"Remember: open means bring it to the front.\" Saved rules go with every ask. It learns lasting facts about you (name, city, favorite apps), and when you correct it, it saves a rule so it gets it right next time. Edit all of it in Settings. Private ears Apple's on-device speech turns your voice into text. Audio never leaves your Mac. Your whole Mac Apps, windows, files, settings, the web and the screen, with Peekaboo for clicking inside any app. Safe by default Safe mode runs the AI's commands in Claude Code's sandbox: they can only write to a scratch folder. Before anything deletes, sends, buys or changes a file, Atticus asks you first. rm , sudo , disk tools and shutdown are always blocked. Every exact command is in the ask log. How the shortcut and the box work Choose Hold to talk or Press to toggle in Settings → General → Shortcut behavior. Hold mode sends when you release. Toggle mode starts on the first press and sends on the second; pauses keep listening. Pressing the shortcut while Atticus answers stops it; during spoken playback it stops the voice. Esc cancels listening without sending. Toggle recordings reach a review screen after 60 seconds, rather than sending automatically. Closing the overlay or pausing Atticus stops its microphone, workers and voice. Click any answer to copy it, including earlier answers still shown in the box. Click your request to edit and ask again, or press ↑ in an empty typing box to recall the latest request. The overlay stays within your display when resized and respects Reduce Motion. Apple's final transcript confirms each voice request before AI tools or learned shortcuts run. AI reasoning can start during a pause, but its tools wait for confirmation. If speech finalization takes too long, Atticus offers the partial text for review. Instant commands still skip the AI entirely. Supported built-in commands run mid-sentence, before you send, with Instant commands and Act while I’m talking on (Settings → Intelligence). Learned shortcuts wait for confirmed words. Install You need: macOS 26 or later (Atticus uses Apple's new on-device speech) A paid Claude plan (Pro or Max) and Claude Code . No Claude Code yet? The setup window installs it and signs you in. Apple's command line tools: xcode-select --install Optional: Peekaboo (see its install steps) so Atticus can click inside apps Paste this in Terminal: curl -fsSL https://raw.githubusercontent.com/SaarthurR/atticus-mac/main/install.sh | bash It checks your Mac, downloads Atticus to ~/.atticus , builds ~/Applications/Atticus.app , and opens it. Atticus starts at login and updates itself from there (turn that off in Settings → About & Updates). Working on the code instead? Clone the repo anywhere and run ./build.sh after each change. The first launch opens a setup window. It checks your Claude plan, then asks for each macOS permission. After that, Atticus lives in the menu bar. Open it from Spotlight (⌘Space, \"Atticus\") for Settings: shortcut, sounds, model, speed, screen, memory and usage. If you sign out of Claude later, the setup window comes back by itself. To see it again: defaults delete com.atticus.app onboarded , then restart the app. Test: python3 atticus.py --selftest on macOS, plus python3 -m unittest discover -s tests -v for offline regressions. After building, ~/Applications/Atticus.app/Contents/MacOS/Atticus --selftest checks native transcript matching without opening the app. Node, when installed, also checks embedded JavaScript syntax. For the UI interaction checks, run python3 -m http.server 8765 --bind 127.0.0.1 from the repo and open http://127.0.0.1:8765/tests/ui.html ; it uses a mock native bridge and makes no Mac actions or AI calls. Remove: launchctl bootout gui/$(id -u)/com.atticus.app , then delete ~/Applications/Atticus.app , ~/.atticus , ~/.config/atticus (your settings and history) and ~/Library/LaunchAgents/com.atticus.app.plist . Watch for me Say \"tell me when Codex is done\" or \"watch this page until it says shipped\". Atticus sets it up once, then checks every 5 seconds on your Mac with no AI, so waiting is free. When it fires you get a notification, and it runs a follow-up if you asked for one. A window must stay open on this desktop (covered is fine). Coding agents like Codex are watched through their own log, with no screen at all. Say \"stop watching\" to cancel. Budget Atticus has to stay fast and nearly free, so new features must fit under these limits: Instant commands: no AI, $0. AI asks: median under $0.002 and 6 s over the last 50 (Oct 10, 2026: $0.00095, 5.0 s). Check with python3 atticus.py --budget . System prompt: under 10,000 characters with every option on. Every ask pays for it, and a test enforces it. Anything that waits or runs in the background: $0 while it waits. AI only to set it up and to act at the end. Usage count Once a day, Atticus sends one random ID (made on your Mac, not tied to you) to PostHog, so I can see how many people use it. It never sends your name, your asks or your screen. Turn it off in Settings → Account & Access → Count me as a user. Files Atticus.swift : the app (hotkey, speech, overlay, onboarding window) atticus.py : the brain (fast commands, system prompt, helpers for windows, web and screen) ui/ui.html , ui/onboarding.html , ui/settings.html : the overlay, the welcome flow, and Settings ui/AppIcon.icns : the app icon ui/orbs.js : the thinking-orbs engine (MIT, Jakub Antalik) License MIT. See LICENSE . ui/orbs.js is from thinking-orbs , also MIT. Contributing Run regressions with a scratch ATTICUS_DIR and use tests/ui.html and tests/settings.html for mock-bridge UI checks. Keep personal agent settings, credentials and runtime state out of commits. Anonymous usage telemetry is disabled unless ATTICUS_POSTHOG_KEY is supplied through the environment; no key is embedded in the source. About Fast, free voice assistant for your Mac. No API key: runs on your Claude Pro or Max plan. Remembers you and learns your shortcuts. Hold ⌃⌥Space and talk. saarthurr.github.io/atticus-mac/ Topics claude claude-code macos menubar-app open-source productivity speech-recognition swift voice-assistant Resources Readme MIT license Activity Stars 28 stars Watchers 0 watching Forks 2 forks Report repository Releases Packages Contributors Languages Footer &copy; 2026 GitHub, Inc. Footer navigation Terms Privacy Security Status Community Docs Contact Manage cookies Do not share my personal information You can’t perform that action at this time.",
+      "fetchedAt": "2026-10-12T08:19:08.802Z",
+      "verifiedAt": "2026-10-12T08:19:08.802Z",
+      "enriched": true,
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "a1c8cb1184207c51f4aeac25",
+      "url": "https://deploylist.com",
+      "productUrl": "https://deploylist.com",
+      "title": "Deploylist project discovery feed · independently fetched product",
+      "publisher": "deploylist.com",
+      "text": "Deploylist - Scroll the most popular indie websites Donate Clear cache deploy list Scroll the internet's most popular indie websites Live feed Rankings",
+      "fetchedAt": "2026-10-12T08:19:12.010Z",
+      "verifiedAt": "2026-10-12T08:19:12.010Z",
+      "enriched": true,
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    }
+  ],
+  "health": [
+    {
+      "sourceId": "167cf06e2bed71a2865e0782",
+      "url": "https://news.ycombinator.com/item?id=49981383",
+      "status": "failed",
+      "message": "Public source returned HTTP 429."
+    },
+    {
+      "url": "https://vendiq.rishailabs.com",
+      "status": "failed",
+      "message": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "url": "https://www.doozadesk.com",
+      "status": "failed",
+      "message": "Public source returned HTTP 404."
+    },
+    {
+      "url": "https://www.lumro.co",
+      "status": "failed",
+      "message": "getaddrinfo ENOTFOUND www.lumro.co"
+    }
+  ],
+  "deterministicResults": [],
+  "noveltyContractVersion": 1,
+  "noveltyContext": {
+    "version": 1,
+    "windowDays": 14,
+    "asOf": "2026-10-12T08:19:03.822Z",
+    "cutoff": "2026-09-28T08:19:03.822Z",
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "title": "A small AI support inbox loop",
+        "productUrl": "https://auxx.ai",
+        "promise": "Triage one kind of ticket, draft a sourced reply, and leave approval to a person.",
+        "whatItIs": "Auxx describes a support CRM where an agent can read tickets, retrieve relevant customer records and knowledge, draft replies, and update records. A beginner version could handle one narrow ticket type using a small sample inbox and a written procedure, rather than rebuilding the full CRM.",
+        "whoPays": "Hypothesis: a small online shop or support team with repetitive questions might pay for less routine inbox work. The supplied page does not establish paying customers or demand.",
+        "loop": [
+          "A new test ticket or scheduled run starts the workflow.",
+          "The system finds the relevant customer record and approved policy text.",
+          "A written procedure routes the ticket to one supported category.",
+          "The model drafts a reply using retrieved material and marks uncertain cases.",
+          "A person reviews the draft and decides whether to send it.",
+          "The workflow records the category and outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:auxx.ai",
+            "brand:auxx"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers",
+            "support_staff"
+          ]
+        }
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "title": "A human checked support inbox loop",
+        "productUrl": "https://n8n.io/ai",
+        "promise": "Sort incoming questions and prepare reply drafts for a person to review.",
+        "whatItIs": "n8n is a workflow builder that connects services and can include AI steps. A small student version could take incoming support messages, label them by topic, and prepare a draft reply for review. A workflow is a set of connected steps that runs when an event occurs.",
+        "whoPays": "Hypothesis: a small online shop with a recurring support inbox might pay for setup or maintenance; the supplied page does not establish demand for this student service.",
+        "loop": [
+          "A new test support email triggers the workflow.",
+          "Rules remove obvious junk and pass the message to a classifier.",
+          "The classifier assigns a topic and priority.",
+          "The workflow retrieves an approved answer note and drafts a reply.",
+          "A person reviews and sends the draft, correcting uncertain cases.",
+          "The workflow records the outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:n8n.io"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers"
+          ]
+        }
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "title": "Track GPU prices and specs in one view",
+        "productUrl": "https://flopper.io/",
+        "promise": "Collect a small set of public GPU prices and compare them with published specifications.",
+        "whatItIs": "Flopper is a GPU hardware explorer. Its maker says it combines GPU specifications, workload estimates, and prices from dozens of providers. The maker also notes that reliable quotes for some large systems are difficult to obtain, so listings are not complete procurement quotes. A student version could track a few consumer GPUs and public provider pages, showing dated prices beside basic specifications. Small AI teams or hardware shoppers might pay for such a comparison, but this customer and willingness to pay are hypotheses. The automated part is checking selected pages and recording changes. A person should confirm the exact model, configuration, availability, and final price before relyin",
+        "whoPays": "Hypothesis: small AI teams or individuals comparing hardware may pay for a focused price and specification tracker; the source establishes no customers or revenue.",
+        "loop": [
+          "Keep a manually reviewed list of GPU models and public provider pages.",
+          "Fetch the selected pages on a schedule and extract visible price and configuration text.",
+          "Store each observation with its URL and timestamp.",
+          "Compare new observations with prior ones and flag changes or missing prices.",
+          "Show a comparison with the published hardware specifications.",
+          "Have a person verify configuration, availability, and quote details before purchase."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:flopper.io",
+            "brand:flopper"
+          ],
+          "workflowKeys": [],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "title": "Catch failures in production AI agents",
+        "productUrl": "https://github.com/tessaryai/tessary",
+        "promise": "Turn agent traces into grouped findings and a human-reviewed root-cause report.",
+        "whatItIs": "Tessary is an open-source tool for teams running AI agents in production. Its repository describes receiving traces (records of an agent’s operations), checking them with classifiers, grouping related findings into cases, and investigating likely causes using trace evidence and, when connected, repository code. A small student project could accept test traces, apply a few simple checks, group matching alerts, and prepare a report for a developer. Teams operating AI agents are a plausible customer, but the sources do not establish who pays. The repeating work is trace checking and case preparation; a person still needs to confirm whether a finding is a real problem and choose any fix.",
+        "whoPays": "Hypothesis: teams operating production AI agents may pay for help finding and investigating failures; the repository does not establish paying customers or revenue.",
+        "loop": [
+          "Receive an agent trace through an instrumentation endpoint.",
+          "Normalize the trace into a consistent format.",
+          "Run enabled classifiers and open findings when checks trigger.",
+          "Group related findings into a case.",
+          "Investigate the case using trace evidence and connected repository code when available.",
+          "Send the findings and explanation to a human owner, who decides whether and how to fix the system."
+        ],
+        "profile": {
+          "productKeys": [
+            "github:tessaryai/tessary",
+            "brand:tessary"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "title": "Test AI phone agents with repeatable calls",
+        "productUrl": "https://voicegremlin.com/",
+        "promise": "Run a scripted call against a phone agent and receive a reviewable pass or fail result.",
+        "whatItIs": "VoiceGremlin is described by its maker as an API for testing AI systems that answer phone calls. A user supplies a phone number and a test case, such as checking whether the agent performs a requested behavior. The service calls the agent, has the two bots converse, and uses an LLM judge—a language model asked to assess the result—to return pass or fail for a software pipeline. A small student version could run one scripted scenario against a test phone agent and save the call outcome. Teams building voice agents are a plausible customer, but the source does not establish who pays or whether customers use it. The repeated loop can run without a person placing each test call, while a human st",
+        "whoPays": "Hypothesis: companies building AI phone agents may pay to check that their agents keep meeting defined behaviors; the source provides no customer or revenue evidence.",
+        "loop": [
+          "An operator defines a test case and supplies a test phone number.",
+          "The API places a call to the phone agent being checked.",
+          "The test bot speaks with the phone agent about the scenario.",
+          "An LLM judge compares the conversation with the requested behavior.",
+          "The system returns a pass or fail result to a software pipeline.",
+          "A developer reviews unclear failures and updates the test or phone agent."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:voicegremlin.com",
+            "brand:voicegremlin"
+          ],
+          "workflowKeys": [
+            "voice_agent_tests"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "title": "Check whether docs work for AI agents",
+        "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+        "promise": "Scan a documentation URL for common access and format problems, then review a scorecard.",
+        "whatItIs": "Velu's agent-friendly documentation checker is described as scoring a documentation URL against the open Agent-Friendly Documentation Spec, using the spec's reference implementation called afdocs. The Show HN post names issues the spec is concerned with: pages rendered only in the browser, missing llms.txt or Markdown versions, soft 404 pages, and pages too large for an agent's context window. A beginner could build a small scheduled checker for one documentation site that records the score and lists detectable problems. Documentation teams are a plausible customer, but the source does not establish who pays. This is an audit and reporting loop, not an automatic documentation repair service.",
+        "whoPays": "Hypothesis: teams maintaining developer documentation may pay for recurring checks; the source does not establish customers or revenue.",
+        "loop": [
+          "Read a configured documentation site URL.",
+          "Check pages for supported agent access and format signals.",
+          "Run the reference checker and save its score.",
+          "Compare the result with the previous scan.",
+          "Send a report when the score or detected issues change.",
+          "A documentation owner verifies findings and chooses any fix."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:veludocs.com",
+            "brand:veludocs"
+          ],
+          "workflowKeys": [
+            "agent_documentation_audit",
+            "website_change_monitor"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "title": "Route visual feedback to a coding agent",
+        "productUrl": "https://circleit.ai",
+        "promise": "Turn a marked-up staging page into an agent task with a reviewable status trail.",
+        "whatItIs": "CircleIt is described as a Chrome extension plus a Claude Code or Codex plugin. A teammate can mark an area on a page, explain the requested change, and send the screenshot, comment, and page metadata to a running coding agent. The source says the system matches the page address to a repository and reports status back in the sender's browser. A small student version could capture one staging page and open a proposed task for a developer's agent. Small product teams are a plausible customer, but that is a hypothesis. The loop handles intake and handoff; a human still needs to judge whether the requested change is correct and review code before release.",
+        "whoPays": "Hypothesis: small software teams that collect frequent website feedback may pay; no customer or payment evidence is given.",
+        "loop": [
+          "A teammate opens a staging page and marks a visible issue.",
+          "Capture the screenshot, comment, page address, and relevant metadata.",
+          "Match the page address to a configured repository.",
+          "Send the feedback to the team's running coding agent after any required approval.",
+          "Show the sender the agent's status and response.",
+          "A developer reviews code changes and decides whether to merge."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:circleit.ai",
+            "brand:circleit"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      }
+    ],
+    "postsSha256": "a5770461692548e187a4d8626edd357648b7b4f9d5c76210db0557d2700effd6"
+  },
+  "assessmentContractVersion": 1,
+  "primaryFetchDiagnostics": [
+    {
+      "productUrl": "https://vendiq.rishailabs.com",
+      "requestedAt": "2026-10-12T08:19:07.841Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "productUrl": "https://github.com/SaarthurR/atticus-mac",
+      "requestedAt": "2026-10-12T08:19:08.262Z",
+      "status": "fetched",
+      "sourceId": "702c3f24c909e329aee6f2a8",
+      "reason": "The candidate product URL was independently re-fetched with public HTTPS, DNS and robots guards."
+    },
+    {
+      "productUrl": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "requestedAt": "2026-10-12T08:19:08.803Z",
+      "status": "fetched",
+      "sourceId": "417c3a0572d8db4597000019",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "requestedAt": "2026-10-12T08:19:08.803Z",
+      "status": "fetched",
+      "sourceId": "1dd03891d1e36345e3123c1a",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.ycombinator.com/companies/hyperprobe",
+      "requestedAt": "2026-10-12T08:19:08.803Z",
+      "status": "fetched",
+      "sourceId": "bb661e23e12d03ecc74d7c56",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.doozadesk.com",
+      "requestedAt": "2026-10-12T08:19:08.803Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "Public source returned HTTP 404."
+    },
+    {
+      "productUrl": "https://www.lumro.co",
+      "requestedAt": "2026-10-12T08:19:11.654Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "getaddrinfo ENOTFOUND www.lumro.co"
+    },
+    {
+      "productUrl": "https://deploylist.com",
+      "requestedAt": "2026-10-12T08:19:11.698Z",
+      "status": "fetched",
+      "sourceId": "a1c8cb1184207c51f4aeac25",
+      "reason": "The candidate product URL was independently re-fetched with public HTTPS, DNS and robots guards."
+    },
+    {
+      "productUrl": "https://n8n.io/workflows/5808-create-custom-pdf-documents-from-templates-with-gemini-and-google-drive",
+      "requestedAt": "2026-10-12T08:19:12.011Z",
+      "status": "fetched",
+      "sourceId": "3c824018da122cca44ea7bde",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.ycombinator.com/companies/trope",
+      "requestedAt": "2026-10-12T08:19:12.011Z",
+      "status": "fetched",
+      "sourceId": "193164099a406e74ebd731c3",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "requestedAt": "2026-10-12T08:19:12.011Z",
+      "status": "fetched",
+      "sourceId": "52cd6f64afa8aaf328ee7f97",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "requestedAt": "2026-10-12T08:19:12.011Z",
+      "status": "fetched",
+      "sourceId": "bc697cf9bffa88f2d189de58",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    }
+  ],
+  "considerationEvidence": [
+    {
+      "title": "VendIQ vendor follow-up agent",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Atticus Mac voice assistant",
+      "productUrl": "https://github.com/SaarthurR/atticus-mac",
+      "sourceIds": [
+        "137cfe2b70b12ea36bfbbe8f",
+        "2c21fb1647b1840a93749780",
+        "702c3f24c909e329aee6f2a8"
+      ],
+      "availableSourceIds": [
+        "137cfe2b70b12ea36bfbbe8f",
+        "2c21fb1647b1840a93749780",
+        "702c3f24c909e329aee6f2a8"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Reflection Beam model release",
+      "productUrl": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "sourceIds": [
+        "417c3a0572d8db4597000019"
+      ],
+      "availableSourceIds": [
+        "417c3a0572d8db4597000019"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice Agent Space (VabbyGupta018)",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "HyperProbe incident debugger",
+      "productUrl": "https://www.ycombinator.com/companies/hyperprobe",
+      "sourceIds": [
+        "bb661e23e12d03ecc74d7c56"
+      ],
+      "availableSourceIds": [
+        "bb661e23e12d03ecc74d7c56"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dooza Desk support agent",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Lumro support agents",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Deploylist project discovery feed",
+      "productUrl": "https://deploylist.com",
+      "sourceIds": [
+        "167cf06e2bed71a2865e0782",
+        "a1c8cb1184207c51f4aeac25"
+      ],
+      "availableSourceIds": [
+        "a1c8cb1184207c51f4aeac25"
+      ],
+      "unavailableSourceIds": [
+        "167cf06e2bed71a2865e0782"
+      ]
+    },
+    {
+      "title": "Custom PDF workflow template",
+      "productUrl": "https://n8n.io/workflows/5808-create-custom-pdf-documents-from-templates-with-gemini-and-google-drive",
+      "sourceIds": [
+        "3c824018da122cca44ea7bde"
+      ],
+      "availableSourceIds": [
+        "3c824018da122cca44ea7bde"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Trope ERP implementation agents",
+      "productUrl": "https://www.ycombinator.com/companies/trope",
+      "sourceIds": [
+        "193164099a406e74ebd731c3"
+      ],
+      "availableSourceIds": [
+        "193164099a406e74ebd731c3"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "ChatGPT Work login handoff",
+      "productUrl": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "sourceIds": [
+        "52cd6f64afa8aaf328ee7f97"
+      ],
+      "availableSourceIds": [
+        "52cd6f64afa8aaf328ee7f97"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice Agent Space (Mohamad5577)",
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "sourceIds": [
+        "bc697cf9bffa88f2d189de58"
+      ],
+      "availableSourceIds": [
+        "bc697cf9bffa88f2d189de58"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
