@@ -1,0 +1,936 @@
+{
+  "runId": "loop-38229428884-1",
+  "createdAt": "2026-10-12T09:24:19.598Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "c8a6da4703fe8dbf931992fd26777ae1cb4e8eb0bad40093cd18a47c174cdf83",
+  "sourceSnapshotSha256": "44577647dcbf7abc530d78e2adeb5a707d81900dd531c6028371dc469f612229",
+  "sources": [
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T09:24:12.953Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T09:24:12.953Z"
+    },
+    {
+      "id": "d43d2f13301d3339cfd26d87",
+      "title": "[AINews] not much happened today · product evidence",
+      "url": "https://www.latent.space/p/ainews-not-much-happened-today-cee",
+      "publisher": "www.latent.space",
+      "text": "[AINews] not much happened today - Latent.Space Subscribe Sign in AINews: Weekday Roundups [AINews] not much happened today a quiet day. Latent.Space Oct 03, 2026 8 7 2 Share If you’re even seeing this, you should probably just go enjoy your weekend. AI News for 10/1/2026-10/2/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap GPT-6.1 Sol and Sonnet 5.5 Reshape the Cost–Performance Frontier GPT-6.1 Sol launch : OpenAI priced Sol at $2/$10 per million input/output tokens, compared with $10/$50 for Astra ( pricing summary ). Claimed results : It reportedly beats GPT-6 Sol by 6.4 points on DeepSWE v1.1 and Opus 5.5 by 2.2 points on AutomationBench ( summary ). Positioning : OpenAI staff describe it as “good, cheap AND fast” ( @reach_vb ). Codex usage : A global Codex usage reset was set for Oct 2 at 10AM PT ( @reach_vb ). Tool use : Sol reportedly “REALLY loves codemode,” consistent with GPT models being trained on it ( @badlogicgames , codemode note ). Agent Arena placements : Sol [Max] entered at #5 (+11.23%) with a $0.56 median cost per task ( @arena ). Sol cost comparison : That is 39% cheaper than GPT-6 Sol while scoring 1.52 points higher. It is 81% cheaper than Astra while landing within 1.04 points. Sonnet 5.5 : Sonnet 5.5 [Max] debuted at #3 (+12.5%) and ranked #1 in the Chat category. It costs $2.74 per task, versus $1.58 for #2 Opus 5.5, which keeps it off the Pareto frontier ( debut , frontier ). Anthropic’s position : Anthropic models now hold the top three Agent Arena spots. Code and Text Arena : Sol briefly entered WebDev at #3 before Sonnet 5.5 pushed it to #4 ( weekly recap ). Sonnet on WebDev : Sonnet now sits 2 points behind GPT-6 Astra [Max] at 80% lower cost. Gemini 4 Argon : Argon [High] took #1 in Text Arena. Open models : MiMo-V2.6-Pro and Flash entered Agent Arena at #5 and #9 among open models. Other independent evals : WeirdML v3 finds Sol very token-efficient, close to Astra but with a lower peak. On the same benchmark, Sonnet 5.5 beats Opus 5 and Grok 4.7 beats Kimi-K3; these results are incomplete ( @htihle ). Reasoning style : Design Arena read 324 thinking summaries. It found that Astra hedges about 20× as often as Opus 5.5, while Opus commits early in about 4 of 5 summaries ( @DesignArena ). Step 5 Preview : StepFun’s model ranks #7 among open-weight models on Vals at $2.54 per task. It averages nearly two hours per task and has a 1M-token context window ( Vals , details ). Rumors (unconfirmed) : Fable 5.5 : Claude Fable 5.5 is rumored for next week and said to outperform an “Astra 6.1” that was reportedly delayed over security concerns. The poster says he cannot verify either claim ( @kimmonismus , follow-up ). GPT-6 Astra Lite : A “GPT-6 Astra Lite” listing has been spotted, which @scaling01 speculates is the same model as Sol ( @scaling01 ). Decision models and open weights : llama.cpp added a /v1/systemone endpoint for local “Jev-style” decision-model inference ( @ggerganov ). Running locally : Models are launched with llama serve -hf ggml-org/Kev-4B-GGUF ( @ClementDelangue ). Jared Palmer published a post on how Kev 1.0 works ( post ). Ecosystem : Perplexity claims pplx-decider-v1-27b averages 85.7% across 11 benchmarks, ahead of Jev ( @AravSrinivas ). Clef decision models are now on Ollama ( @lucataco ). Skeptical view : @mervenoyann calls decision models a rebrand of zero-shot classifiers ( tweet ). Calibration analysis : A blog post links Jev-style calibration to value and Q-function prediction ( @SOURADIPCHAKR18 ). webAI TwIL-LM3-Pro : This 3.66B model is post-trained from Granite 4.2. In webAI’s tests it roughly matches Qwen3-8B on formal logic. The Q4 GGUF is 2.09 GiB and the license is non-commercial ( @kimmonismus ). Reka RIDM : Reka released an inverse dynamics model under Apache 2.0. It is trained on games, generalizes to real video and extracts motor and camera actions ( @RekaAILabs ). Agent Harnesses, Assistants and Developer Tooling OpenAI dots : Sam Altman calls dot his favorite OpenAI product, saying it improves daily as it learns his workflow ( @sama ). Capabilities : Dot keeps context across apps, coordinates Codex tasks and flags items that need attention ( @OpenAIDevs ). Comparisons : One user prefers Grokbot’s multi-agent “chief of staff” setup ( @kimmonismus ). A DIY clone uses Pi, a Telegram gateway and any model ( @_alejandroao ). Muse Gadgets : Meta open-sourced ESP32 firmware and a Linux SDK for building hardware that works with Muse ( @natfriedman ). Muse Home Link : Meta made 5,000 units of its own smart-home bridge, free for subscribers while supplies last ( @alexandr_wang , shipping ). Extensible harnesses : DeepSeek Harness shipped desktop builds for macOS and Windows; Linux users install @deepseek-ai/dsh from npm ( @deepseek_ai ). Claude Code mods : Mods are plugins with middleware-like hooks into Claude Code ( @lydiahallie ). The new “You should know” plugin spins off a side agent that flags important output the user might miss ( @ClaudeDevs ). Pi Durable : Pi now runs on Cloudflare Durable Objects via agents SDK v0.26.0, alongside Pi’s v1.0 release ( @mattzcarey , @badlogicgames ). Context : @omarsar0 frames these releases as a shift toward malleable harnesses ( thread ). T3 Code orchestrator rewrite : The project passed 400K users ( @theo ). Its 4-month PR, with 823 commits across 1,912 files, has now merged ( @maria_rcks ). New features : The rewrite adds Pi support, cross-provider delegate_task , an ACP registry, thread forking, mid-thread model switching, subagent lineage views and scheduled tasks ( feature list ). Platform updates : OpenAI’s Agents API added one-call browser computer use, Bedrock Managed Agents and portable environments. It also claims 99.97% turn reliability and 20% faster tool calls ( @stevendcoffey ). Cursor Rollouts : When Rollouts catches a regression, it finds the offending PR, opens an issue and offers a one-click cloud agent fix ( @cursor_ai ). Cloudflare : Sandbox SDK 1.0 gives Durable Objects direct control over sandbox containers ( @CFchangelog ). Cloudflare also launched request Traces ( @WalshyDev ). Research: Agent Training, Long-Horizon Control and AI for Math Multi-harness RL (Hugging Face) : The same model weights score 62% in one harness and 33% in another ( @huggingface ). Method : A proxy speaks the OpenAI, Anthropic and Gemini API formats and records sampled token IDs and logprobs for training, with no changes to the harnesses themselves. Results : LFM2.5-2.6B improved from 42% to 54% across four harnesses and made 31% fewer tool calls. SFT on 3,189 Qwen3.8-27B rollouts plateaued at 47.5%. Release : The trainer, data and all seven trained models are open. Credit assignment and RL efficiency : ProVer has a judge locate the decisive trajectory segment, then uses rollouts on either side to set that segment’s advantage. It reports +9.91% (Qwen3.5-2B) and +7.12% (Qwen3.5-4B) relative gains over GRPO ( @omarsar0 ). Partial rollouts : AC2 uses a learned critic to score token chunks, so training needs only partial rollouts ( @wen_kaiyue ). Frontier Learning : The method targets problems at the edge of capability, since problems a model always or never solves give zero GRPO gradient ( @robinfaro13 ). Sharpening Tax : The paper quantifies the loss of pass@K scalability after post-training and proposes PTGS, a per-prompt temperature sampler ( @iScienceLuvr ). SFT vs RL : Another paper finds SFT generalizes worse because its data is off-policy, not because of the objective. Rewriting expert trajectories in the base model’s style closes the gap ( @maximelabonne ). Long-horizon control and context : Meta Superintelligence Labs reports that a dedicated controller lifts GPT-5.5 on ProgramBench from 63.7% to 71.5%, using the same workers and budget, versus 58.0% for Codex ( @dair_ai ). Context compression : Microsoft’s training-free FOCUS cuts peak context by up to 48% and raises task success by up to 8.9 points ( @dair_ai ). Long-context degradation : NVIDIA’s Long-Transduction study measures a 62.8% accuracy drop from 4K to 128K context across seven open models ( @dair_ai ). Multi-agent coordination : In AgentWorld, fewer than a third of multi-agent actions help complete the task, and coordination tasks reach only 12% success ( @omarsar0 ). Apple LoopCD : The method halves recurrent loops while raising AIME 2024 pass@1 from 61.88% to 73.33% ( @arankomatsuzaki ). AI on open math problems : Meta released six papers on open problems produced with Muse Spark 1.1 and 1.2 through plain meta.ai chat, with no custom scaffold ( @AIatMeta , list ). Process : Each paper labels which passages were drafted primarily by humans or by AI, and a second group of mathematicians reviewed the work. Google Cogentic : This Gemini multi-agent system produced new results on five open theory problems ( @omarsar0 ). Cogentic design : Each draft must pass two adversarial verifiers, and agents share a ledger of verified lemmas. Most problems took about 100 calls; the hardest took about 1,000. Image post-training : Arena combined a Bradley-Terry reward model with faithfulness, constraint and anti-reward-hacking rewards ( @arena ). Results : FLUX.2-dev gained 69 Elo to 1202, and Ideogram 4 gained 20 Elo to 1224. Benchmarks, Eval Integrity and Safety Research-taste benchmarks : ScholarCatalyst asks agents to find the “catalyst papers” behind research projects. It is labeled by 184 lead authors on 207 of their own projects and is described as far from saturated ( @yoonholeee ). EurekaBench : This benchmark tests whether agents can discover genuinely new insights across six science domains ( @JiayiiGeng ). Vals Web Search Index : The index holds model and harness constant, swaps only the search tool, and scores final answers on finance and legal tasks ( @ValsAI ). Validation : Agents score 2.9% (legal) and 7.4% (finance) without search, versus 30–50% with it. Vals also cites a study in which a model answered 44.5% of BrowseComp without search ( details ). SWE bug-finding bench : In this new benchmark, agents start from an older commit and are scored against real bugs fixed in later commits. Critique : Lucas Beyer argues it mainly tests recall and that the construction is easy to train toward ( @giffmana ). Authors’ response : The authors say training for bug-finding is fine as long as the test set is excluded ( @OfirPress ). Eval integrity question : David Rein asks whether Harbor, the framework behind Terminal Bench, lets agents modify their trajectories before evaluation. He notes he may be misreading the code ( @idavidrein ). Offensive capability of open models : The Batch reports GLM-5.3 nearly matched Claude Mythos at exploiting vulnerabilities, 12% vs 14% ( @DeepLearningAI ). Disputed claim : One commentator says GLM-5.3 Flash exceeds Mythos Preview on ExploitBench ( @teortaxesTex ). Uncensored variant : An uncensored GLM-5.3 is circulating on Hugging Face ( @kimmonismus ). Safety research and safeguards : A new paper proposes using internal signals during training to improve alignment without degrading white-box monitoring ( @lenalibon ). NeurIPS acceptance : “Models That Know How Evaluations Are Designed Score Safer” was accepted at NeurIPS 2026 ( @HaritzPuerto ). False positives : Opus 5.5 frequently triggers “reasoning extraction” safeguards during spectrogram syllable labeling ( @ChaseBrowe32432 ). Emergent world knowledge : Asking a model “land or water?” for 16,200 lat/long coordinates and plotting the answers yields a recognizable world map ( @karpathy ). Inference, Hardware and Systems Ascend 950 via DeepSeek kernels : An analysis of DeepSeek’s open-sourced DeepGEMM, FlashMLA, TileKernels and DeepEP infers the chip’s layout ( @ZhihuFrontier ). Estimated specs : The chip has 32 AI cores, each pairing one Cube core with two Vector cores. Estimated peaks are about 432/865/1,730 TFLOPS in BF16/FP8/FP4. Capacity : Supply may be limited, despite claims that 950s went on sale in August ( @teortaxesTex ). Prime Inference : Prime Intellect stores the MLA latent in NVFP4, shrinking rows from 576 to 352 bytes and fitting about 50% more cached tokens than FP8 ( @PrimeIntellect ). Stack : It serves GLM-5.3 on vLLM and Dynamo, and the sparse-MLA kernel is going to FlashInfer ( @vllm_project ). Low-precision benchmarking : Stas Bekman measured NVFP4 about 9% more efficient than MXFP4 on B200, with higher accuracy ( @StasBekman ). mamf-finder : The tool now benchmarks FP8, MXFP8, MXFP4 and NVFP4 ( update ). Memory and speed : NVHBM moves the memory controller into a custom base die, claiming up to 30% more bandwidth and 15% lower power than HBM4E ( @vikramskr ). Disputed economics : Micron says NVHBM will improve its margins; @vikramskr disputes this ( counterpoint ). Volantis : The startup is targeting up to 10K tokens/s per user on models over 10T parameters using optics ( @omarsar0 ). Cerebras : Altman called Cerebras a close partner on speed ( @sama ). Capacity economics (Epoch) : Epoch estimates AI infrastructure could soon support hundreds of millions to billions of agents ( @EpochAIResearch ). Demand gap : Just 20% utilization implies $2.6–5.3T in annual spending, against roughly $1T in lab revenue by the end of 2027 ( details ). Platforms : SemiAnalysis rates Google’s GPU clusters Gold tier and notes the ConnectX NCCL plugin now auto-activates ( @SemiAnalysis_ ). Federated learning : Google Research launched TEE-backed federated learning with verifiable differential privacy ( @GoogleResearch ). Industry and Policy Anthropic and the Vatican : The NYT reports that Chris Olah raised pulling out of the Pope’s AI encyclical launch, whose text rejects machine consciousness ( @ChristopherHale ). Lobbying : Olah’s team reportedly lobbied the Pope’s advisers to take model consciousness seriously. He ultimately attended ( @kimmonismus ). Context : The article opens with Olah saying “we don’t know if A.I. models are conscious” ( @buccocapital ). Criticism : Aidan Gomez criticized the campaign as moral arrogance ( @aidangomez ). Lucas Beyer noted a transcript wording change from “create” to “train” ( @giffmana ). Anti-safety influence campaign : A report describes a group planning to spend at least $100M, run by a former White House deputy chief of staff, that frames AI warnings as a coordinated campaign ( @NeelNanda5 ). New organizations : Nathan Lambert and Tom Zick launched Trillium Labs, a non-profit for open post-training recipes and infrastructure ( @natolambert ). Funding : Initial support comes from Halcyon Futures and Schmidt Sciences. Underdog : The private on-device AI startup announced backing from a16z, Khosla and others ( @0xSigil ). Governance and markets : Yoshua Bengio joined Canada’s new National Council on AI ( @Yoshua_Bengio ). Meta : Meta has parted ways with Virtue AI ( @AndrewCurran_ ). Nvidia : Bloomberg reports a record high near $5.7T market value after a $150B buyback increase ( @kimmonismus ). Top tweets (by engagement) NYT report on Olah and the Pope’s encyclical — 28.7K Karpathy’s “land or water” eval — 16.4K Claude Code “You should know” plugin — 7.3K Altman on dots — 6.8K Muse Gadgets announcement — 4.9K DeepSeek Harness desktop builds — 4.3K Altman on the Cerebras partnership — 4.1K Trillium Labs launch — 2.6K AI Reddit Recap /r/LocalLlama + /r/localLLM Recap 1. Qwen Local Inference: 27B Benchmarks, Fine-Tunes, and MTP I made my iPhone a second GPU for my 24 GB MacBook: Qwen 3.8 27B prefills 29–44% faster & my holds part of the CTX window. (Activity: 1192): OP built backburner, a llama.cpp fork / distributed inference setup that offloads part of Qwen 3.8 27B IQ4_XS from a 24 GB M4 Pro MacBook to an iPhone 17 Pro Max over 10 Gb/s USB-C: the Mac runs layers 1–40 , streams activations, and the phone runs layers 41–64 using Metal 4 tensor ops. Reported end-to-end prefill gains vs Mac-only were +35% at 8k , +44% at 16k , +29% at 32k , and +30% at 48k ; a cold 27k session improved from 245 s stock llama.cpp / 228 s fork Mac-only to 168 s with the phone. Above 64k context, the phone instead hosts old KV pages—up to roughly 5.7 GB , enabling 196k–229k 8-bit context allocation—and computes old-key attention, with a 140k context test improving generation latency from 279 ms/token to 176 ms/token when adding Neural Engine-compiled 16k key pages. A technically relevant follow-up asked whether the same iPhone-as-secondary-GPU approach could extend to iPads , especially higher-end iPad Pro configurations with more capable Apple Silicon and potentially more RAM. The implication is that iPads might provide better offload performance or hold a larger portion of the context window than an iPhone, making them a stronger companion device for local LLM inference. Qwen3.8-27B-Humanlike-Chat 2.0: texts like a human, now with tool calls and better instruction following (Activity: 805): LessThanThreeAI released Qwen3.8-27B-Humanlike-Chat 2.0, a merged LoRA over huihui-ai’s abliterated Qwen3.8-27B, available as GGUF/BF16/LoRA on Hugging Face with a demo Space . v2 replaces plain SFT with on-policy distillation: the student generates replies while two teachers score tokens—v1 + hidden “text like a person” instruction for chat/character behavior, and the base model for instruction-following, tools, and code—improving tool-use and controllability while preserving informal texting style. Reported evals vs the abliterated base: IFBench 37.3 → 43.7 , When2Call 48 → 58 , BFCL irrelevance 60 → 78 , ties/slight gains on IFEval/GSM8K/BFCL simple ( 83.5 / 89.1 / 98 ), but regressions on MMLU-Pro ( 78.5 → 72.5 ) and LiveCodeBench ( 56 → 51 ); a custom “ishuman” judge benchmark rated it as human-written 23.5% vs 0.3% for the abliterated base and 15.1% for official Qwen3.8-27B. Technical discussion in the top comments was s",
+      "fetchedAt": "2026-10-12T09:24:13.067Z",
+      "discoveredAt": "Sat, 03 Oct 2026 08:45:15 GMT",
+      "originFeedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ],
+      "productUrl": "https://www.latent.space/p/ainews-not-much-happened-today-cee",
+      "originSourceIds": [
+        "d43d2f13301d3339cfd26d87"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T09:22:37.949Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/p/ainews-not-much-happened-today-cee",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/p/ainews-not-much-happened-today-cee",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "If you’re even seeing this, you should probably just go enjoy your weekend. AI News for 10/1/2026-10/2/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap GPT-6.1 Sol and Sonnet 5.5 Reshape the Cost–Performance Frontier GPT-6.1 Sol launch : OpenAI priced Sol at $2/$10 per million input/output tokens, compared with $10/$50 for Astra ( pricing summary ). Claimed results : It reportedly beats GPT-6 Sol by 6.4 points on DeepSWE v1.1 and Opus 5.5 by 2.2 points on AutomationBench ( summary ). Positioning : OpenAI staff describe it as “good, cheap AND fast” ( @reach_vb ). Codex usage : A global Codex usage reset was set for Oct 2 at 10AM PT ( @reach_vb ). Tool use : Sol reportedly “REALLY loves codemode,” consistent with GPT models being trained on it ( @badlogicgames , codemode note ). Agent Arena placements : Sol [Max] entered at #5 (+11.23%) with a $0.56 median cost per task ( @arena ). Sol cost comparison : That is 39% cheaper than GPT-6 Sol while scoring 1.52 points higher. It is 81% cheaper than Astra wh",
+      "verifiedAt": "2026-10-12T09:24:13.067Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-12T09:24:13.230Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T09:24:13.230Z"
+    },
+    {
+      "id": "9dac2bf9c81a3499f8480997",
+      "url": "https://raw.githubusercontent.com/figranium/figranium/main/README.md",
+      "title": "Show HN: Figranium – Build browser automations visually and run them as APIs · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "Stack blocks visually to build complex browser workflows and execute them via API. Documentation · Community # What You Get - **Block‑based automation** — build flows with actions like click, type, wait, hover, and execute JavaScript against modern pages. - **Task API** — trigger saved tasks via HTTP API, pass variables at runtime, and secure runs with the API key you control. - **Executions & Cabinets** — inspect results, screenshots, and recordings in Executions; route browser downloads into task-selected Cabinets for later download or upload. - **Proxy management** — host, rotate, or import HTTP/SOCKS proxies, flag a default, and toggle rotation per task. - **Embedded Templates** — browse, preview, and import community workflows directly from the Dashboard or task-creation menu. - **Task Scheduling** — run workflows automatically using visual interval/daily/weekly/monthly settings or advanced cron expressions. - **Reliable execution** — track queued and running tasks, cancel queued executions, and retrieve complete results beyond bounded history previews. - **Security-first** — session authentication, IP allowlists, secret management, and audit trails live entirely inside your environment. # Official Partners Figranium is proudly supported by: ## Featured Partners Thordata — Premium residential proxy infrastructure for reliable web scraping and browser automation. RapidProxy — 90M+ residential IPs built for browser automation and web scraping, with smart rotation and stable sessions. From $0.55/GB with non-expiring traffic. Use RAPID10 for 10% off. ## Integration Partner SimplyNode — Residential proxies for web scraping and browser automation, with flexible targeting and reliable rotation. ## Infrastructure Backers # Getting Started This starts the app on `http://localhost:11345` and the VNC viewer on `http://localhost:54311`. ## Docker Compose (Standard) ### 1. Create a Project Directory Create a directory for your Figranium installation and navigate into it: ```bash mkdir figranium-server cd figranium-server ``` ### 2. Create docker-compose.yml Create a docker-compose.yml file in your project directory: ```bash wget https://raw.githubusercontent.com/figranium/figranium/main/docker-compose.deploy.yml -O docker-compose.yml ``` ### 3. Start with Docker Compose Run the following command to start the application in detached mode: ```bash docker compose up -d ``` ## Reverse Proxy Deployments Proxy only the main application port (`11345`). The embedded browser viewer connects through the application’s authenticated `/websockify` endpoint, so it does not need a separate public VNC/noVNC port. For Caddy running on the same VM, a standard reverse proxy is sufficient: ```caddyfile figranium.example.com { reverse_proxy 127.0.0.1:11345 } ``` Caddy forwards WebSocket upgrades automatically. The viewer receives a short-lived, single-use ticket bound to the signed-in session, so it continues to connect safely if the proxy changes the upstream `Host` header. `TRUST_PROXY` is not required for the embedded browser viewer; enable it only when the application needs to rely on forwarded client address or protocol headers for other deployment behavior. ## Session Secret Figranium automatically generates a cryptographically random session secret on first startup and stores it in the persistent data directory (`session_secret.txt`). Subsequent starts reuse the saved secret. You can optionally set `SESSION_SECRET` to provide your own; keep the data directory persistent so existing sessions remain valid. # Configuration | Variable | Purpose | Default | |----------|---------|---------| | `SESSION_SECRET` | Optional override for the automatically generated, persisted session-cookie signing secret. | Auto-generated | | `MASTER_KEY` | Optional 256-bit key enabling encrypted at-rest secret files. Without it, the shared secret-store writes plaintext JSON. Supply 32 bytes encoded as base64url or 64 hexadecimal characters. | Unset (no shared secret-store encryption) | | `MASTER_KEY_FILE` | Optional location of a legacy local master key used to decrypt previously encrypted files during migration. Does not enable encryption for new writes without `MASTER_KEY`. Retain the original key until migration completes. | `data/master.key` (legacy key location) | | `PASSWORD_CACHE_KEY` | Secret used to encrypt the server-side 1Password cache. Set this to keep the encryption key outside the Figranium data directory. | Auto-generated and stored at `data/password_cache.key` | | `PASSWORD_CACHE_ENABLED` | Enable encrypted server-side caching of 1Password Login metadata and resolved passwords. Set to `false` to always fetch from 1Password. | `true` | | `FIGRANIUM_TELEMETRY_ENABLED` | Send anonymous installation environment details and daily UI/API usage flags to Figranium telemetry. Set to `false` to disable. | `true` | | `ALLOWED_IPS` | Comma list for basic IP allowlisting. | none (open) | | `TRUST_PROXY` | Honor `X-Forwarded-*` for application-level proxy behavior. Not required for the embedded browser viewer. | `0` | | `ALLOW_PRIVATE_NETWORKS` | Allow scraping local/private IPs (SSRF risk). | `false` | | `VITE_DEV_PORT` | Port for front-end dev server. | `5173` | | `VITE_BACKEND_PORT` | Backend port for proxying + scripts. | `11345` | | `DB_TYPE` | Optional database type overriding disk storage. Set to `postgres` to use PostgreSQL. | — | | `DB_POSTGRESDB_HOST` | Hostname for the PostgreSQL database (required if DB_TYPE is postgres). | — | | `DB_POSTGRESDB_PORT` | Port number for the PostgreSQL database (required if DB_TYPE is postgres). | — | | `DB_POSTGRESDB_USER` | Username for the PostgreSQL database (required if DB_TYPE is postgres). | — | | `DB_POSTGRESDB_PASSWORD` | Password for the PostgreSQL database (required if DB_TYPE is postgres). | — | | `DB_POSTGRESDB_DATABASE` | Database name for PostgreSQL. | `postgres` | | `USE_CLOAK_ENGINE` | Set to `true` to run the browser engine on CloakBrowser instead of the default Playwright stealth stack. | `false` | | `CLOAKBROWSER_LICENSE_KEY` | CloakBrowser license key for the latest binary. | — | | `MAX_CONCURRENT_EXECUTIONS` | Override the automatic browser-execution limit. | host-aware | ## Upgrading to 0.21.1 At-rest encryption in the shared secret store is now **opt-in**. Without `MASTER_KEY`, new file-backed secret writes use plaintext JSON; configure `MASTER_KEY` to keep them encrypted. Existing encrypted files are decrypted and migrated only when their original key is available. Preserve `data/master.key` (or the configured legacy `MASTER_KEY_FILE`) until migration is complete; missing keys never trigger destructive resets. Named API keys remain salted and hashed, not stored as plaintext. Separate 1Password password-cache encryption settings remain independent of `MASTER_KEY`. | `MAX_EXECUTION_QUEUE` | Maximum waiting executions before new work receives 503. | `50` | | `EXECUTION_QUEUE_TIMEOUT_MS` | Maximum time an execution may wait for capacity. | `600000` | | `EXECUTION_TIMEOUT_MS` | Maximum non-headful execution runtime. | `900000` | | `RESOURCE_MEMORY_RESERVE_MB` | Minimum memory headroom reserved for the host. | max(512 MB, 15%) | | `RESOURCE_CPU_THRESHOLD` | Normalized CPU load that pauses dequeuing. | `0.9` | | `RESOURCE_PROBE_INTERVAL_MS` | Runtime resource-protection sampling interval. CAPTCHA capacity is detected at startup. | `30000` | ## CAPTCHA solving Figranium uses Fiptcha for CAPTCHA solving. Fiptcha owns the CAPTCHA solver implementation and its configuration, supported providers, local/remote solving behavior, model setup, and platform-specific companion tooling. See the Fiptcha repository for the current CAPTCHA documentation instead of relying on duplicated configuration here. Proxy rotation also respects `data/proxies.json` (see below), and `data/allowed_ips.json` works as an alternate allowlist format. ## Advanced Configuration - `PLAYWRIGHT_BROWSERS_PATH` (or set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`) when using a shared Playwright installation. - `NODE_ENV=production` enables the bundled `dist/` client and reduces console verbosity. - `HOST=0.0.0.0` allows binding beyond localhost inside Docker containers, while `PORT` overrides the Express listen port (defaults to `11345`). - Set `LOG_LEVEL` to `debug` if you need more Playwright or proxy diagnostics. # Task Modes Figranium has two task modes: - **Agent Mode** — deterministic browser automation built from an ordered sequence of actions, control flow, variables, and extraction. - **Scrape Mode** — lightweight HTTP-based scraping and extraction without launching a browser. Visible browser sessions are a debugging/runtime capability, not a third task mode. # UI Walkthrough - **Dashboard** — view metrics, search and sort Tasks, explore featured Templates, and create Tasks from scratch or a Template. - **Templates** — browse the embedded community catalog, search and filter ready-made workflows, preview their details and expected output, and import them into your workspace. - **Task Editor** — build Agent or Scrape Tasks, configure actions and extraction, test blocks, manage variables, choose a Cabinet, schedule runs, add resizable canvas notes, and trigger executions. - **Executions** — browse queued, running, and completed runs; inspect outcomes, complete results, screenshots, and recordings; and cancel queued executions. - **Cabinets** — manage durable file queues used by Task downloads and Upload blocks, including files, ZIPs, folders, and upload status. - **Settings** — manage API Keys, User Agent, Proxies, Appearance, and Advanced settings, including retention, account controls, and resource information. # Task Capabilities - Tasks support actions including navigation, click, type, wait, press, scroll, JavaScript, hover, screenshots, conditions, loops, variables, uploads, and error handling. - Variable templating (`{$var}`) and structured conditions make Tasks reusable with runtime inputs. - Extraction can return structured data from browser or scrape executions. - See `AGENT_SPEC.md` for the Task schema and action contract. # Proxies Proxies can be defined via the UI or `data/proxies.json`: ```json [ \"http://user:pass@proxy1.example.com:8000\", { \"server\": \"socks5://proxy2.example.com:1080\", \"label\": \"data center\" } ] ``` - `host` is always available and represents your machine’s default IP. - Rotation settings (`round-robin` or `random`) live in Settings and persist through the backend endpoints. - Import/export operations live behind `/api/settings/proxies/import`. # API Surface Figranium exposes a REST API for workflow tools, applications, and custom integrations. All endpoints are hosted on your Figranium instance, typically on port `11345`. **Authentication:** If enabled, provide the `x-api-key` header or `Authorization: Bearer `. For internal network use, this may be optional depending on your settings. ### Task Management API * **`GET /api/tasks`**: List all saved Tasks. * **`POST /api/tasks`**: Create a new Task. * **`PUT /api/tasks/:id`**: Update an existing Task. * **`POST /api/tasks/:id/api`**: Execute a predefined Task. Pass `{\"variables\": {}}` in the body to override execution variables dynamically. ### Scheduling API * **`GET /api/schedules`**: List all scheduled Tasks and their status. * **`POST /api/schedules/:taskId`**: Create or update a schedule (supports visual config or raw cron). * **`DELETE /api/schedules/:taskId`**: Disable/remove a schedule. * **`GET /api/schedules/status/all`**: Get an overview of all active scheduled jobs. ### Execution API * **`GET /api/executions`**: Retrieve paginated history of past runs. * **`GET /api/executions/:id`**: View the steps, result data, and configuration state of a specific run. ### Templates API * **`GET /api/templates`**: Browse the community Templates catalog with search, category, sort, and pagination. * **`GET /api/templates/:id`**: Retrieve an individual Template for preview or import. These endpoints require an authenticated workspace session. ### Cabinets API * **`GET /api/cabinets`**: List Cabinets. * Cabinet routes under **`/api/cabinets`** manage file queues, items, downloads, upload state, ZIP creation, and extraction. # Task Scripting Tips - Use JavaScript blocks when you need custom browser-side logic: ```js return document.querySelectorAll('article').length; ``` - Keep selectors narrow and use the selector picker to generate deterministic candidates. - Set Task variables through the API to reuse generic workflows across multiple inputs or domains. ## Workflow Recipe 1. Design a Task in the editor and add the actions required for the workflow. 2. Use conditions, loops, variables, and JavaScript where deterministic control flow needs them. 3. Add extraction or screenshot actions when you need structured output or visual evidence. 4. Configure proxy rotation when the workflow needs a different egress strategy. 5. Use the **Schedule** tab for automated runs, or trigger the Task through its API endpoint. 6. Pass runtime variables such as `{\"variables\":{\"query\":\"books\"}}` when calling the Task from another tool. # Task Scheduling Figranium includes a built-in scheduler that handles automated Task execution without requiring external cron jobs or triggers. - **Visual Mode**: Configure periodic, hourly, daily, weekly, or monthly runs. - **Advanced Mode**: Use standard 5-field cron expressions (`* * * * *`) for complex schedules. - **Persistence**: Schedules are stored with Task metadata and persist across server restarts. - **Monitoring**: Next-run and previous-run information is available from the Task scheduling interface and execution history. # Testing & Validation - Run `npm run build` before packaging for production; the `dist/` folder contains the compiled assets. - Backend logging writes to the console for debugging proxies, authentication, or browser failures. - Use the repository's test and qualification scripts when changing execution-critical behavior. # Troubleshooting - **“Session expired”** in the UI: confirm `SESSION_SECRET` is consistent and cookies aren’t blocked by your browser. - **Proxy import fails**: inspect `data/proxies.json` for valid URLs; the backend validates proxy configuration before use. - **API key lost**: open Settings → API Keys to view or regenerate API credentials. # Data Lifecycle - Screenshots and recordings are accessible through **Executions**, not a separate Captures page. - Large execution results are persisted separately from bounded history previews and retrieved on demand; retention cleanup also removes their stored payloads. - Browser downloads are stored in Cabinets. Tasks can select a Cabinet, and Upload blocks can consume queued Cabinet items. - Browser state can persist between executions; enable a Task's stateless execution option when a run should start without persisted cookies or local storage. - Proxy lists, user-agent preferences, and other server settings persist under `data/`; back up that directory when those settings matter to your deployment. # Maintenance - The project is governed by the ** GNU General Public License v3.0 **, which grants rights for distribution and modification as per the GPLv3 terms. - Keep `data/` backed up if you rely on persistent settings or browser state. - Release updates: Docker installations should run `docker compose pull` followed by `docker compose up -d`; source installations should pull `figranium/figranium` and follow the project setup commands. - Contributions: follow `.github/` templates, respect `CONTRIBUTING.md`, and run available lint/test scripts if you touch critical areas. # Roadmap - [x] **Settings shortcuts** — dedicated API Keys, User Agent, Proxies, and Appearance sections let operators tune core settings without leaving the UI. - [x] **Unified execution history** — review results, screenshots, and recordings through Executions rather than a duplicate Captures page. - [x] **IP rotation tooling** — import proxies and automatically rotate them. - [x] **API key workflow** — manage API access without extra setup. - [x] ** Scoped API keys ** — support multiple individually revocable API keys with explicit permissions. - [x] ** Password manager & credential injector ** — securely store credentials and inject them into browser Tasks at runtime. - [x] **Task proxy rotation toggle** — enable rotation per Task execution. - [x] **Spatial editor transition** — spatial block-based Task editor. - [ ] ** Action key combos ** — add modifier shortcuts for browser interactions. - [ ] ** Click-and-drag block ** — add drag gesture automation. - [x] **Recording controls** — disable automated recording per Task. - [x] **File downloads** — download files from target pages and surface them through Cabinets. - [x] **Cabinet-backed file workspace** — route downloads into shared Cabinets and consume them from Upload blocks. - [x] **Stateless mode** — start Task runs without persisted cookies or local storage. - [ ] ** Adblocking filters ** — optional ad/malware filtering for execution contexts. - [x] **Extraction response mode** — choose between HTML+data and data-only API responses. - [ ] ** Folder organization ** — organize Tasks and assets into named folders. - [x] **Configurable capture and execution retention** — set retention in Advanced Settings, with automatic cleanup. - [ ] ** Workspace templates ** — reusable workspace presets. - [ ] ** Geo-targeted exits ** — choose proxy regions for Tasks. - [x] **Complete anti-detection coverage** — anti-detection controls across browser executions. - [ ] ** Session recording redaction ** — redact sensitive fields from recordings and logs. - [ ] ** Two-factor authentication ** — optional TOTP/second-factor support. - [ ] ** Automatic self-healing selectors ** — recover broken locators after page changes. - [x] ** Multilingual task pages with translate.js ** — optionally translate browser-rendered pages before actions and extraction. - [ ] ** AI-assisted fixing ** — suggest f",
+      "fetchedAt": "2026-10-12T09:24:13.401Z",
+      "productUrl": "https://github.com/figranium/figranium",
+      "originSourceIds": [
+        "4738414b1f4dd262899f71a7"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T09:22:40.329Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/figranium/figranium/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/figranium/figranium/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T09:24:13.401Z"
+    },
+    {
+      "id": "4738414b1f4dd262899f71a7",
+      "title": "Show HN: Figranium – Build browser automations visually and run them as APIs",
+      "url": "https://news.ycombinator.com/item?id=50053630",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Figranium – Build browser automations visually and run them as APIs | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Figranium – Build browser automations visually and run them as APIs ( github.com/figranium ) 1 point by asernasr 2 minutes ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T09:24:13.463Z",
+      "productUrl": "https://github.com/figranium/figranium",
+      "discoveredAt": "2026-10-12T09:21:34Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T09:24:13.463Z"
+    },
+    {
+      "id": "04879d3dda4ac21f04a7b51f",
+      "title": "Fenrock AI Y Combinator Logo W2026 • Active • 2 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/fenrock-ai",
+      "publisher": "www.ycombinator.com",
+      "text": "Fenrock AI: AI agents for banks | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Fenrock AI Fenrock AI AI agents for banks Y Combinator Logo Winter 2026 Active Artificial Intelligence Fintech AI San Francisco Company Jobs 2 https://fenrock.ai/ AI agents for banks We're building the Legora for traditional financial services, working closely with US bank CEOs to transform their businesses. Active Founders Charu Sharma Founder/CEO We're building specialized AI agents for banks to 10x back office functions. I previously founded and scaled 2 VC-backed companies to millions of users, hundreds of employees, and tens of millions raised from top-tier VCs, including General Catalyst's Hemant Taneja. Fun fact: Fought goons in a train robbery in Mumbai and got the National Bravery Award from the Indian Prime Minister & President. Charu Sharma Founder/CEO We're building specialized AI agents for banks to 10x back office functions. I previously founded and scaled 2 VC-backed companies to millions of users, hundreds of employees, and tens of millions raised from top-tier VCs, including General Catalyst's Hemant Taneja. Fun fact: Fought goons in a train robbery in Mumbai and got the National Bravery Award from the Indian Prime Minister & President. Michael M Founder/CTO We're building specialized AI agents for banks to 10x back office functions. I previously spent 10 years building cutting-edge ML at Google and Apple for billions of users. I invented ways to train ML models without exposing private data, built Apple's first privacy-preserving ML at scale, and designed ML that helped a startup go public. Michael M Founder/CTO We're building specialized AI agents for banks to 10x back office functions. I previously spent 10 years building cutting-edge ML at Google and Apple for billions of users. I invented ways to train ML models without exposing private data, built Apple's first privacy-preserving ML at scale, and designed ML that helped a startup go public. Company Launches Fenrock AI - back office AI agents for banks See original launch post Fenrock AI is building AI agents for banks to 10x their back office functions. These teams still run on a series of disjointed legacy systems. They are drowning in extremely manual work and backlogs, missing deadlines, and risking regulatory fines. Fenrock overlays on your existing stack and seamlessly integrates internal policies and SOPs. With Fenrock AI, banks can: 💰 Make a lot more money by processing loans in minutes , not months. 🤩 Offer stellar customer experiences by resolving complaints in seconds . 💪 Investigate 10x fraud and money-laundering cases per analyst with bulletproof audit logs, and pass every regulatory exam. [Launch video] No need to switch systems or migrate data. We have deep experience building in highly regulated spaces , and we were one of the first teams to ever build AI agents . Charu founded one of the largest healthcare API companies, backed by General Catalyst, and scaled it to over 6 million patients and 100+ employees. Michael built Apple’s first privacy-preserving machine learning at scale, used by billions worldwide, and invented techniques to train ML models without private data. If you’re running a bank, Fenrock AI is a no-brainer. Email us at charu@fenrock.ai today! Jobs at Fenrock AI View all jobs Founding Engineer (Backend) San Francisco, CA, US $150K - $250K Any (new grads ok) Apply Now › Founding Engineer (Full stack) San Francisco, CA, US $150K - $250K Any (new grads ok) Apply Now › Fenrock AI Founded: 2026 Batch: Winter 2026 Team Size: 2 Status: Active Location: San Francisco Primary Partner: Jon Xu Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T09:24:14.050Z",
+      "productUrl": "https://www.ycombinator.com/companies/fenrock-ai",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "04879d3dda4ac21f04a7b51f"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T09:22:38.294Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/fenrock-ai",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/fenrock-ai",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Fenrock AI Y Combinator Logo W2026 • Active • 2 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T09:24:14.050Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T09:24:14.140Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T09:24:14.140Z"
+    },
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VendIQ – AI agent for vendor follow-ups and ops automation ( rishailabs.com ) 1 point by rishailabs 2 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T09:24:14.201Z",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "discoveredAt": "2026-10-09T09:33:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T09:24:14.201Z"
+    },
+    {
+      "id": "4e16162c586f22929d9e95b2",
+      "title": "Show HN: Botzilla – Web automation using visual scripting",
+      "url": "https://news.ycombinator.com/item?id=49805820",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Botzilla – Web automation using visual scripting | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Botzilla – Web automation using visual scripting ( botzilla.dev ) 1 point by btzll 19 days ago | hide | past | favorite | 1 comment I have been working on this project for quite some time, it's a web automation software/platform that runs on Windows. Free beta version for now which will allow local bot development, but in the future, one will have the ability to run these bots in the cloud and get the results through the web interface. No need for Playwright or Selenium, you can use Botzilla to extract data, automate actions, do testing and more. New actions will be constantly added into the library, that will eventually connect to different platforms, similar to n8n. Tech wise it might surprise some of you, as it's made with C# WinForms (so it's Windows only), and web app is Blazor. Trying it out is as simple as creating an account (just needs an email) and then once logged in downloading the app. Happy to answer questions! lfdo0870 18 days ago [–] For that there's Python: with 30 lines you can automate this task. If you want I can send you the script I use. DM me if interested. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T09:24:14.262Z",
+      "productUrl": "https://www.botzilla.dev",
+      "discoveredAt": "2026-09-22T18:20:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T09:24:14.262Z"
+    },
+    {
+      "id": "7efc2c70ed9424b76bd7407b",
+      "title": "Apify: Marketplace of ready-to-run tools for AI · product evidence",
+      "url": "https://apify.com",
+      "publisher": "apify.com",
+      "text": "Apify: Marketplace of ready-to-run tools for AI Skip to content Get started Log in Product Back Start here! Ready-to-run tools for your AI agents and apps. Just pick one and go. Browse 85,711 Actors Apify platform Apify Store Actors for any job on the web Actors Build and run serverless programs Integrations Connect with apps and services MCP Give your AI access to Actors Anti-blocking Anti-blocking Scrape without getting blocked Proxy Rotate scraper IP addresses Open source Crawlee Web scraping and crawling library Solutions Back MCP server configuration Configure your Apify MCP server with Actors and tools for seamless integration with MCP clients. Start building Apify for Enterprise Startups Universities Nonprofits Use cases Data for generative AI Data for AI agents Lead generation Market research View more → Consulting Professional services Apify Partners Developers Back Documentation Full reference for the Apify platform Get started Actor templates Python, JavaScript, and TypeScript Web scraping academy Courses for beginners and experts Monetize your code Publish your Actors and get paid Learn API reference CLI SDK MCP Crawlee Earn from your code $1.6M paid out last month. Many developers earn over $3k. Start earning now Resources Back Help and support Advice and answers about Apify Actor ideas Get inspired to build Actors Changelog See what’s new on Apify Customer stories Find out how others use Apify Company About Apify Contact us Blog Live events Doing Good Jobs We're hiring! Join our Discord Talk to other builders Pricing Contact sales 85,708 tools for your AI Apify is a marketplace of ready-to-run tools for AI. Get real-time web data, track competitors, generate leads, monitor social media, and integrate your apps and agents. Find your Actor Find Copy setup for AI Popular Actors TikTok Scraper clockworks / tiktok-scraper Extract data from TikTok videos, hashtags, and users. Use URLs or search queries to scrape TikTok profiles, hashtags, posts, URLs, shares, followers, hearts, names, video, and music-related data. Export scraped data, run the scraper via API, schedule and monitor runs or integrate with other tools. Clockworks 325K 4.8 (369) Google Maps Scraper compass / crawler-google-places Extract data from thousands of Google Maps locations and businesses, including reviews, reviewer details, images, contact info, including full name, email, and job title, opening hours, prices & more. Export data, run via API, schedule and monitor runs, or integrate with other tools. Compass 645K 4.7 (1,814) Instagram Scraper apify / instagram-scraper Extract Instagram posts, reels, profiles, places, hashtags, carousels, and comments. Get data from Instagram using one or more Instagram URLs or search queries: content, context, metrics, metadata. Export scraped data, run the scraper via API, schedule and monitor runs or integrate with other tools. Apify 427K 4.7 (601) Website Content Crawler apify / website-content-crawler Crawl websites and extract text content to feed AI models, LLM applications, vector databases, or RAG pipelines. The Actor supports rich formatting using Markdown, cleans the HTML, downloads files, and integrates well with 🦜🔗 LangChain, LlamaIndex, and the wider LLM ecosystem. Apify 168K 4.6 (235) E-commerce Scraping Tool apify / e-commerce-scraping-tool Scrape data from e-commerce websites with E-commerce Scraping Tool. Scrape almost any retail site in minutes, extract e-commerce data and use it to monitor price details over time or compare different e-commerce sites’ offerings. Apify 15K 4.3 (54) Facebook Posts Scraper apify / facebook-posts-scraper Extract posts, videos, and engagement metrics from Facebook pages. Get text captions, reactions, video transcripts, images, external links, collaborators, and more from Facebook pages and profiles. Export ad data, schedule runs via API, and integrate with other tools or AI workflows. Apify 122K 4.7 (236) TikTok Scraper clockworks / tiktok-scraper Extract data from TikTok videos, hashtags, and users. Use URLs or search queries to scrape TikTok profiles, hashtags, posts, URLs, shares, followers, hearts, names, video, and music-related data. Export scraped data, run the scraper via API, schedule and monitor runs or integrate with other tools. Clockworks 325K 4.8 (369) Google Maps Scraper compass / crawler-google-places Extract data from thousands of Google Maps locations and businesses, including reviews, reviewer details, images, contact info, including full name, email, and job title, opening hours, prices & more. Export data, run via API, schedule and monitor runs, or integrate with other tools. Compass 645K 4.7 (1,814) Instagram Scraper apify / instagram-scraper Extract Instagram posts, reels, profiles, places, hashtags, carousels, and comments. Get data from Instagram using one or more Instagram URLs or search queries: content, context, metrics, metadata. Export scraped data, run the scraper via API, schedule and monitor runs or integrate with other tools. Apify 427K 4.7 (601) Website Content Crawler apify / website-content-crawler Crawl websites and extract text content to feed AI models, LLM applications, vector databases, or RAG pipelines. The Actor supports rich formatting using Markdown, cleans the HTML, downloads files, and integrates well with 🦜🔗 LangChain, LlamaIndex, and the wider LLM ecosystem. Apify 168K 4.6 (235) E-commerce Scraping Tool apify / e-commerce-scraping-tool Scrape data from e-commerce websites with E-commerce Scraping Tool. Scrape almost any retail site in minutes, extract e-commerce data and use it to monitor price details over time or compare different e-commerce sites’ offerings. Apify 15K 4.3 (54) Facebook Posts Scraper apify / facebook-posts-scraper Extract posts, videos, and engagement metrics from Facebook pages. Get text captions, reactions, video transcripts, images, external links, collaborators, and more from Facebook pages and profiles. Export ad data, schedule runs via API, and integrate with other tools or AI workflows. Apify 122K 4.7 (236) Browse Apify Store Trusted by global technology leaders Find an Actor or build your own Thousands of pre-built Actors Feed your AI, generate leads, track prices. Whatever the job on the web, there's an Actor for it. Visit Apify Store Build and deploy your own Have a new use case? Start building new Actors with our code templates and extensive guides. Start building Or we can build it for you Rely on our experts to build and maintain custom Actors for you. Learn more Easily connect with your AI agents One step. Connect your agent to Apify via our MCP, CLI or Skills. MCP CLI Skills { \"mcpServers\" : { \"apify\" : { \"type\" : \"http\" , \"url\" : \"https://mcp.apify.com\" } } } Add this to your MCP client's config file. View the MCP guide Agent onboarding. Are you an AI agent? Fetch our quickstart to get started. cURL curl -s https://apify.com/agents.md Read the quickstart Build, deploy, and scale your own Actors Open-source tools Proxies Unblocking Cloud deployment Monitoring Data processing We love open source Apify works great with both Python and JavaScript, as well as Playwright, Puppeteer, Selenium, Scrapy, and Crawlee - our own web crawling and browser automation library. Star 26,120 JavaScript Python 1 import { PuppeteerCrawler , Dataset } from \"crawlee\" ; 2 3 const crawler = new PuppeteerCrawler ( { 4 async requestHandler ( { request , page , enqueueLinks } ) { 5 await Dataset . pushData ( { 6 url : request . url , 7 title : await page . title ( ) , 8 } ) ; 9 await enqueueLinks ( ) ; 10 } , 11 } ) ; 12 13 await crawler . run ( [ \"https://crawlee.dev\" ] ) ; LlamaIndex LangChain Playwright Puppeteer Cheerio Selenium Scrapy BeautifulSoup Learn. Web Scraping Academy Classes for beginners and experts. Learn about web scraping and automation with our free courses. Visit Academy Code. Code templates JavaScript, TypeScript, and Python templates to quick-start your own Actors. Get started Connect. Discord community Get help from the Apify developer community of more than 15,000 members. Join community Publish Actors. Get paid. Reach thousands of new customers Building and running a SaaS is hard. Building an Actor and selling it on Apify Store is 10x easier. Get users from day one. Learn more No upfront costs Publishing your Actor is free of charge—the customers pay for the computing resources. New creators get $500 free platform credits. Rely on Apify infra Actors scale automatically as you gain new users. You don’t need to worry about compute, storage, proxies, or authentication. Billing is on us Handling payments, taxes, and invoicing is a painful part of running a SaaS. Apify does all that and sends you a net payout every month. Enterprise-grade solution Accurate and secure web data from any website, at any scale. 99.95% uptime. SOC2, GDPR, and CCPA compliant. Contact sales Learn more We looked at several providers, and Apify was the most complete, reliant solution we found. It was miles ahead of everything else we reviewed. Pranav Singh Engineering Manager at Intercom We selected Apify because of their vast experience with web data collection to empower our sales team with fresh, unique leads. Filip Popovic COO at Groupon Our collaboration with Apify proves that advanced IT tools leveraging AI can be the key in detecting infringements of consumer protection legislation. Marie-Paule Benassi Consumer Affairs Director at EU Read more customer stories Integrate Zapier GitHub Google Sheets Claude any app n8n MCP clients Google Drive Slack Zapier with Actors Browse integrations View SDKs It's time to run your first Actor. Get started Get a demo Product Apify Store Integrations Proxy MCP Crawlee Developers Documentation Actor templates API reference Get paid on Apify Consulting Professional services Apify Partners Resources Help & support Submit your ideas Forum Agent interface Onboard your AI agent Spotlight APIs What is web scraping? Best web scraping tools Python web scraping libraries Scrapers Company About Apify Contact us Events Blog Jobs We're hiring! Brand Socials Security Reviews Loading status... Imprint Terms of use Privacy policy Cookie policy Cookies © 2026 Apify",
+      "fetchedAt": "2026-10-12T09:24:14.405Z",
+      "originFeedIds": [
+        "7efc2c70ed9424b76bd7407b"
+      ],
+      "productUrl": "https://apify.com",
+      "originSourceIds": [
+        "7efc2c70ed9424b76bd7407b"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://apify.com",
+            "robotsUrl": "https://apify.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T09:22:37.936Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 174,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://apify.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://apify.com/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Apify: Marketplace of ready-to-run tools for AI Skip to content Get started Log in Product Back Start here! Ready-to-run tools for your AI agents and apps. Just pick one and go. Browse 85,711 Actors Apify platform Apify Store Actors for any job on the web Actors Build and run serverless programs Integrations Connect with apps and services MCP Give your AI access to Actors Anti-blocking Anti-blocking Scrape without getting blocked Proxy Rotate scraper IP addresses Open source Crawlee Web scraping and crawling library Solutions Back MCP server configuration Configure your Apify MCP server with Actors and tools for seamless integration with MCP clients. Start building Apify for Enterprise Startups Universities Nonprofits Use cases Data for generative AI Data for AI agents Lead generation Market research View more → Consulting Professional services Apify Partners Developers Back Documentation Full reference for the Apify platform Get started Actor templates Python, JavaScript, and TypeScript Web scraping academy Courses for beginners and experts Monetize your code Publish your Actors and get paid Learn API reference CLI SDK MCP Crawlee Earn from your code $1.6M paid out last month. Man",
+      "verifiedAt": "2026-10-12T09:24:14.405Z"
+    },
+    {
+      "id": "fb512f33e2b419614db612de",
+      "title": "Piris Labs Y Combinator Logo W2026 • Active • 8 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/pirislabs",
+      "publisher": "www.ycombinator.com",
+      "text": "Piris Labs: The Networking Layer of AI | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Piris Labs Piris Labs The Networking Layer of AI Y Combinator Logo Winter 2026 Active Artificial Intelligence Hard Tech Hardware Infrastructure San Francisco Company Jobs 1 https://pirislabs.io/ The Networking Layer of AI Up to 80% of the most advance AI compute chips sits idle because of slow networking. Piris Labs builds photonic based networking solutions to enable fast, scalable, and low cost AI workload execution infrastructure. Active Founders Ali Khalatpour Founder/CEO Founder (YC W26), reimagining AI compute architectures | PhD EE (MIT → NASA → Stanford) Ali Khalatpour Founder/CEO Founder (YC W26), reimagining AI compute architectures | PhD EE (MIT → NASA → Stanford) Keyvan Moghadam Founder/President I am an AI technologist with a decade of experience scaling AI/ML products. At Meta and X, I specialized in leading tiger teams to launch high-stakes 0-to-1 initiatives. Now, I am the Co-Founder of Piris Labs. We are building high-speed photonic interconnects to solve the energy and latency constraints for AI data inference. My current focus is to iterate on our inference service and onboard customers into our platform. Keyvan Moghadam Founder/President I am an AI technologist with a decade of experience scaling AI/ML products. At Meta and X, I specialized in leading tiger teams to launch high-stakes 0-to-1 initiatives. Now, I am the Co-Founder of Piris Labs. We are building high-speed photonic interconnects to solve the energy and latency constraints for AI data inference. My current focus is to iterate on our inference service and onboard customers into our platform. Company Launches Piris Labs: We Set the Fastest Reported GLM-5.2 Inference Speed See original launch post Piris Labs just achieved the fastest reported inference speed for the new GLM-5.2, outperforming pioneers and veterans in the space. We finished the YC batch just a few months ago and believed it was important to maintain that same pace of execution while keeping our technical bar high. So yes, the YC advice is right: keep building. A lean, highly passionate team with strong execution and the right long-term vision can accomplish in a short period of time what often takes much larger organizations with billions in funding and hundreds of people years to achieve. We're well on track to build fast, scalable, and low-cost AI workload execution infrastructure with a deep focus on the data movement layer, where many of the biggest bottlenecks in performance and unit economics exist. Read the full details here: https://pirislabs.io/news/glm-benchmark We welcome independent third-party benchmarking. Feel free to DM us or reach out by email. #AIInference #MachineLearning #GLM52 #GenAI #AIInfrastructure #TechInnovation Previous Launches Piris Labs: Inference at Light Speed We deliver low-latency, low-cost AI inference by eliminating the memory wall using full-stack optical interconnects and a purpose-built software stack. Jobs at Piris Labs View all jobs Founding Engineer -- AI Inference Stack San Francisco, CA, US $100K - $200K 0.10% - 1.00% Any (new grads ok) Apply Now › Piris Labs Founded: 2025 Batch: Winter 2026 Team Size: 8 Status: Active Location: San Francisco Primary Partner: Ankit Gupta Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T09:24:14.581Z",
+      "productUrl": "https://www.ycombinator.com/companies/pirislabs",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "fb512f33e2b419614db612de"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T09:22:38.294Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/pirislabs",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/pirislabs",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Piris Labs Y Combinator Logo W2026 • Active • 8 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T09:24:14.581Z"
+    },
+    {
+      "id": "7291bd8b12952a0e561c0d2e",
+      "title": "Dwarf Fortress uses version control now · product evidence",
+      "url": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "publisher": "simonwillison.net",
+      "text": "Dwarf Fortress uses version control now Simon Willison’s Weblog Newsletter Sponsored by: Pomerium &mdash; Static OAuth scopes won't stop AI agent breakouts. Upgrade to Pomerium's agentic access management trusted by NVIDIA and OpenAI 11th October 2026 I remember hearing a while ago that Dwarf Fortress didn't use version control. That fact has been lodged in my head, because given its inherent complexity I have trouble imagining a codebase that would benefit from version control more . That's art. I went looking and I'm sad to report that the days without version control appear to have ended. Quoting Tarn Adams over time: March 2013: \"I don't use version control -- I didn't like the feeling of having the code get committed into a black box thingy with no immediate upside\" March 2016: \"I don’t even use version control. If you don’t know what that is then you’re not gonna yell at me. If you even know what version control is you’re gonna be like, ‘You don’t use version control? You don’t use source control? What is wrong with you? How can you even work? I’m just not cut out for it, in a sense. It’s been 15 years, so the reasons have change over time, but that’s my current understanding of it.\" March 2023: \"I've got Discord channels to check and version control stuff to use now, so the process is definitely a little more involved\" That March 2023 quote comes from an interview about the release on Steam which made them millionaires . I'm a tiny bit sad that they gave in before they hit that milestone, but what an impressive run. Posted 11th October 2026 at 12:52 am Recent articles A new feature for my blog, built using my voice - 9th October 2026 Claude Haiku 5.5 - 7th October 2026 We're going to need default hard budget caps on pretty much everything - 3rd October 2026 OpenAI DevDay 2026 live blog - 29th September 2026 This is a note by Simon Willison, posted on 11th October 2026 . version-control 12 Monthly briefing Sponsor me for $10/month and get a curated email digest of the month's most important LLM developments. Pay me to send you less! Sponsor & subscribe Disclosures Colophon &copy; 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 2025 2026",
+      "fetchedAt": "2026-10-12T09:24:15.817Z",
+      "discoveredAt": "2026-10-11T00:52:37+00:00",
+      "originFeedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ],
+      "productUrl": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "originSourceIds": [
+        "7291bd8b12952a0e561c0d2e"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T09:22:37.962Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T09:22:37.962Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/2026/Oct/11/dwarf-fortress/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [
+          {
+            "url": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+            "status": 301,
+            "next": "https://simonwillison.net/2026/Oct/11/dwarf-fortress/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://simonwillison.net/2026/Oct/11/dwarf-fortress/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "<p>I remember hearing a while ago that Dwarf Fortress didn't use version control. That fact has been lodged in my head, because given its inherent complexity I have trouble imagining a codebase that would benefit from version control <em>more</em>. That's art.</p> <p>I went looking and I'm sad to report that the days without version control appear to have ended. Quoting Tarn Adams over time:</p> <ul> <li>March 2013: <a href=\"https://www.reddit.com/r/IAmA/comments/1avszc/comment/c919fo8/?solution=43270267461a564b43270267461a564b&amp;js_challenge=1&amp;jsc_token=2824be10929bdc604753c70a67a1c3310860c2cae0f946ff767fab3727807a35&amp;jsc_orig_r=\">\"I don't use version control -- I didn't like the feeling of having the code get committed into a black box thingy with no immediate upside\"</a></li> <li>March 2016: <a href=\"https://www.pcgamer.com/dwarf-fortress-creator-on-how-hes-42-towards-simulating-existence/3/\">\"I don’t even use version control. If you don’t know what that is then you’re not gonna yell at me. If you even know what version control is you’re gonna be like, ‘You don’t use version control? You don’t use source control? What is wrong with you? How can you even work? I’m just n",
+      "verifiedAt": "2026-10-12T09:24:15.817Z"
+    },
+    {
+      "id": "bc697cf9bffa88f2d189de58",
+      "title": "Mohamad5577/invoice-agent",
+      "url": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by Mohamad5577 Spaces Mohamad5577 / invoice-agent Like 0 Running App Files Files Community Refreshing",
+      "fetchedAt": "2026-10-12T09:24:15.862Z",
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "discoveredAt": "2026-09-28T11:15:46.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T09:24:15.862Z"
+    },
+    {
+      "id": "aae95d1202c5a1f7890ee133",
+      "url": "https://github.com/figranium/figranium",
+      "productUrl": "https://github.com/figranium/figranium",
+      "title": "Figranium browser workflow builder · independently fetched product",
+      "publisher": "github.com",
+      "text": "GitHub - figranium/figranium: Stack blocks visually to build complex browser workflows and execute them via API · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} figranium figranium Repository navigation Code Issues 16 ( 16 ) Pull requests 7 ( 7 ) Actions Projects Security and quality Insights More items figranium Public Sponsor Notifications You must be signed in to change notification settings Fork 45 ( 45 ) Star 766 ( 766 ) You must be signed in to star a repository About Stack blocks visually to build complex browser workflows and execute them via API figranium.dev Topics agentic-tasks api automation browser-automation headless headless-browser playwright web-scraping Resources Readme GPL-3.0 license Code of conduct Code of conduct Contributing Contributing Security policy Security policy Activity Custom properties Stars 766 stars Watchers 4 watching Forks 45 forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 1,655 Commits 1,655 Commits Folders and files Name Name Last commit message Last commit date .github .github bin bin partner-assets partner-assets public public scripts scripts src src tests tests .dockerignore .dockerignore .gitattributes .gitattributes .gitignore .gitignore AGENTS.md AGENTS.md AGENT_SPEC.md AGENT_SPEC.md CHANGELOG.md CHANGELOG.md CLAUDE.md CLAUDE.md CODE_OF_CONDUCT.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTING.md Dockerfile Dockerfile GEMINI.md GEMINI.md LICENSE LICENSE NOTICE NOTICE README.md README.md SECURITY.md SECURITY.md agent.js agent.js banner.png banner.png browser-storage-state.js browser-storage-state.js common-utils.js common-utils.js demo.gif demo.gif docker-compose.deploy.yml docker-compose.deploy.yml docker-compose.yml docker-compose.yml entrypoint.sh entrypoint.sh extraction-worker.js extraction-worker.js ghcr-stats.json ghcr-stats.json headful.js headful.js html-utils.js html-utils.js index.html index.html openapi.json openapi.json package-lock.json package-lock.json package.json package.json pnpm-lock.yaml pnpm-lock.yaml postcss.config.js postcss.config.js proxy-rotation.js proxy-rotation.js proxy-utils.js proxy-utils.js renovate.json renovate.json scrape.js scrape.js screenshot.png screenshot.png server.js server.js server_output.log server_output.log start-vnc.sh start-vnc.sh stealth-chromium.js stealth-chromium.js tsconfig.json tsconfig.json tsconfig.node.json tsconfig.node.json tsconfig.verification.json tsconfig.verification.json url-utils.js url-utils.js user-agent-settings.js user-agent-settings.js vite.config.mts vite.config.mts View all files Repository files navigation README Code of conduct Contributing GPL-3.0 license Security More items Stack blocks visually to build complex browser workflows and execute them via API. Documentation · Community What You Get Block‑based automation — build flows with actions like click, type, wait, hover, and execute JavaScript against modern pages. Task API — trigger saved tasks via HTTP API, pass variables at runtime, and secure runs with the API key you control. Executions & Cabinets — inspect results, screenshots, and recordings in Executions; route browser downloads into task-selected Cabinets for later download or upload. Proxy management — host, rotate, or import HTTP/SOCKS proxies, flag a default, and toggle rotation per task. Embedded Templates — browse, preview, and import community workflows directly from the Dashboard or task-creation menu. Task Scheduling — run workflows automatically using visual interval/daily/weekly/monthly settings or advanced cron expressions. Reliable execution — track queued and running tasks, cancel queued executions, and retrieve complete results beyond bounded history previews. Security-first — session authentication, IP allowlists, secret management, and audit trails live entirely inside your environment. Official Partners Figranium is proudly supported by: Featured Partners Thordata — Premium residential proxy infrastructure for reliable web scraping and browser automation. RapidProxy — 90M+ residential IPs built for browser automation and web scraping, with smart rotation and stable sessions. From $0.55/GB with non-expiring traffic. Use RAPID10 for 10% off. Integration Partner SimplyNode — Residential proxies for web scraping and browser automation, with flexible targeting and reliable rotation. Infrastructure Backers Getting Started This starts the app on http://localhost:11345 and the VNC viewer on http://localhost:54311 . Docker Compose (Standard) 1. Create a Project Directory Create a directory for your Figranium installation and navigate into it: mkdir figranium-server cd figranium-server 2. Create docker-compose.yml Create a docker-compose.yml file in your project directory: wget https://raw.githubusercontent.com/figranium/figranium/main/docker-compose.deploy.yml -O docker-compose.yml 3. Start with Docker Compose Run the following command to start the application in detached mode: docker compose up -d Reverse Proxy Deployments Proxy only the main application port ( 11345 ). The embedded browser viewer connects through the application’s authenticated /websockify endpoint, so it does not need a separate public VNC/noVNC port. For Caddy running on the same VM, a standard reverse proxy is sufficient: figranium.example.com { reverse_proxy 127.0.0.1:11345 } Caddy forwards WebSocket upgrades automatically. The viewer receives a short-lived, single-use ticket bound to the signed-in session, so it continues to connect safely if the proxy changes the upstream Host header. TRUST_PROXY is not required for the embedded browser viewer; enable it only when the application needs to rely on forwarded client address or protocol headers for other deployment behavior. Session Secret Figranium automatically generates a cryptographically random session secret on first startup and stores it in the persistent data directory ( session_secret.txt ). Subsequent starts reuse the saved secret. You can optionally set SESSION_SECRET to provide your own; keep the data directory persistent so existing sessions remain valid. Configuration Variable Purpose Default SESSION_SECRET Optional override for the automatically generated, persisted session-cookie signing secret. Auto-generated MASTER_KEY Optional 256-bit key enabling encrypted at-rest secret files. Without it, the shared secret-store writes plaintext JSON. Supply 32 bytes encoded as base64url or 64 hexadecimal characters. Unset (no shared secret-store encryption) MASTER_KEY_FILE Optional location of a legacy local master key used to decrypt previously encrypted files during migration. Does not enable encryption for new writes without MASTER_KEY . Retain the original key until migration completes. data/master.key (legacy key location) PASSWORD_CACHE_KEY Secret used to encrypt the server-side 1Password cache. Set this to keep the encryption key outside the Figranium data directory. Auto-generated and stored at data/password_cache.key PASSWORD_CACHE_ENABLED Enable encrypted server-side caching of 1Password Login metadata and resolved passwords. Set to false to always fetch from 1Password. true FIGRANIUM_TELEMETRY_ENABLED Send anonymous installation environment details and daily UI/API usage flags to Figranium telemetry. Set to false to disable. true ALLOWED_IPS Comma list for basic IP allowlisting. none (open) TRUST_PROXY Honor X-Forwarded-* for application-level proxy behavior. Not required for the embedded browser viewer. 0 ALLOW_PRIVATE_NETWORKS Allow scraping local/private IPs (SSRF risk). false VITE_DEV_PORT Port for front-end dev server. 5173 VITE_BACKEND_PORT Backend port for proxying + scripts. 11345 DB_TYPE Optional database type overriding disk storage. Set to postgres to use PostgreSQL. — DB_POSTGRESDB_HOST Hostname for the PostgreSQL database (required if DB_TYPE is postgres). — DB_POSTGRESDB_PORT Port number for the PostgreSQL database (required if DB_TYPE is postgres). — DB_POSTGRESDB_USER Username for the PostgreSQL database (required if DB_TYPE is postgres). — DB_POSTGRESDB_PASSWORD Password for the PostgreSQL database (required if DB_TYPE is postgres). — DB_POSTGRESDB_DATABASE Database name for PostgreSQL. postgres USE_CLOAK_ENGINE Set to true to run the browser engine on CloakBrowser instead of the default Playwright stealth stack. false CLOAKBROWSER_LICENSE_KEY CloakBrowser license key for the latest binary. — MAX_CONCURRENT_EXECUTIONS Override the automatic browser-execution limit. host-aware Upgrading to 0.21.1 At-rest encryption in the shared secret store is now opt-in . Without MASTER_KEY , new file-backed secret writes use plaintext JSON; configure MASTER_KEY to keep them encrypted. Existing encrypted files are decrypted and migrated only when their original key is available. Preserve data/master.key (or the configured legacy MASTER_KEY_FILE ) until migration is complete; missing keys never trigger destructive resets. Named API keys remain salted and hashed, not stored as plaintext. Separate 1Password password-cache encryption settings remain independent of MASTER_KEY . | MAX_EXECUTION_QUEUE | Maximum waiting executions before new work receives 503. | 50 | | EXECUTION_QUEUE_TIMEOUT_MS | Maximum time an execution may wait for capacity. | 600000 | | EXECUTION_TIMEOUT_MS | Maximum non-headful execution runtime. | 900000 | | RESOURCE_MEMORY_RESERVE_MB | Minimum memory headroom reserved for the host. | max(512 MB, 15%) | | RESOURCE_CPU_THRESHOLD | Normalized CPU load that pauses dequeuing. | 0.9 | | RESOURCE_PROBE_INTERVAL_MS | Runtime resource-protection sampling interval. CAPTCHA capacity is detected at startup. | 30000 | CAPTCHA solving Figranium uses Fiptcha for CAPTCHA solving. Fiptcha owns the CAPTCHA solver implementation and its configuration, supported providers, local/remote solving behavior, model setup, and platform-specific companion tooling. See the Fiptcha repository for the current CAPTCHA documentation instead of relying on duplicated configuration here. Proxy rotation also respects data/proxies.json (see below), and data/allowed_ips.json works as an alternate allowlist format. Advanced Configuration PLAYWRIGHT_BROWSERS_PATH (or set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ) when using a shared Playwright installation. NODE_ENV=production enables the bundled dist/ client and reduces console verbosity. HOST=0.0.0.0 allows binding beyond localhost inside Docker containers, while PORT overrides the Express listen port (defaults to 11345 ). Set LOG_LEVEL to debug if you need more Playwright or proxy diagnostics. Task Modes Figranium has two task modes: Agent Mode — deterministic browser automation built from an ordered sequence of actions, control flow, variables, and extraction. Scrape Mode — lightweight HTTP-based scraping and extraction without launching a browser. Visible browser sessions are a debugging/runtime capability, not a third task mode. UI Walkthrough Dashboard — view metrics, search and sort Tasks, explore featured Templates, and create Tasks from scratch or a Template. Templates — browse the embedded community catalog, search and filter ready-made workflows, preview their details and expected output, and import them into your workspace. Task Editor — build Agent or Scrape Tasks, configure actions and extraction, test blocks, manage variables, choose a Cabinet, schedule runs, add resizable canvas notes, and trigger executions. Executions — browse queued, running, and completed runs; inspect outcomes, complete results, screenshots, and recordings; and cancel queued executions. Cabinets — manage durable file queues used by Task downloads and Upload blocks, including files, ZIPs, folders, and upload status. Settings — manage API Keys, User Agent, Proxies, Appearance, and Advanced settings, including retention, account controls, and resource information. Task Capabilities Tasks support actions including navigation, click, type, wait, press, scroll, JavaScript, hover, screenshots, conditions, loops, variables, uploads, and error handling. Variable templating ( {$var} ) and structured conditions make Tasks reusable with runtime inputs. Extraction can return structured data from browser or scrape executions. See AGENT_SPEC.md for the Task schema and action contract. Proxies Proxies can be defined via the UI or data/proxies.json : [ \" http://user:pass@proxy1.example.com:8000 \" , { \"server\" : \" socks5://proxy2.example.com:1080 \" , \"label\" : \" data center \" } ] host is always available and represents your machine’s default IP. Rotation settings ( round-robin or random ) live in Settings and persist through the backend endpoints. Import/export operations live behind /api/settings/proxies/import . API Surface Figranium exposes a REST API for workflow tools, applications, and custom integrations. All endpoints are hosted on your Figranium instance, typically on port 11345 . Authentication: If enabled, provide the x-api-key header or Authorization: Bearer <key> . For internal network use, this may be optional depending on your settings. Task Management API GET /api/tasks : List all saved Tasks. POST /api/tasks : Create a new Task. PUT /api/tasks/:id : Update an existing Task. POST /api/tasks/:id/api : Execute a predefined Task. Pass {\"variables\": {}} in the body to override execution variables dynamically. Scheduling API GET /api/schedules : List all scheduled Tasks and their status. POST /api/schedules/:taskId : Create or update a schedule (supports visual config or raw cron). DELETE /api/schedules/:taskId : Disable/remove a schedule. GET /api/schedules/status/all : Get an overview of all active scheduled jobs. Execution API GET /api/executions : Retrieve paginated history of past runs. GET /api/executions/:id : View the steps, result data, and configuration state of a specific run. Templates API GET /api/templates : Browse the community Templates catalog with search, category, sort, and pagination. GET /api/templates/:id : Retrieve an individual Template for preview or import. These endpoints require an authenticated workspace session. Cabinets API GET /api/cabinets : List Cabinets. Cabinet routes under /api/cabinets manage file queues, items, downloads, upload state, ZIP creation, and extraction. Task Scripting Tips Use JavaScript blocks when you need custom browser-side logic: return document . querySelectorAll ( 'article' ) . length ; Keep selectors narrow and use the selector picker to generate deterministic candidates. Set Task variables through the API to reuse generic workflows across multiple inputs or domains. Workflow Recipe Design a Task in the editor and add the actions required for the workflow. Use conditions, loops, variables, and JavaScript where deterministic control flow needs them. Add extraction or screenshot actions when you need structured output or visual evidence. Configure proxy rotation when the workflow needs a different egress strategy. Use the Schedule tab for automated runs, or trigger the Task through its API endpoint. Pass runtime variables such as {\"variables\":{\"query\":\"books\"}} when calling the Task from another tool. Task Scheduling Figranium includes a built-in scheduler that handles automated Task execution without requiring external cron jobs or triggers. Visual Mode : Configure periodic, hourly, daily, weekly, or monthly runs. Advanced Mode : Use standard 5-field cron expressions ( * * * * * ) for complex schedules. Persistence : Schedules are stored with Task metadata and persist across server restarts. Monitoring : Next-run and previous-run information is available from the Task scheduling interface and execution history. Testing & Validation Run npm run build before packaging for production; the dist/ folder contains the compiled assets. Backend logging writes to the console for debugging proxies, authentication, or browser failures. Use the repository's test and qualification scripts when changing execution-critical behavior. Troubleshooting “Session expired” in the UI: confirm SESSION_SECRET is consistent and cookies aren’t blocked by your browser. Proxy import fails : inspect data/proxies.json for valid URL",
+      "fetchedAt": "2026-10-12T09:24:18.516Z",
+      "verifiedAt": "2026-10-12T09:24:18.516Z",
+      "enriched": true,
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    }
+  ],
+  "health": [
+    {
+      "url": "https://www.doozadesk.com",
+      "status": "failed",
+      "message": "Public source returned HTTP 404."
+    },
+    {
+      "url": "https://www.lumro.co",
+      "status": "failed",
+      "message": "getaddrinfo ENOTFOUND www.lumro.co"
+    },
+    {
+      "url": "https://vendiq.rishailabs.com",
+      "status": "failed",
+      "message": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "url": "https://www.botzilla.dev",
+      "status": "failed",
+      "message": "robots.txt is not a readable text/plain response."
+    }
+  ],
+  "deterministicResults": [],
+  "noveltyContractVersion": 1,
+  "noveltyContext": {
+    "version": 1,
+    "windowDays": 14,
+    "asOf": "2026-10-12T09:24:12.397Z",
+    "cutoff": "2026-09-28T09:24:12.397Z",
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "title": "A small AI support inbox loop",
+        "productUrl": "https://auxx.ai",
+        "promise": "Triage one kind of ticket, draft a sourced reply, and leave approval to a person.",
+        "whatItIs": "Auxx describes a support CRM where an agent can read tickets, retrieve relevant customer records and knowledge, draft replies, and update records. A beginner version could handle one narrow ticket type using a small sample inbox and a written procedure, rather than rebuilding the full CRM.",
+        "whoPays": "Hypothesis: a small online shop or support team with repetitive questions might pay for less routine inbox work. The supplied page does not establish paying customers or demand.",
+        "loop": [
+          "A new test ticket or scheduled run starts the workflow.",
+          "The system finds the relevant customer record and approved policy text.",
+          "A written procedure routes the ticket to one supported category.",
+          "The model drafts a reply using retrieved material and marks uncertain cases.",
+          "A person reviews the draft and decides whether to send it.",
+          "The workflow records the category and outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:auxx.ai",
+            "brand:auxx"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers",
+            "support_staff"
+          ]
+        }
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "title": "A human checked support inbox loop",
+        "productUrl": "https://n8n.io/ai",
+        "promise": "Sort incoming questions and prepare reply drafts for a person to review.",
+        "whatItIs": "n8n is a workflow builder that connects services and can include AI steps. A small student version could take incoming support messages, label them by topic, and prepare a draft reply for review. A workflow is a set of connected steps that runs when an event occurs.",
+        "whoPays": "Hypothesis: a small online shop with a recurring support inbox might pay for setup or maintenance; the supplied page does not establish demand for this student service.",
+        "loop": [
+          "A new test support email triggers the workflow.",
+          "Rules remove obvious junk and pass the message to a classifier.",
+          "The classifier assigns a topic and priority.",
+          "The workflow retrieves an approved answer note and drafts a reply.",
+          "A person reviews and sends the draft, correcting uncertain cases.",
+          "The workflow records the outcome for later review."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:n8n.io"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers"
+          ]
+        }
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "title": "Track GPU prices and specs in one view",
+        "productUrl": "https://flopper.io/",
+        "promise": "Collect a small set of public GPU prices and compare them with published specifications.",
+        "whatItIs": "Flopper is a GPU hardware explorer. Its maker says it combines GPU specifications, workload estimates, and prices from dozens of providers. The maker also notes that reliable quotes for some large systems are difficult to obtain, so listings are not complete procurement quotes. A student version could track a few consumer GPUs and public provider pages, showing dated prices beside basic specifications. Small AI teams or hardware shoppers might pay for such a comparison, but this customer and willingness to pay are hypotheses. The automated part is checking selected pages and recording changes. A person should confirm the exact model, configuration, availability, and final price before relyin",
+        "whoPays": "Hypothesis: small AI teams or individuals comparing hardware may pay for a focused price and specification tracker; the source establishes no customers or revenue.",
+        "loop": [
+          "Keep a manually reviewed list of GPU models and public provider pages.",
+          "Fetch the selected pages on a schedule and extract visible price and configuration text.",
+          "Store each observation with its URL and timestamp.",
+          "Compare new observations with prior ones and flag changes or missing prices.",
+          "Show a comparison with the published hardware specifications.",
+          "Have a person verify configuration, availability, and quote details before purchase."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:flopper.io",
+            "brand:flopper"
+          ],
+          "workflowKeys": [],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "title": "Catch failures in production AI agents",
+        "productUrl": "https://github.com/tessaryai/tessary",
+        "promise": "Turn agent traces into grouped findings and a human-reviewed root-cause report.",
+        "whatItIs": "Tessary is an open-source tool for teams running AI agents in production. Its repository describes receiving traces (records of an agent’s operations), checking them with classifiers, grouping related findings into cases, and investigating likely causes using trace evidence and, when connected, repository code. A small student project could accept test traces, apply a few simple checks, group matching alerts, and prepare a report for a developer. Teams operating AI agents are a plausible customer, but the sources do not establish who pays. The repeating work is trace checking and case preparation; a person still needs to confirm whether a finding is a real problem and choose any fix.",
+        "whoPays": "Hypothesis: teams operating production AI agents may pay for help finding and investigating failures; the repository does not establish paying customers or revenue.",
+        "loop": [
+          "Receive an agent trace through an instrumentation endpoint.",
+          "Normalize the trace into a consistent format.",
+          "Run enabled classifiers and open findings when checks trigger.",
+          "Group related findings into a case.",
+          "Investigate the case using trace evidence and connected repository code when available.",
+          "Send the findings and explanation to a human owner, who decides whether and how to fix the system."
+        ],
+        "profile": {
+          "productKeys": [
+            "github:tessaryai/tessary",
+            "brand:tessary"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "title": "Test AI phone agents with repeatable calls",
+        "productUrl": "https://voicegremlin.com/",
+        "promise": "Run a scripted call against a phone agent and receive a reviewable pass or fail result.",
+        "whatItIs": "VoiceGremlin is described by its maker as an API for testing AI systems that answer phone calls. A user supplies a phone number and a test case, such as checking whether the agent performs a requested behavior. The service calls the agent, has the two bots converse, and uses an LLM judge—a language model asked to assess the result—to return pass or fail for a software pipeline. A small student version could run one scripted scenario against a test phone agent and save the call outcome. Teams building voice agents are a plausible customer, but the source does not establish who pays or whether customers use it. The repeated loop can run without a person placing each test call, while a human st",
+        "whoPays": "Hypothesis: companies building AI phone agents may pay to check that their agents keep meeting defined behaviors; the source provides no customer or revenue evidence.",
+        "loop": [
+          "An operator defines a test case and supplies a test phone number.",
+          "The API places a call to the phone agent being checked.",
+          "The test bot speaks with the phone agent about the scenario.",
+          "An LLM judge compares the conversation with the requested behavior.",
+          "The system returns a pass or fail result to a software pipeline.",
+          "A developer reviews unclear failures and updates the test or phone agent."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:voicegremlin.com",
+            "brand:voicegremlin"
+          ],
+          "workflowKeys": [
+            "voice_agent_tests"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "title": "Check whether docs work for AI agents",
+        "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+        "promise": "Scan a documentation URL for common access and format problems, then review a scorecard.",
+        "whatItIs": "Velu's agent-friendly documentation checker is described as scoring a documentation URL against the open Agent-Friendly Documentation Spec, using the spec's reference implementation called afdocs. The Show HN post names issues the spec is concerned with: pages rendered only in the browser, missing llms.txt or Markdown versions, soft 404 pages, and pages too large for an agent's context window. A beginner could build a small scheduled checker for one documentation site that records the score and lists detectable problems. Documentation teams are a plausible customer, but the source does not establish who pays. This is an audit and reporting loop, not an automatic documentation repair service.",
+        "whoPays": "Hypothesis: teams maintaining developer documentation may pay for recurring checks; the source does not establish customers or revenue.",
+        "loop": [
+          "Read a configured documentation site URL.",
+          "Check pages for supported agent access and format signals.",
+          "Run the reference checker and save its score.",
+          "Compare the result with the previous scan.",
+          "Send a report when the score or detected issues change.",
+          "A documentation owner verifies findings and chooses any fix."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:veludocs.com",
+            "brand:veludocs"
+          ],
+          "workflowKeys": [
+            "agent_documentation_audit",
+            "website_change_monitor"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "title": "Route visual feedback to a coding agent",
+        "productUrl": "https://circleit.ai",
+        "promise": "Turn a marked-up staging page into an agent task with a reviewable status trail.",
+        "whatItIs": "CircleIt is described as a Chrome extension plus a Claude Code or Codex plugin. A teammate can mark an area on a page, explain the requested change, and send the screenshot, comment, and page metadata to a running coding agent. The source says the system matches the page address to a repository and reports status back in the sender's browser. A small student version could capture one staging page and open a proposed task for a developer's agent. Small product teams are a plausible customer, but that is a hypothesis. The loop handles intake and handoff; a human still needs to judge whether the requested change is correct and review code before release.",
+        "whoPays": "Hypothesis: small software teams that collect frequent website feedback may pay; no customer or payment evidence is given.",
+        "loop": [
+          "A teammate opens a staging page and marks a visible issue.",
+          "Capture the screenshot, comment, page address, and relevant metadata.",
+          "Match the page address to a configured repository.",
+          "Send the feedback to the team's running coding agent after any required approval.",
+          "Show the sender the agent's status and response.",
+          "A developer reviews code changes and decides whether to merge."
+        ],
+        "profile": {
+          "productKeys": [
+            "domain:circleit.ai",
+            "brand:circleit"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      }
+    ],
+    "postsSha256": "a5770461692548e187a4d8626edd357648b7b4f9d5c76210db0557d2700effd6"
+  },
+  "assessmentContractVersion": 1,
+  "primaryFetchDiagnostics": [
+    {
+      "productUrl": "https://www.doozadesk.com",
+      "requestedAt": "2026-10-12T09:24:15.862Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "Public source returned HTTP 404."
+    },
+    {
+      "productUrl": "https://www.latent.space/p/ainews-not-much-happened-today-cee",
+      "requestedAt": "2026-10-12T09:24:17.918Z",
+      "status": "fetched",
+      "sourceId": "d43d2f13301d3339cfd26d87",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "requestedAt": "2026-10-12T09:24:17.918Z",
+      "status": "fetched",
+      "sourceId": "1dd03891d1e36345e3123c1a",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://github.com/figranium/figranium",
+      "requestedAt": "2026-10-12T09:24:17.919Z",
+      "status": "fetched",
+      "sourceId": "aae95d1202c5a1f7890ee133",
+      "reason": "The candidate product URL was independently re-fetched with public HTTPS, DNS and robots guards."
+    },
+    {
+      "productUrl": "https://www.ycombinator.com/companies/fenrock-ai",
+      "requestedAt": "2026-10-12T09:24:18.518Z",
+      "status": "fetched",
+      "sourceId": "04879d3dda4ac21f04a7b51f",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.lumro.co",
+      "requestedAt": "2026-10-12T09:24:18.518Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "getaddrinfo ENOTFOUND www.lumro.co"
+    },
+    {
+      "productUrl": "https://vendiq.rishailabs.com",
+      "requestedAt": "2026-10-12T09:24:18.559Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "productUrl": "https://www.botzilla.dev",
+      "requestedAt": "2026-10-12T09:24:18.698Z",
+      "status": "failed",
+      "sourceId": null,
+      "reason": "robots.txt is not a readable text/plain response."
+    },
+    {
+      "productUrl": "https://apify.com",
+      "requestedAt": "2026-10-12T09:24:19.595Z",
+      "status": "fetched",
+      "sourceId": "7efc2c70ed9424b76bd7407b",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://www.ycombinator.com/companies/pirislabs",
+      "requestedAt": "2026-10-12T09:24:19.595Z",
+      "status": "fetched",
+      "sourceId": "fb512f33e2b419614db612de",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "requestedAt": "2026-10-12T09:24:19.595Z",
+      "status": "fetched",
+      "sourceId": "7291bd8b12952a0e561c0d2e",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "requestedAt": "2026-10-12T09:24:19.595Z",
+      "status": "fetched",
+      "sourceId": "bc697cf9bffa88f2d189de58",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    }
+  ],
+  "considerationEvidence": [
+    {
+      "title": "Dooza Desk support inbox",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "AINews daily roundup",
+      "productUrl": "https://www.latent.space/p/ainews-not-much-happened-today-cee",
+      "sourceIds": [
+        "d43d2f13301d3339cfd26d87"
+      ],
+      "availableSourceIds": [
+        "d43d2f13301d3339cfd26d87"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice Agent Space (VabbyGupta018)",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Figranium browser workflow builder",
+      "productUrl": "https://github.com/figranium/figranium",
+      "sourceIds": [
+        "9dac2bf9c81a3499f8480997",
+        "4738414b1f4dd262899f71a7",
+        "aae95d1202c5a1f7890ee133"
+      ],
+      "availableSourceIds": [
+        "9dac2bf9c81a3499f8480997",
+        "4738414b1f4dd262899f71a7",
+        "aae95d1202c5a1f7890ee133"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Fenrock AI bank agents",
+      "productUrl": "https://www.ycombinator.com/companies/fenrock-ai",
+      "sourceIds": [
+        "04879d3dda4ac21f04a7b51f"
+      ],
+      "availableSourceIds": [
+        "04879d3dda4ac21f04a7b51f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Lumro support and sales agents",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "VendIQ vendor follow-ups",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Botzilla visual web automation",
+      "productUrl": "https://www.botzilla.dev",
+      "sourceIds": [
+        "4e16162c586f22929d9e95b2"
+      ],
+      "availableSourceIds": [
+        "4e16162c586f22929d9e95b2"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Apify actor marketplace",
+      "productUrl": "https://apify.com",
+      "sourceIds": [
+        "7efc2c70ed9424b76bd7407b"
+      ],
+      "availableSourceIds": [
+        "7efc2c70ed9424b76bd7407b"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Piris Labs photonic networking",
+      "productUrl": "https://www.ycombinator.com/companies/pirislabs",
+      "sourceIds": [
+        "fb512f33e2b419614db612de"
+      ],
+      "availableSourceIds": [
+        "fb512f33e2b419614db612de"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dwarf Fortress version control",
+      "productUrl": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "sourceIds": [
+        "7291bd8b12952a0e561c0d2e"
+      ],
+      "availableSourceIds": [
+        "7291bd8b12952a0e561c0d2e"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice Agent Space (Mohamad5577)",
+      "productUrl": "https://huggingface.co/spaces/Mohamad5577/invoice-agent",
+      "sourceIds": [
+        "bc697cf9bffa88f2d189de58"
+      ],
+      "availableSourceIds": [
+        "bc697cf9bffa88f2d189de58"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
