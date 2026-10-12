@@ -1,0 +1,638 @@
+{
+  "runId": "loop-38207456044-1",
+  "createdAt": "2026-10-12T05:21:28.060Z",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "cd5fecc11fa31f537ea111688861599f8c5ef45281de49f0bf7f64f3aff1eec1",
+  "sourceSnapshotSha256": "1f512cd933d6ed6d7a126d55e758c8d8b72ac7ab4856f080997e3d2b74dd90da",
+  "sources": [
+    {
+      "id": "c07b5023822db3bc05608ec2",
+      "title": "[AINews] Claude Haiku 5.5 — better than GPT-6 Luna at the same pricing · product evidence",
+      "url": "https://www.latent.space/p/ainews-claude-haiku-55-better-than",
+      "publisher": "www.latent.space",
+      "text": "[AINews] Claude Haiku 5.5 — better than GPT-6 Luna at the same pricing Subscribe Sign in AINews: Weekday Roundups [AINews] Claude Haiku 5.5 — better than GPT-6 Luna at the same pricing yay small models Oct 08, 2026 ∙ Paid 60 Share It’s been about a year since Anthropic shipped Haiku 4.5 , and with successive launches of Sonnet and Opus and Fable up to 5.5 it was seeming a little forgotten, especially as OpenAI launched Luna 6 alongside Astra and Sol 6. Well, it’s here, and it’s a welcome update. More in the summary below. Artificial Analysis @ ArtificialAnlys Anthropic has released Claude Haiku 5.5, scoring 43 on the Artificial Analysis Intelligence Index - up 26 points one year after the last Haiku release Haiku 5.5 is the first Haiku model with Anthropic’s effort settings and adaptive thinking, and Anthropic has introduced tiered … 7:12 PM · Oct 7, 2026 · 152K Views 92 Replies · 111 Reposts · 1.67K Likes AI News for 10/06/2026-10/7/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap Top Story: Anthropic releases Claude Haiku 5.5 What happened Anthropic shipped Claude Haiku 5.5, its first Haiku-tier update in about a year. It is priced to match OpenAI’s GPT-6 Luna, and Anthropic cut prices on Sonnet 5.5 and its subscription plans the same day. Pre-launch signals. @scaling01 posted “happy Haiku 5.5 day” before the announcement. @kimmonismus said the model had already appeared in a Claude Code update and predicted “Luna-pricing.” He then posted the pricing ahead of the official post ( @kimmonismus ) and confirmed when it went live ( @kimmonismus ). Official launch. @claudeai and @AnthropicAI called it “the cheapest, fastest, and most capable small model we’ve ever released,” costing about 75% less to run than Haiku 4.5 on average. Availability and intended use. It is live on the Claude Platform and in Claude Code ( @ClaudeDevs ). Anthropic positions it as a subagent paired with Opus 5.5 or Sonnet 5.5, for high-volume, cost-sensitive work such as summaries, compactions and database queries. @mikeyk described the split as “Opus does the heavy thinking, Haiku does the high-volume work.” Tiered pricing ( @ClaudeDevs ): Prompt lengthInput / output per 1M tokensCache reads per 1MUnder 100K tokens$0.10 / $0.50$0.01Over 100K tokens$0.50 / $2.50$0.05 Sonnet 5.5 price cut. Cache reads were halved from $0.20 to $0.10 per 1M tokens. Anthropic says this makes Sonnet 5.5 about 20% cheaper on most long-running or agentic work ( @claudeai ). API credits for subscribers. Monthly Claude Platform API credits now come with Max 5x ($100), Max 20x ($200) and Team (up to $500, pooled). They work on any model, including Haiku 5.5, and in third-party harnesses ( @ClaudeDevs ). Same-day SDK update. Computer-use and browser-use toolsets are now built into the Python and TypeScript Claude SDKs. The SDK runs the action loop and sends clicks and keystrokes to drivers from browser_use, Browserbase, E2B or Daytona, so developers no longer write that loop themselves ( @ClaudeDevs , quickstart ). Partner rollouts on day one: Cursor: @cursor_ai claims “10x less than Haiku 4.5” on shorter requests and published CursorBench comparisons ( @cursor_ai ). GitHub Copilot in VS Code: @code reports it “matched Claude Sonnet 5 on many coding tasks while using fewer tokens and steps.” Devin: @cognition reports 58.4% on FrontierCode 1.1, ahead of Sonnet 5 at roughly one-eighth the cost per task, and recommends it as a “sidekick” under an Opus 5.5 lead in Fusion. Arena: added to Agent Arena, Code Arena WebDev, Text, Document and Vision, with scores pending ( @arena ). OpenDocRouter: added the same day (details below). Independent evaluation: Artificial Analysis @ArtificialAnlys published the most detailed third-party numbers ( per-eval breakdown , comparison page ). Intelligence Index: 43 at max effort, up 26 points from the previous Haiku. Slightly ahead of GLM-5.3 Flash (42), Gemini 3.8 Flash (41) and GPT-6 Luna (38). Comparable to Kimi K3 (44), a 2.8T-parameter open-weights model. Trails Claude Sonnet 5.5 at max effort (56) by 13 points. New controls. This is the first Haiku with Anthropic’s effort settings and adaptive thinking. Token usage is the main caveat. At max effort it uses about 162k output tokens per Index task, roughly 3x GPT-6 Luna at max (~50k). Going from xhigh to max adds 2 points for about 1.8x the tokens. At equal score it is still more verbose: Haiku 5.5 at high effort scores 38 using ~55k tokens, versus Luna at max scoring 38 with ~50k. The gap widens at lower effort settings. Cost figures are provisional. Artificial Analysis does not yet model the 5x price step above 100K tokens. Cost-per-task numbers will follow. AA-Briefcase (private agentic knowledge-work eval): 1578 Elo. That is ahead of Kimi K3 and GLM-5.3, and comparable to Muse Spark 1.3 at max. Terminal-Bench 4.0: 33% , up from 0% for Haiku 4.5. Level with GLM-5.3 Flash. Ahead of Gemini 3.8 Flash (20%) and GPT-6 Luna (13%). Knowledge versus hallucination (AA-Omniscience): ModelAccuracyHallucination rateHaiku 5.536%40%Gemini 3.8 Flash55%55%GPT-6 Luna44%77% Part of Haiku’s lower accuracy comes from being more willing to say it doesn’t know. AutomationBench-AA: 35% , versus 53–60% for Luna, Gemini 3.8 Flash and GLM-5.3 Flash. A pre-release safety bug caused the model to over-refuse. Anthropic is working on a fix, and Artificial Analysis will re-run the eval and expects the score to rise. Specs: 1M-token context, up from 200k for Haiku 4.5. Text and image input, text output. 5-minute cache writes cost $0.125 per 1M tokens ($0.625 above 100K). Other benchmark claims (mostly vendor or secondhand) @ShayneRedford summarized Anthropic’s reported jumps: OSWorld (computer use): 15% → 72%. TerminalBench: 0% → 39%. This differs from Artificial Analysis’s independent 33% on Terminal-Bench 4.0. 10–50% gains in knowledge work and reasoning. Beats Luna on most of these. 1M context with roughly 12k max output tokens. @alexalbert__ (Anthropic) stressed that Haiku 4.5 shipped Oct 15, 2025, so the comparison spans less than a year. @TheRundownAI reported that it beats GPT-6 Luna “across a variety of benchmarks.” Document parsing (independent, on ParseBench): @LoganMarkewich : overall close to Luna, slightly better on tables, worse on chart understanding. @jerryjliu0 : about $1.2 per 1,000 pages. Good at tables and reading order for the price; weaker on charts, semantic formatting and bounding boxes. Anecdotal: @simonw wrote pricing notes and ran his pelican-on-a-bicycle test. He says it is “SO MUCH better” than Haiku 4.5, which costs 10x more ( comparison ). @AI_Screening says Haiku 5.5 “cooked” Luna on a Three.js zebra simulation (single prompt, not systematic). Opinions and reactions Bullish @kimmonismus : “Way better than GPT-6-Luna, close[r] to Sonnet 5.5… Cheap and smart.” @theo likes the tiered pricing: charging a fifth of the price under 100K tokens “makes it really clear what the model is for.” He also found it striking to see an Anthropic model “so far to the left on the cost/intelligence charts” ( @theo ) and covered the launch on stream ( @theo ). @draecomino : “Haiku at max effort performs like a frontier model.” @kipperrii argues small, cheap models matter more now that they can do “a ton of useful things.” @scaling01 (”cheap af”) and later ( @scaling01 ): “5.5 models are looking good.” @NotTomBrown (”small but mighty”) and @edwinarbus , both from the Anthropic side, posted celebratory notes. Competitive framing The launch is widely read as aimed at OpenAI’s GPT-6 Luna: “rip gpt 6 luna” ( @dejavucoder ), “time to cook Luna” ( @scaling01 ). @kimmonismus framed the Sonnet cache-read cut as Anthropic pressuring OpenAI. On the API credits he added, “OpenAI: your turn” ( @kimmonismus ). @teortaxesTex says Anthropic now has “the deepest product lineup of all labs” (Haiku/Sonnet/Opus/Fable plus Mythos) versus OpenAI’s Luna/Sol/Astra. He still thinks Anthropic “cares less about products,” which he reads as a sign of how much slack it has had through 2026. ThursdAI’s @altryne questioned the middle tier: “Sonnet made sense when Opus was expensive.” The show plans to cover Haiku 5.5 ( @thursdai_pod ). Caveats (mostly from the data, not loud critics) The headline price may overstate real savings. Heavy token use (about 3x Luna at max effort) offsets part of the per-token discount. Prompts over 100K tokens pay 5x more, which matters for long-context agent loops. These two effects likely explain why Cursor’s “10x cheaper on short requests” differs from Anthropic’s “75% cheaper on average.” Factual recall is weaker than Gemini 3.8 Flash and Luna. The over-refusal bug currently depresses the automation score. Not yet benchmarked: Arena scores are pending, and independent cost-per-task figures await tiered-pricing support. Context Haiku 4.5 has been Anthropic’s small model since October 2025. Since then, OpenAI’s GPT-6 Luna, Gemini 3.8 Flash, GLM-5.3 Flash and DeepSeek V4.1 Flash have competed at the low-cost end. Haiku 5.5 matches Luna’s sticker price exactly. It adds effort control and a 1M context. It is explicitly positioned as the cheap worker inside multi-model agent harnesses: Claude Code subagents, Devin Fusion, Copilot subagents, and compaction or summarization steps. Anthropic paired it with Sonnet cache-read cuts and subscription API credits, a coordinated push on agent economics. That push lands amid wider debate over token bills (see @theo below). Other News OpenAI’s 722 Math Manuscripts: Scale, Efficiency and Fallout Keep reading with a 7-day free trial Subscribe to Latent.Space to keep reading this post and get 7 days of free access to the full post archives. Start trial Already a paid subscriber? Sign in Previous Next © 2026 Latent.Space · Privacy ∙ Terms ∙ Collection notice Start your Substack Get the app Substack is the home for great culture",
+      "fetchedAt": "2026-10-12T05:21:24.139Z",
+      "discoveredAt": "Thu, 08 Oct 2026 07:27:51 GMT",
+      "originFeedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ],
+      "productUrl": "https://www.latent.space/p/ainews-claude-haiku-55-better-than",
+      "originSourceIds": [
+        "c07b5023822db3bc05608ec2"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T05:20:12.435Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/p/ainews-claude-haiku-55-better-than",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/p/ainews-claude-haiku-55-better-than",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "It’s been about a year since Anthropic shipped Haiku 4.5 , and with successive launches of Sonnet and Opus and Fable up to 5.5 it was seeming a little forgotten, especially as OpenAI launched Luna 6 alongside Astra and Sol 6. Well, it’s here, and it’s a welcome update. More in the summary below. AI News for 10/06/2026-10/7/2026. We checked 12 subreddits, 544 Twitters and no further Discords. AINews’ website lets you search all past issues. As a reminder, AINews is now a section of Latent Space . You can opt in/out of email frequencies! AI Twitter Recap Top Story: Anthropic releases Claude Haiku 5.5 What happened Anthropic shipped Claude Haiku 5.5, its first Haiku-tier update in about a year. It is priced to match OpenAI’s GPT-6 Luna, and Anthropic cut prices on Sonnet 5.5 and its subscription plans the same day. Pre-launch signals. @scaling01 posted “happy Haiku 5.5 day” before the announcement. @kimmonismus said the model had already appeared in a Claude Code update and predicted “Luna-pricing.” He then posted the pricing ahead of the official post ( @kimmonismus ) and confirmed when it went live ( @kimmonismus ). Official launch. @claudeai and @AnthropicAI called it “the cheapest",
+      "verifiedAt": "2026-10-12T05:21:24.139Z"
+    },
+    {
+      "id": "8e00c6a953fe23fb968804fa",
+      "title": "Rodeo Robotics Y Combinator Logo F2026 • Active • 2 employees • San Francisco · product evidence",
+      "url": "https://www.ycombinator.com/companies/rodeo-robotics",
+      "publisher": "www.ycombinator.com",
+      "text": "Rodeo Robotics: Robots for vehicle maintenance. | Y Combinator Open menu About What Happens at YC? Apply YC Interview Guide FAQ People YC Blog Companies Startup Directory Founder Directory Launch YC Library Partners Resources Startup School Newsletter Requests for Startups For Investors Verify Founders Hacker News Bookface SAFE Find a Co-Founder Events Startup Jobs Log in Apply Home › Companies › Rodeo Robotics Rodeo Robotics Robots for vehicle maintenance. Y Combinator Logo Fall 2026 Active Artificial Intelligence Hard Tech Robotics Automotive San Francisco Company Jobs 0 https://www.rodeorobotics.com/ Robots for vehicle maintenance. Rodeo builds a robotic technician that automates maintenance so fleets can get vehicles back on the road sooner. Initial deployments focus on oil changes at centralized depots, where routine maintenance competes for scarce technician time. Cofounders Michael Hazard and Colby Duke met at Applied Intuition, where they worked with OEMs like Toyota and General Motors to bring software and autonomy to vehicles. They saw firsthand how much manual work it takes to keep vehicle fleets running, and learned how to make autonomy reliable through structured testing, real-world data, and human intervention. They’re now applying their experience to the roughly $600B annual US vehicle maintenance market. The average US vehicle is older than ever, driving up maintenance demand at a time when shops already struggle to hire and retain technicians. That gap leaves fleets facing costly downtime and preventable breakdowns. Despite this need, vehicle maintenance has resisted traditional automation. Service information is fragmented and unreliable, and vehicle hardware varies significantly between makes and models. Rodeo builds on advances in robotic foundation models to learn maintenance skills that transfer across vehicles. Rodeo pairs robots with human technicians who ensure each job is completed correctly, handling work the robots can’t yet perform autonomously. These deployments generate training data for Rodeo’s models through both teleoperation and hand tools augmented to record how technicians work. This lets Rodeo earn revenue while collecting the data needed to automate more of each job and improve margins. Active Founders Michael Hazard Founder/CEO Building robots for vehicle maintenance. Four years at Applied Intuition bringing software and autonomy to vehicles. Former Google APM. Stanford CS. Michael Hazard Founder/CEO Building robots for vehicle maintenance. Four years at Applied Intuition bringing software and autonomy to vehicles. Former Google APM. Stanford CS. Colby Duke Founder/CTO Building robots for vehicle maintenance. Previously the tech lead of Applied Intuition's neural simulation team. Colby Duke Founder/CTO Building robots for vehicle maintenance. Previously the tech lead of Applied Intuition's neural simulation team. Rodeo Robotics Founded: 2026 Batch: Fall 2026 Team Size: 2 Status: Active Location: San Francisco Primary Partner: Harj Taggar Footer Y Combinator Make something people want. Programs YC Program Startup School Work at a Startup Co-Founder Matching Resources Startup Directory Startup Library Investors Demo Day SAFE Hacker News Launch YC YC Deals Company YC Blog Contact Press People Careers Privacy Policy Notice at Collection Security Terms of Use Twitter Twitter Facebook Facebook Instagram Instagram LinkedIn LinkedIn Youtube YouTube © 2026 Y Combinator",
+      "fetchedAt": "2026-10-12T05:21:24.476Z",
+      "productUrl": "https://www.ycombinator.com/companies/rodeo-robotics",
+      "originFeedIds": [
+        "af031577e7a7287449e227af"
+      ],
+      "originSourceIds": [
+        "8e00c6a953fe23fb968804fa"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T05:20:13.086Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/rodeo-robotics",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/rodeo-robotics",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Rodeo Robotics Y Combinator Logo F2026 • Active • 2 employees • San Francisco. Public company directory entry; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T05:21:24.476Z"
+    },
+    {
+      "id": "53695418506c74ec717d910f",
+      "url": "https://raw.githubusercontent.com/storytold/artcraft/main/README.md",
+      "title": "storytold / artcraft · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "ArtCraft The IDE for artists. https://github.com/user-attachments/assets/7339bd09-3e0d-44a7-a024-af9de64e4c11 Watch the two-minute ArtCraft demo on YouTube Download ArtCraft · GitHub releases · Build from source ArtCraft is the IDE for interactive AI image and video creation. Compose in 2D, stage scenes in 3D, and choose the models that fit your work. Turn prompting into *crafting* with visual tools for precise, repeatable results. ## Show, Don't Tell: Advanced Crafting Features Artists need control over composition, character identity, and camera placement. Build the scene before you generate it. Click any preview to view it at full size. | Feature | Preview | | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | **Image to Location** Place virtual actors in a consistent environment and plan multiple shots in the same room. | | | **3D Image Compositing** Layer backdrops, foregrounds, and props in 3D to build compositions with depth. | | | **2D Image Compositing** Compose a scene with image layers, background removal, and drawing tools. | | | **Image to 3D Mesh** Turn an image into a 3D object you can position, rotate, and frame precisely. | | | **Character Posing** Pose characters and set your camera before generating the final shot. | | | **Scene Blocking with Kitbashing** Combine 3D asset kits to control camera angles, object placement, and depth. | | | **Character Identity Transfer** Use a posed mannequin to guide the placement and pose of your character. | | | **Background Removal** Isolate subjects to use as props, layers, or backdrops in 2D and 3D scenes. | | | **Mixed Asset Crafting** Combine image cutouts, worlds, and 3D meshes in one scene. | | More previews are coming for scene blocking, canvas editing, and scene relighting. ## Quick and Easy Prompting Start with a prompt when you want to explore an idea quickly, then use the canvas and scene tools to refine it. | Feature | Preview | | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | **Text to Image** Explore ideas across a wide range of image models with a text prompt. | | | **Prompted Image Editing** Describe changes to an image with models such as Nano Banana Pro and GPT Image. | | | **Canvas Image Editing** Use drawing, masks, and inpainting to guide exactly where an image changes. | | | **Image to Video** Animate an image with your choice of video models and generation controls. | | More previews are coming for image inpainting and image ingredients. ## Models and Providers Supported within ArtCraft | Provider | Models and workflows | | ------------ | ----------------------------------------------------------------------------------------------- | | **ArtCraft** | Images, video, music and sound, 3D meshes, and worlds. Browse the complete model catalog below. | | Grok | Grok Imagine and Grok Video. | | Midjourney | Midjourney image generation. | | Sora | Sora 1, Sora 2, and GPT Image 1. | | World Labs | Marble world generation with Gaussian splats. | ArtCraft: the full 62-model catalog † Currently disabled. ‡ Restricted model; not currently available in the desktop app. #### Images (16) | Family | Models | | ----------- | ----------------------------------------------------------------------------------- | | Nano Banana | Nano Banana; Nano Banana 2; Nano Banana Pro | | GPT Image | GPT Image 1.5; GPT Image 2; GPT Image 2.5 Flare; GPT Image 2.5 Sunburst | | FLUX | FLUX.1 [dev]; FLUX.1 [schnell]; FLUX 1.1 [pro]; FLUX 1.1 [pro] ultra | | Seedream | Seedream 4; Seedream 4.5; Seedream 5 Lite; Seedream 5.0 Pro; Seedream 5.0 Pro Ultra | #### Video (25) | Family | Models | | -------- | ----------------------------------------------------------------------------------------------------------------------------- | | Seedance | Seedance 1.0 Lite †; Seedance 1.5 Pro; Seedance 2.0 | | Kling | Kling 1.6 Pro; Kling 2.1 Pro †; Kling 2.1 Master †; Kling 2.5 Turbo Pro; Kling 2.6 Pro; Kling 3.0 Pro †; Kling 3.0 Standard † | | Veo | Veo 2 †; Veo 3 †; Veo 3 Fast; Veo 3.1; Veo 3.1 Fast; Veo 3.1 Lite | | Sora | Sora 2 †; Sora 2 Pro † | | Vidu | Vidu Q3; Vidu Q3 Turbo | | MiniMax | MiniMax H3; MiniMax H3 Turbo ‡; MiniMax H3 Ultra ‡ | | Flux | Flux 3; Flux 3 Draft | #### Music and sound (5) | Family | Models | | ---------- | ------------------------------------------------ | | Suno | Suno Music; Suno Remix; Suno Sounds; Suno Sample | | Seed Audio | Seed Audio 1.0 | #### 3D meshes (11) | Family | Models | | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | | Hunyuan 3D | Hunyuan 3D 2.0; Hunyuan 3D 2.1; Hunyuan 3D 3; Hunyuan 3D 3 Sketch; Hunyuan 3D 3.1 Pro; Hunyuan 3D 3.1 Rapid; Hunyuan 3D 3.1 Part; Hunyuan 3D 3.1 Smart Topology | | Tripo3D | Tripo3D H3.1 | | Meshy | Meshy 6 | | Rodin | Rodin 2.5 Fast | #### Worlds and Gaussian splats (5) | Family | Models | | ---------- | --------------------------------------------------------- | | Marble | Marble 1.0; Marble 1.0 Draft; Marble 1.1; Marble 1.1 Plus | | TripoSplat | TripoSplat | Additional provider integrations are planned for Kling, Google, Runway, and Luma. We're also interested in supporting existing subscriptions with aggregators such as OpenArt and Freepik. ## Downloads - [Stable releases for Windows and macOS](https://getartcraft.com/) - [Latest builds on GitHub](https://github.com/storytold/artcraft/releases) - [Build from source](./_docs/dev_setup.md), including Linux ## Documentation - [Development setup](./_docs/dev_setup.md) - [Developer documentation](./_docs) - [Desktop build and development scripts](./script/artcraft) - [Roadmap](./ROADMAP.md) - [License](#license) ## License ArtCraft is dual-licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option. Copyright (c) 2026 ArtCraft Team and the ArtCraft contributors. Required notices, including third-party material not covered by this license, are in [NOTICE](NOTICE).",
+      "fetchedAt": "2026-10-12T05:21:24.524Z",
+      "productUrl": "https://github.com/storytold/artcraft",
+      "originSourceIds": [
+        "96cd9bd509bc9d5c8f527d26"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T05:20:15.006Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/storytold/artcraft/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/storytold/artcraft/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T05:21:24.524Z"
+    },
+    {
+      "id": "96cd9bd509bc9d5c8f527d26",
+      "title": "storytold / artcraft",
+      "url": "https://github.com/storytold/artcraft",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - storytold/artcraft: ArtCraft is an intentional crafting engine for artists, designers, and filmmakers · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} storytold artcraft Repository navigation Code Issues 180 ( 180 ) Pull requests 54 ( 54 ) Actions Projects Security and quality Insights More items artcraft Public Notifications You must be signed in to change notification settings Fork 3.1k ( 3.1k ) Star 18.7k ( 18.7k ) You must be signed in to star a repository About ArtCraft is an intentional crafting engine for artists, designers, and filmmakers getartcraft.com Topics 3d-graphics ai aivideo filmmaking imagegeneration Resources Readme Apache-2.0, MIT licenses found Activity Custom properties Stars 18.7k stars Watchers 101 watching Forks 3.1k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 26 Commits 26 Commits Folders and files Name Name Last commit message Last commit date .claude/ rules .claude/ rules .config .config .github .github .sqlx .sqlx _database/ sql/ artcraft_migrations _database/ sql/ artcraft_migrations _docs _docs artcraft-native artcraft-native crates crates docs docs frontend frontend script script test_data test_data .gitattributes .gitattributes .gitignore .gitignore AGENTS.md AGENTS.md CLAUDE.md CLAUDE.md Cargo.lock Cargo.lock Cargo.toml Cargo.toml Cranky.toml Cranky.toml LICENSE-APACHE LICENSE-APACHE LICENSE-MIT LICENSE-MIT NOTICE NOTICE README.md README.md ROADMAP.md ROADMAP.md rustfmt.toml rustfmt.toml View all files Repository files navigation README Apache-2.0 license MIT license More items ArtCraft The IDE for artists. artcraft-new-demo.mp4 Watch the two-minute ArtCraft demo on YouTube Download ArtCraft · GitHub releases · Build from source ArtCraft is the IDE for interactive AI image and video creation. Compose in 2D, stage scenes in 3D, and choose the models that fit your work. Turn prompting into crafting with visual tools for precise, repeatable results. Show, Don't Tell: Advanced Crafting Features Artists need control over composition, character identity, and camera placement. Build the scene before you generate it. Click any preview to view it at full size. Feature Preview Image to Location Place virtual actors in a consistent environment and plan multiple shots in the same room. 3D Image Compositing Layer backdrops, foregrounds, and props in 3D to build compositions with depth. 2D Image Compositing Compose a scene with image layers, background removal, and drawing tools. Image to 3D Mesh Turn an image into a 3D object you can position, rotate, and frame precisely. Character Posing Pose characters and set your camera before generating the final shot. Scene Blocking with Kitbashing Combine 3D asset kits to control camera angles, object placement, and depth. Character Identity Transfer Use a posed mannequin to guide the placement and pose of your character. Background Removal Isolate subjects to use as props, layers, or backdrops in 2D and 3D scenes. Mixed Asset Crafting Combine image cutouts, worlds, and 3D meshes in one scene. More previews are coming for scene blocking, canvas editing, and scene relighting. Quick and Easy Prompting Start with a prompt when you want to explore an idea quickly, then use the canvas and scene tools to refine it. Feature Preview Text to Image Explore ideas across a wide range of image models with a text prompt. Prompted Image Editing Describe changes to an image with models such as Nano Banana Pro and GPT Image. Canvas Image Editing Use drawing, masks, and inpainting to guide exactly where an image changes. Image to Video Animate an image with your choice of video models and generation controls. More previews are coming for image inpainting and image ingredients. Models and Providers Supported within ArtCraft Provider Models and workflows ArtCraft Images, video, music and sound, 3D meshes, and worlds. Browse the complete model catalog below. Grok Grok Imagine and Grok Video. Midjourney Midjourney image generation. Sora Sora 1, Sora 2, and GPT Image 1. World Labs Marble world generation with Gaussian splats. ArtCraft: the full 62-model catalog † Currently disabled. ‡ Restricted model; not currently available in the desktop app. Images (16) Family Models Nano Banana Nano Banana; Nano Banana 2; Nano Banana Pro GPT Image GPT Image 1.5; GPT Image 2; GPT Image 2.5 Flare; GPT Image 2.5 Sunburst FLUX FLUX.1 [dev]; FLUX.1 [schnell]; FLUX 1.1 [pro]; FLUX 1.1 [pro] ultra Seedream Seedream 4; Seedream 4.5; Seedream 5 Lite; Seedream 5.0 Pro; Seedream 5.0 Pro Ultra Video (25) Family Models Seedance Seedance 1.0 Lite †; Seedance 1.5 Pro; Seedance 2.0 Kling Kling 1.6 Pro; Kling 2.1 Pro †; Kling 2.1 Master †; Kling 2.5 Turbo Pro; Kling 2.6 Pro; Kling 3.0 Pro †; Kling 3.0 Standard † Veo Veo 2 †; Veo 3 †; Veo 3 Fast; Veo 3.1; Veo 3.1 Fast; Veo 3.1 Lite Sora Sora 2 †; Sora 2 Pro † Vidu Vidu Q3; Vidu Q3 Turbo MiniMax MiniMax H3; MiniMax H3 Turbo ‡; MiniMax H3 Ultra ‡ Flux Flux 3; Flux 3 Draft Music and sound (5) Family Models Suno Suno Music; Suno Remix; Suno Sounds; Suno Sample Seed Audio Seed Audio 1.0 3D meshes (11) Family Models Hunyuan 3D Hunyuan 3D 2.0; Hunyuan 3D 2.1; Hunyuan 3D 3; Hunyuan 3D 3 Sketch; Hunyuan 3D 3.1 Pro; Hunyuan 3D 3.1 Rapid; Hunyuan 3D 3.1 Part; Hunyuan 3D 3.1 Smart Topology Tripo3D Tripo3D H3.1 Meshy Meshy 6 Rodin Rodin 2.5 Fast Worlds and Gaussian splats (5) <path d=\"m7.775 3.275 1.25-1",
+      "fetchedAt": "2026-10-12T05:21:24.945Z",
+      "productUrl": "https://github.com/storytold/artcraft",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-12T05:21:24.945Z"
+    },
+    {
+      "id": "4deb41e6df5e1d249221bc8f",
+      "url": "https://raw.githubusercontent.com/pytorch/pytorch/main/README.md",
+      "title": "pytorch / pytorch · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "-------------------------------------------------------------------------------- PyTorch is a Python package that provides two high-level features: - Tensor computation (like NumPy) with strong GPU acceleration - Deep neural networks built on a tape-based autograd system You can reuse your favorite Python packages such as NumPy, SciPy, and Cython to extend PyTorch when needed. Our trunk health (Continuous Integration signals) can be found at [hud.pytorch.org](https://hud.pytorch.org/ci/pytorch/pytorch/main). - [More About PyTorch](#more-about-pytorch) - [A GPU-Ready Tensor Library](#a-gpu-ready-tensor-library) - [Dynamic Neural Networks: Tape-Based Autograd](#dynamic-neural-networks-tape-based-autograd) - [Python First](#python-first) - [Imperative Experiences](#imperative-experiences) - [Fast and Lean](#fast-and-lean) - [Extensions Without Pain](#extensions-without-pain) - [Installation](#installation) - [Binaries](#binaries) - [NVIDIA Jetson Platforms](#nvidia-jetson-platforms) - [From Source](#from-source) - [Prerequisites](#prerequisites) - [NVIDIA CUDA Support](#nvidia-cuda-support) - [AMD ROCm Support](#amd-rocm-support) - [Intel GPU Support](#intel-gpu-support) - [Get the PyTorch Source](#get-the-pytorch-source) - [Install Dependencies](#install-dependencies) - [Install PyTorch](#install-pytorch) - [Adjust Build Options (Optional)](#adjust-build-options-optional) - [Docker Image](#docker-image) - [Using pre-built images](#using-pre-built-images) - [Building the image yourself](#building-the-image-yourself) - [Previous Versions](#previous-versions) - [Getting Started](#getting-started) - [Resources](#resources) - [Communication](#communication) - [Releases and Contributing](#releases-and-contributing) - [The Team](#the-team) - [License](#license) ## More About PyTorch [Learn the basics of PyTorch](https://pytorch.org/tutorials/beginner/basics/intro.html) At a granular level, PyTorch is a library that consists of the following components: | Component | Description | | ---- | --- | | [**torch**](https://pytorch.org/docs/stable/torch.html) | A Tensor library like NumPy, with strong GPU support | | [**torch.autograd**](https://pytorch.org/docs/stable/autograd.html) | A tape-based automatic differentiation library that supports all differentiable Tensor operations in torch | | [**torch.nn**](https://pytorch.org/docs/stable/nn.html) | A neural networks library deeply integrated with autograd designed for maximum flexibility | | [**torch.multiprocessing**](https://pytorch.org/docs/stable/multiprocessing.html) | Python multiprocessing, but with magical memory sharing of torch Tensors across processes. Useful for data loading and Hogwild training | | [**torch.utils**](https://pytorch.org/docs/stable/data.html) | DataLoader and other utility functions for convenience | Usually, PyTorch is used either as: - A replacement for NumPy to use the power of GPUs. - A deep learning research platform that provides maximum flexibility and speed. Elaborating Further: ### A GPU-Ready Tensor Library If you use NumPy, then you have used Tensors (a.k.a. ndarray). ![Tensor illustration](https://github.com/pytorch/pytorch/raw/main/docs/source/_static/img/tensor_illustration.png) PyTorch provides Tensors that can live either on the CPU or the GPU and accelerates the computation by a huge amount. We provide a wide variety of tensor routines to accelerate and fit your scientific computation needs such as slicing, indexing, mathematical operations, linear algebra, reductions. And they are fast! ### Dynamic Neural Networks: Tape-Based Autograd PyTorch has a unique way of building neural networks: using and replaying a tape recorder. Most frameworks such as TensorFlow, Theano, Caffe, and CNTK have a static view of the world. One has to build a neural network and reuse the same structure again and again. Changing the way the network behaves means that one has to start from scratch. With PyTorch, we use a technique called reverse-mode auto-differentiation, which allows you to change the way your network behaves arbitrarily with zero lag or overhead. Our inspiration comes from several research papers on this topic, as well as current and past work such as [torch-autograd](https://github.com/twitter/torch-autograd), [autograd](https://github.com/HIPS/autograd), [Chainer](https://chainer.org), etc. While this technique is not unique to PyTorch, it's one of the fastest implementations of it to date. You get the best of speed and flexibility for your crazy research. ![Dynamic graph](https://github.com/pytorch/pytorch/raw/main/docs/source/_static/img/dynamic_graph.gif) ### Python First PyTorch is not a Python binding into a monolithic C++ framework. It is built to be deeply integrated into Python. You can use it naturally like you would use [NumPy](https://www.numpy.org/) / [SciPy](https://www.scipy.org/) / [scikit-learn](https://scikit-learn.org) etc. You can write your new neural network layers in Python itself, using your favorite libraries and use packages such as [Cython](https://cython.org/) and [Numba](https://numba.pydata.org/). Our goal is to not reinvent the wheel where appropriate. ### Imperative Experiences PyTorch is designed to be intuitive, linear in thought, and easy to use. When you execute a line of code, it gets executed. There isn't an asynchronous view of the world. When you drop into a debugger or receive error messages and stack traces, understanding them is straightforward. The stack trace points to exactly where your code was defined. We hope you never spend hours debugging your code because of bad stack traces or asynchronous and opaque execution engines. ### Fast and Lean PyTorch has minimal framework overhead. We integrate acceleration libraries such as [Intel MKL](https://software.intel.com/mkl) and NVIDIA ([cuDNN](https://developer.nvidia.com/cudnn), [NCCL](https://developer.nvidia.com/nccl)) to maximize speed. At the core, its CPU and GPU Tensor and neural network backends are mature and have been tested for years. Hence, PyTorch is quite fast — whether you run small or large neural networks. The memory usage in PyTorch is extremely efficient compared to Torch or some of the alternatives. We've written custom memory allocators for the GPU to make sure that your deep learning models are maximally memory efficient. This enables you to train bigger deep learning models than before. ### Extensions Without Pain Writing new neural network modules, or interfacing with PyTorch's Tensor API, was designed to be straightforward and with minimal abstractions. You can write new neural network layers in Python using the torch API [or your favorite NumPy-based libraries such as SciPy](https://pytorch.org/tutorials/advanced/numpy_extensions_tutorial.html). If you want to write your layers in C/C++, we provide a convenient extension API that is efficient and with minimal boilerplate. No wrapper code needs to be written. You can see [a tutorial here](https://pytorch.org/tutorials/advanced/cpp_extension.html) and [an example here](https://github.com/pytorch/extension-cpp). ## Installation ### Binaries Commands to install binaries via Conda or pip wheels are on our website: [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/) #### NVIDIA Jetson Platforms Python wheels for NVIDIA's Jetson Nano, Jetson TX1/TX2, Jetson Xavier NX/AGX, and Jetson AGX Orin are provided [here](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-10-now-available/72048) and the L4T container is published [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch) They require JetPack 4.2 and above, and [@dusty-nv](https://github.com/dusty-nv) and [@ptrblck](https://github.com/ptrblck) are maintaining them. ### From Source #### Prerequisites If you are installing from source, you will need: - Python 3.10 or later - A compiler that fully supports C++20, such as clang or gcc (gcc 11.3.0 or newer is required, on Linux) - Visual Studio or Visual Studio Build Tool (Windows only) - At least 10 GB of free disk space - 30-60 minutes for the initial build (subsequent rebuilds are much faster) \\* PyTorch CI uses Visual C++ BuildTools, which come with Visual Studio Enterprise, Professional, or Community Editions. You can also install the build tools from https://visualstudio.microsoft.com/visual-cpp-build-tools/. The build tools *do not* come with Visual Studio Code by default. An example of environment setup is shown below: * Linux: ```bash $ source /bin/activate $ conda create -y -n $ conda activate ``` * Windows: ```bash $ source \\Scripts\\activate.bat $ conda create -y -n $ conda activate $ call \"C:\\Program Files\\Microsoft Visual Studio\\ \\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat\" x64 ``` A conda environment is not required. You can also do a PyTorch build in a standard virtual environment, e.g., created with tools like `uv`, provided your system has installed all the necessary dependencies unavailable as pip packages (e.g., CUDA, MKL.) ##### NVIDIA CUDA Support If you want to compile with CUDA support, [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/), then install the following: - [NVIDIA CUDA](https://developer.nvidia.com/cuda-downloads) - [NVIDIA cuDNN](https://developer.nvidia.com/cudnn) v9.0 or above - [Compiler](https://gist.github.com/ax3l/9489132) compatible with CUDA Note: You could refer to the [cuDNN Support Matrix](https://docs.nvidia.com/deeplearning/cudnn/backend/latest/reference/support-matrix.html) for cuDNN versions with the various supported CUDA, CUDA driver, and NVIDIA hardware. If you want to disable CUDA support, export the environment variable `USE_CUDA=0`. Other potentially useful environment variables are documented in [`cmake/EnvVarForwarding.cmake`](./cmake/EnvVarForwarding.cmake). If CUDA is installed in a non-standard location, set PATH so that the nvcc you want to use can be found (e.g., `export PATH=/usr/local/cuda-12.8/bin:$PATH`). If you are building for NVIDIA's Jetson platforms (Jetson Nano, TX1, TX2, AGX Xavier), Instructions to install PyTorch for Jetson Nano are [available here](https://devtalk.nvidia.com/default/topic/1049071/jetson-nano/pytorch-for-jetson-nano/) ##### AMD ROCm Support If you want to compile with ROCm support, install - [AMD ROCm](https://rocm.docs.amd.com/en/latest/deploy/linux/quick_start.html) 4.0 and above installation - ROCm is currently supported only for Linux systems. By default the build system expects ROCm to be installed in `/opt/rocm`. If ROCm is installed in a different directory, the `ROCM_PATH` environment variable must be set to the ROCm installation directory. The build system automatically detects the AMD GPU architecture. Optionally, the AMD GPU architecture can be explicitly set with the `PYTORCH_ROCM_ARCH` environment variable [AMD GPU architecture](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-gpus) If you want to disable ROCm support, export the environment variable `USE_ROCM=0`. Other potentially useful environment variables are documented in [`cmake/EnvVarForwarding.cmake`](./cmake/EnvVarForwarding.cmake). ##### Intel GPU Support If you want to compile with Intel GPU support, follow these - [PyTorch Prerequisites for Intel GPUs](https://www.intel.com/content/www/us/en/developer/articles/tool/pytorch-prerequisites-for-intel-gpu.html) instructions. - Intel GPU is supported for Linux and Windows. If you want to disable Intel GPU support, export the environment variable `USE_XPU=0`. Other potentially useful environment variables are documented in [`cmake/EnvVarForwarding.cmake`](./cmake/EnvVarForwarding.cmake). #### Get the PyTorch Source ```bash git clone https://github.com/pytorch/pytorch cd pytorch # if you are updating an existing checkout git submodule sync git submodule update --init --recursive ``` #### Install Dependencies **Common** ```bash # Run this command from the PyTorch directory after cloning the source code using the “Get the PyTorch Source“ section above pip install --group dev ``` **On Linux** ```bash pip install mkl-static mkl-include # CUDA only: Add LAPACK support for the GPU if needed # magma installation: run with active conda environment. specify CUDA version to install .ci/docker/common/install_magma_conda.sh 12.4 # (optional) If using torch.compile with inductor/triton, install the matching version of triton # Run from the pytorch directory after cloning # For Intel GPU support, please explicitly `export USE_XPU=1` before running command. make triton ``` **On Windows** ```bash pip install mkl-static mkl-include # Add these packages if torch.distributed is needed. # Distributed package support on Windows is a prototype feature and is subject to changes. conda install -c conda-forge libuv=1.51 ``` #### Install PyTorch **On Linux** If you're compiling for AMD ROCm then first run this command: ```bash # Only run this if you're compiling for ROCm python tools/amd_build/build_amd.py ``` Install PyTorch ```bash # the CMake prefix for conda environment export CMAKE_PREFIX_PATH=\"${CONDA_PREFIX:-'$(dirname $(which conda))/../'}:${CMAKE_PREFIX_PATH}\" python -m pip install --no-build-isolation -v -e . # the CMake prefix for non-conda environment, e.g. Python venv # call following after activating the venv export CMAKE_PREFIX_PATH=\"${VIRTUAL_ENV}:${CMAKE_PREFIX_PATH}\" ``` **On macOS** ```bash python -m pip install --no-build-isolation -v -e . ``` **On Windows** If you want to build legacy python code, please refer to [Building on legacy code and CUDA](https://github.com/pytorch/pytorch/blob/main/CONTRIBUTING.md#building-on-legacy-code-and-cuda) **CPU-only builds** In this mode PyTorch computations will run on your CPU, not your GPU. ```cmd python -m pip install --no-build-isolation -v -e . ``` Note on OpenMP: The desired OpenMP implementation is Intel OpenMP (iomp). In order to link against iomp, you'll need to manually download the library and set up the building environment by tweaking `CMAKE_INCLUDE_PATH` and `LIB`. The instruction [here](https://docs.pytorch.org/docs/main/notes/windows.html#building-from-source) is an example for setting up both MKL and Intel OpenMP. Without these configurations for CMake, Microsoft Visual C OpenMP runtime (vcomp) will be used. **CUDA based build** In this mode PyTorch computations will leverage your GPU via CUDA for faster number crunching [NVTX](https://docs.nvidia.com/gameworks/content/gameworkslibrary/nvtx/nvidia_tools_extension_library_nvtx.htm) is needed to build PyTorch with CUDA. NVTX is a part of CUDA distributive, where it is called \"Nsight Compute\". To install it onto an already installed CUDA run CUDA installation once again and check the corresponding checkbox. Make sure that CUDA with Nsight Compute is installed after Visual Studio. Currently, VS 2017 / 2019, and Ninja are supported as the generator of CMake. If `ninja.exe` is detected in `PATH`, then Ninja will be used as the default generator, otherwise, it will use VS 2017 / 2019. If Ninja is selected as the generator, the latest MSVC will get selected as the underlying toolchain. Additional libraries such as [Magma](https://developer.nvidia.com/magma), [oneDNN, a.k.a. MKLDNN or DNNL](https://github.com/oneapi-src/oneDNN), and [Sccache](https://github.com/mozilla/sccache) are often needed. Please refer to the [installation-helper](https://github.com/pytorch/pytorch/tree/main/.ci/pytorch/win-test-helpers/installation-helpers) to install them. You can refer to the [build_pytorch.bat](https://github.com/pytorch/pytorch/blob/main/.ci/pytorch/win-test-helpers/build_pytorch.bat) script for some other environment variables configurations ```cmd cmd :: Set the environment variables after you have downloaded and unzipped the mkl package, :: else CMake would throw an error as `Could NOT find OpenMP`. set CMAKE_INCLUDE_PATH={Your directory}\\mkl\\include set LIB={Your directory}\\mkl\\lib;%LIB% :: Read the content in the previous section carefully before you proceed. :: [Optional] If you want to override the underlying toolset used by Ninja and Visual Studio with CUDA, please run the following script block. :: \"Visual Studio 2019 Developer Command Prompt\" will be run automatically. :: Make sure you have CMake >= 3.12 before you do this when you use the Visual Studio generator. set CMAKE_GENERATOR_TOOLSET_VERSION=14.27 set DISTUTILS_USE_SDK=1 for /f \"usebackq tokens=*\" %i in (`\"%ProgramFiles(x86)%\\Microsoft Visual Studio\\Installer\\vswhere.exe\" -version [15^,17^) -products * -latest -property installationPath`) do call \"%i\\VC\\Auxiliary\\Build\\vcvarsall.bat\" x64 -vcvars_ver=%CMAKE_GENERATOR_TOOLSET_VERSION% :: [Optional] If you want to override the CUDA host compiler set CUDAHOSTCXX=C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\bin\\HostX64\\x64\\cl.exe python -m pip install --no-build-isolation -v -e . ``` **Intel GPU builds** In this mode PyTorch with Intel GPU support will be built. Please make sure [the common prerequisites](#prerequisites) as well as [the prerequisites for Intel GPU](#intel-gpu-support) are properly installed and the environment variables are configured prior to starting the build. For build tool support, `Visual Studio 2022` is required. Then PyTorch can be built with the command: ```cmd :: CMD Commands: :: Set the CMAKE_PREFIX_PATH to help find corresponding packages :: %CONDA_PREFIX% only works after `conda activate custom_env` if defined CMAKE_PREFIX_PATH ( set \"CMAKE_PREFIX_PATH=%CONDA_PREFIX%\\Library;%CMAKE_PREFIX_PATH%\" ) else ( set \"CMAKE_PREFIX_PATH=%CONDA_PREFIX%\\Library\" ) python -m pip install --no-build-isolation -v -e . ``` ##### Adjust Build Options (Optional) You can adjust the configuration of CMake variables through environment variables, which the build forwards to CMake (see [`cmake/EnvVarForwarding.cmake`](./cmake/EnvVarForwarding.cmake) for the full list). For example, pointing the",
+      "fetchedAt": "2026-10-12T05:21:24.956Z",
+      "productUrl": "https://github.com/pytorch/pytorch",
+      "originSourceIds": [
+        "6ee2c2a30826817daec2ab99"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T05:20:15.006Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/pytorch/pytorch/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/pytorch/pytorch/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T05:21:24.956Z"
+    },
+    {
+      "id": "6ee2c2a30826817daec2ab99",
+      "title": "pytorch / pytorch",
+      "url": "https://github.com/pytorch/pytorch",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - pytorch/pytorch: Tensors and Dynamic neural networks in Python with strong GPU acceleration · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} pytorch pytorch Repository navigation Code Issues 5k+ ( 5k+ ) Pull requests 3.6k ( 3.6k ) Actions Projects Wiki Security and quality 5 ( 5 ) Insights More items pytorch Public Notifications You must be signed in to change notification settings Fork 32.2k ( 32.2k ) Star 105k ( 105k ) You must be signed in to star a repository About Tensors and Dynamic neural networks in Python with strong GPU acceleration pytorch.org Topics autograd deep-learning gpu machine-learning neural-network numpy python tensor Resources Readme License Code of conduct Code of conduct Contributing Contributing Security policy Security policy Cite this repository Activity Custom properties Stars 104.6k stars Watchers 1.8k watching Forks 32.2k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 112,346 Commits 112,346 Commits Folders and files Name Name Last commit message Last commit date .agents/ skills .agents/ skills .ci .ci .claude .claude .ctags.d .ctags.d .devcontainer .devcontainer .github .github .spin .spin .vscode .vscode android android aten aten benchmarks benchmarks binaries binaries c10 c10 caffe2 caffe2 cmake cmake docs docs functorch functorch mypy_plugins mypy_plugins scripts scripts test test third_party third_party tools <svg data-component=\"Octicon\" aria-hidden=\"true\" focusable=\"false\" class=\"octicon octicon-file-directory-fill ic",
+      "fetchedAt": "2026-10-12T05:21:25.325Z",
+      "productUrl": "https://github.com/pytorch/pytorch",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-12T05:21:25.325Z"
+    },
+    {
+      "id": "589d69cfdc3d8c3361c46095",
+      "url": "https://raw.githubusercontent.com/lyogavin/airllm/main/README.md",
+      "title": "lyogavin / airllm · public README",
+      "publisher": "raw.githubusercontent.com",
+      "text": "![airllm_logo](https://github.com/lyogavin/airllm/blob/main/assets/airllm_logo_sm.png?v=3&raw=true) [**Quickstart**](#quickstart) | [**Configurations**](#configurations) | [**MacOS**](#macos) | [**Example notebooks**](#example-python-notebook) | [**FAQ**](#faq) **AirLLM** dramatically reduces inference memory usage, letting 70B large language models run on a single 4GB GPU card — without quantization, distillation, or pruning. You can even run **Kimi K3 (2.8T)** — the largest open-source model released to date — on **under 4GB**, **Qwen3.8-Flash-Next (125B)** on **6GB**, and **DeepSeek-V3 (671B)** on **~12GB**. We now also support training huge models on small VRAM: **Qwen3.8-Flash-Next (125B)** under **6GB**. ![GitHub Repo stars](https://img.shields.io/github/stars/lyogavin/airllm?style=social) [![Downloads](https://static.pepy.tech/personalized-badge/airllm?period=total&units=international_system&left_color=grey&right_color=blue&left_text=downloads)](https://pepy.tech/project/airllm) [![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://github.com/LianjiaTech/BELLE/blob/main/LICENSE) [![Generic badge](https://img.shields.io/badge/wechat-Anima-brightgreen?logo=wechat)](https://static.aicompose.cn/static/wecom_barcode.png?t=1671918938) [![Discord](https://img.shields.io/discord/1175437549783760896?logo=discord&color=7289da )](https://discord.gg/2xffU5sn) [![PyPI - AirLLM](https://img.shields.io/pypi/format/airllm?logo=pypi&color=3571a3) ](https://pypi.org/project/airllm/) [![Website](https://img.shields.io/website?up_message=blog&url=https%3A%2F%2Fmedium.com%2F%40lyo.gavin&logo=medium&color=black)](https://medium.com/@lyo.gavin) [![Website](https://img.shields.io/badge/Gavin_Li-Blog-blue)](https://gavinliblog.com) [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dgavinli%26type%3Dpatrons&style=flat)](https://patreon.com/gavinli) [![GitHub Sponsors](https://img.shields.io/github/sponsors/lyogavin?logo=GitHub&color=lightgray)](https://github.com/sponsors/lyogavin) ## AI Agents Recommendation: * [Best AI Game Sprite Generator](https://godmodeai.co) * [Best AI Facial Expression Editor](https://crazyfaceai.com) ## Updates [2026/09] **Training** support: stream frozen weights one layer at a time and keep adapters on the GPU. **Qwen3.8-Flash-Next (125B)** trains under **6GB** (RTX 3060 Ti); **Qwen3.8-27B** trains in **~2GB** at seq 512. See [Training](#training). [2026/08] **Qwen3.8-Flash-Next** support: Qwen's 125B MoE flagship (`Qwen4ExpForConditionalGeneration`) with a ~51B n-gram embedding runs in **5.95GB** of VRAM, measured end to end on one RTX 4090. The n-gram table is file-mapped on the host (a 64GB machine is enough); decoder layers stream. Needs a `transformers` build with in-tree `qwen4_exp` (`pip install git+https://github.com/huggingface/transformers.git` today) and ~360GB of checkpoint disk (`delete_original=True` reclaims the originals after the split). [2026/08] **Qwen3.8-27B** support: Qwen's new dense VL (Gated DeltaNet + Gated Attention, native vision) runs in **3.33GB** of VRAM, measured end to end on one RTX 3090. Needs `transformers` 5.8+. [2026/07] **Kimi K3 (2.8T)** support: the largest open-source model runs on a single card in **3.72GB** of VRAM, measured end to end on one RTX 6000 Ada. Per-expert streaming loads only the experts a token actually routes to. K3 brings three requirements of its own: `pip install compressed-tensors flash-attn` (its model code mandates flash attention regardless of what you request), a CUDA 12 build of torch, since no prebuilt flash-attn wheel exists for CUDA 13 yet, and `transformers` 4.56.x, as its remote code does not load on 5.x. [2026/06] **v3.0**: FP8 model support + the latest models. Run **DeepSeek-V3 (671B) on ~12GB** and **Qwen3-235B on ~3GB**, plus Qwen3, Llama 3.x/4, DeepSeek V2/V3, Phi-4, Gemma and more — all through a single `AutoModel`. [2024/08/20] v2.11.0: Support Qwen2.5 [2024/08/18] v2.10.1 Support CPU inference. Support non sharded models. Thanks @NavodPeiris for the great work! [2024/07/30] Support Llama3.1 **405B** ([example notebook](https://colab.research.google.com/github/lyogavin/airllm/blob/main/air_llm/examples/run_llama3.1_405B.ipynb)). Support **8bit/4bit quantization**. [2024/04/20] AirLLM supports Llama3 natively already. Run Llama3 70B on 4GB single GPU. [2023/12/25] v2.8.2: Support MacOS running 70B large language models. [2023/12/20] v2.7: Support AirLLMMixtral. [2023/12/20] v2.6: Added AutoModel, automatically detect model type, no need to provide model class to initialize model. [2023/12/18] v2.5: added prefetching to overlap the model loading and compute. 10% speed improvement. [2023/12/03] added support of **ChatGLM**, **QWen**, **Baichuan**, **Mistral**, **InternLM**! [2023/12/02] added support for safetensors. Now support all top 10 models in open llm leaderboard. [2023/12/01] airllm 2.0. Support compressions: **3x run time speed up!** [2023/11/20] airllm Initial version! ## Star History ## Table of Contents * [Quick start](#quickstart) * [Model Compression](#model-compression---3x-inference-speed-up) * [Configurations](#configurations) * [Run on MacOS](#macos) * [Example notebooks](#example-python-notebook) * [Supported Models](#supported-models) * [Training](#training) * [Acknowledgement](#acknowledgement) * [FAQ](#faq) ## Quickstart ### 1. Install package First, install the airllm pip package. ```bash pip install airllm ``` ### 2. Inference Then, initialize AirLLMLlama2, pass in the huggingface repo ID of the model being used, or the local path, and inference can be performed similar to a regular transformer model. (*You can also specify the path to save the splitted layered model through **layer_shards_saving_path** when init AirLLMLlama2.* ```python from airllm import AutoModel MAX_LENGTH = 128 # just pass a hugging face repo id — works with almost any popular model: model = AutoModel.from_pretrained(\"Qwen/Qwen3-32B\") # go bigger with the exact same one line: #model = AutoModel.from_pretrained(\"Qwen/Qwen3.8-27B\") # 27B dense VL, 3.33GB #model = AutoModel.from_pretrained(\"Qwen/Qwen3.8-Flash-Next\") # 125B MoE + 51B PLE, 5.95GB #model = AutoModel.from_pretrained(\"Qwen/Qwen3-235B-A22B\") # 235B, runs in ~3GB #model = AutoModel.from_pretrained(\"deepseek-ai/DeepSeek-V3\") # 671B, runs in ~12GB # or use a model's local path... #model = AutoModel.from_pretrained(\"/home/ubuntu/.cache/huggingface/hub/models--Qwen--Qwen3-32B/snapshots/...\") input_text = [ 'What is the capital of United States?', #'I like', ] input_tokens = model.tokenizer(input_text, return_tensors=\"pt\", return_attention_mask=False, truncation=True, max_length=MAX_LENGTH, padding=False) generation_output = model.generate( input_tokens['input_ids'].cuda(), max_new_tokens=20, use_cache=True, return_dict_in_generate=True) output = model.tokenizer.decode(generation_output.sequences[0]) print(output) ``` Note: During inference, the original model will first be decomposed and saved layer-wise. Please ensure there is sufficient disk space in the huggingface cache directory. ## Model Compression - 3x Inference Speed Up! We just added model compression based on block-wise quantization-based model compression. Which can further **speed up the inference speed** for up to **3x** , with **almost ignorable accuracy loss!** (see more performance evaluation and why we use block-wise quantization in [this paper](https://arxiv.org/abs/2212.09720)) ![speed_improvement](https://github.com/lyogavin/airllm/blob/main/assets/airllm2_time_improvement.png?v=2&raw=true) #### How to enable model compression speed up: * Step 1. make sure you have [bitsandbytes](https://github.com/TimDettmers/bitsandbytes) installed by `pip install -U bitsandbytes ` * Step 2. make sure airllm verion later than 2.0.0: `pip install -U airllm` * Step 3. when initialize the model, passing the argument compression ('4bit' or '8bit'): ```python model = AutoModel.from_pretrained(\"garage-bAInd/Platypus2-70B-instruct\", compression='4bit' # specify '8bit' for 8-bit block-wise quantization ) ``` #### What are the differences between model compression and quantization? Quantization normally needs to quantize both weights and activations to really speed things up. Which makes it harder to maintain accuracy and avoid the impact of outliers in all kinds of inputs. While in our case the bottleneck is mainly at the disk loading, we only need to make the model loading size smaller. So, we get to only quantize the weights' part, which is easier to ensure the accuracy. ## Configurations When initialize the model, we support the following configurations: * **compression**: supported options: 4bit, 8bit for 4-bit or 8-bit block-wise quantization, or by default None for no compression * **profiling_mode**: supported options: True to output time consumptions or by default False * **layer_shards_saving_path**: optionally another path to save the splitted model * **hf_token**: huggingface token can be provided here if downloading gated models like: *meta-llama/Llama-2-7b-hf* * **prefetching**: prefetching to overlap the model loading and compute. By default, turned on. For now, only AirLLMLlama2 supports this. * **delete_original**: if you don't have too much disk space, you can set delete_original to true to delete the original downloaded hugging face model, only keep the transformed one to save half of the disk space. ## MacOS Just install airllm and run the code the same as on linux. See more in [Quick Start](#quickstart). * make sure you installed [mlx](https://github.com/ml-explore/mlx?tab=readme-ov-file#installation) and torch * you probably need to install python native see more [here](https://stackoverflow.com/a/65432861/21230266) * only [Apple silicon](https://support.apple.com/en-us/HT211814) is supported Example [python notebook] (https://github.com/lyogavin/airllm/blob/main/air_llm/examples/run_on_macos.ipynb) ## Example Python Notebook Example colabs here: #### example of other models (ChatGLM, QWen, Baichuan, Mistral, etc): * ChatGLM: ```python from airllm import AutoModel MAX_LENGTH = 128 model = AutoModel.from_pretrained(\"THUDM/chatglm3-6b-base\") input_text = ['What is the capital of China?',] input_tokens = model.tokenizer(input_text, return_tensors=\"pt\", return_attention_mask=False, truncation=True, max_length=MAX_LENGTH, padding=True) generation_output = model.generate( input_tokens['input_ids'].cuda(), max_new_tokens=5, use_cache= True, return_dict_in_generate=True) model.tokenizer.decode(generation_output.sequences[0]) ``` * QWen: ```python from airllm import AutoModel MAX_LENGTH = 128 model = AutoModel.from_pretrained(\"Qwen/Qwen-7B\") input_text = ['What is the capital of China?',] input_tokens = model.tokenizer(input_text, return_tensors=\"pt\", return_attention_mask=False, truncation=True, max_length=MAX_LENGTH) generation_output = model.generate( input_tokens['input_ids'].cuda(), max_new_tokens=5, use_cache=True, return_dict_in_generate=True) model.tokenizer.decode(generation_output.sequences[0]) ``` * Baichuan, InternLM, Mistral, etc: ```python from airllm import AutoModel MAX_LENGTH = 128 model = AutoModel.from_pretrained(\"baichuan-inc/Baichuan2-7B-Base\") #model = AutoModel.from_pretrained(\"internlm/internlm-20b\") #model = AutoModel.from_pretrained(\"mistralai/Mistral-7B-Instruct-v0.1\") input_text = ['What is the capital of China?',] input_tokens = model.tokenizer(input_text, return_tensors=\"pt\", return_attention_mask=False, truncation=True, max_length=MAX_LENGTH) generation_output = model.generate( input_tokens['input_ids'].cuda(), max_new_tokens=5, use_cache=True, return_dict_in_generate=True) model.tokenizer.decode(generation_output.sequences[0]) ``` #### To request other model support: [here](https://docs.google.com/forms/d/e/1FAIpQLSe0Io9ANMT964Zi-OQOq1TJmnvP-G3_ZgQDhP7SatN0IEdbOg/viewform?usp=sf_link) ## Supported Models AirLLM works out of the box with **virtually every popular open LLM** — just pass its Hugging Face ID to `AutoModel.from_pretrained(...)`. That covers all the major families: **Llama** (2 / 3 / 3.1 / 3.3 / 4) · **Qwen** (1 / 2 / 2.5 / 3 / 3.5 / 3.8, including MoE, Flash-Next, FP8, and native VL) · **DeepSeek** (V2 / V3 / R1) · **Mistral & Mixtral** · **Phi** · **Gemma** · **ChatGLM** · **Baichuan** · **InternLM** · **Yi** · **Kimi K3** — and most new models the day they're released. ### Tiny GPU, huge models The trick: AirLLM only ever keeps **one layer on the GPU at a time**, so the VRAM you need depends on the model's layer size — not its total size. That's how a 671B model fits on a hobbyist card: | Model | Size | GPU VRAM | |---|---|---| | Qwen3 / Mistral / Phi (≈8B) | 8B | **~1–2 GB** | | Qwen3-30B / Mixtral (MoE) | 30–47B | **~1–3 GB** | | Qwen3.8-27B (dense VL) | 27B | **3.33 GB** | | Qwen3.8-Flash-Next (MoE + PLE) | ~180B | **5.95 GB** | | Qwen3-235B (MoE) | 235B | **~3 GB** | | Llama 3.x 70B (full precision) | 70B | **~4 GB** | | Llama 3.1 405B | 405B | **~8 GB** | | DeepSeek-V3 | **671B** | **~12 GB** | Same one line of code for all of them — no special setup. ## Training AirLLM can fine-tune huge models on a small GPU. Frozen base weights stream from disk one decoder layer at a time; only the adapters stay resident. **Qwen3.8-Flash-Next (125B)** trains under **6GB**; **Qwen3.8-27B** trains in **~2GB** at seq 512. This is not Hugging Face Trainer / bitsandbytes QLoRA. Flash-Next needs a `transformers` build with in-tree `qwen4_exp` (`pip install git+https://github.com/huggingface/transformers.git` today). ### 1. Prepare a dataset One JSON object per line (`.jsonl`). The usual field is `text` — next-token prediction over the whole string: ```json {\"text\": \"Your first training document. Can be a few sentences or a few paragraphs.\"} {\"text\": \"Your second training document.\"} ``` Instruction pairs work too. Loss is applied on the completion only: ```json {\"prompt\": \"What is AirLLM?\", \"completion\": \"A library that runs and trains huge models on small VRAM.\"} {\"instruction\": \"Translate to English\", \"input\": \"bonjour\", \"output\": \"hello\"} ``` A `.txt` file is also fine: one example per blank-line-separated block. A two-line starter file lives at `air_llm/examples/sft_example.jsonl`. ### 2. Run training From the repo root, point `--data` at your file: ```bash python air_llm/examples/train_qwen38_flash_next_lora.py \\ --data my_data.jsonl \\ --seq-len 512 \\ --epochs 1 \\ --save-adapter qwen38-flash-next-lora.pt ``` For the 27B dense model: ```bash python air_llm/examples/train_qwen38_lora.py \\ --data my_data.jsonl \\ --seq-len 512 \\ --epochs 1 \\ --save-adapter qwen38-27b-lora.pt ``` `--steps N` stops after N examples (useful for a smoke test). Omit `--data` and the script overfits a built-in snippet. ### Python API ```python from airllm import AirLLMLoRAQwen4Exp trainer = AirLLMLoRAQwen4Exp( \"Qwen/Qwen3.8-Flash-Next\", max_seq_len=512, lora_r=16, delete_original=True, ) tok = trainer.tokenizer if tok.pad_token_id is None: tok.pad_token = tok.eos_token encoded = tok( \"Your training text here.\", return_tensors=\"pt\", truncation=True, max_length=512, ) loss = trainer.train_step( encoded[\"input_ids\"].cuda(), attention_mask=encoded.get(\"attention_mask\"), ) print(loss) trainer.save_adapter(\"qwen38-flash-next-lora.pt\") ``` `AirLLMLoRA` is the same API for `Qwen/Qwen3.8-27B`. ## Acknowledgement A lot of the code are based on SimJeg's great work in the Kaggle exam competition. Big shoutout to SimJeg: [GitHub account @SimJeg](https://github.com/SimJeg), [the code on Kaggle](https://www.kaggle.com/code/simjeg/platypus2-70b-with-wikipedia-rag), [the associated discussion](https://www.kaggle.com/competitions/kaggle-llm-science-exam/discussion/446414). ## FAQ ### 1. MetadataIncompleteBuffer safetensors_rust.SafetensorError: Error while deserializing header: MetadataIncompleteBuffer If you run into this error, most possible cause is you run out of disk space. The process of splitting model is very disk-consuming. See [this](https://huggingface.co/TheBloke/guanaco-65B-GPTQ/discussions/12). You may need to extend your disk space, clear huggingface [.cache](https://huggingface.co/docs/datasets/cache) and rerun. ### 2. ValueError: max() arg is an empty sequence Most likely you are loading QWen or ChatGLM model with Llama2 class. Try the following: For QWen model: ```python from airllm import AutoModel #<----- instead of AirLLMLlama2 AutoModel.from_pretrained(...) ``` For ChatGLM model: ```python from airllm import AutoModel #<----- instead of AirLLMLlama2 AutoModel.from_pretrained(...) ``` ### 3. 401 Client Error....Repo model ... is gated. Some models are gated models, needs huggingface api token. You can provide hf_token: ```python model = AutoModel.from_pretrained(\"meta-llama/Llama-2-7b-hf\", #hf_token='HF_API_TOKEN') ``` ### 4. ValueError: Asking to pad but the tokenizer does not have a padding token. Some model's tokenizer doesn't have padding token, so you can set a padding token or simply turn the padding config off: ```python input_tokens = model.tokenizer(input_text, return_tensors=\"pt\", return_attention_mask=False, truncation=True, max_length=MAX_LENGTH, padding=False #<----------- turn off padding ) ``` ## Citing AirLLM If you find AirLLM useful in your research and wish to cite it, please use the following BibTex entry: ``` @software{airllm2023, author = {Gavin Li}, title = {AirLLM: scaling large language models on low-end commodity computers}, url = {https://github.com/lyogavin/airllm/}, version = {0.0}, year = {2023}, } ``` ## Contribution Welcomed contributions, ideas and discussions! If you find it useful, please ⭐ or buy me a coffee! 🙏 [![\"Buy Me A Coffee\"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://bmc.link/lyogavinQ)",
+      "fetchedAt": "2026-10-12T05:21:25.336Z",
+      "productUrl": "https://github.com/lyogavin/airllm",
+      "originSourceIds": [
+        "759119abe3ffdb8f16da1171"
+      ],
+      "evidenceKind": "github-readme",
+      "evidenceFetch": {
+        "maxBytes": 350000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://raw.githubusercontent.com",
+            "robotsUrl": "https://raw.githubusercontent.com/robots.txt",
+            "status": 404,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-12T05:20:15.006Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://raw.githubusercontent.com/lyogavin/airllm/main/README.md",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "resolvedUrl": "https://raw.githubusercontent.com/lyogavin/airllm/main/README.md",
+        "maxBytes": 350000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T05:21:25.336Z"
+    },
+    {
+      "id": "759119abe3ffdb8f16da1171",
+      "title": "lyogavin / airllm",
+      "url": "https://github.com/lyogavin/airllm",
+      "publisher": "GitHub · daily trending repositories",
+      "text": "GitHub - lyogavin/airllm: AirLLM 70B inference with single 4GB GPU · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} lyogavin airllm Repository navigation Code Issues 112 ( 112 ) Pull requests 48 ( 48 ) Discussions Actions Projects Security and quality Insights More items airllm Public Sponsor Notifications You must be signed in to change notification settings Fork 3.8k ( 3.8k ) Star 36.7k ( 36.7k ) You must be signed in to star a repository About AirLLM 70B inference with single 4GB GPU Topics chinese-llm chinese-nlp finetune generative-ai instruct-gpt instruction-set llama llm lora open-models open-source open-source-models qlora Resources Readme Apache-2.0 license Activity Stars 36.7k stars Watchers 305 watching Forks 3.8k forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 385 Commits 385 Commits Folders and files Name Name Last commit message Last commit date .github .github air_llm air_llm anima_100k anima_100k assets assets data data eval eval examples examples rlhf rlhf scripts scripts training training .gitignore .gitignore LICENSE LICENSE README.md README.md README_ja.md README_ja.md anima_logo.png anima_logo.png funding.json funding.json requirements.txt requirements.txt View all files Repository files navigation README Apache-2.0 license More items Quickstart | Configurations | MacOS | Example notebooks | FAQ AirLLM dramatically reduces inference memory usage, letting 70B large language models run on a single 4GB GPU card — without quantization, distillation, or pruning. You can even run Kimi K3 (2.8T) — the largest open-source model released to date — on under 4GB , Qwen3.8-Flash-Next (125B) on 6GB ,",
+      "fetchedAt": "2026-10-12T05:21:25.647Z",
+      "productUrl": "https://github.com/lyogavin/airllm",
+      "originFeedIds": [
+        "fb41898e3878114109088fed"
+      ],
+      "verifiedAt": "2026-10-12T05:21:25.647Z"
+    },
+    {
+      "id": "a7bace0290595f8c07ac270b",
+      "title": "Terrapin BOOSTED · product evidence",
+      "url": "https://betalist.com/startups/tryterrapin",
+      "publisher": "betalist.com",
+      "text": "Terrapin: Turn receipts, email & photos into clean, | BetaList BetaList Home Browse Newsletter Search FAQ Advertise Support Startup Jobs Vision Pro apps Home Browse Newsletter Search FAQ Advertise Support theme#toggle\" class=\" size-9 rounded-full hover:bg-gray-100 flex items-center justify-center dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 \" title=\"Toggle theme\" > Log in Submit Startup Back to all startups Terrapin BOOSTED Turn receipts, email & photos into clean, tax-ready insights, automatically Terrapin is a receipt proof automation platform built for freelancers, 1099 contractors, and self-employed workers. We automatically find, match, and organise your business receipts - so you never miss a deduction again. Most freelancers lose thousands every year to receipts they can't find at tax time. Terrapin fixes that by connecting to the places your receipts already live - your email inbox, bank accounts, and camera roll - and doing the work for you. No manual uploads, no spreadsheets, no shoeboxes. We match each receipt to the right transaction, categorize it, and separate business from personal expenses. When it's time to file, export a CPA-ready bundle - no chasing, no gaps. Get early access to our private beta and one month fre, no credit card required → https://www.tryterrapin.com/waitlist Visit Site Visit Site Topics Freelancers Small and Medium Businesses Finance Technology Artificial Intelligence Productivity Software Featured August 25, 2025 Request changes Get your badge Report this startup Manage collections Discover startups similar to Terrapin FreeDAST SPONSOR Scan your live site for risks and get a clear security grade SPONSOR TradePilot Scan rooms with your iPhone, get AI estimates built on your actual rates. Signed Manage startup investments, diligence, and taxes in one place Todoless BOOSTED AI-native, privacy-first task management that understands natural typing BOOSTED talat The private meeting notes app with 100% on-device AI Clearical AI-powered time tracking for knowledge workers Tarly AI Edit resumes via prompts (like Cursor); get a personal website in 1 minute Recoura BOOSTED Recover failed Stripe and Square payments with manual and automated dunning BOOSTED Retuner AI AI resume tailor and free builder to beat ATS filters",
+      "fetchedAt": "2026-10-12T05:21:25.961Z",
+      "productUrl": "https://betalist.com/startups/tryterrapin",
+      "originFeedIds": [
+        "498a696b45de80618b28713d"
+      ],
+      "originSourceIds": [
+        "a7bace0290595f8c07ac270b"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://betalist.com",
+            "robotsUrl": "https://betalist.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T05:20:12.782Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 99,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://betalist.com/startups/tryterrapin",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://betalist.com/startups/tryterrapin",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Terrapin BOOSTED. Turn receipts, email & photos into clean, tax-ready insights, automatically Public startup listing; maker evidence requires a fresh independent check.",
+      "verifiedAt": "2026-10-12T05:21:25.961Z"
+    },
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: VendIQ – AI agent for vendor follow-ups and ops automation ( rishailabs.com ) 1 point by rishailabs 2 days ago | hide | past | favorite | discuss help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T05:21:26.545Z",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "discoveredAt": "2026-10-09T09:33:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T05:21:26.545Z"
+    },
+    {
+      "id": "167cf06e2bed71a2865e0782",
+      "title": "Show HN: Deploylist – StumbleUpon feed for upvoted web projects on HN and Reddit",
+      "url": "https://news.ycombinator.com/item?id=49981383",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Deploylist – StumbleUpon feed for upvoted web projects on HN and Reddit | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Deploylist – StumbleUpon feed for upvoted web projects on HN and Reddit ( deploylist.com ) 1 point by henry-xli 5 days ago | hide | past | favorite | discuss I’ve seen indie development take off over the past few years, but many attempts to capture this creativity and revive the StumbleUpon concept have fallen short, mostly due to having lackluster entries. My website allows forums to act as a tried-and-true quality filtering system to show you the best of the online development scene. This site runs an automatic ingestion every 3 days, selecting the most-upvoted posts across all the linked subreddits and Hacker News over the past week and month (feel free to suggest more good sources of web projects), that center around a standalone project hosted on a non-major site (so not Github, App Store, Steam, etc). In this way, projects can be viewed quickly and easily within the browser. Websites with embedding issues are still ranked on the leaderboard, but aren’t shown in the live view. Ideally, this website stirs your creativity, serves a somewhat-accurate snapshot of the web development scene, and shows that the internet can still be fun to explore. Try the live feed yourself: deploylist.com help Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T05:21:26.620Z",
+      "productUrl": "https://deploylist.com",
+      "discoveredAt": "2026-10-06T17:15:47Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T05:21:26.620Z"
+    },
+    {
+      "id": "e395188ccbcee80ed4b65645",
+      "url": "https://apiaxess.dev",
+      "title": "Show HN: I built a free Burp/Caido alternative but, zero setup - API Testing · product evidence",
+      "publisher": "apiaxess.dev",
+      "text": "apiaxess — Mobile or web, the API comes to you. Skip to content v 0.1.0 Product Docs Trust Resources Download › Mobile or web, the API comes to you. A browser already routed through the proxy. An Android emulator that already trusts the certificate. One session, nothing to set up. Download Try it below ↓ Web capture APK analysis Android target Devices Workbench API surface Export Session & audit Settings try it → click a row, then Send to Resend apiaxess File Capture View Help Go to surface, flow, endpoint or command ⌘K api.northwind-retail.io Live control connected CAPT BNCH SURF DLVR Session session:2l1a434f3f6b1a Capture Web capture APK analysis Android target Devices Analyse Workbench API surface Deliver Export Session & audit Settings Capture health Live traffic 2.4k Resend Fuzz WebSocket 1 Intercept matching requests Any method Any status filter: host, path, method, status 1,204 flows Method Path St Ms Size POST /v1/cart/items 201 53 302 B GET /v1/loyalty/points 200 27 144 B GET /v1/catalog/facets 200 64 8.2 kB POST /v1/push/register 200 18 88 B GET /v1/cart 200 22 1.4 kB GET /v1/me 200 41 612 B POST /v1/cart/items 201 Request Response Timing host api.northwind-retail.io client Web capture scope In declared scope authorization Bearer eyJhbGciOi…Qm9 content-type application/json Send to Resend Send to Fuzz Intercept queue 0 Diagnostics 0 Control · reliable No paused requests With intercept on, matching requests pause here until you forward, modify or drop them. WORKBENCH session:2l1a434f3f6b1a Control Telemetry 127.0.0.1 ← swipe the app to look around → GET /v1/cart POST /v1/checkout/confirm GET /v1/me PATCH /v1/me/preferences GET /v1/internal/flags POST /v1/push/register GET /v1/loyalty/points PUT /v1/cart/items GET /v1/checkout/quote DELETE /v1/me/addresses GET /v1/cart POST /v1/checkout/confirm GET /v1/me PATCH /v1/me/preferences GET /v1/internal/flags POST /v1/push/register GET /v1/loyalty/points PUT /v1/cart/items GET /v1/checkout/quote DELETE /v1/me/addresses 2,481 Flows captured 128 Endpoints merged 9 Only the app calls 0 Setup steps From a sample session on the Northwind demo app. Measured, not claimed. We built a reference Android app with 17 documented endpoints (Retrofit, OkHttp, HttpURLConnection and GraphQL, plus a third-party host and calls behind taps and a second screen) and scored apiaxess against it. Static 17 /17 Found from the code, zero phantom endpoints. Live capture 17 /17 Decrypted while the app ran. Fused 17 /17 Each one confirmed by both. Capture both clients. Keep the evidence. 01 Mobile A phone you never had to prepare. Boots already trusting the certificate. Install an APK, drive it, read the traffic. Pinned apps included. Show me in the app ↑ 02 Web A browser that already trusts you. Its own Chromium on an isolated profile, routed through the proxy. Your browser is never touched. Show me in the app ↑ 03 Workbench See it live. Resend it. Fuzz it. Replay any request, or run a full Intruder-class attack. Four attack types, no throttling. Show me in the app ↑ 04 Export Leave with a spec, not a screenshot. OpenAPI 3.1, Postman, HAR and a Python client, from one command. Show me in the app ↑ It won’t make things up. Every endpoint is labelled confirmed or inferred-from-code, first-party or third. Your own Resend and Fuzz traffic never leaks into the recovered surface. And when something can’t be done, like an app whose pinning can’t be beaten, apiaxess tells you so instead of showing you an empty list. Nine endpoints a browser-only session never sees. Open source. Read every line. Apache-2.0 licensed. Check how the certificate is made, confirm there’s no telemetry, build it yourself. ★ Star on GitHub Point it at an app. Read the API. Download v0.1.0 Windows Linux macOS next apiaxess Product Docs Trust Download Release notes FAQ © 2026 apiaxess · v 0.1.0",
+      "fetchedAt": "2026-10-12T05:21:27.425Z",
+      "productUrl": "https://apiaxess.dev",
+      "originSourceIds": [
+        "14b711318be451e7341f00ea"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": false,
+      "evidenceNote": "First-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://apiaxess.dev",
+            "robotsUrl": "https://apiaxess.dev/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-12T05:20:15.576Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 117,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://apiaxess.dev/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://apiaxess.dev/",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-12T05:21:27.425Z"
+    },
+    {
+      "id": "14b711318be451e7341f00ea",
+      "title": "Show HN: I built a free Burp/Caido alternative but, zero setup - API Testing",
+      "url": "https://news.ycombinator.com/item?id=49911931",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: I built a free Burp/Caido alternative but, zero setup - API Testing | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: I built a free Burp/Caido alternative but, zero setup - API Testing ( apiaxess.dev ) 32 points by coding-maniac 11 days ago | hide | past | favorite | 5 comments This is Katriel, the architect of the tool APIaxess. I have been API pentesting for a good time now, and starting with API pentesting was a bit of a rough patch. Specially the setting up and having to know the intricacies of proxies, networking and other stuff. Then once i got through it, the next rough patch was the apk pentesting, where getting the traffic of any apk was more of a task then the pentesting itself. So i started by writing scripts that automates the process and then made sure that any rooted adb just automatically started sending traffic to the burpsuite setup, and then that helped a lot. Then i just thought that this issue needs to be resolved in a more open manner, since its a very known pain point. So i built a GUI around it, made sure that it can handle everything that a normal api traffic tool can and then thought of releasing it, for people to test it out. Before the inital release, i have myself battle tested this tool, in multiple ways, while also sharing it with other professionals in my industry who constantly use Burp/Caido/HTTPToolkit or other similar tools. I know that the tool needs more features and more refinements, but thought of making it public so that i can get to know about the issues much sooner. Do check out the Github and leave a star if it helped you out, and do share it with your colleagues so that they could also waste less time setting it up and more time doing the work that they like. github.com/KatrielMoses/apiaxess help root-tester1 11 days ago [–] A lot of people do notice and feel the same pain that you feel. I believe that this tool is gonna help the QA Engineers as well, since their day to day does include that same workflow. Would definitely recommend this on my feed reply mythri-backend 11 days ago | parent | next [–] If the tool really does what it says, then this tool is really good for engineers period. Gotta check it out reply coding-maniac 11 days ago | root | parent | next [–] Correct, apk developers could really benefit using this, if they want to go secure by design and also if they just want to test functionalities out on the go. The client apk can be installed on whatever emulator, the device needs to be rooted, thats the only requirement, which makes sense reply coding-maniac 11 days ago | parent | prev | next [–] Yeah, true. Makes a lot of sense to QA/Test Engineers to also use it. reply hack3r0st 11 days ago | parent | prev [–] Agreed reply Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T05:21:27.762Z",
+      "productUrl": "https://apiaxess.dev",
+      "discoveredAt": "2026-09-30T17:32:10Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ],
+      "verifiedAt": "2026-10-12T05:21:27.762Z"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "title": "VabbyGupta018/invoice-agent",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "publisher": "Hugging Face · invoice workflow demos",
+      "text": "Invoice Agent - a Hugging Face Space by VabbyGupta018 Spaces VabbyGupta018 / invoice-agent Like 0 Paused App Files Files Community Fetching metadata from the HF Docker repository... This Space has been paused. Want to use this Space? Head to the community tab to ask the author(s) to restart it.",
+      "fetchedAt": "2026-10-12T05:21:27.907Z",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "discoveredAt": "2026-10-07T13:47:42.000Z",
+      "originFeedIds": [
+        "470ff63db8da1802b0ccc779"
+      ],
+      "verifiedAt": "2026-10-12T05:21:27.907Z"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "title": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots)",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Dooza Desk – AI-native customer support for small teams (free pilots) ( doozadesk.com ) 2 points by Sibinarendran 10 months ago | hide | past | favorite I built Dooza Desk ( https://www.doozadesk.com ), a very early, AI native helpdesk for small teams. I’m looking for a few teams to run free pilots and tell me what breaks. Problem I’m aiming at: - Small teams still type the same support answers that legacy tools can't close - Most helpdesks are seat-priced, not work done or AI based like cursor - “AI” in many tools is a thin layer on top of an old ticketing model, not the core. What Dooza Desk does right now (basic version): - Simple shared omnichannel inbox for customer messages. - AI can autonomously solve tickets and take actions (need some polish) - Lightweight helpdesk features (assign, status, notes) so it can replace a bare inbox for small teams. High-level implementation details: - Messages are normalized into a single internal ticket format. - AI Agents builder + pipeline runs on each message (classify intent, suggest tags, draft reply). - Customer and conversation history are stored so future messages can reuse context. - The system is designed so more automation steps can be added over time as I see real workflows. State of the product: - Very early, rough edges expected. - Focused on making a narrow set of flows actually work end-to-end instead of a big feature checklist. - I’m actively changing things based on feedback; nothing is “frozen”. What I’m looking for: - 3–5 small teams (SaaS or e-commerce or any product with recurring customer questions) willing to run a free pilot. - Brutal feedback on: - where the AI suggestions are useless or dangerous - which workflows must be automated first for this to be worth using - what’s missing to replace your current shared inbox / helpdesk for at least part of your support If you want to try a pilot, you can sign up at https://www.doozadesk.com and then email me, I’ll wire things up manually and adjust the product around your workflows, Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T05:21:27.981Z",
+      "productUrl": "https://www.doozadesk.com",
+      "discoveredAt": "2025-12-05T07:31:43Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T05:21:27.981Z"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "title": "Show HN: Lumro – AI agents for customer support, sales, and more",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "publisher": "Hacker News · small customer-support products",
+      "text": "Show HN: Lumro – AI agents for customer support, sales, and more | Hacker News Hacker News new | past | comments | ask | show | jobs | submit login Show HN: Lumro – AI agents for customer support, sales, and more ( lumro.co ) 2 points by Ophilip on Sept 12, 2025 | hide | past | favorite Hey HN, We just launched Lumro, a platform that lets you create AI agents that actually do things, not just chat. With Lumro you can: Handle customer support instantly, 24/7 Capture leads and qualify them Book demos or route tickets automatically The idea is to take repetitive work off human teams so they can focus on strategy and relationships. We launched yesterday and so far: 200+ people checked it out 15 signed up Our agent booked 1 demo Our agent captured 2 leads It’s early days, but we’re excited about the traction. Would love your feedback especially on what you’d want to see in an AI agent for your business. Consider applying for YC's Winter 2027 batch! Applications are open till November 2. Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact Search:",
+      "fetchedAt": "2026-10-12T05:21:28.059Z",
+      "productUrl": "https://www.lumro.co",
+      "discoveredAt": "2025-09-12T16:16:23Z",
+      "originFeedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ],
+      "verifiedAt": "2026-10-12T05:21:28.059Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [],
+  "assessmentContractVersion": 1,
+  "considerationEvidence": [
+    {
+      "title": "Haiku 5.5 model coverage",
+      "productUrl": "https://www.latent.space/p/ainews-claude-haiku-55-better-than",
+      "sourceIds": [
+        "c07b5023822db3bc05608ec2"
+      ],
+      "availableSourceIds": [
+        "c07b5023822db3bc05608ec2"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Rodeo Robotics vehicle maintenance",
+      "productUrl": "https://www.ycombinator.com/companies/rodeo-robotics",
+      "sourceIds": [
+        "8e00c6a953fe23fb968804fa"
+      ],
+      "availableSourceIds": [
+        "8e00c6a953fe23fb968804fa"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "ArtCraft creative IDE",
+      "productUrl": "https://github.com/storytold/artcraft",
+      "sourceIds": [
+        "53695418506c74ec717d910f",
+        "96cd9bd509bc9d5c8f527d26"
+      ],
+      "availableSourceIds": [
+        "53695418506c74ec717d910f",
+        "96cd9bd509bc9d5c8f527d26"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "PyTorch machine learning framework",
+      "productUrl": "https://github.com/pytorch/pytorch",
+      "sourceIds": [
+        "4deb41e6df5e1d249221bc8f",
+        "6ee2c2a30826817daec2ab99"
+      ],
+      "availableSourceIds": [
+        "4deb41e6df5e1d249221bc8f",
+        "6ee2c2a30826817daec2ab99"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "AirLLM low memory inference",
+      "productUrl": "https://github.com/lyogavin/airllm",
+      "sourceIds": [
+        "589d69cfdc3d8c3361c46095",
+        "759119abe3ffdb8f16da1171"
+      ],
+      "availableSourceIds": [
+        "589d69cfdc3d8c3361c46095",
+        "759119abe3ffdb8f16da1171"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Terrapin receipt organization",
+      "productUrl": "https://betalist.com/startups/tryterrapin",
+      "sourceIds": [
+        "a7bace0290595f8c07ac270b"
+      ],
+      "availableSourceIds": [
+        "a7bace0290595f8c07ac270b"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "VendIQ vendor follow-ups",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "sourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "availableSourceIds": [
+        "265adce9a63ce1b22335c79d"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Deploylist project discovery feed",
+      "productUrl": "https://deploylist.com",
+      "sourceIds": [
+        "167cf06e2bed71a2865e0782"
+      ],
+      "availableSourceIds": [
+        "167cf06e2bed71a2865e0782"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "APIaxess API testing tool",
+      "productUrl": "https://apiaxess.dev",
+      "sourceIds": [
+        "e395188ccbcee80ed4b65645",
+        "14b711318be451e7341f00ea"
+      ],
+      "availableSourceIds": [
+        "e395188ccbcee80ed4b65645",
+        "14b711318be451e7341f00ea"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Invoice Agent Hugging Face Space",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "sourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "availableSourceIds": [
+        "1dd03891d1e36345e3123c1a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Dooza Desk support inbox",
+      "productUrl": "https://www.doozadesk.com",
+      "sourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "availableSourceIds": [
+        "825b3af6f3796a98a9e1803f"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Lumro support and sales agents",
+      "productUrl": "https://www.lumro.co",
+      "sourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "availableSourceIds": [
+        "9a0a9e719dcbdcc105bc1a7d"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
