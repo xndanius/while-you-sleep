@@ -34,6 +34,13 @@ test('method reflects the current scoring policy without stale equal-weight or t
   assert.match(after,/A high score is an assessment, not proof of demand or future profit/);
 });
 
+test('method separates documented demand from an unbuilt service and preserves the legacy evidence basis',()=>{
+ const html=renderMethodology(fixture()),scoring=section(html,'method-scoring');
+ assert.match(scoring,/proposed AI service remains a hypothesis/);assert.match(scoring,/4–6.*fresh primary notice/);assert.match(scoring,/7–8.*corroboration/);assert.match(scoring,/9–10.*corroborated/);
+ assert.match(scoring,/Older product examples retain/);assert.match(scoring,/working-product evidence/);
+ assert.match(section(html,'method-publishing'),/Unverified runs raise an operational alert/);
+});
+
 test('hourly cadence and cap come from the schedule; static method never promises a stale next tick',()=>{
   const input=fixture(),html=renderMethodology(input),publishing=section(html,'method-publishing');
   assert.match(publishing,/One publication slot every hour at :07/);

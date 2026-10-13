@@ -27,6 +27,13 @@ try{
       if(typeof item?.productUrl==='string'&&!selectedProducts.has(canonicalURL(item.productUrl)))throw new Error('Writer assessed a product outside the bounded primary evidence selection.');
     }
   }
+  for(const field of ['candidates','rejected']){
+    if(draft[field]!==undefined&&!Array.isArray(draft[field]))throw new Error('Writer '+field+' must be an array of explicitly identified items.');
+    for(const item of draft[field]||[]){
+      if(typeof item?.title!=='string'||!item.title.trim()||typeof item?.productUrl!=='string'||!item.productUrl.trim())throw new Error('Writer '+field+' entry must retain its title and exact productUrl; no exclusion may be silently dropped.');
+      try{canonicalURL(item.productUrl);}catch{throw new Error('Writer '+field+' entry has an invalid productUrl; no exclusion may be silently dropped.');}
+    }
+  }
   const previous=await records('posts'),sources=[],health=[];
   const noveltyContext=createNoveltyContext(previous);
   const demandRequired=process.env.DEMAND_CONTRACT_VERSION==='1'||!!process.env.EXPECTED_LEARNING_SELECTION_SHA;
@@ -125,4 +132,8 @@ try{
   const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...demandContract,...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
   await writeJSON(dataPath('check-context',runId),context);
   console.log(JSON.stringify({runId,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,results:deterministicResults}));
-}catch(error){console.error(safeError(error));process.exitCode=1;}
+}catch(error){
+  const reason=safeError(error).replace(/[\r\n\x00-\x1f\x7f]/g,' ').trim();
+  if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,`verified=false\nunverified_code=checker_preparation_failed\nunverified_reason=${reason}\n`);
+  console.error(reason);process.exitCode=1;
+}

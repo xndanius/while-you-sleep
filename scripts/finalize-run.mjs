@@ -39,7 +39,7 @@ if(child.status!==0){
 if(scheduling)await settleLoop(runId);
 const finalized=await readJSON(dataPath('runs',runId));
 const unverified=finalized.assessmentOutcome==='unverified'&&!!finalized.unverifiedAssessment;
-const operationalFailure=!unverified&&(child.status!==0||finalized.operationalFailures?.length>0);
+const operationalFailure=unverified||child.status!==0||finalized.operationalFailures?.length>0;
 if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,`operational_failure=${!!operationalFailure}\nunverified=${unverified}\nrun_status=${finalized.status}\n`);
 console.log(JSON.stringify({runId,operationalFailure,assessmentOutcome:finalized.assessmentOutcome||'legacy',status:finalized.status}));
 }

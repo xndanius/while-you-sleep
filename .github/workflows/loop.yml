@@ -190,9 +190,9 @@ jobs:
     outputs:
       repair: ${{ steps.verdict.outputs.repair }}
       privacy_safe: ${{ steps.privacy.outputs.safe }}
-      verified: ${{ steps.accept.outputs.verified }}
-      unverified_code: ${{ steps.accept.outputs.unverified_code }}
-      unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
+      verified: ${{ steps.prepare.outputs.verified || steps.accept.outputs.verified }}
+      unverified_code: ${{ steps.prepare.outputs.unverified_code || steps.accept.outputs.unverified_code }}
+      unverified_reason: ${{ steps.prepare.outputs.unverified_reason || steps.accept.outputs.unverified_reason }}
       model_completed: ${{ steps.model.outcome == 'success' }}
       model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
@@ -252,7 +252,7 @@ jobs:
         run: node scripts/guard-private-artifacts.mjs "$RUN_ID" checker
       - name: Accept only a fresh independent output bound to the frozen context
         id: accept
-        if: always() && steps.privacy.outputs.safe == 'true'
+        if: always() && steps.prepare.outcome == 'success' && steps.privacy.outputs.safe == 'true'
         env:
           EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
@@ -353,10 +353,10 @@ jobs:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
       EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
     outputs:
-      verified: ${{ steps.accept.outputs.verified }}
+      verified: ${{ steps.prepare.outputs.verified || steps.accept.outputs.verified }}
       privacy_safe: ${{ steps.privacy.outputs.safe }}
-      unverified_code: ${{ steps.accept.outputs.unverified_code }}
-      unverified_reason: ${{ steps.accept.outputs.unverified_reason }}
+      unverified_code: ${{ steps.prepare.outputs.unverified_code || steps.accept.outputs.unverified_code }}
+      unverified_reason: ${{ steps.prepare.outputs.unverified_reason || steps.accept.outputs.unverified_reason }}
       model_completed: ${{ steps.model.outcome == 'success' }}
       model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
@@ -424,7 +424,7 @@ jobs:
         run: node scripts/guard-private-artifacts.mjs "$RUN_ID" final_check
       - name: Accept only the new final independent output
         id: accept
-        if: always() && steps.privacy.outputs.safe == 'true'
+        if: always() && steps.prepare.outcome == 'success' && steps.privacy.outputs.safe == 'true'
         env:
           EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}

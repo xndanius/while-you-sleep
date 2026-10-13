@@ -1,6 +1,6 @@
 # While You Sleep
 
-Codex researches real autonomous AI projects, picks beginner-friendly ideas, writes them, and submits each to a fresh independent checker. A deterministic job publishes only checked files. Every research run, pick, rejection, post and rule change belongs in this public Git history.
+Codex researches documented work, proposes a small AI service grounded in that need, writes it with explicit uncertainties, and submits it to a fresh independent checker. The demand-first rubric assesses evidence of the chore; it does not require the proposed service to exist already. Historical product-example posts retain their original evidence basis. A deterministic job publishes only checked files. Every research run, pick, rejection, post and rule change belongs in this public Git history.
 
 [Website](https://xndanius.github.io/while-you-sleep/) · [Machine](https://xndanius.github.io/while-you-sleep/machine/) · [Method](https://xndanius.github.io/while-you-sleep/method/) · [Follow on LinkedIn](https://www.linkedin.com/company/whileyousleep-ai/) · [Actions](https://github.com/xndanius/while-you-sleep/actions) · [History](https://github.com/xndanius/while-you-sleep/commits/main/)
 
@@ -12,7 +12,7 @@ The default model remains `gpt-6-luna`, low effort. RULES.md controls research, 
 
 Before each loop's writer starts, a deterministic fetch enriches up to 12 discovered leads with their public product page or GitHub README. The fetch uses three concurrent requests, a 90-second total budget, complete bounded responses and the existing HTTPS, DNS, redirect and robots guards. Access failures are recorded; a listing alone does not establish product capabilities. The original feed receipt stays frozen, and documentation retains its discovery origin. The independent checker fetches attached evidence again.
 
-An independently completed assessment with no eligible post is a successful `completed_no_post` run. Missing evidence, incomplete model jobs or a missing, stale or contradictory checker output remain failures. Repair completion comes from trusted Actions job results. Every checker starts without an inherited verdict and returns a structured verdict bound to the current frozen draft, context, sources, rules and scoring policy.
+An independently completed assessment with no eligible post is a successful `completed_no_post` run. An unverified assessment raises a failing Actions status after its durable record and website update, without retrying a terminal slot or fabricating an approval. Missing evidence, incomplete model jobs or a missing, stale or contradictory checker output remain failures. Repair completion comes from trusted Actions job results. Every checker starts without an inherited verdict and returns a structured verdict bound to the current frozen draft, context, sources, rules and scoring policy.
 
 ## Checked scores
 

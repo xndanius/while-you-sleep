@@ -174,11 +174,33 @@ test('empty assessment refetch covers each actual exclusion rather than arbitrar
  assert.equal(context.sources.length,8);assert.equal(context.considerationEvidence.length,8);assert.ok(context.considerationEvidence.every(item=>item.availableSourceIds.length===1));
 });
 
+test('malformed exclusions fail preparation explicitly instead of silently checking a fallback subset',async t=>{
+ for(const rejected of [[{title:'A real exclusion',url:'https://example.com/product-0',reason:'No bounded task.'}],[{title:'A real exclusion',productUrl:'not a URL',reason:'No bounded task.'}],{title:'Wrong collection shape'}]){
+  const result=await execute(t,{count:0,script:'prepare-check',missing:'checks',mutate:f=>{f.draft.rejected=rejected;}});
+  assert.equal(result.execution.status,1);assert.match(result.execution.stdout,/FETCH_COUNT 0/);
+  const outputs=Object.fromEntries(result.outputs.trim().split('\n').map(line=>{const index=line.indexOf('=');return [line.slice(0,index),line.slice(index+1)];}));
+  assert.equal(outputs.verified,'false');assert.equal(outputs.unverified_code,'checker_preparation_failed');assert.match(outputs.unverified_reason,/Writer rejected/);
+  assert.doesNotMatch(outputs.unverified_reason,/fingerprints/);
+  const finalized=spawnSync(process.execPath,['scripts/finalize-run.mjs',runId],{cwd:result.root,env:{...result.env,MODEL_JOB_RESULTS:JSON.stringify({...jobs,checker:{result:'failure',outputs}})},encoding:'utf8'});
+  assert.equal(finalized.status,0,finalized.stderr);
+  const run=await result.record('runs');assert.equal(run.status,'no_post_unverified');assert.equal(run.unverifiedAssessment.code,'checker_preparation_failed');assert.equal(run.unverifiedAssessment.reason,outputs.unverified_reason);assert.deepEqual(run.published,[]);
+  assert.match(await readFile(path.join(result.root,'outputs'),'utf8'),/operational_failure=true/);
+ }
+});
+
+test('each explicit rejected notice receives its own independent evidence and fetch diagnostic',async t=>{
+ const result=await execute(t,{count:12,script:'prepare-check',mutate:f=>{f.draft.rejected=f.draft.posts.map(post=>({title:post.title,productUrl:post.productUrl,reason:'No supported new service.'}));f.draft.posts=[];}});
+ assert.equal(result.execution.status,0,result.execution.stderr);const context=await result.record('check-context');
+ assert.equal(context.considerationEvidence.length,12);assert.equal(context.primaryFetchDiagnostics.length,12);assert.equal(context.sources.length,12);
+ assert.deepEqual(context.considerationEvidence.map(item=>item.productUrl),result.f.draft.rejected.map(item=>item.productUrl));
+ assert.ok(context.primaryFetchDiagnostics.every(item=>item.status==='fetched'));assert.ok(context.considerationEvidence.every(item=>item.availableSourceIds.length===1));
+});
+
 test('new enriched snapshots restrict assessments to their selected product identities',async t=>{
  const accepted=await execute(t,{script:'prepare-check',mutateResearch:research=>research.enrichment={status:'completed',observations:[{productUrl:research.sources[0].url}]}});
  assert.equal(accepted.execution.status,0,accepted.execution.stderr);
  const outside=await execute(t,{script:'prepare-check',mutateResearch:research=>research.enrichment={status:'completed',observations:[{productUrl:'https://example.com/another-product'}]}});
- assert.equal(outside.execution.status,1);assert.match(outside.execution.stderr,/outside the bounded primary evidence selection/);
+ assert.equal(outside.execution.status,1);assert.match(outside.execution.stderr,/outside the bounded primary evidence selection/);assert.match(outside.outputs,/unverified_code=checker_preparation_failed/);assert.match(outside.outputs,/unverified_reason=Writer assessed a product outside the bounded primary evidence selection\./);
  const ordinary=await execute(t,{script:'prepare-check',mutateResearch:research=>research.enrichment={status:'not_requested',observations:[]}});
  assert.equal(ordinary.execution.status,0,ordinary.execution.stderr);
 });
@@ -201,7 +223,7 @@ test('pending relay holds eligible publication but honest checked threshold refu
 test('missing checks, corrupt completion, unavailable sources and failed model stages safely close as unverified without approvals',async t=>{
  for(const options of [{missing:'checks'},{afterBind:f=>delete f.manifest.completedAssessment},{afterBind:f=>f.manifest.completedAssessment.rulesSha256='a'.repeat(64)},{afterBind:f=>f.manifest.checks=[]},{liveStatus:503},{count:0,liveStatus:503},{count:0,liveStatus:429},{mutate:f=>f.jobs.repair.result='failure'}]){
   const result=await execute(t,options);assert.equal(result.execution.status,0,result.execution.stderr,'finalizer persists failure before the separate hosted status check');
-  const run=await result.record('runs'),outcome=await result.record('slot-outcomes');assert.equal(run.assessmentOutcome,'unverified');assert.equal(run.status,'no_post_unverified');assert.ok(run.operationalFailures.length);assert.equal(run.checkedAssessment,undefined);assert.equal(run.unverifiedAssessment.completed,false);assert.equal(outcome.status,'no_post_unverified');assert.match(result.outputs,/operational_failure=false/);assert.deepEqual(run.published,[]);
+  const run=await result.record('runs'),outcome=await result.record('slot-outcomes');assert.equal(run.assessmentOutcome,'unverified');assert.equal(run.status,'no_post_unverified');assert.ok(run.operationalFailures.length);assert.equal(run.checkedAssessment,undefined);assert.equal(run.unverifiedAssessment.completed,false);assert.equal(outcome.status,'no_post_unverified');assert.match(result.outputs,/operational_failure=true/);assert.deepEqual(run.published,[]);
   const next=loopDecision({...result.f.scheduling,now:new Date(now),reservations:[{...result.f.scheduling,schedulingSha256:result.env.LOOP_SCHEDULING_SHA}],outcomes:[outcome]});
   assert.equal(next.slotIds.some(id=>result.f.scheduling.slotIds.includes(id)),false,'an unverified hour cannot spend on the same slot again');
   if(options.liveStatus===429)assert.match(run.unverifiedAssessment.reason,/HTTP 429/);
@@ -210,7 +232,7 @@ test('missing checks, corrupt completion, unavailable sources and failed model s
 
 test('unverified content closes even a former third retry without claiming an independent assessment',async t=>{
  const result=await execute(t,{liveStatus:503,mutate:f=>{for(const id of f.scheduling.slotIds)f.scheduling.attemptCounts[id]=3;}});
- const run=await result.record('runs'),outcome=await result.record('slot-outcomes');assert.equal(run.assessmentOutcome,'unverified');assert.equal(outcome.status,'no_post_unverified');assert.ok(outcome.slotOutcomes.every(slot=>slot.status==='no_post_unverified'));assert.equal(run.checkedAssessment,undefined);assert.match(result.outputs,/operational_failure=false/);
+ const run=await result.record('runs'),outcome=await result.record('slot-outcomes');assert.equal(run.assessmentOutcome,'unverified');assert.equal(outcome.status,'no_post_unverified');assert.ok(outcome.slotOutcomes.every(slot=>slot.status==='no_post_unverified'));assert.equal(run.checkedAssessment,undefined);assert.match(result.outputs,/operational_failure=true/);
 });
 
 test('legacy cap-three reservations retain their original checker contract and rejection behavior',async t=>{
@@ -282,7 +304,8 @@ test('workflow neutral content errors retain explicit model outcomes and only ve
  for(const name of ['writer','checker','repair','final_check']){
   const text=job(name);assert.match(text,/id: model\n(?:        if: [^\n]+\n)?        continue-on-error: true\n        uses: openai\/codex-action@/);assert.match(text,/model_completed: .*steps.model.outcome == 'success'/);
  }
- for(const name of ['checker','final_check']){assert.match(job(name),/verified: .*steps.accept.outputs.verified/);assert.match(job(name),/id: accept\n        if: always\(\)/);}
+ for(const name of ['checker','final_check']){assert.match(job(name),/verified: .*steps.prepare.outputs.verified \|\| steps.accept.outputs.verified/);assert.match(job(name),/unverified_reason: .*steps.prepare.outputs.unverified_reason \|\| steps.accept.outputs.unverified_reason/);assert.match(job(name),/id: accept\n        if: always\(\) && steps.prepare.outcome == 'success'/);}
+ assert.match(job('report-status'),/needs.record.outputs.operational_failure == 'true'/);assert.match(job('report-status'),/exit 1/);
  assert.match(job('repair'),/if: .*outputs.verified == 'true'/);
  assert.match(job('record'),/name: .*final_check.result != 'skipped'/);
  assert.ok(job('record').split('\n').filter(line=>line.includes('EXPECTED_CONTEXT_SHA:')).every(line=>line.includes("final_check.outputs.context_sha256 != ''")));
