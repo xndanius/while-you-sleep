@@ -1,0 +1,202 @@
+{
+  "runId": "improve-38453919197-1",
+  "trialId": "8ecbf42e48abb08eecada54e",
+  "posts": [
+    {
+      "id": "a26319ec24c0eb42ec512bd6",
+      "candidateId": "a26319ec24c0eb42ec512bd6",
+      "title": "A server for AI appointment requests",
+      "promise": "Gateway lets agents check services, prices and slots before requesting a booking.",
+      "whatItIs": "Gateway is an open-source server for businesses to publish services and prices to AI agents over HTTP. Its README describes connecting a Google Calendar or Square Appointments, then allowing agents to check availability, get a quote, book, cancel or reschedule. A beginner experiment could test a narrowly scoped setup for one service, if they have access to the required calendar or Square account.",
+      "whoPays": "Hypothesis: an appointment-based business that wants to accept AI-agent bookings might pay for setup or support. The source does not establish customers or revenue.",
+      "loop": [
+        "Choose one service and its price with the business owner.",
+        "Set up Gateway and connect an available Google Calendar or Square account.",
+        "Check the published service and available slots locally.",
+        "Let an agent request a quote and booking through the server.",
+        "Have the owner review bookings, cancellations and messages, then correct setup issues."
+      ],
+      "evidence": "The GitHub README describes an open-source server with services, prices, booking and owner messages over HTTP, and a demo in which an agent checks slots, gets a quote and books into a calendar. It lists Node 22.13 or newer and a Google Calendar service account or Square account as setup requirements.",
+      "uncertainty": "The page documents a demo and setup path, not customer demand or production reliability. The demo requires a reachable HTTPS address for a cloud agent. A human must confirm service details, access, and whether each booking or change is appropriate; the source does not establish unattended operation safety.",
+      "first24Hours": [
+        "Read the README setup requirements and choose a test calendar or Square account you are authorized to use.",
+        "Write down one service, its price and the booking rules with its owner.",
+        "Map a local test of slot lookup and a booking request, with owner review before any real appointment is accepted."
+      ],
+      "sourceIds": [
+        "a26319ec24c0eb42ec512bd6"
+      ],
+      "productUrl": "https://github.com/mudroom-ai/gateway",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A one-service trial is conceivable, but the README requires Node, npm, Git and calendar or Square setup.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: appointment businesses might pay for booking setup, but the source reports no customers or revenue.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "The documented quick start and demo give a bounded trial, with account setup and HTTPS access as obstacles.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The server supports repeatable slot checks and booking actions, while owners provide service rules and handle messages and review.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The README provides setup steps and a repeatable demo, but no independent real-use evidence.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "ef244017b1460269fc687cea",
+      "candidateId": "ef244017b1460269fc687cea",
+      "title": "A remote browser for AI agents",
+      "promise": "Browser Use offers hosted browsers that an agent can use to complete web tasks.",
+      "whatItIs": "Browser Use describes two products: Browser Use Agents, a web agent, and Browser Infrastructure, a remote browser for other agents. A beginner can study the documented product and try a small, low-stakes browser task; a student-built service that automates a narrow task would be a separate hypothesis, not an established feature here.",
+      "whoPays": "Hypothesis: a team running agents on web tasks might pay for browser infrastructure or agent access. The page lists pricing, but does not establish paying customer counts.",
+      "loop": [
+        "Choose a permitted, low-stakes task on a site you are allowed to use.",
+        "Connect an agent to Browser Use using its documented starting path.",
+        "Have the agent attempt the selected browser task.",
+        "Check the page state and any submitted information yourself.",
+        "Record where the agent failed and decide whether to retry manually."
+      ],
+      "evidence": "The first-party page describes Browser Use Agents and Browser Infrastructure and gives pricing for browser time and agent usage. It reports results from its own 106-task and 71-site benchmarks; these are company-reported tests, not independent proof of customer outcomes.",
+      "uncertainty": "The provided page does not give beginner implementation instructions or detailed evidence for a student-built service. Benchmark methods and real-world outcomes are not independently established in this source. Keep a person responsible for account access, sensitive data, and any consequential form submission or purchase.",
+      "first24Hours": [
+        "Read the product and pricing sections and pick one low-stakes web task.",
+        "Try the available free starting option only on a site and account you may use.",
+        "Check the result manually and list which actions would need human approval in a repeatable trial."
+      ],
+      "sourceIds": [
+        "ef244017b1460269fc687cea"
+      ],
+      "productUrl": "https://browser-use.com",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The page offers a free start but supplies little implementation detail for a beginner experiment.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams operating web agents might pay; listed prices do not show buyer demand or revenue.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A product trial is bounded, but the supplied page does not explain how to build a student version in two weeks.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The product is presented as agents completing browser tasks, but this source gives no operational loop or human-review details.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The first-party page describes products and benchmarks, without independent verification or specific customer-use evidence.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "e50962080372ef282af39399",
+      "candidateId": "e50962080372ef282af39399",
+      "title": "Local meeting notes you can check",
+      "promise": "Pluto records and processes meetings on a Mac, then links notes to their source.",
+      "whatItIs": "Pluto is an open-source meeting assistant for Apple Silicon Macs. Its README says it records meetings without a bot, transcribes on the Mac, creates notes and next steps, and lets users ask questions with references back to the conversation. A small student trial could use one short, consented meeting and check the notes against the recording.",
+      "whoPays": "Hypothesis: a person or team that wants local meeting notes might pay for setup help, but this source does not establish demand or sales.",
+      "loop": [
+        "Check that the Mac meets the listed requirements and tell participants about recording.",
+        "Install Pluto and choose local AI setup, following its guide.",
+        "Record a short meeting with participant permission.",
+        "Review the generated notes and next steps against the conversation.",
+        "Ask a question about the meeting and follow its references back to the source."
+      ],
+      "evidence": "The GitHub README provides Mac setup steps, names an Apple Silicon Mac with macOS 14.2 or later, and describes recording, transcription, notes, next steps and source references. It explicitly tells users to let participants know when recording.",
+      "uncertainty": "The README documents the product and setup, not transcription accuracy, adoption or commercial demand. The user must obtain participant consent and check generated notes and answers against the recording before relying on them. Local processing is described, but the provided text does not establish every privacy property.",
+      "first24Hours": [
+        "Check the Mac requirements and read Pluto's setup steps before installing anything.",
+        "Ask participants and get their agreement before recording a short test meeting.",
+        "Review notes, next steps and one answer against the recording and its references."
+      ],
+      "sourceIds": [
+        "e50962080372ef282af39399"
+      ],
+      "productUrl": "https://github.com/metagrover/pluto",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The README gives a first-meeting path, though setup needs a recent Apple Silicon Mac and model downloads.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: people wanting meeting notes might pay for help, but the source gives no customer or revenue evidence.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A consented one-meeting evaluation follows the documented install and review steps, subject to hardware and setup access.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Recording, transcription and note generation are automated steps, while consent and checking notes against the conversation remain human tasks.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The first-party README demonstrates a concrete setup and workflow, but the attached text provides no independent use evidence.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "refusals": []
+}

@@ -1,0 +1,202 @@
+{
+  "runId": "improve-38453919197-1",
+  "trialId": "4cc67e65414bd840eb09f902",
+  "posts": [
+    {
+      "id": "a26319ec24c0eb42ec512bd6",
+      "candidateId": "a26319ec24c0eb42ec512bd6",
+      "title": "A booking gateway for AI agents",
+      "promise": "See how a small service could let agents check services, prices and booking slots.",
+      "whatItIs": "Gateway is an open-source server that exposes a business's services, prices and booking actions to AI agents over HTTP. A beginner's experiment could help one local service business set up and test this flow; that service offer is hypothetical. The documented setup needs Node, npm, a calendar or Square account, and configuration.",
+      "whoPays": "Hypothesis: an appointment-based business might pay for setup help if it wants agents to handle booking requests. The source documents no paying customers or revenue.",
+      "loop": [
+        "The owner lists services and prices in the chosen booking system.",
+        "Gateway exposes the information and available slots to an agent.",
+        "The agent checks a requested slot and gets a quote.",
+        "The agent submits a booking, cancellation or rescheduling request.",
+        "The owner reviews the calendar and handles messages or exceptions."
+      ],
+      "evidence": "The project README describes Google Calendar and Square connectors, an API for services, slots, quotes and bookings, and a demo in which an agent checks a slot, gets a quote and books into a calendar. It documents prerequisites and setup. This shows a working-product path, not customer adoption.",
+      "uncertainty": "The demo requires configuration and a public HTTPS address for a cloud agent; its temporary tunnel changes each run. Human owners still need to check calendar accuracy, permissions, messages and exceptions. The source gives no evidence of demand or paid users.",
+      "first24Hours": [
+        "Read the README's quick-start prerequisites and write down which are available; completion is a checklist showing Node, npm and a test calendar or Square account status.",
+        "Draw a sample service, price and booking flow without using real customer data; completion is a diagram with the owner review point marked.",
+        "Ask one appointment business whether this hypothetical workflow is useful, without promising results; completion is a dated note of their answer or no response."
+      ],
+      "sourceIds": [
+        "a26319ec24c0eb42ec512bd6"
+      ],
+      "productUrl": "https://github.com/mudroom-ai/gateway",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The README gives a quick start, but setup needs Node 22.13+, npm, Git and a connected booking system.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: appointment businesses could value agent booking, but the page reports no paying customers or validated demand.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A narrow demo is documented, though a beginner must configure a calendar or Square and expose a reachable server.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The documented flow checks slots and can book, while owner messages and setup, permissions and exceptions need human handling.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The README describes connectors, setup and a repeatable booking demonstration, but gives no evidence of real customer use.",
+            "sourceIds": [
+              "a26319ec24c0eb42ec512bd6"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "ef244017b1460269fc687cea",
+      "candidateId": "ef244017b1460269fc687cea",
+      "title": "A remote browser for agent workflows",
+      "promise": "Explore a small, reviewed browser task using Browser Use's remote infrastructure.",
+      "whatItIs": "Browser Use offers browser agents and remote browser infrastructure for agents. Its page lists examples such as data extraction, form filling and research. A student could hypothetically test one low-risk public-page research workflow for a small organization, with a person checking every result; this service is not established by the source.",
+      "whoPays": "Hypothesis: a small organization that repeats public web research might pay for a reviewed summary. The page provides product pricing, not evidence that such customers buy this proposed service.",
+      "loop": [
+        "The user chooses a permitted public page and a narrow question.",
+        "An agent uses a browser to gather the requested page information.",
+        "The agent returns a draft summary with links to the pages it used.",
+        "A person checks the pages and corrects errors before sharing anything.",
+        "The person records failures and stops tasks involving access barriers or sensitive actions."
+      ],
+      "evidence": "The product page describes Browser Use Agents and remote browser infrastructure, says the service supports examples including data extraction and research, and lists browser infrastructure at $0.02 per hour plus internet traffic. Its benchmark figures are company-reported claims on the page, not independent validation here.",
+      "uncertainty": "The page does not establish how reliably a beginner's chosen workflow will perform or whether an organization would pay for it. Browser tasks can fail or return wrong information, so a human must check source pages; do not use this experiment for logins, sensitive data or consequential submissions.",
+      "first24Hours": [
+        "Choose one public, non-sensitive page and write a single factual question; completion is a question and page URL in a test note.",
+        "Review the product's free-start and pricing information and estimate the test inputs; completion is a note of listed charges and unknown traffic cost.",
+        "Manually answer the question from the page and save the supporting lines; completion is a checked answer with its source URL."
+      ],
+      "sourceIds": [
+        "ef244017b1460269fc687cea"
+      ],
+      "productUrl": "https://browser-use.com",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The page offers a free start and remote infrastructure, but does not provide a beginner's step-by-step setup in the supplied text.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: organizations may value reviewed web research, but the page shows product pricing rather than demand for this service.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A single public-page task is a plausible small experiment, though setup, usage costs and task reliability are not established here.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The product is presented for browser agents and research, but a human must verify outputs and handle failures in this proposed loop.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The page describes live agent and infrastructure products, use examples and pricing; its benchmark claims are first-party and not independently confirmed here.",
+            "sourceIds": [
+              "ef244017b1460269fc687cea"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "e50962080372ef282af39399",
+      "candidateId": "e50962080372ef282af39399",
+      "title": "Turn meeting recordings into reviewed notes",
+      "promise": "Try Pluto's local meeting workflow, then check notes against the conversation.",
+      "whatItIs": "Pluto is an open-source meeting assistant for Apple Silicon Macs. Its README says it records meetings without a bot, transcribes on the Mac, and creates notes and next steps. A student could hypothetically offer help organizing reviewed notes for a small team, using only meetings whose participants agreed to recording.",
+      "whoPays": "Hypothesis: a small team that wants help keeping track of meeting decisions might pay for setup or note organization. The page does not establish paying customers for that service.",
+      "loop": [
+        "Tell participants about the recording and get their agreement before starting.",
+        "Record a short meeting in Pluto on a supported Mac.",
+        "Let Pluto process the recording into notes and next steps.",
+        "Review the notes against the conversation and correct errors.",
+        "Share only the approved notes with the intended participants."
+      ],
+      "evidence": "The README describes Pluto's local recording and transcription flow, lists Apple Silicon and macOS requirements, and instructs users to review notes and next steps after processing. It also says screenshots use fictional demo data. This is first-party product documentation, not evidence of customer outcomes.",
+      "uncertainty": "A suitable Mac, model downloads and microphone and system-audio permissions are required. Transcription or generated notes may be wrong; people must consent to recording and check the notes before sharing. The source does not demonstrate paid demand for a note service.",
+      "first24Hours": [
+        "Check the README's Mac and macOS requirements against your device; completion is a written yes or no for each requirement.",
+        "Draft a short consent message explaining the recording and ask participants before any test; completion is their recorded agreement or a decision not to record.",
+        "If everyone agrees and setup is available, record a short test meeting and compare each proposed next step with the audio; completion is a corrected note or a log that setup prevented the test."
+      ],
+      "sourceIds": [
+        "e50962080372ef282af39399"
+      ],
+      "productUrl": "https://github.com/metagrover/pluto",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The README gives an install and first-meeting path, but requires Apple Silicon, macOS 14.2 or later and model setup.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams may value organized meeting notes, but the supplied page gives no evidence of buyers for a student note service.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A single short meeting is a bounded trial with documented setup steps, contingent on supported hardware and participant consent.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Pluto can record, transcribe and draft notes locally, while consent, error correction and sharing decisions stay with people.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The first-party README documents a working product and first-meeting workflow, but its sample screenshots use fictional data and real-use outcomes are not shown.",
+            "sourceIds": [
+              "e50962080372ef282af39399"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "refusals": []
+}
