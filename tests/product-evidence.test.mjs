@@ -7,6 +7,7 @@ import {PRODUCT_EVIDENCE_POLICY,PRODUCT_SELECTION_POLICY,selectProductLeads,enri
 import {hash,sha256,stableJSON,canonicalURL,writeJSON} from '../lib/storage.mjs';
 import {emptySourceRegistry,applySourceTransition,createSourceScanReceipt,validateSourceScanReceipt} from '../lib/source-registry.mjs';
 import {researchSnapshot} from '../scripts/research-snapshot.mjs';
+import {DEMAND_SOURCE_CATALOG,parseDemandSourcePage,fetchDemandEvidence} from '../lib/demand-sources.mjs';
 
 const now='2026-10-11T15:00:00.000Z';
 const capability='The product reads uploaded invoice documents, extracts structured fields, and exports CSV files for review. The operator chooses the documents and checks the result before sending records. It includes a command line interface and documented configuration; running it still requires a server, credentials and human approval. ';
@@ -15,6 +16,17 @@ function source(n,{productUrl,url=`https://products.example.org/tool-${n}`}={}){
 function origin(item,feedId='feed-a'){return {sourceId:item.id,url:item.url,productUrl:item.productUrl||item.url,feedIds:[feedId]};}
 function page(url,text=capability.repeat(8),options={}){const maxBytes=options.maxBytes??2000000;return {url,text,status:200,contentType:options.contentType||'text/html',fetchedAt:now,maxBytes,bytes:Buffer.byteLength(text),truncated:false,redirects:[],robots:[{origin:new URL(url).origin,evaluatedUrl:url,allowed:true,status:404,state:'missing'}]};}
 const fetchFixture=async(url,options)=>page(url,capability.repeat(8),options);
+const demandJob=(id,text)=>({id:String(id),headline:'Administrator',occupation:{label:'Administratör'},salary_type:{concept_id:'oG8G_9cW_nRf'},publication_date:'2026-10-10T08:00:00',application_deadline:'2026-11-01',description:{text}});
+
+test('demand retrieval prefers literal tasks to longer broad descriptions without assigning editorial scores',()=>{
+ const def=DEMAND_SOURCE_CATALOG[2],rows=[demandJob(100,'Du är en strukturerad administratör med god servicekänsla. '.repeat(8)),demandJob(101,'Registrera dokument och arkivera inkommande underlag.\nSammanställa rapporter för granskning varje vecka.')];
+ const items=parseDemandSourcePage(def,page(def.url,JSON.stringify({hits:rows}),{contentType:'application/json'}));
+ const selection={selectedSegment:'professional_services',demandSourceIds:[def.id]},options={learningSelection:selection,demandDefinitions:[def],originMap:items.map(item=>origin(item,def.id)),limit:1};
+ const selected=selectProductLeads(items,options);
+ assert.equal(selected.length,1);assert.equal(selected[0].productUrl,items[1].url);assert.deepEqual(selected[0].selection.signals,['explicit-task-excerpt']);
+ assert.ok(!('scoring' in selected[0])&&!('overall' in selected[0])&&!('pass' in selected[0]));assert.ok(!('scoring' in items[1]));
+ assert.equal(selectProductLeads(items,{...options,recentAssessments:[{productUrl:items[1].url,assessedAt:now}],now})[0].productUrl,items[0].url);
+});
 
 test('lead selection is deterministic, bounded, diverse and excludes already published products',()=>{
  const items=Array.from({length:24},(_,n)=>source(n)),git=source(25,{productUrl:'https://github.com/public/invoices'});items.push(git);
@@ -33,6 +45,17 @@ test('a repository-heavy scan gives concrete workflow documentation a real bound
 function completedHistory(productUrl='https://products.example.org/review'){
  const runId='loop-808-1',draft={runId,candidates:[{productUrl,sourceIds:['origin'],reason:'Explicitly refused after independent evidence.'}],posts:[],rejected:[]},sources=[{id:hash(canonicalURL(productUrl)),url:canonicalURL(productUrl),productUrl,text:capability.repeat(2),enriched:true,evidenceKind:'product-page',evidenceFetch:{maxBytes:2000000,complete:true},fetchedAt:'2026-10-11T14:20:00.000Z',verifiedAt:'2026-10-11T14:20:00.000Z'}],context={runId,draftSha256:sha256(stableJSON(draft)),rulesSha256:'b'.repeat(64),sourceSnapshotSha256:sha256(stableJSON(sources)),scoringPolicy:{policySha256:'d'.repeat(64)},sources},proof={schema:1,completed:true,contractVersion:1,runId,checkerRunId:runId+'-independent-check',decision:'no_supported_candidate',completedAt:'2026-10-11T14:30:00.000Z',draftSha256:context.draftSha256,contextSha256:sha256(stableJSON(context)),rulesSha256:context.rulesSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,policySha256:context.scoringPolicy.policySha256},run={id:runId,type:'loop',assessmentOutcome:'completed',operationalFailures:[],checkedAssessment:proof},research={id:runId,runId,enrichment:{status:'completed',observations:[{productUrl,status:'fetched',fetchedAt:'2026-10-11T14:20:00.000Z'}]}};return {runs:[run],drafts:[draft],research:[research],contexts:[context],now};
 }
+
+test('fresh guarded demand metadata makes a completed refusal eligible for the existing cooldown',async()=>{
+ const def=DEMAND_SOURCE_CATALOG[2],row=demandJob(100,'Registrera dokument för granskning.'),original=parseDemandSourcePage(def,page(def.url,JSON.stringify({hits:[row]}),{contentType:'application/json'}))[0];
+ const at='2026-10-11T14:20:00.000Z',fresh=await fetchDemandEvidence({...original,productUrl:'https://forged.example.org'},{definition:def,fetchPage:async url=>({...page(url,JSON.stringify(row),{contentType:'application/json'}),fetchedAt:at})});
+ assert.equal(fresh.productUrl,original.url);assert.ok(fresh.text.length<300);
+ const history=completedHistory(original.url),context=history.contexts[0],proof=history.runs[0].checkedAssessment;
+ context.sources=[fresh];context.sourceSnapshotSha256=sha256(stableJSON(context.sources));proof.sourceSnapshotSha256=context.sourceSnapshotSha256;proof.contextSha256=sha256(stableJSON(context));
+ const recent=recentProductAssessments(history);assert.equal(recent.length,1);assert.equal(recent[0].productUrl,original.url);
+ assert.equal(selectProductLeads([original],{recentAssessments:recent,now}).length,0);
+ assert.equal(recentProductAssessments({...history,now:'2026-10-12T14:30:00.000Z'}).length,0);
+});
 
 test('recent refusal memory binds a completed exact draft and fetched primary evidence, then expires honestly',()=>{
  const history=completedHistory(),recent=recentProductAssessments(history);assert.deepEqual(recent,[{productUrl:'https://products.example.org/review',assessedAt:'2026-10-11T14:30:00.000Z',runId:'loop-808-1'}]);const items=[source(1,{url:recent[0].productUrl}),source(2)],selected=selectProductLeads(items,{recentAssessments:recent,now});assert.deepEqual(selected.map(item=>item.productUrl),[items[1].url]);assert.equal(selectProductLeads(items,{recentAssessments:recent,now:'2026-10-12T14:30:00.000Z'}).length,2);assert.deepEqual(recentProductAssessments({...history,now:'2026-10-12T14:30:00.000Z'}),[]);

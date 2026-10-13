@@ -1,5 +1,7 @@
 # While You Sleep
 
+Demand input repair (13 October 2026): the official job adapter keeps bounded verb-first task bullets as well as task sentences, under the same contact/name/number exclusions. It preserves whole excerpts and the human-work disclaimer within the existing three-excerpt/1,200-character cap. Retrieval prioritizes explicit task excerpts without assigning editorial scores. Fresh demand refetches retain their exact notice identity and fixed fetch metadata, allowing the existing 24-hour completed-assessment cooldown to work for future checked notices. Existing historical records remain immutable.
+
 Codex researches documented work, proposes a small AI service grounded in that need, writes it with explicit uncertainties, and submits it to a fresh independent checker. The demand-first rubric assesses evidence of the chore; it does not require the proposed service to exist already. Historical product-example posts retain their original evidence basis. A deterministic job publishes only checked files. Every research run, pick, rejection, post and rule change belongs in this public Git history.
 
 [Website](https://xndanius.github.io/while-you-sleep/) · [Machine](https://xndanius.github.io/while-you-sleep/machine/) · [Method](https://xndanius.github.io/while-you-sleep/method/) · [Follow on LinkedIn](https://www.linkedin.com/company/whileyousleep-ai/) · [Actions](https://github.com/xndanius/while-you-sleep/actions) · [History](https://github.com/xndanius/while-you-sleep/commits/main/)

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {DEMAND_SOURCE_CATALOG,sourceRole,sourceSegments,sourceDemandKind,parseDemandSourcePage,fetchDemandEvidence} from '../lib/demand-sources.mjs';
+import {DEMAND_SOURCE_CATALOG,sourceRole,sourceSegments,sourceDemandKind,parseDemandSourcePage,fetchDemandEvidence,demandTaskCount} from '../lib/demand-sources.mjs';
 import {sourceSeedCatalog,normalizeSourceDefinition,parseSourcePage,validateSource} from '../lib/research.mjs';
 import {sourceDefinitionReasons,SOURCE_POLICY} from '../lib/source-registry.mjs';
 import {admissionDecision} from '../scripts/source-registry.mjs';
@@ -34,6 +34,26 @@ test('only salaried, open and nontechnical roles in the actual selected segment 
  assert.throws(()=>parseDemandSourcePage(health,page(health,{hits:[job()]})),/No current paid nontechnical/);
 });
 
+test('literal task bullets take the bounded excerpt slots ahead of generic introductions',()=>{
+ const def=DEMAND_SOURCE_CATALOG[2],row=job();
+ const tasks=['Hantera dokumentation, registrering och arkivering','Sammanställa rapporter, statistik och olika typer av underlag','Uppdatera och administrera interna system'];
+ row.description.text=['Du är en strukturerad administratör med god servicekänsla.','Som administratör arbetar du i en viktig stödjande roll.','Vi söker dig som har erfarenhet av administration.',...tasks.map(line=>'• '+line),'Registrera dokument för Alice Example och skicka till alice@example.org.','Registrera dokument på telefon 0701234567.','Compile invoice records for human review.'].join('\n');
+ const item=parseDemandSourcePage(def,page(def,{hits:[row]}))[0];
+ assert.deepEqual(item.taskExcerpts,tasks);assert.equal(demandTaskCount(item),3);
+ assert.ok(tasks.every(line=>item.text.includes(line)&&row.description.text.includes(line)));
+ assert.doesNotMatch(JSON.stringify(item),/Alice|@|0701234567|servicekänsla/);assert.ok(item.text.length<=1200);
+ assert.equal(demandTaskCount({...item,taskExcerpts:['Invented invoice task not present in the source.']}),0);
+});
+
+test('task excerpts never truncate a statement or remove the human-work disclaimer to fit the budget',()=>{
+ const def=DEMAND_SOURCE_CATALOG[2],row=job();
+ row.description.text=Array.from({length:3},(_,i)=>'Registrera dokument och sammanställa rapporter '+('för granskning '.repeat(18))+['dagligen','veckovis','månadsvis'][i]).join('\n');
+ const item=parseDemandSourcePage(def,page(def,{hits:[row]}))[0];
+ assert.ok(item.taskExcerpts.length>=1);assert.ok(item.text.length<=1200);
+ assert.ok(item.taskExcerpts.every(line=>row.description.text.includes(line)&&item.text.includes(line)));
+ assert.ok(item.text.endsWith('A paid staff vacancy is demand for human work; it does not prove anyone buys an AI tool.'));
+});
+
 test('official service tenders whitelist CPV categories and active tender requests without buyer/contact/free-text or payment claims',()=>{
  const def=DEMAND_SOURCE_CATALOG[0],item=parseDemandSourcePage(def,page(def,{releases:[tender()]}))[0];
  assert.equal(item.title,'Public tender: Mailing services');assert.equal(item.segment,'public_sector');assert.equal(item.demandKind,'public_tender');assert.equal(item.demandEvidence.status,'active');assert.equal(item.demandEvidence.classificationCode,'79571000');assert.equal(item.postedAt,'2026-10-12T09:56:01.000Z');assert.match(item.text,/does not prove a completed payment/);
@@ -53,6 +73,7 @@ test('fresh demand re-fetch reconstructs privacy-safe authority from the trusted
  const def=DEMAND_SOURCE_CATALOG[2],original=parseDemandSourcePage(def,page(def,{hits:[job()]}))[0];let request;
  const fresh=await fetchDemandEvidence({...original,text:'Model claims customers paid for its AI tool.',role:'building'},{definition:def,fetchPage:async(url,options)=>{request={url,options};return {...page(def,job()),url,robots:[{...page(def,job()).robots[0],evaluatedUrl:url}]};}});
  assert.equal(fresh.role,'demand');assert.equal(fresh.id,original.id);assert.equal(fresh.registrySourceId,def.id);assert.equal(fresh.verifiedAt,now);assert.doesNotMatch(fresh.text,/Model claims/);assert.doesNotMatch(JSON.stringify(fresh),/Alice|Private Person|@/);assert.deepEqual(request.options,{maxBytes:2000000,complete:true});
+ assert.equal(fresh.productUrl,original.url);assert.equal(fresh.enriched,true);assert.equal(fresh.evidenceKind,'demand-notice');assert.deepEqual(fresh.evidenceFetch,{maxBytes:2000000,complete:true});
  for(const altered of [{...original,registrySourceId:'forged'},{...original,url:'https://foreign.example.org/ad/31578015'},{...original,url:original.url+'?contact=true'},{...original,id:'forged'}])await assert.rejects(fetchDemandEvidence(altered,{definition:def}),/origin|scope/);
  await assert.rejects(fetchDemandEvidence(original,{definition:def,fetchPage:async url=>({...page(def,job()),url,robots:[{allowed:false}]})}),/public guards/);
  await assert.rejects(fetchDemandEvidence(original,{definition:def,fetchPage:async url=>({...page(def,{...job(),id:'31578016'}),url})}),/No current paid nontechnical/);
