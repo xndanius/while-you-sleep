@@ -1,0 +1,243 @@
+{
+  "id": "loop-38473893120-1",
+  "type": "loop",
+  "status": "completed_no_post",
+  "startedAt": "2026-10-13T21:53:26.997Z",
+  "finishedAt": "2026-10-13T21:55:37.167Z",
+  "candidatesFound": 0,
+  "picked": 0,
+  "rejected": [
+    {
+      "title": "Public tender: Event services",
+      "productUrl": "https://www.contractsfinder.service.gov.uk/Published/OCDS/Release/8c5c952b-376a-46d4-8635-c3fba0288d03-917384",
+      "reason": "The selected official tender notice says only “Event services” and contains no concrete task, deliverable, or workflow. Its generic statement that a procurement request is demand does not establish what work is requested, so a demand-backed AI experiment would require inventing duties."
+    },
+    {
+      "title": "Public tender: Event services",
+      "productUrl": "https://www.contractsfinder.service.gov.uk/Published/OCDS/Release/2e04fda8-05f7-4686-9f1e-25d2e25bf0ef-917357",
+      "reason": "The selected official tender notice says only “Event services” and contains no concrete task, deliverable, or workflow. Its generic statement that a procurement request is demand does not establish what work is requested, so a demand-backed AI experiment would require inventing duties."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-13T21:53:38.821Z",
+      "message": "Fetched 199 live source records; 0 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-13T21:54:42.446Z",
+      "message": "Codex CLI wrote 0 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "passed",
+      "at": "2026-10-13T21:54:42.446Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Both selected public-sector tender notices were assessed against their attached primary text. Each identifies only the broad Event services category and supplies no concrete task or deliverable, so neither supports a grounded demand-first experiment."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38473893120",
+  "version": "rules-fa1bc8e34594",
+  "rulesSha256": "fa1bc8e34594b275be116597cb9e97adb97ba6c525f79f16ec9ab483cad543c7",
+  "rulesCommit": "ca9969f6e7a7aed64fa2220161b47071651dd6a1",
+  "usage": {
+    "id": "loop-38473893120-1",
+    "type": "usage",
+    "runId": "loop-38473893120-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-13T21:55:33.565Z",
+    "localDate": "2026-10-14",
+    "githubRunId": "38473893120",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38473893120/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "recorded",
+    "inputTokens": 304113,
+    "cachedInputTokens": 240986,
+    "cacheWriteInputTokens": 63088,
+    "outputTokens": 3117,
+    "reasoningOutputTokens": 411,
+    "costUsd": 0.01185826,
+    "observedCounts": {
+      "inputTokens": 304113,
+      "cachedInputTokens": 240986,
+      "cacheWriteInputTokens": 63088,
+      "outputTokens": 3117,
+      "reasoningOutputTokens": 411,
+      "costUsd": 0.01185826
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 2,
+      "notRunModelJobs": 2,
+      "unknownModelJobs": 0
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [
+      "gpt-6-luna"
+    ],
+    "pricingStatus": "recorded_token_estimate",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 115559741001,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38473893120/job/115559741001",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 169861,
+        "cachedInputTokens": 140265,
+        "cacheWriteInputTokens": 29575,
+        "outputTokens": 1464,
+        "reasoningOutputTokens": 224,
+        "costUsd": 0.005833625,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "checker",
+        "jobId": 115560168544,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38473893120/job/115560168544",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 134252,
+        "cachedInputTokens": 100721,
+        "cacheWriteInputTokens": 33513,
+        "outputTokens": 1653,
+        "reasoningOutputTokens": 187,
+        "costUsd": 0.006024635,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "repair",
+        "jobId": 115560521060,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38473893120/job/115560521060",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "final_check",
+        "jobId": 115560523241,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38473893120/job/115560523241",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "3cab353615f112c6c6b08dabf99d1ea83412bef2b964e1c17c32a6ce58e327a4",
+  "assessmentOutcome": "completed",
+  "operationalFailures": [],
+  "checkedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "contractVersion": 1,
+    "runId": "loop-38473893120-1",
+    "schedulingSha256": "bd0d566c91084935e6abe815b640fda467ccde20eaa98f55f79459c17399ebb7",
+    "slotIds": [
+      "publish-2026-10-14-00-07"
+    ],
+    "draftSha256": "33a2767d94333eef17271be1a652ed9e5841c42aa59364475db76c35cbef92f2",
+    "contextSha256": "20f437da7a40eaf3bd93007aab4fb90ab108b726f28c954d07effe94154f7e7e",
+    "rulesSha256": "fa1bc8e34594b275be116597cb9e97adb97ba6c525f79f16ec9ab483cad543c7",
+    "sourceSnapshotSha256": "3cab353615f112c6c6b08dabf99d1ea83412bef2b964e1c17c32a6ce58e327a4",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkerRunId": "loop-38473893120-1-independent-check",
+    "completedAt": "2026-10-13T21:55:37.167Z",
+    "decision": "no_supported_candidate",
+    "reason": "Both considered public tenders were freshly fetched and readable, but each notice states only “Event services” and provides no concrete chore or deliverable; neither supports a grounded demand-first experiment.",
+    "checkedPostIds": []
+  },
+  "eventName": "schedule",
+  "modelExecuted": true,
+  "scheduling": {
+    "id": "loop-38473893120-1",
+    "runId": "loop-38473893120-1",
+    "type": "loop-scheduling",
+    "eventName": "schedule",
+    "event": "schedule",
+    "triggerCron": "7,27,47 * * * *",
+    "githubRunId": "38473893120",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38473893120",
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-14-00-07",
+    "scheduledAt": "2026-10-13T21:07:00.000Z",
+    "localDate": "2026-10-14",
+    "localTime": "00:07",
+    "requestedAt": "2026-10-13T21:53:26.997Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 0,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-14-00-07",
+        "scheduledAt": "2026-10-13T21:07:00.000Z",
+        "localDate": "2026-10-14",
+        "localTime": "00:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-14-00-07",
+        "scheduledAt": "2026-10-13T21:07:00.000Z",
+        "localDate": "2026-10-14",
+        "localTime": "00:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-14-00-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-14-00-07": 1
+    },
+    "reservationId": "loop-38473893120-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot"
+  }
+}
