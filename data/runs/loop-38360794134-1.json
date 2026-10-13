@@ -1,0 +1,326 @@
+{
+  "id": "loop-38360794134-1",
+  "type": "loop",
+  "status": "completed_no_post",
+  "startedAt": "2026-10-13T07:08:32.691Z",
+  "finishedAt": "2026-10-13T07:11:10.806Z",
+  "candidatesFound": 3,
+  "picked": 0,
+  "rejected": [
+    {
+      "title": "Public tender: Advertising and marketing services",
+      "productUrl": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages/096037-2026",
+      "reason": "The readable notice snapshot identifies only the broad category “Advertising and marketing services”; it does not describe a concrete task suitable for a bounded, safe AI workflow, and it provides no working product evidence."
+    },
+    {
+      "title": "Public tender: Mailing services",
+      "productUrl": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages/095976-2026",
+      "reason": "The readable notice snapshot identifies only the broad category “Mailing services”; it does not describe a concrete task suitable for a bounded, safe AI workflow, and it provides no working product evidence."
+    },
+    {
+      "title": "Public tender: Advertising and marketing services",
+      "productUrl": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages/095724-2026",
+      "reason": "The readable notice snapshot identifies only the broad category “Advertising and marketing services”; it does not describe a concrete task suitable for a bounded, safe AI workflow, and it provides no working product evidence."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-13T07:08:47.048Z",
+      "message": "Fetched 200 live source records; 0 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-13T07:09:59.494Z",
+      "message": "Codex CLI wrote 0 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "passed",
+      "at": "2026-10-13T07:09:59.494Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Assessed all 3 selected public-sector tender leads. Their compact snapshots expose only broad service categories, not concrete chores or working AI workflows, so none supports an eligible demand-backed proposal."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38360794134",
+  "version": "rules-b68e2a16de6e",
+  "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+  "rulesCommit": "9b74a4bac4e9041900e8ad4052f1df51e300f022",
+  "usage": {
+    "id": "loop-38360794134-1",
+    "type": "usage",
+    "runId": "loop-38360794134-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-13T07:11:05.505Z",
+    "localDate": "2026-10-13",
+    "githubRunId": "38360794134",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38360794134/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "recorded",
+    "inputTokens": 325832,
+    "cachedInputTokens": 255778,
+    "cacheWriteInputTokens": 70015,
+    "outputTokens": 4013,
+    "reasoningOutputTokens": 793,
+    "costUsd": 0.013320055,
+    "observedCounts": {
+      "inputTokens": 325832,
+      "cachedInputTokens": 255778,
+      "cacheWriteInputTokens": 70015,
+      "outputTokens": 4013,
+      "reasoningOutputTokens": 793,
+      "costUsd": 0.013320055
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 2,
+      "notRunModelJobs": 2,
+      "unknownModelJobs": 0
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [
+      "gpt-6-luna"
+    ],
+    "pricingStatus": "recorded_token_estimate",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 115174349821,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38360794134/job/115174349821",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 152252,
+        "cachedInputTokens": 117606,
+        "cacheWriteInputTokens": 34628,
+        "outputTokens": 1809,
+        "reasoningOutputTokens": 433,
+        "costUsd": 0.00641086,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "checker",
+        "jobId": 115174705117,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38360794134/job/115174705117",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 173580,
+        "cachedInputTokens": 138172,
+        "cacheWriteInputTokens": 35387,
+        "outputTokens": 2204,
+        "reasoningOutputTokens": 360,
+        "costUsd": 0.006909195,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "repair",
+        "jobId": 115175068916,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38360794134/job/115175068916",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "final_check",
+        "jobId": 115175070010,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38360794134/job/115175070010",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "8b104ad0aff900afa2dd186441b37792949f22814d732f925ecca1f21ce07b9b",
+  "assessmentOutcome": "completed",
+  "operationalFailures": [],
+  "checkedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "contractVersion": 1,
+    "runId": "loop-38360794134-1",
+    "schedulingSha256": "beac93345f86b8562a25b7a0aed2dee362e1353e8c639071f39788b654a522a8",
+    "slotIds": [
+      "publish-2026-10-13-10-07"
+    ],
+    "draftSha256": "e6398208165ffe9632610d50b7b3f00906d84c6fa0960ec519edc329be4bdec1",
+    "contextSha256": "b250ec654c57e33b62dec83275e9dcb2a5449af34e0f79f35d0e3ef3e7b3ac10",
+    "rulesSha256": "b68e2a16de6e4446f0b3c48a15d846ae7d91c222ee06e8b6ac46bdead4cd9614",
+    "sourceSnapshotSha256": "8b104ad0aff900afa2dd186441b37792949f22814d732f925ecca1f21ce07b9b",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkerRunId": "loop-38360794134-1-independent-check",
+    "completedAt": "2026-10-13T07:11:10.806Z",
+    "decision": "no_supported_candidate",
+    "reason": "The draft is empty. All three excluded tender URLs were independently fetched; their fresh sanitized records contain only broad advertising/marketing or mailing service categories, with no concrete chore or working AI workflow evidence to support a proposal.",
+    "checkedPostIds": []
+  },
+  "eventName": "workflow_dispatch",
+  "modelExecuted": true,
+  "scheduling": {
+    "id": "loop-38360794134-1",
+    "runId": "loop-38360794134-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "38360794134",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38360794134",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-38359217868-1",
+      "clockRunId": "38359217868",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38359217868",
+      "dispatchId": "clock-38359217868-1-loop",
+      "runId": "38360794134",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-13T07:08:15.058Z",
+      "requestedAt": "2026-10-13T07:08:15.058Z",
+      "verifiedAt": "2026-10-13T07:08:32.691Z",
+      "parentHeadSha": "7b117f686841f7621c7a9d1ae8dd07b16f48df4f"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-13-10-07",
+    "scheduledAt": "2026-10-13T07:07:00.000Z",
+    "localDate": "2026-10-13",
+    "localTime": "10:07",
+    "requestedAt": "2026-10-13T07:08:32.691Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 0,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-13-00-07",
+        "scheduledAt": "2026-10-12T21:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "00:07"
+      },
+      {
+        "id": "publish-2026-10-13-01-07",
+        "scheduledAt": "2026-10-12T22:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "01:07"
+      },
+      {
+        "id": "publish-2026-10-13-02-07",
+        "scheduledAt": "2026-10-12T23:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "02:07"
+      },
+      {
+        "id": "publish-2026-10-13-03-07",
+        "scheduledAt": "2026-10-13T00:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "03:07"
+      },
+      {
+        "id": "publish-2026-10-13-04-07",
+        "scheduledAt": "2026-10-13T01:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "04:07"
+      },
+      {
+        "id": "publish-2026-10-13-05-07",
+        "scheduledAt": "2026-10-13T02:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "05:07"
+      },
+      {
+        "id": "publish-2026-10-13-06-07",
+        "scheduledAt": "2026-10-13T03:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "06:07"
+      },
+      {
+        "id": "publish-2026-10-13-07-07",
+        "scheduledAt": "2026-10-13T04:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "07:07"
+      },
+      {
+        "id": "publish-2026-10-13-08-07",
+        "scheduledAt": "2026-10-13T05:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "08:07"
+      },
+      {
+        "id": "publish-2026-10-13-09-07",
+        "scheduledAt": "2026-10-13T06:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "09:07"
+      },
+      {
+        "id": "publish-2026-10-13-10-07",
+        "scheduledAt": "2026-10-13T07:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "10:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-13-10-07",
+        "scheduledAt": "2026-10-13T07:07:00.000Z",
+        "localDate": "2026-10-13",
+        "localTime": "10:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-13-10-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-13-10-07": 1
+    },
+    "reservationId": "loop-38360794134-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot"
+  }
+}
