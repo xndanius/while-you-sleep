@@ -4,7 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {ROOT,readJSON,writeJSON,sha256,stableJSON,validId} from '../lib/storage.mjs';
 import {verifyClockDispatch} from '../lib/clock-provenance.mjs';
-import {CURATION_MINIMUM_SCORE,CURATION_DAILY_CAP,validateCurationConfig,readCurationRecords,curationDecision,validatedCurationPicks,selectCurationPost,validateCurationReceipt} from '../lib/curation.mjs';
+import {CURATION_MINIMUM_SCORE,CURATION_DAILY_CAP,CURATION_LOOKBACK_HOURS,validateCurationConfig,readCurationRecords,curationDecision,validatedCurationPicks,selectCurationPost,validateCurationReceipt} from '../lib/curation.mjs';
 
 function trustedEnvironment(env){
  if(!/^curate-[1-9]\d{0,15}-[1-9]\d{0,3}$/.test(env.RUN_ID||''))throw new Error('A bounded curator run identity is required.');
@@ -38,7 +38,7 @@ export function curationReceipt({slot,config,pick,receipts,policy,rulesSha256,en
  const selectedAt=new Date(now).toISOString(),cap=receipts.filter(receipt=>receipt.outcome==='picked'&&receipt.localDate===slot.localDate).length>=CURATION_DAILY_CAP;
  if(cap)pick=null;
  const outcome=cap?'daily_cap':pick?'picked':'empty',reason=cap?'daily_curation_cap_reached':pick?'highest_eligible_checked_score':'no_eligible_checked_post';
- const receipt={schema:1,id:slot.id,type:'curation',slotId:slot.id,localDate:slot.localDate,localTime:slot.localTime,scheduledAt:slot.scheduledAt,activatedAt:config.activatedAt,selectedAt,windowStart:new Date(Date.parse(selectedAt)-12*3600000).toISOString(),windowEnd:selectedAt,outcome,scheduleStatus:'completed',reason,minimumScore:CURATION_MINIMUM_SCORE,dailyCap:CURATION_DAILY_CAP,runId:env.RUN_ID,githubRunId:env.RUN_ID.match(/^curate-(\d+)-/)[1],githubRunAttempt:Number(env.RUN_ID.match(/-(\d+)$/)[1]),githubRunUrl:`https://github.com/xndanius/while-you-sleep/actions/runs/${env.RUN_ID.match(/^curate-(\d+)-/)[1]}`,eventName:env.GITHUB_EVENT_NAME||'workflow_dispatch',rulesSha256,policySha256:policy.policySha256,pick,modelExecuted:false,engine:'GitHub Actions deterministic curator',...(clock?{clock}:{})};
+ const receipt={schema:1,id:slot.id,type:'curation',slotId:slot.id,localDate:slot.localDate,localTime:slot.localTime,scheduledAt:slot.scheduledAt,activatedAt:config.activatedAt,selectedAt,windowStart:new Date(Date.parse(selectedAt)-CURATION_LOOKBACK_HOURS*3600000).toISOString(),windowEnd:selectedAt,outcome,scheduleStatus:'completed',reason,minimumScore:CURATION_MINIMUM_SCORE,dailyCap:CURATION_DAILY_CAP,runId:env.RUN_ID,githubRunId:env.RUN_ID.match(/^curate-(\d+)-/)[1],githubRunAttempt:Number(env.RUN_ID.match(/-(\d+)$/)[1]),githubRunUrl:`https://github.com/xndanius/while-you-sleep/actions/runs/${env.RUN_ID.match(/^curate-(\d+)-/)[1]}`,eventName:env.GITHUB_EVENT_NAME||'workflow_dispatch',rulesSha256,policySha256:policy.policySha256,pick,modelExecuted:false,engine:'GitHub Actions deterministic curator',...(clock?{clock}:{})};
  const failures=validateCurationReceipt(receipt,{config});if(failures.length)throw new Error(failures.join(' '));return receipt;
 }
 export async function writeCurationDecisions({root=ROOT,env=process.env,now=new Date(),apiGet}={}){

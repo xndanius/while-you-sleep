@@ -31,13 +31,13 @@ test('activation enables only future current-day fixed odd-minute slots; disable
  const afterNoon={...config,activatedAt:'2026-10-12T10:00:00.000Z'};assert.equal(curationDecision({config:afterNoon,now}).due,false);assert.deepEqual(curationSlots(afterNoon,evening).map(slot=>slot.localTime),['18:17']);
  const nextDay=curationDecision({config,now:new Date('2026-10-13T06:00:00Z')});assert.equal(nextDay.due,false,'yesterday missed slots are not backfilled');
 });
-test('selection uses current unrounded checked weights, exact twelve-hour window and stable tie-breaking',async()=>{
+test('selection uses current unrounded checked weights, exact twenty-four-hour window and stable tie-breaking',async()=>{
  const policy=scoringFixture().policy,older=checkedPost('older',{publishedAt:'2026-10-12T07:00:00.000Z'}),newer=checkedPost('newer'),best=checkedPost('best',{values:{ease:9}});
  assert.equal((await selectCurationPost({config,posts:[older,newer,best],policy,now})).postId,'best');
  assert.equal((await selectCurationPost({config,posts:[older,newer],policy,now})).postId,'newer');
  const a=checkedPost('alpha'),z=checkedPost('zeta');assert.equal((await selectCurationPost({config,posts:[z,a],policy,now})).postId,'alpha');
  const tooOld=checkedPost('old',{publishedAt:'2026-10-12T05:59:59.000Z'}),future=checkedPost('future',{publishedAt:'2026-10-12T09:26:00.000Z'});assert.equal(await selectCurationPost({config,posts:[tooOld,future],policy,now}),null);
- const historical={...config,activatedAt:'2026-10-10T00:00:00.000Z'},expired=checkedPost('expired',{publishedAt:'2026-10-11T21:24:59.999Z'});assert.equal(await selectCurationPost({config:historical,posts:[expired],policy,now}),null);
+ const historical={...config,activatedAt:'2026-10-10T00:00:00.000Z'},expired=checkedPost('expired',{publishedAt:'2026-10-11T09:24:59.999Z'});assert.equal(await selectCurationPost({config:historical,posts:[expired],policy,now}),null);
  const values={ease:6,profit:6,feasibility:6,autonomy:6,evidence:5},below=checkedPost('below',{values}),weights={...policy.weights,evidence:0.1},roundedPolicy={weights,threshold:6,policySha256:scoringPolicyHash(weights,6)};
  assert.equal(await selectCurationPost({config,posts:[below],policy:roundedPolicy,now}),null,'a mean that rounds to 6 must not qualify');
  assert.equal(await selectCurationPost({config:{schema:1,enabled:false,activatedAt:null},posts:[best],policy,now}),null);
@@ -121,4 +121,31 @@ test('six is eligible now while historical seven-point receipts retain their own
  const before=stableJSON(old);assert.deepEqual(validateCurationReceipt(old,{config}),[]);assert.equal(stableJSON(old),before);
  const invalid={...receipt,minimumScore:5};assert.ok(validateCurationReceipt(invalid,{config}).length);
  assert.equal(curationStatus({config,receipts:[old],now}).minimumScore,6);
+});
+
+
+test('evening ideas remain eligible at the next noon slot; the twenty-four-hour boundary and global dedup hold',async()=>{
+ const when=new Date('2026-10-14T09:17:00.000Z'),policy=scoringFixture().policy;
+ const eveningPost=checkedPost('overnight',{publishedAt:'2026-10-13T18:07:00.000Z',values:{ease:6,profit:6,feasibility:6,autonomy:6,evidence:6}});
+ assert.equal((await selectCurationPost({config,posts:[eveningPost],policy,now:when})).postId,'overnight');
+ const expired=checkedPost('expired24',{publishedAt:'2026-10-13T09:16:59.999Z'});
+ assert.equal(await selectCurationPost({config,posts:[expired],policy,now:when}),null);
+ const exactBoundary=checkedPost('boundary24',{publishedAt:'2026-10-13T09:17:00.000Z'});
+ assert.equal((await selectCurationPost({config,posts:[exactBoundary],policy,now:when})).postId,'boundary24');
+ const receipt=await pickedReceipt(eveningPost,{when});
+ assert.equal(Date.parse(receipt.windowEnd)-Date.parse(receipt.windowStart),24*3600000);
+ assert.equal(await selectCurationPost({config,posts:[eveningPost],receipts:[receipt],policy,now:new Date('2026-10-14T15:17:00.000Z')}),null);
+ assert.equal(curationStatus({config,receipts:[receipt],now:when}).lookbackHours,24);
+});
+
+test('historical twelve-hour receipts retain their exact window and bytes',async()=>{
+ const post=checkedPost('historical-window'),receipt=await pickedReceipt(post);
+ receipt.minimumScore=7;receipt.windowStart=new Date(Date.parse(receipt.selectedAt)-12*3600000).toISOString();
+ const original=stableJSON(receipt);
+ assert.deepEqual(validateCurationReceipt(receipt,{config,posts:[post]}),[]);
+ assert.equal((await validatedCurationPicks({config,receipts:[receipt],posts:[post]})).length,1);
+ assert.equal(curationDecision({config,receipts:[receipt],now}).due,false);
+ assert.equal(stableJSON(receipt),original);
+ const invalid={...receipt,windowStart:new Date(Date.parse(receipt.selectedAt)-48*3600000).toISOString()};
+ assert.ok(validateCurationReceipt(invalid,{config}).length);
 });

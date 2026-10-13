@@ -11,7 +11,7 @@ function fixture() {
     policy:{weights:{ease:1,profit:1,feasibility:1,autonomy:1,evidence:1},threshold:6},
     schedule:{cadenceMode:'hourly',hourlyActive:true,dailyCap:24,publicationMinute:7,publicationTimes:Array.from({length:24},(_,hour)=>String(hour).padStart(2,'0')+':07'),researchEveryHours:1,researchMinute:23,improvementTime:'22:13'},
     clock:{waitMinutes:15,nextTickAt:'2026-10-11T08:00:00.000Z',lastTickAt:'2026-10-11T07:45:00.000Z'},
-    curation:{enabled:true,minimumScore:6,dailyCap:2,selectionTimes:['12:17','18:17'],lastDecision:{reason:'no_eligible_checked_post',selectedAt:'2026-10-11T09:17:00.000Z'}},
+    curation:{enabled:true,minimumScore:6,dailyCap:2,lookbackHours:24,selectionTimes:['12:17','18:17'],lastDecision:{reason:'no_eligible_checked_post',selectedAt:'2026-10-11T09:17:00.000Z'}},
     relay:{state:'published',firstPublishedAt:'2026-10-11T08:55:00.000Z',feedPath:'best.xml',bestFeedSwitch:{state:'confirmed',confirmedAt:'2026-10-11T12:10:58.834Z'},linkedinUrl:'https://www.linkedin.com/company/whileyousleep-ai/'},
     sources:{enabled:false,coverage:{reason:'Historic origin attribution was not recorded; yield accounting starts with the source registry.',trustedFetchSnapshots:6},rows:[{id:'source-one',name:'Public product feed',url:'https://example.org/feed.xml',status:'configured',lastFetchAt:'2026-10-11T10:17:00.000Z',health:{status:'ok',message:'Fetched 20 public source records.'},stats:{fetchAttempts:null,successfulFetches:null,itemsFetched:null,candidates:null,passedChecks:null,averageScore:null,published:null,linkedInPicks:null}}],changes:[]},
     versions:[{id:'improve-123-1',status:'rejected',createdAt:'2026-10-11T05:40:00.000Z',change:'Try a more concrete loop rule.',reasons:['Grounding regressed.'],baselineScore:18,challengerScore:12.7,githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/123'}],picks:[],
@@ -84,7 +84,7 @@ test('source history stays unavailable until measured, and measured zero remains
 test('relay feed is best only after a dated switch confirmation, and selections are separate from confirmed publications',()=>{
   const input=fixture(),confirmed=section(renderMethodology(input),'method-linkedin');
   assert.match(confirmed,/12:17 and 18:17 Vilnius/);
-  assert.match(confirmed,/preceding twelve hours/);
+  assert.match(confirmed,/preceding 24 hours/);
   assert.match(confirmed,/at least <strong>6\/10/);
   assert.match(confirmed,/2 picks per Vilnius day/);
   assert.match(confirmed,/switch to <a href="https:\/\/example.test\/channel\/best.xml">best.xml<\/a> is confirmed/);
