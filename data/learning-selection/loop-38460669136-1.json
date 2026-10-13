@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "id": "loop-38460669136-1",
+  "runId": "loop-38460669136-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-13T20:10:45.315Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38460669136-1",
+  "registrySha256": "9501fd7f8849b0f55b4e4740cb1d3dcbf4dcd84de4904dba2c2acf76dd8e2d65",
+  "scoreboardSha256": "3be01c0bfe33ef55866afcaaabbe0dbeda8925b0f958fa398b82305945232412",
+  "eligibleSegments": [
+    "professional_services",
+    "education",
+    "public_sector"
+  ],
+  "selectedSegment": "public_sector",
+  "demandSourceIds": [
+    "d7da742b595e7ec512a8ef54"
+  ],
+  "segmentDraws": [
+    {
+      "id": "public_sector",
+      "value": 0.03035057325879747
+    },
+    {
+      "id": "education",
+      "value": 0.01881043627295492
+    },
+    {
+      "id": "professional_services",
+      "value": 0.005053701632455313
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "d7da742b595e7ec512a8ef54",
+      "value": 0.06747030174060147
+    },
+    {
+      "id": "cca981f46ee3fb8981413fee",
+      "value": 0.017210370357387948
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "8ef335213e70b38904e7a504",
+        "scanId": "research-38456180153-1",
+        "scanSha256": "5b1e04eb8467fbe43b02fec1b6f9d9ce9dea54c3410b9f55573b6cb657a20960",
+        "items": 20,
+        "retryAt": "2026-10-13T21:37:04.618Z"
+      }
+    ]
+  },
+  "reason": "Try public sector and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38460669136",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "cadb8830ab4197a5c88291faabb02cc3300222cb"
+  }
+}
