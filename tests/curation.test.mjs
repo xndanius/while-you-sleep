@@ -38,8 +38,8 @@ test('selection uses current unrounded checked weights, exact twelve-hour window
  const a=checkedPost('alpha'),z=checkedPost('zeta');assert.equal((await selectCurationPost({config,posts:[z,a],policy,now})).postId,'alpha');
  const tooOld=checkedPost('old',{publishedAt:'2026-10-12T05:59:59.000Z'}),future=checkedPost('future',{publishedAt:'2026-10-12T09:26:00.000Z'});assert.equal(await selectCurationPost({config,posts:[tooOld,future],policy,now}),null);
  const historical={...config,activatedAt:'2026-10-10T00:00:00.000Z'},expired=checkedPost('expired',{publishedAt:'2026-10-11T21:24:59.999Z'});assert.equal(await selectCurationPost({config:historical,posts:[expired],policy,now}),null);
- const values={ease:7,profit:7,feasibility:7,autonomy:7,evidence:6},below=checkedPost('below',{values}),weights={...policy.weights,evidence:0.1},roundedPolicy={weights,threshold:6,policySha256:scoringPolicyHash(weights,6)};
- assert.equal(await selectCurationPost({config,posts:[below],policy:roundedPolicy,now}),null,'a mean that rounds to 7 must not qualify');
+ const values={ease:6,profit:6,feasibility:6,autonomy:6,evidence:5},below=checkedPost('below',{values}),weights={...policy.weights,evidence:0.1},roundedPolicy={weights,threshold:6,policySha256:scoringPolicyHash(weights,6)};
+ assert.equal(await selectCurationPost({config,posts:[below],policy:roundedPolicy,now}),null,'a mean that rounds to 6 must not qualify');
  assert.equal(await selectCurationPost({config:{schema:1,enabled:false,activatedAt:null},posts:[best],policy,now}),null);
 });
 test('picked receipts freeze verified criteria and policy; builds can verify them after a later weight change',async()=>{
@@ -108,4 +108,17 @@ test('push races discard only unpushed receipts and re-evaluate selection under 
  };
  const result=await publishCuration({root,env:ci,now,push:true,gitRun});assert.equal(result.committed,true);assert.equal(pushes,2);assert.equal(result.written[0].outcome,'empty');assert.ok(operations.some(args=>args[0]==='reset'));
  assert.equal((await readCurationRecords(root))[0].pick,null);
+});
+
+
+test('six is eligible now while historical seven-point receipts retain their own minimum',async()=>{
+ const values={ease:6,profit:6,feasibility:6,autonomy:6,evidence:6},post=checkedPost('six',{values}),receipt=await pickedReceipt(post);
+ assert.equal(receipt.minimumScore,6);assert.equal(receipt.pick.scoring.overall,6);
+ assert.deepEqual(validateCurationReceipt(receipt,{config,posts:[post]}),[]);
+ assert.equal((await validatedCurationPicks({config,receipts:[receipt],posts:[post]}))[0].postId,'six');
+ const claimedOldRule={...receipt,minimumScore:7};assert.ok(validateCurationReceipt(claimedOldRule,{config,posts:[post]}).length,'a six-point pick cannot claim the historical seven-point rule');
+ const old=await pickedReceipt(checkedPost('old-seven',{values:{ease:7,profit:7,feasibility:7,autonomy:7,evidence:7}}));old.minimumScore=7;
+ const before=stableJSON(old);assert.deepEqual(validateCurationReceipt(old,{config}),[]);assert.equal(stableJSON(old),before);
+ const invalid={...receipt,minimumScore:5};assert.ok(validateCurationReceipt(invalid,{config}).length);
+ assert.equal(curationStatus({config,receipts:[old],now}).minimumScore,6);
 });
