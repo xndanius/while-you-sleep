@@ -9,7 +9,7 @@ import {validateCurationReceipts} from '../lib/curation.mjs';
 import {trustedScheduledMetadata} from './prepare-scheduled-job.mjs';
 import {enrichProductLeads} from '../lib/product-evidence.mjs';
 import {candidateHistory} from '../lib/candidate-input.mjs';
-import {loadLearningState,selectLearningTargets} from '../lib/learning.mjs';
+import {loadLearningState,loadDemandFeedAvailability,selectLearningTargets} from '../lib/learning.mjs';
 import {retainSafeBuildingScan,retainSafeBuildingEnrichment} from '../lib/research-privacy.mjs';
 import {privateArtifactReasons} from '../lib/privacy.mjs';
 
@@ -23,9 +23,10 @@ export async function registryInput(root=ROOT,now=new Date()){
 }
 export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=scanSourceDefinitions,enrich=null,learningEnabled=true,now=new Date()}={}){
  const registry=await readPublicSourceRegistry(root),input=registry.initializedAt?await registryInput(root,now):null;
+ const history=enrich?await candidateHistory(root,now):{recentAssessments:[]};
  let definitions=input?registryDefinitions(registry,input.stats):sourceDefinitions.map(({id,name,url,kind})=>({id,name,url,kind})),learningSelection=null;
  if(learningEnabled&&runId.startsWith('loop-')&&env.GITHUB_ACTIONS==='true'){
-  const scoreboard=await loadLearningState({root,registry,posts:input?.posts||[],now});learningSelection=selectLearningTargets({runId,registry,scoreboard,posts:input?.posts||[],now,producer:{repository:env.GITHUB_REPOSITORY,runId:env.GITHUB_RUN_ID,runAttempt:Number(env.GITHUB_RUN_ATTEMPT),workflow:'loop.yml',stage:'pre_model',headSha:env.SOURCE_HEAD_SHA||env.GITHUB_SHA}});
+  const scoreboard=await loadLearningState({root,registry,posts:input?.posts||[],now}),availability=await loadDemandFeedAvailability({root,registry,recentAssessments:history.recentAssessments,now});learningSelection=selectLearningTargets({runId,registry,scoreboard,posts:input?.posts||[],availability,now,producer:{repository:env.GITHUB_REPOSITORY,runId:env.GITHUB_RUN_ID,runAttempt:Number(env.GITHUB_RUN_ATTEMPT),workflow:'loop.yml',stage:'pre_model',headSha:env.SOURCE_HEAD_SHA||env.GITHUB_SHA}});
   const demand=(registry.sources||[]).filter(source=>learningSelection.demandSourceIds.includes(source.id)).map(({id,name,url,kind})=>({id,name,url,kind}));definitions=[...demand,...definitions.filter(source=>sourceRole(source)==='building').slice(0,20-demand.length)];
   await writeJSON(path.join(root,'data','learning-selection',runId+'.json'),learningSelection,{immutable:true});
   // Preserve the search decision even if the subsequent guarded scan fails.
@@ -42,7 +43,6 @@ export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=sca
  }
  // The feed receipt fingerprints exactly the original scan. Added documentation
  // never changes its feed item counts, original IDs, URLs or attribution tuples.
- const history=enrich?await candidateHistory(root,now):{recentAssessments:[]};
  const enriched=enrich?await enrich({sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),now:()=>Date.now()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
  const retained=retainSafeBuildingEnrichment(enriched.sources,result,definitions),sources=retained.sources,scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?env:{GITHUB_EVENT_NAME:env.GITHUB_EVENT_NAME});
  const enrichmentFailed=enrich&&enriched.enrichment.status==='failed';

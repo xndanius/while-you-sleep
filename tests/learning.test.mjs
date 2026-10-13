@@ -5,7 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
-import {learningScoreboard,selectLearningTargets,validateLearningSelection,deriveLearningReceipt,validateLearningReceipt,loadLearningState,readOperatorMarks} from '../lib/learning.mjs';
+import {demandFeedAvailability,loadDemandFeedAvailability,learningScoreboard,selectLearningTargets,validateLearningSelection,deriveLearningReceipt,validateLearningReceipt,loadLearningState,readOperatorMarks} from '../lib/learning.mjs';
 import {hash,sha256,stableJSON,writeJSON,candidateIdentity} from '../lib/storage.mjs';
 import {DEMAND_SOURCE_CATALOG,demandSourceMetadata} from '../lib/demand-sources.mjs';
 import {createDemandContext,demandContextHash} from '../lib/demand.mjs';
@@ -99,4 +99,36 @@ test('hosted default seals the demand selection before scanning and keeps origin
 });
 test('a guarded scan error still leaves the independently sealed customer selection available',async t=>{
  const root=await temp(t),admitted=applySourceTransition(emptySourceRegistry(),{definition,toStatus:'probation',reason:'A guarded hosted fixture admission passed.',validation:validation(definition.url),howAdded:'seed',now});await writeJSON(path.join(root,'data','sources','registry.json'),admitted);await fs.writeFile(path.join(root,'RULES.md'),rules);const env={GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_RUN_ID:'456',GITHUB_RUN_ATTEMPT:'1',SOURCE_HEAD_SHA:head,GITHUB_OUTPUT:path.join(root,'output')};await assert.rejects(researchSnapshot({root,runId,env,now,scan:async()=>{throw Error('Guarded scan failed.');}}),/Guarded scan failed/);const sealed=JSON.parse(await fs.readFile(path.join(root,'data','learning-selection',runId+'.json'),'utf8'));assert.deepEqual(validateLearningSelection(sealed),[]);assert.match(await fs.readFile(env.GITHUB_OUTPUT,'utf8'),new RegExp('learning_selection_sha256='+sha256(stableJSON(sealed))));
+});
+
+
+test('a fresh exhausted demand feed rests without changing rewards or allowing a building substitute',()=>{
+ const f=fixture(),availability=demandFeedAvailability({registry,scans:[f.scan],recentAssessments:[{productUrl:f.source.url,assessedAt:now}],now});
+ assert.equal(availability.exclusions.length,1);assert.equal(availability.exclusions[0].sourceId,definition.id);assert.equal(availability.exclusions[0].scanSha256,sha256(stableJSON(f.scan)));
+ assert.equal(availability.exclusions[0].retryAt,'2026-10-12T13:00:00.000Z');
+ const board=learningScoreboard({registry,now}),before=stableJSON(board),selected=selectLearningTargets({runId,registry,scoreboard:board,availability,now,producer:f.selection.producer});
+ assert.equal(selected.selectedSegment,null);assert.deepEqual(selected.demandSourceIds,[]);assert.deepEqual(validateLearningSelection(selected),[]);assert.equal(stableJSON(board),before);
+ const pair={sources:[...registry.sources,{...DEMAND_SOURCE_CATALOG[3],status:'active'}]},remaining=selectLearningTargets({runId,registry:pair,scoreboard:learningScoreboard({registry:pair,now}),availability,now,producer:f.selection.producer});
+ assert.equal(remaining.selectedSegment,'health_admin');assert.equal(remaining.demandSourceIds.length,1);
+ const forged=structuredClone(f.selection);forged.availability=availability;assert.ok(validateLearningSelection(forged).length,'a sampled feed cannot also be marked exhausted');
+});
+
+test('availability requires every frozen notice to be cooled and rechecks stale, changed or unknown scans',()=>{
+ const f=fixture(),second={...f.source,id:hash('https://jobsearch.api.jobtechdev.se/ad/654321'),url:'https://jobsearch.api.jobtechdev.se/ad/654321'},observation={...f.scan.observations[0],itemCount:2,validation:{...f.scan.observations[0].validation,itemCount:2}};
+ const scan=createSourceScanReceipt({runId,registry,sources:[f.source,second],observations:[observation],originMap:[...f.scan.originMap,{sourceId:second.id,url:second.url,productUrl:null,feedIds:[definition.id]}],producer:{...f.scan.producer,definitions:[definition]},now});
+ const recent=[{productUrl:f.source.url,assessedAt:now}],options={registry,scans:[scan],recentAssessments:recent,now};
+ assert.equal(demandFeedAvailability(options).exclusions.length,0);
+ recent.push({productUrl:second.url,assessedAt:now});assert.equal(demandFeedAvailability(options).exclusions.length,1);
+ assert.equal(demandFeedAvailability({...options,now:'2026-10-12T13:00:00.000Z'}).exclusions.length,0,'scan refresh is due within two hours');
+ const altered=structuredClone(scan);altered.sourcesSha256='b'.repeat(64);assert.equal(demandFeedAvailability({...options,scans:[altered]}).exclusions.length,0);
+ const failed=createSourceScanReceipt({runId:'loop-789-1',registry,sources:[],observations:[{...f.scan.observations[0],status:'failed',itemCount:0}],originMap:[],producer:{...f.scan.producer,runId:'789',definitions:[definition]},now:'2026-10-12T11:30:00.000Z'});
+ assert.equal(demandFeedAvailability({...options,scans:[scan,failed],now:'2026-10-12T11:31:00.000Z'}).exclusions.length,0,'a newer unknown feed state cannot inherit an older exhausted claim');
+ const expiring=[{productUrl:f.source.url,assessedAt:'2026-10-11T11:30:00.000Z'}];
+ assert.equal(demandFeedAvailability({registry,scans:[f.scan],recentAssessments:expiring,now}).exclusions[0].retryAt,'2026-10-12T11:30:00.000Z');
+});
+
+test('bounded availability loader preserves the original scan and binds its exact fingerprint',async t=>{
+ const root=await temp(t),f=fixture(),before=stableJSON(f.scan);await writeJSON(path.join(root,'data','source-scans',runId+'.json'),f.scan);
+ const value=await loadDemandFeedAvailability({root,registry,recentAssessments:[{productUrl:f.source.url,assessedAt:now}],now});
+ assert.equal(value.exclusions[0].scanSha256,sha256(before));assert.equal(stableJSON(JSON.parse(await fs.readFile(path.join(root,'data','source-scans',runId+'.json'),'utf8'))),before);
 });
