@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import {candidateHistory,writerResearchView} from '../lib/candidate-input.mjs';
+import {candidateHistory,writerResearchView,selectBuildingReferences} from '../lib/candidate-input.mjs';
 import {sha256,stableJSON} from '../lib/storage.mjs';
 
 test('writer view keeps selected discovery and primary evidence without rewriting the immutable snapshot',()=>{
@@ -16,4 +16,55 @@ test('recent writer memory distinguishes provisional ratings and refuses an alte
  for(const [directory,record] of [['runs',run],['drafts',draft]]){await fs.mkdir(path.join(root,'data',directory),{recursive:true});await fs.writeFile(path.join(root,'data',directory,runId+'.json'),JSON.stringify(record));}
  let history=await candidateHistory(root,'2026-10-11T17:00:00.000Z');assert.equal(history.rejections.length,1);assert.match(history.rejections[0].ratingStatus,/provisional/);assert.equal(history.rejections[0].primaryEvidenceFetched,false);assert.deepEqual(history.recentAssessments,[]);
  draft.candidates[0].reason='Altered';await fs.writeFile(path.join(root,'data','drafts',runId+'.json'),JSON.stringify(draft));assert.equal((await candidateHistory(root,'2026-10-11T17:00:00.000Z')).rejections.length,0);assert.equal((await candidateHistory(root,'2026-10-12T17:00:00.000Z')).rejections.length,0);
+});
+
+const demand={id:'notice',url:'https://jobsearch.api.jobtechdev.se/ad/123',role:'demand',demand:true,title:'Paid administrator role',text:'Hantera fakturering och dokumentation.',taskExcerpts:['Hantera fakturering och dokumentation.']};
+const reference=(id,host,title)=>({id,url:`https://${host}/${id}`,role:'building',title,text:title});
+
+test('late relevant building references replace unrelated early items without changing source identity or the eight-item bound',()=>{
+ const unrelated=Array.from({length:8},(_,i)=>reference('support-'+i,'news.example','Customer support inbox'));
+ const invoice=reference('invoice-ocr','n8n.example','Extract invoice data from PDF documents');
+ const document=reference('document-api','docs.example','Document parsing API');
+ const sources=[...unrelated,invoice,document,demand],before=structuredClone(sources);
+ const selected=selectBuildingReferences(sources,[demand]);
+ assert.equal(selected.length,8);assert.equal(selected[0],invoice);assert.equal(selected[1],document);
+ assert.ok(selected.every(source=>sources.includes(source)&&source!==demand));
+ assert.deepEqual(sources,before);assert.deepEqual(selectBuildingReferences(sources,[demand]),selected);
+ assert.equal(selectBuildingReferences(sources,[demand],{limit:100}).length,8);
+});
+
+test('relevant source-host diversity comes before a third matching reference from one host',()=>{
+ const dominant=Array.from({length:9},(_,i)=>reference('invoice-document-'+i,'one.example','Invoice document extraction'));
+ const other=reference('invoice-api','two.example','Invoice API');
+ const selected=selectBuildingReferences([...dominant,other],[demand]);
+ assert.deepEqual(selected.slice(0,3),[dominant[0],dominant[1],other]);
+ assert.equal(selected.length,8);assert.equal(new Set(selected).size,8);
+});
+
+test('writer matches only selected demand notices and keeps the immutable snapshot intact',()=>{
+ const unrelated={...demand,id:'unselected',taskExcerpts:['Planera möten och bokningar.']};
+ const meeting=reference('calendar','meet.example','Meeting calendar appointments');
+ const invoice=reference('invoice','invoice.example','Invoice extraction');
+ const snapshot={sources:[unrelated,meeting,invoice,demand],learningSelection:{selectedSegment:'professional_services'},enrichment:{status:'completed',observations:[{originSourceIds:['notice'],evidenceIds:['notice']}]}};
+ const view=writerResearchView(snapshot);
+ assert.deepEqual(view.sources,[demand,invoice,meeting]);assert.equal(snapshot.sources[0],unrelated);
+ assert.match(view.writerView.note,/establish no customer demand/);
+ assert.deepEqual(writerResearchView({...snapshot,learningSelection:null}).sources,[demand]);
+ const notRequested={...snapshot,enrichment:{status:'not_requested'}};assert.equal(writerResearchView(notRequested),notRequested);
+});
+
+test('no recognizable demand task keeps the existing bounded order; zero capacity stays empty',()=>{
+ const sources=Array.from({length:10},(_,i)=>reference('source-'+i,'one.example','General implementation'));
+ assert.deepEqual(selectBuildingReferences(sources,[]),sources.slice(0,8));
+ assert.deepEqual(selectBuildingReferences(sources,[demand],{limit:0}),[]);
+});
+
+test('task-specific references beat body-only catalog matches and record does not match recordings',()=>{
+ const catalog={...reference('catalog','catalog.example','Large tool catalog'),text:'Includes invoice document tools.'};
+ const recording=reference('recordings','video.example','Screen recordings for support');
+ const direct=Array.from({length:8},(_,i)=>reference('invoice-'+i,'tools.example','Invoice workflow'));
+ assert.deepEqual(selectBuildingReferences([catalog,recording,...direct],[demand]),direct);
+ const records={...demand,taskExcerpts:['Organize records for review.']};
+ const filing=reference('filing','files.example','Document filing');
+ assert.deepEqual(selectBuildingReferences([recording,filing],[records],{limit:1}),[filing]);
 });
