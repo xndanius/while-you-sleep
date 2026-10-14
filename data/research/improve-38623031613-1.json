@@ -1,0 +1,1397 @@
+{
+  "id": "improve-38623031613-1",
+  "runId": "improve-38623031613-1",
+  "createdAt": "2026-10-14T19:22:32.502Z",
+  "sources": [
+    {
+      "id": "46abb109139474961ffc18e1",
+      "title": "Show HN: Run AI-generated logic safely inside your app",
+      "url": "https://news.ycombinator.com/item?id=50093435",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Run AI-generated logic safely inside your app Stof is an open-source runtime for logic you don't own or fully trust. Imagine a JSON document with functions inside, scoped to just the document that contains them. Stof instantiates this doc as a small wasm env, and makes these functions safe to call. They can't access or manipulate anything but their own doc. WebAssembly by itself is large in binary form, requires a lot of tooling, etc. Stof can be sent over the wire easily, is a superset of JSON for compatibility, and keeps the guarantees. I created Stof not to replace a data format or anything, but to be a glue layer for data and distributed systems to work with one another. This includes I/O for interchange data like JSON, YAML, TOML, etc., but also complex data like PDFs, images, binaries, both structured and unstructured (good layer to turn one into the other). The fact is, the layer of data and communication between apps tends to be a bit messy, and strict adapters compiled at build time tend to be insufficient for the dynamism of modern software. This applies directly to AI-generated data and code, which is basically like calling into another untrusted service. With t",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://stof.dev",
+      "discoveredAt": "2026-10-14T19:18:46Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "96f0856f916758142aa81cf3",
+      "title": "Show HN: Eevo – Consequential Decision Model",
+      "url": "https://news.ycombinator.com/item?id=50093003",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Eevo – Consequential Decision Model Hi HN, I'm Juho from Upright. I think we may have stumbled upon an interesting approach to AI alignment. The idea is as follows: 1. train a decision model to be really good at comparative sizing of consequences, expected value problems, and modelling overlap between different consequences 2. create a harness around that model that accepts a decision context, list of options, and identified consequences, then runs pairwise comparisons and overlap modelling for the consequences using the decision model in (1), and finally solves implied relative consequences \"sizes\" and finally EV (for different stakeholders) 3. Make AI agents running on general purpose LLMs use (2) to make better decisions. So the agent provides the context, options, and identifies the consequences, Eevo model just sizes them, models their overlap, and computes EV. In practice this seems to improve agent judgement a lot (in addition to adding lots of practical observability) It seems the (well-motivated) emphasis on instruction-following hurts model's performance on expected value tasks. The underlying decision model we trained beats Jev, Clef, MS decision-1 the model on ",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://www.uprightproject.com/eevo",
+      "discoveredAt": "2026-10-14T18:52:50Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "9a27135d2d9573f13200db4f",
+      "title": "Show HN: Zero-shot classifier on scale-to-zero GPUs, one forward pass per call",
+      "url": "https://news.ycombinator.com/item?id=50092536",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Zero-shot classifier on scale-to-zero GPUs, one forward pass per call Product URL: https://console.runpod.io/hub/listing/lateos-ai/reflex",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://console.runpod.io/hub/listing/lateos-ai/reflex",
+      "discoveredAt": "2026-10-14T18:26:24Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "21a5f4eedb1d4c846993aa5c",
+      "title": "Show HN: Golang DL/ML primitives with inference, diffusion, vision, systemone",
+      "url": "https://news.ycombinator.com/item?id=50091939",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Golang DL/ML primitives with inference, diffusion, vision, systemone I created a DL inference engine that slowly grew to have more and functionality. - Inference for a bunch of open weights architectures - Diffusion image generation fir Z ai turbo - Vision input into LLM for inference - Vulkan/fast CPU, optimized kernels - Playground for testing - Last but not least, system one fast inference mode with same API semantics as Jev It's MIT, so go nuts Product URL: https://github.com/computerex/dlgo",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://github.com/computerex/dlgo",
+      "discoveredAt": "2026-10-14T17:53:56Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "b544b92279d33e0d410934f6",
+      "title": "Show HN: A webcomic for AI agents, written and drawn by Claude",
+      "url": "https://news.ycombinator.com/item?id=50091610",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: A webcomic for AI agents, written and drawn by Claude Product URL: https://stop-sequence.com/",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://stop-sequence.com",
+      "discoveredAt": "2026-10-14T17:35:53Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "6d49e6f8bebbec07f6996c1f",
+      "title": "Show HN: botsay – cowsay for the AI Era",
+      "url": "https://news.ycombinator.com/item?id=50091196",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: botsay – cowsay for the AI Era Does this need to exist? Probably not. Does it add whimsy to the sterile, cold terminal environment that has become our chosen home? Well maybe. Product URL: https://github.com/maebert/botsay",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://github.com/maebert/botsay",
+      "discoveredAt": "2026-10-14T17:16:10Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "e1d7f2ee6c9f0c05addc644d",
+      "title": "Show HN: I wrote an email app that accepts only one sender per inbox",
+      "url": "https://news.ycombinator.com/item?id=50090932",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: I wrote an email app that accepts only one sender per inbox Infinite inboxes, including prefixes where you don't have to create inboxes before you use them -- they self create when you add a suffix. Three types of inboxes: - One sender. Locks to the first domain to send email (except gmail, outlook, etc where it locks to an email account for obivous reasons. It bounces everyone else. - Temporary. Lasts for a while (24h, 7days, etc) then bounces. Received messages stay or go as per your choice. - Prefix. The most powerful. Declare a prefix like \"service\" and then invent any suffix, like \"service-netflix\" or \"service$bank\" and it creates a new one-sender inbox locked to whoever wrote first. Bring you own domain. Bring your own AI (MCP server ready). Forwarding. Please help me test it. Product URL: https://clova.email/",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://clova.email",
+      "discoveredAt": "2026-10-14T17:00:59Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "bf8bd6e59ea402d7310f722b",
+      "title": "Show HN: OWASP Finbot Defended with Tenuo",
+      "url": "https://news.ycombinator.com/item?id=50090102",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: OWASP Finbot Defended with Tenuo Tenuo is a task-scoped authz primitive for agentic work. We are an open protocol and an open source implementation at github.com/tenuo-ai/tenuo We created a fork of OWASP finbot with Tenuo wired in and red-teamed it with promptfoo. We went from 50 successful attacks to 0 with Tenuo. The promptfoo attacks were able to fool the model, but the deterministic guardrails Tenuo provides stopped it from acting on the poisoned instructions. Product URL: https://github.com/tenuo-ai/finbot-ctf",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://github.com/tenuo-ai/finbot-ctf",
+      "discoveredAt": "2026-10-14T16:17:39Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "dff99c32475bbb59abbb4526",
+      "title": "Show HN: Sonia. Local AI Assistant Linux. 13Gb RAM, No GPU, Skills Supported",
+      "url": "https://news.ycombinator.com/item?id=50089901",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Sonia. Local AI Assistant Linux. 13Gb RAM, No GPU, Skills Supported Product URL: https://github.com/grigio/sonia-assistant",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://github.com/grigio/sonia-assistant",
+      "discoveredAt": "2026-10-14T16:08:09Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "fb03d76bf3a14349552ac184",
+      "title": "Show HN: CueLight – open-source <2mb/0.5M param always listening turn detector",
+      "url": "https://news.ycombinator.com/item?id=50089154",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: CueLight – open-source SmartTurn is a fantastic open source model for turn detection. I needed a much smaller version that could fit anywhere and be always on (always actually being every 20ms in this case), so I figured I could do a trade off of making it support one language only (English), not rely on building on top of a Whisper model and possibly squeeze out similar performance. While I do still wish to improve this model significantly, this is my progress in doing so thus far. I also augmented the data with synthetic noise and reverb to try to improve its scores in handling those situations. I'd love for people to try it, and even better, provide suggestions or audio that can help me improve it. The link takes you to a sample of it running in the browser. There's also an SSM version but that was purely for experimental purposes. While SSMs do well on streaming, there isn't much to gain from it here, since long memory of audio stream isn't that important for turn detection, just the most recent few seconds really, so the GRU version does just fine (or better) and uses much less CPU. More details are in the repo: https://github.com/sshah03/CueLight For those interested",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://sshah03.github.io/CueLight",
+      "discoveredAt": "2026-10-14T15:28:25Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "e572a29d544cf8c93bb26aff",
+      "title": "Show HN: Live release calendar for frontier AI models, from Polymarket odds",
+      "url": "https://news.ycombinator.com/item?id=50089096",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Live release calendar for frontier AI models, from Polymarket odds Product URL: https://whenitships.com",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://whenitships.com",
+      "discoveredAt": "2026-10-14T15:25:37Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "f51a61471e0452244d5de084",
+      "title": "Show HN: The first short movie built using code and AI",
+      "url": "https://news.ycombinator.com/item?id=50089045",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: The first short movie built using code and AI Product URL: https://fframes.studio/the-why/",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://fframes.studio/the-why",
+      "discoveredAt": "2026-10-14T15:23:13Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "b12fe2f52258a524695e3daa",
+      "title": "Show HN: Graphicle, a Rust port of Graphify with memory for coding agents",
+      "url": "https://news.ycombinator.com/item?id=50088713",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Graphicle, a Rust port of Graphify with memory for coding agents Product URL: https://github.com/graphicle-ai/graphicle",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://github.com/graphicle-ai/graphicle",
+      "discoveredAt": "2026-10-14T15:00:41Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "6fb21bd0e9532628e47ad50f",
+      "title": "Show HN: BScaff - A CLI tool for project scaffolding and snippets",
+      "url": "https://news.ycombinator.com/item?id=50088096",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: BScaff - A CLI tool for project scaffolding and snippets I built BScaff, a CLI tool for saving and reusing project structures, templates, files, and text snippets. It can serve as a URL bookmark tool as well. It started with project scaffolding, but I wanted something more general-purpose: a tool that could save almost any reusable starting point and bring it back whenever needed. For each language, I had a specific way of structuring projects that I have refined over years, but I could not find any tool which can quickly help to generate such scaffolding quickly. Copier and Cookiecutter exists but they depend on templates, and I didn't want to create templates for such tasks. One more use-case I had was when I used AI chatbots who suggest some project structure, and I want to quickly create that. So I wanted something offline which can quickly help me save and recreate file trees. Then I added snippets to it too, but I mostly use it for notes taking personally. Some things you can do with it: * Save Git repository templates locally and use them offline whenever you need to create a new project * Create reusable templates from existing directories * Save and recreate direc",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://github.com/akashnag/bscaff",
+      "discoveredAt": "2026-10-14T14:14:16Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "effa983d86ae6c500da6e910",
+      "title": "Show HN: Merlin, Run Your Claude Code and Codex from Slack, Linear and GitHub",
+      "url": "https://news.ycombinator.com/item?id=50088088",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Merlin, Run Your Claude Code and Codex from Slack, Linear and GitHub Hi HN, I built Merlin to let you use your own Claude Code and Codex subscription from Slack, Linear, and GitHub. There is a desktop app for macOS and Windows, and a CLI daemon for Linux. When someone mentions Merlin in a Slack thread or Linear issue comment, the task runs on that team member's machine, using their own Claude Code or Codex runtime, and progress and results come back to the original thread. Teammates can steer the agent mid-run. Merlin also has schedules, shared skills, and memory. I know you've probably heard about Claude Tag. Merlin is similar to that but also different. The model usage goes to the Claude Code or Codex subscription instead of API bill, and you can use Merlin across different surfaces to streamline workflow instead of just in Slack (Linear's agent session works particularly well with Merlin. You can just leverage Linear as your control panel for agentic work using Merlin). Merlin also runs on your local machines, which means that you can use your local context including MCPs, skills and local files instead of in a cloud sandbox. Merlin does not upload your working director",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://usemerlin.ai",
+      "discoveredAt": "2026-10-14T14:13:33Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "020a0805ee466211c958f4ab",
+      "title": "Show HN: Open-source DFM checks for manufacturing and MCP",
+      "url": "https://news.ycombinator.com/item?id=50088069",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Open-source DFM checks for manufacturing and MCP Product URL: https://openmrp.ai/dfm",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://openmrp.ai/dfm",
+      "discoveredAt": "2026-10-14T14:12:05Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "65aa310f46792dc5060181c9",
+      "title": "Show HN: Veduta – Personal Agent with GenUI",
+      "url": "https://news.ycombinator.com/item?id=50087496",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Veduta – Personal Agent with GenUI The idea came to me while I was watching a livestream with Antirez and mr RIP, one of the first streams they did together. I thought Antirez might be right when he said that once AI agents moved beyond the terminal, we would reach a whole new level. So I decided to create \"Veduta\", which is basically Hermes/OpenClaw but with a UI. What exactly is the advantage? It could track everything for you and give you visual feedback without you actually having to ask the same questions again, because all the information is stored inside the daemon running on the server. Instead of having something that just runs, you have something that delivers \"sheets with written reports that you can consult at any time.\" This translates into saving tokens and accessing information faster, while also keeping everything organized. I don't know if you'll appreciate this open-source project, but feel free to leave any kind of feedback. It's always welcome! :) Thanks, everyone! Product URL: https://github.com/Ic3b3rg/veduta",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://github.com/Ic3b3rg/veduta",
+      "discoveredAt": "2026-10-14T13:29:50Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "442e3a3748aaed6a398a7a6c",
+      "title": "Show HN: Markdown to Doc in a Click",
+      "url": "https://news.ycombinator.com/item?id=50087438",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Markdown to Doc in a Click Everything is markdown now thanks to AI agents, which is honestly quite convenient for all things development, but once in a while you might want to share markdown with your non-technical friends, so what do you do then? MD2Doc of course! It was another one of those little problem-solution projects which seem unassuming, but still consistently get about 9k users a month. I am torn because on one hand, it's trivial, on the other, maybe it makes sense to grow it? This was just a weekend project. What would you do? https://md2doc.com",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": null,
+      "discoveredAt": "2026-10-14T13:26:10Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "8d36fa3fd3120df51c5774c3",
+      "title": "Show HN: An embeddable DOCX/XLSX/PPTX editor SDK for your AI agent",
+      "url": "https://news.ycombinator.com/item?id=50087264",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: An embeddable DOCX/XLSX/PPTX editor SDK for your AI agent Product URL: https://playground.developers.thinkfree.com/playground/editor-ai-sdk/",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://playground.developers.thinkfree.com/playground/editor-ai-sdk",
+      "discoveredAt": "2026-10-14T13:15:20Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "dbb155d9c7b14a824a519d9c",
+      "title": "Show HN: Evlat, see which of your AI agents waiting on you",
+      "url": "https://news.ycombinator.com/item?id=50087078",
+      "publisher": "Hacker News · Show HN",
+      "text": "Show HN: Evlat, see which of your AI agents waiting on you Product URL: https://evlat.kalaomer.com/",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "productUrl": "https://evlat.kalaomer.com",
+      "discoveredAt": "2026-10-14T13:00:23Z",
+      "originFeedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "id": "841b6718a34c7b5b473be50b",
+      "title": "Show HN: Google, Outlook and iCloud in one superpowered calendar",
+      "url": "https://news.ycombinator.com/item?id=50086619",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Google, Outlook and iCloud in one superpowered calendar Hi HN! I am Alessandro Afloarei and I am so happy to show you Calendar0. Calendar0 is a calendar app for the web, plus a tray/menu bar app for macOS, Windows and Linux. It shows Google, Outlook and iCloud calendars, lets you add events quickly, has booking links, and can record and transcribe calls. I started it in September 2025 as a hobby project for keeping all my calendars in one place, easy to reach, and over the last months I added so many new features to it. A few details that might be interesting: Quick add uses a mix of chrono, Jev and Gemini. It is also capable of automatically adding guests from names. Recording captures the mic and the system audio (no bots) and uses AssemblyAI for the transcription. Afterwards, the audio file is deleted. There's also an MCP server, so you can connect it to Claude or ChatGPT and ask about your week or meetings. To try it you have to sign in and connect a calendar, since it can't do much without one. It is mostly free (quick add, booking links, MCP connector). I ask for an upgrade only where I actually pay myself for the feature itself, e.g. meeting transcription. I have so",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://www.calendar0.app",
+      "discoveredAt": "2026-10-14T12:26:40Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "5ee4669c2740ea10ec96ec9b",
+      "title": "Show HN: The first open-weight model for general deterministic task",
+      "url": "https://news.ycombinator.com/item?id=50075058",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: The first open-weight model for general deterministic task Hey HN! Today we’re releasing interfaze-1.1-lite, an open-weight model for tasks with a deterministic answer: OCR, STT with speaker diarization, classification and more. Lite is a reasoning core plus a collection of specialist models (document reader, line detector, speech recognizer, segmentation). The core chooses the specialists to be executed and produces the answer in your JSON schema. The specialist models give you: bounding boxes, word timestamps and a confidence score per each line and word. The raw outputs are returned next to the answer so that you can filter based on that. E.g., post rows above 0.9 automatically and forward the rest to a human. Runs on a single 80 GB GPU (e.g. H100) without any additional services. Happy to answer any questions regarding the architecture, benchmarks and limitations. Product URL: https://huggingface.co/interfaze-ai/interfaze-1-lite",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+      "discoveredAt": "2026-10-13T17:06:08Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "62694bcce7d85264b9b15493",
+      "title": "Show HN: Treesum – Replace MS Excel/Project with a Code Editor",
+      "url": "https://news.ycombinator.com/item?id=50074864",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Treesum – Replace MS Excel/Project with a Code Editor # Intro The goal of this software is to make it easy to get the plan that's in your head onto the page. Start with the outline then add details. Then more details. Then numbers: costs, time, quantities. Then organize and categorize with #tags. All the sums, graphs and pivot table functionality happens automatically in the Calcs, Timeline, Stats views. And everything looks nice without you having to format it. Currently, it's all local, saved in your browser. Save your plan permanently by downloading the '.tsum' file. Open (upload) the '.tsum' to start working again. Everything happens in the browser. The files are stored where ever you like. The '.tsum' file is just text - human and AI readable. Use it to plan anything. We hope it works like your brain does - by organizing things in trees. # Story This software is entirely vibe-coded. It had to be - none of my developer friends would help me out. The front end JS on this app is too complex for a part time developer like myself. I've had this idea for a while and was only able to bring it to life because of AI. It may not gain traction, but at least I can put it out ther",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://www.treesum.app",
+      "discoveredAt": "2026-10-13T16:55:21Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "2602248cf1d623046cc06ee7",
+      "title": "Show HN: Mana – family organizer with an AI assistant",
+      "url": "https://news.ycombinator.com/item?id=50071636",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Mana – family organizer with an AI assistant Hi HN, I built Mana, a family organizer: shared calendars, shopping lists, receipt scanners, meal planning, chores, and notes for the whole household, with a built-in AI assistant (\"add milk and eggs,\" \"plan dinners for the week\") plus automations (e.g., milk goes back on the list before it runs out). Additionally, you can connect Mana MCP to your Claude, ChatGPT, Gemini etc. The goal is to eventually take the model calls and storage to local but that's work to be done. Appreciate if there's any feedback. Thank you! Product URL: https://ourmana.app/",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://ourmana.app",
+      "discoveredAt": "2026-10-13T13:42:05Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "f9f2db715fef95fc290f4868",
+      "title": "Show HN: Made a good work assistant but can't promote it. Like Viktor.com",
+      "url": "https://news.ycombinator.com/item?id=50069663",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Made a good work assistant but can't promote it. Like Viktor.com I'll be brief. It's only me, but have 20+ yr tech experience. Due to lost work/clients focused on ActorDo. It connects Email, Calendar, Tasks over Microsoft and Gmail accounts. It's an agentic AI that you can ask or make requests over the tools. Also created Slack, Microsoft Teams, Whatsapp, Outlook Add-in, Chrome extension It also has an Automations Studio for trackable automations. Built-in editable memory for all interactions. It really saves users time. How do I sell it?",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": null,
+      "discoveredAt": "2026-10-13T10:50:13Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "b3b8e4503090b3fac0bae3bc",
+      "title": "Show HN: Pluto – open-source second-brain for work",
+      "url": "https://news.ycombinator.com/item?id=50067805",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Pluto – open-source second-brain for work Hey everyone, I built Pluto to be my second brain for work. It remembers what I’ve committed to, what other people have promised, and reminds me to follow up. It builds that context automatically from meeting notes, so I can pick up where a conversation left off. Product URL: https://github.com/metagrover/pluto",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://github.com/metagrover/pluto",
+      "discoveredAt": "2026-10-13T06:58:57Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "4738414b1f4dd262899f71a7",
+      "title": "Show HN: Figranium – Build browser automations visually and run them as APIs",
+      "url": "https://news.ycombinator.com/item?id=50053630",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Figranium – Build browser automations visually and run them as APIs Product URL: https://github.com/figranium/figranium",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://github.com/figranium/figranium",
+      "discoveredAt": "2026-10-12T09:21:34Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "2a08a3c0a6fe8982bb8f89f3",
+      "title": "Show HN: BraiNOTES, handwritten notes on your lecture PDFs in a browser tab",
+      "url": "https://news.ycombinator.com/item?id=50049132",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: BraiNOTES, handwritten notes on your lecture PDFs in a browser tab In August, I posted here about TeXbrain, a LaTeX editor that runs completely in the browser, with no need for an account or server. (I didn't excpect it to get that much feedback, bug reports and help from here!) This is the same idea for the other half of my studies, the handwritten notes. I take them on a convertible laptop, and I've had a hard time with apps for that, taking notes from a device to another, exporting as PDF, needing an account for many of them, etc. So I've been working on the version of it that I always wanted. Open a tab, the slides of the lecture or multiple PDFs open next to the page or even become the page, write on them with my pen, and nothing ever leaves my browser. braiNOTES is a static website and has no backend. Strokes are perfect-freehand outlines which support pen pressure, the PDF files are rendered by pdf.js in a worker, and for storage it uses IndexedDB a moment after every change. No account, no analytics, and completely offline and local-first. You can export notebooks as .brainotes files, which in the background is a zip with one json per page + the PDFs and pictures y",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://github.com/swimmingbrain/brainotes",
+      "discoveredAt": "2026-10-11T23:22:29Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "85e4917219e990e8c90fedee",
+      "title": "Show HN: Flow State Tracker – Open-source, local-first automatic time tracker",
+      "url": "https://news.ycombinator.com/item?id=50044150",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Flow State Tracker – Open-source, local-first automatic time tracker Product URL: https://sourceforge.net/projects/flow-state-tracker/",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://sourceforge.net/projects/flow-state-tracker",
+      "discoveredAt": "2026-10-11T15:11:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "f2a6627779bcc167602d2540",
+      "title": "Show HN: Modelship – an open source ray backed model cluster",
+      "url": "https://news.ycombinator.com/item?id=50040528",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Modelship – an open source ray backed model cluster Hey all, just wanted to share how my spare time has been spent for quite some time now. Ok, this one started oddly. My aim initially was just to serve multiple models on one GPU and fire it up in my unraid machine. By the time that first bit was done, I realised I could just add one more thing... and another... and well, from beginning of this year when, imho, AI became useful, the whole thing it kind of blew up. So here's what it does: - spins a ray cluster - deploys models using various loaders (vllm, llamacpp, diffusers, sherpa_onnx, etc.) - serves an openai responses ready api on top of them Now some the details, already listed in my production readiness ( https://docs.model-ship.ai/production-readiness/#production-... ) plan: - scores 17/17 on the Open Responses conformance suite and it's got its own responses redis backed store - currently supports cpu, metal and cuda - it has prometheus metrics and grafana dashboard - can run under docker, k8s or simply native install - automatically sizes model context - has MCP support Feedback would be much appreciated. https://github.com/modelship-ai/modelship Product URL: http",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://github.com/modelship-ai/modelship",
+      "discoveredAt": "2026-10-11T07:28:20Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "38aa1e7d60db4ba3eb939f03",
+      "title": "Show HN: Eval-skills for automatic agent improvement",
+      "url": "https://news.ycombinator.com/item?id=50035864",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Eval-skills for automatic agent improvement Product URL: https://github.com/confident-ai/eval-skills",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://github.com/confident-ai/eval-skills",
+      "discoveredAt": "2026-10-10T18:46:27Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "e2fa4aa7ef0dd836deaac7fb",
+      "title": "Show HN: Flopper is a hardware explorer for AI infrastructure and beyond",
+      "url": "https://news.ycombinator.com/item?id=50035826",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Flopper is a hardware explorer for AI infrastructure and beyond Hello! I built Flopper to make it easier to compare GPUs and understand the tradeoffs for workloads for AI and beyond. When researching GPUs from say Nvidia, AMD, and Huawei, I kept running into the same problem: specs were scattered across datasheets, and matching them to available configurations, vendors, and prices was cumbersome and a bit weird and frankly annoyingggg! AMD made me make an account :( So I started a place to bring that information together. Flopper lets you compare GPU specs, including TDP and compute throughput in terms of flops/tops, alongside estimates for AI workloads or other compute workloads (say, ~FP32 based) I recently added pricing data from dozens of providers to help track how prices change over time. Getting reliable quotes for systems like the NVL72 is still particularly difficult tbh, not sure how I can tell you how much that costs easily due to them being behind large procurement contracts and big multi-nationals. One thing that's become fairlyyyy clear is the interest in consumer cards and local LLMs. The bigger challenge is connecting advertised specs to real-world performa",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://flopper.io",
+      "discoveredAt": "2026-10-10T18:42:44Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "title": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VendIQ – AI agent for vendor follow-ups and ops automation Product URL: https://vendiq.rishailabs.com/",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "discoveredAt": "2026-10-09T09:33:14Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "be96a50b3b12839be95364e3",
+      "title": "Show HN: Rename Super Intelligence Back to Artificial Intelligence",
+      "url": "https://news.ycombinator.com/item?id=50015492",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Rename Super Intelligence Back to Artificial Intelligence Automatically renames all occurrences of \"Super Intelligence \" to \"Artificial Intelligence\". 100% vibe-coded in two prompts. Product URL: https://chromewebstore.google.com/detail/si-→-ai/cfpagmhjlhnbjabgaoeobkciklolaekn",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://chromewebstore.google.com/detail/si-%E2%86%92-ai/cfpagmhjlhnbjabgaoeobkciklolaekn",
+      "discoveredAt": "2026-10-09T03:05:00Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "82a9a7673fdc5fd395c6ba05",
+      "title": "Show HN: Waystone – Browser automation from one recording, no code",
+      "url": "https://news.ycombinator.com/item?id=50002499",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Waystone – Browser automation from one recording, no code Product URL: https://github.com/tiliondev/waystone",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://github.com/tiliondev/waystone",
+      "discoveredAt": "2026-10-08T06:42:01Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "7cd98dadfb653ac13c226271",
+      "title": "Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents",
+      "url": "https://news.ycombinator.com/item?id=49995804",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: VoiceGremlin, a SaaS tool for automated tests against AI phone agents Hi, I'm a former SDET and now solo dev of VoiceGremlin, a tool for automated tests against AI that answer phones. You pass the API a phone number and a test case like \"Verify that the agent does X.\" It calls your voice agent, tests the thing by having the bots talk to each other, and uses LLM-as-judge to provide a pass/fail for your pipeline. State: Fully working, free trial, no card needed. Try it out and please give me feedback, especially if you run in to problems. Goal: I built VoiceGremlin with the explicit goal of being Mailosaur for phone agents. We paid for Mailosaur at work because the alternative (having our automated tests interact programmatically with our corporate Outlook server) was doable, but very painful, both technically and organizationally. The lesson I learned was \"doable, but painful\" is a good sign of a SaaS opportunity. Well, getting an automated test to call a phone number is also painful. Telephony providers are tough to get onboarded as vendors. Using your own STT/TTS means a lot of bandwidth moving through wherever you run your test automation from. It's tricky to get the LLM",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://voicegremlin.com",
+      "discoveredAt": "2026-10-07T17:16:36Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "5ddcd9b9a77277b323f87e71",
+      "title": "Show HN: Shortfuse – Make macOS permissions expire automatically",
+      "url": "https://news.ycombinator.com/item?id=49995706",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Shortfuse – Make macOS permissions expire automatically I used to get a little paranoid about the perms I was giving to apps, and them just keeping them. Especially, microphone (!!). So I made this Mac app that lets you schedule selected permissions to expire after 15 minutes, an hour, tonight, or when the app quits. You can also review permissions grouped by app and spot records left behind by deleted apps. MacOS 14+, Intel and Apple silicon. Demo and download: https://rygorlabs.com/shortfuse",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": null,
+      "discoveredAt": "2026-10-07T17:09:42Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "0a8561b508cdd701e1e1e925",
+      "title": "Show HN: PanelAlpha Engine – Turn your VPS into a programmable hosting layer",
+      "url": "https://news.ycombinator.com/item?id=49991829",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: PanelAlpha Engine – Turn your VPS into a programmable hosting layer PanelAlpha Engine is an open-source hosting environment for your VPS, programmable through MCP, API and CLI. After ~2 years in the making (we started back in the non-ai era) we've decided to open source our Docker-based Engine. So far, we've used it as a back-end environment for WordPress sites and we have been distributing it through web hosting providers and larger agencies. It's been tested on a few thousand sites already. Now people are vibe coding, using AI for everything and building agentic workflows, while at the same time open source projects are getting through a reinassaince. So, not only we have open-sourced it ourselves, but we've also expanded it to support any web application and tested it against over a thousand repositories (and soon will be much more). You can use it with MCP, API or CLI to: - deploy projects from files or git - get a preview URL or use your own domain with automatic SSL - restrict access with a password - get built-in monitoring and visitor stats (no need for Google Analytics) - manage databases, SFTP/FTP, CRON, firewall rules - read through logs and debug - create or re",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://engine.panelalpha.com",
+      "discoveredAt": "2026-10-07T12:28:51Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "ce3d43d6696c38e924f4c4d9",
+      "title": "Show HN: Self-custody USDC billing for metered APIs – no Stripe, no bank, $0/mo",
+      "url": "https://news.ycombinator.com/item?id=49982801",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Self-custody USDC billing for metered APIs – no Stripe, no bank, $0/mo Product URL: https://github.com/web4-watchbot/web4-automaton/blob/main/docs/billing-rail-deep-dive.md",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://github.com/web4-watchbot/web4-automaton/blob/main/docs/billing-rail-deep-dive.md",
+      "discoveredAt": "2026-10-06T19:20:34Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "9e82e4f4e5edd36aab5eaa23",
+      "title": "Show HN: Automatically unlock your laptop if your phone is nearby",
+      "url": "https://news.ycombinator.com/item?id=49982795",
+      "publisher": "Hacker News · automation",
+      "text": "Show HN: Automatically unlock your laptop if your phone is nearby Product URL: https://git.frog.ski/pam_bluetooth/about/",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "productUrl": "https://git.frog.ski/pam_bluetooth/about",
+      "discoveredAt": "2026-10-06T19:20:09Z",
+      "originFeedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "id": "71c698c9f186d9bdf1652115",
+      "title": "YouTube Music launches new labels as AI-generated music floods streaming platforms",
+      "url": "https://techcrunch.com/2026/10/14/youtube-music-launches-new-labels-as-ai-generated-music-floods-streaming-platforms",
+      "publisher": "TechCrunch · AI",
+      "text": "The label will appear on the player page and include songs entirely generated by AI or partially, such as involved in composition and vocals.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 18:23:46 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "2dcf16d6f1c0e22fcddf8b0f",
+      "title": "Apate sends AI agents undercover to get scammed so they can gather fraud intelligence",
+      "url": "https://techcrunch.com/2026/10/14/apate-sends-ai-agents-undercover-to-get-scammed-so-they-can-gather-fraud-intelligence",
+      "publisher": "TechCrunch · AI",
+      "text": "Most companies use AI agents to ship products faster or speed up workflows. Apate.ai sends them undercover to get scammed.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 18:00:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "ab12d93437757467fe01f7c7",
+      "title": "Deezer will soon let you filter out AI-generated music",
+      "url": "https://techcrunch.com/2026/10/14/deezer-will-soon-let-you-filter-out-ai-generated-music",
+      "publisher": "TechCrunch · AI",
+      "text": "Deezer said that the new toggle will be rolled out by the end of the year.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 15:16:04 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "d66c3929d9d8d625f8473020",
+      "title": "Save 50% on your TechCrunch Disrupt 2026 ticket and join the last 2 days in San Francisco’s Moscone West",
+      "url": "https://techcrunch.com/2026/10/14/save-50-on-your-techcrunch-disrupt-2026-ticket-and-join-the-last-two-days-in-san-francisco",
+      "publisher": "TechCrunch · AI",
+      "text": "Get a 50% discount on the last two days of TechCrunch Disrupt 2026, October 14-15, in San Francisco. Register now and join the rest of the startup ecosystem. Today, it's all about physical and software AI.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 15:13:24 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "21708234358eadea5e8015e4",
+      "title": "Zenzap raises $44M for its AI chat app that aims to replace WhatsApp in the workplace",
+      "url": "https://techcrunch.com/2026/10/14/zenzap-raises-44m-for-its-ai-chat-app-that-aims-to-replace-whatsapp-in-the-workplace",
+      "publisher": "TechCrunch · AI",
+      "text": "Zenzap is used by organizations including Starbucks and Taco Bell.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 15:08:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "fb5ac323f0dc6bb825c035c9",
+      "title": "Floqer’s AI agents research sales prospects so teams don’t have to",
+      "url": "https://techcrunch.com/2026/10/14/floqers-ai-agents-help-b2b-revenue-teams-research-customers",
+      "publisher": "TechCrunch · AI",
+      "text": "The problem Floqer is trying to solve is familiar to anyone who has worked in sales or revenue operations.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 15:00:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "56d30406a7702bda30bd4a52",
+      "title": "TechCrunch Disrupt 2026: Day 2",
+      "url": "https://techcrunch.com/2026/10/14/techcrunch-disrupt-2026-day-2",
+      "publisher": "TechCrunch · AI",
+      "text": "Day 2 at TechCrunch Disrupt 2026, full of all themes across AI, as well as an investor-only session, more roundtables, Side Events, and more. Register to save 50% on your pass.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 14:30:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "75861fc4432aec080c02c69c",
+      "title": "Scimplify raises $25M to challenge China’s grip on critical materials with AI",
+      "url": "https://techcrunch.com/2026/10/14/scimplify-raises-25m-to-challenge-chinas-grip-on-critical-materials-with-ai",
+      "publisher": "TechCrunch · AI",
+      "text": "Scimplify's annualized revenue run rate has tripled to $200 million as it eyes U.S. expansion.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Wed, 14 Oct 2026 11:00:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "f581adf32b14cf27ac832664",
+      "title": "Science Corporation implants its vision-restoring chip in its first Stargardt disease patient",
+      "url": "https://techcrunch.com/2026/10/13/science-corporation-implants-its-vision-restoring-chip-in-its-first-stargardt-disease-patient",
+      "publisher": "TechCrunch · AI",
+      "text": "Max Hodak, the former president and co-founder of Neuralink, detailed onstage at TechCrunch Disrupt how his company's work with PRIMA is part of its path toward a novel brain-computer interface (BCI).",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 23:13:31 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "4b533c9e17a5cd60746210c3",
+      "title": "Cerebras CEO says we’re nearing a future where everyone has a personal AI assistant at home",
+      "url": "https://techcrunch.com/2026/10/13/cerebras-ceo-says-were-nearing-a-future-where-everyone-has-a-personal-ai-assistant-at-home",
+      "publisher": "TechCrunch · AI",
+      "text": "Cerebras CEO Andrew Feldman predicts a future where personal AI assistants become as commonplace as household appliances, running partly on local devices and partly in the cloud.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 23:05:34 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "b27d148e512fc806d239dad2",
+      "title": "Industrial Next wants factory robots to switch tasks in minutes, not weeks",
+      "url": "https://techcrunch.com/2026/10/13/industrial-next-wants-factory-robots-to-switch-tasks-in-minutes-not-weeks",
+      "publisher": "TechCrunch · AI",
+      "text": "Industrial Next helps manufacturers automate complex, delicate tasks that have traditionally required human labor.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 23:00:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "42b26e2f5aa4b54c951ee569",
+      "title": "Cerebras CEO pushes back on AI doomsday warnings",
+      "url": "https://techcrunch.com/2026/10/13/cerebras-ceo-pushes-back-on-ai-doomsday-warnings",
+      "publisher": "TechCrunch · AI",
+      "text": "Cerebras CEO Andrew Feldman has a message for AI leaders spreading doomsday warnings: Maybe stop talking? At TechCrunch Disrupt, he argued that the industry's focus on AI's risks is drowning out its potential benefits.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 22:36:59 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "47b1c61501a00890c87ae572",
+      "title": "Judge orders OpenAI to turn over hiring records in Apple trade secrets case",
+      "url": "https://techcrunch.com/2026/10/13/judge-orders-openai-to-turn-over-hiring-records-in-apple-trade-secrets-case",
+      "publisher": "TechCrunch · AI",
+      "text": "A federal judge ruled that Apple can access OpenAI's interview materials involving former Apple employees, as well as private messages and testimony from key figures in the case.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 20:36:44 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "fd0dc8b4fea02801dc1bf5b1",
+      "title": "Flox Intelligence is building AI to keep wildlife away from trains, airports, and roads",
+      "url": "https://techcrunch.com/2026/10/13/flox-intelligence-is-building-ai-to-keep-wildlife-away-from-trains-airports-and-roads",
+      "publisher": "TechCrunch · AI",
+      "text": "Flox's edge devices can identify animals and use species-specific sounds to drive them away from critical infrastructure.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 18:30:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "d2b49f5446522b415ed6cc39",
+      "title": "Facebook is giving users more control over their algorithm",
+      "url": "https://techcrunch.com/2026/10/13/facebook-is-giving-users-more-control-over-their-algorithm",
+      "publisher": "TechCrunch · AI",
+      "text": "Meta announced the launch of its new AI-powered feature, “Your Algorithm,” a feature it first launched on Instagram.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 18:05:24 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "f0f1c2f3634e5356d16e0950",
+      "title": "Laplace Intelligence red-teams robots and self-driving cars before they hit the real world",
+      "url": "https://techcrunch.com/2026/10/13/laplace-intelligence-red-teams-robots-and-self-driving-cars-before-they-hit-the-real-world",
+      "publisher": "TechCrunch · AI",
+      "text": "University of Michigan spinout Laplace Intelligence uses AI agents and interactive simulation to stress-test robots and self-driving vehicles before deployment. The profitable startup is competing in Startup Battlefield at TechCrunch Disrupt, October 13-15 in San Francisco.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 17:30:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "4e9e4f1d9cd106f632b9b1ae",
+      "title": "Pluto Security raises $42M as AI gives enterprise security teams a new headache",
+      "url": "https://techcrunch.com/2026/10/13/pluto-security-raises-42m-as-ai-gives-enterprise-security-teams-a-new-headache",
+      "publisher": "TechCrunch · AI",
+      "text": "The problem with giving everyone in a company access to AI tools is that people will use them in unexpected ways. And that fact is steadily seeding fears that companies now have new, gaping security holes in their systems or, at least, will soon.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 17:18:25 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "45d87d6cab7a70aff9e6ab94",
+      "title": "Google Play now lets anyone build private, vibe-coded apps that run on Android",
+      "url": "https://techcrunch.com/2026/10/13/google-play-now-supports-private-vibe-coded-apps-built-just-for-you",
+      "publisher": "TechCrunch · AI",
+      "text": "Google is making it easier to build and use personal Android apps created with AI, without having to make them available to everyone on the Play Store.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 17:00:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "c84e593e0844397d895c89b5",
+      "title": "SpaceX and Google both said no. Now his software is riding a SpaceX rocket next to Google’s",
+      "url": "https://techcrunch.com/2026/10/13/satlyt-founded-by-a-former-google-and-spacex-product-manager-raises-8m-to-run-ai-on-satellites",
+      "publisher": "TechCrunch · AI",
+      "text": "Satlyt wants to be the Android of orbital computing, offering open software that works on many companies' satellites, versus SpaceX's closed, all-in-one iPhone-style approach.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 16:30:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "2d6c787b937985c8d24e1e00",
+      "title": "TechCrunch Disrupt 2026: Day 1",
+      "url": "https://techcrunch.com/2026/10/13/techcrunch-disrupt-2026-day-1",
+      "publisher": "TechCrunch · AI",
+      "text": "TechCrunch Disrupt 2026 officially kicks off today. See what's in store for Day 1 (Oct. 13) at San Francisco's Moscone West. Don't miss it. Register for your pass now and meet 10,000+ tech leaders at the startup epicenter of the year.",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "discoveredAt": "Tue, 13 Oct 2026 14:00:00 +0000",
+      "originFeedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "title": "Advanced AI Workflow Automation Software & Tools - n8n",
+      "url": "https://n8n.io/ai",
+      "publisher": "n8n · official AI workflows",
+      "text": "Advanced AI Workflow Automation Software & Tools - n8n n8n.io Product Product overview Automate business processes without limits on your logic Integrations Seamlessly move and transform data between different apps with n8n. Templates Explore +10k workflow automation templates AI Get to prod faster — and with more flexibility than coding alone MCP Build and update n8n workflows from inside your AI app Use cases Building AI agents RAG IT operations Security operations Lead automation Supercharge your CRM Limitless integrations Backend prototyping Embedding n8n Case studies Docs Self-host n8n Documentation Our license Changelog Community Forum Learn Careers Blog Creators Partners Hire an expert Events Support Enterprise Pricing 207,254 Sign in Get Started See llms.txt for all machine-readable content. The potential of AI with the power of automation The practical way to make a business impact with AI n8n is about help, not hype. Build modular AI systems that are easy to debug, explainable by design, and maintainable as requirements change. Start building for free* Talk to sales * 14 days free trial. No credit card required. Over 207k GitHub stars Self host-able SOC2 compliant Common ",
+      "fetchedAt": "2026-10-14T19:22:32.497Z",
+      "originFeedIds": [
+        "e20bcacf021524725d3fc275"
+      ]
+    },
+    {
+      "id": "7efc2c70ed9424b76bd7407b",
+      "title": "Apify: Marketplace of ready-to-run tools for AI",
+      "url": "https://apify.com",
+      "publisher": "Apify · official platform",
+      "text": "Apify: Marketplace of ready-to-run tools for AI Skip to content Get started Log in Product Back Start here! Ready-to-run tools for your AI agents and apps. Just pick one and go. Browse 87,720 Actors Apify platform Apify Store Actors for any job on the web Actors Build and run serverless programs Integrations Connect with apps and services MCP Give your AI access to Actors Anti-blocking Anti-blocking Scrape without getting blocked Proxy Rotate scraper IP addresses Open source Crawlee Web scraping and crawling library Solutions Back MCP server configuration Configure your Apify MCP server with Actors and tools for seamless integration with MCP clients. Start building Apify for Enterprise Startups Universities Nonprofits Use cases Data for generative AI Data for AI agents Lead generation Market research View more → Consulting Professional services Apify Partners Developers Back Documentation Full reference for the Apify platform Get started Actor templates Python, JavaScript, and TypeScript Web scraping academy Courses for beginners and experts Monetize your code Publish your Actors and get paid Learn API reference CLI SDK MCP Crawlee Earn from your code $1.7M paid out last month. Man",
+      "fetchedAt": "2026-10-14T19:22:31.840Z",
+      "originFeedIds": [
+        "7efc2c70ed9424b76bd7407b"
+      ]
+    },
+    {
+      "id": "ef244017b1460269fc687cea",
+      "title": "Browser Use Agents & Browser Infrastructure | Browser Use",
+      "url": "https://browser-use.com",
+      "publisher": "Browser Use · official project",
+      "text": "Browser Use Agents & Browser Infrastructure | Browser Use Browser Use Agents Browsers Showcase Resources Pricing 118k Log in Start for free SUPERFAST mode Join the waitlist ↗ Agents that use the browser . Browser Use Agents finish the task. Browser Infrastructure is the simple remote browser for your own agents. Run an agent Connect your agent Hermes Hermes made Browser Use the default browser tool. 48–66% fewer task tokens Browser Use Agents The most accurate web agent. And the cheapest. Among 7 entries on our 106 -task Internal Bench Hard . Browser Use 82% · 17¢ Opus 5 62% · $3.40 Sonnet 5 59% · $1.55 Gemini 3.1 Pro 59% · $2.20 Task success on 106 tasks · cost per solved task Full benchmark, 6 other models Browser Infrastructure The simple remote browser for AI agents. $0.02 an hour. Browser Use 81% Anchor 77% kernel 67% Steel 47% Browserbase 42% Share of 71 protected sites reached In our 71 -site protected-site benchmark, Browser Use reached 81 % of sites and Browserbase reached 42% . See the full benchmark for the test setup and results. Full benchmark, 5 other providers Pricing Start free. Pay as you go. Credits from $ 5 . No subscription. No expiry. Browsers $0.02 / hour Plus",
+      "fetchedAt": "2026-10-14T19:22:32.048Z",
+      "originFeedIds": [
+        "ef244017b1460269fc687cea"
+      ]
+    },
+    {
+      "id": "d554ca3fc8b9fd3548600b86",
+      "title": "Dify - The Platform for Production-Ready Agentic Workflows",
+      "url": "https://dify.ai",
+      "publisher": "Dify · official project",
+      "text": "Dify - The Platform for Production-Ready Agentic Workflows Products Solutions Docs Pricing Company Contact Sales Log in Get Started EN Menu Get Back Products Solutions Docs Pricing Company Products Get Back Build Workflow Studio Visual Builder for Agentic Workflows Knowledge Pipeline Prepare searchable knowledge bases Marketplace Explore Dify tools, models, and integrations Deploy Dify Cloud Hosted SaaS — prototype to production Dify Enterprise Private deployment for enterprise teams Community Edition Open-source, self-deploy with Docker Solutions Get Back Assessment & Testing Scale item generation with multi-stage review Manufacturing & Industrial One private platform across every business unit Consumer Goods & FMCG Let business teams build their own Agents Professional Services & Audit Drive audit automation with Agents and RPA Logistics & Supply Chain Grow business volume without proportional cost growth Public Sector Deploy locally and share securely across institutions Banking & Financial Services Unify business teams on one AI platform Pharma & Life Sciences Governed expert-level AI assistants Semiconductor Orchestrate AI on top of proprietary LLMs Education One knowledge bas",
+      "fetchedAt": "2026-10-14T19:22:32.172Z",
+      "originFeedIds": [
+        "d554ca3fc8b9fd3548600b86"
+      ]
+    }
+  ],
+  "health": [
+    {
+      "feedId": "414b771cc5ba604e287450f9",
+      "name": "Reddit · r/SideProject",
+      "url": "https://www.reddit.com/r/SideProject/new/.rss?limit=20",
+      "status": "failed",
+      "startedAt": "2026-10-14T19:22:31.233Z",
+      "fetchedAt": "2026-10-14T19:22:31.416Z",
+      "items": 0,
+      "itemCount": 0,
+      "message": "Robots rules refuse this public source.",
+      "stage": "robots",
+      "code": "robots_disallowed",
+      "validation": {
+        "origin": "https://www.reddit.com",
+        "robotsUrl": "https://www.reddit.com/robots.txt",
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "fetchedAt": "2026-10-14T19:22:31.416Z",
+        "redirects": [],
+        "state": "available",
+        "bytes": 538,
+        "truncated": false,
+        "allowed": false,
+        "matchedRule": {
+          "type": "disallow",
+          "path": "/",
+          "specificity": 1
+        },
+        "selectedUserAgents": [
+          "*"
+        ],
+        "evaluatedUrl": "https://www.reddit.com/r/SideProject/new/.rss?limit=20",
+        "reason": "Matching robots Disallow rule.",
+        "parserVersion": "public-sources-v2",
+        "itemCount": 0
+      }
+    },
+    {
+      "feedId": "d3ccc7035ca7e86a961a6efb",
+      "name": "Reddit · r/Entrepreneur",
+      "url": "https://www.reddit.com/r/Entrepreneur/new/.rss?limit=20",
+      "status": "failed",
+      "startedAt": "2026-10-14T19:22:31.233Z",
+      "fetchedAt": "2026-10-14T19:22:31.416Z",
+      "items": 0,
+      "itemCount": 0,
+      "message": "Robots rules refuse this public source.",
+      "stage": "robots",
+      "code": "robots_disallowed",
+      "validation": {
+        "origin": "https://www.reddit.com",
+        "robotsUrl": "https://www.reddit.com/robots.txt",
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "fetchedAt": "2026-10-14T19:22:31.416Z",
+        "redirects": [],
+        "state": "available",
+        "bytes": 538,
+        "truncated": false,
+        "allowed": false,
+        "matchedRule": {
+          "type": "disallow",
+          "path": "/",
+          "specificity": 1
+        },
+        "selectedUserAgents": [
+          "*"
+        ],
+        "evaluatedUrl": "https://www.reddit.com/r/Entrepreneur/new/.rss?limit=20",
+        "reason": "Matching robots Disallow rule.",
+        "parserVersion": "public-sources-v2",
+        "itemCount": 0
+      }
+    },
+    {
+      "feedId": "1f3001f90b996f25c0f7f6eb",
+      "name": "Reddit · r/n8n",
+      "url": "https://www.reddit.com/r/n8n/new/.rss?limit=20",
+      "status": "failed",
+      "startedAt": "2026-10-14T19:22:31.421Z",
+      "fetchedAt": "2026-10-14T19:22:31.416Z",
+      "items": 0,
+      "itemCount": 0,
+      "message": "Robots rules refuse this public source.",
+      "stage": "robots",
+      "code": "robots_disallowed",
+      "validation": {
+        "origin": "https://www.reddit.com",
+        "robotsUrl": "https://www.reddit.com/robots.txt",
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "fetchedAt": "2026-10-14T19:22:31.416Z",
+        "redirects": [],
+        "state": "available",
+        "bytes": 538,
+        "truncated": false,
+        "allowed": false,
+        "matchedRule": {
+          "type": "disallow",
+          "path": "/",
+          "specificity": 1
+        },
+        "selectedUserAgents": [
+          "*"
+        ],
+        "evaluatedUrl": "https://www.reddit.com/r/n8n/new/.rss?limit=20",
+        "reason": "Matching robots Disallow rule.",
+        "parserVersion": "public-sources-v2",
+        "itemCount": 0
+      }
+    },
+    {
+      "feedId": "50f9aa9fc25a65ee8d4c39c8",
+      "name": "Reddit · r/AI_Agents",
+      "url": "https://www.reddit.com/r/AI_Agents/new/.rss?limit=20",
+      "status": "failed",
+      "startedAt": "2026-10-14T19:22:31.421Z",
+      "fetchedAt": "2026-10-14T19:22:31.416Z",
+      "items": 0,
+      "itemCount": 0,
+      "message": "Robots rules refuse this public source.",
+      "stage": "robots",
+      "code": "robots_disallowed",
+      "validation": {
+        "origin": "https://www.reddit.com",
+        "robotsUrl": "https://www.reddit.com/robots.txt",
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "fetchedAt": "2026-10-14T19:22:31.416Z",
+        "redirects": [],
+        "state": "available",
+        "bytes": 538,
+        "truncated": false,
+        "allowed": false,
+        "matchedRule": {
+          "type": "disallow",
+          "path": "/",
+          "specificity": 1
+        },
+        "selectedUserAgents": [
+          "*"
+        ],
+        "evaluatedUrl": "https://www.reddit.com/r/AI_Agents/new/.rss?limit=20",
+        "reason": "Matching robots Disallow rule.",
+        "parserVersion": "public-sources-v2",
+        "itemCount": 0
+      }
+    },
+    {
+      "feedId": "7210e36e4fc8aa402e667258",
+      "name": "Product Hunt",
+      "url": "https://www.producthunt.com/feed",
+      "status": "failed",
+      "startedAt": "2026-10-14T19:22:31.433Z",
+      "fetchedAt": "2026-10-14T19:22:31.575Z",
+      "items": 0,
+      "itemCount": 0,
+      "message": "robots.txt returned HTTP 403; access is refused.",
+      "stage": "robots",
+      "code": "robots_unavailable",
+      "validation": {
+        "origin": "https://www.producthunt.com",
+        "robotsUrl": "https://www.producthunt.com/robots.txt",
+        "status": 403,
+        "contentType": "text/html; charset=UTF-8",
+        "fetchedAt": "2026-10-14T19:22:31.575Z",
+        "redirects": [],
+        "allowed": false,
+        "state": "unreachable",
+        "parserVersion": "public-sources-v2",
+        "itemCount": 0
+      }
+    },
+    {
+      "feedId": "6548833164b0e7c9a8a95a1c",
+      "name": "Indie Hackers",
+      "url": "https://www.indiehackers.com",
+      "status": "failed",
+      "startedAt": "2026-10-14T19:22:31.438Z",
+      "fetchedAt": "2026-10-14T19:22:31.629Z",
+      "items": 0,
+      "itemCount": 0,
+      "message": "Public source returned HTTP 403.",
+      "stage": "fetch",
+      "code": "source_http_error",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.indiehackers.com",
+            "robotsUrl": "https://www.indiehackers.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:31.598Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 772,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.indiehackers.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "resolvedUrl": "https://www.indiehackers.com/",
+        "httpStatus": 403,
+        "contentType": "text/html; charset=UTF-8",
+        "maxBytes": 2000000,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 0
+      }
+    },
+    {
+      "feedId": "a654756600fbb68b9c75c45b",
+      "name": "TechCrunch · AI",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+      "status": "ok",
+      "startedAt": "2026-10-14T19:22:31.577Z",
+      "fetchedAt": "2026-10-14T19:22:31.666Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:31.615Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/category/artificial-intelligence/feed",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:31.615Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/category/artificial-intelligence/feed/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+            "status": 301,
+            "next": "https://techcrunch.com/category/artificial-intelligence/feed/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "application/rss+xml; charset=UTF-8",
+        "resolvedUrl": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "fetchedAt": "2026-10-14T19:22:31.666Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      }
+    },
+    {
+      "feedId": "7efc2c70ed9424b76bd7407b",
+      "name": "Apify · official platform",
+      "url": "https://apify.com",
+      "status": "ok",
+      "startedAt": "2026-10-14T19:22:31.683Z",
+      "fetchedAt": "2026-10-14T19:22:31.840Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://apify.com",
+            "robotsUrl": "https://apify.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:31.708Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 174,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://apify.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://apify.com/",
+        "fetchedAt": "2026-10-14T19:22:31.840Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      }
+    },
+    {
+      "feedId": "fc96810c8981082bcd1a293c",
+      "name": "Hacker News · Show HN",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+      "status": "ok",
+      "startedAt": "2026-10-14T19:22:31.228Z",
+      "fetchedAt": "2026-10-14T19:22:31.965Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:31.595Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+        "fetchedAt": "2026-10-14T19:22:31.965Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      }
+    },
+    {
+      "feedId": "54649964a0a05f1bfa2b2d36",
+      "name": "Hacker News · automation",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+      "status": "ok",
+      "startedAt": "2026-10-14T19:22:31.232Z",
+      "fetchedAt": "2026-10-14T19:22:32.003Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:31.595Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+        "fetchedAt": "2026-10-14T19:22:32.003Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      }
+    },
+    {
+      "feedId": "ef244017b1460269fc687cea",
+      "name": "Browser Use · official project",
+      "url": "https://browser-use.com",
+      "status": "ok",
+      "startedAt": "2026-10-14T19:22:31.843Z",
+      "fetchedAt": "2026-10-14T19:22:32.048Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://browser-use.com",
+            "robotsUrl": "https://browser-use.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:31.996Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 1043,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://browser-use.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://browser-use.com/",
+        "fetchedAt": "2026-10-14T19:22:32.048Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      }
+    },
+    {
+      "feedId": "d554ca3fc8b9fd3548600b86",
+      "name": "Dify · official project",
+      "url": "https://dify.ai",
+      "status": "ok",
+      "startedAt": "2026-10-14T19:22:31.966Z",
+      "fetchedAt": "2026-10-14T19:22:32.172Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://dify.ai",
+            "robotsUrl": "https://dify.ai/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-14T19:22:32.095Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 67,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://dify.ai/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "resolvedUrl": "https://dify.ai/",
+        "fetchedAt": "2026-10-14T19:22:32.172Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      }
+    },
+    {
+      "feedId": "e20bcacf021524725d3fc275",
+      "name": "n8n · official AI workflows",
+      "url": "https://n8n.io/ai",
+      "status": "ok",
+      "startedAt": "2026-10-14T19:22:31.629Z",
+      "fetchedAt": "2026-10-14T19:22:32.497Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:32.252Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/ai",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T19:22:32.252Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/ai/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://n8n.io/ai",
+            "status": 308,
+            "next": "https://n8n.io/ai/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://n8n.io/ai/",
+        "fetchedAt": "2026-10-14T19:22:32.497Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      }
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38623031613"
+}
