@@ -23,6 +23,14 @@ test('fresh checker must cover exactly five criteria, supported ceilings and lit
  for(const mutation of [{supported:false},{maxSupportedScore:1},{sourceId:'unattached'},{evidenceQuote:'Scheduled checks'},{evidenceQuote:'scheduled automated checks'},{reason:'Two lines\ninvalid.'},{extra:true}])assert.ok(checkScoringApproval(criteria,scoreChecks.map((value,index)=>index===0?{...value,...mutation}:value),[source]).length);
  assert.ok(checkScoringApproval(criteria,scoreChecks.map(value=>value.criterion==='profit'?{...value,reason:'The customer will pay for this.'}:value),[source]).length);
 });
+test('building evidence must be attached to both the proposal and the criterion before a capability can pass',()=>{
+ const {criteria,scoreChecks,source}=scoringFixture(),building={...source,id:'b'.repeat(24),url:'https://example.com/docs/checks',text:'The documented test tool can flag missing cells for human review.'};
+ const ratings={...criteria,ease:{...criteria.ease,sourceIds:[building.id]}},checks=scoreChecks.map(check=>check.criterion==='ease'?{...check,sourceId:building.id,evidenceQuote:'flag missing cells for human review'}:check),sources=[source,building];
+ assert.ok(checkScoringApproval(ratings,checks,sources,{sourceIds:[source.id]}).length,'a source merely available in the research context is not attached to the post');
+ assert.deepEqual(checkScoringApproval(ratings,checks,sources,{sourceIds:[source.id,building.id]}),[]);
+ assert.ok(checkScoringApproval(criteria,checks,sources,{sourceIds:[source.id,building.id]}).length,'post-level attachment alone cannot support a criterion citing different evidence');
+ assert.ok(checkScoringApproval(ratings,checks.map(check=>check.criterion==='ease'?{...check,evidenceQuote:'automatically correct all payroll entries'}:check),sources,{sourceIds:[source.id,building.id]}).length,'a related document cannot support an invented capability quote');
+});
 test('weighted means use unrounded values and clamp only floating-point range overflow',()=>{
  const {criteria,policy}=scoringFixture();assert.equal(weightedOverall(criteria,policy.weights),6);
  assert.equal(weightedOverall(criteria,{...policy.weights,evidence:2}),37/6);
