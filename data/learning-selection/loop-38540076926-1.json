@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "loop-38540076926-1",
+  "runId": "loop-38540076926-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-14T09:08:12.549Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38540076926-1",
+  "registrySha256": "9501fd7f8849b0f55b4e4740cb1d3dcbf4dcd84de4904dba2c2acf76dd8e2d65",
+  "scoreboardSha256": "15e3dac5487291003813c30c123078e974678ffdbcbc7a9f8d85c1c65d2a7abf",
+  "eligibleSegments": [
+    "professional_services",
+    "education"
+  ],
+  "selectedSegment": "professional_services",
+  "demandSourceIds": [
+    "3c18d6f9afb86838768b18fe"
+  ],
+  "segmentDraws": [
+    {
+      "id": "professional_services",
+      "value": 0.06020818086547377
+    },
+    {
+      "id": "education",
+      "value": 0.006484484092359844
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "3c18d6f9afb86838768b18fe",
+      "value": 0.014742905544737402
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "8ef335213e70b38904e7a504",
+        "scanId": "research-38536045249-1",
+        "scanSha256": "7b08379f67cc262b82916e22d41dfb5a1cc3481be23ac08f610a29aed7a58785",
+        "items": 20,
+        "retryAt": "2026-10-14T10:34:43.491Z"
+      },
+      {
+        "sourceId": "cca981f46ee3fb8981413fee",
+        "scanId": "research-38536045249-1",
+        "scanSha256": "7b08379f67cc262b82916e22d41dfb5a1cc3481be23ac08f610a29aed7a58785",
+        "items": 2,
+        "retryAt": "2026-10-14T10:34:43.491Z"
+      },
+      {
+        "sourceId": "d7da742b595e7ec512a8ef54",
+        "scanId": "research-38536045249-1",
+        "scanSha256": "7b08379f67cc262b82916e22d41dfb5a1cc3481be23ac08f610a29aed7a58785",
+        "items": 2,
+        "retryAt": "2026-10-14T10:34:43.491Z"
+      }
+    ]
+  },
+  "reason": "Try professional services and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38540076926",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "12961ff63dcac76a1a15cf86f46fce019daf81cd"
+  }
+}
