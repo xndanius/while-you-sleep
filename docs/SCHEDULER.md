@@ -16,7 +16,7 @@ The 15-minute wait aims to check a newly elapsed slot promptly. Runner queues, d
 | Research | Every three hours at :23 under legacy cadence; hourly :23 once hourly cadence is active | Every 30 minutes at :23, :53 |
 | Measure | Daily 21:37 | Every 30 minutes at :13, :43 |
 | Improve | Daily 22:13 | Every 30 minutes at :13, :43 |
-| LinkedIn selection | 12:17, 18:17; minimum checked score7, cap2 | Every 30 minutes at :17, :47 |
+| LinkedIn selection | 12:17, 18:17; minimum checked score 6, rolling 24-hour eligibility, cap 2 | Every 30 minutes at :17, :47 |
 
 A backup gate that has no due work calls no model, commits no work record, and does not deploy Pages. Empty ticks and claims write only runtime metadata, with no Git commits and no Pages deploy. A tick that dispatches content commits its immutable receipt; chain restarts retain committed recovery history. An already waiting workflow may finish one legacy transition during migration. Backup frequency does not guarantee an on-time start: GitHub documents that scheduled jobs may start late or be dropped under load. The observed delays do not establish the underlying cause. [Official schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
 
