@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "id": "loop-38514936960-1",
+  "runId": "loop-38514936960-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-14T05:07:44.907Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38514936960-1",
+  "registrySha256": "9501fd7f8849b0f55b4e4740cb1d3dcbf4dcd84de4904dba2c2acf76dd8e2d65",
+  "scoreboardSha256": "22d51f6f0af0090729985480765b056ee5c446845c7d6cf3f823bf8873f6d213",
+  "eligibleSegments": [
+    "professional_services",
+    "education",
+    "health_admin"
+  ],
+  "selectedSegment": "health_admin",
+  "demandSourceIds": [
+    "8ef335213e70b38904e7a504"
+  ],
+  "segmentDraws": [
+    {
+      "id": "health_admin",
+      "value": 0.05165004308036911
+    },
+    {
+      "id": "professional_services",
+      "value": 0.004574253757053965
+    },
+    {
+      "id": "education",
+      "value": 0.004348009463273603
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "8ef335213e70b38904e7a504",
+      "value": 0.0016051186602851384
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "cca981f46ee3fb8981413fee",
+        "scanId": "research-38513362820-1",
+        "scanSha256": "10a85f8709c2abbd6c0567e7bea380e42d33e01ebf6b9f91770110ec57a0a60c",
+        "items": 2,
+        "retryAt": "2026-10-14T06:49:34.618Z"
+      },
+      {
+        "sourceId": "d7da742b595e7ec512a8ef54",
+        "scanId": "research-38513362820-1",
+        "scanSha256": "10a85f8709c2abbd6c0567e7bea380e42d33e01ebf6b9f91770110ec57a0a60c",
+        "items": 2,
+        "retryAt": "2026-10-14T06:49:34.618Z"
+      }
+    ]
+  },
+  "reason": "Try health admin and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38514936960",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "c8701783f7db2e3080245ff17f0c8b362e6a483b"
+  }
+}
