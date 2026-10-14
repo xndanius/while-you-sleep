@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import {loopTiming} from '../public/schedule.js';
 import {currentDaySlots} from '../public/slot-display.js';
 import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from '../public/feed-view.js';
+import {HISTORICAL_OVERLAPS,historicalOverlapFor} from '../public/historical-overlaps.js';
 
 const score=value=>({overall:value,criteria:Object.fromEntries(['ease','profit','feasibility','autonomy','evidence'].map(key=>[key,{value:7}]))});
 const idea=(id,overall,minutesAgo)=>({id,title:`Idea ${id}`,promise:'A checked small scope.',publishedAt:new Date(Date.now()-minutesAgo*60000).toISOString(),scoring:score(overall),sources:[]});
@@ -22,10 +23,44 @@ async function feedHarness({posts,url='https://example.test/channel/',saved=[]})
   const localStorage={getItem:key=>stored.get(key)??null,setItem:(key,value)=>stored.set(key,value)};
   const data={posts,status:{state:'running'},schedule:{proof:{state:'publication_observed'}}};
   const source=(await readFile(new URL('../public/app.js',import.meta.url),'utf8')).replace(/^import .+;\n/gm,'');
-  vm.runInNewContext(source,{loopTiming,currentDaySlots,DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts,document,window:browser,localStorage,fetch:async()=>({ok:true,json:async()=>data}),AbortController,URL,Date,Intl,console,setTimeout:()=>1,clearTimeout(){},setInterval:()=>1});
+  vm.runInNewContext(source,{loopTiming,currentDaySlots,DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts,historicalOverlapFor,document,window:browser,localStorage,fetch:async()=>({ok:true,json:async()=>data}),AbortController,URL,Date,Intl,console,setTimeout:()=>1,clearTimeout(){},setInterval:()=>1});
   await new Promise(resolve=>setImmediate(resolve));
-  return {elements,browser,stored,history,popstate(next){browser.location=new URL(next);windowEvents.get('popstate')?.();},clickPosts(selector,button){elements.get('posts').emit('click',{preventDefault(){},target:{closest:value=>value===selector?button:null}});}};
+  return {elements,browser,stored,history,async refresh(nextPosts){if(nextPosts)data.posts=nextPosts;elements.get('refresh-feed').emit('click');await new Promise(resolve=>setImmediate(resolve));},popstate(next){browser.location=new URL(next);windowEvents.get('popstate')?.();},clickPosts(selector,button){elements.get('posts').emit('click',{preventDefault(){},target:{closest:value=>value===selector?button:null}});}};
 }
+
+test('the real historical support repeat is annotated without removing either original idea',async()=>{
+  const posts=await Promise.all(['98b4f6281cc3de4ecdfa95f6','e20bcacf021524725d3fc275'].map(id=>readFile(new URL(`../data/posts/${id}.json`,import.meta.url),'utf8').then(JSON.parse)));
+  const original=JSON.stringify(posts),harness=await feedHarness({posts});
+  assert.deepEqual(postIds(harness.elements.get('posts').innerHTML),posts.map(post=>post.id));
+  assert.equal((harness.elements.get('posts').innerHTML.match(/class="post-overlap"/g)||[]).length,1);
+  assert.match(harness.elements.get('posts').innerHTML,/Another tool for the same support-inbox loop\./);
+  assert.match(harness.elements.get('posts').innerHTML,/href="https:\/\/example\.test\/channel\/p\/e20bcacf021524725d3fc275\/"/);
+  assert.match(harness.elements.get('posts').innerHTML,/11 Oct, 20:15 Vilnius/);
+  assert.equal(JSON.stringify(posts),original);
+});
+
+test('refreshing unchanged or updated feed contents never appends a second copy of a post',async()=>{
+  const earlier=idea('earlier',7,60),later=idea('later',8,10),harness=await feedHarness({posts:[earlier]});
+  for(let i=0;i<3;i++)await harness.refresh();
+  assert.deepEqual(postIds(harness.elements.get('posts').innerHTML),['earlier']);
+  await harness.refresh([later,earlier]);
+  for(let i=0;i<3;i++)await harness.refresh();
+  assert.deepEqual(postIds(harness.elements.get('posts').innerHTML),['later','earlier']);
+  assert.equal(harness.elements.get('post-count').textContent,'(2)');
+});
+
+test('historical annotations require exact audited identity, content hash and publication date',async()=>{
+  assert.equal(HISTORICAL_OVERLAPS.length,1);
+  for(const entry of HISTORICAL_OVERLAPS){
+    const [later,earlier]=await Promise.all([entry.postId,entry.earlierPostId].map(id=>readFile(new URL(`../data/posts/${id}.json`,import.meta.url),'utf8').then(JSON.parse)));
+    assert.equal(historicalOverlapFor(later),entry);
+    assert.equal(earlier.contentSha256,entry.earlierContentSha256);
+    assert.equal(earlier.publishedAt,entry.earlierPublishedAt);
+    assert.equal(earlier.title,entry.earlierTitle);
+    assert.equal(historicalOverlapFor(earlier),null);
+    for(const changes of [{id:'another'},{contentSha256:'0'.repeat(64)},{publishedAt:'2026-10-12T00:00:00.000Z'}])assert.equal(historicalOverlapFor({...later,...changes}),null);
+  }
+});
 
 test('loaded filtered views show exact result counts and honest no-match state with a clear action',async()=>{
   const harness=await feedHarness({posts:[idea('low',6.4,60)],url:'https://example.test/channel/?min=8&period=7d'});

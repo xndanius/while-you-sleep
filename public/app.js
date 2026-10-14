@@ -1,6 +1,7 @@
 import {loopTiming} from './schedule.js?v=c43b6f368cb6';
 import {currentDaySlots} from './slot-display.js?v=c43b6f368cb6';
 import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=c43b6f368cb6';
+import {historicalOverlapFor} from './historical-overlaps.js';
 
 (() => {
   'use strict';
@@ -57,6 +58,13 @@ import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPos
     return `<div class="feed-score"><a class="feed-overall-score" href="${escape(publicURL)}" aria-label="Overall score ${overall.toFixed(1)} out of 10. Read the score reasons."><span>Score</span><strong>${overall.toFixed(1)}<small> / 10</small></strong></a><dl class="feed-criterion-scores">${criteria.map(([key,label,title])=>{const value=post.scoring.criteria?.[key]?.value;return `<div title="${escape(title)}"><dt>${label}</dt><dd>${Number.isInteger(value)&&value>=1&&value<=10?value:'—'}<span class="sr-only"> out of 10</span></dd></div>`;}).join('')}</dl></div>`;
   }
 
+  function overlapMarkup(post){
+    const overlap=historicalOverlapFor(post);
+    if(!overlap)return '';
+    const earlierURL=safeURL(`p/${encodeURIComponent(overlap.earlierPostId)}/`);
+    return `<aside class="post-overlap" aria-label="Historical repeat"><strong>${escape(overlap.label)}</strong><p>Earlier idea: <a href="${escape(earlierURL)}">${escape(overlap.earlierTitle)}</a> (${escape(dateLabel(overlap.earlierPublishedAt))} Vilnius). Both were published before repeat prevention was tightened on 12 October. Both source records are kept.</p></aside>`;
+  }
+
   function syncFeedControls(){
     for(const sort of ['newest','best']){
       $(`${sort}-sort`).classList.toggle('active',feedView.sort===sort);
@@ -91,12 +99,13 @@ import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPos
     const recordedSaves = typeof post.metrics?.saves === 'number' && Number.isFinite(post.metrics.saves) && post.metrics.saves >= 0 ? new Intl.NumberFormat('en-GB').format(post.metrics.saves) : null;
     const uncertainty = post.uncertainty || post.limitations;
     const imageAlt = `${title} — ${plain(post.promise)}`;
-    const imageFallback = `<div class="post-image-fallback"><small>While You Sleep</small>${escape(title)}</div>`;
+    const imageFallback = `<div class="post-image-fallback"><small>Autonomous Startup Ideas</small>${escape(title)}</div>`;
     return `<article class="post" id="${escape(anchorId(id))}" data-post-id="${escape(id)}" aria-labelledby="title-${escape(anchorId(id))}">
       <div class="post-top"><div class="post-meta"><span class="post-number">${String(index + 1).padStart(2, '0')}</span><span class="meta-separator" aria-hidden="true"></span><time datetime="${escape(post.publishedAt || '')}">${escape(dateLabel(post.publishedAt))}</time></div><div class="verified-label"><span aria-hidden="true">✓</span> Checked by the loop</div></div>
       <div class="post-content"><div class="post-image-column"><a class="post-image-link" href="${escape(imageURL)}" target="_blank" rel="noopener noreferrer" aria-label="Open image card for ${escape(title)}"><img class="post-image" src="${escape(imageURL)}" alt="${escape(imageAlt)}" loading="lazy" width="1080" height="1350" data-fallback="${escape(imageFallback)}"></a><p class="post-image-caption">One idea. A small version you can build.<br>Open the card to see it full size.</p></div>
       <div class="post-copy"><h3 id="title-${escape(anchorId(id))}"><a href="${escape(publicURL)}">${escape(title)}</a></h3>${post.promise ? `<p class="post-promise">${paragraphs(post.promise)}</p>` : ''}
         ${scoreMarkup(post,publicURL)}
+        ${overlapMarkup(post)}
         <div class="post-body-grid">${post.whatItIs ? `<section class="post-field"><h4>What it is</h4><p>${paragraphs(post.whatItIs)}</p></section>` : ''}${post.whoPays ? `<section class="post-field"><h4>Who pays</h4><p>${paragraphs(post.whoPays)}</p></section>` : ''}${loop.length ? `<section class="post-field full"><h4>How the loop runs</h4><ol class="idea-loop">${loop.map((step) => `<li>${escape(step)}</li>`).join('')}</ol></section>` : ''}</div>
         ${post.evidence || uncertainty ? `<section class="post-evidence"><h4>The evidence</h4>${post.evidence ? `<p>${paragraphs(post.evidence)}</p>` : ''}${uncertainty ? `<p class="uncertainty"><strong>What we don’t know:</strong> ${paragraphs(uncertainty)}</p>` : ''}</section>` : ''}
         ${actions.length ? `<section class="first-hours"><h4>Build a small version · your first 24 hours</h4><ol>${actions.map((action) => `<li>${escape(action)}</li>`).join('')}</ol></section>` : ''}
