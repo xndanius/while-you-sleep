@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "id": "loop-38652240370-1",
+  "runId": "loop-38652240370-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-14T23:09:06.280Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38652240370-1",
+  "registrySha256": "6485b181a3d9d38b7588062fe7afb586c0a001e26d536d0748faa1b47a5ceaa2",
+  "scoreboardSha256": "30c8542de38e15bfb03509075d7c9a75dae08c06083354dd732bc145556ad52f",
+  "eligibleSegments": [
+    "professional_services",
+    "education"
+  ],
+  "selectedSegment": "professional_services",
+  "demandSourceIds": [
+    "3c18d6f9afb86838768b18fe"
+  ],
+  "segmentDraws": [
+    {
+      "id": "professional_services",
+      "value": 0.015649475569976562
+    },
+    {
+      "id": "education",
+      "value": 0.000006606285155075864
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "3c18d6f9afb86838768b18fe",
+      "value": 0.009748413318897182
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "8ef335213e70b38904e7a504",
+        "scanId": "research-38647472707-1",
+        "scanSha256": "ecfd5efca6f6759717b841f2880f5b05f635057331d09aaa8bb9d0904e29e925",
+        "items": 20,
+        "retryAt": "2026-10-15T00:25:18.839Z"
+      }
+    ]
+  },
+  "reason": "Try professional services and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38652240370",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "a4dd7438dc9fa615c17166bce12b85dabb526482"
+  }
+}
