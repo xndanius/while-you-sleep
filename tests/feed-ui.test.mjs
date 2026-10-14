@@ -46,7 +46,7 @@ test('refreshing unchanged or updated feed contents never appends a second copy 
   await harness.refresh([later,earlier]);
   for(let i=0;i<3;i++)await harness.refresh();
   assert.deepEqual(postIds(harness.elements.get('posts').innerHTML),['later','earlier']);
-  assert.equal(harness.elements.get('post-count').textContent,'(2)');
+  assert.equal(harness.elements.get('post-count').textContent,'(2 published posts)');
 });
 
 test('historical annotations require exact audited identity, content hash and publication date',async()=>{
@@ -65,14 +65,14 @@ test('historical annotations require exact audited identity, content hash and pu
 test('loaded filtered views show exact result counts and honest no-match state with a clear action',async()=>{
   const harness=await feedHarness({posts:[idea('low',6.4,60)],url:'https://example.test/channel/?min=8&period=7d'});
   const {elements}=harness;
-  assert.equal(elements.get('post-count').textContent,'(0)');
+  assert.equal(elements.get('post-count').textContent,'(0 published posts)');
   assert.match(elements.get('posts').innerHTML,/No ideas match these filters/);
   assert.doesNotMatch(elements.get('posts').innerHTML,/first ideas are on their way/);
   assert.equal(elements.get('minimum-score').value,'8');
   assert.equal(elements.get('feed-period').value,'7d');
   harness.clickPosts('[data-reset-filters]',{});
   assert.deepEqual(postIds(elements.get('posts').innerHTML),['low']);
-  assert.equal(elements.get('post-count').textContent,'(1)');
+  assert.equal(elements.get('post-count').textContent,'(1 published post)');
   assert.equal(harness.browser.location.search,'');
 });
 
@@ -94,7 +94,7 @@ test('sort and filter controls update share URLs and Back restores controls, ord
   assert.equal(elements.get('newest-sort').attributes['aria-pressed'],'true');
   assert.equal(elements.get('best-sort').attributes['aria-pressed'],'false');
   assert.equal(elements.get('minimum-score').value,'any');
-  assert.equal(elements.get('post-count').textContent,'(2)');
+  assert.equal(elements.get('post-count').textContent,'(2 published posts)');
 });
 
 test('saved view keeps URL filters and saving or removing an idea does not reset the selected view',async()=>{
@@ -102,7 +102,7 @@ test('saved view keeps URL filters and saving or removing an idea does not reset
   const {elements}=harness;
   elements.get('saved-tab').emit('click');
   assert.deepEqual(postIds(elements.get('posts').innerHTML),['saved']);
-  assert.equal(elements.get('post-count').textContent,'(1)');
+  assert.equal(elements.get('post-count').textContent,'(1 published post)');
   assert.equal(elements.get('saved-count').textContent,'2');
   harness.clickPosts('[data-save]',{dataset:{save:'saved'}});
   assert.match(elements.get('posts').innerHTML,/No ideas match these filters/);

@@ -1,4 +1,6 @@
-# While You Sleep
+# Autonomous Startup Ideas
+
+Research-backed business ideas with a practical autonomous loop, readable sources and a clear first test. Formerly **While You Sleep**; repository paths, public post URLs and RSS identifiers remain stable. Rebranding changes presentation, not historical evidence or publication claims.
 
 
 Demand input repair (14 October 2026): task extraction also recognizes inflected Swedish actions and common task bullets such as preparing timesheets or checking work orders. A fixed software-name vocabulary is allowed; other internal names, contact details, numbers and patient text still exclude the entire line. Recruitment requirements do not displace actual tasks. The three-excerpt/1,200-character bounds stay unchanged. Completed notices rest for 24 hours only while their sanitized evidence text is unchanged; a new guarded scan with changed literal evidence may reopen research, while an already-published notice remains excluded. Older parser scans cannot suppress a fresh assessment after an extraction repair. When no selected demand notice is freshly available, writer preparation stops before a paid model call and leaves the slot honestly unverified. Fresh independent evidence also passes the privacy guard before a checker model call. The writer and checker assess a clearly labeled small experiment, not replacement of an employer’s entire system; all independent score, source, privacy and novelty checks remain in force.

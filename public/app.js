@@ -1,7 +1,7 @@
-import {loopTiming} from './schedule.js?v=c43b6f368cb6';
-import {currentDaySlots} from './slot-display.js?v=c43b6f368cb6';
-import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=c43b6f368cb6';
-import {historicalOverlapFor} from './historical-overlaps.js';
+import {loopTiming} from './schedule.js?v=4d8e46e51b0c';
+import {currentDaySlots} from './slot-display.js?v=4d8e46e51b0c';
+import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=4d8e46e51b0c';
+import {historicalOverlapFor} from './historical-overlaps.js?v=4d8e46e51b0c';
 
 (() => {
   'use strict';
@@ -125,18 +125,18 @@ import {historicalOverlapFor} from './historical-overlaps.js';
   function render() {
     updateSavedCount();
     const filtered = visiblePosts();
-    $('post-count').textContent = hasLoaded ? `(${filtered.length})` : '';
+    $('post-count').textContent = hasLoaded ? `(${filtered.length} published ${filtered.length===1?'post':'posts'})` : '';
     const period=feedView.period==='24h'?'last 24 hours':feedView.period==='7d'?'last 7 days':'all time';
-    $('feed-view-note').textContent=`${hasLoaded?`${filtered.length} ${filtered.length===1?'idea':'ideas'} · `:''}${feedView.sort==='best'?'Highest score first':'Newest first'} · ${feedView.min==='any'?'any score':`score ${feedView.min}+`} · ${period}${currentTab==='saved'?' · saved on this browser':''}`;
+    $('feed-view-note').textContent=`${hasLoaded?`${filtered.length} ${filtered.length===1?'post':'posts'} · `:''}${feedView.sort==='best'?'Highest score first':'Newest first'} · ${feedView.min==='any'?'any score':`score ${feedView.min}+`} · ${period}${currentTab==='saved'?' · saved on this browser':''}`;
     $('posts').setAttribute('aria-busy', 'false');
     observer?.disconnect();
     if (!filtered.length) {
       const hasFilters=feedView.min!=='any'||feedView.period!=='all';
       $('posts').innerHTML = hasLoaded&&hasFilters&&(currentTab!=='saved'||posts.some(post=>saved.has(String(post.id))))
-        ? '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>No ideas match these filters.</h3><p>Try a lower minimum score or a longer period.</p><button class="button reset-feed-filters" type="button" data-reset-filters>Clear filters</button></div>'
+        ? '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">↻</span><h3>No ideas match these filters.</h3><p>Try a lower minimum score or a longer period.</p><button class="button reset-feed-filters" type="button" data-reset-filters>Clear filters</button></div>'
         : currentTab === 'saved'
-        ? '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>A place for the ideas you keep.</h3><p>Tap “Save idea” on any post to keep it here on this browser.</p><a href="#feed" data-show-all>Browse all ideas <span aria-hidden="true">↗</span></a></div>'
-        : '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>The first ideas are on their way.</h3><p>The loop publishes after research and a separate source check. Its recorded progress is on the machine page.</p><a href="machine/">See the loop log <span aria-hidden="true">↗</span></a></div>';
+        ? '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">↻</span><h3>A place for the ideas you keep.</h3><p>Tap “Save idea” on any post to keep it here on this browser.</p><a href="#feed" data-show-all>Browse all ideas <span aria-hidden="true">↗</span></a></div>'
+        : '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">↻</span><h3>The first ideas are on their way.</h3><p>The loop publishes after research and a separate source check. Its recorded progress is in the research log.</p><a href="machine/">See the loop log <span aria-hidden="true">↗</span></a></div>';
       return;
     }
     $('posts').innerHTML = filtered.map((post,index) => postMarkup(post,index)).join('');
@@ -162,7 +162,7 @@ import {historicalOverlapFor} from './historical-overlaps.js';
     const latest=slots.filter(slot=>validDate(slot.plannedAt)?.getTime()<=Date.now()).at(-1);
     const slotLabel=dateLabel(latest?.plannedAt||cadence.latestSlotAt);
     const slotNote=latest?latest.state==='published'?`The ${slotLabel} slot published at ${dateLabel(latest.actualAt)}.`:latest.state==='cap_reached'?`The ${slotLabel} slot reached the ${cadence.dailyCap||3}-post daily cap.`:latest.state==='no_post'?`The ${slotLabel} slot completed without a qualifying idea.`:latest.state==='retry_exhausted'?`The ${slotLabel} slot stopped after its failed retries.`:latest.state==='running'?`The ${slotLabel} slot is running; publication is not yet recorded.`:`The ${slotLabel} slot is ${latest.state.replace(/_/g,' ')}; no publication is recorded.`:cadence.slotState==='recorded'?'Latest slot has a recorded attempt.':`Publication for the ${slotLabel} slot is not recorded.`;
-    const proofNote=proof?.state==='publication_observed'?'Scheduled publishing is verified.':proof?.state==='loop_observed'?'A scheduled loop is recorded; scheduled publication is not yet verified.':proof?.state==='trigger_observed'?'A schedule trigger is recorded; scheduled publishing is not yet verified.':'Scheduled publishing is not yet verified.';
+    const proofNote=proof?.state==='publication_observed'?'A scheduled publication is recorded. Each new attempt still needs to pass the check.':proof?.state==='loop_observed'?'A scheduled loop is recorded; scheduled publication is not yet verified.':proof?.state==='trigger_observed'?'A schedule trigger is recorded; scheduled publishing is not yet verified.':'Scheduled publishing is not yet verified.';
     $('cadence-note').textContent=`Next planned loop: ${dateLabel(cadence.nextPublicationAt)} Vilnius. ${slotNote} ${proofNote}`;
   }
 
@@ -184,7 +184,7 @@ import {historicalOverlapFor} from './historical-overlaps.js';
       renderSchedule();
       const hostedVerified = Boolean(data.schedule?.verifiedHostedRunAt || data.status?.lastHostedRunUrl);
       const proof=data.schedule?.proof,scheduledVerified=proof?.state==='publication_observed';
-      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? hostedVerified ? 'Waiting for the first idea' : 'Waiting for the first run' : scheduledVerified ? 'Scheduled publishing verified' : proof?.state==='loop_observed'?'Scheduled loop observed':proof?.state==='trigger_observed'?'Schedule trigger observed':'Scheduled publishing unverified';
+      $('feed-status').textContent = data.status?.state === 'awaiting_first_cloud_run' ? hostedVerified ? 'Waiting for the first idea' : 'Waiting for the first run' : scheduledVerified ? 'Scheduled publication recorded' : proof?.state==='loop_observed'?'Scheduled loop observed':proof?.state==='trigger_observed'?'Schedule trigger observed':'Scheduled publishing unverified';
       $('feed-signal').className = `signal-dot${scheduledVerified?' live':''}`;
       $('feed-notice').classList.remove('visible');
       $('feed-notice').textContent = '';
@@ -202,7 +202,7 @@ import {historicalOverlapFor} from './historical-overlaps.js';
       $('feed-notice').textContent = hasLoaded ? 'The feed could not refresh. These are the last posts loaded. We’ll try again in a minute.' : 'The feed could not load. We’ll try again in a minute, or you can refresh now.';
       $('feed-notice').classList.add('visible');
       $('posts').setAttribute('aria-busy', 'false');
-      if (!hasLoaded) $('posts').innerHTML = '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">◔</span><h3>We couldn’t reach the feed.</h3><p>The latest ideas will appear when the connection returns.</p><a href="machine/">Check the machine <span aria-hidden="true">↗</span></a></div>';
+      if (!hasLoaded) $('posts').innerHTML = '<div class="empty-state"><span class="empty-symbol" aria-hidden="true">↻</span><h3>We couldn’t reach the feed.</h3><p>The latest ideas will appear when the connection returns.</p><a href="machine/">Read the research log <span aria-hidden="true">↗</span></a></div>';
     } finally {
       clearTimeout(timeout);
       fetching = false;

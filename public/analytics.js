@@ -27,7 +27,7 @@
         !/^[a-z0-9][a-z0-9-]{0,62}\.goatcounter\.com$/.test(site.hostname) || site.hostname === 'www.goatcounter.com') { active = false; queue.length = 0; return; }
       const isMachine = /\/machine(?:\.html|\/(?:index\.html)?)?$/.test(location.pathname);
       window.goatcounter = {no_onload:true,no_events:true,endpoint:`${site.origin}/count`,path:isMachine ? '/machine' : '/',
-        title:isMachine ? 'While You Sleep — machine' : 'While You Sleep — feed',referrer:''};
+        title:isMachine ? 'Autonomous Startup Ideas — machine' : 'Autonomous Startup Ideas — feed',referrer:''};
       const script = document.createElement('script');
       script.src = 'https://gc.zgo.at/count.js';
       script.async = true;

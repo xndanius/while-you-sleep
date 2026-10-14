@@ -158,7 +158,7 @@ test('the renderer keeps input records unchanged and supplies canonical navigati
   assert.match(missing,/No source rows are recorded/);
   assert.throws(()=>renderMethodology({baseURL:'javascript:alert(1)'}),/HTTPS base URL/);
   assert.throws(()=>renderMethodology({baseURL:'https://user:password@example.org'}),/without credentials/);
-  for(const file of ['public/index.html','public/machine.html'])assert.match(await readFile(new URL('../'+file,import.meta.url),'utf8'),/<a href="method\/">The method<\/a>/);
+  for(const file of ['public/index.html','public/machine.html'])assert.match(await readFile(new URL('../'+file,import.meta.url),'utf8'),/<a href="method\/">How it works<\/a>/);
 });
 
 const sourcePolicy = () => ({activeCap:40,scanBudget:20,explorationSlots:5,maxDiscoveriesPerDay:3,timezone:'Europe/Vilnius',review:'First due hosted research scan of each Vilnius day',promotion:{minAgeDays:7,minSuccessfulScans:6,minCheckedCandidates:10,minPassedChecks:3,minPublished:1,minimumAverageScore:'current_publish_threshold'},retirement:{minAgeDays:7,minSuccessfulScans:10,minCheckedCandidates:10,maxPassRateExclusive:0.1,consecutiveAccessFailures:10}});
