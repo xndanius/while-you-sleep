@@ -1,0 +1,218 @@
+{
+  "runId": "loop-38534084573-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-14T08:18:56.000Z",
+  "candidates": [
+    {
+      "title": "Invoice checks against orders and agreements",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+      "sourceIds": [
+        "e66c11ffb7bd20ced50ba56a",
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "sourceIds": [
+          "e66c11ffb7bd20ced50ba56a"
+        ],
+        "chore": "Handle invoices and check supporting documents against agreements and orders.",
+        "evidenceQuote": "Hantera fakturor och kontrollera underlag mot avtal och beställningar"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 7,
+            "reason": "A beginner can test fictional invoices in a sheet; the workflow example extracts invoice fields but does not compare agreements.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: a professional office may value a review queue; this notice proves paid human work, not AI-service purchases.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a"
+            ]
+          },
+          "feasibility": {
+            "value": 7,
+            "reason": "A two-week mock can flag field mismatches using operator-supplied fictional records; the reference supports extraction and logging, not matching.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "Intake and draft comparisons can repeat, but a person must verify source documents and decide every mismatch.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The notice names invoice checks against agreements and orders; the workflow shows invoice extraction and logging, not this comparison.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          }
+        }
+      },
+      "reason": "Picked as a narrow fictional-record experiment: compare extracted invoice fields with operator-supplied agreement/order fields, then send mismatches to a human. The workflow reference supports extraction and logging; real records, rules and AI-service demand remain unproved."
+    },
+    {
+      "title": "Work-order closeout and invoice readiness",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31549320",
+      "sourceIds": [
+        "00d3c50a94b55056aeb7023e"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "sourceIds": [
+          "00d3c50a94b55056aeb7023e"
+        ],
+        "chore": "Ensure work orders are updated and closed correctly.",
+        "evidenceQuote": "säkerställa att arbetsorder är uppdaterade och avslutas korrekt"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A fictional checklist can start in a sheet, but the notice gives no required fields or closeout rules.",
+            "sourceIds": [
+              "00d3c50a94b55056aeb7023e"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a professional office may value cleaner work-order closeout; the notice proves no AI-service demand.",
+            "sourceIds": [
+              "00d3c50a94b55056aeb7023e"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A mock checklist is possible, but two-week usefulness is uncertain without the actual closeout rules.",
+            "sourceIds": [
+              "00d3c50a94b55056aeb7023e"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A person must confirm each work order is complete and authorize invoicing; the notice gives no repeatable decision rules.",
+            "sourceIds": [
+              "00d3c50a94b55056aeb7023e"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The notice names work-order updates, closeout and invoicing, but gives little detail on fields, frequency or process.",
+            "sourceIds": [
+              "00d3c50a94b55056aeb7023e"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed as a fictional closeout checklist; source lacks concrete fields and decision rules, leaving the five-criterion mean below the threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Work-order closeout and invoice readiness",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31549320",
+      "reason": "Below threshold: the notice identifies work-order closeout and invoicing, but supplies no fields or rules for a useful comparison; prototype utility and autonomy remain too uncertain."
+    }
+  ],
+  "posts": [
+    {
+      "id": "e66c11ffb7bd20ced50ba56a",
+      "candidateId": "e66c11ffb7bd20ced50ba56a",
+      "title": "Check invoices against orders and agreements",
+      "promise": "Extract invoice fields, flag mismatches, and leave each decision to a person.",
+      "whatItIs": "The paid notice describes work handling invoices and checking supporting documents against agreements and orders. A small proposed service could read fictional invoice examples and compare operator-entered fields with a simple agreement/order sheet. The attached workflow example describes extracting invoice details and logging them in a sheet, which supports those prototype mechanics but does not demonstrate agreement matching.",
+      "whoPays": "Hypothesis: a professional services office that handles recurring invoices might pay for a reviewed exception queue. The notice establishes a paid human role, not demand for an AI service or willingness to pay.",
+      "loop": [
+        "An operator supplies a fictional invoice and matching test agreement/order row.",
+        "The prototype extracts selected fields such as invoice number and amount.",
+        "It compares only the fields the operator configured.",
+        "It lists missing or differing values with links to the test inputs.",
+        "A person checks the documents and decides whether any discrepancy matters."
+      ],
+      "evidence": "The fresh paid notice says the role handles invoices and checks supporting documents against agreements and orders. The n8n listing describes a workflow that extracts invoice details, logs them in a Google Sheet and sends a notification. These sources show the chore and a related example, not this proposed match check or customer outcomes.",
+      "uncertainty": "This is a proposed fictional-data experiment, not a tested service. Field choices and comparison rules are design choices. The workflow example does not verify agreements or legal/accounting correctness. Real deployment would require permission, access, privacy review and human approval; use fictional records only here.",
+      "first24Hours": [
+        "Create three fictional invoice and order pairs with deliberately varied fields.",
+        "Build a sheet with operator-chosen fields and expected values.",
+        "Manually compare prototype flags with the examples and record false alerts."
+      ],
+      "sourceIds": [
+        "e66c11ffb7bd20ced50ba56a",
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "sourceIds": [
+          "e66c11ffb7bd20ced50ba56a"
+        ],
+        "chore": "Handle invoices and check supporting documents against agreements and orders.",
+        "evidenceQuote": "Hantera fakturor och kontrollera underlag mot avtal och beställningar"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 7,
+            "reason": "A beginner can test fictional invoices in a sheet; the workflow example extracts invoice fields but does not compare agreements.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: a professional office may value a review queue; this notice proves paid human work, not AI-service purchases.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a"
+            ]
+          },
+          "feasibility": {
+            "value": 7,
+            "reason": "A two-week mock can flag field mismatches using operator-supplied fictional records; the reference supports extraction and logging, not matching.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "Intake and draft comparisons can repeat, but a person must verify source documents and decide every mismatch.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The notice names invoice checks against agreements and orders; the workflow shows invoice extraction and logging, not this comparison.",
+            "sourceIds": [
+              "e66c11ffb7bd20ced50ba56a",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Selected the invoice-to-order/agreement check as a narrow fictional-data prototype: mean 6.2, with related extraction/logging mechanics documented. Rejected the work-order closeout checklist below threshold because its source lacks task fields and decision rules."
+    }
+  ]
+}
