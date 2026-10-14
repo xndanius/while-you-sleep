@@ -1,0 +1,4759 @@
+{
+  "schema": 1,
+  "id": "research-38507211428-1",
+  "runId": "research-38507211428-1",
+  "type": "source-scan",
+  "createdAt": "2026-10-14T03:37:57.059Z",
+  "registrySha256": "9501fd7f8849b0f55b4e4740cb1d3dcbf4dcd84de4904dba2c2acf76dd8e2d65",
+  "definitions": [
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "name": "n8n · official AI workflows",
+      "url": "https://n8n.io/ai",
+      "kind": "html"
+    },
+    {
+      "id": "2ae9fd69127e82131f7ec675",
+      "name": "Hacker News · small customer-support products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+      "kind": "hn"
+    },
+    {
+      "id": "ef244017b1460269fc687cea",
+      "name": "Browser Use · official project",
+      "url": "https://browser-use.com",
+      "kind": "html"
+    },
+    {
+      "id": "63dbb54258e730e95fa20298",
+      "name": "Hugging Face · trending public Spaces",
+      "url": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+      "kind": "hf-spaces"
+    },
+    {
+      "id": "d554ca3fc8b9fd3548600b86",
+      "name": "Dify · official project",
+      "url": "https://dify.ai",
+      "kind": "html"
+    },
+    {
+      "id": "a654756600fbb68b9c75c45b",
+      "name": "TechCrunch · AI",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+      "kind": "rss"
+    },
+    {
+      "id": "7efc2c70ed9424b76bd7407b",
+      "name": "Apify · official platform",
+      "url": "https://apify.com",
+      "kind": "html"
+    },
+    {
+      "id": "470ff63db8da1802b0ccc779",
+      "name": "Hugging Face · invoice workflow demos",
+      "url": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+      "kind": "hf-spaces"
+    },
+    {
+      "id": "96fe006ed5f7b38bfc889c7d",
+      "name": "Ben’s Bites · public newsletter",
+      "url": "https://www.bensbites.com/feed",
+      "kind": "rss"
+    },
+    {
+      "id": "3733c65b9abe07b4b87156f9",
+      "name": "Simon Willison · public AI notes",
+      "url": "https://simonwillison.net/atom/everything",
+      "kind": "rss"
+    },
+    {
+      "id": "a5689419c24836e7e0ce37dd",
+      "name": "Latent Space · public newsletter",
+      "url": "https://www.latent.space/feed",
+      "kind": "rss"
+    },
+    {
+      "id": "ec389fe35523e6dbba11e744",
+      "name": "Hacker News · Launch HN",
+      "url": "https://news.ycombinator.com/launches",
+      "kind": "hn-launches"
+    },
+    {
+      "id": "11df15447c6c0e0dfdc06be3",
+      "name": "Hacker News · document products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+      "kind": "hn"
+    },
+    {
+      "id": "b681f434d554a69a059ccf85",
+      "name": "n8n · invoice processing templates",
+      "url": "https://n8n.io/workflows/categories/invoice-processing",
+      "kind": "n8n-workflows"
+    },
+    {
+      "id": "fb41898e3878114109088fed",
+      "name": "GitHub · daily trending repositories",
+      "url": "https://github.com/trending",
+      "kind": "github-trending"
+    },
+    {
+      "id": "d7da742b595e7ec512a8ef54",
+      "name": "Find a Tender · public service tenders",
+      "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=20",
+      "kind": "uk-tenders-demand"
+    },
+    {
+      "id": "cca981f46ee3fb8981413fee",
+      "name": "Contracts Finder · public service tenders",
+      "url": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?stages=tender&limit=20",
+      "kind": "uk-contracts-demand"
+    },
+    {
+      "id": "3c18d6f9afb86838768b18fe",
+      "name": "JobSearch · paid administration roles",
+      "url": "https://jobsearch.api.jobtechdev.se/search?q=administrat%C3%B6r&limit=20",
+      "kind": "jobtech-demand"
+    },
+    {
+      "id": "b36040a453674772f62166cb",
+      "name": "JobSearch · paid school administration roles",
+      "url": "https://jobsearch.api.jobtechdev.se/search?q=skoladministrat%C3%B6r&limit=20",
+      "kind": "jobtech-demand"
+    },
+    {
+      "id": "8ef335213e70b38904e7a504",
+      "name": "JobSearch · paid medical secretary roles",
+      "url": "https://jobsearch.api.jobtechdev.se/search?q=medicinsk%20sekreterare&limit=20",
+      "kind": "jobtech-demand"
+    }
+  ],
+  "definitionsSha256": "137964b31dbbdfc0c47169d0f505199e67e437669aaee1921b6638741e56d750",
+  "sources": [
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "url": "https://n8n.io/ai",
+      "productUrl": null,
+      "textSha256": "d1e3c2caaf462f9ec1c266faf046c42a4009f3b28a74fdd69cf3e6aa3dc7b253"
+    },
+    {
+      "id": "6cdd9673d8a4c6df36a271c6",
+      "url": "https://news.ycombinator.com/item?id=49473507",
+      "productUrl": "https://asking.com.br",
+      "textSha256": "84cadc325420c76c8c08d14f94ea10750dde4238345035192b0053bd417dd86d"
+    },
+    {
+      "id": "80acc896eb7e49fdc9ba34dd",
+      "url": "https://news.ycombinator.com/item?id=49262666",
+      "productUrl": "https://heydeacon.com",
+      "textSha256": "4a4cd45550d458ab5c11c0b44fa773f3fa9df08738d69f54085610ad3012d1ea"
+    },
+    {
+      "id": "72076adade67c90c7ff00772",
+      "url": "https://news.ycombinator.com/item?id=48384979",
+      "productUrl": "https://pocketping.io",
+      "textSha256": "d954a3ad81acc7595389c0fb2281172404c78bed05bc9aea311820636665a441"
+    },
+    {
+      "id": "afacaf413bd4ff2bd45612fc",
+      "url": "https://news.ycombinator.com/item?id=48243325",
+      "productUrl": null,
+      "textSha256": "13fec8fc67cd16c20441d96fff211f6c5622f289d3579890c2a105db1a386fac"
+    },
+    {
+      "id": "b59d472e868d018693dcf394",
+      "url": "https://news.ycombinator.com/item?id=48024366",
+      "productUrl": "https://www.bugtrotter.io",
+      "textSha256": "ad1e7cdca586ed487052c280058ce74d73b227e42586d00868d49ea50bc03bfc"
+    },
+    {
+      "id": "14da0aab26df018c6c149502",
+      "url": "https://news.ycombinator.com/item?id=47827928",
+      "productUrl": "https://auxx.ai",
+      "textSha256": "f85f697108f6ab7696ae9d8ea49fc870d70e1efa54de033d100f05c5d5859a8b"
+    },
+    {
+      "id": "2ca3640726449b93be0b088a",
+      "url": "https://news.ycombinator.com/item?id=46828261",
+      "productUrl": "https://www.chatbridge.live",
+      "textSha256": "63a5659ce21bb16f054d19f1bdb67d825ca03237fe18fcd331ca58390161b793"
+    },
+    {
+      "id": "4847fb0bb6b371ebc5f272c8",
+      "url": "https://news.ycombinator.com/item?id=46602819",
+      "productUrl": "https://www.hivinq.com",
+      "textSha256": "4669e960a88a9c46510628d806e743f10de435fa99d82054996f7250b7ea21fc"
+    },
+    {
+      "id": "af327c1f739ea7109e335359",
+      "url": "https://news.ycombinator.com/item?id=46176301",
+      "productUrl": "https://www.chat-data.com/changelog/ui-based-response-launch",
+      "textSha256": "33688817cc58400c112de8e773be51f85963f96d0c77638faa9ae55ebda1c34b"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "productUrl": "https://www.doozadesk.com",
+      "textSha256": "425c54c62d6804f4985d14fed97fc37ca99d477ea0ad5ebc945b4bbcc45e916a"
+    },
+    {
+      "id": "e97665c6220d305a170f032f",
+      "url": "https://news.ycombinator.com/item?id=46075684",
+      "productUrl": "https://www.sparrowdesk.com/ref=hn",
+      "textSha256": "a99365d7806c95dd6b86c02a30cfa1b4f7ab4f5e97a14b0aaa457ab74d90490a"
+    },
+    {
+      "id": "4deeec333a22b65c93f4285d",
+      "url": "https://news.ycombinator.com/item?id=45943336",
+      "productUrl": "https://app.supogen.com",
+      "textSha256": "db75bb4fb172523c664fdfb7aeabbc66e936e452678c352f9c27c4ad81530307"
+    },
+    {
+      "id": "67f404330095ab63c15efdfe",
+      "url": "https://news.ycombinator.com/item?id=45913070",
+      "productUrl": "https://dodiddone.it.com",
+      "textSha256": "bcbbe09689d6d8ac1bb624107881300a11b686964b79179837b440a1626abdc0"
+    },
+    {
+      "id": "e40d37ccd678e000ef8c0957",
+      "url": "https://news.ycombinator.com/item?id=45732847",
+      "productUrl": "https://afec48d1-2eb5-490b-a1d8-f3b483aa87dc-00-3om0kaugaka9.kirk.replit.dev/landing/972ca3fc-0657-48a7-ac47-6874017b75fb",
+      "textSha256": "9553ab545dfd2111cf66b6eca6a5e4e5cfb6ccc735c7acd7401cc29a91868fe8"
+    },
+    {
+      "id": "ace6c0b2882fba54cdaa7058",
+      "url": "https://news.ycombinator.com/item?id=45684178",
+      "productUrl": "https://screenask.com",
+      "textSha256": "551ad95a15036d42e858897ea660b38d98528b141b56f0606721e23996d2ca4f"
+    },
+    {
+      "id": "1b4c5d7e7c590fddd84e0c91",
+      "url": "https://news.ycombinator.com/item?id=45668780",
+      "productUrl": "https://www.gibsonai.com/use-cases/customer-support",
+      "textSha256": "10b1b65473adae1a7c1628113f1e818563c01ad54c5e0ff26a33b42d326bceca"
+    },
+    {
+      "id": "5f70b65d63a89e9186557064",
+      "url": "https://news.ycombinator.com/item?id=45288011",
+      "productUrl": "https://ticketdesk.ai",
+      "textSha256": "057d653672ecdde7facca3f9a1f29314f41909645fdc5fa2ce04df5208183141"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "productUrl": "https://www.lumro.co",
+      "textSha256": "90b62d0d0b3672d553ebf45246880e7f68fcd2f1c1f1e3579d4a596b35d8774c"
+    },
+    {
+      "id": "0df192c077f30c68eaa1172b",
+      "url": "https://news.ycombinator.com/item?id=44917083",
+      "productUrl": "https://www.helplify.io",
+      "textSha256": "bd78cac55615792cb16db246f6acd8971a708a014245928b0f891421b8401d48"
+    },
+    {
+      "id": "17b8a21b6c7e1054a8da07df",
+      "url": "https://news.ycombinator.com/item?id=44628286",
+      "productUrl": null,
+      "textSha256": "f8fdc1ba8c2e343df9c0de5f991155d6b89a7206bbfab8849582ba91525a7a75"
+    },
+    {
+      "id": "ef244017b1460269fc687cea",
+      "url": "https://browser-use.com",
+      "productUrl": null,
+      "textSha256": "76d9dd075a61124d501353770d5faad8379e4c33360b7f7f04a08116673deb57"
+    },
+    {
+      "id": "9d548c8934cc92d53bebcbb4",
+      "url": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "productUrl": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "textSha256": "16c11bb05dcb97faa968c93a185ef3282c0d072da5b3ac83b4bd6bf850fe3b2e"
+    },
+    {
+      "id": "e967910dc9b9aeec709a7a39",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "productUrl": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "textSha256": "8e3bbcd8106dd41aa4814200d02c0cb082371ae63e912d8200d777f3cf3617c3"
+    },
+    {
+      "id": "dc8958655abd8e125a7477ce",
+      "url": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "textSha256": "b2478a072790090e1f2e20e957537ba7123bd03d734f8781fabbf57bbc830656"
+    },
+    {
+      "id": "642d3322c52cb5a65a863277",
+      "url": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "textSha256": "b5ee939b85610a05c2f77315ef3f9441dc7e523433df9d760a8b229d45ac8773"
+    },
+    {
+      "id": "701f3cfaacd0df0a0703f5c7",
+      "url": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "productUrl": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "textSha256": "e022458f4b1eb22ff6696782d53b42a217956dc47c03da866e62c04333f643c3"
+    },
+    {
+      "id": "b1efedf1539f957695a6f38e",
+      "url": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-aio-loras",
+      "productUrl": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-aio-loras",
+      "textSha256": "4b24167f0d7fe51deb9ff65a369f81fb17003284fe6ae8d429683c7cd4197a86"
+    },
+    {
+      "id": "fb156c59b1983f5d49d61807",
+      "url": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "productUrl": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "textSha256": "e5a5341d5704c31b0a90cf38e43ce582f3f236621d103fbdddbee4226d8c97be"
+    },
+    {
+      "id": "9ce319a8ad36fdd6ea588528",
+      "url": "https://huggingface.co/spaces/FineEnvs/multi-harness-rl",
+      "productUrl": "https://huggingface.co/spaces/FineEnvs/multi-harness-rl",
+      "textSha256": "f884eb2e6b3d19df94488a5e1dfa5ea44f95cc63f775ee80bcfc107c6c1b4d46"
+    },
+    {
+      "id": "468350d28d751249c7662882",
+      "url": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-gguf",
+      "productUrl": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-gguf",
+      "textSha256": "ad436e841da32421fff4602a5044ddafdae66af75a33a82fe731e257f7c58d5d"
+    },
+    {
+      "id": "100ef290074628b971606650",
+      "url": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "productUrl": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "textSha256": "041fbbbb97d8af20672c58ace503b0a39192c26b6a5b4e4cba41f277a84e8420"
+    },
+    {
+      "id": "7508a12cb77f9acb45dc103f",
+      "url": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "productUrl": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "textSha256": "d61c606a0b8c559ae06b7c7a74679cc8df6b35a3a352db992888235a33e9821a"
+    },
+    {
+      "id": "dc55f80744e6b8b600a786bb",
+      "url": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "productUrl": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "textSha256": "06cb223b7a501895ab2854db99226d939e46d11da139f9c183ac8ccb89b8600c"
+    },
+    {
+      "id": "9f9138fda1c06c230777f1fd",
+      "url": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "productUrl": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "textSha256": "54d75bfe640371071d1428faf368efa8c75a300694e7c952732b185752ce0ee1"
+    },
+    {
+      "id": "abfd59f85ca3413221131441",
+      "url": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "productUrl": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "textSha256": "a7467d38e7a6dbfc093a24c8f1b05bd64ec5655e32a655cee20160028b539d2d"
+    },
+    {
+      "id": "697b19ddcec68ebd9cdc8fda",
+      "url": "https://huggingface.co/spaces/hugging-apps/minimax-h3-character-swap-lora",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/minimax-h3-character-swap-lora",
+      "textSha256": "acc90b299838323a270e4e50fa8f927a300410455b04d15a14d9f3e064abacab"
+    },
+    {
+      "id": "ce621ef626621472dd94dce7",
+      "url": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "productUrl": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "textSha256": "48258a533fe4c917f13f1b297a87919eee6d6bc0840eb197ede4b8e7a73f8d50"
+    },
+    {
+      "id": "3bc2a4a3dc8835fea9776402",
+      "url": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "productUrl": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "textSha256": "d2560be3047e5e2a62aced04aec887b2ef8c05d5c34ed8e1b1a38060e1229da3"
+    },
+    {
+      "id": "52acb0ba14da98d33a941174",
+      "url": "https://huggingface.co/spaces/kulkas2pintu/QWEN_EDIT_IMAGE",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/QWEN_EDIT_IMAGE",
+      "textSha256": "e1f7eaa419e34e08f9559010dfef9e6b3899c4487f4ada36fa37bab7fe8b23d7"
+    },
+    {
+      "id": "e2f8381828caabacf4704234",
+      "url": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "productUrl": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "textSha256": "861e33779d740799ca3c780500cbfda4feeff11297726c9caaead684da5bdc89"
+    },
+    {
+      "id": "4d3b9dd26805797b8e298f70",
+      "url": "https://huggingface.co/spaces/webml-community/embeddinggemma-2-webgpu",
+      "productUrl": "https://huggingface.co/spaces/webml-community/embeddinggemma-2-webgpu",
+      "textSha256": "3498c3e511c58c0eadb479ee8c75ccfc81f9c74e3d7b0d11bf5f94a31924c970"
+    },
+    {
+      "id": "d554ca3fc8b9fd3548600b86",
+      "url": "https://dify.ai",
+      "productUrl": null,
+      "textSha256": "387a4a7aea39510d15aba63d3fd157ecc574996981aa52e7b7c277bc4b9f7966"
+    },
+    {
+      "id": "f581adf32b14cf27ac832664",
+      "url": "https://techcrunch.com/2026/10/13/science-corporation-implants-its-vision-restoring-chip-in-its-first-stargardt-disease-patient",
+      "productUrl": null,
+      "textSha256": "b13e99589270e3bfd60c97868167821ed7cd497bac7b2293b00be5fcfe341bb4"
+    },
+    {
+      "id": "4b533c9e17a5cd60746210c3",
+      "url": "https://techcrunch.com/2026/10/13/cerebras-ceo-says-were-nearing-a-future-where-everyone-has-a-personal-ai-assistant-at-home",
+      "productUrl": null,
+      "textSha256": "54bb4f99fbc084e7f3e71cf194906f82060bcab99bfaf820b70fe10852cf3ec4"
+    },
+    {
+      "id": "b27d148e512fc806d239dad2",
+      "url": "https://techcrunch.com/2026/10/13/industrial-next-wants-factory-robots-to-switch-tasks-in-minutes-not-weeks",
+      "productUrl": null,
+      "textSha256": "7873e76726943570023f746c5b884da0dcd86d9707d8d8c6c1f1d2e327641066"
+    },
+    {
+      "id": "42b26e2f5aa4b54c951ee569",
+      "url": "https://techcrunch.com/2026/10/13/cerebras-ceo-pushes-back-on-ai-doomsday-warnings",
+      "productUrl": null,
+      "textSha256": "ca0b6e64d2f2bd99496733a2e893363bdcac93ee3d5253cf616f625ea517c691"
+    },
+    {
+      "id": "47b1c61501a00890c87ae572",
+      "url": "https://techcrunch.com/2026/10/13/judge-orders-openai-to-turn-over-hiring-records-in-apple-trade-secrets-case",
+      "productUrl": null,
+      "textSha256": "ebf1c43f44d8e826ebb2bb17104693f75c7ade3b941274029200de820ee62aa4"
+    },
+    {
+      "id": "fd0dc8b4fea02801dc1bf5b1",
+      "url": "https://techcrunch.com/2026/10/13/flox-intelligence-is-building-ai-to-keep-wildlife-away-from-trains-airports-and-roads",
+      "productUrl": null,
+      "textSha256": "753f1e1ed9f58f083c8311b182bb4baf6fa4b13e84207cd68281a975565f87da"
+    },
+    {
+      "id": "d2b49f5446522b415ed6cc39",
+      "url": "https://techcrunch.com/2026/10/13/facebook-is-giving-users-more-control-over-their-algorithm",
+      "productUrl": null,
+      "textSha256": "d4ac77f6fd67b40b05093b8649ac87d268a99e17062f68fd5fddbc6a85e19b09"
+    },
+    {
+      "id": "f0f1c2f3634e5356d16e0950",
+      "url": "https://techcrunch.com/2026/10/13/laplace-intelligence-red-teams-robots-and-self-driving-cars-before-they-hit-the-real-world",
+      "productUrl": null,
+      "textSha256": "fe4bd6aee4f9e05ae007e83fd0ee4a3434d58dcf980719227799b099eae0e828"
+    },
+    {
+      "id": "4e9e4f1d9cd106f632b9b1ae",
+      "url": "https://techcrunch.com/2026/10/13/pluto-security-raises-42m-as-ai-gives-enterprise-security-teams-a-new-headache",
+      "productUrl": null,
+      "textSha256": "9db5a2c5c4065163840f0bfd55cf0f54bab258543313293a3017795d4b7e211b"
+    },
+    {
+      "id": "45d87d6cab7a70aff9e6ab94",
+      "url": "https://techcrunch.com/2026/10/13/google-play-now-supports-private-vibe-coded-apps-built-just-for-you",
+      "productUrl": null,
+      "textSha256": "0f62ee72b9ca81babc7005c8805042b3121bb5d51c959d414c4998d9d37da829"
+    },
+    {
+      "id": "c84e593e0844397d895c89b5",
+      "url": "https://techcrunch.com/2026/10/13/satlyt-founded-by-a-former-google-and-spacex-product-manager-raises-8m-to-run-ai-on-satellites",
+      "productUrl": null,
+      "textSha256": "d3065a3c688180df7d8b6a5421d8026be838bc4e2b689776f9f7630097b10d4c"
+    },
+    {
+      "id": "2d6c787b937985c8d24e1e00",
+      "url": "https://techcrunch.com/2026/10/13/techcrunch-disrupt-2026-day-1",
+      "productUrl": null,
+      "textSha256": "d2009f673f15fa7fd62f08cfaf384536bdc699be8dbe98421c8406becaa12e24"
+    },
+    {
+      "id": "1c21139e121f2f8343db051b",
+      "url": "https://techcrunch.com/2026/10/13/spacexsi-bundles-x-premium-grok-and-cursor-into-one-subscription",
+      "productUrl": null,
+      "textSha256": "f75163e81d9e2391ec9e0dfb5d1e21f5dcb8f7eec93d8a0a3c77e720269e0671"
+    },
+    {
+      "id": "9a845b395df164fb630cb033",
+      "url": "https://techcrunch.com/2026/10/13/the-final-disrupt-stage-lineup-three-days-of-conversations-you-wont-hear-anywhere-outside-of-techcrunch-disrupt-2026",
+      "productUrl": null,
+      "textSha256": "709e64a9e25f941512ebf9168b92555b1636e3a0dc58e0ca4c8a2f7af48220b2"
+    },
+    {
+      "id": "d7ffd4af20344ede7b0624b9",
+      "url": "https://techcrunch.com/2026/10/13/amex-introduces-a-framework-to-prevent-ai-agents-from-making-unauthorized-purchases",
+      "productUrl": null,
+      "textSha256": "595260288ba8d8f7466168bddca8a8bd74b2b704cf24b98689da442ca5e315fd"
+    },
+    {
+      "id": "540f856caa5181656e7e9644",
+      "url": "https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy",
+      "productUrl": null,
+      "textSha256": "c1b7f91faf96ab5ed43e078ba7de5d0eb9068db9be0b637cf13f746d0537376d"
+    },
+    {
+      "id": "1e2db47d258dd52efadf3b01",
+      "url": "https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder",
+      "productUrl": null,
+      "textSha256": "f748b9f58d7170b182a4b4cd29da1af3f2cdac062d4d25c1694824ed48208ffa"
+    },
+    {
+      "id": "5086a26c24b9017fd585e28f",
+      "url": "https://techcrunch.com/2026/10/12/windborne-wins-a-hefty-us-air-force-contract-for-its-balloon-data",
+      "productUrl": null,
+      "textSha256": "66efaf4ac3ff378da560e70d17a7af6478e330dda2c7c63f76a93bdbd26af697"
+    },
+    {
+      "id": "f32ec83ece71d3f7fc37a571",
+      "url": "https://techcrunch.com/2026/10/12/honeyjar-offers-ai-tools-to-improve-pr-and-comms-at-every-company",
+      "productUrl": null,
+      "textSha256": "1edf57c7be80a8ee332541b88bcf92af3eab6ab52a9fb97b040774174e3c8c20"
+    },
+    {
+      "id": "3280ed302a3eecae2a9571c7",
+      "url": "https://techcrunch.com/2026/10/12/microsoft-president-says-uk-is-best-placed-to-drive-ai-regulation",
+      "productUrl": null,
+      "textSha256": "dfa2dc1c8f8a370a1a74987f44b11efb0e8b7d17251e75954e14fe55b0a5a19a"
+    },
+    {
+      "id": "7efc2c70ed9424b76bd7407b",
+      "url": "https://apify.com",
+      "productUrl": null,
+      "textSha256": "75e956781485d3a5d968bc7097f9437830d6ed9c5c813d9b4ecbb819257eff5d"
+    },
+    {
+      "id": "698bfea2b7b729bc0ab16a1c",
+      "url": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "productUrl": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "textSha256": "5445549d6ea183f36344ac1ab73bfc390cbd63fb346f13448c6f09aa8b0da9c1"
+    },
+    {
+      "id": "15950ad512e6bd08dfe62252",
+      "url": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "productUrl": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "textSha256": "156d76adbb83cec6b5a780be6f0bd36b910de08df1a069ebe05cfb4e2359bf89"
+    },
+    {
+      "id": "50561baf4530db439848fc9b",
+      "url": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "productUrl": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "textSha256": "d2fd2c08851fb46f7bb79d3d2c077198be30692cefb37dfdf35f76231da02a28"
+    },
+    {
+      "id": "3d28365427bc516da7d0ed0d",
+      "url": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "productUrl": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "textSha256": "03896c841ac768bef81d132d984b11922b22eaa74cebe72d1c386b321b692180"
+    },
+    {
+      "id": "e5074e4b1ac7444fb51faf0e",
+      "url": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "productUrl": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "textSha256": "f69ca6c31c3d2ab1443ee8e9de694b88a81ddbe1068116074ccd6d3f5ff42376"
+    },
+    {
+      "id": "f8cfea836e1702ceec21d5f8",
+      "url": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "textSha256": "89b0c93b8235a21bfca9cd25227974999c8764938f8daf2eafd8461199da3479"
+    },
+    {
+      "id": "a07874e56fdc37fe2c042b81",
+      "url": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "productUrl": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "textSha256": "7c00cb4bee8f985edc27216961329563af1389d0830f801426ae8e5ba8993bed"
+    },
+    {
+      "id": "623769c9d980ffb995f65cdc",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "textSha256": "32e19581770ff38f8c5f51086745e12d2395e8017ef6197e32e10b3d0a57d94c"
+    },
+    {
+      "id": "7590c62adf8c4b6dd70ad54e",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "textSha256": "ef207b789ef768bcb8caaea1b191562d6472d654354bc5c5a7eb74d4ef5e4758"
+    },
+    {
+      "id": "bdd8b5a7dd636446ee24a8fe",
+      "url": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "productUrl": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "textSha256": "f55325262f51fb5affbe255f33068872d50c46735ed9b85c11883b75d82800da"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "textSha256": "75beb36c49123ff8794e4cb033ebe32d936798f48a1ee61cc8ff0eb93e834daa"
+    },
+    {
+      "id": "1609df54fa9aaf3df877db65",
+      "url": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "productUrl": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "textSha256": "39903fe14d9ffcdca2332c8fc6e0b43bc2beb679d24069644a1614bd9c335ba0"
+    },
+    {
+      "id": "f657dd5703cbf04263ca2cbe",
+      "url": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "productUrl": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "textSha256": "5bd5b423943895db9acacc1dd7ed85b5cb5752c879b60320a9048738c15e3aae"
+    },
+    {
+      "id": "a569e909a84275c0e342e3f9",
+      "url": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "productUrl": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "textSha256": "c44f1fc8b8d069d58554adf86662dabf35860e658ce0fe3ed009d41708471f61"
+    },
+    {
+      "id": "14e26d166e12757318a5e260",
+      "url": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "textSha256": "5b134e39c465062a1fa85d5a094fec672384cc7c0f61d7ffdbba7e8d9a681ef0"
+    },
+    {
+      "id": "8834a95ee6e22f1783f0f8bc",
+      "url": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "productUrl": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "textSha256": "d3e4d11211da203c75cfe31971d03e37263919eaeb63d1cacff3ce053ea0d2d3"
+    },
+    {
+      "id": "4a2181b4ee8a3fdd132b74ac",
+      "url": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "textSha256": "2cecc12cd9a4dda624452ce30876a887d5e6709de4aa996596322a5283e03cb4"
+    },
+    {
+      "id": "0efa82095af534ac6fa36985",
+      "url": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "textSha256": "301489ab40330c32a37e999a8f402c8947eb7376e27d8f0bfb39f26cdc22750f"
+    },
+    {
+      "id": "14381d771aefb1ca8401fd62",
+      "url": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "textSha256": "7a76dbd675b48d745fc770f5c4d589b0992b799db23707e3fc07370b3b7b8b81"
+    },
+    {
+      "id": "2f30ca6f505b92f0e5ab05c1",
+      "url": "https://huggingface.co/spaces/Mustafa5192/Invoice-merger",
+      "productUrl": "https://huggingface.co/spaces/Mustafa5192/Invoice-merger",
+      "textSha256": "638577d3db359c3f4f8d82ae067e19946b3f478e95cdd42a6f86544957dfc313"
+    },
+    {
+      "id": "7aafcc8d015cd1278b985bee",
+      "url": "https://www.bensbites.com/p/zucks-wonderfull",
+      "productUrl": null,
+      "textSha256": "2489c27ee77c2fd92caa83c5216d491cfa58428a4c0bd1f33a9ecb9926405c3b"
+    },
+    {
+      "id": "8fe6e5f2fddf3911b3c8a1e9",
+      "url": "https://www.bensbites.com/p/text-is-so-2023",
+      "productUrl": null,
+      "textSha256": "14494f192071866f8fce806452ecaa647b62f485245c8ce9ca82d9e87761f0ba"
+    },
+    {
+      "id": "6559bbeddb61172576de7951",
+      "url": "https://www.bensbites.com/p/thoughts-from-san-francisco",
+      "productUrl": null,
+      "textSha256": "ed77c5776a0864dca70f258345c481ea1e52cff00fc510df9a3333d17ac288b5"
+    },
+    {
+      "id": "d39329af8ebd63eb33c7e0e8",
+      "url": "https://www.bensbites.com/p/openai-devday-2026",
+      "productUrl": null,
+      "textSha256": "08d19417bd54547a05602ef5260c213841df34aa2295f4ddaf9e54c6548f9226"
+    },
+    {
+      "id": "14f7ddb17512538ee6ead671",
+      "url": "https://www.bensbites.com/p/sonnet-55-is-worth-a-try",
+      "productUrl": null,
+      "textSha256": "8d15ffd97c3dc7f51b11317ef4883c407be020ee9dce505a2d51dc865d45079c"
+    },
+    {
+      "id": "2c9a7f5cf7155b059672e97a",
+      "url": "https://www.bensbites.com/p/50-years-of-tech-devices",
+      "productUrl": null,
+      "textSha256": "35d743dfea595290129b377577ab8f15ed4681fee4a9db857be8205b2925f1a9"
+    },
+    {
+      "id": "fd54812f164c816fbab95370",
+      "url": "https://www.bensbites.com/p/back-to-claude",
+      "productUrl": null,
+      "textSha256": "1a9f67433451d85516b9dbea8d13d6410414677937c231ed247cc2272f0ebfe1"
+    },
+    {
+      "id": "6738f3ceabaa304f81cb8cdf",
+      "url": "https://www.bensbites.com/p/what-can-you-build-with-jev",
+      "productUrl": null,
+      "textSha256": "cf160563189dde7097a817ef72472c9883ee9825f6254703847883bd8067340c"
+    },
+    {
+      "id": "d3cb423779ff8236c3ec4324",
+      "url": "https://www.bensbites.com/p/new-home-for-cowork",
+      "productUrl": null,
+      "textSha256": "d7d6a512025f30f1e55518c3f98066b33a954a4a272fb18783ae895147061984"
+    },
+    {
+      "id": "b76e0dae669e83a29804f9e3",
+      "url": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+      "productUrl": null,
+      "textSha256": "d5f8db361d235ac506c28ec8ebffc3cb210b78f6fe2c36dfe4fad4a524771eb8"
+    },
+    {
+      "id": "07d50b9cc4ae26797646c9fa",
+      "url": "https://www.bensbites.com/p/telling-ai-to-design-is-hard",
+      "productUrl": null,
+      "textSha256": "1b4f9ae874925ade8f2914c2269aea11a4875e7ab59b7848b5a57cf73e65677f"
+    },
+    {
+      "id": "e6936e42c6e9ce1c5ee0fa33",
+      "url": "https://www.bensbites.com/p/everyone-needs-a-muse",
+      "productUrl": null,
+      "textSha256": "c8d691eca7b09c25a147f31cb101bde69815fe2e2b7e13f06929468dc7b54b36"
+    },
+    {
+      "id": "d5f7db556079222ae56abcc0",
+      "url": "https://www.bensbites.com/p/the-first-gpt-6-model",
+      "productUrl": null,
+      "textSha256": "b026e052cd7cc772ba5c5bee7a3d9414c6ccbafa5a97e185733229e237d2f250"
+    },
+    {
+      "id": "8175048030ded19a63f81dff",
+      "url": "https://www.bensbites.com/p/scraping-107m-rows-of-data-to-build",
+      "productUrl": null,
+      "textSha256": "9e12236807a34e1d2ce1fd32de1fcf5631783a52f2ae827c725535f0704205b5"
+    },
+    {
+      "id": "40a9913f55937995275810d8",
+      "url": "https://www.bensbites.com/p/fable-51",
+      "productUrl": null,
+      "textSha256": "da664ef30f2510c82e6d60d3bc1c9666f6ed5c5b3a046a65900ad8bb1fad9fac"
+    },
+    {
+      "id": "6bff2778e2fa248bde021efd",
+      "url": "https://www.bensbites.com/p/build-your-ideas",
+      "productUrl": null,
+      "textSha256": "4bfc8d732ed76a4aa2834bdb78859d5ba4443a8c99a3374a6a4b8bdce573b944"
+    },
+    {
+      "id": "5d1198e2c0c1ba038d9732d2",
+      "url": "https://www.bensbites.com/p/how-i-built-this-21f",
+      "productUrl": null,
+      "textSha256": "f33f8274b633ae95dac760331a41d67bae38651b9fb73cf2a434bb4ac9431699"
+    },
+    {
+      "id": "52cd6f64afa8aaf328ee7f97",
+      "url": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "productUrl": null,
+      "textSha256": "25e62346a19a3eb275c88a78a4c3bc5275ab5fa4cdad2e8b166706cb4c0dc3a0"
+    },
+    {
+      "id": "8d9e0fb1cc8e873eb2bd8152",
+      "url": "https://www.bensbites.com/p/agents-on-your-mobile",
+      "productUrl": null,
+      "textSha256": "fd388cb5bf4ff0266d26a7ab5c4d0bd9186b764ff34aedcc23e94b72436a9016"
+    },
+    {
+      "id": "f9873c0d952a116ee97e1294",
+      "url": "https://www.bensbites.com/p/how-i-built-this",
+      "productUrl": null,
+      "textSha256": "43d90aba81172f4f3f9fa1ea30ea04236267e71638a6ac4b72c95a48dfabda9a"
+    },
+    {
+      "id": "7e289d45dfc4cd8f5fef8ccf",
+      "url": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic",
+      "productUrl": null,
+      "textSha256": "21cccd45f34c45ca6a9f1ee10f1047f3ce1b08c0ab84aa5c7216baf72cc7aab2"
+    },
+    {
+      "id": "6451d923eed6bbe644dbebbc",
+      "url": "https://simonwillison.net/2026/Oct/13/llm-gemini",
+      "productUrl": null,
+      "textSha256": "a2bb32b58c7818899ea1512f6792619b64908dd96fec26a704e0e83f51e0b5b2"
+    },
+    {
+      "id": "1ce341749cd1d883ec323914",
+      "url": "https://simonwillison.net/2026/Oct/13/geoffrey-huntley",
+      "productUrl": null,
+      "textSha256": "b2178a47a23e6fd64af7f3e95fe30b3b4c37b231855c0ed47dd710e198adf333"
+    },
+    {
+      "id": "e6734b2c11074d76a3ecb2a6",
+      "url": "https://simonwillison.net/2026/Oct/13/web-edit",
+      "productUrl": null,
+      "textSha256": "7ee1a5e38cfe48178fda0d5ec5cc20a35c013296daf2970f12d7d1b1e3f79354"
+    },
+    {
+      "id": "5ca8d6f055cb2e9fa5fb4b75",
+      "url": "https://simonwillison.net/2026/Oct/12/llm-meta-ai",
+      "productUrl": null,
+      "textSha256": "5401f4c3eb80460cd413d6b9f45db43cc61578679520944200fe6491d17922f7"
+    },
+    {
+      "id": "e8d8f43511a9291fb5e3d53b",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15",
+      "productUrl": null,
+      "textSha256": "e4a2f3b16732556ead2f694b302ff5c705c106aa517f685b992ba45337c76597"
+    },
+    {
+      "id": "97e3cba45007401f16113a4c",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15-web-edit-profiling",
+      "productUrl": null,
+      "textSha256": "13eb7bd532e4b60082aa7df0ad46f25d3c053ea005bbeca58cb72eb8481d62ed"
+    },
+    {
+      "id": "993bc19082d2d062c86a72ba",
+      "url": "https://simonwillison.net/2026/Oct/12/web-edit",
+      "productUrl": null,
+      "textSha256": "00fce9734601f50e7e04d3a2f54c9205b8c4aa099d78485084c105ac8d5fc4b7"
+    },
+    {
+      "id": "79fb31c209812beb34edc71f",
+      "url": "https://simonwillison.net/2026/Oct/12/datasette-ports",
+      "productUrl": null,
+      "textSha256": "acf6c6ffd4533727e13b78d704a455b797ff3c3fb830d4f764ed0007c3d3cfc5"
+    },
+    {
+      "id": "7291bd8b12952a0e561c0d2e",
+      "url": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "productUrl": null,
+      "textSha256": "1c2f7f3141d05c744bc3bacd754a5d5ec83ef9d98de6b85acfb792918edb9a8b"
+    },
+    {
+      "id": "d3612ff459da8b570925d705",
+      "url": "https://simonwillison.net/2026/Oct/10/python-actions",
+      "productUrl": null,
+      "textSha256": "3abc73df1dd6904aa4c9ce743feaecfc7fc937965b3441b978a3677751c110a3"
+    },
+    {
+      "id": "51b6227273006399313d5b67",
+      "url": "https://simonwillison.net/2026/Oct/10/the-new-york-times",
+      "productUrl": null,
+      "textSha256": "0fd362396d10701a6d28dd207e3f7faa1750ed605286dee8472f0e44ce2eb6b5"
+    },
+    {
+      "id": "7e720aeda47f0a423402183f",
+      "url": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "productUrl": null,
+      "textSha256": "6223f4d25b502c19cc3fe654e4ca6606f24748d9adce6e012008db945b409998"
+    },
+    {
+      "id": "39e6bd368c40b12952cf2dce",
+      "url": "https://simonwillison.net/2026/Oct/9/matthew-green",
+      "productUrl": null,
+      "textSha256": "8839b765f5113fbdd87d9ae42ef0aafd93d4eb865d04de34a8ea0463ef65c1af"
+    },
+    {
+      "id": "6cb53bbd6b721016b18daaf4",
+      "url": "https://simonwillison.net/2026/Oct/9/built-using-my-voice",
+      "productUrl": null,
+      "textSha256": "c48edb69143b7d0e53c9e0d6afb2dbea10ba487ca1e2f66b1b31d8b4fa45bdf5"
+    },
+    {
+      "id": "f5034dade94eb8023e8cc08f",
+      "url": "https://simonwillison.net/2026/Oct/9/ttok",
+      "productUrl": null,
+      "textSha256": "e8bdf081ca0701ec4c636126f56008c91fae375d7fa2dc76982c2b1f4247dcdb"
+    },
+    {
+      "id": "f37003b32e1952f48d5b2803",
+      "url": "https://simonwillison.net/2026/Oct/8/ttok",
+      "productUrl": null,
+      "textSha256": "3333f44a32a4579b3a4e03f6b3c1761f44312eddd13903c912065d244ec1ac72"
+    },
+    {
+      "id": "3618833fba59bdc647a6bc0c",
+      "url": "https://simonwillison.net/2026/Oct/8/carson-gross",
+      "productUrl": null,
+      "textSha256": "313eac077f0fb87192676ad90dc8669b51bd351b40dadc4aa4c262cb313678b4"
+    },
+    {
+      "id": "6218fed10e32f470e0284ea4",
+      "url": "https://simonwillison.net/2026/Oct/7/ben-affleck",
+      "productUrl": null,
+      "textSha256": "5848f700ae5dd84f567d99835d4768943bb75e2d20bc13161cb693926ec7c238"
+    },
+    {
+      "id": "fdc864340b44ea6ec22983b3",
+      "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5",
+      "productUrl": null,
+      "textSha256": "388e0980969960b159834159a9b7b1c4ab1f72102d27bfff355d8807d4e23b63"
+    },
+    {
+      "id": "be997bf718606abb5880af09",
+      "url": "https://www.latent.space/p/dyna",
+      "productUrl": null,
+      "textSha256": "48354935843409f03d96e3fe2765514c8edd830507462583c34c3bc9e1e66d55"
+    },
+    {
+      "id": "e71374164f2cb1add8d9303e",
+      "url": "https://www.latent.space/p/claude-dynamic-workflows",
+      "productUrl": null,
+      "textSha256": "9ec24825011dba9edcb7e925c09e8df1ce12e1769f8c00939cc7afb00ac9a1f8"
+    },
+    {
+      "id": "e5f022f9be79d8e96eab97cb",
+      "url": "https://www.latent.space/p/nyc2026",
+      "productUrl": null,
+      "textSha256": "062dc9bcc769ad1e31ab70a07973c4be8b1e75b40f69dc911727db5bb87a19aa"
+    },
+    {
+      "id": "9a2a489d753abcefd301a946",
+      "url": "https://www.latent.space/p/standard-bots",
+      "productUrl": null,
+      "textSha256": "a4b1bf7dba88dd20289bccfbc993d921fdb3fcbd3f7e29cd749bbd75b21a2a41"
+    },
+    {
+      "id": "68a694837125984e014d7340",
+      "url": "https://www.latent.space/p/biohub-deepmind",
+      "productUrl": null,
+      "textSha256": "9c3bf2332807789b148491d6f9a71f4429ef7a9dfc5eadd02d07287a5f4d3619"
+    },
+    {
+      "id": "9db9af42b7f614ecd07414a9",
+      "url": "https://www.latent.space/p/ainews-not-much-happened-today-60f",
+      "productUrl": null,
+      "textSha256": "c2af71f7cb1533a2ce38b702df83faec3ec4f1ad314de5f63b164ac82bc6f363"
+    },
+    {
+      "id": "22732f8185e35596b40539e9",
+      "url": "https://www.latent.space/p/stacklok",
+      "productUrl": null,
+      "textSha256": "17407d17265301e4b5926006ae122462feac8c8d8d9ca7841e9ce48b4253933b"
+    },
+    {
+      "id": "9416b01a853f1769cc798e8d",
+      "url": "https://www.latent.space/p/ainews-quasi-riemann-hypothesis-openai",
+      "productUrl": null,
+      "textSha256": "cf80dab7209c93676f05145946650d7bf95f86d8531c2b8fcbe36e8bc842391b"
+    },
+    {
+      "id": "417c3a0572d8db4597000019",
+      "url": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "productUrl": null,
+      "textSha256": "0f17f4ebe8daeab6e29b8c802bae868d1696d73148cf50a2a6b2fca024d4a869"
+    },
+    {
+      "id": "0300916b911fbe76cc9315db",
+      "url": "https://www.latent.space/p/airbnb",
+      "productUrl": null,
+      "textSha256": "61c9742547fce0048f91c49a323287fa3a5b71ec4115a0865ce831d2b0beab84"
+    },
+    {
+      "id": "901948bef614fb42cdf74c7b",
+      "url": "https://www.latent.space/p/ainews-pi-10-pi-durable-and-aie-nyc",
+      "productUrl": null,
+      "textSha256": "1562f3d4648f33044e8af7a05da69e63829a678975b141d0696fe041792baaab"
+    },
+    {
+      "id": "da0034913ac66df228385b13",
+      "url": "https://www.latent.space/p/rlm",
+      "productUrl": null,
+      "textSha256": "b000b9b549ba113ce0707d7932055ea9051325dd5c314819b1133c4e6211f5fe"
+    },
+    {
+      "id": "cfe32cdb08fcc91ab019a475",
+      "url": "https://www.latent.space/p/devday-2026",
+      "productUrl": null,
+      "textSha256": "1dda3c013ac65ae5029405fd29efccb802a62a619aa2a427a7946a02820e39a2"
+    },
+    {
+      "id": "3439063e9fd745f73599d596",
+      "url": "https://www.latent.space/p/ainews-openai-devday-2026-dots-61",
+      "productUrl": null,
+      "textSha256": "4dfb00a053d4c42f1ea2d59910ce78e00482288a21fcbc9d5a60288abb0a9372"
+    },
+    {
+      "id": "c0f3efa6baba2d65cbf16e0b",
+      "url": "https://news.ycombinator.com/item?id=50073471",
+      "productUrl": "https://news.ycombinator.com/item?id=50073471",
+      "textSha256": "35ed9e7559b13b10788848240228d4f4c2a716be68c5c83873f07273b69634b9"
+    },
+    {
+      "id": "93481ec2e3a9d5b087b696ce",
+      "url": "https://news.ycombinator.com/item?id=50059096",
+      "productUrl": "https://news.ycombinator.com/item?id=50059096",
+      "textSha256": "56f6cb608143135cff621e202c06d0fafebc5b4e245df4fcd8fe23e23e29be42"
+    },
+    {
+      "id": "bae2411b93f9037617b9617b",
+      "url": "https://news.ycombinator.com/item?id=49911995",
+      "productUrl": "https://github.com/magnitudedev/magnitude",
+      "textSha256": "a03f4c81a7776f98b58b2d1e1c0c6ff06afd5295c1947a4aa2406c57ce5ffcd0"
+    },
+    {
+      "id": "241cedafb2f2096359f71f0e",
+      "url": "https://news.ycombinator.com/item?id=49881505",
+      "productUrl": "https://www.vespper.com/blog/launching-vespper-docx-mcp",
+      "textSha256": "929a46993d7ddc3fae2d61e91bdf97de9dd1305c5108af24952f549d967a9ae6"
+    },
+    {
+      "id": "971b17fcf8ca133b04009416",
+      "url": "https://news.ycombinator.com/item?id=49804931",
+      "productUrl": "https://www.coveragecat.com",
+      "textSha256": "2a2ee29595c9e344db67560e7b6193f456d893914178494e02e815fd5c2bdc9b"
+    },
+    {
+      "id": "98a698085fb1fa80319290a2",
+      "url": "https://news.ycombinator.com/item?id=49743049",
+      "productUrl": "https://news.ycombinator.com/item?id=49743049",
+      "textSha256": "551f78510e52e037d4e86755818a3308fa074dc173e629064d1605c3fdafd7aa"
+    },
+    {
+      "id": "56abc7d43b055b8120e31430",
+      "url": "https://news.ycombinator.com/item?id=49552616",
+      "productUrl": "https://news.ycombinator.com/item?id=49552616",
+      "textSha256": "74c15c437dd6c190a6ce78c8db32aea311c87cc8d5891d5421d03c739efe48f1"
+    },
+    {
+      "id": "6e96c111f32d0712944683da",
+      "url": "https://news.ycombinator.com/item?id=49543530",
+      "productUrl": "https://news.ycombinator.com/item?id=49543530",
+      "textSha256": "0168e0026f9fc6af726516a9bfabb665243c0ef17b6ca7b6717a95b0cf902416"
+    },
+    {
+      "id": "d52885a334088c8a3164163e",
+      "url": "https://news.ycombinator.com/item?id=49525153",
+      "productUrl": "https://www.norirobotics.com",
+      "textSha256": "4d3c9dc849384b7b66c88fbcc094651d38d110bca840b341d96812656975e821"
+    },
+    {
+      "id": "44c4a2b1e7c7b231fde2a80c",
+      "url": "https://news.ycombinator.com/item?id=49511007",
+      "productUrl": "https://usealmanac.com",
+      "textSha256": "c6ed95d4a0edff4df89479ffb7d51b0db10f978dd9025d2d8d927fde595f9e0c"
+    },
+    {
+      "id": "3219402da73851e1cdb792e0",
+      "url": "https://news.ycombinator.com/item?id=49510632",
+      "productUrl": "https://github.com/Hebbian-Robotics/hflow",
+      "textSha256": "c19c63a89fd1614f7a27106eb2b18f77d3d2e519c95a641f7d256f44add23517"
+    },
+    {
+      "id": "f44fa4c5ba02f64f5102fc3b",
+      "url": "https://news.ycombinator.com/item?id=49466715",
+      "productUrl": "https://news.ycombinator.com/item?id=49466715",
+      "textSha256": "d8e7e562126ac3443cbd1272ea25f8e11f5e0600eacc1baf20566373d0ac4305"
+    },
+    {
+      "id": "10ccfbc2566b618813e2c054",
+      "url": "https://news.ycombinator.com/item?id=49451495",
+      "productUrl": "https://www.risklytics.ai",
+      "textSha256": "37ab988e2555f093672b68b2896be2294c15ed0dfce7cc9061006ada8ca71b3d"
+    },
+    {
+      "id": "1e322718b449dbf37613b836",
+      "url": "https://news.ycombinator.com/item?id=49376038",
+      "productUrl": "https://github.com/runvendo/vendo",
+      "textSha256": "98aec9a40793682a155688d8463ba42151ca770f101dd32db695b736640e55db"
+    },
+    {
+      "id": "c48b9ca3991d590a76e44c0d",
+      "url": "https://news.ycombinator.com/item?id=49363710",
+      "productUrl": "https://github.com/onecli/onecli",
+      "textSha256": "15e70b9ca3161cf9759826de08da93a9dc89b488d97ac7847d63823aeb38cd58"
+    },
+    {
+      "id": "4688b71b756a06361476f2fb",
+      "url": "https://news.ycombinator.com/item?id=49348136",
+      "productUrl": "https://machine0.io",
+      "textSha256": "58382609d58dcfd5dcdd2423ebd541eee78a7a07c80cee4a505044a86f4171fc"
+    },
+    {
+      "id": "3d4e4fd79cddb69878f413c1",
+      "url": "https://news.ycombinator.com/item?id=49332751",
+      "productUrl": "https://speko.ai",
+      "textSha256": "65aa0d8702ef782a9c3e025cacd3524a3408c6b14c9ba1d7ec3a7a4d1a4d5804"
+    },
+    {
+      "id": "51dcb64339d73bb520ac10a2",
+      "url": "https://news.ycombinator.com/item?id=49283063",
+      "productUrl": "https://www.codewithbullet.com",
+      "textSha256": "d8f12613b2bb80238657afb86ca551a7736872f343f6a60268081c90a8622655"
+    },
+    {
+      "id": "4298bff4fe796619b500af25",
+      "url": "https://news.ycombinator.com/item?id=49269090",
+      "productUrl": "https://discoveredmaterials.com/research",
+      "textSha256": "554f2aeb09874f2143bce2b4df1e608cdce1d573688a8bd7311a1c20e5568a21"
+    },
+    {
+      "id": "879ab9478970541649165f54",
+      "url": "https://news.ycombinator.com/item?id=49259309",
+      "productUrl": "https://www.trykeet.com",
+      "textSha256": "5deba4476356ba84ee77e01b777eb37f6ba4242d18c8e187bcd6c22fa4d74a81"
+    },
+    {
+      "id": "342b136b581a48d87b445a93",
+      "url": "https://news.ycombinator.com/item?id=50079361",
+      "productUrl": "https://updown.laravel.cloud/059a14a0-9113-4fad-a9db-e8ef2d2e830c",
+      "textSha256": "b765cb24e09b7cc2f7b5280a612283d2751c45b5534e4cc61412c806d9233204"
+    },
+    {
+      "id": "5c593ce6f13e38ccca3ce5db",
+      "url": "https://news.ycombinator.com/item?id=50052566",
+      "productUrl": "https://www.jruva.in",
+      "textSha256": "894aca9addebd677d678f8a17f969c154fde2a3306c036b6d2eeb6ad8302b53b"
+    },
+    {
+      "id": "cd4b108088eb92f81b6c1adf",
+      "url": "https://news.ycombinator.com/item?id=50048129",
+      "productUrl": "https://cachety.com",
+      "textSha256": "8233ef1e11f847229fa221baafa381da6b4895f32d477ace3679e7d571bd99aa"
+    },
+    {
+      "id": "d32a3e5679ad79dcdfea2668",
+      "url": "https://news.ycombinator.com/item?id=50031317",
+      "productUrl": "https://github.com/aartur/docexp",
+      "textSha256": "8dd0fa6d60c23a3ccde4125c67b1f76de49da0be163733ad3d15809cf62a8536"
+    },
+    {
+      "id": "9466c808c7a1baff1a388125",
+      "url": "https://news.ycombinator.com/item?id=50014659",
+      "productUrl": "https://www.nace.ai/developers",
+      "textSha256": "1768ada088a9ec11b50f067f2694358b034d583ff94cf4c348109e89341e7e33"
+    },
+    {
+      "id": "b10a3bb525a948027a616984",
+      "url": "https://news.ycombinator.com/item?id=50006936",
+      "productUrl": "https://nucleus.excom.dev",
+      "textSha256": "3eedf10655a1bc0a11d527265fc29611021bad3efcaf8c40d5841ad5c4691d2f"
+    },
+    {
+      "id": "c815e99f1918e58a78b4349c",
+      "url": "https://news.ycombinator.com/item?id=49977184",
+      "productUrl": "https://docultra.org",
+      "textSha256": "8426defe1ca0edf2a62f5de3c99f5be2af74ab160b33b69891ba4cb890dd5aab"
+    },
+    {
+      "id": "cb2cab75301d9e85f3161785",
+      "url": "https://news.ycombinator.com/item?id=49974080",
+      "productUrl": "https://astro-plakar-wayback.fly.dev/docs/getting-started/installation",
+      "textSha256": "d460f868c6ab47bdca092666c7c8959a946363ac2644eff8ed1571475b94d083"
+    },
+    {
+      "id": "0df67bc3c7d3e347437d25c4",
+      "url": "https://news.ycombinator.com/item?id=49967539",
+      "productUrl": "https://www.invofox.com/en",
+      "textSha256": "3f9946cb8195ffe0970e6976058177c2461d6459b0651ab0292a1e2144b15d83"
+    },
+    {
+      "id": "d4039c4e9f9108f14fe06ca1",
+      "url": "https://news.ycombinator.com/item?id=49947702",
+      "productUrl": "https://json-doc.com",
+      "textSha256": "47cc1b12b1b1959fd569ac98a34a6f56d21618db4b448e7e78d5ae4c849bcd52"
+    },
+    {
+      "id": "12c16728d5081b718ada2f03",
+      "url": "https://news.ycombinator.com/item?id=49923203",
+      "productUrl": "https://www.veludocs.com",
+      "textSha256": "715cfbce451acb9133e645981139310fa8ac7261aba5ec620b8e240141dd8722"
+    },
+    {
+      "id": "97a532b151cb111631117832",
+      "url": "https://news.ycombinator.com/item?id=49894301",
+      "productUrl": "https://sezwhere.com",
+      "textSha256": "5a0566c02f0c2fb407af634b7455aea8933f6b4d0c8b8731c792b966a5f7fe88"
+    },
+    {
+      "id": "93cb392afa8d457f30691123",
+      "url": "https://news.ycombinator.com/item?id=49869904",
+      "productUrl": "https://rare-books.vercel.app",
+      "textSha256": "67d3d91d20b9257fcefa1a99505f4514e03468cfd9a9addfe302e99be12bcb45"
+    },
+    {
+      "id": "a0ba78a55c830444d375c0e2",
+      "url": "https://news.ycombinator.com/item?id=49866189",
+      "productUrl": "https://www.npmjs.com/package/revise",
+      "textSha256": "3ac9652cf9ac06b946e6123c23d7fe99ecfbbb7b3e17a4f9e36e35503b0daf7f"
+    },
+    {
+      "id": "6859168b6a37428ab30987a1",
+      "url": "https://news.ycombinator.com/item?id=49866121",
+      "productUrl": "https://dicty.io",
+      "textSha256": "9fb55b353ab4df59c6748b366bab2d00b8da48c9165cb78d0a1c5ce5f8a58b53"
+    },
+    {
+      "id": "4925b235e80f8eeb3af64447",
+      "url": "https://news.ycombinator.com/item?id=49738595",
+      "productUrl": "https://github.com/Ontos-AI/knowhere",
+      "textSha256": "c3f47a12e0a5fc3e60d324d5c4190e3c8743ecf2312ff67781796435f7ab8e8b"
+    },
+    {
+      "id": "8eab0af476c34cad1244c829",
+      "url": "https://news.ycombinator.com/item?id=49737256",
+      "productUrl": "https://github.com/AysanZ/alidade",
+      "textSha256": "eaaf5aa2b7dad5698ff5b4c2035ce8cd52c2aabce776e82758cc2cb9c3c223f5"
+    },
+    {
+      "id": "355c2c5234beb0c37366404b",
+      "url": "https://news.ycombinator.com/item?id=49660648",
+      "productUrl": "https://github.com/paulknysh/raggy",
+      "textSha256": "fdd8085c7c56892601d2dcd2938870ccb5446ec99e756711b4438055cb0d8efc"
+    },
+    {
+      "id": "d6e99b624e3933b6fbf82caa",
+      "url": "https://news.ycombinator.com/item?id=49618090",
+      "productUrl": "https://github.com/aws-samples/sample-textract-field-memory",
+      "textSha256": "9198da1dcfee6b8a5ee69c799c9e180d9597fa6dcb4fa1e740441c40687b3213"
+    },
+    {
+      "id": "633c94533e5a823da0c89f1c",
+      "url": "https://news.ycombinator.com/item?id=49586334",
+      "productUrl": "https://github.com/drl990114/MarkFlowy",
+      "textSha256": "6f0539c9543c24d271d7a3d6581db1886cb3c1344ba9b05388d350036584504c"
+    },
+    {
+      "id": "bcddd7d35acdfcaa49f31d2d",
+      "url": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "textSha256": "4ab4d189a0bd93b5a73e9375e74b3861da82f01c7380d95b124cd4ce286cf939"
+    },
+    {
+      "id": "ca6a664d20bd48cf57145f2e",
+      "url": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "textSha256": "2da98abba3e3dd4ed39075a80d3bdac4c8c58e4c51096b7ca78ad3ddc91d40c8"
+    },
+    {
+      "id": "0f1e1c9ed7c9b88df76447ab",
+      "url": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "productUrl": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "textSha256": "5fd6a6cf02f1043cffef7297598f05285b116df09543050a37d2a9a49ffb1fb6"
+    },
+    {
+      "id": "3ecc3a5ea527357de5fa4165",
+      "url": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "textSha256": "3b70231c67b75e76b575712e800ace971a2e178efb139d3f30c79d51c3bec9ea"
+    },
+    {
+      "id": "eb08bb526b3fe0ba957f00c2",
+      "url": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "productUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "textSha256": "d800e82c4d4735fd991cd0e9ab2df159c85a16f3bb2c8a2e48e37cfdd1d3759f"
+    },
+    {
+      "id": "ce550eec21fdd6de3c333ecd",
+      "url": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "productUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "textSha256": "0ae0da0181e8ddc589d79e2127b7278f79dc0f3c3eb5c6555fb283d58ba95ac9"
+    },
+    {
+      "id": "1b3ba5be008d9c8a8e2422f9",
+      "url": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "productUrl": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "textSha256": "87fd445ac4f5fec2074b4c77236847ae8b4e446bed005be6b95e1c4ef106dc35"
+    },
+    {
+      "id": "be8fa77dfa6f3364ffd4f537",
+      "url": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "textSha256": "2adfe576fc0e5ffc619ac9d09068df80a09dfdac15b09facb69551235c218270"
+    },
+    {
+      "id": "697c3528c356ce202c5ae31e",
+      "url": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "textSha256": "579da33e5bc49b2cebaaae3d703bb5cd0e5033d15caaf7dce3a4b2d7e5cbb235"
+    },
+    {
+      "id": "8472cdf645082b82438ba2a0",
+      "url": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "productUrl": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "textSha256": "1213e1fd83cdc0a40df61f4add6fdcf9b6d8ad60761ff6a0176d9b7aaaa68d31"
+    },
+    {
+      "id": "458c04cd04ca960bc316608e",
+      "url": "https://github.com/morluto/rea",
+      "productUrl": "https://github.com/morluto/rea",
+      "textSha256": "080223335216d131473b1f2c5994cfa0c11c609c4e2a261d99bf95e9b2e307cf"
+    },
+    {
+      "id": "f3d0d1f85de671d55fee2b62",
+      "url": "https://github.com/bilawalsidhu/gods-eye-view",
+      "productUrl": "https://github.com/bilawalsidhu/gods-eye-view",
+      "textSha256": "4af5b4777d0d8f3a729e166f11983c45a8750cff5f05cd6bd0d5c7a079501744"
+    },
+    {
+      "id": "da8ac24508773f981b8dc464",
+      "url": "https://github.com/debpalash/VoiceStudio",
+      "productUrl": "https://github.com/debpalash/VoiceStudio",
+      "textSha256": "6fd89fbabefbbfc5778e2f4a5e465e0a74393f5f238587794a4485aa5f1fce7f"
+    },
+    {
+      "id": "cfe6b1639c3c3094f26f16ce",
+      "url": "https://github.com/mksglu/context-mode",
+      "productUrl": "https://github.com/mksglu/context-mode",
+      "textSha256": "f93646b7c9eb7b57f8ec0818431c9a77eeb778e14fe356dcd16a8a981d36bfb2"
+    },
+    {
+      "id": "9c939c7199afd9a60700695b",
+      "url": "https://github.com/cathrynlavery/diagram-design",
+      "productUrl": "https://github.com/cathrynlavery/diagram-design",
+      "textSha256": "787d38a80f3ee0af6d403d56cd484cdb3cc9f00f0552f93a09484c273992bb1f"
+    },
+    {
+      "id": "3888c0e3209644c8101e4bcd",
+      "url": "https://github.com/vercel-labs/skills",
+      "productUrl": "https://github.com/vercel-labs/skills",
+      "textSha256": "b629dee821125ced40d2beb7ce3af3ffad09a8c68ada4c38ca069f3711e685f8"
+    },
+    {
+      "id": "759119abe3ffdb8f16da1171",
+      "url": "https://github.com/lyogavin/airllm",
+      "productUrl": "https://github.com/lyogavin/airllm",
+      "textSha256": "388207580d64792aff8bc8fb500defd9e72daf189ee1dd2821c026fd76758cb8"
+    },
+    {
+      "id": "96cd9bd509bc9d5c8f527d26",
+      "url": "https://github.com/storytold/artcraft",
+      "productUrl": "https://github.com/storytold/artcraft",
+      "textSha256": "062df60370b9909cc1f42b52080ae388a019d04f90d4ece16df62938801b117a"
+    },
+    {
+      "id": "6165c7ee0513cba19a7a07e8",
+      "url": "https://github.com/xtool-org/xtool",
+      "productUrl": "https://github.com/xtool-org/xtool",
+      "textSha256": "8c421e20c47b6436fab16604bbec1c92afb8a521cc2d410e2825b2e478045303"
+    },
+    {
+      "id": "ffb02be944ece53dd8a4e66e",
+      "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages/096037-2026",
+      "productUrl": null,
+      "textSha256": "7deb0142f39e7596a1e58ed82831f1214e8328168f74b2e6794e8907fe0055a3"
+    },
+    {
+      "id": "ea11f83c595fac0655a095e4",
+      "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages/095976-2026",
+      "productUrl": null,
+      "textSha256": "930c1cf946769cc768d59bd6bcf617218d093e6612e104995e44f22bb3737892"
+    },
+    {
+      "id": "29b4545803971a05ef83dcbb",
+      "url": "https://www.contractsfinder.service.gov.uk/Published/OCDS/Release/8c5c952b-376a-46d4-8635-c3fba0288d03-917384",
+      "productUrl": null,
+      "textSha256": "8569fcc5a2b030d7811c073fc43fe7930404e4a4c307c38a6e4146125b21e0f0"
+    },
+    {
+      "id": "42465945641feef82aee7698",
+      "url": "https://www.contractsfinder.service.gov.uk/Published/OCDS/Release/2e04fda8-05f7-4686-9f1e-25d2e25bf0ef-917357",
+      "productUrl": null,
+      "textSha256": "6c6185eaac292297e65c379058ebc9a368e179be42baf644c87dfb6c21536c0b"
+    },
+    {
+      "id": "08dc340137f876134e8cd6d4",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31578015",
+      "productUrl": null,
+      "textSha256": "1fdf821ca5d1d0243e7caa3deeb1e2addcf50538e993ebab84419ef621321444"
+    },
+    {
+      "id": "b564cbaadfbbf682eff74a79",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31575613",
+      "productUrl": null,
+      "textSha256": "e27b74159f0a4bc3b9c64eb42df41190fa35b324cd7b14632de23471821767f1"
+    },
+    {
+      "id": "f5dc682a72dfd370c945ec77",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31551851",
+      "productUrl": null,
+      "textSha256": "e65dd705781e37c6b15d0a0dd62b12eac35fda670e332fc0f9c68986ef5bd7f2"
+    },
+    {
+      "id": "34ef6572b6fe9ea1b02736c4",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31477636",
+      "productUrl": null,
+      "textSha256": "850ab30aeb10d1ddab91a58dd15a79ea7c6139afdc688df54ea2bb6ea5bbe243"
+    },
+    {
+      "id": "65563e458bbb0861f1de58aa",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31586790",
+      "productUrl": null,
+      "textSha256": "ca6d2198dfc238c831eb8ca276efba6426ad0d92c5366d19e8755629bd775415"
+    },
+    {
+      "id": "e7d50986a834a06b5747f179",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31578306",
+      "productUrl": null,
+      "textSha256": "785b9a11469f1ea272b799e52d1ab87e65d11ad3906548506259456cf409ac3e"
+    },
+    {
+      "id": "2faa8eabfa7bbedbde9984d5",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31574584",
+      "productUrl": null,
+      "textSha256": "124565b52397f787d8920226805378fc6012d3295319441b2765a039e5b09829"
+    },
+    {
+      "id": "4fc12cfe05724316dd5662ad",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31554889",
+      "productUrl": null,
+      "textSha256": "1f538a6940c0419f59b6c4be5ab833158883adbfdff1c85f34485c1b2ec9367b"
+    },
+    {
+      "id": "6f5f0c43005d8c097795dc56",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31535471",
+      "productUrl": null,
+      "textSha256": "1799ebfddc206c480d84859dc8073cc4ed87e2c20dd3adea0de0f3e692446b4a"
+    },
+    {
+      "id": "306d4a6cafe6cbe754e45483",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31509577",
+      "productUrl": null,
+      "textSha256": "972de652dfcb1b962e874f1605d119fc625d6e0f5dfec24d6da9d95ac1bc1eab"
+    },
+    {
+      "id": "7edf73ff4c444870f42c0838",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31587727",
+      "productUrl": null,
+      "textSha256": "ff370da0e81c2711180e477c36a61b2946d1fbe3076689dc0b7b03aa273617ca"
+    },
+    {
+      "id": "e6af3b3d6403e6773319dc0e",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31582328",
+      "productUrl": null,
+      "textSha256": "7f389d30f8fdf171cd2bccdc3e7fbed3eb4f9c02531982730270e2c48b2f79cb"
+    },
+    {
+      "id": "adf9a116d5aa0d4584f14965",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31572638",
+      "productUrl": null,
+      "textSha256": "217a6eca2939fcab9b19f1504cacc67dd8c0eb5df261ba435f88372e8554ee9d"
+    },
+    {
+      "id": "00d3c50a94b55056aeb7023e",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31549320",
+      "productUrl": null,
+      "textSha256": "21762f666b03133a85a9a59a051e0de908bd562a0738ac8a2210a942b4ae9157"
+    },
+    {
+      "id": "763f3faed00c70578fc85936",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31548970",
+      "productUrl": null,
+      "textSha256": "0b11917d814bfcbd7ad12516089fdee8d6255444111be584817e20444fac11a8"
+    },
+    {
+      "id": "6e103d304cb6db524e2593e6",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31588779",
+      "productUrl": null,
+      "textSha256": "10f974e21384e94e7169ef7ced08717ea6dc73fffe46228f65f7bd0604de40de"
+    },
+    {
+      "id": "e6046c680a356b1ec40b908d",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31584620",
+      "productUrl": null,
+      "textSha256": "2674fb6fd7350458153780ed7878f91af74b003f9a09f1a56f8adec2a6c1effa"
+    },
+    {
+      "id": "4ca7cda0d6afa9397d0d28b3",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31580004",
+      "productUrl": null,
+      "textSha256": "84eef6a8346506ff43fcc374ee096edf3f341d9ba629358e64abf69244520674"
+    },
+    {
+      "id": "0ae210de8ae5dc63b22b8a69",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31576445",
+      "productUrl": null,
+      "textSha256": "e27b74159f0a4bc3b9c64eb42df41190fa35b324cd7b14632de23471821767f1"
+    },
+    {
+      "id": "f0175742c7d58eb728130400",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31539441",
+      "productUrl": null,
+      "textSha256": "79592e2f51692f8f649c8b0ff00dee0b9158a171f5b93353a3b449751cd5f1e3"
+    },
+    {
+      "id": "1a3d92cbfc29dbd97fe777f5",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "productUrl": null,
+      "textSha256": "ac49f9afc5768a5e653e9782b21f9e060e896d1638cc5f9ecb67ca636c8ccdc6"
+    },
+    {
+      "id": "401abc1f20e2f21b0ac35fd2",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31472376",
+      "productUrl": null,
+      "textSha256": "43280bac6e1f4dfc0a7a0ba493cd37f844514f9ac2f24bf91ced5db9584ce6ae"
+    },
+    {
+      "id": "08f2db2458052937894c034c",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31538445",
+      "productUrl": null,
+      "textSha256": "cb38035a4e96b102dba4f2f9a7f9b70a955c9aa3c3e3ef1b3f0985b3017522a0"
+    },
+    {
+      "id": "6be59c9bea58f4b0415f123a",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31586660",
+      "productUrl": null,
+      "textSha256": "d2262556419a98bc89911865bb8f8e60667b2932fc1e1afde0e8211c720f9e88"
+    },
+    {
+      "id": "d591877dbef0c463e1e497c0",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31507408",
+      "productUrl": null,
+      "textSha256": "1741e523d31f3ef9cc773609fcb8569b7559f65e916c626ec77ae1129dffa020"
+    },
+    {
+      "id": "58eee5cfdb9bd9e94b3e85df",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31585208",
+      "productUrl": null,
+      "textSha256": "add127d4088740f1991abf7a6494a06a8ad627153d99988dfe0c195b4d948b5b"
+    },
+    {
+      "id": "ea5a11d8bf4ecba2e21ffe64",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31570377",
+      "productUrl": null,
+      "textSha256": "07fe3dde9deb86caf8147fdbd23e2caa8d13f79423873467ddd001cdf2d310ba"
+    },
+    {
+      "id": "d80fa8cdd7ff795659aa9154",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31563110",
+      "productUrl": null,
+      "textSha256": "5652cde6764d7cea669feb64d537f14b553c627acbc56ac779e48b4df0c252ba"
+    },
+    {
+      "id": "ecfdcaf6294f89c3284393f3",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31475171",
+      "productUrl": null,
+      "textSha256": "fa391af108a9ee947dc09cb63451ac20c961674812b027b1c8ca5e4cf959f9a6"
+    },
+    {
+      "id": "22872cf33bcebcc381edcd46",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31489651",
+      "productUrl": null,
+      "textSha256": "7851b1def32d7807df78fc9b342b1a54ce2649eea3a7ad61261640c3263b4ec7"
+    },
+    {
+      "id": "16db8a0c6f56f178fc288963",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31569530",
+      "productUrl": null,
+      "textSha256": "b64b9ec47ca4add441f20bcd38ade869051ab0967e72d689ef60785d08e520c4"
+    },
+    {
+      "id": "458c02274c2cd3b1d0b0dcc2",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31587546",
+      "productUrl": null,
+      "textSha256": "eb706617fcc50ac2f122a3943d7553251d2bef94fa2c143a39869510c156c6d7"
+    },
+    {
+      "id": "25d391e9df8bca3db0757c52",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31584968",
+      "productUrl": null,
+      "textSha256": "ee84278eeee45d850cc36dfa7f1d1091252ba1f4923eaade40087b4294edcafa"
+    },
+    {
+      "id": "fdd37fd15a98eb695e63b553",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31550869",
+      "productUrl": null,
+      "textSha256": "e25f89401c5e8a89e2ed9e4c1691ccd9dfc83b89f70d16fd4ed5134954d97a71"
+    },
+    {
+      "id": "ba9229fba06958c3587899cd",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31538209",
+      "productUrl": null,
+      "textSha256": "38022ab333d1e8dca4740db640c3ff95d1df7bdd4940d25536df6e624a47f7ec"
+    },
+    {
+      "id": "f3801918ce992efa28cd4fe7",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31577125",
+      "productUrl": null,
+      "textSha256": "0690193213b51fbc2db5adac1ce656c653a95a8386127ccc8b7b5815f500abba"
+    },
+    {
+      "id": "925ba2f862511d5e56e10d87",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31570420",
+      "productUrl": null,
+      "textSha256": "4eccbaee8627f38107ea49ee698668e2c67a180f48d5840f78b087674f234df0"
+    },
+    {
+      "id": "99025f0bc23ab7a461be7384",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31567911",
+      "productUrl": null,
+      "textSha256": "d131934b2627b3e82c4f8d5c7b3c6b431451088a516592dee2dc3665b942b191"
+    },
+    {
+      "id": "d856148e4ea1fa6dbeb7a278",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31560119",
+      "productUrl": null,
+      "textSha256": "438cb8ac12d39aef24a7972fbe8c74167213b749335a2cb000facaae21c8bc37"
+    },
+    {
+      "id": "33a6ed01386147c9bf787dfc",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31545637",
+      "productUrl": null,
+      "textSha256": "3d13c2297d0883de5898dcb6550cb659614f90322822389c611300652ae0317e"
+    },
+    {
+      "id": "f5b838513ab3f762321265b1",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31528777",
+      "productUrl": null,
+      "textSha256": "64b0ed4764176eec32a3dbbd66bdab0630553d548de9408bb8538c4bc4bb9d04"
+    },
+    {
+      "id": "a86c6d803d1bc89d9905392d",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31417197",
+      "productUrl": null,
+      "textSha256": "9adb4538e621b4e65076f519117d4479633267d82721c948cc89c5b502e130c4"
+    },
+    {
+      "id": "0ea6c42a7ad4a3bd0b7282e8",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31591383",
+      "productUrl": null,
+      "textSha256": "9a8eca45bedbc9040b7d8f93e15b1e095a6bb35157511a1f1b815073e7a07236"
+    },
+    {
+      "id": "450bfa4366dae008c2879363",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31588827",
+      "productUrl": null,
+      "textSha256": "78e342121339d5ca82de4770e9146277cdb8b24aa73dc6e00cf6921055ecfdc0"
+    },
+    {
+      "id": "05ef1616c1b77d3b1a6c8efa",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31583087",
+      "productUrl": null,
+      "textSha256": "1a6809f36625242ff866a21dc9e1caed07734cfd4818db90c35cad65e5214bb3"
+    },
+    {
+      "id": "44665c3d25eabdde8a02aa38",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31538054",
+      "productUrl": null,
+      "textSha256": "13274772f219b99843161221511946482580e0826bb1140bb50fbce7177bbcee"
+    },
+    {
+      "id": "cd7a74bc5bc126a0c4c8696b",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31523209",
+      "productUrl": null,
+      "textSha256": "7d93fa3323c590bf1d2aebc22d6c45708b1472f7bbf012de3e265d8901367339"
+    },
+    {
+      "id": "13559bee1e19dc07860ca509",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31508623",
+      "productUrl": null,
+      "textSha256": "c41dbc4506d9d2de7e4ac11183ef55b106ea0ec28b2467804aee26912376037f"
+    },
+    {
+      "id": "953830e662493b3560d83b8c",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31502267",
+      "productUrl": null,
+      "textSha256": "1386c7f01eaee0fedf667d894cfc69eba7c60d61f493c7d1cbbacf8fc97666c7"
+    },
+    {
+      "id": "bb160f0a91045c4b9dddc7a5",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31399086",
+      "productUrl": null,
+      "textSha256": "b918de7d825d2d53a6ce96d5701f4b38a035f3c00dd8e692d6a8e037e917e7f7"
+    },
+    {
+      "id": "7659be884e6db25f02a41075",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31588105",
+      "productUrl": null,
+      "textSha256": "78e342121339d5ca82de4770e9146277cdb8b24aa73dc6e00cf6921055ecfdc0"
+    },
+    {
+      "id": "82d2387a78c31dd2f8b4f771",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31578258",
+      "productUrl": null,
+      "textSha256": "a41b6e1d99765b75044d4ee6db7e3129f611c42a812e2911e91091c3a6418ea9"
+    },
+    {
+      "id": "0ecd330d3bae984d9ac5c6ce",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31569802",
+      "productUrl": null,
+      "textSha256": "25e42d1995d58710b5eebaa1ec0710a25fae2bea3c264ebceac855325aca93ac"
+    },
+    {
+      "id": "30c7d3a67a929bff971c9799",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31563135",
+      "productUrl": null,
+      "textSha256": "847e8b2d3ecf42477bc65baa3996be426d10d03ac1b2f348bc52f56013e57557"
+    },
+    {
+      "id": "91fa7885e45fb2d8b5ce9418",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+      "productUrl": null,
+      "textSha256": "4e41eeb558329bdaad4332dd4edad926d7e43e7e2e79cc5e1ee8852f31ee04c7"
+    }
+  ],
+  "sourcesSha256": "ada96d501c4eb80251cc62fd6e07094ceb8d263cf5d12a866892cc932f6ee584",
+  "sourceSnapshotSha256": "7c1bf79af2f6e2dd48faee5b9671267aefd9c6c94b9ef8db3fff79be27c3c4de",
+  "observations": [
+    {
+      "feedId": "e20bcacf021524725d3fc275",
+      "name": "n8n · official AI workflows",
+      "url": "https://n8n.io/ai",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:58.937Z",
+      "fetchedAt": "2026-10-14T03:37:59.486Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.250Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/ai",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.250Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/ai/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://n8n.io/ai",
+            "status": 308,
+            "next": "https://n8n.io/ai/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://n8n.io/ai/",
+        "fetchedAt": "2026-10-14T03:37:59.486Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "2ae9fd69127e82131f7ec675",
+      "name": "Hacker News · small customer-support products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:58.943Z",
+      "fetchedAt": "2026-10-14T03:37:59.452Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.137Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+        "fetchedAt": "2026-10-14T03:37:59.452Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "ef244017b1460269fc687cea",
+      "name": "Browser Use · official project",
+      "url": "https://browser-use.com",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:58.944Z",
+      "fetchedAt": "2026-10-14T03:37:59.277Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://browser-use.com",
+            "robotsUrl": "https://browser-use.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.188Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 1043,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://browser-use.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://browser-use.com/",
+        "fetchedAt": "2026-10-14T03:37:59.277Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "63dbb54258e730e95fa20298",
+      "name": "Hugging Face · trending public Spaces",
+      "url": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:58.944Z",
+      "fetchedAt": "2026-10-14T03:37:59.283Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://huggingface.co",
+            "robotsUrl": "https://huggingface.co/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-14T03:37:59.196Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 68,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json; charset=utf-8",
+        "resolvedUrl": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+        "fetchedAt": "2026-10-14T03:37:59.283Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "d554ca3fc8b9fd3548600b86",
+      "name": "Dify · official project",
+      "url": "https://dify.ai",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.279Z",
+      "fetchedAt": "2026-10-14T03:37:59.717Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://dify.ai",
+            "robotsUrl": "https://dify.ai/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-14T03:37:59.587Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 67,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://dify.ai/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "resolvedUrl": "https://dify.ai/",
+        "fetchedAt": "2026-10-14T03:37:59.717Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "a654756600fbb68b9c75c45b",
+      "name": "TechCrunch · AI",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.283Z",
+      "fetchedAt": "2026-10-14T03:37:59.463Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.386Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/category/artificial-intelligence/feed",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.386Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/category/artificial-intelligence/feed/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+            "status": 301,
+            "next": "https://techcrunch.com/category/artificial-intelligence/feed/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "application/rss+xml; charset=UTF-8",
+        "resolvedUrl": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "fetchedAt": "2026-10-14T03:37:59.463Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "7efc2c70ed9424b76bd7407b",
+      "name": "Apify · official platform",
+      "url": "https://apify.com",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.454Z",
+      "fetchedAt": "2026-10-14T03:37:59.711Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://apify.com",
+            "robotsUrl": "https://apify.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.511Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 174,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://apify.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://apify.com/",
+        "fetchedAt": "2026-10-14T03:37:59.711Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "470ff63db8da1802b0ccc779",
+      "name": "Hugging Face · invoice workflow demos",
+      "url": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.475Z",
+      "fetchedAt": "2026-10-14T03:37:59.554Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://huggingface.co",
+            "robotsUrl": "https://huggingface.co/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-14T03:37:59.196Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 68,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json; charset=utf-8",
+        "resolvedUrl": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+        "fetchedAt": "2026-10-14T03:37:59.554Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "96fe006ed5f7b38bfc889c7d",
+      "name": "Ben’s Bites · public newsletter",
+      "url": "https://www.bensbites.com/feed",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.489Z",
+      "fetchedAt": "2026-10-14T03:37:59.754Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.bensbites.com",
+            "robotsUrl": "https://www.bensbites.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.688Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 595,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.bensbites.com/feed",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "resolvedUrl": "https://www.bensbites.com/feed",
+        "fetchedAt": "2026-10-14T03:37:59.754Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "3733c65b9abe07b4b87156f9",
+      "name": "Simon Willison · public AI notes",
+      "url": "https://simonwillison.net/atom/everything",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.554Z",
+      "fetchedAt": "2026-10-14T03:38:00.011Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-14T03:37:59.807Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/atom/everything",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-14T03:37:59.807Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/atom/everything/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://simonwillison.net/atom/everything",
+            "status": 301,
+            "next": "https://simonwillison.net/atom/everything/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "resolvedUrl": "https://simonwillison.net/atom/everything/",
+        "fetchedAt": "2026-10-14T03:38:00.011Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "a5689419c24836e7e0ce37dd",
+      "name": "Latent Space · public newsletter",
+      "url": "https://www.latent.space/feed",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.713Z",
+      "fetchedAt": "2026-10-14T03:38:00.052Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.885Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/feed",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/feed",
+        "fetchedAt": "2026-10-14T03:38:00.052Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 14,
+      "omittedItemCount": 6
+    },
+    {
+      "feedId": "ec389fe35523e6dbba11e744",
+      "name": "Hacker News · Launch HN",
+      "url": "https://news.ycombinator.com/launches",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.719Z",
+      "fetchedAt": "2026-10-14T03:37:59.892Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://news.ycombinator.com",
+            "robotsUrl": "https://news.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.848Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 243,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://news.ycombinator.com/launches",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://news.ycombinator.com/launches",
+        "fetchedAt": "2026-10-14T03:37:59.892Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "11df15447c6c0e0dfdc06be3",
+      "name": "Hacker News · document products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.770Z",
+      "fetchedAt": "2026-10-14T03:38:00.037Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.137Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+        "fetchedAt": "2026-10-14T03:38:00.037Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "b681f434d554a69a059ccf85",
+      "name": "n8n · invoice processing templates",
+      "url": "https://n8n.io/workflows/categories/invoice-processing",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:37:59.895Z",
+      "fetchedAt": "2026-10-14T03:38:01.054Z",
+      "items": 10,
+      "itemCount": 10,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:37:59.250Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/categories/invoice-processing",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/categories/invoice-processing",
+        "fetchedAt": "2026-10-14T03:38:01.054Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 10
+      },
+      "retainedItemCount": 10,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "fb41898e3878114109088fed",
+      "name": "GitHub · daily trending repositories",
+      "url": "https://github.com/trending",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:38:00.035Z",
+      "fetchedAt": "2026-10-14T03:38:01.425Z",
+      "items": 9,
+      "itemCount": 9,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://github.com",
+            "robotsUrl": "https://github.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-14T03:38:00.264Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 16739,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "baidu",
+              "*"
+            ],
+            "evaluatedUrl": "https://github.com/trending",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://github.com/trending",
+        "fetchedAt": "2026-10-14T03:38:01.425Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 9
+      },
+      "retainedItemCount": 9,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "d7da742b595e7ec512a8ef54",
+      "name": "Find a Tender · public service tenders",
+      "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:38:00.038Z",
+      "fetchedAt": "2026-10-14T03:38:03.773Z",
+      "items": 2,
+      "itemCount": 2,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.find-tender.service.gov.uk",
+            "robotsUrl": "https://www.find-tender.service.gov.uk/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:38:00.574Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=20",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=20",
+        "fetchedAt": "2026-10-14T03:38:03.773Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 2
+      },
+      "retainedItemCount": 2,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "cca981f46ee3fb8981413fee",
+      "name": "Contracts Finder · public service tenders",
+      "url": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?stages=tender&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:38:00.086Z",
+      "fetchedAt": "2026-10-14T03:38:11.060Z",
+      "items": 2,
+      "itemCount": 2,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.contractsfinder.service.gov.uk",
+            "robotsUrl": "https://www.contractsfinder.service.gov.uk/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-14T03:38:00.632Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?stages=tender&limit=20",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?stages=tender&limit=20",
+        "fetchedAt": "2026-10-14T03:38:11.060Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 2
+      },
+      "retainedItemCount": 2,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "3c18d6f9afb86838768b18fe",
+      "name": "JobSearch · paid administration roles",
+      "url": "https://jobsearch.api.jobtechdev.se/search?q=administrat%C3%B6r&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:38:01.057Z",
+      "fetchedAt": "2026-10-14T03:38:04.151Z",
+      "items": 19,
+      "itemCount": 19,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://jobsearch.api.jobtechdev.se",
+            "robotsUrl": "https://jobsearch.api.jobtechdev.se/robots.txt",
+            "status": 404,
+            "contentType": "application/json; charset=UTF-8",
+            "fetchedAt": "2026-10-14T03:38:02.288Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://jobsearch.api.jobtechdev.se/search?q=administrat%C3%B6r&limit=20",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://jobsearch.api.jobtechdev.se/search?q=administrat%C3%B6r&limit=20",
+        "fetchedAt": "2026-10-14T03:38:04.151Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 19
+      },
+      "retainedItemCount": 19,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "b36040a453674772f62166cb",
+      "name": "JobSearch · paid school administration roles",
+      "url": "https://jobsearch.api.jobtechdev.se/search?q=skoladministrat%C3%B6r&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:38:01.426Z",
+      "fetchedAt": "2026-10-14T03:38:04.072Z",
+      "items": 16,
+      "itemCount": 16,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://jobsearch.api.jobtechdev.se",
+            "robotsUrl": "https://jobsearch.api.jobtechdev.se/robots.txt",
+            "status": 404,
+            "contentType": "application/json; charset=UTF-8",
+            "fetchedAt": "2026-10-14T03:38:02.288Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://jobsearch.api.jobtechdev.se/search?q=skoladministrat%C3%B6r&limit=20",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://jobsearch.api.jobtechdev.se/search?q=skoladministrat%C3%B6r&limit=20",
+        "fetchedAt": "2026-10-14T03:38:04.072Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 16
+      },
+      "retainedItemCount": 16,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "8ef335213e70b38904e7a504",
+      "name": "JobSearch · paid medical secretary roles",
+      "url": "https://jobsearch.api.jobtechdev.se/search?q=medicinsk%20sekreterare&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-14T03:38:03.775Z",
+      "fetchedAt": "2026-10-14T03:38:05.420Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://jobsearch.api.jobtechdev.se",
+            "robotsUrl": "https://jobsearch.api.jobtechdev.se/robots.txt",
+            "status": 404,
+            "contentType": "application/json; charset=UTF-8",
+            "fetchedAt": "2026-10-14T03:38:02.288Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://jobsearch.api.jobtechdev.se/search?q=medicinsk%20sekreterare&limit=20",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://jobsearch.api.jobtechdev.se/search?q=medicinsk%20sekreterare&limit=20",
+        "fetchedAt": "2026-10-14T03:38:05.420Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v1",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    }
+  ],
+  "originMap": [
+    {
+      "sourceId": "e20bcacf021524725d3fc275",
+      "url": "https://n8n.io/ai",
+      "productUrl": null,
+      "feedIds": [
+        "e20bcacf021524725d3fc275"
+      ]
+    },
+    {
+      "sourceId": "6cdd9673d8a4c6df36a271c6",
+      "url": "https://news.ycombinator.com/item?id=49473507",
+      "productUrl": "https://asking.com.br",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "80acc896eb7e49fdc9ba34dd",
+      "url": "https://news.ycombinator.com/item?id=49262666",
+      "productUrl": "https://heydeacon.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "72076adade67c90c7ff00772",
+      "url": "https://news.ycombinator.com/item?id=48384979",
+      "productUrl": "https://pocketping.io",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "afacaf413bd4ff2bd45612fc",
+      "url": "https://news.ycombinator.com/item?id=48243325",
+      "productUrl": null,
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "b59d472e868d018693dcf394",
+      "url": "https://news.ycombinator.com/item?id=48024366",
+      "productUrl": "https://www.bugtrotter.io",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "14da0aab26df018c6c149502",
+      "url": "https://news.ycombinator.com/item?id=47827928",
+      "productUrl": "https://auxx.ai",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "2ca3640726449b93be0b088a",
+      "url": "https://news.ycombinator.com/item?id=46828261",
+      "productUrl": "https://www.chatbridge.live",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "4847fb0bb6b371ebc5f272c8",
+      "url": "https://news.ycombinator.com/item?id=46602819",
+      "productUrl": "https://www.hivinq.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "af327c1f739ea7109e335359",
+      "url": "https://news.ycombinator.com/item?id=46176301",
+      "productUrl": "https://www.chat-data.com/changelog/ui-based-response-launch",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "825b3af6f3796a98a9e1803f",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "productUrl": "https://www.doozadesk.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "e97665c6220d305a170f032f",
+      "url": "https://news.ycombinator.com/item?id=46075684",
+      "productUrl": "https://www.sparrowdesk.com/ref=hn",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "4deeec333a22b65c93f4285d",
+      "url": "https://news.ycombinator.com/item?id=45943336",
+      "productUrl": "https://app.supogen.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "67f404330095ab63c15efdfe",
+      "url": "https://news.ycombinator.com/item?id=45913070",
+      "productUrl": "https://dodiddone.it.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "e40d37ccd678e000ef8c0957",
+      "url": "https://news.ycombinator.com/item?id=45732847",
+      "productUrl": "https://afec48d1-2eb5-490b-a1d8-f3b483aa87dc-00-3om0kaugaka9.kirk.replit.dev/landing/972ca3fc-0657-48a7-ac47-6874017b75fb",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "ace6c0b2882fba54cdaa7058",
+      "url": "https://news.ycombinator.com/item?id=45684178",
+      "productUrl": "https://screenask.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "1b4c5d7e7c590fddd84e0c91",
+      "url": "https://news.ycombinator.com/item?id=45668780",
+      "productUrl": "https://www.gibsonai.com/use-cases/customer-support",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "5f70b65d63a89e9186557064",
+      "url": "https://news.ycombinator.com/item?id=45288011",
+      "productUrl": "https://ticketdesk.ai",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "9a0a9e719dcbdcc105bc1a7d",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "productUrl": "https://www.lumro.co",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "0df192c077f30c68eaa1172b",
+      "url": "https://news.ycombinator.com/item?id=44917083",
+      "productUrl": "https://www.helplify.io",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "17b8a21b6c7e1054a8da07df",
+      "url": "https://news.ycombinator.com/item?id=44628286",
+      "productUrl": null,
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "ef244017b1460269fc687cea",
+      "url": "https://browser-use.com",
+      "productUrl": null,
+      "feedIds": [
+        "ef244017b1460269fc687cea"
+      ]
+    },
+    {
+      "sourceId": "9d548c8934cc92d53bebcbb4",
+      "url": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "productUrl": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "e967910dc9b9aeec709a7a39",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "productUrl": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "dc8958655abd8e125a7477ce",
+      "url": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "642d3322c52cb5a65a863277",
+      "url": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "701f3cfaacd0df0a0703f5c7",
+      "url": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "productUrl": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "b1efedf1539f957695a6f38e",
+      "url": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-aio-loras",
+      "productUrl": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-aio-loras",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "fb156c59b1983f5d49d61807",
+      "url": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "productUrl": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "9ce319a8ad36fdd6ea588528",
+      "url": "https://huggingface.co/spaces/FineEnvs/multi-harness-rl",
+      "productUrl": "https://huggingface.co/spaces/FineEnvs/multi-harness-rl",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "468350d28d751249c7662882",
+      "url": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-gguf",
+      "productUrl": "https://huggingface.co/spaces/arudradey/qwen-image-2.1-uncensored-gguf",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "100ef290074628b971606650",
+      "url": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "productUrl": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "7508a12cb77f9acb45dc103f",
+      "url": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "productUrl": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "dc55f80744e6b8b600a786bb",
+      "url": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "productUrl": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "9f9138fda1c06c230777f1fd",
+      "url": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "productUrl": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "abfd59f85ca3413221131441",
+      "url": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "productUrl": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "697b19ddcec68ebd9cdc8fda",
+      "url": "https://huggingface.co/spaces/hugging-apps/minimax-h3-character-swap-lora",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/minimax-h3-character-swap-lora",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "ce621ef626621472dd94dce7",
+      "url": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "productUrl": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "3bc2a4a3dc8835fea9776402",
+      "url": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "productUrl": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "52acb0ba14da98d33a941174",
+      "url": "https://huggingface.co/spaces/kulkas2pintu/QWEN_EDIT_IMAGE",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/QWEN_EDIT_IMAGE",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "e2f8381828caabacf4704234",
+      "url": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "productUrl": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "4d3b9dd26805797b8e298f70",
+      "url": "https://huggingface.co/spaces/webml-community/embeddinggemma-2-webgpu",
+      "productUrl": "https://huggingface.co/spaces/webml-community/embeddinggemma-2-webgpu",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "d554ca3fc8b9fd3548600b86",
+      "url": "https://dify.ai",
+      "productUrl": null,
+      "feedIds": [
+        "d554ca3fc8b9fd3548600b86"
+      ]
+    },
+    {
+      "sourceId": "f581adf32b14cf27ac832664",
+      "url": "https://techcrunch.com/2026/10/13/science-corporation-implants-its-vision-restoring-chip-in-its-first-stargardt-disease-patient",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "4b533c9e17a5cd60746210c3",
+      "url": "https://techcrunch.com/2026/10/13/cerebras-ceo-says-were-nearing-a-future-where-everyone-has-a-personal-ai-assistant-at-home",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "b27d148e512fc806d239dad2",
+      "url": "https://techcrunch.com/2026/10/13/industrial-next-wants-factory-robots-to-switch-tasks-in-minutes-not-weeks",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "42b26e2f5aa4b54c951ee569",
+      "url": "https://techcrunch.com/2026/10/13/cerebras-ceo-pushes-back-on-ai-doomsday-warnings",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "47b1c61501a00890c87ae572",
+      "url": "https://techcrunch.com/2026/10/13/judge-orders-openai-to-turn-over-hiring-records-in-apple-trade-secrets-case",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "fd0dc8b4fea02801dc1bf5b1",
+      "url": "https://techcrunch.com/2026/10/13/flox-intelligence-is-building-ai-to-keep-wildlife-away-from-trains-airports-and-roads",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "d2b49f5446522b415ed6cc39",
+      "url": "https://techcrunch.com/2026/10/13/facebook-is-giving-users-more-control-over-their-algorithm",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "f0f1c2f3634e5356d16e0950",
+      "url": "https://techcrunch.com/2026/10/13/laplace-intelligence-red-teams-robots-and-self-driving-cars-before-they-hit-the-real-world",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "4e9e4f1d9cd106f632b9b1ae",
+      "url": "https://techcrunch.com/2026/10/13/pluto-security-raises-42m-as-ai-gives-enterprise-security-teams-a-new-headache",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "45d87d6cab7a70aff9e6ab94",
+      "url": "https://techcrunch.com/2026/10/13/google-play-now-supports-private-vibe-coded-apps-built-just-for-you",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "c84e593e0844397d895c89b5",
+      "url": "https://techcrunch.com/2026/10/13/satlyt-founded-by-a-former-google-and-spacex-product-manager-raises-8m-to-run-ai-on-satellites",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "2d6c787b937985c8d24e1e00",
+      "url": "https://techcrunch.com/2026/10/13/techcrunch-disrupt-2026-day-1",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "1c21139e121f2f8343db051b",
+      "url": "https://techcrunch.com/2026/10/13/spacexsi-bundles-x-premium-grok-and-cursor-into-one-subscription",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "9a845b395df164fb630cb033",
+      "url": "https://techcrunch.com/2026/10/13/the-final-disrupt-stage-lineup-three-days-of-conversations-you-wont-hear-anywhere-outside-of-techcrunch-disrupt-2026",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "d7ffd4af20344ede7b0624b9",
+      "url": "https://techcrunch.com/2026/10/13/amex-introduces-a-framework-to-prevent-ai-agents-from-making-unauthorized-purchases",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "540f856caa5181656e7e9644",
+      "url": "https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "1e2db47d258dd52efadf3b01",
+      "url": "https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "5086a26c24b9017fd585e28f",
+      "url": "https://techcrunch.com/2026/10/12/windborne-wins-a-hefty-us-air-force-contract-for-its-balloon-data",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "f32ec83ece71d3f7fc37a571",
+      "url": "https://techcrunch.com/2026/10/12/honeyjar-offers-ai-tools-to-improve-pr-and-comms-at-every-company",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "3280ed302a3eecae2a9571c7",
+      "url": "https://techcrunch.com/2026/10/12/microsoft-president-says-uk-is-best-placed-to-drive-ai-regulation",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "7efc2c70ed9424b76bd7407b",
+      "url": "https://apify.com",
+      "productUrl": null,
+      "feedIds": [
+        "7efc2c70ed9424b76bd7407b"
+      ]
+    },
+    {
+      "sourceId": "698bfea2b7b729bc0ab16a1c",
+      "url": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "productUrl": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "15950ad512e6bd08dfe62252",
+      "url": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "productUrl": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "50561baf4530db439848fc9b",
+      "url": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "productUrl": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "3d28365427bc516da7d0ed0d",
+      "url": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "productUrl": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "e5074e4b1ac7444fb51faf0e",
+      "url": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "productUrl": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "f8cfea836e1702ceec21d5f8",
+      "url": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "a07874e56fdc37fe2c042b81",
+      "url": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "productUrl": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "623769c9d980ffb995f65cdc",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "7590c62adf8c4b6dd70ad54e",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "bdd8b5a7dd636446ee24a8fe",
+      "url": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "productUrl": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "1dd03891d1e36345e3123c1a",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "1609df54fa9aaf3df877db65",
+      "url": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "productUrl": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "f657dd5703cbf04263ca2cbe",
+      "url": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "productUrl": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "a569e909a84275c0e342e3f9",
+      "url": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "productUrl": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "14e26d166e12757318a5e260",
+      "url": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "8834a95ee6e22f1783f0f8bc",
+      "url": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "productUrl": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "4a2181b4ee8a3fdd132b74ac",
+      "url": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "0efa82095af534ac6fa36985",
+      "url": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "14381d771aefb1ca8401fd62",
+      "url": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "2f30ca6f505b92f0e5ab05c1",
+      "url": "https://huggingface.co/spaces/Mustafa5192/Invoice-merger",
+      "productUrl": "https://huggingface.co/spaces/Mustafa5192/Invoice-merger",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "7aafcc8d015cd1278b985bee",
+      "url": "https://www.bensbites.com/p/zucks-wonderfull",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "8fe6e5f2fddf3911b3c8a1e9",
+      "url": "https://www.bensbites.com/p/text-is-so-2023",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "6559bbeddb61172576de7951",
+      "url": "https://www.bensbites.com/p/thoughts-from-san-francisco",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "d39329af8ebd63eb33c7e0e8",
+      "url": "https://www.bensbites.com/p/openai-devday-2026",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "14f7ddb17512538ee6ead671",
+      "url": "https://www.bensbites.com/p/sonnet-55-is-worth-a-try",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "2c9a7f5cf7155b059672e97a",
+      "url": "https://www.bensbites.com/p/50-years-of-tech-devices",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "fd54812f164c816fbab95370",
+      "url": "https://www.bensbites.com/p/back-to-claude",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "6738f3ceabaa304f81cb8cdf",
+      "url": "https://www.bensbites.com/p/what-can-you-build-with-jev",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "d3cb423779ff8236c3ec4324",
+      "url": "https://www.bensbites.com/p/new-home-for-cowork",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "b76e0dae669e83a29804f9e3",
+      "url": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "07d50b9cc4ae26797646c9fa",
+      "url": "https://www.bensbites.com/p/telling-ai-to-design-is-hard",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "e6936e42c6e9ce1c5ee0fa33",
+      "url": "https://www.bensbites.com/p/everyone-needs-a-muse",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "d5f7db556079222ae56abcc0",
+      "url": "https://www.bensbites.com/p/the-first-gpt-6-model",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "8175048030ded19a63f81dff",
+      "url": "https://www.bensbites.com/p/scraping-107m-rows-of-data-to-build",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "40a9913f55937995275810d8",
+      "url": "https://www.bensbites.com/p/fable-51",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "6bff2778e2fa248bde021efd",
+      "url": "https://www.bensbites.com/p/build-your-ideas",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "5d1198e2c0c1ba038d9732d2",
+      "url": "https://www.bensbites.com/p/how-i-built-this-21f",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "52cd6f64afa8aaf328ee7f97",
+      "url": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "8d9e0fb1cc8e873eb2bd8152",
+      "url": "https://www.bensbites.com/p/agents-on-your-mobile",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "f9873c0d952a116ee97e1294",
+      "url": "https://www.bensbites.com/p/how-i-built-this",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "7e289d45dfc4cd8f5fef8ccf",
+      "url": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "6451d923eed6bbe644dbebbc",
+      "url": "https://simonwillison.net/2026/Oct/13/llm-gemini",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "1ce341749cd1d883ec323914",
+      "url": "https://simonwillison.net/2026/Oct/13/geoffrey-huntley",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "e6734b2c11074d76a3ecb2a6",
+      "url": "https://simonwillison.net/2026/Oct/13/web-edit",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "5ca8d6f055cb2e9fa5fb4b75",
+      "url": "https://simonwillison.net/2026/Oct/12/llm-meta-ai",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "e8d8f43511a9291fb5e3d53b",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "97e3cba45007401f16113a4c",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15-web-edit-profiling",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "993bc19082d2d062c86a72ba",
+      "url": "https://simonwillison.net/2026/Oct/12/web-edit",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "79fb31c209812beb34edc71f",
+      "url": "https://simonwillison.net/2026/Oct/12/datasette-ports",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "7291bd8b12952a0e561c0d2e",
+      "url": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "d3612ff459da8b570925d705",
+      "url": "https://simonwillison.net/2026/Oct/10/python-actions",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "51b6227273006399313d5b67",
+      "url": "https://simonwillison.net/2026/Oct/10/the-new-york-times",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "7e720aeda47f0a423402183f",
+      "url": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "39e6bd368c40b12952cf2dce",
+      "url": "https://simonwillison.net/2026/Oct/9/matthew-green",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "6cb53bbd6b721016b18daaf4",
+      "url": "https://simonwillison.net/2026/Oct/9/built-using-my-voice",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "f5034dade94eb8023e8cc08f",
+      "url": "https://simonwillison.net/2026/Oct/9/ttok",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "f37003b32e1952f48d5b2803",
+      "url": "https://simonwillison.net/2026/Oct/8/ttok",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "3618833fba59bdc647a6bc0c",
+      "url": "https://simonwillison.net/2026/Oct/8/carson-gross",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "6218fed10e32f470e0284ea4",
+      "url": "https://simonwillison.net/2026/Oct/7/ben-affleck",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "fdc864340b44ea6ec22983b3",
+      "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "be997bf718606abb5880af09",
+      "url": "https://www.latent.space/p/dyna",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "e71374164f2cb1add8d9303e",
+      "url": "https://www.latent.space/p/claude-dynamic-workflows",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "e5f022f9be79d8e96eab97cb",
+      "url": "https://www.latent.space/p/nyc2026",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "9a2a489d753abcefd301a946",
+      "url": "https://www.latent.space/p/standard-bots",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "68a694837125984e014d7340",
+      "url": "https://www.latent.space/p/biohub-deepmind",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "9db9af42b7f614ecd07414a9",
+      "url": "https://www.latent.space/p/ainews-not-much-happened-today-60f",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "22732f8185e35596b40539e9",
+      "url": "https://www.latent.space/p/stacklok",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "9416b01a853f1769cc798e8d",
+      "url": "https://www.latent.space/p/ainews-quasi-riemann-hypothesis-openai",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "417c3a0572d8db4597000019",
+      "url": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "0300916b911fbe76cc9315db",
+      "url": "https://www.latent.space/p/airbnb",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "901948bef614fb42cdf74c7b",
+      "url": "https://www.latent.space/p/ainews-pi-10-pi-durable-and-aie-nyc",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "da0034913ac66df228385b13",
+      "url": "https://www.latent.space/p/rlm",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "cfe32cdb08fcc91ab019a475",
+      "url": "https://www.latent.space/p/devday-2026",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "3439063e9fd745f73599d596",
+      "url": "https://www.latent.space/p/ainews-openai-devday-2026-dots-61",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "c0f3efa6baba2d65cbf16e0b",
+      "url": "https://news.ycombinator.com/item?id=50073471",
+      "productUrl": "https://news.ycombinator.com/item?id=50073471",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "93481ec2e3a9d5b087b696ce",
+      "url": "https://news.ycombinator.com/item?id=50059096",
+      "productUrl": "https://news.ycombinator.com/item?id=50059096",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "bae2411b93f9037617b9617b",
+      "url": "https://news.ycombinator.com/item?id=49911995",
+      "productUrl": "https://github.com/magnitudedev/magnitude",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "241cedafb2f2096359f71f0e",
+      "url": "https://news.ycombinator.com/item?id=49881505",
+      "productUrl": "https://www.vespper.com/blog/launching-vespper-docx-mcp",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "971b17fcf8ca133b04009416",
+      "url": "https://news.ycombinator.com/item?id=49804931",
+      "productUrl": "https://www.coveragecat.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "98a698085fb1fa80319290a2",
+      "url": "https://news.ycombinator.com/item?id=49743049",
+      "productUrl": "https://news.ycombinator.com/item?id=49743049",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "56abc7d43b055b8120e31430",
+      "url": "https://news.ycombinator.com/item?id=49552616",
+      "productUrl": "https://news.ycombinator.com/item?id=49552616",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "6e96c111f32d0712944683da",
+      "url": "https://news.ycombinator.com/item?id=49543530",
+      "productUrl": "https://news.ycombinator.com/item?id=49543530",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "d52885a334088c8a3164163e",
+      "url": "https://news.ycombinator.com/item?id=49525153",
+      "productUrl": "https://www.norirobotics.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "44c4a2b1e7c7b231fde2a80c",
+      "url": "https://news.ycombinator.com/item?id=49511007",
+      "productUrl": "https://usealmanac.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "3219402da73851e1cdb792e0",
+      "url": "https://news.ycombinator.com/item?id=49510632",
+      "productUrl": "https://github.com/Hebbian-Robotics/hflow",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "f44fa4c5ba02f64f5102fc3b",
+      "url": "https://news.ycombinator.com/item?id=49466715",
+      "productUrl": "https://news.ycombinator.com/item?id=49466715",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "10ccfbc2566b618813e2c054",
+      "url": "https://news.ycombinator.com/item?id=49451495",
+      "productUrl": "https://www.risklytics.ai",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "1e322718b449dbf37613b836",
+      "url": "https://news.ycombinator.com/item?id=49376038",
+      "productUrl": "https://github.com/runvendo/vendo",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "c48b9ca3991d590a76e44c0d",
+      "url": "https://news.ycombinator.com/item?id=49363710",
+      "productUrl": "https://github.com/onecli/onecli",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "4688b71b756a06361476f2fb",
+      "url": "https://news.ycombinator.com/item?id=49348136",
+      "productUrl": "https://machine0.io",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "3d4e4fd79cddb69878f413c1",
+      "url": "https://news.ycombinator.com/item?id=49332751",
+      "productUrl": "https://speko.ai",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "51dcb64339d73bb520ac10a2",
+      "url": "https://news.ycombinator.com/item?id=49283063",
+      "productUrl": "https://www.codewithbullet.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "4298bff4fe796619b500af25",
+      "url": "https://news.ycombinator.com/item?id=49269090",
+      "productUrl": "https://discoveredmaterials.com/research",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "879ab9478970541649165f54",
+      "url": "https://news.ycombinator.com/item?id=49259309",
+      "productUrl": "https://www.trykeet.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "342b136b581a48d87b445a93",
+      "url": "https://news.ycombinator.com/item?id=50079361",
+      "productUrl": "https://updown.laravel.cloud/059a14a0-9113-4fad-a9db-e8ef2d2e830c",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "5c593ce6f13e38ccca3ce5db",
+      "url": "https://news.ycombinator.com/item?id=50052566",
+      "productUrl": "https://www.jruva.in",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "cd4b108088eb92f81b6c1adf",
+      "url": "https://news.ycombinator.com/item?id=50048129",
+      "productUrl": "https://cachety.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "d32a3e5679ad79dcdfea2668",
+      "url": "https://news.ycombinator.com/item?id=50031317",
+      "productUrl": "https://github.com/aartur/docexp",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "9466c808c7a1baff1a388125",
+      "url": "https://news.ycombinator.com/item?id=50014659",
+      "productUrl": "https://www.nace.ai/developers",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "b10a3bb525a948027a616984",
+      "url": "https://news.ycombinator.com/item?id=50006936",
+      "productUrl": "https://nucleus.excom.dev",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "c815e99f1918e58a78b4349c",
+      "url": "https://news.ycombinator.com/item?id=49977184",
+      "productUrl": "https://docultra.org",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "cb2cab75301d9e85f3161785",
+      "url": "https://news.ycombinator.com/item?id=49974080",
+      "productUrl": "https://astro-plakar-wayback.fly.dev/docs/getting-started/installation",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "0df67bc3c7d3e347437d25c4",
+      "url": "https://news.ycombinator.com/item?id=49967539",
+      "productUrl": "https://www.invofox.com/en",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "d4039c4e9f9108f14fe06ca1",
+      "url": "https://news.ycombinator.com/item?id=49947702",
+      "productUrl": "https://json-doc.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "12c16728d5081b718ada2f03",
+      "url": "https://news.ycombinator.com/item?id=49923203",
+      "productUrl": "https://www.veludocs.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "97a532b151cb111631117832",
+      "url": "https://news.ycombinator.com/item?id=49894301",
+      "productUrl": "https://sezwhere.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "93cb392afa8d457f30691123",
+      "url": "https://news.ycombinator.com/item?id=49869904",
+      "productUrl": "https://rare-books.vercel.app",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "a0ba78a55c830444d375c0e2",
+      "url": "https://news.ycombinator.com/item?id=49866189",
+      "productUrl": "https://www.npmjs.com/package/revise",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "6859168b6a37428ab30987a1",
+      "url": "https://news.ycombinator.com/item?id=49866121",
+      "productUrl": "https://dicty.io",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "4925b235e80f8eeb3af64447",
+      "url": "https://news.ycombinator.com/item?id=49738595",
+      "productUrl": "https://github.com/Ontos-AI/knowhere",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "8eab0af476c34cad1244c829",
+      "url": "https://news.ycombinator.com/item?id=49737256",
+      "productUrl": "https://github.com/AysanZ/alidade",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "355c2c5234beb0c37366404b",
+      "url": "https://news.ycombinator.com/item?id=49660648",
+      "productUrl": "https://github.com/paulknysh/raggy",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "d6e99b624e3933b6fbf82caa",
+      "url": "https://news.ycombinator.com/item?id=49618090",
+      "productUrl": "https://github.com/aws-samples/sample-textract-field-memory",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "633c94533e5a823da0c89f1c",
+      "url": "https://news.ycombinator.com/item?id=49586334",
+      "productUrl": "https://github.com/drl990114/MarkFlowy",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "bcddd7d35acdfcaa49f31d2d",
+      "url": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "ca6a664d20bd48cf57145f2e",
+      "url": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "0f1e1c9ed7c9b88df76447ab",
+      "url": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "productUrl": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "3ecc3a5ea527357de5fa4165",
+      "url": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "eb08bb526b3fe0ba957f00c2",
+      "url": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "productUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "ce550eec21fdd6de3c333ecd",
+      "url": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "productUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "1b3ba5be008d9c8a8e2422f9",
+      "url": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "productUrl": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "be8fa77dfa6f3364ffd4f537",
+      "url": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "697c3528c356ce202c5ae31e",
+      "url": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "8472cdf645082b82438ba2a0",
+      "url": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "productUrl": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "458c04cd04ca960bc316608e",
+      "url": "https://github.com/morluto/rea",
+      "productUrl": "https://github.com/morluto/rea",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "f3d0d1f85de671d55fee2b62",
+      "url": "https://github.com/bilawalsidhu/gods-eye-view",
+      "productUrl": "https://github.com/bilawalsidhu/gods-eye-view",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "da8ac24508773f981b8dc464",
+      "url": "https://github.com/debpalash/VoiceStudio",
+      "productUrl": "https://github.com/debpalash/VoiceStudio",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "cfe6b1639c3c3094f26f16ce",
+      "url": "https://github.com/mksglu/context-mode",
+      "productUrl": "https://github.com/mksglu/context-mode",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "9c939c7199afd9a60700695b",
+      "url": "https://github.com/cathrynlavery/diagram-design",
+      "productUrl": "https://github.com/cathrynlavery/diagram-design",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "3888c0e3209644c8101e4bcd",
+      "url": "https://github.com/vercel-labs/skills",
+      "productUrl": "https://github.com/vercel-labs/skills",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "759119abe3ffdb8f16da1171",
+      "url": "https://github.com/lyogavin/airllm",
+      "productUrl": "https://github.com/lyogavin/airllm",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "96cd9bd509bc9d5c8f527d26",
+      "url": "https://github.com/storytold/artcraft",
+      "productUrl": "https://github.com/storytold/artcraft",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "6165c7ee0513cba19a7a07e8",
+      "url": "https://github.com/xtool-org/xtool",
+      "productUrl": "https://github.com/xtool-org/xtool",
+      "feedIds": [
+        "fb41898e3878114109088fed"
+      ]
+    },
+    {
+      "sourceId": "ffb02be944ece53dd8a4e66e",
+      "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages/096037-2026",
+      "productUrl": null,
+      "feedIds": [
+        "d7da742b595e7ec512a8ef54"
+      ]
+    },
+    {
+      "sourceId": "ea11f83c595fac0655a095e4",
+      "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages/095976-2026",
+      "productUrl": null,
+      "feedIds": [
+        "d7da742b595e7ec512a8ef54"
+      ]
+    },
+    {
+      "sourceId": "29b4545803971a05ef83dcbb",
+      "url": "https://www.contractsfinder.service.gov.uk/Published/OCDS/Release/8c5c952b-376a-46d4-8635-c3fba0288d03-917384",
+      "productUrl": null,
+      "feedIds": [
+        "cca981f46ee3fb8981413fee"
+      ]
+    },
+    {
+      "sourceId": "42465945641feef82aee7698",
+      "url": "https://www.contractsfinder.service.gov.uk/Published/OCDS/Release/2e04fda8-05f7-4686-9f1e-25d2e25bf0ef-917357",
+      "productUrl": null,
+      "feedIds": [
+        "cca981f46ee3fb8981413fee"
+      ]
+    },
+    {
+      "sourceId": "08dc340137f876134e8cd6d4",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31578015",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "b564cbaadfbbf682eff74a79",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31575613",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "f5dc682a72dfd370c945ec77",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31551851",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "34ef6572b6fe9ea1b02736c4",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31477636",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "65563e458bbb0861f1de58aa",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31586790",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "e7d50986a834a06b5747f179",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31578306",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "2faa8eabfa7bbedbde9984d5",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31574584",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "4fc12cfe05724316dd5662ad",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31554889",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "6f5f0c43005d8c097795dc56",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31535471",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "306d4a6cafe6cbe754e45483",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31509577",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "7edf73ff4c444870f42c0838",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31587727",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "e6af3b3d6403e6773319dc0e",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31582328",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "adf9a116d5aa0d4584f14965",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31572638",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "00d3c50a94b55056aeb7023e",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31549320",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "763f3faed00c70578fc85936",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31548970",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "6e103d304cb6db524e2593e6",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31588779",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "e6046c680a356b1ec40b908d",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31584620",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "4ca7cda0d6afa9397d0d28b3",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31580004",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "0ae210de8ae5dc63b22b8a69",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31576445",
+      "productUrl": null,
+      "feedIds": [
+        "3c18d6f9afb86838768b18fe"
+      ]
+    },
+    {
+      "sourceId": "f0175742c7d58eb728130400",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31539441",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "1a3d92cbfc29dbd97fe777f5",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "401abc1f20e2f21b0ac35fd2",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31472376",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "08f2db2458052937894c034c",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31538445",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "6be59c9bea58f4b0415f123a",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31586660",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "d591877dbef0c463e1e497c0",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31507408",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "58eee5cfdb9bd9e94b3e85df",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31585208",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "ea5a11d8bf4ecba2e21ffe64",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31570377",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "d80fa8cdd7ff795659aa9154",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31563110",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "ecfdcaf6294f89c3284393f3",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31475171",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "22872cf33bcebcc381edcd46",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31489651",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "16db8a0c6f56f178fc288963",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31569530",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "458c02274c2cd3b1d0b0dcc2",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31587546",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "25d391e9df8bca3db0757c52",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31584968",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "fdd37fd15a98eb695e63b553",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31550869",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "ba9229fba06958c3587899cd",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31538209",
+      "productUrl": null,
+      "feedIds": [
+        "b36040a453674772f62166cb"
+      ]
+    },
+    {
+      "sourceId": "f3801918ce992efa28cd4fe7",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31577125",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "925ba2f862511d5e56e10d87",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31570420",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "99025f0bc23ab7a461be7384",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31567911",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "d856148e4ea1fa6dbeb7a278",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31560119",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "33a6ed01386147c9bf787dfc",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31545637",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "f5b838513ab3f762321265b1",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31528777",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "a86c6d803d1bc89d9905392d",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31417197",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "0ea6c42a7ad4a3bd0b7282e8",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31591383",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "450bfa4366dae008c2879363",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31588827",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "05ef1616c1b77d3b1a6c8efa",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31583087",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "44665c3d25eabdde8a02aa38",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31538054",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "cd7a74bc5bc126a0c4c8696b",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31523209",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "13559bee1e19dc07860ca509",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31508623",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "953830e662493b3560d83b8c",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31502267",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "bb160f0a91045c4b9dddc7a5",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31399086",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "7659be884e6db25f02a41075",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31588105",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "82d2387a78c31dd2f8b4f771",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31578258",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "0ecd330d3bae984d9ac5c6ce",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31569802",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "30c7d3a67a929bff971c9799",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31563135",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    },
+    {
+      "sourceId": "91fa7885e45fb2d8b5ce9418",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+      "productUrl": null,
+      "feedIds": [
+        "8ef335213e70b38904e7a504"
+      ]
+    }
+  ],
+  "privacyOmissions": {
+    "schema": 1,
+    "phase": "scan",
+    "policy": "whole-unsafe-building-record-omission",
+    "fetchedItemCount": 262,
+    "retainedItemCount": 256,
+    "omittedItemCount": 6,
+    "uniqueOmittedRecords": 6,
+    "byFeed": [
+      {
+        "feedId": "a5689419c24836e7e0ce37dd",
+        "fetchedItemCount": 20,
+        "retainedItemCount": 14,
+        "omittedItemCount": 6,
+        "categories": [
+          {
+            "category": "username_pattern",
+            "count": 6
+          }
+        ]
+      }
+    ]
+  },
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38507211428",
+    "runAttempt": 1,
+    "workflow": "research.yml",
+    "stage": "research",
+    "headSha": "e08472013862a026213d0c4f1c3c579ecf96914b"
+  }
+}
