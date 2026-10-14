@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "loop-38494149089-1",
+  "runId": "loop-38494149089-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-14T01:09:53.263Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38494149089-1",
+  "registrySha256": "9501fd7f8849b0f55b4e4740cb1d3dcbf4dcd84de4904dba2c2acf76dd8e2d65",
+  "scoreboardSha256": "6376fe26edc22b53681bad8b3456a4f78bb003331f50a917b6df8dbe14599617",
+  "eligibleSegments": [
+    "education",
+    "public_sector"
+  ],
+  "selectedSegment": "public_sector",
+  "demandSourceIds": [
+    "d7da742b595e7ec512a8ef54"
+  ],
+  "segmentDraws": [
+    {
+      "id": "public_sector",
+      "value": 0.08334443165913905
+    },
+    {
+      "id": "education",
+      "value": 0.013166418770765775
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "d7da742b595e7ec512a8ef54",
+      "value": 0.005097563455398097
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "3c18d6f9afb86838768b18fe",
+        "scanId": "research-38491105809-1",
+        "scanSha256": "247f1cf235cc121eca07b684e19c8841ab3e7add38f721fb73afd8ad7263d222",
+        "items": 19,
+        "retryAt": "2026-10-14T02:36:38.025Z"
+      },
+      {
+        "sourceId": "8ef335213e70b38904e7a504",
+        "scanId": "research-38491105809-1",
+        "scanSha256": "247f1cf235cc121eca07b684e19c8841ab3e7add38f721fb73afd8ad7263d222",
+        "items": 20,
+        "retryAt": "2026-10-14T02:36:38.025Z"
+      },
+      {
+        "sourceId": "cca981f46ee3fb8981413fee",
+        "scanId": "research-38491105809-1",
+        "scanSha256": "247f1cf235cc121eca07b684e19c8841ab3e7add38f721fb73afd8ad7263d222",
+        "items": 2,
+        "retryAt": "2026-10-14T02:36:38.025Z"
+      }
+    ]
+  },
+  "reason": "Try public sector and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38494149089",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "bfc0512978ee12b280bbe2d0db59f706aa485bc1"
+  }
+}
