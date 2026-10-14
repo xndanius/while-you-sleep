@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {demandFeedAvailability,loadDemandFeedAvailability,learningScoreboard,selectLearningTargets,validateLearningSelection,deriveLearningReceipt,validateLearningReceipt,loadLearningState,readOperatorMarks} from '../lib/learning.mjs';
 import {hash,sha256,stableJSON,writeJSON,candidateIdentity} from '../lib/storage.mjs';
-import {DEMAND_SOURCE_CATALOG,demandSourceMetadata} from '../lib/demand-sources.mjs';
+import {DEMAND_SOURCE_CATALOG,demandSourceMetadata,demandEvidenceFingerprint,DEMAND_TASK_EXTRACTOR_VERSION} from '../lib/demand-sources.mjs';
 import {createDemandContext,demandContextHash} from '../lib/demand.mjs';
 import {createSourceScanReceipt,applySourceTransition,emptySourceRegistry} from '../lib/source-registry.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
@@ -17,16 +17,17 @@ import {importLearningSelection} from '../scripts/import-learning-selection.mjs'
 import {recordLearning} from '../scripts/record-learning.mjs';
 import {selectProductLeads,enrichProductLeads,sourceEvidenceFetchOptions} from '../lib/product-evidence.mjs';
 import {writerResearchView} from '../lib/candidate-input.mjs';
+import {SOURCE_PARSER_VERSION} from '../lib/research.mjs';
 import {researchSnapshot} from '../scripts/research-snapshot.mjs';
 
 const now='2026-10-12T11:00:00.000Z',runId='loop-456-1',head='a'.repeat(40),rules='<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n';
 const definition=(({id,name,url,kind})=>({id,name,url,kind}))(DEMAND_SOURCE_CATALOG[2]);
 const registry={schema:1,initializedAt:now,sources:[{...definition,status:'active'}]};
-function validation(url){return {publicHttps:true,robotsAllowed:true,readable:true,robots:[{origin:new URL(url).origin,evaluatedUrl:url,robotsUrl:new URL('/robots.txt',url).toString(),status:404,state:'missing',allowed:true,contentType:'text/plain',fetchedAt:now}],redirects:[],httpStatus:200,contentType:'application/json',resolvedUrl:url,fetchedAt:now,maxBytes:2000000,truncated:false,parserVersion:'public-sources-v1',itemCount:1};}
+function validation(url){return {publicHttps:true,robotsAllowed:true,readable:true,robots:[{origin:new URL(url).origin,evaluatedUrl:url,robotsUrl:new URL('/robots.txt',url).toString(),status:404,state:'missing',allowed:true,contentType:'text/plain',fetchedAt:now}],redirects:[],httpStatus:200,contentType:'application/json',resolvedUrl:url,fetchedAt:now,maxBytes:2000000,truncated:false,parserVersion:SOURCE_PARSER_VERSION,itemCount:1};}
 function fixture({empty=false}={}){
  const producer={repository:'xndanius/while-you-sleep',runId:'456',runAttempt:1,workflow:'loop.yml',stage:'pre_model',headSha:head};
  const selection=selectLearningTargets({runId,registry,scoreboard:learningScoreboard({registry,now}),now,producer});
- const url='https://jobsearch.api.jobtechdev.se/ad/123456',source={id:hash(url),url,registrySourceId:definition.id,segment:'professional_services',role:'demand',demandKind:'paid_job',demandMetadataVersion:1,demand:true,demandEvidence:{kind:'paid_job',paid:true,status:'open',noticeId:'123456'},fetchedAt:now,verifiedAt:now,text:'A paid administrator vacancy lists document filing duties. The role organizes records and reviews invoices. Human approval remains required before an export. This synthetic test text establishes a bounded fixture, never a real customer or actual revenue.'};
+ const url='https://jobsearch.api.jobtechdev.se/ad/123456',source={id:hash(url),url,registrySourceId:definition.id,segment:'professional_services',role:'demand',demandKind:'paid_job',demandMetadataVersion:1,taskExcerptVersion:DEMAND_TASK_EXTRACTOR_VERSION,demand:true,demandEvidence:{kind:'paid_job',paid:true,status:'open',noticeId:'123456'},fetchedAt:now,verifiedAt:now,text:'A paid administrator vacancy lists document filing duties. The role organizes records and reviews invoices. Human approval remains required before an export. This synthetic test text establishes a bounded fixture, never a real customer or actual revenue.'};
  const scan=createSourceScanReceipt({runId,registry,sources:[source],observations:[{feedId:definition.id,url:definition.url,status:'ok',itemCount:1,fetchedAt:now,message:'A guarded fixture item was parsed.',validation:validation(definition.url)}],originMap:[{sourceId:source.id,url,productUrl:null,feedIds:[definition.id]}],producer:{...producer,definitions:[definition]},now});
  const postId=candidateIdentity({productUrl:url}),demandEvidence={kind:'paid_job',sourceIds:[source.id],chore:'Organize records for human review.',evidenceQuote:'A paid administrator vacancy lists document filing duties'};
  const post={id:postId,candidateId:postId,title:'A synthetic filing review queue',promise:'Prepare a filing draft for review.',whatItIs:'A bounded synthetic test.',whoPays:'Hypothesis: administration teams could value a reviewed draft.',loop:['Read a document.','Prepare a filing draft.','Request human approval.'],evidence:'The source lists document filing duties.',uncertainty:'This fixture proves no AI customer or revenue.',first24Hours:['Choose an input.','Create a draft.','Review it.'],productUrl:url,sourceIds:[source.id],segment:'professional_services',demandEvidence,scoring:{criteria:Object.fromEntries(SCORING_KEYS.map(criterion=>[criterion,{value:6,reason:criterion==='profit'?'Hypothesis: a reviewed filing draft could help administration teams.':'This fixture describes bounded filing and review duties.',sourceIds:[source.id]}]))}};
@@ -131,4 +132,15 @@ test('bounded availability loader preserves the original scan and binds its exac
  const root=await temp(t),f=fixture(),before=stableJSON(f.scan);await writeJSON(path.join(root,'data','source-scans',runId+'.json'),f.scan);
  const value=await loadDemandFeedAvailability({root,registry,recentAssessments:[{productUrl:f.source.url,assessedAt:now}],now});
  assert.equal(value.exclusions[0].scanSha256,sha256(before));assert.equal(stableJSON(JSON.parse(await fs.readFile(path.join(root,'data','source-scans',runId+'.json'),'utf8'))),before);
+});
+
+
+test('changed demand evidence or an older extractor cannot suppress a new guarded assessment',()=>{
+ const f=fixture(),recent=[{productUrl:f.source.url,assessedAt:now,demandEvidenceSha256:demandEvidenceFingerprint(f.source)}],options={registry,scans:[f.scan],recentAssessments:recent,now};
+ assert.equal(demandFeedAvailability(options).exclusions.length,1);
+ const rebuild=source=>createSourceScanReceipt({runId,registry,sources:[source],observations:f.scan.observations,originMap:f.scan.originMap,producer:{...f.scan.producer,definitions:[definition]},now});
+ assert.equal(demandFeedAvailability({...options,scans:[rebuild({...f.source,text:f.source.text+' A newly available literal task.'})]}).exclusions.length,0);
+ const old=createSourceScanReceipt({runId,registry,sources:[f.source],observations:f.scan.observations.map(row=>({...row,validation:{...row.validation,parserVersion:'public-sources-v1'}})),originMap:f.scan.originMap,producer:{...f.scan.producer,definitions:[definition]},now});
+ assert.equal(demandFeedAvailability({...options,scans:[old]}).exclusions.length,0);
+ assert.equal(demandFeedAvailability({...options,scans:[rebuild({...f.source,fetchedAt:'2026-10-12T11:01:00.000Z'})]}).exclusions.length,1,'a fetch timestamp alone is not changed task evidence');
 });

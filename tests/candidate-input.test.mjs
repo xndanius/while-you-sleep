@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import {candidateHistory,writerResearchView,selectBuildingReferences} from '../lib/candidate-input.mjs';
+import {candidateHistory,writerResearchView,writerReadiness,selectBuildingReferences} from '../lib/candidate-input.mjs';
 import {sha256,stableJSON} from '../lib/storage.mjs';
 
 test('writer view keeps selected discovery and primary evidence without rewriting the immutable snapshot',()=>{
@@ -67,4 +67,12 @@ test('task-specific references beat body-only catalog matches and record does no
  const records={...demand,taskExcerpts:['Organize records for review.']};
  const filing=reference('filing','files.example','Document filing');
  assert.deepEqual(selectBuildingReferences([recording,filing],[records],{limit:1}),[filing]);
+});
+
+
+test('missing selected demand cannot spend a writer model call or fabricate an empty assessment',()=>{
+ const options={demandRequired:true},source={...demand,segment:'professional_services',demand:true},snapshot={learningSelection:{selectedSegment:'professional_services'},sources:[source],enrichment:{observations:[{status:'fetched',evidenceIds:[source.id]}]}};
+ assert.equal(writerReadiness(snapshot,options).ready,true);
+ for(const bad of [{...snapshot,learningSelection:{selectedSegment:null}},{...snapshot,sources:[{...source,role:'building'}]},{...snapshot,enrichment:{observations:[{status:'failed',evidenceIds:[]}]}},{...snapshot,sources:[{...source,segment:'education'}]}]){assert.equal(writerReadiness(bad,options).ready,false);assert.match(writerReadiness(bad,options).reason,/without a model call/);}
+ assert.equal(writerReadiness({},{}).ready,true,'legacy non-demand runs retain their existing path');
 });

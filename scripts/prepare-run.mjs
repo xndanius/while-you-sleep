@@ -1,7 +1,7 @@
 import {mkdir,writeFile,readFile,rm} from 'node:fs/promises';
 import {readJSON,dataPath,sha256,stableJSON,records} from '../lib/storage.mjs';
 import {validateLoopScheduling} from '../lib/loop-schedule.mjs';
-import {candidateHistory,writerResearchView} from '../lib/candidate-input.mjs';
+import {candidateHistory,writerResearchView,writerReadiness} from '../lib/candidate-input.mjs';
 import {ROOT} from '../lib/storage.mjs';
 import {parseScoringPolicy} from '../lib/scoring.mjs';
 import {checkerOutputSchema} from '../lib/checker-output.mjs';
@@ -23,7 +23,7 @@ await mkdir('.run',{recursive:true});await mkdir('data/drafts',{recursive:true})
 if(['writer','repair'].includes(role)){
  const history=await candidateHistory(ROOT);context.recentRejectionsPath='.run/recent-rejections.json';
  await writeFile(context.recentRejectionsPath,JSON.stringify(history.rejections,null,2));
- const snapshot=await readJSON(dataPath('research',runId));context.originalResearchPath=context.researchPath;context.researchPath='.run/writer-research.json';
+ const snapshot=await readJSON(dataPath('research',runId));const readiness=writerReadiness(snapshot,{demandRequired:context.demandContractVersion===1});if(!readiness.ready)throw new Error(readiness.reason);context.originalResearchPath=context.researchPath;context.researchPath='.run/writer-research.json';
  context.selectedSegment=snapshot.learningSelection?.selectedSegment||null;
  if(context.demandContractVersion===1){const selection=await readJSON(dataPath('learning-selection',runId));if(selection.runId!==runId)throw new Error('Demand-first writer has no matching trusted learning selection.');context.selectedSegment=selection.selectedSegment;}
  if(role==='repair'){const frozen=await readJSON(dataPath('check-context',runId));context.selectedSegment=frozen.demandContext?.selectedSegment||context.selectedSegment;}

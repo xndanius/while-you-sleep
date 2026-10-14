@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {DEMAND_SOURCE_CATALOG,sourceRole,sourceSegments,sourceDemandKind,parseDemandSourcePage,fetchDemandEvidence,demandTaskCount} from '../lib/demand-sources.mjs';
+import {DEMAND_SOURCE_CATALOG,sourceRole,sourceSegments,sourceDemandKind,parseDemandSourcePage,fetchDemandEvidence,demandTaskCount,demandEvidenceFingerprint,DEMAND_TASK_EXTRACTOR_VERSION} from '../lib/demand-sources.mjs';
 import {sourceSeedCatalog,normalizeSourceDefinition,parseSourcePage,validateSource} from '../lib/research.mjs';
 import {sourceDefinitionReasons,SOURCE_POLICY} from '../lib/source-registry.mjs';
 import {admissionDecision} from '../scripts/source-registry.mjs';
@@ -84,4 +84,22 @@ test('normal guarded source admission recognizes the new adapters and retains ol
  assert.equal(result.eligible,true);assert.equal(result.validation.itemCount,1);assert.equal(admissionDecision(result,normalizeSourceDefinition(def)),true);assert.equal(result.sampleItems[0].role,'demand');
  const blocked=await validateSource(def,{now,fetchPage:async()=>({...data,robots:[{...data.robots[0],allowed:false}]})});assert.equal(blocked.eligible,false);assert.equal(blocked.sampleItems.length,0);assert.equal(admissionDecision(blocked,normalizeSourceDefinition(def)),false);
  assert.equal(canonicalURL(result.sampleItems[0].url),result.sampleItems[0].url);
+});
+
+
+test('real task forms and fixed software names survive while recruitment and private names stay out',()=>{
+ const def=DEMAND_SOURCE_CATALOG[2],row=job();
+ const tasks=['Föra in tidrapporter i Excel och säkerställa korrekthet och noggrannhet','säkerställa att arbetsorder är uppdaterade och avslutas korrekt','kvalitetssäkra underlag och skapa ett effektivt faktureringsflöde'];
+ row.description.text=['Vi söker dig som har erfarenhet av administration.','Du har erfarenhet av schemaplanering och fakturering.','Vi har skyldighet att kontrollera belastningsregistret.',...tasks,'Du registrerar dokument för Alice Example.','Föra in tidrapporter åt Private Person i Excel.','Registrera dokument på Main Street.'].join('\n');
+ const item=parseDemandSourcePage(def,page(def,{hits:[row]}))[0];
+ assert.deepEqual(item.taskExcerpts,tasks);assert.equal(demandTaskCount(item),3);assert.equal(item.taskExcerptVersion,DEMAND_TASK_EXTRACTOR_VERSION);
+ assert.ok(tasks.every(line=>row.description.text.includes(line)));assert.doesNotMatch(item.text,/Alice|Private|Main|erfarenhet|belastnings/);
+ const other=job();other.description.text='Du registrerar elever och böcker i vårt utlåningssystem.\nI ditt arbete kommer du att hantera arkivering och dokument.\nArbetsuppgifterna omfattar registrering av inkommande ärenden.';
+ const preserved=parseDemandSourcePage(def,page(def,{hits:[other]}))[0];assert.equal(preserved.taskExcerpts.length,3);assert.equal(demandTaskCount(preserved),3);
+});
+
+test('demand evidence identity ignores fetch timestamps but changes when a literal task changes',()=>{
+ const def=DEMAND_SOURCE_CATALOG[2],item=parseDemandSourcePage(def,page(def,{hits:[job()]}))[0],fingerprint=demandEvidenceFingerprint(item);
+ assert.match(fingerprint,/^[a-f0-9]{64}$/);assert.equal(demandEvidenceFingerprint({...item,fetchedAt:'2026-10-14T00:00:00.000Z',verifiedAt:'2026-10-14T00:00:00.000Z',taskExcerptVersion:999}),fingerprint);
+ assert.notEqual(demandEvidenceFingerprint({...item,text:item.text+' A changed public task.'}),fingerprint);assert.equal(demandEvidenceFingerprint({...item,role:'building'}),null);
 });

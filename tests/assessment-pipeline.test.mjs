@@ -310,3 +310,12 @@ test('workflow neutral content errors retain explicit model outcomes and only ve
  assert.match(job('record'),/name: .*final_check.result != 'skipped'/);
  assert.ok(job('record').split('\n').filter(line=>line.includes('EXPECTED_CONTEXT_SHA:')).every(line=>line.includes("final_check.outputs.context_sha256 != ''")));
 });
+
+
+test('fresh private page content stops preparation before any checker input or model call',async t=>{
+ const privateText=text+' Follow @fictionalprivatehandle for more details.';
+ const result=await execute(t,{script:'prepare-check',liveText:privateText});
+ assert.equal(result.execution.status,1);assert.match(result.execution.stderr,/Fresh independent evidence failed privacy checks \(username_pattern\)/);assert.match(result.outputs,/checker_preparation_failed/);
+ assert.doesNotMatch(result.execution.stdout+result.execution.stderr+result.outputs,/fictionalprivatehandle/);
+ assert.ok(!JSON.stringify(await result.record('check-context')).includes('fictionalprivatehandle'));
+});

@@ -9,6 +9,7 @@ import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
 import {createDemandContext,demandContextHash,demandEvidenceReasons,demandContextReasons} from '../lib/demand.mjs';
 import {validSourceAdmission} from '../lib/source-registry.mjs';
+import {privateArtifactCategories} from '../lib/privacy.mjs';
 const runId=process.argv[2];
 try{
   const draft=await readJSON(dataPath('drafts',runId));const research=await readJSON(dataPath('research',runId));
@@ -130,6 +131,8 @@ try{
   const deterministicResults=draft.posts.map(post=>{const reasons=deterministicCheck(post,[...research.sources,...sources],[...previous,...earlierProposals],{scoringPolicy,noveltyNow:new Date(noveltyContext.asOf),demandContext:demandContract,demandRequired});if(sameBatch.has(post.id))reasons.push('Duplicate product in this writer batch.');sameBatch.add(post.id);earlierProposals.push({...post,publishedAt:noveltyContext.asOf,...(demandRequired?{demandContractVersion:1,checker:{demandCheck:{supported:true}}}:{})});if(post.sourceIds?.some(sourceId=>!sources.some(s=>s.id===sourceId)))reasons.push('Attached evidence source could not be re-fetched.');return {postId:post.id,pass:reasons.length===0,reasons};});
   await writeJSON(dataPath('drafts',runId),draft);
   const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...demandContract,...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
+  const privacyCategories=privateArtifactCategories(context);
+  if(privacyCategories.length)throw new Error('Fresh independent evidence failed privacy checks ('+[...new Set(privacyCategories)].join(', ')+'); no checker model call is permitted.');
   await writeJSON(dataPath('check-context',runId),context);
   console.log(JSON.stringify({runId,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,results:deterministicResults}));
 }catch(error){

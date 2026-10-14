@@ -7,7 +7,7 @@ import {PRODUCT_EVIDENCE_POLICY,PRODUCT_SELECTION_POLICY,selectProductLeads,enri
 import {hash,sha256,stableJSON,canonicalURL,writeJSON} from '../lib/storage.mjs';
 import {emptySourceRegistry,applySourceTransition,createSourceScanReceipt,validateSourceScanReceipt} from '../lib/source-registry.mjs';
 import {researchSnapshot} from '../scripts/research-snapshot.mjs';
-import {DEMAND_SOURCE_CATALOG,parseDemandSourcePage,fetchDemandEvidence} from '../lib/demand-sources.mjs';
+import {DEMAND_SOURCE_CATALOG,parseDemandSourcePage,fetchDemandEvidence,demandEvidenceFingerprint} from '../lib/demand-sources.mjs';
 
 const now='2026-10-11T15:00:00.000Z';
 const capability='The product reads uploaded invoice documents, extracts structured fields, and exports CSV files for review. The operator chooses the documents and checks the result before sending records. It includes a command line interface and documented configuration; running it still requires a server, credentials and human approval. ';
@@ -145,4 +145,15 @@ test('a wholly failed enrichment preserves the scan receipt but makes a loop ope
 
 test('standalone snapshots keep their original source scan contract and do not request product enrichment',async t=>{
  const f=await snapshotFixture(t),result=await researchSnapshot({root:f.root,runId:'research-701-1',env:f.env,now,scan:async()=>f.result});assert.equal(result.snapshot.enrichment.status,'not_requested');assert.equal(result.snapshot.sources.length,3);assert.equal(result.receipt.producer.workflow,'research.yml');assert.equal(result.receipt.producer.stage,'research');assert.equal(result.snapshot.scheduleStatus,'completed');
+});
+
+
+test('only changed substantive demand evidence reopens a cooled notice, never a published one',()=>{
+ const def=DEMAND_SOURCE_CATALOG[2],items=parseDemandSourcePage(def,page(def.url,JSON.stringify({hits:[demandJob(111,'Registrera dokument för granskning och arkivering.')] }),{contentType:'application/json'}));
+ const original=items[0],recentAssessments=[{productUrl:original.url,assessedAt:now,demandEvidenceSha256:demandEvidenceFingerprint(original)}],options={recentAssessments,now,learningSelection:{selectedSegment:'professional_services',demandSourceIds:[def.id]},demandDefinitions:[def],originMap:[origin(original,def.id)]};
+ assert.equal(selectProductLeads(items,options).length,0);
+ assert.equal(selectProductLeads([{...original,fetchedAt:'2026-10-11T15:01:00.000Z'}],options).length,0);
+ const changed={...original,text:original.text+' Sammanställa fakturaunderlag för granskning.'};
+ assert.equal(selectProductLeads([changed],options).length,1);assert.equal(selectProductLeads([changed],{...options,previous:[{productUrl:original.url}]}).length,0);
+ assert.equal(selectProductLeads([changed],{...options,recentAssessments:[{productUrl:original.url,assessedAt:now}]}).length,0,'an unproven legacy fingerprint cannot claim changed evidence');
 });
