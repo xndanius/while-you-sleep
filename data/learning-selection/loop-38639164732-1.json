@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "id": "loop-38639164732-1",
+  "runId": "loop-38639164732-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-14T21:18:30.248Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38639164732-1",
+  "registrySha256": "9501fd7f8849b0f55b4e4740cb1d3dcbf4dcd84de4904dba2c2acf76dd8e2d65",
+  "scoreboardSha256": "f393726db54acfd459289c3d968cd62e9bc04baa1a1cafb81918cc4e18b9a85d",
+  "eligibleSegments": [
+    "professional_services",
+    "public_sector"
+  ],
+  "selectedSegment": "public_sector",
+  "demandSourceIds": [
+    "d7da742b595e7ec512a8ef54"
+  ],
+  "segmentDraws": [
+    {
+      "id": "public_sector",
+      "value": 0.009305510031348283
+    },
+    {
+      "id": "professional_services",
+      "value": 0.0055489578931640655
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "d7da742b595e7ec512a8ef54",
+      "value": 0.09331519050035347
+    },
+    {
+      "id": "cca981f46ee3fb8981413fee",
+      "value": 0.001174141544617247
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "8ef335213e70b38904e7a504",
+        "scanId": "research-38632396841-1",
+        "scanSha256": "a6891a7648eb635eff29e800b2d70c97addcd8cc369ffa0b003d3fbcaec5c096",
+        "items": 20,
+        "retryAt": "2026-10-14T22:29:19.116Z"
+      },
+      {
+        "sourceId": "b36040a453674772f62166cb",
+        "scanId": "research-38632396841-1",
+        "scanSha256": "a6891a7648eb635eff29e800b2d70c97addcd8cc369ffa0b003d3fbcaec5c096",
+        "items": 17,
+        "retryAt": "2026-10-14T22:12:17.514Z"
+      }
+    ]
+  },
+  "reason": "Try public sector and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38639164732",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "c7ca8563c9935c8466db9907f981d6282082a70a"
+  }
+}
