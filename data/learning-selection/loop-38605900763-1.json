@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "id": "loop-38605900763-1",
+  "runId": "loop-38605900763-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-14T17:21:32.069Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38605900763-1",
+  "registrySha256": "9501fd7f8849b0f55b4e4740cb1d3dcbf4dcd84de4904dba2c2acf76dd8e2d65",
+  "scoreboardSha256": "775e53efcf7ce57f89c636ebc266571c4804876f2753e408fba36233872e1e4c",
+  "eligibleSegments": [
+    "health_admin",
+    "public_sector"
+  ],
+  "selectedSegment": "public_sector",
+  "demandSourceIds": [
+    "cca981f46ee3fb8981413fee"
+  ],
+  "segmentDraws": [
+    {
+      "id": "public_sector",
+      "value": 0.05022623732995086
+    },
+    {
+      "id": "health_admin",
+      "value": 0.006270201311583576
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "cca981f46ee3fb8981413fee",
+      "value": 0.15507048521796404
+    },
+    {
+      "id": "d7da742b595e7ec512a8ef54",
+      "value": 0.1492027323922266
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "3c18d6f9afb86838768b18fe",
+        "scanId": "research-38600925526-1",
+        "scanSha256": "9654363bb496e5a51408f41aa8eb853b9cad8bc3cb8f6d55f9bbbc8d1b5b4725",
+        "items": 20,
+        "retryAt": "2026-10-14T18:47:00.273Z"
+      },
+      {
+        "sourceId": "b36040a453674772f62166cb",
+        "scanId": "research-38600925526-1",
+        "scanSha256": "9654363bb496e5a51408f41aa8eb853b9cad8bc3cb8f6d55f9bbbc8d1b5b4725",
+        "items": 17,
+        "retryAt": "2026-10-14T18:47:00.273Z"
+      }
+    ]
+  },
+  "reason": "Try public sector and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38605900763",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "f3dbcca6a7b1c3074891f43cb504dac77cbb2dbc"
+  }
+}
