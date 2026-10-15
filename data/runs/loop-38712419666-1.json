@@ -1,0 +1,348 @@
+{
+  "id": "loop-38712419666-1",
+  "type": "loop",
+  "status": "completed_no_post",
+  "startedAt": "2026-10-15T09:22:29.149Z",
+  "finishedAt": "2026-10-15T09:25:46.427Z",
+  "candidatesFound": 5,
+  "picked": 0,
+  "rejected": [
+    {
+      "title": "Prepare an invoice review sheet",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+      "reason": "A proposed mock takes fictional invoice, agreement and order text, extracts selected fields, flags missing or mismatched values for a clerk to review, and never approves or pays invoices. Proposed narrow test: Invoices and checking supporting documents against agreements and orders are also assessed by the work-order/billing lead; those two leads overlap in invoice checking. Five-criterion mean 5.2 is below the threshold of 6; no validated AI-service demand."
+    },
+    {
+      "title": "Prepare an order-to-billing review list",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31549320",
+      "reason": "A proposed mock turns fictional work-order notes into a list of missing closure details for a clerk to check before billing; it does not update official records or issue invoices. Proposed narrow test: The separate invoice-review lead overlaps on invoice checking, but this notice additionally names work-order closure; its narrow closure-list task remains distinct. No attached reference supports work-order status rules. Five-criterion mean 4.4 is below the threshold of 6; no validated AI-service demand."
+    },
+    {
+      "title": "Draft an invoice and order exception list",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31600021",
+      "reason": "A proposed mock compares fictional invoice text with operator-supplied order details and flags blank or visibly inconsistent fields for human review; it does not handle purchasing, calculate financial results or submit billing. Proposed narrow test: This overlaps the other invoice-review lead on invoice checking and has broader unrelated duties; no attached reference supports the remaining reporting or purchasing tasks. Five-criterion mean 4.8 is below the threshold of 6; no validated AI-service demand. It also overlaps the invoice-checking workflow in the selected invoice-review lead."
+    },
+    {
+      "title": "Sort incoming and outgoing mail",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31599816",
+      "reason": "A proposed mock labels fictional mail items by operator-defined category and drafts a routing note; a person checks the label and physically handles or sends every item. Proposed narrow test: The source names mail handling only, without mail types, routing rules or frequency; no attached building reference supports this workflow. Five-criterion mean 3.8 is below the threshold of 6; no validated AI-service demand."
+    },
+    {
+      "title": "Summarize fictional budget figures",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31599736",
+      "reason": "A proposed mock groups operator-supplied fictional budget figures into a draft variance summary and flags missing inputs; a person checks every calculation and makes financial decisions. Proposed narrow test: The source mentions budget and forecast support but gives no fields, process or frequency; cash-card duties are excluded. No attached building reference supports reporting mechanics. Five-criterion mean 3.8 is below the threshold of 6; no validated AI-service demand."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-15T09:22:44.924Z",
+      "message": "Fetched 238 live source records; 1 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-15T09:24:32.622Z",
+      "message": "Codex CLI wrote 0 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "passed",
+      "at": "2026-10-15T09:24:32.622Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Assessed all five selected primary demand notices. The two invoice-checking concepts overlap each other; all concepts remain below the unrounded threshold of 6 given absent validated AI demand and limited implementation evidence. No post proposed."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38712419666",
+  "version": "rules-fa1bc8e34594",
+  "rulesSha256": "fa1bc8e34594b275be116597cb9e97adb97ba6c525f79f16ec9ab483cad543c7",
+  "rulesCommit": "03cd1806decd9df4ae4b20fc912de80861b1720a",
+  "usage": {
+    "id": "loop-38712419666-1",
+    "type": "usage",
+    "runId": "loop-38712419666-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-15T09:25:42.553Z",
+    "localDate": "2026-10-15",
+    "githubRunId": "38712419666",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38712419666/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "recorded",
+    "inputTokens": 462762,
+    "cachedInputTokens": 383641,
+    "cacheWriteInputTokens": 79073,
+    "outputTokens": 6612,
+    "reasoningOutputTokens": 1697,
+    "costUsd": 0.017031334999999998,
+    "observedCounts": {
+      "inputTokens": 462762,
+      "cachedInputTokens": 383641,
+      "cacheWriteInputTokens": 79073,
+      "outputTokens": 6612,
+      "reasoningOutputTokens": 1697,
+      "costUsd": 0.017031334999999998
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 2,
+      "notRunModelJobs": 2,
+      "unknownModelJobs": 0
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [
+      "gpt-6-luna"
+    ],
+    "pricingStatus": "recorded_token_estimate",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 116346968209,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38712419666/job/116346968209",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 267133,
+        "cachedInputTokens": 226887,
+        "cacheWriteInputTokens": 40219,
+        "outputTokens": 4101,
+        "reasoningOutputTokens": 1145,
+        "costUsd": 0.009349445,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "checker",
+        "jobId": 116347622343,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38712419666/job/116347622343",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 195629,
+        "cachedInputTokens": 156754,
+        "cacheWriteInputTokens": 38854,
+        "outputTokens": 2511,
+        "reasoningOutputTokens": 552,
+        "costUsd": 0.007681889999999999,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "repair",
+        "jobId": 116348190277,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38712419666/job/116348190277",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "final_check",
+        "jobId": 116348190942,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38712419666/job/116348190942",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "e573579978f1aa9047e13b4cc35f63835f352e8617d276455744f124e4e7f481",
+  "assessmentOutcome": "completed",
+  "operationalFailures": [],
+  "checkedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "contractVersion": 1,
+    "runId": "loop-38712419666-1",
+    "schedulingSha256": "9ee5d4af86dfc1da29326ce1f1fd897c6624ee6a09a656b39398255434eae080",
+    "slotIds": [
+      "publish-2026-10-15-12-07"
+    ],
+    "draftSha256": "daa0be4a2b868f04da64c3852eaf82037fe9df5ea644063feb61c2617038c0cb",
+    "contextSha256": "6ad4f1f666a35463c830cc75cdc5d4854a929968afc5f1ac2fcdc6d47e1db73a",
+    "rulesSha256": "fa1bc8e34594b275be116597cb9e97adb97ba6c525f79f16ec9ab483cad543c7",
+    "sourceSnapshotSha256": "e573579978f1aa9047e13b4cc35f63835f352e8617d276455744f124e4e7f481",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkerRunId": "loop-38712419666-1-independent-check",
+    "completedAt": "2026-10-15T09:25:46.427Z",
+    "decision": "no_supported_candidate",
+    "reason": "All five candidates have readable, freshly fetched notices, but these establish human administrative tasks only. The invoice concepts overlap each other; the mail and budget proposals lack workflow detail, and none has sufficient attached implementation evidence to support the frozen mean threshold of 6.",
+    "checkedPostIds": []
+  },
+  "eventName": "workflow_dispatch",
+  "modelExecuted": true,
+  "scheduling": {
+    "id": "loop-38712419666-1",
+    "runId": "loop-38712419666-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "38712419666",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38712419666",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-38710472625-1",
+      "clockRunId": "38710472625",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/38710472625",
+      "dispatchId": "clock-38710472625-1-loop",
+      "runId": "38712419666",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-15T09:22:09.401Z",
+      "requestedAt": "2026-10-15T09:22:09.401Z",
+      "verifiedAt": "2026-10-15T09:22:29.149Z",
+      "parentHeadSha": "5394877a8887478f1785eff703b2dd90ffbdb090"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-15-12-07",
+    "scheduledAt": "2026-10-15T09:07:00.000Z",
+    "localDate": "2026-10-15",
+    "localTime": "12:07",
+    "requestedAt": "2026-10-15T09:22:29.149Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 0,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-15-00-07",
+        "scheduledAt": "2026-10-14T21:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "00:07"
+      },
+      {
+        "id": "publish-2026-10-15-01-07",
+        "scheduledAt": "2026-10-14T22:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "01:07"
+      },
+      {
+        "id": "publish-2026-10-15-02-07",
+        "scheduledAt": "2026-10-14T23:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "02:07"
+      },
+      {
+        "id": "publish-2026-10-15-03-07",
+        "scheduledAt": "2026-10-15T00:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "03:07"
+      },
+      {
+        "id": "publish-2026-10-15-04-07",
+        "scheduledAt": "2026-10-15T01:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "04:07"
+      },
+      {
+        "id": "publish-2026-10-15-05-07",
+        "scheduledAt": "2026-10-15T02:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "05:07"
+      },
+      {
+        "id": "publish-2026-10-15-06-07",
+        "scheduledAt": "2026-10-15T03:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "06:07"
+      },
+      {
+        "id": "publish-2026-10-15-07-07",
+        "scheduledAt": "2026-10-15T04:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "07:07"
+      },
+      {
+        "id": "publish-2026-10-15-08-07",
+        "scheduledAt": "2026-10-15T05:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "08:07"
+      },
+      {
+        "id": "publish-2026-10-15-09-07",
+        "scheduledAt": "2026-10-15T06:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "09:07"
+      },
+      {
+        "id": "publish-2026-10-15-10-07",
+        "scheduledAt": "2026-10-15T07:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "10:07"
+      },
+      {
+        "id": "publish-2026-10-15-11-07",
+        "scheduledAt": "2026-10-15T08:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "11:07"
+      },
+      {
+        "id": "publish-2026-10-15-12-07",
+        "scheduledAt": "2026-10-15T09:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "12:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-15-12-07",
+        "scheduledAt": "2026-10-15T09:07:00.000Z",
+        "localDate": "2026-10-15",
+        "localTime": "12:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-15-12-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-15-12-07": 1
+    },
+    "reservationId": "loop-38712419666-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot"
+  }
+}
