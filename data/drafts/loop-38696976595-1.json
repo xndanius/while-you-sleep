@@ -1,0 +1,151 @@
+{
+  "runId": "loop-38696976595-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-15T07:20:00Z",
+  "candidates": [
+    {
+      "title": "Prepare an invoice review sheet",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31598759",
+      "sourceIds": [
+        "cabc58d84f610404fb5ebd89",
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "sourceIds": [
+          "cabc58d84f610404fb5ebd89"
+        ],
+        "chore": "Review supplier invoices and assemble billing support; proposed experiment extracts selected fields into a review sheet for a clerk.",
+        "evidenceQuote": "Granska leverantörsfakturor samt sammanställa faktureringsunderlag"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A review sheet can use extracted fields, but the attached template only describes extraction and logging, not invoice checks.",
+            "sourceIds": [
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: administrators may value less repetitive invoice preparation; the notice does not show AI-service buyers.",
+            "sourceIds": [
+              "cabc58d84f610404fb5ebd89"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A two-week mock can extract selected fields and flag blanks; invoice coding rules remain unspecified.",
+            "sourceIds": [
+              "cabc58d84f610404fb5ebd89",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Extraction and logging repeat, but a clerk must verify values, resolve exceptions and approve billing material.",
+            "sourceIds": [
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The fresh notice names supplier-invoice review and billing-basis preparation; a template supports extraction/logging only.",
+            "sourceIds": [
+              "cabc58d84f610404fb5ebd89",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          }
+        }
+      },
+      "reason": "The notice supports a concrete invoice-preparation chore and an attached n8n example supports extraction and logging. A fictional review-sheet experiment is feasible to assess, but the reference does not support reconciliation or approval; provisional mean 5.4 is below threshold."
+    },
+    {
+      "title": "Prepare a fictional travel booking checklist",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31509577",
+      "sourceIds": [
+        "306d4a6cafe6cbe754e45483"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "sourceIds": [
+          "306d4a6cafe6cbe754e45483"
+        ],
+        "chore": "Organize operator-supplied fictional travel booking details into a checklist; a person confirms options and books.",
+        "evidenceQuote": "resebokningar, inköp och annan dokumentation"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A fictional booking checklist is possible, but no attached reference supports booking mechanics.",
+            "sourceIds": [
+              "306d4a6cafe6cbe754e45483"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: professional offices may value booking help; the notice gives no evidence of AI-service demand.",
+            "sourceIds": [
+              "306d4a6cafe6cbe754e45483"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A mock could organize operator-supplied travel details, but no booking rules or suitable implementation reference is attached.",
+            "sourceIds": [
+              "306d4a6cafe6cbe754e45483"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A draft checklist could repeat, while a person must confirm options and make every booking.",
+            "sourceIds": [
+              "306d4a6cafe6cbe754e45483"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The notice explicitly lists travel bookings, but provides no fields, constraints, frequency or software evidence.",
+            "sourceIds": [
+              "306d4a6cafe6cbe754e45483"
+            ]
+          }
+        }
+      },
+      "reason": "The notice explicitly includes travel bookings. A checklist mock can be scoped with fictional inputs, but no attached building reference supports booking mechanics; provisional mean 4.8 is below threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Paid administrator role, notice 31572638",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31572638",
+      "reason": "The primary notice says the role uses resources efficiently and sustainably but gives no concrete chore. There is no safe task-specific experiment to assess; rejecting as insufficient task evidence."
+    },
+    {
+      "title": "Paid administrator role, notice 31578306",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31578306",
+      "reason": "The enriched primary source supplies no concrete task excerpt beyond the role category. Do not infer duties from the title; insufficient task evidence for a proposal."
+    },
+    {
+      "title": "Prepare an invoice review sheet",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31598759",
+      "reason": "Below threshold after assessing the bounded extraction and review-sheet experiment: modest scores average 5.4. The invoice template supports extraction/logging only, not reconciliation or approval."
+    },
+    {
+      "title": "Prepare a fictional travel booking checklist",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31509577",
+      "reason": "Below threshold after assessing a fictional-data checklist experiment: modest scores average 4.8, and no attached implementation reference supports booking mechanics."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all four enriched professional-services notices. Two had concrete chores and received five-criterion assessments; both experiments remain below the threshold. Two notices lacked concrete task evidence. No post proposed."
+    }
+  ]
+}
