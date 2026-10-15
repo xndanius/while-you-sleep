@@ -1,0 +1,97 @@
+{
+  "runId": "loop-38704476220-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-15T08:20:00.000Z",
+  "candidates": [
+    {
+      "title": "Prepare an invoice review sheet",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "sourceIds": [
+        "1a3d92cbfc29dbd97fe777f5",
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "segment": "education",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "sourceIds": [
+          "1a3d92cbfc29dbd97fe777f5"
+        ],
+        "chore": "Handle invoices and prepare financial materials for budget and follow-up.",
+        "evidenceQuote": "hantera fakturor och ta fram ekonomiska underlag för budget och uppföljning"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A fictional invoice can test field extraction; the template lists PDF extraction and sheet logging, not school-specific rules.",
+            "sourceIds": [
+              "1a3d92cbfc29dbd97fe777f5",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: schools may value invoice preparation support; the notice proves paid human work, not AI-service demand.",
+            "sourceIds": [
+              "1a3d92cbfc29dbd97fe777f5"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A two-week mock can extract invoice number, amount and due date for clerk review; the template does not support reconciliation.",
+            "sourceIds": [
+              "1a3d92cbfc29dbd97fe777f5",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The template monitors PDFs, extracts fields and logs them; a clerk must verify values and handle coding or approvals.",
+            "sourceIds": [
+              "1a3d92cbfc29dbd97fe777f5",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh notice names invoices and financial materials; the template lists extraction and logging but no school use.",
+            "sourceIds": [
+              "1a3d92cbfc29dbd97fe777f5",
+              "ca6a664d20bd48cf57145f2e"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a fictional invoice extraction and clerk-review experiment. Its mean is below the 6 threshold; the notice supports the chore and the attached template supports extraction/logging, while school-specific rules and reconciliation are unsupported. Recent invoice-workflow refusals remain applicable."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Paid school administrator role",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "reason": "The notice does name invoice handling, so it was assessed as a candidate; the bounded extraction and review experiment scores below threshold, and analogous invoice workflows were recently refused on unchanged implementation evidence."
+    },
+    {
+      "title": "Paid school administrator role",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31538445",
+      "reason": "The fresh notice describes teamwork and communication traits but no concrete repeated task to scope; do not infer duties from the role title."
+    },
+    {
+      "title": "Paid school administrator role",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31569530",
+      "reason": "The notice contains no task excerpt beyond the role category, so there is no concrete chore to assess without inventing duties."
+    },
+    {
+      "title": "Paid school administrator role",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31584968",
+      "reason": "The notice describes broad administrative support and collaboration but no bounded task or output; no chore can be inferred safely."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed the four selected education demand notices. One concrete invoice chore was scored with the attached extraction/logging reference and falls below threshold; three notices lacked a bounded chore. No post proposed."
+    }
+  ]
+}
