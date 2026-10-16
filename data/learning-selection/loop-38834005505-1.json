@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "id": "loop-38834005505-1",
+  "runId": "loop-38834005505-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-16T01:14:33.795Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-38834005505-1",
+  "registrySha256": "6485b181a3d9d38b7588062fe7afb586c0a001e26d536d0748faa1b47a5ceaa2",
+  "scoreboardSha256": "f93852244c9bd765e22265881868b6e072e7cf2c78c2fdee3410ed3255cd5212",
+  "eligibleSegments": [
+    "education"
+  ],
+  "selectedSegment": "education",
+  "demandSourceIds": [
+    "b36040a453674772f62166cb"
+  ],
+  "segmentDraws": [
+    {
+      "id": "education",
+      "value": 0.024553431881084862
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "b36040a453674772f62166cb",
+      "value": 0.005042087146072011
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "3c18d6f9afb86838768b18fe",
+        "scanId": "research-38829279235-1",
+        "scanSha256": "8feeafd99c2d865fda09a97b610c5c737c18af17c4ae7344f75549609e7ec40f",
+        "items": 19,
+        "retryAt": "2026-10-16T02:17:07.651Z"
+      },
+      {
+        "sourceId": "8ef335213e70b38904e7a504",
+        "scanId": "research-38829279235-1",
+        "scanSha256": "8feeafd99c2d865fda09a97b610c5c737c18af17c4ae7344f75549609e7ec40f",
+        "items": 20,
+        "retryAt": "2026-10-16T02:24:45.752Z"
+      }
+    ]
+  },
+  "reason": "Try education and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38834005505",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "bb50dd38d6abd979790e806a5a4bed9d48ea581e"
+  }
+}
