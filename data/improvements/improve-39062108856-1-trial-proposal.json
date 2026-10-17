@@ -1,0 +1,202 @@
+{
+  "runId": "improve-39062108856-1",
+  "trialId": "d7792ed0637a235a9318b96d",
+  "posts": [
+    {
+      "id": "f68a463e009fc3a33e677ada",
+      "candidateId": "f68a463e009fc3a33e677ada",
+      "title": "A clearer way to review code changes",
+      "promise": "Try a small AI-assisted diff review workflow with a human checking every suggestion.",
+      "whatItIs": "Twain is a desktop diff viewer for Git projects. Its README describes a combined view of changed files, search, syntax highlighting, and comments that AI agents can read and add to through a CLI. A beginner could test a separate small workflow that turns selected diff comments into a draft review checklist; that adaptation is a hypothesis, not a feature established by this source.",
+      "whoPays": "Hypothesis: an individual developer or small software team might pay for a useful review workflow; the source provides no customer or payment evidence.",
+      "loop": [
+        "A developer opens a Git change in Twain and selects a changed section.",
+        "They add a comment describing a question or concern.",
+        "A proposed student tool sends that comment and selected diff text to an AI model.",
+        "The model drafts review questions or a checklist.",
+        "The developer checks every point against the code and edits or discards it."
+      ],
+      "evidence": "The GitHub page describes Twain as a diff viewer with Git support, a combined changed-file view, search, and comments that AI agents can read and add through a CLI. It also provides download/build instructions. These are project-page claims, not independent usage evidence.",
+      "uncertainty": "The source does not establish users, demand, or that an AI review checklist is part of Twain. The proposed workflow needs a developer to check correctness, security implications, and every suggested change; it must not modify code on its own.",
+      "first24Hours": [
+        "Install or build Twain using the project page's instructions and open a sample Git diff.",
+        "Write down three review questions for one changed section, then add them as comments.",
+        "Manually compare a model-drafted checklist with the diff and record errors before considering a prototype."
+      ],
+      "sourceIds": [
+        "f68a463e009fc3a33e677ada"
+      ],
+      "productUrl": "https://github.com/andunieee/twain",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The project gives download and build paths, but building requires GTK 4, GtkSourceView 5, and libadwaita, so a first test has setup friction.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: developers or small teams might pay for a review aid, but this project page gives no buyer or demand evidence.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A manual test of draft questions from selected diff comments fits a small experiment; the source does not establish that the proposed checklist works.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The source says agents can read and add comments through a CLI; a proposed checklist loop can draft text, while a developer must verify it.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The GitHub page documents a working project, features, and installation routes, but supplies no real-use evidence beyond repository signals.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "0d8aa67c035844531236845b",
+      "candidateId": "0d8aa67c035844531236845b",
+      "title": "Test document extraction with an open model",
+      "promise": "Prototype a document-to-table helper, then check every extracted field by hand.",
+      "whatItIs": "The Interfaze 1 Lite model card describes a model for tasks including document reading and structured output, and gives sample code for extracting fields from a receipt image. A beginner could test a narrow student adaptation that extracts vendor, date, and total into a draft table. The adaptation is a hypothesis; it is not an established service from the source.",
+      "whoPays": "Hypothesis: a small business that handles receipts might pay for a reliable extraction helper; the source does not establish customers or demand.",
+      "loop": [
+        "Choose a few sample receipt images that you have permission to use.",
+        "Submit each image with a request for vendor, date, and total in a fixed structure.",
+        "Save the model's output as a draft table.",
+        "Compare each field against the original receipt and mark errors.",
+        "Have a person approve corrections before using or exporting any data."
+      ],
+      "evidence": "The Hugging Face model card provides example code for image document extraction and structured output. It says the model requires one 80 GB GPU for local operation, describes an API option, and lists limitations including memory use on large PDFs. Its benchmark figures are model-card claims, not independently verified here.",
+      "uncertainty": "The source does not show that this receipt workflow has customers or is accurate enough for business records. Local setup calls for substantial GPU hardware and custom code; using remote code requires trust_remote_code. A person must verify all extracted fields and handle sensitive documents carefully.",
+      "first24Hours": [
+        "Read the model card's hardware and setup requirements before choosing local or API testing.",
+        "Use a small set of non-sensitive receipt images and ask for vendor, date, and total.",
+        "Compare every output field with its image and note mistakes without treating the output as a record."
+      ],
+      "sourceIds": [
+        "0d8aa67c035844531236845b"
+      ],
+      "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "The model card's local requirements include an 80 GB GPU, and its examples require library setup; an API route is also described but needs an account and key.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: businesses handling receipts might pay for extraction, but the model card gives no evidence of buyers or demand for this adaptation.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A narrow sample test is described by adapting the model card's receipt example, but setup, hardware, and output checking remain obstacles.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The model card shows image-to-structured-output calls that could automate drafting fields; a person must verify them before records are used.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The first-party model card provides use examples and benchmark claims, but does not establish independent results or customer use for this receipt workflow.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "6e0e24ffe427e31fa6bf272f",
+      "candidateId": "6e0e24ffe427e31fa6bf272f",
+      "title": "A cycling plan that adapts to your week",
+      "promise": "Explore a small training-plan assistant with a cyclist reviewing every workout change.",
+      "whatItIs": "Cuore's website describes a cycling coach that plans training around a rider's FTP, goals, and available week, then adjusts as the rider goes. It displays a coach chat example and says it works with several Bluetooth smart trainers. A beginner could test a simple weekly planning assistant that proposes a schedule from rider-entered availability and goals; that separate adaptation is hypothetical.",
+      "whoPays": "Hypothesis: recreational cyclists might pay for personalized planning; the source does not provide customer, price, or demand evidence.",
+      "loop": [
+        "A cyclist enters available training time, a goal, and any constraints they choose to share.",
+        "The proposed tool drafts a weekly schedule for the rider to review.",
+        "The rider asks for an adjustment when their availability changes.",
+        "The tool drafts a revised schedule and explains what changed.",
+        "The rider decides whether to follow it and can stop or seek qualified advice."
+      ],
+      "evidence": "Cuore's site describes personalized cycling training plans based on FTP, goals, and a rider's week, with adjustments over time. It shows a coach chat example and lists Wahoo, Tacx, Elite, Saris, and Bluetooth smart trainers as supported. This is first-party product information.",
+      "uncertainty": "The page does not establish how the plans are generated, their training outcomes, or customer demand. The student version is only a proposed scheduling aid. It should not diagnose, prescribe around injury or illness, or override a coach or clinician; the cyclist reviews each plan and workout change.",
+      "first24Hours": [
+        "Read Cuore's site and note only the inputs it explicitly names: FTP, goals, and weekly availability.",
+        "Draft a sample weekly schedule for a fictional rider with clearly stated assumptions.",
+        "Ask a knowledgeable cyclist to flag unsafe or impractical suggestions before testing with anyone."
+      ],
+      "sourceIds": [
+        "6e0e24ffe427e31fa6bf272f"
+      ],
+      "productUrl": "https://cuore.fit",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A simple planning mockup can use the website's named inputs and chat example, though the source does not describe a build process for a student version.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recreational cyclists might pay for planning help, but the site provides no evidence of demand, customers, or pricing.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A two-week mockup using availability and goals is bounded, while safe, personalized training decisions remain beyond what this page demonstrates.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The site says plans adjust over time and shows coach chat; a student loop could draft changes but needs rider review and safety limits.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The product site describes its coach and shows a chat example, but includes no independently checked outcomes or customer-use evidence.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "refusals": []
+}

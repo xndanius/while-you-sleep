@@ -1,0 +1,202 @@
+{
+  "runId": "improve-39062108856-1",
+  "trialId": "89da3e3db056b649ccfe29e4",
+  "posts": [
+    {
+      "id": "f68a463e009fc3a33e677ada",
+      "candidateId": "f68a463e009fc3a33e677ada",
+      "title": "A focused diff review helper",
+      "promise": "Turn a Git change into a short, human-checked review checklist.",
+      "whatItIs": "Twain is a Git diff viewer with a combined view of changed files, search, syntax highlighting and comments that an AI agent can read. A student could test a small helper that turns a diff and the reviewer's own notes into a checklist; that adaptation is a proposal, not a Twain feature.",
+      "whoPays": "Hypothesis: a small software team might pay to reduce the time spent organizing code review. No customer demand or payment is established here.",
+      "loop": [
+        "Choose one Git change and open it in Twain.",
+        "Review changed lines and add comments where context is needed.",
+        "Provide the diff and those comments to a text model in a proposed prototype.",
+        "Ask it to draft a checklist of changes and questions, without approving code.",
+        "A developer checks every item against the diff and decides what to do."
+      ],
+      "evidence": "The attached GitHub page describes Twain as a Git diff viewer with Git support, combined changed-file view, search and line comments; it says an AI can read comments and add more from a CLI. It also lists missing merge, three-way comparison and direct editing support.",
+      "uncertainty": "The source documents product features, not buyer demand, review time saved or the proposed checklist tool. A human must verify all findings; a text model may miss bugs or invent issues, and this prototype should not merge or edit code.",
+      "first24Hours": [
+        "Install Twain from its latest release or build it using the source's listed prerequisites.",
+        "Open a small Git change and try the documented line-comment workflow.",
+        "Manually draft a checklist from that diff and compare every item to the changed lines."
+      ],
+      "sourceIds": [
+        "f68a463e009fc3a33e677ada"
+      ],
+      "productUrl": "https://github.com/andunieee/twain",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The source gives a usable diff viewer and install routes, but a useful AI checklist still needs a separate model workflow.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: software teams could value review organization, but the source establishes no buyer demand or payment.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A two-week manual-input checklist experiment is narrow; integrating a model safely and evaluating its findings remain obstacles.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A model could draft checklist items from a diff and comments, while a developer must verify each item and decide actions.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The GitHub page describes a working repository and concrete features, but supplies no real-use evidence for this proposed service.",
+            "sourceIds": [
+              "f68a463e009fc3a33e677ada"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "0d8aa67c035844531236845b",
+      "candidateId": "0d8aa67c035844531236845b",
+      "title": "A human-checked document extraction demo",
+      "promise": "Test a small document-to-table workflow with careful human review.",
+      "whatItIs": "The attached model card describes Interfaze 1 Lite as a model with document reading and structured-output capabilities, with example code for extracting fields from a receipt. A student could test a narrow prototype that turns a few sample invoices into a draft table; this adaptation is hypothetical, not an established product service.",
+      "whoPays": "Hypothesis: a small business that handles documents might pay for reviewed data entry, but the source does not establish customers or demand.",
+      "loop": [
+        "Choose a small set of non-sensitive sample documents and fields.",
+        "Run the model's document reading or structured extraction on each sample.",
+        "Show the extracted fields beside the original document.",
+        "Have a person check every value, especially totals and dates.",
+        "Record errors and revise the field instructions before another small run."
+      ],
+      "evidence": "The Hugging Face model card describes document OCR and structured output, provides a receipt extraction example, and says the model needs an 80 GB GPU for local use. It also documents performance benchmarks and notes that large PDFs can use significant CUDA memory.",
+      "uncertainty": "Benchmarks and examples on a model card do not establish accuracy for a student's chosen documents or customer demand. Local hardware is a major obstacle; use only consented, non-sensitive samples, and have a person verify every extracted field before use.",
+      "first24Hours": [
+        "Read the model card's requirements and confirm whether you can access suitable hardware before attempting a run.",
+        "Select a few non-sensitive sample documents and define three fields to extract.",
+        "Manually compare any model output with the source documents and note every error."
+      ],
+      "sourceIds": [
+        "0d8aa67c035844531236845b"
+      ],
+      "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "The model card offers examples, but local use requires an 80 GB GPU, a substantial barrier for a beginner.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: organizations handling documents may value checked extraction, but the source provides no customer or payment evidence.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A tiny extraction demo is scoped, but the documented GPU requirement and memory use make a two-week build access-dependent.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The model can produce document text and structured fields, but the prototype needs human verification and error handling.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The first-party model card gives working examples and benchmarks, without evidence of this proposed service's real-world use.",
+            "sourceIds": [
+              "0d8aa67c035844531236845b"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "6e0e24ffe427e31fa6bf272f",
+      "candidateId": "6e0e24ffe427e31fa6bf272f",
+      "title": "A cycling plan draft with coach review",
+      "promise": "Explore a training-plan assistant that leaves workout decisions to the cyclist.",
+      "whatItIs": "Cuore presents an AI cycling coach that plans training around a cyclist's FTP, goals and week, and adjusts plans as they go. A student could prototype a simple weekly-plan draft from a rider's stated available time and goals; this is a hypothetical adaptation, not a Cuore feature claim.",
+      "whoPays": "Hypothesis: recreational cyclists might pay for convenient plan suggestions, but the attached source gives no evidence of customers or willingness to pay.",
+      "loop": [
+        "Ask a cyclist for their goal, available weekly time and relevant training context.",
+        "Draft a simple weekly schedule using those inputs and clearly state its assumptions.",
+        "Show the draft to the cyclist for corrections before they follow anything.",
+        "Ask what changed in their week and prepare a revised draft.",
+        "Keep progression, pain, illness and return-from-injury decisions with a qualified human."
+      ],
+      "evidence": "The Cuore page says its coach plans around FTP, goals and the user's week, adjusts training, and invites cyclists to ask about training and available time. It lists support for several smart trainers and desktop and iOS platforms.",
+      "uncertainty": "The page is product copy, not evidence of training outcomes or paid demand. A student prototype should not prescribe treatment or push through pain; cyclists should review suggestions, and injury, illness or intensive training decisions need qualified human advice.",
+      "first24Hours": [
+        "Write a short intake form for a goal, available weekly time and the cyclist's own constraints.",
+        "Draft one conservative sample week by hand and mark every assumption.",
+        "Ask a cyclist to review the draft for clarity and identify what needs a human coach."
+      ],
+      "sourceIds": [
+        "6e0e24ffe427e31fa6bf272f"
+      ],
+      "productUrl": "https://cuore.fit",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The page shows a conversational coach and a simple intake example, though a safe training-plan prototype needs careful boundaries.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: some cyclists might pay for plan suggestions, but the source does not document buyers or payment.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A draft based on a few stated inputs is a plausible experiment, while credible training logic and safe handling need human input.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A repeatable intake and draft loop is possible, but riders must review changes and humans handle health or injury concerns.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The product page demonstrates a coaching interface and describes plan adjustments, but offers no independent outcomes evidence.",
+            "sourceIds": [
+              "6e0e24ffe427e31fa6bf272f"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "refusals": []
+}

@@ -1,0 +1,467 @@
+{
+  "runId": "improve-39062108856-1",
+  "trialKind": "prose",
+  "sourceSnapshotSha256": "2591cc1061485b3e6c3326a5d3995a608beb620ecf99f31b76dfcb6b19928e6e",
+  "trialsSha256": "7280f61296f9331857aec55b4b1b117248a56bf8509fc2e1dc3ab11a7b8d1568",
+  "cases": [
+    {
+      "candidateId": "f68a463e009fc3a33e677ada",
+      "productUrl": "https://github.com/andunieee/twain",
+      "sources": [
+        {
+          "id": "f68a463e009fc3a33e677ada",
+          "url": "https://github.com/andunieee/twain",
+          "title": "Show HN: Twain, a diff viewer like Meld, but for the age of AI",
+          "publisher": "github.com",
+          "text": "GitHub - andunieee/twain: a diff viewer for the age of aquarius · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government View all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} andunieee twain Repository navigation Code Issues Pull requests Actions Projects Security and quality Insights More items twain Public Notifications You must be signed in to change notification settings Fork 0 ( 0 ) Star 4 ( 4 ) You must be signed in to star a repository About a diff viewer for the age of aquarius andunieee.github.io/twain/ Resources Readme GPL-3.0 license Activity Stars 4 stars Watchers 0 watching Forks 0 forks Report repository master Branches Tags Go to file Code Open more actions menu Latest commit History 26 Commits 26 Commits Folders and files Name Name Last commit message Last commit date .github/ workflows .github/ workflows flatpak flatpak src src .gitignore .gitignore Cargo.lock Cargo.lock Cargo.toml Cargo.toml LICENSE LICENSE README.md README.md screenshot.png screenshot.png View all files Repository files navigation README GPL-3.0 license More items twain A diff viewer for people who love Meld, but wanted it to be slightly different. Things that are like Meld: intuitive and nice view of what changed to what, what was removed from where and added where; scrolling minimaps of changes; git support; fast. Things we have that Meld doesn't: all files from a Git diff shown in the same view, sequentially; a file tree on the side, super fast; show either the full files or only the parts that changed, with granular revealing of the unchanged parts; tree-sitter-based syntax highlighting; the ability to comment on sets of changes and lines, and AIs can read these comments and add more from a CLI, like Hunk; the ability to search through the entire set of modified files. Thins Meld has that we don't: merge; three-way comparisons; support for other version control systems; ability to edit the files directly. Usage Run twain in your project's directory. It can also compare other Git revisions, but that doesn't matter much for now. Comments Select lines and press C or right-click the mouse to leave a comment on them. Tell your AI agent to look into twain comment --help so it can participate. Install Download a binary or a Flatpak bundle from the latest release or build from source (needs GTK 4, GtkSourceView 5 and libadwaita): cargo install --git https://github.com/andunieee/twain About a diff viewer for the age of aquarius andunieee.github.io/twain/ Resources Readme GPL-3.0 license Activity Stars 4 stars Watchers 0 watching Forks 0 forks Report repository Releases Contributors Languages Footer &copy; 2026 GitHub, Inc. Footer navigation Terms Privacy Security Status Community Docs Contact Manage cookies Do not share my personal information You can’t perform that action at this time.",
+          "fetchedAt": "2026-10-17T19:22:14.690Z",
+          "verifiedAt": "2026-10-17T19:22:14.690Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "f68a463e009fc3a33e677ada",
+          "candidateId": "f68a463e009fc3a33e677ada",
+          "title": "A focused diff review helper",
+          "promise": "Turn a Git change into a short, human-checked review checklist.",
+          "whatItIs": "Twain is a Git diff viewer with a combined view of changed files, search, syntax highlighting and comments that an AI agent can read. A student could test a small helper that turns a diff and the reviewer's own notes into a checklist; that adaptation is a proposal, not a Twain feature.",
+          "whoPays": "Hypothesis: a small software team might pay to reduce the time spent organizing code review. No customer demand or payment is established here.",
+          "loop": [
+            "Choose one Git change and open it in Twain.",
+            "Review changed lines and add comments where context is needed.",
+            "Provide the diff and those comments to a text model in a proposed prototype.",
+            "Ask it to draft a checklist of changes and questions, without approving code.",
+            "A developer checks every item against the diff and decides what to do."
+          ],
+          "evidence": "The attached GitHub page describes Twain as a Git diff viewer with Git support, combined changed-file view, search and line comments; it says an AI can read comments and add more from a CLI. It also lists missing merge, three-way comparison and direct editing support.",
+          "uncertainty": "The source documents product features, not buyer demand, review time saved or the proposed checklist tool. A human must verify all findings; a text model may miss bugs or invent issues, and this prototype should not merge or edit code.",
+          "first24Hours": [
+            "Install Twain from its latest release or build it using the source's listed prerequisites.",
+            "Open a small Git change and try the documented line-comment workflow.",
+            "Manually draft a checklist from that diff and compare every item to the changed lines."
+          ],
+          "sourceIds": [
+            "f68a463e009fc3a33e677ada"
+          ],
+          "productUrl": "https://github.com/andunieee/twain",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 5,
+                "reason": "The source gives a usable diff viewer and install routes, but a useful AI checklist still needs a separate model workflow.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: software teams could value review organization, but the source establishes no buyer demand or payment.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "feasibility": {
+                "value": 6,
+                "reason": "A two-week manual-input checklist experiment is narrow; integrating a model safely and evaluating its findings remain obstacles.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "A model could draft checklist items from a diff and comments, while a developer must verify each item and decide actions.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The GitHub page describes a working repository and concrete features, but supplies no real-use evidence for this proposed service.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": {
+          "id": "f68a463e009fc3a33e677ada",
+          "candidateId": "f68a463e009fc3a33e677ada",
+          "title": "A clearer way to review code changes",
+          "promise": "Try a small AI-assisted diff review workflow with a human checking every suggestion.",
+          "whatItIs": "Twain is a desktop diff viewer for Git projects. Its README describes a combined view of changed files, search, syntax highlighting, and comments that AI agents can read and add to through a CLI. A beginner could test a separate small workflow that turns selected diff comments into a draft review checklist; that adaptation is a hypothesis, not a feature established by this source.",
+          "whoPays": "Hypothesis: an individual developer or small software team might pay for a useful review workflow; the source provides no customer or payment evidence.",
+          "loop": [
+            "A developer opens a Git change in Twain and selects a changed section.",
+            "They add a comment describing a question or concern.",
+            "A proposed student tool sends that comment and selected diff text to an AI model.",
+            "The model drafts review questions or a checklist.",
+            "The developer checks every point against the code and edits or discards it."
+          ],
+          "evidence": "The GitHub page describes Twain as a diff viewer with Git support, a combined changed-file view, search, and comments that AI agents can read and add through a CLI. It also provides download/build instructions. These are project-page claims, not independent usage evidence.",
+          "uncertainty": "The source does not establish users, demand, or that an AI review checklist is part of Twain. The proposed workflow needs a developer to check correctness, security implications, and every suggested change; it must not modify code on its own.",
+          "first24Hours": [
+            "Install or build Twain using the project page's instructions and open a sample Git diff.",
+            "Write down three review questions for one changed section, then add them as comments.",
+            "Manually compare a model-drafted checklist with the diff and record errors before considering a prototype."
+          ],
+          "sourceIds": [
+            "f68a463e009fc3a33e677ada"
+          ],
+          "productUrl": "https://github.com/andunieee/twain",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 5,
+                "reason": "The project gives download and build paths, but building requires GTK 4, GtkSourceView 5, and libadwaita, so a first test has setup friction.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: developers or small teams might pay for a review aid, but this project page gives no buyer or demand evidence.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "feasibility": {
+                "value": 5,
+                "reason": "A manual test of draft questions from selected diff comments fits a small experiment; the source does not establish that the proposed checklist works.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "The source says agents can read and add comments through a CLI; a proposed checklist loop can draft text, while a developer must verify it.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The GitHub page documents a working project, features, and installation routes, but supplies no real-use evidence beyond repository signals.",
+                "sourceIds": [
+                  "f68a463e009fc3a33e677ada"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    },
+    {
+      "candidateId": "0d8aa67c035844531236845b",
+      "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+      "sources": [
+        {
+          "id": "0d8aa67c035844531236845b",
+          "url": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+          "title": "Show HN: The first open-weight model for general deterministic task",
+          "publisher": "huggingface.co",
+          "text": "interfaze-ai/interfaze-1-lite · Hugging Face Hugging Face Models Datasets Spaces Buckets new Docs Enterprise Pricing Website Tasks HuggingChat Collections Languages Organizations Community Blog Posts Daily Papers Hardware Learn Discord Forum GitHub Solutions Team & Enterprise Hugging Face PRO Enterprise Support Inference Providers Inference Endpoints Storage Buckets Log In Sign Up interfaze-ai / interfaze-1-lite Like 67 Follow Interfaze 66 Image-Text-to-Text Transformers Safetensors 15 languages interfaze_lite feature-extraction vlm any-to-text audio-text-to-text multimodal multilingual mixture-of-architectures ocr document-understanding speech-recognition speaker-diarization object-detection gui-grounding image-segmentation translation time-series-forecasting guardrails structured-output agent custom_code License: interfaze-open Model card Files Files and versions xet Community Deploy Copy to bucket new Use this model Instructions to use interfaze-ai/interfaze-1-lite with libraries, inference providers, notebooks, and local apps. Follow these links to get started. Libraries Transformers How to use interfaze-ai/interfaze-1-lite with Transformers: # Use a pipeline as a high-level helper from transformers import pipeline pipe = pipeline(\"image-text-to-text\", model=\"interfaze-ai/interfaze-1-lite\", trust_remote_code=True) # pip install -U transformers accelerate # Load model directly from transformers import AutoModel model = AutoModel.from_pretrained(\"interfaze-ai/interfaze-1-lite\", trust_remote_code=True, device_map=\"auto\") Notebooks Google Colab Kaggle Local Apps Settings vLLM How to use interfaze-ai/interfaze-1-lite with vLLM: Install from pip and serve model # Install vLLM from pip: pip install vllm # Start the vLLM server: vllm serve \"interfaze-ai/interfaze-1-lite\" # Call the server using curl (OpenAI-compatible API): curl -X POST \"http://localhost:8000/v1/completions\" \\ -H \"Content-Type: application/json\" \\ --data '{ \"model\": \"interfaze-ai/interfaze-1-lite\", \"prompt\": \"Once upon a time,\", \"max_tokens\": 512, \"temperature\": 0.5 }' Use Docker docker model run hf.co/interfaze-ai/interfaze-1-lite SGLang How to use interfaze-ai/interfaze-1-lite with SGLang: Install from pip and serve model # Install SGLang from pip: pip install sglang # Start the SGLang server: python3 -m sglang.launch_server \\ --model-path \"interfaze-ai/interfaze-1-lite\" \\ --host 0.0.0.0 \\ --port 30000 # Call the server using curl (OpenAI-compatible API): curl -X POST \"http://localhost:30000/v1/completions\" \\ -H \"Content-Type: application/json\" \\ --data '{ \"model\": \"interfaze-ai/interfaze-1-lite\", \"prompt\": \"Once upon a time,\", \"max_tokens\": 512, \"temperature\": 0.5 }' Use Docker images docker run --gpus all \\ --shm-size 32g \\ -p 30000:30000 \\ -v ~/.cache/huggingface:/root/.cache/huggingface \\ --env \"HF_TOKEN=<secret>\" \\ --ipc=host \\ lmsysorg/sglang:latest \\ python3 -m sglang.launch_server \\ --model-path \"interfaze-ai/interfaze-1-lite\" \\ --host 0.0.0.0 \\ --port 30000 # Call the server using curl (OpenAI-compatible API): curl -X POST \"http://localhost:30000/v1/completions\" \\ -H \"Content-Type: application/json\" \\ --data '{ \"model\": \"interfaze-ai/interfaze-1-lite\", \"prompt\": \"Once upon a time,\", \"max_tokens\": 512, \"temperature\": 0.5 }' Docker Model Runner How to use interfaze-ai/interfaze-1-lite with Docker Model Runner: docker model run hf.co/interfaze-ai/interfaze-1-lite Interfaze 1.1 Lite Introduction Key features Model architecture Performance The benchmarks Quickstart Requirements Using 🤗 Transformers Using the Interfaze API Examples Read a document, with boxes Transcribe a call and split it by speaker Detect objects and outline them Ground interface elements for an agent Forecast a time series Check a message before it reaches your app Extract structured data through the API Limitations Thank You Models Open-Source Projects Interfaze 1.1 Lite Website · Docs · Run tasks · Blog · GitHub Introduction Interfaze 1.1 Lite is a mixture-of-architectures (MoA) model for developer workloads: reading documents, transcribing speech, locating objects and interface elements, and answering over all of it with structured output. A single vision-language reasoning core works alongside a set of specialist architectures, each built for one kind of perception. The core reads the request, decides which specialists to run, and composes the answer from what they return. The whole model runs on one 80 GB GPU with no external services. Key features Document understanding. Text, reading order, tables and layout from images, PDFs (up to 50 pages a call) and Word files, with a box and confidence for every line and word. Speech. Transcription with timestamps and speaker diarization. Long recordings are cut at pauses and decoded in batches: a 95-minute recording transcribes in about 90 seconds. Visual grounding. Open-vocabulary object detection with outlines, and GUI element grounding for computer-use agents. Structured output. Responses constrained to a JSON schema you supply, reading from any mix of text, images, documents and audio. Translation, forecasting and guardrails. Translation across 160+ languages, time-series forecasting from CSV or JSON, and safety checks on text and images. Multilingual reasoning. Science, math, SQL and general knowledge across 14+ languages, with a 131k-token context. Self-contained. One repository, one GPU, runs offline. Model architecture Interfaze 1.1 Lite is not one network. It is a reasoning core plus specialists, each chosen for the task it is best at, connected by tool calls. Component Architecture Role Reasoning core Hybrid-attention decoder with a vision encoder, FP8, 131k context Plans, calls specialists, grounds boxes on a 0–1000 grid, writes the answer Document reader Vision-language model trained for page reading Text, reading order, tables and markdown Line geometry Text detector and recognizer Every line's box and confidence Layout Document layout detector Titles, paragraphs, tables and figures, with boxes Speech Encoder-decoder speech recognizer Transcripts and timestamps in 99 languages Diarization Speaker segmentation and embedding pipeline Who spoke when Segmentation Promptable segmentation model Object outlines and masks Forecasting Time-series foundation model Future values of a numeric series Guardrails Safety classifier Text safety in 119 languages, reported as S1–S14 codes (S6 and S14 never) How the parts combine: OCR is two views of one page, stitched. The document reader supplies the text, and the line detector supplies the geometry. Each detected line takes the reader's words for it, so boxes are exact and text is complete. Speakers are attributed per word, by the largest overlap with each speaker's turns, then grouped into chunks. Detection and GUI grounding run on the reasoning core, which returns boxes on a 0–1000 grid. Outlines come from the segmentation model. A run task skips planning. Naming one capability ( task=\"ocr\" , \"speech_to_text\" , …) runs that specialist directly and returns its raw result. Performance Benchmark What it measures Interfaze 1.1 Lite Interfaze GPT-5.4-Mini Claude-Sonnet-4.6 Gemini-3-Flash Grok-4.3 GPQA Diamond Graduate-level science 85.9 92.4 82.8 89.9 88.5 73.6 MMMLU Knowledge in 14 languages 87.8 90.9 75.3 84.9 88.7 89.7 MMMU-Pro Multimodal reasoning 73.2 71.1 40.4 46.3 67.6 68.7 olmOCR-Bench Document OCR 83.8 85.7 80.1 73.9 75.3 81.9 OCRBench v2 (English) Text in images 60.9 70.7 52.7 54.7 55.8 54.7 RefCOCO ( Acc@0.5 ) Referring-expression grounding 83.8 82.1 – – – – VoxPopuli-Cleaned (WER ↓) Speech recognition 3.01 2.4 – – 4.0 – SOB (value accuracy) Structured output from text, images and audio 81.5 80.5 – 77.9 77.3* – Spider 2.0-Lite (SQLite) Text-to-SQL 48.9 52.9 26.7 49.6 45.2 45.9 These are Interfaze 1 Lite's scores: 1.1 changes the document reader and the guard, and its own scores will replace them once measured. Interfaze 1 Lite was scored by us with each benchmark's official scorer. Every other score is from the Interfaze leaderboard . Higher is better except WER. *Gemini-3-Flash-Preview. The benchmarks GPQA Diamond (all 198 questions). Graduate-level physics, chemistry and biology multiple choice, written to resist search. Lite scores 85.9, ahead of GPT-5.4-Mini and Grok-4.3, and strongest in physics. MMMLU (MMMLU-lite, all 19,950: 1,425 questions in each of 14 languages). MMLU translated by professional translators. Lite averages 87.8, ahead of Claude-Sonnet-4.6. The low-resource languages (Swahili, Yoruba, Bengali) are where it loses most. MMMU-Pro (all 1,730 questions per track, mean of standard and vision tracks). College-level questions that need the image, including a track where the question itself is inside the picture. Lite leads the board at 73.2. olmOCR-Bench (all 1,403 PDFs). Unit tests on real documents: arXiv math, old scans, tables, headers and footers, multi-column pages and long tiny text. Lite scores 83.8, with 91.9 on long tiny text and 88.8 on tables. OCRBench v2, English (all 7,400 English items). Recognition, referring, spotting, extraction, parsing, calculation, understanding and reasoning over text in images. Lite scores 60.9; its text spotting leads every general-purpose model on the board. RefCOCO ( Acc@0.5 ). Find the one object a sentence describes (\"the man in red on the left\"). Lite's answer box scores 83.8, first on the board. VoxPopuli-Cleaned (all 628 clips). European Parliament speech, scored by word error rate after the benchmark's standard text normalisation. Lite's WER is 3.01%. SOB, the Structured Output Benchmark (all 5,324 records). Extract values into a JSON schema from text, images and audio; value accuracy counts exact field matches. Lite scores 81.5, second of 30 models, with 97% of responses valid JSON. Spider 2.0-Lite (the 135 SQLite tasks). Enterprise text-to-SQL over real schemas, scored by executing the query. Lite solves 48.9%, between the Claude models and Gemini-3-Flash. Quickstart To run Lite as an OpenAI-compatible server with Docker, see GitHub . Requirements One 80 GB GPU with compute capability 8.9 or newer (Hopper, Ada). Tested on an H100. ffmpeg on the system, to decode audio. hf download interfaze-ai/interfaze-1-lite requirements.txt --local-dir . pip install -r requirements.txt flash-linear-attention matters: without it, transformers runs the linear-attention layers as a plain PyTorch loop, and generation slows to minutes per page. Using 🤗 Transformers from transformers import AutoModel model = AutoModel.from_pretrained( \"interfaze-ai/interfaze-1-lite\" , trust_remote_code= True ) answer = model.chat( [{ \"role\" : \"user\" , \"content\" : \"What is the total, and which item is highlighted?\" }], files=[ \"receipt.jpg\" ], ) print (answer[ \"content\" ]) # the answer print (answer[ \"precontext\" ]) # each specialist's full result: [{\"name\", \"result\"}] trust_remote_code=True is required: the model's routing and specialists are defined in this repository. Components load on first use, so a caller that only runs OCR never loads the others. Each capability is also a method of its own: Method Returns chat(messages, files=[...]) content (the answer) and precontext[] (each specialist's result) ocr(source, page_range=None, return_markdown=False) text , sections[] (one per page, with lines[].words[] , four-corner bounds , average_confidence ), width , height transcribe(audio, by_speaker=False, language=\"auto\", word_timestamps=False) text and chunks[] with timestamps; each chunk carries a speaker with by_speaker detect(image, prompts, return_masks=False) detected_objects[] with label , bounds and polygon (and mask when asked) ground(image, prompts=None) gui_elements[] with type and bounds ; with no prompts, every interactive element forecast(y, horizon) the next horizon points of a {date: value} series y : timestamp[] and value[] moderate(text) output : \"safe\" , or \"unsafe\" and the violated categories (S1–S14) Coordinates are pixels of the input: an image's own size, or a PDF page at 144 DPI. Using the Interfaze API The same model is served behind an OpenAI-compatible API. Get your API key from the Interfaze dashboard , then set model to interfaze-1-lite : import { Interfaze } from \"interfaze\" ; const interfaze = new Interfaze (); // reads INTERFAZE_API_KEY const res = await interfaze. chat . completions . create ({ model : \"interfaze-1-lite\" , messages : [{ role : \"user\" , content : \"Summarise the attached contract in three bullets.\" }], }); Examples Read a document, with boxes doc = model.ocr( \"invoice.pdf\" , page_range=[ 1 , 2 ]) print (doc[ \"text\" ]) for page in doc[ \"sections\" ]: for line in page[ \"lines\" ]: box = line[ \"bounds\" ] print (page[ \"page\" ], line[ \"text\" ], box[ \"top_left\" ], box[ \"bottom_right\" ]) Transcribe a call and split it by speaker call = model.transcribe( \"support_call.mp3\" , by_speaker= True ) for chunk in call[ \"chunks\" ]: start, end = chunk[ \"timestamp\" ] print ( f\"[ {start: 6.1 f} – {end: 6.1 f} ] {chunk[ 'speaker' ]} : {chunk[ 'text' ]} \" ) Detect objects and outline them found = model.detect( \"street.jpg\" , [ \"car\" , \"bicycle\" , \"traffic light\" ]) for obj in found[ \"detected_objects\" ]: print (obj[ \"label\" ], obj[ \"bounds\" ][ \"top_left\" ], obj[ \"bounds\" ][ \"bottom_right\" ], len (obj.get( \"polygon\" , []))) Ground interface elements for an agent screen = model.ground( \"checkout.png\" , [ \"Add to cart button\" , \"search box\" ]) for element in screen[ \"gui_elements\" ]: b = element[ \"bounds\" ] x = (b[ \"top_left\" ][ \"x\" ] + b[ \"bottom_right\" ][ \"x\" ]) / 2 y = (b[ \"top_left\" ][ \"y\" ] + b[ \"bottom_right\" ][ \"y\" ]) / 2 print (element[ \"type\" ], \"click at\" , (x, y)) Forecast a time series weekly_sales = { \"2024-01-01\" : 412 , \"2024-01-08\" : 387 , \"2024-01-15\" : 524 , \"2024-01-22\" : 461 , \"2024-01-29\" : 398 , \"2024-02-05\" : 542 , \"2024-02-12\" : 475 , \"2024-02-19\" : 401 , } nxt = model.forecast(weekly_sales, horizon= 4 ) print ( list ( zip (nxt[ \"timestamp\" ], nxt[ \"value\" ]))) Check a message before it reaches your app verdict = model.moderate( \"How do I make a weapon at home?\" ) print (verdict[ \"output\" ]) # \"safe\", or \"unsafe\" and the violated codes on the next line Extract structured data through the API from openai import OpenAI client = OpenAI(base_url= \"https://api.interfaze.ai/v1\" , api_key= \"sk_...\" ) res = client.chat.completions.create( model= \"interfaze-1-lite\" , messages=[{ \"role\" : \"user\" , \"content\" : [ { \"type\" : \"text\" , \"text\" : \"Extract the vendor, date and total.\" }, { \"type\" : \"image_url\" , \"image_url\" : { \"url\" : \"https://example.com/receipt.jpg\" }}, ]}], response_format={ \"type\" : \"json_schema\" , \"json_schema\" : { \"name\" : \"receipt\" , \"schema\" : { \"type\" : \"object\" , \"properties\" : { \"vendor\" : { \"type\" : \"string\" }, \"date\" : { \"type\" : \"string\" }, \"total\" : { \"type\" : \"number\" }}, \"required\" : [ \"vendor\" , \"date\" , \"total\" ], }}}, ) print (res.choices[ 0 ].message.content) Limitations Generation through transformers is correct but slower than a serving engine with paged attention and batching. For throughput, use the Interfaze API or serve the model with a batching engine. chat does not take a response schema; ask for JSON in the prompt, or use the API's response_format . A dense document page can take a minute or more to read on the transformers path. Memory: processing large PDFs can spike in significant use of CUDA memory. Thank You We are grateful to the teams behind the models and open-source projects whose work we use and build upon. Models Qwen3.8 27B dots.mocr Whisper large-v3 turbo speaker-diarization-community-1 SAM 2.1 Qwen3Guard TimesFM 2.5 PP-OCRv5 Detection PP-DocLayout Open-Source Projects Special thanks to the open-source projects that make these models possible: vLLM Hugging Face Transformers pyannote.audio PaddleOCR SAM 2 TimesFM Downloads last month 314 Inference Providers NEW Image-Text-to-Text This model isn't deployed by any Inference Provider. 🙋 Ask for provider support System theme Company TOS Privacy About Careers Website Models Datasets Spaces Pricing Docs",
+          "fetchedAt": "2026-10-17T19:22:14.795Z",
+          "verifiedAt": "2026-10-17T19:22:14.795Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "0d8aa67c035844531236845b",
+          "candidateId": "0d8aa67c035844531236845b",
+          "title": "A human-checked document extraction demo",
+          "promise": "Test a small document-to-table workflow with careful human review.",
+          "whatItIs": "The attached model card describes Interfaze 1 Lite as a model with document reading and structured-output capabilities, with example code for extracting fields from a receipt. A student could test a narrow prototype that turns a few sample invoices into a draft table; this adaptation is hypothetical, not an established product service.",
+          "whoPays": "Hypothesis: a small business that handles documents might pay for reviewed data entry, but the source does not establish customers or demand.",
+          "loop": [
+            "Choose a small set of non-sensitive sample documents and fields.",
+            "Run the model's document reading or structured extraction on each sample.",
+            "Show the extracted fields beside the original document.",
+            "Have a person check every value, especially totals and dates.",
+            "Record errors and revise the field instructions before another small run."
+          ],
+          "evidence": "The Hugging Face model card describes document OCR and structured output, provides a receipt extraction example, and says the model needs an 80 GB GPU for local use. It also documents performance benchmarks and notes that large PDFs can use significant CUDA memory.",
+          "uncertainty": "Benchmarks and examples on a model card do not establish accuracy for a student's chosen documents or customer demand. Local hardware is a major obstacle; use only consented, non-sensitive samples, and have a person verify every extracted field before use.",
+          "first24Hours": [
+            "Read the model card's requirements and confirm whether you can access suitable hardware before attempting a run.",
+            "Select a few non-sensitive sample documents and define three fields to extract.",
+            "Manually compare any model output with the source documents and note every error."
+          ],
+          "sourceIds": [
+            "0d8aa67c035844531236845b"
+          ],
+          "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 3,
+                "reason": "The model card offers examples, but local use requires an 80 GB GPU, a substantial barrier for a beginner.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: organizations handling documents may value checked extraction, but the source provides no customer or payment evidence.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "feasibility": {
+                "value": 4,
+                "reason": "A tiny extraction demo is scoped, but the documented GPU requirement and memory use make a two-week build access-dependent.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "The model can produce document text and structured fields, but the prototype needs human verification and error handling.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The first-party model card gives working examples and benchmarks, without evidence of this proposed service's real-world use.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": {
+          "id": "0d8aa67c035844531236845b",
+          "candidateId": "0d8aa67c035844531236845b",
+          "title": "Test document extraction with an open model",
+          "promise": "Prototype a document-to-table helper, then check every extracted field by hand.",
+          "whatItIs": "The Interfaze 1 Lite model card describes a model for tasks including document reading and structured output, and gives sample code for extracting fields from a receipt image. A beginner could test a narrow student adaptation that extracts vendor, date, and total into a draft table. The adaptation is a hypothesis; it is not an established service from the source.",
+          "whoPays": "Hypothesis: a small business that handles receipts might pay for a reliable extraction helper; the source does not establish customers or demand.",
+          "loop": [
+            "Choose a few sample receipt images that you have permission to use.",
+            "Submit each image with a request for vendor, date, and total in a fixed structure.",
+            "Save the model's output as a draft table.",
+            "Compare each field against the original receipt and mark errors.",
+            "Have a person approve corrections before using or exporting any data."
+          ],
+          "evidence": "The Hugging Face model card provides example code for image document extraction and structured output. It says the model requires one 80 GB GPU for local operation, describes an API option, and lists limitations including memory use on large PDFs. Its benchmark figures are model-card claims, not independently verified here.",
+          "uncertainty": "The source does not show that this receipt workflow has customers or is accurate enough for business records. Local setup calls for substantial GPU hardware and custom code; using remote code requires trust_remote_code. A person must verify all extracted fields and handle sensitive documents carefully.",
+          "first24Hours": [
+            "Read the model card's hardware and setup requirements before choosing local or API testing.",
+            "Use a small set of non-sensitive receipt images and ask for vendor, date, and total.",
+            "Compare every output field with its image and note mistakes without treating the output as a record."
+          ],
+          "sourceIds": [
+            "0d8aa67c035844531236845b"
+          ],
+          "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 3,
+                "reason": "The model card's local requirements include an 80 GB GPU, and its examples require library setup; an API route is also described but needs an account and key.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: businesses handling receipts might pay for extraction, but the model card gives no evidence of buyers or demand for this adaptation.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "feasibility": {
+                "value": 4,
+                "reason": "A narrow sample test is described by adapting the model card's receipt example, but setup, hardware, and output checking remain obstacles.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "The model card shows image-to-structured-output calls that could automate drafting fields; a person must verify them before records are used.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The first-party model card provides use examples and benchmark claims, but does not establish independent results or customer use for this receipt workflow.",
+                "sourceIds": [
+                  "0d8aa67c035844531236845b"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    },
+    {
+      "candidateId": "6e0e24ffe427e31fa6bf272f",
+      "productUrl": "https://cuore.fit",
+      "sources": [
+        {
+          "id": "6e0e24ffe427e31fa6bf272f",
+          "url": "https://cuore.fit",
+          "title": "Show HN: I built an AI cycling coach",
+          "publisher": "cuore.fit",
+          "text": "Cuore Log in Create account Truly personalized training for cyclists. Sports science, turned into a coach that knows you. It plans your training around your FTP, your goals and your week, and adjusts it as you go. Create your account Talk to the coach Works with Wahoo Tacx Elite Saris Any Bluetooth smart trainer Works on macOS Windows Linux iOS Coming soon Android Coming soon Your Cuore coach Ask about training, trainers or where to start Coach: Hi, I'm your Cuore coach. What are you training for, and how much time do you have in a week? I have three hours a week. Where do I start? Does it work with my Wahoo KICKR? How do I change a workout while riding? Message to your coach Send Create an account and your coach keeps this conversation. Create your account Language English Español (España) Español (Latinoamérica) Français Deutsch Italiano Nederlands Português (Brasil) Português (Portugal) Русский Български 简体中文 繁體中文 日本語 한국어 Create account Log in Privacy",
+          "fetchedAt": "2026-10-17T19:22:15.260Z",
+          "verifiedAt": "2026-10-17T19:22:15.260Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "6e0e24ffe427e31fa6bf272f",
+          "candidateId": "6e0e24ffe427e31fa6bf272f",
+          "title": "A cycling plan that adapts to your week",
+          "promise": "Explore a small training-plan assistant with a cyclist reviewing every workout change.",
+          "whatItIs": "Cuore's website describes a cycling coach that plans training around a rider's FTP, goals, and available week, then adjusts as the rider goes. It displays a coach chat example and says it works with several Bluetooth smart trainers. A beginner could test a simple weekly planning assistant that proposes a schedule from rider-entered availability and goals; that separate adaptation is hypothetical.",
+          "whoPays": "Hypothesis: recreational cyclists might pay for personalized planning; the source does not provide customer, price, or demand evidence.",
+          "loop": [
+            "A cyclist enters available training time, a goal, and any constraints they choose to share.",
+            "The proposed tool drafts a weekly schedule for the rider to review.",
+            "The rider asks for an adjustment when their availability changes.",
+            "The tool drafts a revised schedule and explains what changed.",
+            "The rider decides whether to follow it and can stop or seek qualified advice."
+          ],
+          "evidence": "Cuore's site describes personalized cycling training plans based on FTP, goals, and a rider's week, with adjustments over time. It shows a coach chat example and lists Wahoo, Tacx, Elite, Saris, and Bluetooth smart trainers as supported. This is first-party product information.",
+          "uncertainty": "The page does not establish how the plans are generated, their training outcomes, or customer demand. The student version is only a proposed scheduling aid. It should not diagnose, prescribe around injury or illness, or override a coach or clinician; the cyclist reviews each plan and workout change.",
+          "first24Hours": [
+            "Read Cuore's site and note only the inputs it explicitly names: FTP, goals, and weekly availability.",
+            "Draft a sample weekly schedule for a fictional rider with clearly stated assumptions.",
+            "Ask a knowledgeable cyclist to flag unsafe or impractical suggestions before testing with anyone."
+          ],
+          "sourceIds": [
+            "6e0e24ffe427e31fa6bf272f"
+          ],
+          "productUrl": "https://cuore.fit",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 6,
+                "reason": "A simple planning mockup can use the website's named inputs and chat example, though the source does not describe a build process for a student version.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: recreational cyclists might pay for planning help, but the site provides no evidence of demand, customers, or pricing.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "feasibility": {
+                "value": 5,
+                "reason": "A two-week mockup using availability and goals is bounded, while safe, personalized training decisions remain beyond what this page demonstrates.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "The site says plans adjust over time and shows coach chat; a student loop could draft changes but needs rider review and safety limits.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The product site describes its coach and shows a chat example, but includes no independently checked outcomes or customer-use evidence.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": {
+          "id": "6e0e24ffe427e31fa6bf272f",
+          "candidateId": "6e0e24ffe427e31fa6bf272f",
+          "title": "A cycling plan draft with coach review",
+          "promise": "Explore a training-plan assistant that leaves workout decisions to the cyclist.",
+          "whatItIs": "Cuore presents an AI cycling coach that plans training around a cyclist's FTP, goals and week, and adjusts plans as they go. A student could prototype a simple weekly-plan draft from a rider's stated available time and goals; this is a hypothetical adaptation, not a Cuore feature claim.",
+          "whoPays": "Hypothesis: recreational cyclists might pay for convenient plan suggestions, but the attached source gives no evidence of customers or willingness to pay.",
+          "loop": [
+            "Ask a cyclist for their goal, available weekly time and relevant training context.",
+            "Draft a simple weekly schedule using those inputs and clearly state its assumptions.",
+            "Show the draft to the cyclist for corrections before they follow anything.",
+            "Ask what changed in their week and prepare a revised draft.",
+            "Keep progression, pain, illness and return-from-injury decisions with a qualified human."
+          ],
+          "evidence": "The Cuore page says its coach plans around FTP, goals and the user's week, adjusts training, and invites cyclists to ask about training and available time. It lists support for several smart trainers and desktop and iOS platforms.",
+          "uncertainty": "The page is product copy, not evidence of training outcomes or paid demand. A student prototype should not prescribe treatment or push through pain; cyclists should review suggestions, and injury, illness or intensive training decisions need qualified human advice.",
+          "first24Hours": [
+            "Write a short intake form for a goal, available weekly time and the cyclist's own constraints.",
+            "Draft one conservative sample week by hand and mark every assumption.",
+            "Ask a cyclist to review the draft for clarity and identify what needs a human coach."
+          ],
+          "sourceIds": [
+            "6e0e24ffe427e31fa6bf272f"
+          ],
+          "productUrl": "https://cuore.fit",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 5,
+                "reason": "The page shows a conversational coach and a simple intake example, though a safe training-plan prototype needs careful boundaries.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: some cyclists might pay for plan suggestions, but the source does not document buyers or payment.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "feasibility": {
+                "value": 5,
+                "reason": "A draft based on a few stated inputs is a plausible experiment, while credible training logic and safe handling need human input.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "A repeatable intake and draft loop is possible, but riders must review changes and humans handle health or injury concerns.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The product page demonstrates a coaching interface and describes plan adjustments, but offers no independent outcomes evidence.",
+                "sourceIds": [
+                  "6e0e24ffe427e31fa6bf272f"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    }
+  ]
+}
