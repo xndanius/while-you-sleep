@@ -1,0 +1,4477 @@
+{
+  "schema": 1,
+  "id": "loop-38994663435-1",
+  "runId": "loop-38994663435-1",
+  "type": "source-scan",
+  "createdAt": "2026-10-17T02:22:59.272Z",
+  "registrySha256": "6485b181a3d9d38b7588062fe7afb586c0a001e26d536d0748faa1b47a5ceaa2",
+  "definitions": [
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "name": "n8n · official AI workflows",
+      "url": "https://n8n.io/ai",
+      "kind": "html"
+    },
+    {
+      "id": "2ae9fd69127e82131f7ec675",
+      "name": "Hacker News · small customer-support products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+      "kind": "hn"
+    },
+    {
+      "id": "63dbb54258e730e95fa20298",
+      "name": "Hugging Face · trending public Spaces",
+      "url": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+      "kind": "hf-spaces"
+    },
+    {
+      "id": "a654756600fbb68b9c75c45b",
+      "name": "TechCrunch · AI",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+      "kind": "rss"
+    },
+    {
+      "id": "ef244017b1460269fc687cea",
+      "name": "Browser Use · official project",
+      "url": "https://browser-use.com",
+      "kind": "html"
+    },
+    {
+      "id": "7efc2c70ed9424b76bd7407b",
+      "name": "Apify · official platform",
+      "url": "https://apify.com",
+      "kind": "html"
+    },
+    {
+      "id": "d554ca3fc8b9fd3548600b86",
+      "name": "Dify · official project",
+      "url": "https://dify.ai",
+      "kind": "html"
+    },
+    {
+      "id": "470ff63db8da1802b0ccc779",
+      "name": "Hugging Face · invoice workflow demos",
+      "url": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+      "kind": "hf-spaces"
+    },
+    {
+      "id": "96fe006ed5f7b38bfc889c7d",
+      "name": "Ben’s Bites · public newsletter",
+      "url": "https://www.bensbites.com/feed",
+      "kind": "rss"
+    },
+    {
+      "id": "3733c65b9abe07b4b87156f9",
+      "name": "Simon Willison · public AI notes",
+      "url": "https://simonwillison.net/atom/everything",
+      "kind": "rss"
+    },
+    {
+      "id": "a5689419c24836e7e0ce37dd",
+      "name": "Latent Space · public newsletter",
+      "url": "https://www.latent.space/feed",
+      "kind": "rss"
+    },
+    {
+      "id": "11df15447c6c0e0dfdc06be3",
+      "name": "Hacker News · document products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+      "kind": "hn"
+    },
+    {
+      "id": "ec389fe35523e6dbba11e744",
+      "name": "Hacker News · Launch HN",
+      "url": "https://news.ycombinator.com/launches",
+      "kind": "hn-launches"
+    },
+    {
+      "id": "b681f434d554a69a059ccf85",
+      "name": "n8n · invoice processing templates",
+      "url": "https://n8n.io/workflows/categories/invoice-processing",
+      "kind": "n8n-workflows"
+    },
+    {
+      "id": "af031577e7a7287449e227af",
+      "name": "YC · AI company directory",
+      "url": "https://www.ycombinator.com/companies/industry/artificial-intelligence",
+      "kind": "yc-directory"
+    },
+    {
+      "id": "54649964a0a05f1bfa2b2d36",
+      "name": "Hacker News · automation",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+      "kind": "hn"
+    },
+    {
+      "id": "fc96810c8981082bcd1a293c",
+      "name": "Hacker News · Show HN",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+      "kind": "hn"
+    }
+  ],
+  "definitionsSha256": "e65b4e2e3ba744632810d77f7f2733fd566f7b15dce474b5cbb535600ba54f19",
+  "sources": [
+    {
+      "id": "e20bcacf021524725d3fc275",
+      "url": "https://n8n.io/ai",
+      "productUrl": null,
+      "textSha256": "9af4eee13af9d50874365b62310574e5671a163031c4885f80b12ab0b402f798"
+    },
+    {
+      "id": "6cdd9673d8a4c6df36a271c6",
+      "url": "https://news.ycombinator.com/item?id=49473507",
+      "productUrl": "https://asking.com.br",
+      "textSha256": "84cadc325420c76c8c08d14f94ea10750dde4238345035192b0053bd417dd86d"
+    },
+    {
+      "id": "80acc896eb7e49fdc9ba34dd",
+      "url": "https://news.ycombinator.com/item?id=49262666",
+      "productUrl": "https://heydeacon.com",
+      "textSha256": "4a4cd45550d458ab5c11c0b44fa773f3fa9df08738d69f54085610ad3012d1ea"
+    },
+    {
+      "id": "72076adade67c90c7ff00772",
+      "url": "https://news.ycombinator.com/item?id=48384979",
+      "productUrl": "https://pocketping.io",
+      "textSha256": "d954a3ad81acc7595389c0fb2281172404c78bed05bc9aea311820636665a441"
+    },
+    {
+      "id": "afacaf413bd4ff2bd45612fc",
+      "url": "https://news.ycombinator.com/item?id=48243325",
+      "productUrl": null,
+      "textSha256": "13fec8fc67cd16c20441d96fff211f6c5622f289d3579890c2a105db1a386fac"
+    },
+    {
+      "id": "b59d472e868d018693dcf394",
+      "url": "https://news.ycombinator.com/item?id=48024366",
+      "productUrl": "https://www.bugtrotter.io",
+      "textSha256": "ad1e7cdca586ed487052c280058ce74d73b227e42586d00868d49ea50bc03bfc"
+    },
+    {
+      "id": "14da0aab26df018c6c149502",
+      "url": "https://news.ycombinator.com/item?id=47827928",
+      "productUrl": "https://auxx.ai",
+      "textSha256": "f85f697108f6ab7696ae9d8ea49fc870d70e1efa54de033d100f05c5d5859a8b"
+    },
+    {
+      "id": "2ca3640726449b93be0b088a",
+      "url": "https://news.ycombinator.com/item?id=46828261",
+      "productUrl": "https://www.chatbridge.live",
+      "textSha256": "63a5659ce21bb16f054d19f1bdb67d825ca03237fe18fcd331ca58390161b793"
+    },
+    {
+      "id": "4847fb0bb6b371ebc5f272c8",
+      "url": "https://news.ycombinator.com/item?id=46602819",
+      "productUrl": "https://www.hivinq.com",
+      "textSha256": "4669e960a88a9c46510628d806e743f10de435fa99d82054996f7250b7ea21fc"
+    },
+    {
+      "id": "af327c1f739ea7109e335359",
+      "url": "https://news.ycombinator.com/item?id=46176301",
+      "productUrl": "https://www.chat-data.com/changelog/ui-based-response-launch",
+      "textSha256": "33688817cc58400c112de8e773be51f85963f96d0c77638faa9ae55ebda1c34b"
+    },
+    {
+      "id": "825b3af6f3796a98a9e1803f",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "productUrl": "https://www.doozadesk.com",
+      "textSha256": "425c54c62d6804f4985d14fed97fc37ca99d477ea0ad5ebc945b4bbcc45e916a"
+    },
+    {
+      "id": "e97665c6220d305a170f032f",
+      "url": "https://news.ycombinator.com/item?id=46075684",
+      "productUrl": "https://www.sparrowdesk.com/ref=hn",
+      "textSha256": "a99365d7806c95dd6b86c02a30cfa1b4f7ab4f5e97a14b0aaa457ab74d90490a"
+    },
+    {
+      "id": "4deeec333a22b65c93f4285d",
+      "url": "https://news.ycombinator.com/item?id=45943336",
+      "productUrl": "https://app.supogen.com",
+      "textSha256": "db75bb4fb172523c664fdfb7aeabbc66e936e452678c352f9c27c4ad81530307"
+    },
+    {
+      "id": "67f404330095ab63c15efdfe",
+      "url": "https://news.ycombinator.com/item?id=45913070",
+      "productUrl": "https://dodiddone.it.com",
+      "textSha256": "bcbbe09689d6d8ac1bb624107881300a11b686964b79179837b440a1626abdc0"
+    },
+    {
+      "id": "e40d37ccd678e000ef8c0957",
+      "url": "https://news.ycombinator.com/item?id=45732847",
+      "productUrl": "https://afec48d1-2eb5-490b-a1d8-f3b483aa87dc-00-3om0kaugaka9.kirk.replit.dev/landing/972ca3fc-0657-48a7-ac47-6874017b75fb",
+      "textSha256": "9553ab545dfd2111cf66b6eca6a5e4e5cfb6ccc735c7acd7401cc29a91868fe8"
+    },
+    {
+      "id": "ace6c0b2882fba54cdaa7058",
+      "url": "https://news.ycombinator.com/item?id=45684178",
+      "productUrl": "https://screenask.com",
+      "textSha256": "551ad95a15036d42e858897ea660b38d98528b141b56f0606721e23996d2ca4f"
+    },
+    {
+      "id": "1b4c5d7e7c590fddd84e0c91",
+      "url": "https://news.ycombinator.com/item?id=45668780",
+      "productUrl": "https://www.gibsonai.com/use-cases/customer-support",
+      "textSha256": "10b1b65473adae1a7c1628113f1e818563c01ad54c5e0ff26a33b42d326bceca"
+    },
+    {
+      "id": "5f70b65d63a89e9186557064",
+      "url": "https://news.ycombinator.com/item?id=45288011",
+      "productUrl": "https://ticketdesk.ai",
+      "textSha256": "057d653672ecdde7facca3f9a1f29314f41909645fdc5fa2ce04df5208183141"
+    },
+    {
+      "id": "9a0a9e719dcbdcc105bc1a7d",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "productUrl": "https://www.lumro.co",
+      "textSha256": "90b62d0d0b3672d553ebf45246880e7f68fcd2f1c1f1e3579d4a596b35d8774c"
+    },
+    {
+      "id": "0df192c077f30c68eaa1172b",
+      "url": "https://news.ycombinator.com/item?id=44917083",
+      "productUrl": "https://www.helplify.io",
+      "textSha256": "bd78cac55615792cb16db246f6acd8971a708a014245928b0f891421b8401d48"
+    },
+    {
+      "id": "17b8a21b6c7e1054a8da07df",
+      "url": "https://news.ycombinator.com/item?id=44628286",
+      "productUrl": null,
+      "textSha256": "f8fdc1ba8c2e343df9c0de5f991155d6b89a7206bbfab8849582ba91525a7a75"
+    },
+    {
+      "id": "9d548c8934cc92d53bebcbb4",
+      "url": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "productUrl": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "textSha256": "16c11bb05dcb97faa968c93a185ef3282c0d072da5b3ac83b4bd6bf850fe3b2e"
+    },
+    {
+      "id": "e967910dc9b9aeec709a7a39",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "productUrl": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "textSha256": "8e3bbcd8106dd41aa4814200d02c0cb082371ae63e912d8200d777f3cf3617c3"
+    },
+    {
+      "id": "dc8958655abd8e125a7477ce",
+      "url": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "textSha256": "b2478a072790090e1f2e20e957537ba7123bd03d734f8781fabbf57bbc830656"
+    },
+    {
+      "id": "642d3322c52cb5a65a863277",
+      "url": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "textSha256": "b5ee939b85610a05c2f77315ef3f9441dc7e523433df9d760a8b229d45ac8773"
+    },
+    {
+      "id": "3bc2a4a3dc8835fea9776402",
+      "url": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "productUrl": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "textSha256": "d2560be3047e5e2a62aced04aec887b2ef8c05d5c34ed8e1b1a38060e1229da3"
+    },
+    {
+      "id": "c1eee0d79036065be8544f3c",
+      "url": "https://huggingface.co/spaces/autotrust/shorts",
+      "productUrl": "https://huggingface.co/spaces/autotrust/shorts",
+      "textSha256": "fee4ccdf272086f5dfeef8d5eefa92d47241c5263df5f7a30e9a6ea618168c71"
+    },
+    {
+      "id": "aa3bcf3ecd42c436fcc3b9a4",
+      "url": "https://huggingface.co/spaces/autotrust/news",
+      "productUrl": "https://huggingface.co/spaces/autotrust/news",
+      "textSha256": "2a286658247280f28bdfdde474f3daa12a3cc3d995ea180243d87080e0745aaa"
+    },
+    {
+      "id": "fb156c59b1983f5d49d61807",
+      "url": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "productUrl": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "textSha256": "e5a5341d5704c31b0a90cf38e43ce582f3f236621d103fbdddbee4226d8c97be"
+    },
+    {
+      "id": "70a6cc9f1c8bb9eac4443807",
+      "url": "https://huggingface.co/spaces/black-forest-labs/flux-3-image-klein",
+      "productUrl": "https://huggingface.co/spaces/black-forest-labs/flux-3-image-klein",
+      "textSha256": "898e88cf0db40fa7d3ca68d654241bd74f53c0f719b311540ac90983b1d2a663"
+    },
+    {
+      "id": "dc55f80744e6b8b600a786bb",
+      "url": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "productUrl": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "textSha256": "06cb223b7a501895ab2854db99226d939e46d11da139f9c183ac8ccb89b8600c"
+    },
+    {
+      "id": "1af7ebc91fd8b14f0aec8600",
+      "url": "https://huggingface.co/spaces/fishaudio/Drama-3",
+      "productUrl": "https://huggingface.co/spaces/fishaudio/Drama-3",
+      "textSha256": "44f4651d83fa1492df184b1837a1041c090225ddc15d970b19deac9d5ed4c85c"
+    },
+    {
+      "id": "229b397ce3c041bee1330ce1",
+      "url": "https://huggingface.co/spaces/hugging-apps/qwen-qwen-image-2-1-turbo",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/qwen-qwen-image-2-1-turbo",
+      "textSha256": "4457aae55d035cfd3ff02af674aad2d9d6055807346d3f01e89a21662a71b64f"
+    },
+    {
+      "id": "9f9138fda1c06c230777f1fd",
+      "url": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "productUrl": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "textSha256": "54d75bfe640371071d1428faf368efa8c75a300694e7c952732b185752ce0ee1"
+    },
+    {
+      "id": "701f3cfaacd0df0a0703f5c7",
+      "url": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "productUrl": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "textSha256": "e022458f4b1eb22ff6696782d53b42a217956dc47c03da866e62c04333f643c3"
+    },
+    {
+      "id": "e2f8381828caabacf4704234",
+      "url": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "productUrl": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "textSha256": "861e33779d740799ca3c780500cbfda4feeff11297726c9caaead684da5bdc89"
+    },
+    {
+      "id": "a17b06d634122c8c668667be",
+      "url": "https://huggingface.co/spaces/pablodawson/minimax-h3-360-orbit",
+      "productUrl": "https://huggingface.co/spaces/pablodawson/minimax-h3-360-orbit",
+      "textSha256": "3a25507051fdaaea19aa9be7ce99727bec43180235cecf6e8b6d311e89c707d1"
+    },
+    {
+      "id": "abfd59f85ca3413221131441",
+      "url": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "productUrl": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "textSha256": "a7467d38e7a6dbfc093a24c8f1b05bd64ec5655e32a655cee20160028b539d2d"
+    },
+    {
+      "id": "100ef290074628b971606650",
+      "url": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "productUrl": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "textSha256": "041fbbbb97d8af20672c58ace503b0a39192c26b6a5b4e4cba41f277a84e8420"
+    },
+    {
+      "id": "ce621ef626621472dd94dce7",
+      "url": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "productUrl": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "textSha256": "48258a533fe4c917f13f1b297a87919eee6d6bc0840eb197ede4b8e7a73f8d50"
+    },
+    {
+      "id": "7508a12cb77f9acb45dc103f",
+      "url": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "productUrl": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "textSha256": "d61c606a0b8c559ae06b7c7a74679cc8df6b35a3a352db992888235a33e9821a"
+    },
+    {
+      "id": "8f4036b74df273ae542d8301",
+      "url": "https://techcrunch.com/2026/10/16/replit-is-no-longer-working-with-anthropic-ceo-says",
+      "productUrl": null,
+      "textSha256": "5daead9d33a5544da9d43467f33fcb2ebdb6536ebf7f337dc0d7c546d1d1ada6"
+    },
+    {
+      "id": "43f5d9299a926e4d769e96d9",
+      "url": "https://techcrunch.com/2026/10/16/india-becomes-the-latest-country-to-report-rogue-ai-agent-activity",
+      "productUrl": null,
+      "textSha256": "d5ea2bc9cb4752d728e4bd7907945b00b057ac7e1fe9c56fa93aee03fd03c359"
+    },
+    {
+      "id": "bf815e64fedf96f62911c925",
+      "url": "https://techcrunch.com/video/a-nvidia-insider-turned-vc-on-why-robotics-hasnt-hit-its-chatgpt-moment-yet",
+      "productUrl": null,
+      "textSha256": "6b6a6e33b4aa7c89b347b345ed61e6b7f2594cc69d73ea68190492ae2e56f121"
+    },
+    {
+      "id": "7cf2fb5203224340531f390e",
+      "url": "https://techcrunch.com/podcast/physical-ai-is-more-than-robots-says-the-nvidia-veteran-now-investing-in-it",
+      "productUrl": null,
+      "textSha256": "6b6a6e33b4aa7c89b347b345ed61e6b7f2594cc69d73ea68190492ae2e56f121"
+    },
+    {
+      "id": "75fa23d8834b88f0cdaa3045",
+      "url": "https://techcrunch.com/2026/10/16/elorians-first-ai-model-wants-to-reason-with-images-not-just-about-them",
+      "productUrl": null,
+      "textSha256": "c54792bf7019ad905e9fe353fa632f83db779b471dca323b732e17717ad22561"
+    },
+    {
+      "id": "08ae3f1b7d83d7996372b532",
+      "url": "https://techcrunch.com/2026/10/16/jev-is-vercels-fastest-adopted-ai-model-ever",
+      "productUrl": null,
+      "textSha256": "a1ee9383313c758e8b535a7eb5cf0f7615d1ea600fe34eb578c950c5d36c06ae"
+    },
+    {
+      "id": "7dc0e5c6956b6261873fecdd",
+      "url": "https://techcrunch.com/2026/10/16/mark-wahlberg-on-using-ai-in-film-the-right-way-and-being-open-to-an-ai-clone-carrying-on-his-legacy",
+      "productUrl": null,
+      "textSha256": "59214f3dc481d9aae8d176ed924a806c52b971c22ddbd55d09c0efad000bbe63"
+    },
+    {
+      "id": "657188b4be634999a7eec5b8",
+      "url": "https://techcrunch.com/2026/10/16/veritas-is-building-a-chip-to-verify-luxury-goods",
+      "productUrl": null,
+      "textSha256": "1957e20b21dad4e9148b636bbfde328e5c1da8b0b7fc0fd5f5003d505fc0e484"
+    },
+    {
+      "id": "02f60fa99bd6fa5dfa5e2801",
+      "url": "https://techcrunch.com/2026/10/16/replits-ceo-says-the-future-of-work-is-the-self-driving-company",
+      "productUrl": null,
+      "textSha256": "adcf228d02f657e8d4307c17c0bcefa904585e11458df801f0692996001db6a5"
+    },
+    {
+      "id": "bdb5caa1dae4ab509e1be7f6",
+      "url": "https://techcrunch.com/2026/10/15/when-it-came-to-cal-ais-viral-success-a-small-army-of-influencers-paid-off",
+      "productUrl": null,
+      "textSha256": "40854dc88f7c54a52ecfa16f369d4a27a806e80d8761265c3eb37cf91d7de315"
+    },
+    {
+      "id": "8243c9a70d3f19e15eb8c374",
+      "url": "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs",
+      "productUrl": null,
+      "textSha256": "7561ca9f7f3998bf4539e151c625f3ce41374b5349917047eac724159aca2c04"
+    },
+    {
+      "id": "f159e33b88a953e59ea9ebeb",
+      "url": "https://techcrunch.com/2026/10/15/amazon-devices-chief-panos-panay-sees-a-future-where-ai-devices-replace-the-need-to-use-apps",
+      "productUrl": null,
+      "textSha256": "7525e1697a17b858d145523cd112ec0ff5955c506c10535f2b2fafc25c9f725b"
+    },
+    {
+      "id": "bca736b8e46393cc3d4eec91",
+      "url": "https://techcrunch.com/2026/10/15/anthropic-is-letting-metr-researchers-look-under-the-hood-with-employee-level-access",
+      "productUrl": null,
+      "textSha256": "2f03aa5ebddc23e8e59323f80fcf356fbfc3b78a0b758c76d59aa4e33db7c28a"
+    },
+    {
+      "id": "d0efebcc7c6f1b1c3d0fe232",
+      "url": "https://techcrunch.com/2026/10/15/bluesky-expands-its-ai-powered-attie-app-to-let-anyone-build-websites-games-and-more",
+      "productUrl": null,
+      "textSha256": "a9f102e7d77087b3148d8662a2bfba2987afe94a126818b19635f8e2c9c0f22b"
+    },
+    {
+      "id": "dbb4ac50000ed94ab766970f",
+      "url": "https://techcrunch.com/2026/10/15/last-chance-to-save-up-to-200-on-techcrunch-founder-summit-early-booking-ends-oct-16",
+      "productUrl": null,
+      "textSha256": "007c14d7ee97a57c0c38f1ef03103536cea972b205aa43b9b57aeef66f0a158c"
+    },
+    {
+      "id": "fa3be6b020a0d422ad5cd4bf",
+      "url": "https://techcrunch.com/2026/10/15/ai-agents-are-coming-to-rivians-cars",
+      "productUrl": null,
+      "textSha256": "6d5e58608508198e87c01f497055b94c2d5ed3bb84f16b2f41bf18160de1f7b1"
+    },
+    {
+      "id": "8560a2cd1b5ad897d1f04f74",
+      "url": "https://techcrunch.com/2026/10/15/googles-universal-cart-shopping-tool-launches-in-the-us",
+      "productUrl": null,
+      "textSha256": "b73218e481b7b90422de8354862e411bd4a425c9473a0487a7a3bde642480ce7"
+    },
+    {
+      "id": "38883cff1d0be07e3d209bca",
+      "url": "https://techcrunch.com/2026/10/15/techcrunch-disrupt-2026-last-day",
+      "productUrl": null,
+      "textSha256": "3cadfe2a41c0740fce9e6f8d904ce43fb75b2db36a1e15c0542a306c7bfe1d3f"
+    },
+    {
+      "id": "a0dd901df9cb7cea9e7f58cd",
+      "url": "https://techcrunch.com/2026/10/15/amazons-bee-launches-two-new-personal-ai-devices-starting-at-75",
+      "productUrl": null,
+      "textSha256": "c8cd9e5ba06405da4bb9b1e3e53b1b0806c5237c7c56f14467ce6efa844e8bdd"
+    },
+    {
+      "id": "c583a0918e79df9da857add5",
+      "url": "https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform",
+      "productUrl": null,
+      "textSha256": "f571847b4d83cc03e117b65cd74d4177d218059e27eda20d62d1bf13bbe93a6a"
+    },
+    {
+      "id": "ef244017b1460269fc687cea",
+      "url": "https://browser-use.com",
+      "productUrl": null,
+      "textSha256": "6048ab6a9772337f55c72631f080dc448e08f87556aa3cb0020770c524510b4e"
+    },
+    {
+      "id": "7efc2c70ed9424b76bd7407b",
+      "url": "https://apify.com",
+      "productUrl": null,
+      "textSha256": "09637a4c5ecd76e4d6d8e9165e9c6fa90ed701f1485138343b38bcc00efbf5a5"
+    },
+    {
+      "id": "d554ca3fc8b9fd3548600b86",
+      "url": "https://dify.ai",
+      "productUrl": null,
+      "textSha256": "387a4a7aea39510d15aba63d3fd157ecc574996981aa52e7b7c277bc4b9f7966"
+    },
+    {
+      "id": "decd65cbff34ea9dc19e58fb",
+      "url": "https://huggingface.co/spaces/Riya1104/InvoiceIQ",
+      "productUrl": "https://huggingface.co/spaces/Riya1104/InvoiceIQ",
+      "textSha256": "0cb11484ed82af9ea401cd58819a6153f8ca9bcbccc1e369b2c0452874d9bd6c"
+    },
+    {
+      "id": "698bfea2b7b729bc0ab16a1c",
+      "url": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "productUrl": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "textSha256": "5445549d6ea183f36344ac1ab73bfc390cbd63fb346f13448c6f09aa8b0da9c1"
+    },
+    {
+      "id": "15950ad512e6bd08dfe62252",
+      "url": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "productUrl": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "textSha256": "156d76adbb83cec6b5a780be6f0bd36b910de08df1a069ebe05cfb4e2359bf89"
+    },
+    {
+      "id": "50561baf4530db439848fc9b",
+      "url": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "productUrl": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "textSha256": "d2fd2c08851fb46f7bb79d3d2c077198be30692cefb37dfdf35f76231da02a28"
+    },
+    {
+      "id": "3d28365427bc516da7d0ed0d",
+      "url": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "productUrl": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "textSha256": "03896c841ac768bef81d132d984b11922b22eaa74cebe72d1c386b321b692180"
+    },
+    {
+      "id": "e5074e4b1ac7444fb51faf0e",
+      "url": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "productUrl": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "textSha256": "f69ca6c31c3d2ab1443ee8e9de694b88a81ddbe1068116074ccd6d3f5ff42376"
+    },
+    {
+      "id": "f8cfea836e1702ceec21d5f8",
+      "url": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "textSha256": "89b0c93b8235a21bfca9cd25227974999c8764938f8daf2eafd8461199da3479"
+    },
+    {
+      "id": "a07874e56fdc37fe2c042b81",
+      "url": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "productUrl": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "textSha256": "7c00cb4bee8f985edc27216961329563af1389d0830f801426ae8e5ba8993bed"
+    },
+    {
+      "id": "623769c9d980ffb995f65cdc",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "textSha256": "32e19581770ff38f8c5f51086745e12d2395e8017ef6197e32e10b3d0a57d94c"
+    },
+    {
+      "id": "7590c62adf8c4b6dd70ad54e",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "textSha256": "ef207b789ef768bcb8caaea1b191562d6472d654354bc5c5a7eb74d4ef5e4758"
+    },
+    {
+      "id": "bdd8b5a7dd636446ee24a8fe",
+      "url": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "productUrl": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "textSha256": "f55325262f51fb5affbe255f33068872d50c46735ed9b85c11883b75d82800da"
+    },
+    {
+      "id": "1dd03891d1e36345e3123c1a",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "textSha256": "75beb36c49123ff8794e4cb033ebe32d936798f48a1ee61cc8ff0eb93e834daa"
+    },
+    {
+      "id": "1609df54fa9aaf3df877db65",
+      "url": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "productUrl": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "textSha256": "39903fe14d9ffcdca2332c8fc6e0b43bc2beb679d24069644a1614bd9c335ba0"
+    },
+    {
+      "id": "f657dd5703cbf04263ca2cbe",
+      "url": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "productUrl": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "textSha256": "5bd5b423943895db9acacc1dd7ed85b5cb5752c879b60320a9048738c15e3aae"
+    },
+    {
+      "id": "a569e909a84275c0e342e3f9",
+      "url": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "productUrl": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "textSha256": "c44f1fc8b8d069d58554adf86662dabf35860e658ce0fe3ed009d41708471f61"
+    },
+    {
+      "id": "14e26d166e12757318a5e260",
+      "url": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "textSha256": "5b134e39c465062a1fa85d5a094fec672384cc7c0f61d7ffdbba7e8d9a681ef0"
+    },
+    {
+      "id": "8834a95ee6e22f1783f0f8bc",
+      "url": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "productUrl": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "textSha256": "d3e4d11211da203c75cfe31971d03e37263919eaeb63d1cacff3ce053ea0d2d3"
+    },
+    {
+      "id": "4a2181b4ee8a3fdd132b74ac",
+      "url": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "textSha256": "2cecc12cd9a4dda624452ce30876a887d5e6709de4aa996596322a5283e03cb4"
+    },
+    {
+      "id": "0efa82095af534ac6fa36985",
+      "url": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "textSha256": "301489ab40330c32a37e999a8f402c8947eb7376e27d8f0bfb39f26cdc22750f"
+    },
+    {
+      "id": "14381d771aefb1ca8401fd62",
+      "url": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "textSha256": "7a76dbd675b48d745fc770f5c4d589b0992b799db23707e3fc07370b3b7b8b81"
+    },
+    {
+      "id": "9cce3c399f76353564ea8d13",
+      "url": "https://www.bensbites.com/p/prompt-tips-from-anthropic",
+      "productUrl": null,
+      "textSha256": "2039ba201e402eaad90eecd653939a5d017d869fd8db4dbddbf0bec8f6aa1096"
+    },
+    {
+      "id": "7aafcc8d015cd1278b985bee",
+      "url": "https://www.bensbites.com/p/zucks-wonderfull",
+      "productUrl": null,
+      "textSha256": "2489c27ee77c2fd92caa83c5216d491cfa58428a4c0bd1f33a9ecb9926405c3b"
+    },
+    {
+      "id": "8fe6e5f2fddf3911b3c8a1e9",
+      "url": "https://www.bensbites.com/p/text-is-so-2023",
+      "productUrl": null,
+      "textSha256": "14494f192071866f8fce806452ecaa647b62f485245c8ce9ca82d9e87761f0ba"
+    },
+    {
+      "id": "6559bbeddb61172576de7951",
+      "url": "https://www.bensbites.com/p/thoughts-from-san-francisco",
+      "productUrl": null,
+      "textSha256": "ed77c5776a0864dca70f258345c481ea1e52cff00fc510df9a3333d17ac288b5"
+    },
+    {
+      "id": "d39329af8ebd63eb33c7e0e8",
+      "url": "https://www.bensbites.com/p/openai-devday-2026",
+      "productUrl": null,
+      "textSha256": "08d19417bd54547a05602ef5260c213841df34aa2295f4ddaf9e54c6548f9226"
+    },
+    {
+      "id": "14f7ddb17512538ee6ead671",
+      "url": "https://www.bensbites.com/p/sonnet-55-is-worth-a-try",
+      "productUrl": null,
+      "textSha256": "8d15ffd97c3dc7f51b11317ef4883c407be020ee9dce505a2d51dc865d45079c"
+    },
+    {
+      "id": "2c9a7f5cf7155b059672e97a",
+      "url": "https://www.bensbites.com/p/50-years-of-tech-devices",
+      "productUrl": null,
+      "textSha256": "35d743dfea595290129b377577ab8f15ed4681fee4a9db857be8205b2925f1a9"
+    },
+    {
+      "id": "fd54812f164c816fbab95370",
+      "url": "https://www.bensbites.com/p/back-to-claude",
+      "productUrl": null,
+      "textSha256": "1a9f67433451d85516b9dbea8d13d6410414677937c231ed247cc2272f0ebfe1"
+    },
+    {
+      "id": "6738f3ceabaa304f81cb8cdf",
+      "url": "https://www.bensbites.com/p/what-can-you-build-with-jev",
+      "productUrl": null,
+      "textSha256": "cf160563189dde7097a817ef72472c9883ee9825f6254703847883bd8067340c"
+    },
+    {
+      "id": "d3cb423779ff8236c3ec4324",
+      "url": "https://www.bensbites.com/p/new-home-for-cowork",
+      "productUrl": null,
+      "textSha256": "d7d6a512025f30f1e55518c3f98066b33a954a4a272fb18783ae895147061984"
+    },
+    {
+      "id": "b76e0dae669e83a29804f9e3",
+      "url": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+      "productUrl": null,
+      "textSha256": "d5f8db361d235ac506c28ec8ebffc3cb210b78f6fe2c36dfe4fad4a524771eb8"
+    },
+    {
+      "id": "07d50b9cc4ae26797646c9fa",
+      "url": "https://www.bensbites.com/p/telling-ai-to-design-is-hard",
+      "productUrl": null,
+      "textSha256": "1b4f9ae874925ade8f2914c2269aea11a4875e7ab59b7848b5a57cf73e65677f"
+    },
+    {
+      "id": "e6936e42c6e9ce1c5ee0fa33",
+      "url": "https://www.bensbites.com/p/everyone-needs-a-muse",
+      "productUrl": null,
+      "textSha256": "c8d691eca7b09c25a147f31cb101bde69815fe2e2b7e13f06929468dc7b54b36"
+    },
+    {
+      "id": "d5f7db556079222ae56abcc0",
+      "url": "https://www.bensbites.com/p/the-first-gpt-6-model",
+      "productUrl": null,
+      "textSha256": "b026e052cd7cc772ba5c5bee7a3d9414c6ccbafa5a97e185733229e237d2f250"
+    },
+    {
+      "id": "8175048030ded19a63f81dff",
+      "url": "https://www.bensbites.com/p/scraping-107m-rows-of-data-to-build",
+      "productUrl": null,
+      "textSha256": "9e12236807a34e1d2ce1fd32de1fcf5631783a52f2ae827c725535f0704205b5"
+    },
+    {
+      "id": "40a9913f55937995275810d8",
+      "url": "https://www.bensbites.com/p/fable-51",
+      "productUrl": null,
+      "textSha256": "da664ef30f2510c82e6d60d3bc1c9666f6ed5c5b3a046a65900ad8bb1fad9fac"
+    },
+    {
+      "id": "6bff2778e2fa248bde021efd",
+      "url": "https://www.bensbites.com/p/build-your-ideas",
+      "productUrl": null,
+      "textSha256": "4bfc8d732ed76a4aa2834bdb78859d5ba4443a8c99a3374a6a4b8bdce573b944"
+    },
+    {
+      "id": "5d1198e2c0c1ba038d9732d2",
+      "url": "https://www.bensbites.com/p/how-i-built-this-21f",
+      "productUrl": null,
+      "textSha256": "f33f8274b633ae95dac760331a41d67bae38651b9fb73cf2a434bb4ac9431699"
+    },
+    {
+      "id": "52cd6f64afa8aaf328ee7f97",
+      "url": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "productUrl": null,
+      "textSha256": "25e62346a19a3eb275c88a78a4c3bc5275ab5fa4cdad2e8b166706cb4c0dc3a0"
+    },
+    {
+      "id": "8d9e0fb1cc8e873eb2bd8152",
+      "url": "https://www.bensbites.com/p/agents-on-your-mobile",
+      "productUrl": null,
+      "textSha256": "fd388cb5bf4ff0266d26a7ab5c4d0bd9186b764ff34aedcc23e94b72436a9016"
+    },
+    {
+      "id": "3bc592cc5b6877b701ba64d7",
+      "url": "https://simonwillison.net/2026/Oct/16/code-review",
+      "productUrl": null,
+      "textSha256": "ce7970edeaccc7a643aebb3ffa3eb7fa20ce890be590bab4fca3462ea903eb67"
+    },
+    {
+      "id": "f63d7248b24014115f326f2f",
+      "url": "https://simonwillison.net/2026/Oct/15/chirp-pong",
+      "productUrl": null,
+      "textSha256": "b634cf36744755339d629846a5721aafbb125525358c583a7f16b7b1889fbcb0"
+    },
+    {
+      "id": "e58311dcd1376969cb5988e8",
+      "url": "https://simonwillison.net/2026/Oct/15/anthropic-tells-investors",
+      "productUrl": null,
+      "textSha256": "bda4af3f324e2079e7ed97731403a46b51bbd82ac6114a98dfe0cf07f80cb849"
+    },
+    {
+      "id": "b734a6066c595494ada7a28b",
+      "url": "https://simonwillison.net/2026/Oct/15/latex",
+      "productUrl": null,
+      "textSha256": "33ed4dfa32c0a9114089ec90713c1d4e055b17b7007fce5b7a1264029f6eecb4"
+    },
+    {
+      "id": "3e6e644f1b2b0e94cbd7e718",
+      "url": "https://simonwillison.net/2026/Oct/14/tree-appreciator",
+      "productUrl": null,
+      "textSha256": "86de9c67a37517ebda7b9043688adc4ba8bc44b46f4c3bc705e818d4fc7f861b"
+    },
+    {
+      "id": "154a39176d886b3bd0ff901e",
+      "url": "https://simonwillison.net/2026/Oct/14/ai-is-mass-decompiling-games",
+      "productUrl": null,
+      "textSha256": "681ab5f54a36af90bc71ef2143cc59b02904135279027dcdd7366d789177e781"
+    },
+    {
+      "id": "7e289d45dfc4cd8f5fef8ccf",
+      "url": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic",
+      "productUrl": null,
+      "textSha256": "21cccd45f34c45ca6a9f1ee10f1047f3ce1b08c0ab84aa5c7216baf72cc7aab2"
+    },
+    {
+      "id": "6451d923eed6bbe644dbebbc",
+      "url": "https://simonwillison.net/2026/Oct/13/llm-gemini",
+      "productUrl": null,
+      "textSha256": "a2bb32b58c7818899ea1512f6792619b64908dd96fec26a704e0e83f51e0b5b2"
+    },
+    {
+      "id": "1ce341749cd1d883ec323914",
+      "url": "https://simonwillison.net/2026/Oct/13/geoffrey-huntley",
+      "productUrl": null,
+      "textSha256": "b2178a47a23e6fd64af7f3e95fe30b3b4c37b231855c0ed47dd710e198adf333"
+    },
+    {
+      "id": "e6734b2c11074d76a3ecb2a6",
+      "url": "https://simonwillison.net/2026/Oct/13/web-edit",
+      "productUrl": null,
+      "textSha256": "7ee1a5e38cfe48178fda0d5ec5cc20a35c013296daf2970f12d7d1b1e3f79354"
+    },
+    {
+      "id": "5ca8d6f055cb2e9fa5fb4b75",
+      "url": "https://simonwillison.net/2026/Oct/12/llm-meta-ai",
+      "productUrl": null,
+      "textSha256": "5401f4c3eb80460cd413d6b9f45db43cc61578679520944200fe6491d17922f7"
+    },
+    {
+      "id": "e8d8f43511a9291fb5e3d53b",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15",
+      "productUrl": null,
+      "textSha256": "e4a2f3b16732556ead2f694b302ff5c705c106aa517f685b992ba45337c76597"
+    },
+    {
+      "id": "97e3cba45007401f16113a4c",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15-web-edit-profiling",
+      "productUrl": null,
+      "textSha256": "13eb7bd532e4b60082aa7df0ad46f25d3c053ea005bbeca58cb72eb8481d62ed"
+    },
+    {
+      "id": "993bc19082d2d062c86a72ba",
+      "url": "https://simonwillison.net/2026/Oct/12/web-edit",
+      "productUrl": null,
+      "textSha256": "00fce9734601f50e7e04d3a2f54c9205b8c4aa099d78485084c105ac8d5fc4b7"
+    },
+    {
+      "id": "79fb31c209812beb34edc71f",
+      "url": "https://simonwillison.net/2026/Oct/12/datasette-ports",
+      "productUrl": null,
+      "textSha256": "acf6c6ffd4533727e13b78d704a455b797ff3c3fb830d4f764ed0007c3d3cfc5"
+    },
+    {
+      "id": "7291bd8b12952a0e561c0d2e",
+      "url": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "productUrl": null,
+      "textSha256": "1c2f7f3141d05c744bc3bacd754a5d5ec83ef9d98de6b85acfb792918edb9a8b"
+    },
+    {
+      "id": "d3612ff459da8b570925d705",
+      "url": "https://simonwillison.net/2026/Oct/10/python-actions",
+      "productUrl": null,
+      "textSha256": "3abc73df1dd6904aa4c9ce743feaecfc7fc937965b3441b978a3677751c110a3"
+    },
+    {
+      "id": "51b6227273006399313d5b67",
+      "url": "https://simonwillison.net/2026/Oct/10/the-new-york-times",
+      "productUrl": null,
+      "textSha256": "0fd362396d10701a6d28dd207e3f7faa1750ed605286dee8472f0e44ce2eb6b5"
+    },
+    {
+      "id": "7e720aeda47f0a423402183f",
+      "url": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "productUrl": null,
+      "textSha256": "6223f4d25b502c19cc3fe654e4ca6606f24748d9adce6e012008db945b409998"
+    },
+    {
+      "id": "39e6bd368c40b12952cf2dce",
+      "url": "https://simonwillison.net/2026/Oct/9/matthew-green",
+      "productUrl": null,
+      "textSha256": "8839b765f5113fbdd87d9ae42ef0aafd93d4eb865d04de34a8ea0463ef65c1af"
+    },
+    {
+      "id": "fe88897c2a464af3e362eaf6",
+      "url": "https://www.latent.space/p/ainews-agents-disprove-polysemanticity",
+      "productUrl": null,
+      "textSha256": "a002e06fda9636a3fe28000a8eda9ddeb606886387435574c90f9d8f2f30faf8"
+    },
+    {
+      "id": "247153705736c57d29c6ef69",
+      "url": "https://www.latent.space/p/crossing-the-threshold",
+      "productUrl": null,
+      "textSha256": "180320ebaa9a7336de65304ed886193e97d43bd4902e6ab355ccb89a15c941b5"
+    },
+    {
+      "id": "649989f895c2f016c528f89e",
+      "url": "https://www.latent.space/p/lab-in-the-loop-at-compute-speed",
+      "productUrl": null,
+      "textSha256": "760ef0a59ba493fc638e28805b084d680cfb5caff0b1286b64460aba6281523f"
+    },
+    {
+      "id": "43abc94dd1f0ca280d726dae",
+      "url": "https://www.latent.space/p/ainews-ai-engineer-nyc-gemini-4-argon",
+      "productUrl": null,
+      "textSha256": "7e8196879227739d8807be02a1ebe93cde6209c19b6ad53f2d0b3884c3baf4e4"
+    },
+    {
+      "id": "be997bf718606abb5880af09",
+      "url": "https://www.latent.space/p/dyna",
+      "productUrl": null,
+      "textSha256": "48354935843409f03d96e3fe2765514c8edd830507462583c34c3bc9e1e66d55"
+    },
+    {
+      "id": "e71374164f2cb1add8d9303e",
+      "url": "https://www.latent.space/p/claude-dynamic-workflows",
+      "productUrl": null,
+      "textSha256": "9ec24825011dba9edcb7e925c09e8df1ce12e1769f8c00939cc7afb00ac9a1f8"
+    },
+    {
+      "id": "e5f022f9be79d8e96eab97cb",
+      "url": "https://www.latent.space/p/nyc2026",
+      "productUrl": null,
+      "textSha256": "062dc9bcc769ad1e31ab70a07973c4be8b1e75b40f69dc911727db5bb87a19aa"
+    },
+    {
+      "id": "9a2a489d753abcefd301a946",
+      "url": "https://www.latent.space/p/standard-bots",
+      "productUrl": null,
+      "textSha256": "a4b1bf7dba88dd20289bccfbc993d921fdb3fcbd3f7e29cd749bbd75b21a2a41"
+    },
+    {
+      "id": "68a694837125984e014d7340",
+      "url": "https://www.latent.space/p/biohub-deepmind",
+      "productUrl": null,
+      "textSha256": "9c3bf2332807789b148491d6f9a71f4429ef7a9dfc5eadd02d07287a5f4d3619"
+    },
+    {
+      "id": "9db9af42b7f614ecd07414a9",
+      "url": "https://www.latent.space/p/ainews-not-much-happened-today-60f",
+      "productUrl": null,
+      "textSha256": "c2af71f7cb1533a2ce38b702df83faec3ec4f1ad314de5f63b164ac82bc6f363"
+    },
+    {
+      "id": "22732f8185e35596b40539e9",
+      "url": "https://www.latent.space/p/stacklok",
+      "productUrl": null,
+      "textSha256": "17407d17265301e4b5926006ae122462feac8c8d8d9ca7841e9ce48b4253933b"
+    },
+    {
+      "id": "9416b01a853f1769cc798e8d",
+      "url": "https://www.latent.space/p/ainews-quasi-riemann-hypothesis-openai",
+      "productUrl": null,
+      "textSha256": "cf80dab7209c93676f05145946650d7bf95f86d8531c2b8fcbe36e8bc842391b"
+    },
+    {
+      "id": "417c3a0572d8db4597000019",
+      "url": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "productUrl": null,
+      "textSha256": "0f17f4ebe8daeab6e29b8c802bae868d1696d73148cf50a2a6b2fca024d4a869"
+    },
+    {
+      "id": "0300916b911fbe76cc9315db",
+      "url": "https://www.latent.space/p/airbnb",
+      "productUrl": null,
+      "textSha256": "61c9742547fce0048f91c49a323287fa3a5b71ec4115a0865ce831d2b0beab84"
+    },
+    {
+      "id": "d4017db5050166483de87253",
+      "url": "https://news.ycombinator.com/item?id=50117118",
+      "productUrl": "https://github.com/AlphaWorkroom/AlphaDocs",
+      "textSha256": "88504ce3c156f018c45103b869860336e1be2d9034af430a5ee91d110835973c"
+    },
+    {
+      "id": "f5258b65b367b71d4e5063ea",
+      "url": "https://news.ycombinator.com/item?id=50105101",
+      "productUrl": "https://dipperpdf.com",
+      "textSha256": "667fe76bebb481bc3d469ed2898dd67280514e5eaa94f38195a0acf18e83aa81"
+    },
+    {
+      "id": "342b136b581a48d87b445a93",
+      "url": "https://news.ycombinator.com/item?id=50079361",
+      "productUrl": "https://updown.laravel.cloud/059a14a0-9113-4fad-a9db-e8ef2d2e830c",
+      "textSha256": "b765cb24e09b7cc2f7b5280a612283d2751c45b5534e4cc61412c806d9233204"
+    },
+    {
+      "id": "5c593ce6f13e38ccca3ce5db",
+      "url": "https://news.ycombinator.com/item?id=50052566",
+      "productUrl": "https://www.jruva.in",
+      "textSha256": "894aca9addebd677d678f8a17f969c154fde2a3306c036b6d2eeb6ad8302b53b"
+    },
+    {
+      "id": "cd4b108088eb92f81b6c1adf",
+      "url": "https://news.ycombinator.com/item?id=50048129",
+      "productUrl": "https://cachety.com",
+      "textSha256": "8233ef1e11f847229fa221baafa381da6b4895f32d477ace3679e7d571bd99aa"
+    },
+    {
+      "id": "d32a3e5679ad79dcdfea2668",
+      "url": "https://news.ycombinator.com/item?id=50031317",
+      "productUrl": "https://github.com/aartur/docexp",
+      "textSha256": "8dd0fa6d60c23a3ccde4125c67b1f76de49da0be163733ad3d15809cf62a8536"
+    },
+    {
+      "id": "9466c808c7a1baff1a388125",
+      "url": "https://news.ycombinator.com/item?id=50014659",
+      "productUrl": "https://www.nace.ai/developers",
+      "textSha256": "1768ada088a9ec11b50f067f2694358b034d583ff94cf4c348109e89341e7e33"
+    },
+    {
+      "id": "b10a3bb525a948027a616984",
+      "url": "https://news.ycombinator.com/item?id=50006936",
+      "productUrl": "https://nucleus.excom.dev",
+      "textSha256": "3eedf10655a1bc0a11d527265fc29611021bad3efcaf8c40d5841ad5c4691d2f"
+    },
+    {
+      "id": "c815e99f1918e58a78b4349c",
+      "url": "https://news.ycombinator.com/item?id=49977184",
+      "productUrl": "https://docultra.org",
+      "textSha256": "8426defe1ca0edf2a62f5de3c99f5be2af74ab160b33b69891ba4cb890dd5aab"
+    },
+    {
+      "id": "cb2cab75301d9e85f3161785",
+      "url": "https://news.ycombinator.com/item?id=49974080",
+      "productUrl": "https://astro-plakar-wayback.fly.dev/docs/getting-started/installation",
+      "textSha256": "d460f868c6ab47bdca092666c7c8959a946363ac2644eff8ed1571475b94d083"
+    },
+    {
+      "id": "0df67bc3c7d3e347437d25c4",
+      "url": "https://news.ycombinator.com/item?id=49967539",
+      "productUrl": "https://www.invofox.com/en",
+      "textSha256": "3f9946cb8195ffe0970e6976058177c2461d6459b0651ab0292a1e2144b15d83"
+    },
+    {
+      "id": "d4039c4e9f9108f14fe06ca1",
+      "url": "https://news.ycombinator.com/item?id=49947702",
+      "productUrl": "https://json-doc.com",
+      "textSha256": "47cc1b12b1b1959fd569ac98a34a6f56d21618db4b448e7e78d5ae4c849bcd52"
+    },
+    {
+      "id": "12c16728d5081b718ada2f03",
+      "url": "https://news.ycombinator.com/item?id=49923203",
+      "productUrl": "https://www.veludocs.com",
+      "textSha256": "715cfbce451acb9133e645981139310fa8ac7261aba5ec620b8e240141dd8722"
+    },
+    {
+      "id": "97a532b151cb111631117832",
+      "url": "https://news.ycombinator.com/item?id=49894301",
+      "productUrl": "https://sezwhere.com",
+      "textSha256": "5a0566c02f0c2fb407af634b7455aea8933f6b4d0c8b8731c792b966a5f7fe88"
+    },
+    {
+      "id": "93cb392afa8d457f30691123",
+      "url": "https://news.ycombinator.com/item?id=49869904",
+      "productUrl": "https://rare-books.vercel.app",
+      "textSha256": "67d3d91d20b9257fcefa1a99505f4514e03468cfd9a9addfe302e99be12bcb45"
+    },
+    {
+      "id": "a0ba78a55c830444d375c0e2",
+      "url": "https://news.ycombinator.com/item?id=49866189",
+      "productUrl": "https://www.npmjs.com/package/revise",
+      "textSha256": "3ac9652cf9ac06b946e6123c23d7fe99ecfbbb7b3e17a4f9e36e35503b0daf7f"
+    },
+    {
+      "id": "6859168b6a37428ab30987a1",
+      "url": "https://news.ycombinator.com/item?id=49866121",
+      "productUrl": "https://dicty.io",
+      "textSha256": "9fb55b353ab4df59c6748b366bab2d00b8da48c9165cb78d0a1c5ce5f8a58b53"
+    },
+    {
+      "id": "4925b235e80f8eeb3af64447",
+      "url": "https://news.ycombinator.com/item?id=49738595",
+      "productUrl": "https://github.com/Ontos-AI/knowhere",
+      "textSha256": "c3f47a12e0a5fc3e60d324d5c4190e3c8743ecf2312ff67781796435f7ab8e8b"
+    },
+    {
+      "id": "8eab0af476c34cad1244c829",
+      "url": "https://news.ycombinator.com/item?id=49737256",
+      "productUrl": "https://github.com/AysanZ/alidade",
+      "textSha256": "eaaf5aa2b7dad5698ff5b4c2035ce8cd52c2aabce776e82758cc2cb9c3c223f5"
+    },
+    {
+      "id": "355c2c5234beb0c37366404b",
+      "url": "https://news.ycombinator.com/item?id=49660648",
+      "productUrl": "https://github.com/paulknysh/raggy",
+      "textSha256": "fdd8085c7c56892601d2dcd2938870ccb5446ec99e756711b4438055cb0d8efc"
+    },
+    {
+      "id": "c0f3efa6baba2d65cbf16e0b",
+      "url": "https://news.ycombinator.com/item?id=50073471",
+      "productUrl": "https://news.ycombinator.com/item?id=50073471",
+      "textSha256": "35ed9e7559b13b10788848240228d4f4c2a716be68c5c83873f07273b69634b9"
+    },
+    {
+      "id": "93481ec2e3a9d5b087b696ce",
+      "url": "https://news.ycombinator.com/item?id=50059096",
+      "productUrl": "https://news.ycombinator.com/item?id=50059096",
+      "textSha256": "56f6cb608143135cff621e202c06d0fafebc5b4e245df4fcd8fe23e23e29be42"
+    },
+    {
+      "id": "bae2411b93f9037617b9617b",
+      "url": "https://news.ycombinator.com/item?id=49911995",
+      "productUrl": "https://github.com/magnitudedev/magnitude",
+      "textSha256": "a03f4c81a7776f98b58b2d1e1c0c6ff06afd5295c1947a4aa2406c57ce5ffcd0"
+    },
+    {
+      "id": "241cedafb2f2096359f71f0e",
+      "url": "https://news.ycombinator.com/item?id=49881505",
+      "productUrl": "https://www.vespper.com/blog/launching-vespper-docx-mcp",
+      "textSha256": "929a46993d7ddc3fae2d61e91bdf97de9dd1305c5108af24952f549d967a9ae6"
+    },
+    {
+      "id": "971b17fcf8ca133b04009416",
+      "url": "https://news.ycombinator.com/item?id=49804931",
+      "productUrl": "https://www.coveragecat.com",
+      "textSha256": "2a2ee29595c9e344db67560e7b6193f456d893914178494e02e815fd5c2bdc9b"
+    },
+    {
+      "id": "98a698085fb1fa80319290a2",
+      "url": "https://news.ycombinator.com/item?id=49743049",
+      "productUrl": "https://news.ycombinator.com/item?id=49743049",
+      "textSha256": "551f78510e52e037d4e86755818a3308fa074dc173e629064d1605c3fdafd7aa"
+    },
+    {
+      "id": "56abc7d43b055b8120e31430",
+      "url": "https://news.ycombinator.com/item?id=49552616",
+      "productUrl": "https://news.ycombinator.com/item?id=49552616",
+      "textSha256": "74c15c437dd6c190a6ce78c8db32aea311c87cc8d5891d5421d03c739efe48f1"
+    },
+    {
+      "id": "6e96c111f32d0712944683da",
+      "url": "https://news.ycombinator.com/item?id=49543530",
+      "productUrl": "https://news.ycombinator.com/item?id=49543530",
+      "textSha256": "0168e0026f9fc6af726516a9bfabb665243c0ef17b6ca7b6717a95b0cf902416"
+    },
+    {
+      "id": "d52885a334088c8a3164163e",
+      "url": "https://news.ycombinator.com/item?id=49525153",
+      "productUrl": "https://www.norirobotics.com",
+      "textSha256": "4d3c9dc849384b7b66c88fbcc094651d38d110bca840b341d96812656975e821"
+    },
+    {
+      "id": "44c4a2b1e7c7b231fde2a80c",
+      "url": "https://news.ycombinator.com/item?id=49511007",
+      "productUrl": "https://usealmanac.com",
+      "textSha256": "c6ed95d4a0edff4df89479ffb7d51b0db10f978dd9025d2d8d927fde595f9e0c"
+    },
+    {
+      "id": "3219402da73851e1cdb792e0",
+      "url": "https://news.ycombinator.com/item?id=49510632",
+      "productUrl": "https://github.com/Hebbian-Robotics/hflow",
+      "textSha256": "c19c63a89fd1614f7a27106eb2b18f77d3d2e519c95a641f7d256f44add23517"
+    },
+    {
+      "id": "f44fa4c5ba02f64f5102fc3b",
+      "url": "https://news.ycombinator.com/item?id=49466715",
+      "productUrl": "https://news.ycombinator.com/item?id=49466715",
+      "textSha256": "d8e7e562126ac3443cbd1272ea25f8e11f5e0600eacc1baf20566373d0ac4305"
+    },
+    {
+      "id": "10ccfbc2566b618813e2c054",
+      "url": "https://news.ycombinator.com/item?id=49451495",
+      "productUrl": "https://www.risklytics.ai",
+      "textSha256": "37ab988e2555f093672b68b2896be2294c15ed0dfce7cc9061006ada8ca71b3d"
+    },
+    {
+      "id": "1e322718b449dbf37613b836",
+      "url": "https://news.ycombinator.com/item?id=49376038",
+      "productUrl": "https://github.com/runvendo/vendo",
+      "textSha256": "98aec9a40793682a155688d8463ba42151ca770f101dd32db695b736640e55db"
+    },
+    {
+      "id": "c48b9ca3991d590a76e44c0d",
+      "url": "https://news.ycombinator.com/item?id=49363710",
+      "productUrl": "https://github.com/onecli/onecli",
+      "textSha256": "15e70b9ca3161cf9759826de08da93a9dc89b488d97ac7847d63823aeb38cd58"
+    },
+    {
+      "id": "4688b71b756a06361476f2fb",
+      "url": "https://news.ycombinator.com/item?id=49348136",
+      "productUrl": "https://machine0.io",
+      "textSha256": "58382609d58dcfd5dcdd2423ebd541eee78a7a07c80cee4a505044a86f4171fc"
+    },
+    {
+      "id": "3d4e4fd79cddb69878f413c1",
+      "url": "https://news.ycombinator.com/item?id=49332751",
+      "productUrl": "https://speko.ai",
+      "textSha256": "65aa0d8702ef782a9c3e025cacd3524a3408c6b14c9ba1d7ec3a7a4d1a4d5804"
+    },
+    {
+      "id": "51dcb64339d73bb520ac10a2",
+      "url": "https://news.ycombinator.com/item?id=49283063",
+      "productUrl": "https://www.codewithbullet.com",
+      "textSha256": "d8f12613b2bb80238657afb86ca551a7736872f343f6a60268081c90a8622655"
+    },
+    {
+      "id": "4298bff4fe796619b500af25",
+      "url": "https://news.ycombinator.com/item?id=49269090",
+      "productUrl": "https://discoveredmaterials.com/research",
+      "textSha256": "554f2aeb09874f2143bce2b4df1e608cdce1d573688a8bd7311a1c20e5568a21"
+    },
+    {
+      "id": "879ab9478970541649165f54",
+      "url": "https://news.ycombinator.com/item?id=49259309",
+      "productUrl": "https://www.trykeet.com",
+      "textSha256": "5deba4476356ba84ee77e01b777eb37f6ba4242d18c8e187bcd6c22fa4d74a81"
+    },
+    {
+      "id": "bcddd7d35acdfcaa49f31d2d",
+      "url": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "textSha256": "4ab4d189a0bd93b5a73e9375e74b3861da82f01c7380d95b124cd4ce286cf939"
+    },
+    {
+      "id": "ca6a664d20bd48cf57145f2e",
+      "url": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "textSha256": "2da98abba3e3dd4ed39075a80d3bdac4c8c58e4c51096b7ca78ad3ddc91d40c8"
+    },
+    {
+      "id": "0f1e1c9ed7c9b88df76447ab",
+      "url": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "productUrl": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "textSha256": "5fd6a6cf02f1043cffef7297598f05285b116df09543050a37d2a9a49ffb1fb6"
+    },
+    {
+      "id": "3ecc3a5ea527357de5fa4165",
+      "url": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "textSha256": "3b70231c67b75e76b575712e800ace971a2e178efb139d3f30c79d51c3bec9ea"
+    },
+    {
+      "id": "eb08bb526b3fe0ba957f00c2",
+      "url": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "productUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "textSha256": "d800e82c4d4735fd991cd0e9ab2df159c85a16f3bb2c8a2e48e37cfdd1d3759f"
+    },
+    {
+      "id": "ce550eec21fdd6de3c333ecd",
+      "url": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "productUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "textSha256": "0ae0da0181e8ddc589d79e2127b7278f79dc0f3c3eb5c6555fb283d58ba95ac9"
+    },
+    {
+      "id": "1b3ba5be008d9c8a8e2422f9",
+      "url": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "productUrl": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "textSha256": "87fd445ac4f5fec2074b4c77236847ae8b4e446bed005be6b95e1c4ef106dc35"
+    },
+    {
+      "id": "be8fa77dfa6f3364ffd4f537",
+      "url": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "textSha256": "2adfe576fc0e5ffc619ac9d09068df80a09dfdac15b09facb69551235c218270"
+    },
+    {
+      "id": "697c3528c356ce202c5ae31e",
+      "url": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "textSha256": "579da33e5bc49b2cebaaae3d703bb5cd0e5033d15caaf7dce3a4b2d7e5cbb235"
+    },
+    {
+      "id": "8472cdf645082b82438ba2a0",
+      "url": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "productUrl": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "textSha256": "1213e1fd83cdc0a40df61f4add6fdcf9b6d8ad60761ff6a0176d9b7aaaa68d31"
+    },
+    {
+      "id": "d1cc332f52c94c649361a801",
+      "url": "https://www.ycombinator.com/companies/scale-ai",
+      "productUrl": "https://www.ycombinator.com/companies/scale-ai",
+      "textSha256": "395950bd10e02480d11068470785e4db8e5333634182ca5db887f694d06ae9c4"
+    },
+    {
+      "id": "3602e836576fac94475430a2",
+      "url": "https://www.ycombinator.com/companies/checkr",
+      "productUrl": "https://www.ycombinator.com/companies/checkr",
+      "textSha256": "40f53c7eb24e38088051d4ec26495a9a368cfa11a386a325952bec7a8de8cc56"
+    },
+    {
+      "id": "e101da3b27711db1b70d71cc",
+      "url": "https://www.ycombinator.com/companies/plyxl",
+      "productUrl": "https://www.ycombinator.com/companies/plyxl",
+      "textSha256": "dad5c6b2aa637fbf18a093b7185c0c05b2dd7b5f7c8640b40bdac611ae29bf6a"
+    },
+    {
+      "id": "10d5baee2ba06abff4133573",
+      "url": "https://www.ycombinator.com/companies/altair-health",
+      "productUrl": "https://www.ycombinator.com/companies/altair-health",
+      "textSha256": "d354ea07f94ec738c82e6a1dd3dff187712c35dead5adc4e89b7d20a96bddac4"
+    },
+    {
+      "id": "8e6e5fe6a6d21c9cf39a2a83",
+      "url": "https://www.ycombinator.com/companies/praxis",
+      "productUrl": "https://www.ycombinator.com/companies/praxis",
+      "textSha256": "4510afe223b139b5aa2f76d9153e61f15a28f3828214e2a3c010f9c10a965087"
+    },
+    {
+      "id": "527783070618b976b402a4c8",
+      "url": "https://www.ycombinator.com/companies/polemos-industries",
+      "productUrl": "https://www.ycombinator.com/companies/polemos-industries",
+      "textSha256": "40c98eb6f9d11b8139580740d5de0c9ac58af7caa5955689a81a4b4d9fcc8c53"
+    },
+    {
+      "id": "7e09b153ea67c2d96ff15f2b",
+      "url": "https://www.ycombinator.com/companies/sintem",
+      "productUrl": "https://www.ycombinator.com/companies/sintem",
+      "textSha256": "d31608087a59cee8e770fb509c15c0a0b83efddfcb4088fa2d4e0ef8bb120ad6"
+    },
+    {
+      "id": "8e00c6a953fe23fb968804fa",
+      "url": "https://www.ycombinator.com/companies/rodeo-robotics",
+      "productUrl": "https://www.ycombinator.com/companies/rodeo-robotics",
+      "textSha256": "d6d7a4671f68e2dacbdf3115ac17a6c317c6876c63ffae8e33437895d43dc96e"
+    },
+    {
+      "id": "d86813975f309369511842df",
+      "url": "https://www.ycombinator.com/companies/native",
+      "productUrl": "https://www.ycombinator.com/companies/native",
+      "textSha256": "07f5dc828d562e6302db2e6e1d8004b22a92c6a4bf215c68975cc764cbfc7c64"
+    },
+    {
+      "id": "0e57074ba292834ef1e52cd0",
+      "url": "https://www.ycombinator.com/companies/munito-ai",
+      "productUrl": "https://www.ycombinator.com/companies/munito-ai",
+      "textSha256": "0b7bf9cf8085b12a811ebbc42740b984ef403974dd413b5688c8ad760080aead"
+    },
+    {
+      "id": "9efb8fad9944e0510ae97b9f",
+      "url": "https://www.ycombinator.com/companies/composal",
+      "productUrl": "https://www.ycombinator.com/companies/composal",
+      "textSha256": "a8251455a82db23069ade7139b134b8038dfdb5392e15e364126d8c3913836ca"
+    },
+    {
+      "id": "a1c7049082ab313fa17d114e",
+      "url": "https://www.ycombinator.com/companies/uxduck",
+      "productUrl": "https://www.ycombinator.com/companies/uxduck",
+      "textSha256": "81bee029f660584e137678e36901844a45159dcd93bec4c9140648c58b6d9983"
+    },
+    {
+      "id": "4a5c21426f8a15b04ca4df19",
+      "url": "https://www.ycombinator.com/companies/resin-technologies",
+      "productUrl": "https://www.ycombinator.com/companies/resin-technologies",
+      "textSha256": "d50cc8c4664925ece8bac136fabd34fd57a3afc29f22cca81ae0647e7f806050"
+    },
+    {
+      "id": "f8043317f9ecadbe530b5501",
+      "url": "https://www.ycombinator.com/companies/ploid",
+      "productUrl": "https://www.ycombinator.com/companies/ploid",
+      "textSha256": "2c0f46193c1809a3e939e41dd45ba01d352c285a044e7304191bfc4e2efc22f1"
+    },
+    {
+      "id": "ee144b08384f6e1e265fd791",
+      "url": "https://www.ycombinator.com/companies/rystic",
+      "productUrl": "https://www.ycombinator.com/companies/rystic",
+      "textSha256": "a5b7537b161d90d3d7cd17ece6456b33a9581b3d048c4ef3db1e4f07ffaf8c8e"
+    },
+    {
+      "id": "610dc24237b587b48c56f177",
+      "url": "https://www.ycombinator.com/companies/useterse",
+      "productUrl": "https://www.ycombinator.com/companies/useterse",
+      "textSha256": "d7d66444fcb1b65ea7484c66e22ac438111778461ae2486cfb0db8040ecd38b7"
+    },
+    {
+      "id": "744a5f8bec7889cbd2231643",
+      "url": "https://www.ycombinator.com/companies/boxesdev",
+      "productUrl": "https://www.ycombinator.com/companies/boxesdev",
+      "textSha256": "53e55661b90e8ea36550faf1a602bbe0a6ec66d38229bae89cfd817fbaa4f536"
+    },
+    {
+      "id": "906a538f5527d0cc2f18eb3d",
+      "url": "https://www.ycombinator.com/companies/openhack",
+      "productUrl": "https://www.ycombinator.com/companies/openhack",
+      "textSha256": "24c26858bd700a7562629582a0f41489baf9e979bc62d9405a8bc03db64272db"
+    },
+    {
+      "id": "f98c025caa80fd47baedab82",
+      "url": "https://www.ycombinator.com/companies/ageospatial",
+      "productUrl": "https://www.ycombinator.com/companies/ageospatial",
+      "textSha256": "5c9fb50717001385e6c17feb613db9d102ffd0b8c604a0aa1709ced94aae0a63"
+    },
+    {
+      "id": "c1bb26bcec7a5fef9b8b4557",
+      "url": "https://www.ycombinator.com/companies/cyclon",
+      "productUrl": "https://www.ycombinator.com/companies/cyclon",
+      "textSha256": "01f95ed2e960b743891c8ef0f178d00d4e34813e41449cbf9c4f8a2dd96b2c71"
+    },
+    {
+      "id": "1ae78d90d01685a630a8e97c",
+      "url": "https://news.ycombinator.com/item?id=50126334",
+      "productUrl": "https://fakeipedia.org",
+      "textSha256": "294ad5b112d6f1a6a222c4784d5dfb46fbde803b458fee2b414377ced6ea96e6"
+    },
+    {
+      "id": "3ff4ccb471a4442e80c702fc",
+      "url": "https://news.ycombinator.com/item?id=50122776",
+      "productUrl": "https://stoke.money",
+      "textSha256": "b95328c499d88ce94d05e767b73748b1dfde6c705471f349b91d7a89e54033f2"
+    },
+    {
+      "id": "e9bab5d8dfe74c5bae3ae11a",
+      "url": "https://news.ycombinator.com/item?id=50117598",
+      "productUrl": "https://videre.sh",
+      "textSha256": "5e3fd5754607ac5371c042562bc10edc3df493f717cbfd0999896d2d2edfe903"
+    },
+    {
+      "id": "c6d9ea7d0daa013b22b8a957",
+      "url": "https://news.ycombinator.com/item?id=50107729",
+      "productUrl": "https://github.com/readysettech/rdst",
+      "textSha256": "f25edb9d24efce9b55e748819e1ffe9c7727479a7c5856a4f320d6debcd722cd"
+    },
+    {
+      "id": "16ff8106ff996298ae352aff",
+      "url": "https://news.ycombinator.com/item?id=50105490",
+      "productUrl": "https://github.com/sergiotapia/joyscroller",
+      "textSha256": "a2b37f56ffe2ca6db9d98fdba0bfe3479677f51771f40043c1c77e64111c10a0"
+    },
+    {
+      "id": "841b6718a34c7b5b473be50b",
+      "url": "https://news.ycombinator.com/item?id=50086619",
+      "productUrl": "https://www.calendar0.app",
+      "textSha256": "04b9a00b5269457e5a0c678ab569419561145011c519a2c9eac1cfa2751c66d7"
+    },
+    {
+      "id": "5ee4669c2740ea10ec96ec9b",
+      "url": "https://news.ycombinator.com/item?id=50075058",
+      "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+      "textSha256": "f9eba0d4d4bac276632bd4137ab17a2ba6ca4cd731fe331a42cdf66c368e76b8"
+    },
+    {
+      "id": "62694bcce7d85264b9b15493",
+      "url": "https://news.ycombinator.com/item?id=50074864",
+      "productUrl": "https://www.treesum.app",
+      "textSha256": "19ec5e9ab46d764e881a99440de75d5a805767eb010bfd801cf997af16678941"
+    },
+    {
+      "id": "2602248cf1d623046cc06ee7",
+      "url": "https://news.ycombinator.com/item?id=50071636",
+      "productUrl": "https://ourmana.app",
+      "textSha256": "826d252596b66d3f337139901c20609534b9166a9a9218fbce8b095a570bf331"
+    },
+    {
+      "id": "f9f2db715fef95fc290f4868",
+      "url": "https://news.ycombinator.com/item?id=50069663",
+      "productUrl": null,
+      "textSha256": "a134277fd32a746a32ceac2d8549c8a037bb750de9b31f8a62d695e0393ced31"
+    },
+    {
+      "id": "b3b8e4503090b3fac0bae3bc",
+      "url": "https://news.ycombinator.com/item?id=50067805",
+      "productUrl": "https://github.com/metagrover/pluto",
+      "textSha256": "c1ab436b79069ba5da2530f4658cb5ea380266b11aebc010477ff14b1a8aaece"
+    },
+    {
+      "id": "4738414b1f4dd262899f71a7",
+      "url": "https://news.ycombinator.com/item?id=50053630",
+      "productUrl": "https://github.com/figranium/figranium",
+      "textSha256": "aa6b5cb1e6953a464b58cfc3198aa9f5b97f024f4dae58e1da8a27df4b4a1959"
+    },
+    {
+      "id": "2a08a3c0a6fe8982bb8f89f3",
+      "url": "https://news.ycombinator.com/item?id=50049132",
+      "productUrl": "https://github.com/swimmingbrain/brainotes",
+      "textSha256": "5e646676dd6de061def075f652ea7409ba7c59b6b7eb3e7c7afe2b302cfdd41f"
+    },
+    {
+      "id": "85e4917219e990e8c90fedee",
+      "url": "https://news.ycombinator.com/item?id=50044150",
+      "productUrl": "https://sourceforge.net/projects/flow-state-tracker",
+      "textSha256": "956fc5df49f43b21bde355bb27367a1fea596b544b4e238ec0d655d0b1901cea"
+    },
+    {
+      "id": "f2a6627779bcc167602d2540",
+      "url": "https://news.ycombinator.com/item?id=50040528",
+      "productUrl": "https://github.com/modelship-ai/modelship",
+      "textSha256": "a5572bb989ccd23a90b238150a94ea793f2a0128e932e0c7060d1b8606cf4493"
+    },
+    {
+      "id": "38aa1e7d60db4ba3eb939f03",
+      "url": "https://news.ycombinator.com/item?id=50035864",
+      "productUrl": "https://github.com/confident-ai/eval-skills",
+      "textSha256": "95f99d640a58b5e24b8a3699fb4bc0eccdd42c375e8ed75fad6e76dd6cf013fe"
+    },
+    {
+      "id": "e2fa4aa7ef0dd836deaac7fb",
+      "url": "https://news.ycombinator.com/item?id=50035826",
+      "productUrl": "https://flopper.io",
+      "textSha256": "b15a1254e39015d7e02d72b97a88495b7af86c0cc7d3347d3dd83846f016358c"
+    },
+    {
+      "id": "265adce9a63ce1b22335c79d",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "textSha256": "d4a2ff2cf3c6ebfe59de3806266b64a4e2b8a8a1d65d83fe7b210a84a5a3cb83"
+    },
+    {
+      "id": "be96a50b3b12839be95364e3",
+      "url": "https://news.ycombinator.com/item?id=50015492",
+      "productUrl": "https://chromewebstore.google.com/detail/si-%E2%86%92-ai/cfpagmhjlhnbjabgaoeobkciklolaekn",
+      "textSha256": "ac4dc564c244a8737ff0c2e205bd12b1d7e4ffdd3c69415d757fa6020bcfc7b7"
+    },
+    {
+      "id": "82a9a7673fdc5fd395c6ba05",
+      "url": "https://news.ycombinator.com/item?id=50002499",
+      "productUrl": "https://github.com/tiliondev/waystone",
+      "textSha256": "be3977145376d50c3d0cf879e22408540680062aa094f12ba6293becdf681ad9"
+    },
+    {
+      "id": "6d7cb864af44eb2befa94dc9",
+      "url": "https://news.ycombinator.com/item?id=50127256",
+      "productUrl": "https://www.wysebee.com",
+      "textSha256": "25a7c635fe1bc85fae4c54cd25f4a7a9d49447b0facb71121d56871c93d833b5"
+    },
+    {
+      "id": "4e6f411bb0b0f6b12fad783b",
+      "url": "https://news.ycombinator.com/item?id=50127157",
+      "productUrl": "https://github.com/andunieee/twain",
+      "textSha256": "7269cbc46df7a1db8a2cec992fa18f8fac4a0132b05408d4e777e547f65808c6"
+    },
+    {
+      "id": "68a3df913a5d45c7294bea38",
+      "url": "https://news.ycombinator.com/item?id=50125797",
+      "productUrl": "https://ozilai.net",
+      "textSha256": "12cd327330babbd1868010c5ea474b05768929546870fc1bb5502cf876d8bcdd"
+    },
+    {
+      "id": "38d140b8541233b26a82abf7",
+      "url": "https://news.ycombinator.com/item?id=50125746",
+      "productUrl": "https://roadster.pavlin.dev",
+      "textSha256": "f5af4eaa13a7669654cf6fc3f5b082a0622cfc8c85bbd2c48b3c8860e8092e85"
+    },
+    {
+      "id": "49fd682868fcc588e1cf352e",
+      "url": "https://news.ycombinator.com/item?id=50123249",
+      "productUrl": "https://tensorpix.ai/usecases/real-estate-video-maker",
+      "textSha256": "e87bce5971e60701118a859713beaea53425826ab0c219f247ee17489304674b"
+    },
+    {
+      "id": "7fc818269e9583ce19d40f06",
+      "url": "https://news.ycombinator.com/item?id=50122767",
+      "productUrl": "https://github.com/Moshik21/weatherdeck",
+      "textSha256": "f335ccb7b18975d6a181284d670e78810484ecd083a79751f81c7434e98252a8"
+    },
+    {
+      "id": "04d12591406c6870d1cb56f0",
+      "url": "https://news.ycombinator.com/item?id=50122324",
+      "productUrl": "https://www.kapwing.com/ai/prompt-generator/camera",
+      "textSha256": "e77d4f40273bfbe743b9d6db60a33899bcd6ea166edc874e04122b23f673847f"
+    },
+    {
+      "id": "9a0e84ae362bd1ce46e403e5",
+      "url": "https://news.ycombinator.com/item?id=50120752",
+      "productUrl": "https://next-brain.ai/brian2-atlas",
+      "textSha256": "09bc76f77c5c5a98378dc662c87e471bc3aca74aa0b52ad87db698eace08ceaa"
+    },
+    {
+      "id": "0c9b94aa5fe1767b4def0b4e",
+      "url": "https://news.ycombinator.com/item?id=50120286",
+      "productUrl": "https://aegisfw.com",
+      "textSha256": "1512a4a480eac72a5eedf80a93e35e1d06e534e3be6c258508b572ec1ef178c2"
+    },
+    {
+      "id": "b65a54fcf95e01462aba1af3",
+      "url": "https://news.ycombinator.com/item?id=50119958",
+      "productUrl": "https://blog.etherpk.com/agent-chat-ask-a-language-model-about-your-notes",
+      "textSha256": "f65be4e9415487928a19cc57626240884b72c667ef2b51f3bdd1c270507a1bb8"
+    },
+    {
+      "id": "b6f8dab59207686acc44ddb7",
+      "url": "https://news.ycombinator.com/item?id=50119806",
+      "productUrl": "https://gitlab.com/pablosanzo/musejailbreak",
+      "textSha256": "cab2cce4a8a122068899c968355cbbd456cb59dfaabc4aec48bdd8fcb34da437"
+    },
+    {
+      "id": "370649b7d4f5ec8a257d349b",
+      "url": "https://news.ycombinator.com/item?id=50119778",
+      "productUrl": "https://github.com/gemron/Termexo",
+      "textSha256": "540ef52997b8db4e9e5e9e60a8b40f7bd4bc0b14a793f5105f1913838721a491"
+    },
+    {
+      "id": "b9a1c4e3142a36691b905a8e",
+      "url": "https://news.ycombinator.com/item?id=50119748",
+      "productUrl": "https://github.com/Canonry/canonry",
+      "textSha256": "cb5507ef2a064aef3784f84b2461036f43a7df573d07d7f1305e49cda92ddfc8"
+    },
+    {
+      "id": "12263426091f48c87cc3fd85",
+      "url": "https://news.ycombinator.com/item?id=50119352",
+      "productUrl": "https://github.com/busabase/busabase",
+      "textSha256": "44db0fb2e85a025d87528d3b163685df6619bffadbf8798745590dccc41908f3"
+    },
+    {
+      "id": "88182f2748fedb8a9dd694dc",
+      "url": "https://news.ycombinator.com/item?id=50118876",
+      "productUrl": "https://rstation.ai",
+      "textSha256": "a5803889ebc49c3df740e2379b22b4aa3592adb594e693069017f9a51a3e87fe"
+    },
+    {
+      "id": "88c874b34e6dcabb87c19552",
+      "url": "https://news.ycombinator.com/item?id=50118394",
+      "productUrl": "https://ndroo.github.io/tapo-boiler-monitor",
+      "textSha256": "d38dca2ad0f6f95875c17fd20502803c3f8bb491e960e4eec38a30caf462ef46"
+    },
+    {
+      "id": "a886930a4315c72588eeba19",
+      "url": "https://news.ycombinator.com/item?id=50118127",
+      "productUrl": "https://slopgrid.com",
+      "textSha256": "3f900a7d8cd7fcb9c48b4943b43b67a7364e3f4192881c1d062373cb3f667cf7"
+    },
+    {
+      "id": "670f8696685146667ca04478",
+      "url": "https://news.ycombinator.com/item?id=50118028",
+      "productUrl": "https://github.com/hugomn/heldkeys",
+      "textSha256": "7e62f5c0695eb1c4b0fdc375ed6f125ca9fcee8f23c786c331c98bd27bfd5788"
+    }
+  ],
+  "sourcesSha256": "11447edc676d80535a1614003c64724704d7dcc7a570d1292c9a030f2ab237b0",
+  "sourceSnapshotSha256": "1290330dbbadff05c2b55b1918e3e3d2039425f9f9acdddb595a7be7cd20ab89",
+  "observations": [
+    {
+      "feedId": "e20bcacf021524725d3fc275",
+      "name": "n8n · official AI workflows",
+      "url": "https://n8n.io/ai",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.323Z",
+      "fetchedAt": "2026-10-17T02:23:05.634Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.489Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/ai",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.489Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/ai/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://n8n.io/ai",
+            "status": 308,
+            "next": "https://n8n.io/ai/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://n8n.io/ai/",
+        "fetchedAt": "2026-10-17T02:23:05.634Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "2ae9fd69127e82131f7ec675",
+      "name": "Hacker News · small customer-support products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.327Z",
+      "fetchedAt": "2026-10-17T02:23:05.898Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.509Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+        "fetchedAt": "2026-10-17T02:23:05.898Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "63dbb54258e730e95fa20298",
+      "name": "Hugging Face · trending public Spaces",
+      "url": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.328Z",
+      "fetchedAt": "2026-10-17T02:23:05.531Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://huggingface.co",
+            "robotsUrl": "https://huggingface.co/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-17T02:23:05.498Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 68,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json; charset=utf-8",
+        "resolvedUrl": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+        "fetchedAt": "2026-10-17T02:23:05.531Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "a654756600fbb68b9c75c45b",
+      "name": "TechCrunch · AI",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.328Z",
+      "fetchedAt": "2026-10-17T02:23:05.886Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.485Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/category/artificial-intelligence/feed",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://techcrunch.com",
+            "robotsUrl": "https://techcrunch.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.485Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 710,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://techcrunch.com/category/artificial-intelligence/feed/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+            "status": 301,
+            "next": "https://techcrunch.com/category/artificial-intelligence/feed/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "application/rss+xml; charset=UTF-8",
+        "resolvedUrl": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "fetchedAt": "2026-10-17T02:23:05.886Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "ef244017b1460269fc687cea",
+      "name": "Browser Use · official project",
+      "url": "https://browser-use.com",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.533Z",
+      "fetchedAt": "2026-10-17T02:23:05.664Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://browser-use.com",
+            "robotsUrl": "https://browser-use.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.620Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 1043,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://browser-use.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://browser-use.com/",
+        "fetchedAt": "2026-10-17T02:23:05.664Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "7efc2c70ed9424b76bd7407b",
+      "name": "Apify · official platform",
+      "url": "https://apify.com",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.636Z",
+      "fetchedAt": "2026-10-17T02:23:05.828Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://apify.com",
+            "robotsUrl": "https://apify.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.727Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 174,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://apify.com/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://apify.com/",
+        "fetchedAt": "2026-10-17T02:23:05.828Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "d554ca3fc8b9fd3548600b86",
+      "name": "Dify · official project",
+      "url": "https://dify.ai",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.666Z",
+      "fetchedAt": "2026-10-17T02:23:05.880Z",
+      "items": 1,
+      "itemCount": 1,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://dify.ai",
+            "robotsUrl": "https://dify.ai/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-17T02:23:05.831Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 67,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://dify.ai/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "resolvedUrl": "https://dify.ai/",
+        "fetchedAt": "2026-10-17T02:23:05.880Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 1
+      },
+      "retainedItemCount": 1,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "470ff63db8da1802b0ccc779",
+      "name": "Hugging Face · invoice workflow demos",
+      "url": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.830Z",
+      "fetchedAt": "2026-10-17T02:23:05.858Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://huggingface.co",
+            "robotsUrl": "https://huggingface.co/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-17T02:23:05.498Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 68,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json; charset=utf-8",
+        "resolvedUrl": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+        "fetchedAt": "2026-10-17T02:23:05.858Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "96fe006ed5f7b38bfc889c7d",
+      "name": "Ben’s Bites · public newsletter",
+      "url": "https://www.bensbites.com/feed",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.858Z",
+      "fetchedAt": "2026-10-17T02:23:05.985Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.bensbites.com",
+            "robotsUrl": "https://www.bensbites.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.956Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 595,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.bensbites.com/feed",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "resolvedUrl": "https://www.bensbites.com/feed",
+        "fetchedAt": "2026-10-17T02:23:05.985Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "3733c65b9abe07b4b87156f9",
+      "name": "Simon Willison · public AI notes",
+      "url": "https://simonwillison.net/atom/everything",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.883Z",
+      "fetchedAt": "2026-10-17T02:23:06.054Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-17T02:23:05.974Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/atom/everything",
+            "reason": "No matching robots Disallow rule."
+          },
+          {
+            "origin": "https://simonwillison.net",
+            "robotsUrl": "https://simonwillison.net/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-17T02:23:05.974Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 136,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://simonwillison.net/atom/everything/",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [
+          {
+            "url": "https://simonwillison.net/atom/everything",
+            "status": 301,
+            "next": "https://simonwillison.net/atom/everything/"
+          }
+        ],
+        "httpStatus": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "resolvedUrl": "https://simonwillison.net/atom/everything/",
+        "fetchedAt": "2026-10-17T02:23:06.054Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "a5689419c24836e7e0ce37dd",
+      "name": "Latent Space · public newsletter",
+      "url": "https://www.latent.space/feed",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.896Z",
+      "fetchedAt": "2026-10-17T02:23:06.021Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.latent.space",
+            "robotsUrl": "https://www.latent.space/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.960Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 593,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.latent.space/feed",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "resolvedUrl": "https://www.latent.space/feed",
+        "fetchedAt": "2026-10-17T02:23:06.021Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 14,
+      "omittedItemCount": 6
+    },
+    {
+      "feedId": "11df15447c6c0e0dfdc06be3",
+      "name": "Hacker News · document products",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:05.900Z",
+      "fetchedAt": "2026-10-17T02:23:06.188Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.509Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+        "fetchedAt": "2026-10-17T02:23:06.188Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "ec389fe35523e6dbba11e744",
+      "name": "Hacker News · Launch HN",
+      "url": "https://news.ycombinator.com/launches",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:06.002Z",
+      "fetchedAt": "2026-10-17T02:23:06.545Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://news.ycombinator.com",
+            "robotsUrl": "https://news.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:06.322Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 243,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://news.ycombinator.com/launches",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://news.ycombinator.com/launches",
+        "fetchedAt": "2026-10-17T02:23:06.545Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "b681f434d554a69a059ccf85",
+      "name": "n8n · invoice processing templates",
+      "url": "https://n8n.io/workflows/categories/invoice-processing",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:06.040Z",
+      "fetchedAt": "2026-10-17T02:23:07.283Z",
+      "items": 10,
+      "itemCount": 10,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.489Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/categories/invoice-processing",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/categories/invoice-processing",
+        "fetchedAt": "2026-10-17T02:23:07.283Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 10
+      },
+      "retainedItemCount": 10,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "af031577e7a7287449e227af",
+      "name": "YC · AI company directory",
+      "url": "https://www.ycombinator.com/companies/industry/artificial-intelligence",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:06.072Z",
+      "fetchedAt": "2026-10-17T02:23:07.068Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://www.ycombinator.com",
+            "robotsUrl": "https://www.ycombinator.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-17T02:23:06.601Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 283,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://www.ycombinator.com/companies/industry/artificial-intelligence",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://www.ycombinator.com/companies/industry/artificial-intelligence",
+        "fetchedAt": "2026-10-17T02:23:07.068Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "54649964a0a05f1bfa2b2d36",
+      "name": "Hacker News · automation",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:06.189Z",
+      "fetchedAt": "2026-10-17T02:23:06.533Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.509Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+        "fetchedAt": "2026-10-17T02:23:06.533Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    },
+    {
+      "feedId": "fc96810c8981082bcd1a293c",
+      "name": "Hacker News · Show HN",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+      "status": "ok",
+      "startedAt": "2026-10-17T02:23:06.534Z",
+      "fetchedAt": "2026-10-17T02:23:06.811Z",
+      "items": 20,
+      "itemCount": 20,
+      "message": "Public HTTPS, robots access and bounded item parser passed.",
+      "validation": {
+        "publicHttps": true,
+        "robots": [
+          {
+            "origin": "https://hn.algolia.com",
+            "robotsUrl": "https://hn.algolia.com/robots.txt",
+            "status": 404,
+            "contentType": "text/html; charset=utf-8",
+            "fetchedAt": "2026-10-17T02:23:05.509Z",
+            "redirects": [],
+            "state": "missing",
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [],
+            "evaluatedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+            "reason": "robots.txt is missing (404/410); project policy permits access."
+          }
+        ],
+        "robotsAllowed": true,
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "application/json",
+        "resolvedUrl": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+        "fetchedAt": "2026-10-17T02:23:06.811Z",
+        "maxBytes": 2000000,
+        "truncated": false,
+        "readable": true,
+        "parserVersion": "public-sources-v2",
+        "itemCount": 20
+      },
+      "retainedItemCount": 20,
+      "omittedItemCount": 0
+    }
+  ],
+  "originMap": [
+    {
+      "sourceId": "e20bcacf021524725d3fc275",
+      "url": "https://n8n.io/ai",
+      "productUrl": null,
+      "feedIds": [
+        "e20bcacf021524725d3fc275"
+      ]
+    },
+    {
+      "sourceId": "6cdd9673d8a4c6df36a271c6",
+      "url": "https://news.ycombinator.com/item?id=49473507",
+      "productUrl": "https://asking.com.br",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "80acc896eb7e49fdc9ba34dd",
+      "url": "https://news.ycombinator.com/item?id=49262666",
+      "productUrl": "https://heydeacon.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "72076adade67c90c7ff00772",
+      "url": "https://news.ycombinator.com/item?id=48384979",
+      "productUrl": "https://pocketping.io",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "afacaf413bd4ff2bd45612fc",
+      "url": "https://news.ycombinator.com/item?id=48243325",
+      "productUrl": null,
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "b59d472e868d018693dcf394",
+      "url": "https://news.ycombinator.com/item?id=48024366",
+      "productUrl": "https://www.bugtrotter.io",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "14da0aab26df018c6c149502",
+      "url": "https://news.ycombinator.com/item?id=47827928",
+      "productUrl": "https://auxx.ai",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "2ca3640726449b93be0b088a",
+      "url": "https://news.ycombinator.com/item?id=46828261",
+      "productUrl": "https://www.chatbridge.live",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "4847fb0bb6b371ebc5f272c8",
+      "url": "https://news.ycombinator.com/item?id=46602819",
+      "productUrl": "https://www.hivinq.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "af327c1f739ea7109e335359",
+      "url": "https://news.ycombinator.com/item?id=46176301",
+      "productUrl": "https://www.chat-data.com/changelog/ui-based-response-launch",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "825b3af6f3796a98a9e1803f",
+      "url": "https://news.ycombinator.com/item?id=46157695",
+      "productUrl": "https://www.doozadesk.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "e97665c6220d305a170f032f",
+      "url": "https://news.ycombinator.com/item?id=46075684",
+      "productUrl": "https://www.sparrowdesk.com/ref=hn",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "4deeec333a22b65c93f4285d",
+      "url": "https://news.ycombinator.com/item?id=45943336",
+      "productUrl": "https://app.supogen.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "67f404330095ab63c15efdfe",
+      "url": "https://news.ycombinator.com/item?id=45913070",
+      "productUrl": "https://dodiddone.it.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "e40d37ccd678e000ef8c0957",
+      "url": "https://news.ycombinator.com/item?id=45732847",
+      "productUrl": "https://afec48d1-2eb5-490b-a1d8-f3b483aa87dc-00-3om0kaugaka9.kirk.replit.dev/landing/972ca3fc-0657-48a7-ac47-6874017b75fb",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "ace6c0b2882fba54cdaa7058",
+      "url": "https://news.ycombinator.com/item?id=45684178",
+      "productUrl": "https://screenask.com",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "1b4c5d7e7c590fddd84e0c91",
+      "url": "https://news.ycombinator.com/item?id=45668780",
+      "productUrl": "https://www.gibsonai.com/use-cases/customer-support",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "5f70b65d63a89e9186557064",
+      "url": "https://news.ycombinator.com/item?id=45288011",
+      "productUrl": "https://ticketdesk.ai",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "9a0a9e719dcbdcc105bc1a7d",
+      "url": "https://news.ycombinator.com/item?id=45223738",
+      "productUrl": "https://www.lumro.co",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "0df192c077f30c68eaa1172b",
+      "url": "https://news.ycombinator.com/item?id=44917083",
+      "productUrl": "https://www.helplify.io",
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "17b8a21b6c7e1054a8da07df",
+      "url": "https://news.ycombinator.com/item?id=44628286",
+      "productUrl": null,
+      "feedIds": [
+        "2ae9fd69127e82131f7ec675"
+      ]
+    },
+    {
+      "sourceId": "9d548c8934cc92d53bebcbb4",
+      "url": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "productUrl": "https://huggingface.co/spaces/Pepe104/MiniMax-H3-Turbo-Lora-UNCENSORED",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "e967910dc9b9aeec709a7a39",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "productUrl": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "dc8958655abd8e125a7477ce",
+      "url": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "productUrl": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "642d3322c52cb5a65a863277",
+      "url": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "3bc2a4a3dc8835fea9776402",
+      "url": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "productUrl": "https://huggingface.co/spaces/vclnhihihi/qwen-image-21-uncensored",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "c1eee0d79036065be8544f3c",
+      "url": "https://huggingface.co/spaces/autotrust/shorts",
+      "productUrl": "https://huggingface.co/spaces/autotrust/shorts",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "aa3bcf3ecd42c436fcc3b9a4",
+      "url": "https://huggingface.co/spaces/autotrust/news",
+      "productUrl": "https://huggingface.co/spaces/autotrust/news",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "fb156c59b1983f5d49d61807",
+      "url": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "productUrl": "https://huggingface.co/spaces/Viggle/Qwen-Image-2.1-viggle-turbo",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "70a6cc9f1c8bb9eac4443807",
+      "url": "https://huggingface.co/spaces/black-forest-labs/flux-3-image-klein",
+      "productUrl": "https://huggingface.co/spaces/black-forest-labs/flux-3-image-klein",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "dc55f80744e6b8b600a786bb",
+      "url": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "productUrl": "https://huggingface.co/spaces/Aura1in/Krea-2-Turbo_v2",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "1af7ebc91fd8b14f0aec8600",
+      "url": "https://huggingface.co/spaces/fishaudio/Drama-3",
+      "productUrl": "https://huggingface.co/spaces/fishaudio/Drama-3",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "229b397ce3c041bee1330ce1",
+      "url": "https://huggingface.co/spaces/hugging-apps/qwen-qwen-image-2-1-turbo",
+      "productUrl": "https://huggingface.co/spaces/hugging-apps/qwen-qwen-image-2-1-turbo",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "9f9138fda1c06c230777f1fd",
+      "url": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "productUrl": "https://huggingface.co/spaces/AST-1320/Qwen-2511-Plus-Flux.2-klein-9B",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "701f3cfaacd0df0a0703f5c7",
+      "url": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "productUrl": "https://huggingface.co/spaces/tardellirs/model-pulse",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "e2f8381828caabacf4704234",
+      "url": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "productUrl": "https://huggingface.co/spaces/wank3r/minimax-h3",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "a17b06d634122c8c668667be",
+      "url": "https://huggingface.co/spaces/pablodawson/minimax-h3-360-orbit",
+      "productUrl": "https://huggingface.co/spaces/pablodawson/minimax-h3-360-orbit",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "abfd59f85ca3413221131441",
+      "url": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "productUrl": "https://huggingface.co/spaces/lightonai/LightOnOCR-3-Demo",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "100ef290074628b971606650",
+      "url": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "productUrl": "https://huggingface.co/spaces/00000tt/LTX-2.3-10Eros",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "ce621ef626621472dd94dce7",
+      "url": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "productUrl": "https://huggingface.co/spaces/vamo455/Omni-videos-custom-auto_prompt_high-quality",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "7508a12cb77f9acb45dc103f",
+      "url": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "productUrl": "https://huggingface.co/spaces/aet256/Qwen-Image-Edit-Rapid-AIO-Loras-Experimental",
+      "feedIds": [
+        "63dbb54258e730e95fa20298"
+      ]
+    },
+    {
+      "sourceId": "8f4036b74df273ae542d8301",
+      "url": "https://techcrunch.com/2026/10/16/replit-is-no-longer-working-with-anthropic-ceo-says",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "43f5d9299a926e4d769e96d9",
+      "url": "https://techcrunch.com/2026/10/16/india-becomes-the-latest-country-to-report-rogue-ai-agent-activity",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "bf815e64fedf96f62911c925",
+      "url": "https://techcrunch.com/video/a-nvidia-insider-turned-vc-on-why-robotics-hasnt-hit-its-chatgpt-moment-yet",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "7cf2fb5203224340531f390e",
+      "url": "https://techcrunch.com/podcast/physical-ai-is-more-than-robots-says-the-nvidia-veteran-now-investing-in-it",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "75fa23d8834b88f0cdaa3045",
+      "url": "https://techcrunch.com/2026/10/16/elorians-first-ai-model-wants-to-reason-with-images-not-just-about-them",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "08ae3f1b7d83d7996372b532",
+      "url": "https://techcrunch.com/2026/10/16/jev-is-vercels-fastest-adopted-ai-model-ever",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "7dc0e5c6956b6261873fecdd",
+      "url": "https://techcrunch.com/2026/10/16/mark-wahlberg-on-using-ai-in-film-the-right-way-and-being-open-to-an-ai-clone-carrying-on-his-legacy",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "657188b4be634999a7eec5b8",
+      "url": "https://techcrunch.com/2026/10/16/veritas-is-building-a-chip-to-verify-luxury-goods",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "02f60fa99bd6fa5dfa5e2801",
+      "url": "https://techcrunch.com/2026/10/16/replits-ceo-says-the-future-of-work-is-the-self-driving-company",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "bdb5caa1dae4ab509e1be7f6",
+      "url": "https://techcrunch.com/2026/10/15/when-it-came-to-cal-ais-viral-success-a-small-army-of-influencers-paid-off",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "8243c9a70d3f19e15eb8c374",
+      "url": "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "f159e33b88a953e59ea9ebeb",
+      "url": "https://techcrunch.com/2026/10/15/amazon-devices-chief-panos-panay-sees-a-future-where-ai-devices-replace-the-need-to-use-apps",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "bca736b8e46393cc3d4eec91",
+      "url": "https://techcrunch.com/2026/10/15/anthropic-is-letting-metr-researchers-look-under-the-hood-with-employee-level-access",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "d0efebcc7c6f1b1c3d0fe232",
+      "url": "https://techcrunch.com/2026/10/15/bluesky-expands-its-ai-powered-attie-app-to-let-anyone-build-websites-games-and-more",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "dbb4ac50000ed94ab766970f",
+      "url": "https://techcrunch.com/2026/10/15/last-chance-to-save-up-to-200-on-techcrunch-founder-summit-early-booking-ends-oct-16",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "fa3be6b020a0d422ad5cd4bf",
+      "url": "https://techcrunch.com/2026/10/15/ai-agents-are-coming-to-rivians-cars",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "8560a2cd1b5ad897d1f04f74",
+      "url": "https://techcrunch.com/2026/10/15/googles-universal-cart-shopping-tool-launches-in-the-us",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "38883cff1d0be07e3d209bca",
+      "url": "https://techcrunch.com/2026/10/15/techcrunch-disrupt-2026-last-day",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "a0dd901df9cb7cea9e7f58cd",
+      "url": "https://techcrunch.com/2026/10/15/amazons-bee-launches-two-new-personal-ai-devices-starting-at-75",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "c583a0918e79df9da857add5",
+      "url": "https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform",
+      "productUrl": null,
+      "feedIds": [
+        "a654756600fbb68b9c75c45b"
+      ]
+    },
+    {
+      "sourceId": "ef244017b1460269fc687cea",
+      "url": "https://browser-use.com",
+      "productUrl": null,
+      "feedIds": [
+        "ef244017b1460269fc687cea"
+      ]
+    },
+    {
+      "sourceId": "7efc2c70ed9424b76bd7407b",
+      "url": "https://apify.com",
+      "productUrl": null,
+      "feedIds": [
+        "7efc2c70ed9424b76bd7407b"
+      ]
+    },
+    {
+      "sourceId": "d554ca3fc8b9fd3548600b86",
+      "url": "https://dify.ai",
+      "productUrl": null,
+      "feedIds": [
+        "d554ca3fc8b9fd3548600b86"
+      ]
+    },
+    {
+      "sourceId": "decd65cbff34ea9dc19e58fb",
+      "url": "https://huggingface.co/spaces/Riya1104/InvoiceIQ",
+      "productUrl": "https://huggingface.co/spaces/Riya1104/InvoiceIQ",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "698bfea2b7b729bc0ab16a1c",
+      "url": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "productUrl": "https://huggingface.co/spaces/K4thir/Invoice-processing",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "15950ad512e6bd08dfe62252",
+      "url": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "productUrl": "https://huggingface.co/spaces/Jashu-2128/invoicepilot-demo",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "50561baf4530db439848fc9b",
+      "url": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "productUrl": "https://huggingface.co/spaces/MH20011981/idp_invoice_space",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "3d28365427bc516da7d0ed0d",
+      "url": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "productUrl": "https://huggingface.co/spaces/Nra/sbn_invoice",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "e5074e4b1ac7444fb51faf0e",
+      "url": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "productUrl": "https://huggingface.co/spaces/bks-lab/xrechnung-invoice-fields-viewer",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "f8cfea836e1702ceec21d5f8",
+      "url": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/reverse-charge-vat-invoice-checker",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "a07874e56fdc37fe2c042b81",
+      "url": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "productUrl": "https://huggingface.co/spaces/anispepper/invoice-extractor",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "623769c9d980ffb995f65cdc",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "7590c62adf8c4b6dd70ad54e",
+      "url": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "productUrl": "https://huggingface.co/spaces/to-be/invoice_document_headers_extraction_with_donut-OLD",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "bdd8b5a7dd636446ee24a8fe",
+      "url": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "productUrl": "https://huggingface.co/spaces/213Jamesalli/213-invoice-profit-tools",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "1dd03891d1e36345e3123c1a",
+      "url": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "productUrl": "https://huggingface.co/spaces/VabbyGupta018/invoice-agent",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "1609df54fa9aaf3df877db65",
+      "url": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "productUrl": "https://huggingface.co/spaces/dli629/free-invoice-generator-tool",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "f657dd5703cbf04263ca2cbe",
+      "url": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "productUrl": "https://huggingface.co/spaces/naufalrifai/invoice_checking",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "a569e909a84275c0e342e3f9",
+      "url": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "productUrl": "https://huggingface.co/spaces/mark3233/quicksend-invoice-maker-ios-app-wise-design",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "14e26d166e12757318a5e260",
+      "url": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/german-e-invoice-clock-2027",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "8834a95ee6e22f1783f0f8bc",
+      "url": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "productUrl": "https://huggingface.co/spaces/mostafaclever/invoiceManager",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "4a2181b4ee8a3fdd132b74ac",
+      "url": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/php-invoice-number-sequence-composer-package",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "0efa82095af534ac6fa36985",
+      "url": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/ksef-fa3-invoice-lint",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "14381d771aefb1ca8401fd62",
+      "url": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "productUrl": "https://huggingface.co/spaces/getreadystack/invoice-wordpress-plugin",
+      "feedIds": [
+        "470ff63db8da1802b0ccc779"
+      ]
+    },
+    {
+      "sourceId": "9cce3c399f76353564ea8d13",
+      "url": "https://www.bensbites.com/p/prompt-tips-from-anthropic",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "7aafcc8d015cd1278b985bee",
+      "url": "https://www.bensbites.com/p/zucks-wonderfull",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "8fe6e5f2fddf3911b3c8a1e9",
+      "url": "https://www.bensbites.com/p/text-is-so-2023",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "6559bbeddb61172576de7951",
+      "url": "https://www.bensbites.com/p/thoughts-from-san-francisco",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "d39329af8ebd63eb33c7e0e8",
+      "url": "https://www.bensbites.com/p/openai-devday-2026",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "14f7ddb17512538ee6ead671",
+      "url": "https://www.bensbites.com/p/sonnet-55-is-worth-a-try",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "2c9a7f5cf7155b059672e97a",
+      "url": "https://www.bensbites.com/p/50-years-of-tech-devices",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "fd54812f164c816fbab95370",
+      "url": "https://www.bensbites.com/p/back-to-claude",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "6738f3ceabaa304f81cb8cdf",
+      "url": "https://www.bensbites.com/p/what-can-you-build-with-jev",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "d3cb423779ff8236c3ec4324",
+      "url": "https://www.bensbites.com/p/new-home-for-cowork",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "b76e0dae669e83a29804f9e3",
+      "url": "https://www.bensbites.com/p/good-luck-slowing-this-down",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "07d50b9cc4ae26797646c9fa",
+      "url": "https://www.bensbites.com/p/telling-ai-to-design-is-hard",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "e6936e42c6e9ce1c5ee0fa33",
+      "url": "https://www.bensbites.com/p/everyone-needs-a-muse",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "d5f7db556079222ae56abcc0",
+      "url": "https://www.bensbites.com/p/the-first-gpt-6-model",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "8175048030ded19a63f81dff",
+      "url": "https://www.bensbites.com/p/scraping-107m-rows-of-data-to-build",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "40a9913f55937995275810d8",
+      "url": "https://www.bensbites.com/p/fable-51",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "6bff2778e2fa248bde021efd",
+      "url": "https://www.bensbites.com/p/build-your-ideas",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "5d1198e2c0c1ba038d9732d2",
+      "url": "https://www.bensbites.com/p/how-i-built-this-21f",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "52cd6f64afa8aaf328ee7f97",
+      "url": "https://www.bensbites.com/p/who-let-the-agents-in",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "8d9e0fb1cc8e873eb2bd8152",
+      "url": "https://www.bensbites.com/p/agents-on-your-mobile",
+      "productUrl": null,
+      "feedIds": [
+        "96fe006ed5f7b38bfc889c7d"
+      ]
+    },
+    {
+      "sourceId": "3bc592cc5b6877b701ba64d7",
+      "url": "https://simonwillison.net/2026/Oct/16/code-review",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "f63d7248b24014115f326f2f",
+      "url": "https://simonwillison.net/2026/Oct/15/chirp-pong",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "e58311dcd1376969cb5988e8",
+      "url": "https://simonwillison.net/2026/Oct/15/anthropic-tells-investors",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "b734a6066c595494ada7a28b",
+      "url": "https://simonwillison.net/2026/Oct/15/latex",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "3e6e644f1b2b0e94cbd7e718",
+      "url": "https://simonwillison.net/2026/Oct/14/tree-appreciator",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "154a39176d886b3bd0ff901e",
+      "url": "https://simonwillison.net/2026/Oct/14/ai-is-mass-decompiling-games",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "7e289d45dfc4cd8f5fef8ccf",
+      "url": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "6451d923eed6bbe644dbebbc",
+      "url": "https://simonwillison.net/2026/Oct/13/llm-gemini",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "1ce341749cd1d883ec323914",
+      "url": "https://simonwillison.net/2026/Oct/13/geoffrey-huntley",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "e6734b2c11074d76a3ecb2a6",
+      "url": "https://simonwillison.net/2026/Oct/13/web-edit",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "5ca8d6f055cb2e9fa5fb4b75",
+      "url": "https://simonwillison.net/2026/Oct/12/llm-meta-ai",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "e8d8f43511a9291fb5e3d53b",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "97e3cba45007401f16113a4c",
+      "url": "https://simonwillison.net/2026/Oct/12/python-3-15-web-edit-profiling",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "993bc19082d2d062c86a72ba",
+      "url": "https://simonwillison.net/2026/Oct/12/web-edit",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "79fb31c209812beb34edc71f",
+      "url": "https://simonwillison.net/2026/Oct/12/datasette-ports",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "7291bd8b12952a0e561c0d2e",
+      "url": "https://simonwillison.net/2026/Oct/11/dwarf-fortress",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "d3612ff459da8b570925d705",
+      "url": "https://simonwillison.net/2026/Oct/10/python-actions",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "51b6227273006399313d5b67",
+      "url": "https://simonwillison.net/2026/Oct/10/the-new-york-times",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "7e720aeda47f0a423402183f",
+      "url": "https://simonwillison.net/2026/Oct/9/deno-is-joining-cloudflare",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "39e6bd368c40b12952cf2dce",
+      "url": "https://simonwillison.net/2026/Oct/9/matthew-green",
+      "productUrl": null,
+      "feedIds": [
+        "3733c65b9abe07b4b87156f9"
+      ]
+    },
+    {
+      "sourceId": "fe88897c2a464af3e362eaf6",
+      "url": "https://www.latent.space/p/ainews-agents-disprove-polysemanticity",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "247153705736c57d29c6ef69",
+      "url": "https://www.latent.space/p/crossing-the-threshold",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "649989f895c2f016c528f89e",
+      "url": "https://www.latent.space/p/lab-in-the-loop-at-compute-speed",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "43abc94dd1f0ca280d726dae",
+      "url": "https://www.latent.space/p/ainews-ai-engineer-nyc-gemini-4-argon",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "be997bf718606abb5880af09",
+      "url": "https://www.latent.space/p/dyna",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "e71374164f2cb1add8d9303e",
+      "url": "https://www.latent.space/p/claude-dynamic-workflows",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "e5f022f9be79d8e96eab97cb",
+      "url": "https://www.latent.space/p/nyc2026",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "9a2a489d753abcefd301a946",
+      "url": "https://www.latent.space/p/standard-bots",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "68a694837125984e014d7340",
+      "url": "https://www.latent.space/p/biohub-deepmind",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "9db9af42b7f614ecd07414a9",
+      "url": "https://www.latent.space/p/ainews-not-much-happened-today-60f",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "22732f8185e35596b40539e9",
+      "url": "https://www.latent.space/p/stacklok",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "9416b01a853f1769cc798e8d",
+      "url": "https://www.latent.space/p/ainews-quasi-riemann-hypothesis-openai",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "417c3a0572d8db4597000019",
+      "url": "https://www.latent.space/p/ainews-reflection-beam-501b-a23b",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "0300916b911fbe76cc9315db",
+      "url": "https://www.latent.space/p/airbnb",
+      "productUrl": null,
+      "feedIds": [
+        "a5689419c24836e7e0ce37dd"
+      ]
+    },
+    {
+      "sourceId": "d4017db5050166483de87253",
+      "url": "https://news.ycombinator.com/item?id=50117118",
+      "productUrl": "https://github.com/AlphaWorkroom/AlphaDocs",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "f5258b65b367b71d4e5063ea",
+      "url": "https://news.ycombinator.com/item?id=50105101",
+      "productUrl": "https://dipperpdf.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "342b136b581a48d87b445a93",
+      "url": "https://news.ycombinator.com/item?id=50079361",
+      "productUrl": "https://updown.laravel.cloud/059a14a0-9113-4fad-a9db-e8ef2d2e830c",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "5c593ce6f13e38ccca3ce5db",
+      "url": "https://news.ycombinator.com/item?id=50052566",
+      "productUrl": "https://www.jruva.in",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "cd4b108088eb92f81b6c1adf",
+      "url": "https://news.ycombinator.com/item?id=50048129",
+      "productUrl": "https://cachety.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "d32a3e5679ad79dcdfea2668",
+      "url": "https://news.ycombinator.com/item?id=50031317",
+      "productUrl": "https://github.com/aartur/docexp",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "9466c808c7a1baff1a388125",
+      "url": "https://news.ycombinator.com/item?id=50014659",
+      "productUrl": "https://www.nace.ai/developers",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "b10a3bb525a948027a616984",
+      "url": "https://news.ycombinator.com/item?id=50006936",
+      "productUrl": "https://nucleus.excom.dev",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "c815e99f1918e58a78b4349c",
+      "url": "https://news.ycombinator.com/item?id=49977184",
+      "productUrl": "https://docultra.org",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "cb2cab75301d9e85f3161785",
+      "url": "https://news.ycombinator.com/item?id=49974080",
+      "productUrl": "https://astro-plakar-wayback.fly.dev/docs/getting-started/installation",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "0df67bc3c7d3e347437d25c4",
+      "url": "https://news.ycombinator.com/item?id=49967539",
+      "productUrl": "https://www.invofox.com/en",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "d4039c4e9f9108f14fe06ca1",
+      "url": "https://news.ycombinator.com/item?id=49947702",
+      "productUrl": "https://json-doc.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "12c16728d5081b718ada2f03",
+      "url": "https://news.ycombinator.com/item?id=49923203",
+      "productUrl": "https://www.veludocs.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "97a532b151cb111631117832",
+      "url": "https://news.ycombinator.com/item?id=49894301",
+      "productUrl": "https://sezwhere.com",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "93cb392afa8d457f30691123",
+      "url": "https://news.ycombinator.com/item?id=49869904",
+      "productUrl": "https://rare-books.vercel.app",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "a0ba78a55c830444d375c0e2",
+      "url": "https://news.ycombinator.com/item?id=49866189",
+      "productUrl": "https://www.npmjs.com/package/revise",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "6859168b6a37428ab30987a1",
+      "url": "https://news.ycombinator.com/item?id=49866121",
+      "productUrl": "https://dicty.io",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "4925b235e80f8eeb3af64447",
+      "url": "https://news.ycombinator.com/item?id=49738595",
+      "productUrl": "https://github.com/Ontos-AI/knowhere",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "8eab0af476c34cad1244c829",
+      "url": "https://news.ycombinator.com/item?id=49737256",
+      "productUrl": "https://github.com/AysanZ/alidade",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "355c2c5234beb0c37366404b",
+      "url": "https://news.ycombinator.com/item?id=49660648",
+      "productUrl": "https://github.com/paulknysh/raggy",
+      "feedIds": [
+        "11df15447c6c0e0dfdc06be3"
+      ]
+    },
+    {
+      "sourceId": "c0f3efa6baba2d65cbf16e0b",
+      "url": "https://news.ycombinator.com/item?id=50073471",
+      "productUrl": "https://news.ycombinator.com/item?id=50073471",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "93481ec2e3a9d5b087b696ce",
+      "url": "https://news.ycombinator.com/item?id=50059096",
+      "productUrl": "https://news.ycombinator.com/item?id=50059096",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "bae2411b93f9037617b9617b",
+      "url": "https://news.ycombinator.com/item?id=49911995",
+      "productUrl": "https://github.com/magnitudedev/magnitude",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "241cedafb2f2096359f71f0e",
+      "url": "https://news.ycombinator.com/item?id=49881505",
+      "productUrl": "https://www.vespper.com/blog/launching-vespper-docx-mcp",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "971b17fcf8ca133b04009416",
+      "url": "https://news.ycombinator.com/item?id=49804931",
+      "productUrl": "https://www.coveragecat.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "98a698085fb1fa80319290a2",
+      "url": "https://news.ycombinator.com/item?id=49743049",
+      "productUrl": "https://news.ycombinator.com/item?id=49743049",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "56abc7d43b055b8120e31430",
+      "url": "https://news.ycombinator.com/item?id=49552616",
+      "productUrl": "https://news.ycombinator.com/item?id=49552616",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "6e96c111f32d0712944683da",
+      "url": "https://news.ycombinator.com/item?id=49543530",
+      "productUrl": "https://news.ycombinator.com/item?id=49543530",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "d52885a334088c8a3164163e",
+      "url": "https://news.ycombinator.com/item?id=49525153",
+      "productUrl": "https://www.norirobotics.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "44c4a2b1e7c7b231fde2a80c",
+      "url": "https://news.ycombinator.com/item?id=49511007",
+      "productUrl": "https://usealmanac.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "3219402da73851e1cdb792e0",
+      "url": "https://news.ycombinator.com/item?id=49510632",
+      "productUrl": "https://github.com/Hebbian-Robotics/hflow",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "f44fa4c5ba02f64f5102fc3b",
+      "url": "https://news.ycombinator.com/item?id=49466715",
+      "productUrl": "https://news.ycombinator.com/item?id=49466715",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "10ccfbc2566b618813e2c054",
+      "url": "https://news.ycombinator.com/item?id=49451495",
+      "productUrl": "https://www.risklytics.ai",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "1e322718b449dbf37613b836",
+      "url": "https://news.ycombinator.com/item?id=49376038",
+      "productUrl": "https://github.com/runvendo/vendo",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "c48b9ca3991d590a76e44c0d",
+      "url": "https://news.ycombinator.com/item?id=49363710",
+      "productUrl": "https://github.com/onecli/onecli",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "4688b71b756a06361476f2fb",
+      "url": "https://news.ycombinator.com/item?id=49348136",
+      "productUrl": "https://machine0.io",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "3d4e4fd79cddb69878f413c1",
+      "url": "https://news.ycombinator.com/item?id=49332751",
+      "productUrl": "https://speko.ai",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "51dcb64339d73bb520ac10a2",
+      "url": "https://news.ycombinator.com/item?id=49283063",
+      "productUrl": "https://www.codewithbullet.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "4298bff4fe796619b500af25",
+      "url": "https://news.ycombinator.com/item?id=49269090",
+      "productUrl": "https://discoveredmaterials.com/research",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "879ab9478970541649165f54",
+      "url": "https://news.ycombinator.com/item?id=49259309",
+      "productUrl": "https://www.trykeet.com",
+      "feedIds": [
+        "ec389fe35523e6dbba11e744"
+      ]
+    },
+    {
+      "sourceId": "bcddd7d35acdfcaa49f31d2d",
+      "url": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/15694-process-gmail-invoice-pdfs-with-gemini-ocr-gpt-4o-slack-and-google-sheets",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "ca6a664d20bd48cf57145f2e",
+      "url": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "0f1e1c9ed7c9b88df76447ab",
+      "url": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "productUrl": "https://n8n.io/workflows/4849-automated-invoice-processing-with-telegram-gpt-4o-ocr-and-sap-integration",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "3ecc3a5ea527357de5fa4165",
+      "url": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "eb08bb526b3fe0ba957f00c2",
+      "url": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "productUrl": "https://n8n.io/workflows/11290-financial-document-extraction-from-gmail-to-google-sheets",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "ce550eec21fdd6de3c333ecd",
+      "url": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "productUrl": "https://n8n.io/workflows/10111-ai-powered-invoice-reminder-and-payment-tracker-for-finance-and-accounting",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "1b3ba5be008d9c8a8e2422f9",
+      "url": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "productUrl": "https://n8n.io/workflows/6686-track-expenses-from-receipt-photos-with-telegram-and-google-sheets-using-ocrspace",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "be8fa77dfa6f3364ffd4f537",
+      "url": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "697c3528c356ce202c5ae31e",
+      "url": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "productUrl": "https://n8n.io/workflows/4247-invoice-processor-and-validator-with-ocr-ai-and-google-sheets",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "8472cdf645082b82438ba2a0",
+      "url": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "productUrl": "https://n8n.io/workflows/10029-automate-invoice-processing-with-ocr-gpt-4-and-salesforce-opportunity-creation",
+      "feedIds": [
+        "b681f434d554a69a059ccf85"
+      ]
+    },
+    {
+      "sourceId": "d1cc332f52c94c649361a801",
+      "url": "https://www.ycombinator.com/companies/scale-ai",
+      "productUrl": "https://www.ycombinator.com/companies/scale-ai",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "3602e836576fac94475430a2",
+      "url": "https://www.ycombinator.com/companies/checkr",
+      "productUrl": "https://www.ycombinator.com/companies/checkr",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "e101da3b27711db1b70d71cc",
+      "url": "https://www.ycombinator.com/companies/plyxl",
+      "productUrl": "https://www.ycombinator.com/companies/plyxl",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "10d5baee2ba06abff4133573",
+      "url": "https://www.ycombinator.com/companies/altair-health",
+      "productUrl": "https://www.ycombinator.com/companies/altair-health",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "8e6e5fe6a6d21c9cf39a2a83",
+      "url": "https://www.ycombinator.com/companies/praxis",
+      "productUrl": "https://www.ycombinator.com/companies/praxis",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "527783070618b976b402a4c8",
+      "url": "https://www.ycombinator.com/companies/polemos-industries",
+      "productUrl": "https://www.ycombinator.com/companies/polemos-industries",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "7e09b153ea67c2d96ff15f2b",
+      "url": "https://www.ycombinator.com/companies/sintem",
+      "productUrl": "https://www.ycombinator.com/companies/sintem",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "8e00c6a953fe23fb968804fa",
+      "url": "https://www.ycombinator.com/companies/rodeo-robotics",
+      "productUrl": "https://www.ycombinator.com/companies/rodeo-robotics",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "d86813975f309369511842df",
+      "url": "https://www.ycombinator.com/companies/native",
+      "productUrl": "https://www.ycombinator.com/companies/native",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "0e57074ba292834ef1e52cd0",
+      "url": "https://www.ycombinator.com/companies/munito-ai",
+      "productUrl": "https://www.ycombinator.com/companies/munito-ai",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "9efb8fad9944e0510ae97b9f",
+      "url": "https://www.ycombinator.com/companies/composal",
+      "productUrl": "https://www.ycombinator.com/companies/composal",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "a1c7049082ab313fa17d114e",
+      "url": "https://www.ycombinator.com/companies/uxduck",
+      "productUrl": "https://www.ycombinator.com/companies/uxduck",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "4a5c21426f8a15b04ca4df19",
+      "url": "https://www.ycombinator.com/companies/resin-technologies",
+      "productUrl": "https://www.ycombinator.com/companies/resin-technologies",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "f8043317f9ecadbe530b5501",
+      "url": "https://www.ycombinator.com/companies/ploid",
+      "productUrl": "https://www.ycombinator.com/companies/ploid",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "ee144b08384f6e1e265fd791",
+      "url": "https://www.ycombinator.com/companies/rystic",
+      "productUrl": "https://www.ycombinator.com/companies/rystic",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "610dc24237b587b48c56f177",
+      "url": "https://www.ycombinator.com/companies/useterse",
+      "productUrl": "https://www.ycombinator.com/companies/useterse",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "744a5f8bec7889cbd2231643",
+      "url": "https://www.ycombinator.com/companies/boxesdev",
+      "productUrl": "https://www.ycombinator.com/companies/boxesdev",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "906a538f5527d0cc2f18eb3d",
+      "url": "https://www.ycombinator.com/companies/openhack",
+      "productUrl": "https://www.ycombinator.com/companies/openhack",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "f98c025caa80fd47baedab82",
+      "url": "https://www.ycombinator.com/companies/ageospatial",
+      "productUrl": "https://www.ycombinator.com/companies/ageospatial",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "c1bb26bcec7a5fef9b8b4557",
+      "url": "https://www.ycombinator.com/companies/cyclon",
+      "productUrl": "https://www.ycombinator.com/companies/cyclon",
+      "feedIds": [
+        "af031577e7a7287449e227af"
+      ]
+    },
+    {
+      "sourceId": "1ae78d90d01685a630a8e97c",
+      "url": "https://news.ycombinator.com/item?id=50126334",
+      "productUrl": "https://fakeipedia.org",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36",
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "3ff4ccb471a4442e80c702fc",
+      "url": "https://news.ycombinator.com/item?id=50122776",
+      "productUrl": "https://stoke.money",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36",
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "e9bab5d8dfe74c5bae3ae11a",
+      "url": "https://news.ycombinator.com/item?id=50117598",
+      "productUrl": "https://videre.sh",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "c6d9ea7d0daa013b22b8a957",
+      "url": "https://news.ycombinator.com/item?id=50107729",
+      "productUrl": "https://github.com/readysettech/rdst",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "16ff8106ff996298ae352aff",
+      "url": "https://news.ycombinator.com/item?id=50105490",
+      "productUrl": "https://github.com/sergiotapia/joyscroller",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "841b6718a34c7b5b473be50b",
+      "url": "https://news.ycombinator.com/item?id=50086619",
+      "productUrl": "https://www.calendar0.app",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "5ee4669c2740ea10ec96ec9b",
+      "url": "https://news.ycombinator.com/item?id=50075058",
+      "productUrl": "https://huggingface.co/interfaze-ai/interfaze-1-lite",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "62694bcce7d85264b9b15493",
+      "url": "https://news.ycombinator.com/item?id=50074864",
+      "productUrl": "https://www.treesum.app",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "2602248cf1d623046cc06ee7",
+      "url": "https://news.ycombinator.com/item?id=50071636",
+      "productUrl": "https://ourmana.app",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "f9f2db715fef95fc290f4868",
+      "url": "https://news.ycombinator.com/item?id=50069663",
+      "productUrl": null,
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "b3b8e4503090b3fac0bae3bc",
+      "url": "https://news.ycombinator.com/item?id=50067805",
+      "productUrl": "https://github.com/metagrover/pluto",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "4738414b1f4dd262899f71a7",
+      "url": "https://news.ycombinator.com/item?id=50053630",
+      "productUrl": "https://github.com/figranium/figranium",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "2a08a3c0a6fe8982bb8f89f3",
+      "url": "https://news.ycombinator.com/item?id=50049132",
+      "productUrl": "https://github.com/swimmingbrain/brainotes",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "85e4917219e990e8c90fedee",
+      "url": "https://news.ycombinator.com/item?id=50044150",
+      "productUrl": "https://sourceforge.net/projects/flow-state-tracker",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "f2a6627779bcc167602d2540",
+      "url": "https://news.ycombinator.com/item?id=50040528",
+      "productUrl": "https://github.com/modelship-ai/modelship",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "38aa1e7d60db4ba3eb939f03",
+      "url": "https://news.ycombinator.com/item?id=50035864",
+      "productUrl": "https://github.com/confident-ai/eval-skills",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "e2fa4aa7ef0dd836deaac7fb",
+      "url": "https://news.ycombinator.com/item?id=50035826",
+      "productUrl": "https://flopper.io",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "265adce9a63ce1b22335c79d",
+      "url": "https://news.ycombinator.com/item?id=50018161",
+      "productUrl": "https://vendiq.rishailabs.com",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "be96a50b3b12839be95364e3",
+      "url": "https://news.ycombinator.com/item?id=50015492",
+      "productUrl": "https://chromewebstore.google.com/detail/si-%E2%86%92-ai/cfpagmhjlhnbjabgaoeobkciklolaekn",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "82a9a7673fdc5fd395c6ba05",
+      "url": "https://news.ycombinator.com/item?id=50002499",
+      "productUrl": "https://github.com/tiliondev/waystone",
+      "feedIds": [
+        "54649964a0a05f1bfa2b2d36"
+      ]
+    },
+    {
+      "sourceId": "6d7cb864af44eb2befa94dc9",
+      "url": "https://news.ycombinator.com/item?id=50127256",
+      "productUrl": "https://www.wysebee.com",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "4e6f411bb0b0f6b12fad783b",
+      "url": "https://news.ycombinator.com/item?id=50127157",
+      "productUrl": "https://github.com/andunieee/twain",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "68a3df913a5d45c7294bea38",
+      "url": "https://news.ycombinator.com/item?id=50125797",
+      "productUrl": "https://ozilai.net",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "38d140b8541233b26a82abf7",
+      "url": "https://news.ycombinator.com/item?id=50125746",
+      "productUrl": "https://roadster.pavlin.dev",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "49fd682868fcc588e1cf352e",
+      "url": "https://news.ycombinator.com/item?id=50123249",
+      "productUrl": "https://tensorpix.ai/usecases/real-estate-video-maker",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "7fc818269e9583ce19d40f06",
+      "url": "https://news.ycombinator.com/item?id=50122767",
+      "productUrl": "https://github.com/Moshik21/weatherdeck",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "04d12591406c6870d1cb56f0",
+      "url": "https://news.ycombinator.com/item?id=50122324",
+      "productUrl": "https://www.kapwing.com/ai/prompt-generator/camera",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "9a0e84ae362bd1ce46e403e5",
+      "url": "https://news.ycombinator.com/item?id=50120752",
+      "productUrl": "https://next-brain.ai/brian2-atlas",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "0c9b94aa5fe1767b4def0b4e",
+      "url": "https://news.ycombinator.com/item?id=50120286",
+      "productUrl": "https://aegisfw.com",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "b65a54fcf95e01462aba1af3",
+      "url": "https://news.ycombinator.com/item?id=50119958",
+      "productUrl": "https://blog.etherpk.com/agent-chat-ask-a-language-model-about-your-notes",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "b6f8dab59207686acc44ddb7",
+      "url": "https://news.ycombinator.com/item?id=50119806",
+      "productUrl": "https://gitlab.com/pablosanzo/musejailbreak",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "370649b7d4f5ec8a257d349b",
+      "url": "https://news.ycombinator.com/item?id=50119778",
+      "productUrl": "https://github.com/gemron/Termexo",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "b9a1c4e3142a36691b905a8e",
+      "url": "https://news.ycombinator.com/item?id=50119748",
+      "productUrl": "https://github.com/Canonry/canonry",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "12263426091f48c87cc3fd85",
+      "url": "https://news.ycombinator.com/item?id=50119352",
+      "productUrl": "https://github.com/busabase/busabase",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "88182f2748fedb8a9dd694dc",
+      "url": "https://news.ycombinator.com/item?id=50118876",
+      "productUrl": "https://rstation.ai",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "88c874b34e6dcabb87c19552",
+      "url": "https://news.ycombinator.com/item?id=50118394",
+      "productUrl": "https://ndroo.github.io/tapo-boiler-monitor",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "a886930a4315c72588eeba19",
+      "url": "https://news.ycombinator.com/item?id=50118127",
+      "productUrl": "https://slopgrid.com",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    },
+    {
+      "sourceId": "670f8696685146667ca04478",
+      "url": "https://news.ycombinator.com/item?id=50118028",
+      "productUrl": "https://github.com/hugomn/heldkeys",
+      "feedIds": [
+        "fc96810c8981082bcd1a293c"
+      ]
+    }
+  ],
+  "privacyOmissions": {
+    "schema": 1,
+    "phase": "scan",
+    "policy": "whole-unsafe-building-record-omission",
+    "fetchedItemCount": 254,
+    "retainedItemCount": 248,
+    "omittedItemCount": 6,
+    "uniqueOmittedRecords": 6,
+    "byFeed": [
+      {
+        "feedId": "a5689419c24836e7e0ce37dd",
+        "fetchedItemCount": 20,
+        "retainedItemCount": 14,
+        "omittedItemCount": 6,
+        "categories": [
+          {
+            "category": "username_pattern",
+            "count": 6
+          }
+        ]
+      }
+    ]
+  },
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "38994663435",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "e7cc9ce00a74bd2653917bb6ef3064c7e299998e"
+  }
+}
