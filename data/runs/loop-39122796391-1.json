@@ -1,0 +1,355 @@
+{
+  "id": "loop-39122796391-1",
+  "type": "loop",
+  "status": "completed_no_post",
+  "startedAt": "2026-10-18T11:20:09.544Z",
+  "finishedAt": "2026-10-18T11:23:05.456Z",
+  "candidatesFound": 1,
+  "picked": 0,
+  "rejected": [
+    {
+      "title": "Extract invoice fields for staff review",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "reason": "Assessed a fictional invoice-field extraction and review-table experiment. The attached templates support extraction/logging, but not school budgeting or financial decisions; score mean 5.4 is below threshold 6."
+    },
+    {
+      "title": "Paid school administrator role",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31538445",
+      "reason": "Reject: the notice describes role qualities and team context but supplies no concrete manual chore; do not invent duties from the title."
+    },
+    {
+      "title": "Paid school administrator role",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31569530",
+      "reason": "Reject: the source text contains only a role title and paid-vacancy disclaimer, with no concrete task to scope or score."
+    },
+    {
+      "title": "Paid school administrator role",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31584968",
+      "reason": "Reject: general administrative support and student-administration categories do not identify a bounded concrete task; inventing one from the role would be unsupported."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-18T11:20:25.239Z",
+      "message": "Fetched 252 live source records; 0 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-18T11:21:54.272Z",
+      "message": "Codex CLI wrote 0 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "passed",
+      "at": "2026-10-18T11:21:54.272Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Assessed all four enriched education demand notices. One concrete invoice chore supports a narrow fictional extraction-and-review experiment, but the attached invoice templates do not support school budgeting and its equal-weight mean is below 6. The other three notices lack a sufficiently specific chore; no post proposed."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39122796391",
+  "version": "rules-fa1bc8e34594",
+  "rulesSha256": "fa1bc8e34594b275be116597cb9e97adb97ba6c525f79f16ec9ab483cad543c7",
+  "rulesCommit": "7cf13e661b5172eea87a6032a679c1910a643026",
+  "usage": {
+    "id": "loop-39122796391-1",
+    "type": "usage",
+    "runId": "loop-39122796391-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-18T11:23:00.104Z",
+    "localDate": "2026-10-18",
+    "githubRunId": "39122796391",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39122796391/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "recorded",
+    "inputTokens": 382554,
+    "cachedInputTokens": 306552,
+    "cacheWriteInputTokens": 75960,
+    "outputTokens": 5586,
+    "reasoningOutputTokens": 1307,
+    "costUsd": 0.015357719999999998,
+    "observedCounts": {
+      "inputTokens": 382554,
+      "cachedInputTokens": 306552,
+      "cacheWriteInputTokens": 75960,
+      "outputTokens": 5586,
+      "reasoningOutputTokens": 1307,
+      "costUsd": 0.015357719999999998
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 2,
+      "notRunModelJobs": 2,
+      "unknownModelJobs": 0
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [
+      "gpt-6-luna"
+    ],
+    "pricingStatus": "recorded_token_estimate",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 117661713255,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39122796391/job/117661713255",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 213525,
+        "cachedInputTokens": 172271,
+        "cacheWriteInputTokens": 41233,
+        "outputTokens": 2658,
+        "reasoningOutputTokens": 564,
+        "costUsd": 0.008207935,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "checker",
+        "jobId": 117661994312,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39122796391/job/117661994312",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 169029,
+        "cachedInputTokens": 134281,
+        "cacheWriteInputTokens": 34727,
+        "outputTokens": 2928,
+        "reasoningOutputTokens": 743,
+        "costUsd": 0.007149785,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "repair",
+        "jobId": 117662242686,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39122796391/job/117662242686",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "final_check",
+        "jobId": 117662242506,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39122796391/job/117662242506",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "858c32dbdc4c0684cc18306262f34158ccb8a887ca1113aac5d677e93e580f2d",
+  "assessmentOutcome": "completed",
+  "operationalFailures": [],
+  "checkedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "contractVersion": 1,
+    "runId": "loop-39122796391-1",
+    "schedulingSha256": "67f063f9be2fe0323ea5b86c059936fe4a33958209a6f38b6e526d31d4261d31",
+    "slotIds": [
+      "publish-2026-10-18-14-07"
+    ],
+    "draftSha256": "79f9196cc83453d9e9eaa39dbbab83f70416d13409acccf1258ed4863f7e53c1",
+    "contextSha256": "daba23d5425557b624b8ff3885cd1beb1abfa4c949d01dfcb753cc5eace94665",
+    "rulesSha256": "fa1bc8e34594b275be116597cb9e97adb97ba6c525f79f16ec9ab483cad543c7",
+    "sourceSnapshotSha256": "858c32dbdc4c0684cc18306262f34158ccb8a887ca1113aac5d677e93e580f2d",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkerRunId": "loop-39122796391-1-independent-check",
+    "completedAt": "2026-10-18T11:23:05.456Z",
+    "decision": "no_supported_candidate",
+    "reason": "No candidate is supported for publication: one fresh notice names invoice handling and budget records, but the cited workflow-template support is absent from this fresh source context; the other three notices lack a bounded chore. All four exact pages were freshly fetched and examined.",
+    "checkedPostIds": []
+  },
+  "eventName": "workflow_dispatch",
+  "modelExecuted": true,
+  "scheduling": {
+    "id": "loop-39122796391-1",
+    "runId": "loop-39122796391-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "39122796391",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39122796391",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-39121748769-1",
+      "clockRunId": "39121748769",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39121748769",
+      "dispatchId": "clock-39121748769-1-loop",
+      "runId": "39122796391",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-18T11:19:52.293Z",
+      "requestedAt": "2026-10-18T11:19:52.293Z",
+      "verifiedAt": "2026-10-18T11:20:09.544Z",
+      "parentHeadSha": "9aae4bb2cdb486286917470313e491443c19aef0"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-18-14-07",
+    "scheduledAt": "2026-10-18T11:07:00.000Z",
+    "localDate": "2026-10-18",
+    "localTime": "14:07",
+    "requestedAt": "2026-10-18T11:20:09.544Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 0,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-18-00-07",
+        "scheduledAt": "2026-10-17T21:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "00:07"
+      },
+      {
+        "id": "publish-2026-10-18-01-07",
+        "scheduledAt": "2026-10-17T22:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "01:07"
+      },
+      {
+        "id": "publish-2026-10-18-02-07",
+        "scheduledAt": "2026-10-17T23:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "02:07"
+      },
+      {
+        "id": "publish-2026-10-18-03-07",
+        "scheduledAt": "2026-10-18T00:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "03:07"
+      },
+      {
+        "id": "publish-2026-10-18-04-07",
+        "scheduledAt": "2026-10-18T01:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "04:07"
+      },
+      {
+        "id": "publish-2026-10-18-05-07",
+        "scheduledAt": "2026-10-18T02:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "05:07"
+      },
+      {
+        "id": "publish-2026-10-18-06-07",
+        "scheduledAt": "2026-10-18T03:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "06:07"
+      },
+      {
+        "id": "publish-2026-10-18-07-07",
+        "scheduledAt": "2026-10-18T04:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "07:07"
+      },
+      {
+        "id": "publish-2026-10-18-08-07",
+        "scheduledAt": "2026-10-18T05:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "08:07"
+      },
+      {
+        "id": "publish-2026-10-18-09-07",
+        "scheduledAt": "2026-10-18T06:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "09:07"
+      },
+      {
+        "id": "publish-2026-10-18-10-07",
+        "scheduledAt": "2026-10-18T07:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "10:07"
+      },
+      {
+        "id": "publish-2026-10-18-11-07",
+        "scheduledAt": "2026-10-18T08:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "11:07"
+      },
+      {
+        "id": "publish-2026-10-18-12-07",
+        "scheduledAt": "2026-10-18T09:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "12:07"
+      },
+      {
+        "id": "publish-2026-10-18-13-07",
+        "scheduledAt": "2026-10-18T10:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "13:07"
+      },
+      {
+        "id": "publish-2026-10-18-14-07",
+        "scheduledAt": "2026-10-18T11:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "14:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-18-14-07",
+        "scheduledAt": "2026-10-18T11:07:00.000Z",
+        "localDate": "2026-10-18",
+        "localTime": "14:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-18-14-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-18-14-07": 1
+    },
+    "reservationId": "loop-39122796391-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot"
+  }
+}
