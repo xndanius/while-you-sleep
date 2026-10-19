@@ -11,6 +11,7 @@ import {createDemandContext,demandContextHash,demandEvidenceReasons,demandContex
 import {validSourceAdmission} from '../lib/source-registry.mjs';
 import {privateArtifactCategories} from '../lib/privacy.mjs';
 import {validateLearningSelection} from '../lib/learning.mjs';
+import {extractImplementationEvidence} from '../lib/implementation-evidence.mjs';
 const runId=process.argv[2];
 try{
   const draft=await readJSON(dataPath('drafts',runId));const research=await readJSON(dataPath('research',runId));
@@ -46,8 +47,14 @@ try{
   const definitionFor=source=>registry.sources.find(definition=>definition.id===source.registrySourceId&&['active','probation'].includes(definition.status)&&validSourceAdmission(definition.validation)&&(selectedDemandSourceIds===null||selectedDemandSourceIds.includes(definition.id)));
   const authorizedSources=[];
   const officialDemandURL=value=>{try{return ['www.contractsfinder.service.gov.uk','www.find-tender.service.gov.uk','jobsearch.api.jobtechdev.se'].includes(new URL(value).hostname);}catch{return false;}};
-  let selectedSegment=null,learningSelection=null,fallbackPolicy=null;
+  let selectedSegment=null,learningSelection=null,fallbackPolicy=null,recoveryBatchPolicy=null;
   if(process.env.EXPECTED_LEARNING_SELECTION_SHA){const selection=await readJSON(dataPath('learning-selection',runId));if(validateLearningSelection(selection,{runId,expectedSha256:process.env.EXPECTED_LEARNING_SELECTION_SHA}).length)throw new Error('Trusted pre-model learning selection changed.');selectedSegment=selection.selectedSegment;selectedDemandSourceIds=selection.demandSourceIds;learningSelection=selection;}
+  if(learningSelection?.selectionStrategy==='mixed-recovery-v1'){
+   const batch=research.enrichment?.recoveryBatch;
+   if(!/^[a-f0-9]{64}$/.test(process.env.EXPECTED_RESEARCH_SHA||'')||sha256(stableJSON(research))!==process.env.EXPECTED_RESEARCH_SHA||!batch||batch.mode!==learningSelection.researchPolicy.mode||!Array.isArray(batch.leadAssignments)||batch.leadAssignments.some(item=>!learningSelection.eligibleSegments.includes(item.segment)||!learningSelection.demandSourceIds.includes(item.registrySourceId)))throw new Error('Mixed recovery assignments lack their exact sealed original research and eligible source/segment binding.');
+   recoveryBatchPolicy={...batch,researchSha256:process.env.EXPECTED_RESEARCH_SHA};
+   const accounted=new Set([...draft.posts,...(draft.candidates||[]),...(draft.rejected||[])].map(item=>canonicalURL(item.productUrl)));if(batch.leadAssignments.some(item=>!accounted.has(canonicalURL(item.productUrl))))throw new Error('The mixed writer omitted an assigned lead; every builder and demand assignment needs an explicit assessment or exclusion.');
+  }
   if(research.enrichment?.fallback===true){
     if(!learningSelection?.researchPolicy?.fallbackEnabled||!['fallback','repair'].includes(learningSelection.researchPolicy.mode)||research.enrichment.fallbackFrom?.status!=='no_new_leads'||research.enrichment.fallbackFrom.selected!==0||research.enrichment.fallbackFrom.attempted!==0||!/^[a-f0-9]{64}$/.test(process.env.EXPECTED_RESEARCH_SHA||'')||sha256(stableJSON(research))!==process.env.EXPECTED_RESEARCH_SHA)throw new Error('Builder fallback lacks the original pre-model no-fresh-demand research fingerprint.');
     const urls=(research.enrichment.observations||[]).filter(item=>item.status==='fetched').map(item=>canonicalURL(item.productUrl)),ids=research.enrichment.demandSignalIds;
@@ -87,6 +94,7 @@ try{
     selected=known.size?[...known.values()]:research.sources.filter(source=>typeof source?.id==='string'&&typeof source?.url==='string'&&typeof source?.text==='string'&&source.text.trim().length>=100).slice(0,8);
   }
   if(fallbackPolicy)selected=[...new Map([...selected,...fallbackPolicy.demandSourceIds.map(id=>research.sources.find(source=>source.id===id)).filter(Boolean)].map(source=>[source.id,source])).values()];
+  if(recoveryBatchPolicy)selected=[...new Map([...selected,...recoveryBatchPolicy.leadAssignments.flatMap(item=>[research.sources.find(source=>source.id===item.demandSourceId),...research.sources.filter(source=>source.enriched===true&&sameProduct(source,item.productUrl))]).filter(Boolean)].map(source=>[source.id,source])).values()];
   for(const source of selected){
     try{
       const definition=definitionFor(source);
@@ -94,7 +102,7 @@ try{
       if(definition&&sourceRole(definition)==='demand'){
         const fresh=await fetchDemandEvidence(source,{definition});sources.push(fresh);
         authorizedSources.push({sourceId:fresh.id,registrySourceId:definition.id,url:fresh.url,role:'demand',demandKind:sourceDemandKind(definition),segments:[fresh.segment]});
-      }else{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source)),text=plainText(page.text).slice(0,18000);if(text.length<100)throw new Error('Evidence source contained too little readable text.');sources.push({...source,text,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});}
+      }else{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source)),extracted=extractImplementationEvidence(page.text,{maxCharacters:source.enriched===true?8000:18000,minCharacters:100});if(!extracted)throw new Error('Evidence source has no useful complete privacy-safe capability section.');sources.push({...source,...extracted,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});}
     }
     catch(error){health.push({sourceId:source.id,url:source.url,status:'failed',message:safeError(error)});}
   }
@@ -104,7 +112,7 @@ try{
   // evidence of a failed request. Re-fetch each exact known candidate product
   // here so empty-batch exclusions have current guarded diagnostics too.
   if(!draft.posts.length)for(const item of considerationEvidence){
-    const requestedAt=new Date().toISOString(),existing=sources.find(source=>sameURL(source.url,item.productUrl));
+    const requestedAt=new Date().toISOString(),existing=sources.find(source=>sameURL(source.url,item.productUrl)||sameURL(source.productUrl,item.productUrl));
     const denied=health.find(entry=>sameURL(entry.url,item.productUrl));
     if(existing){primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId:existing.id,reason:'The candidate product URL was independently re-fetched in this check context.'});continue;}
     if(denied){primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'failed',sourceId:null,reason:denied.message});continue;}
@@ -132,7 +140,7 @@ try{
     try{const page=await fetchPublic(post.productUrl),text=plainText(page.text).slice(0,18000);if(text.length<100)continue;const sourceId=hash(post.productUrl);sources.push({id:sourceId,url:post.productUrl,title:post.title+' · official product',publisher:new URL(post.productUrl).hostname,text,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});post.sourceIds=[...new Set([...(post.sourceIds||[]),sourceId])].slice(0,4);}
     catch(error){health.push({url:post.productUrl,status:'failed',message:safeError(error)});}
   }
-  const demandContext=createDemandContext({registrySources,authorizedSources:[...new Map(authorizedSources.map(source=>[source.sourceId,source])).values()],posts:previous,selectedSegment,fallbackPolicy}),demandContextSha256=demandContextHash(demandContext);
+  const demandContext=createDemandContext({registrySources,authorizedSources:[...new Map(authorizedSources.map(source=>[source.sourceId,source])).values()],posts:previous,selectedSegment,fallbackPolicy,recoveryBatchPolicy}),demandContextSha256=demandContextHash(demandContext);
   const demandContract=demandRequired?{demandContractVersion:1,demandContext,demandContextSha256}:{};
   const demandFailures=demandContextReasons(demandContract);if(demandFailures.length)throw new Error(demandFailures.join(' ')+(health.length?' Guarded evidence retrieval: '+health.map(item=>item.message).join(' ').slice(0,500):''));
   if(demandRequired)for(const candidate of draft.candidates||[]){const reasons=demandEvidenceReasons(candidate,sources,{required:true,context:demandContract});if(reasons.length)throw new Error('A considered candidate did not begin with verifiable privacy-safe demand: '+reasons.join(' '));}

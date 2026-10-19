@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {hash,canonicalURL} from '../lib/storage.mjs';
 import {parseSourcePage,validateSource,scanSourceDefinitions,sourceSeedCatalog,sourceDefinitions,inferSourceKind,extractPublicFeedLinks,plainText} from '../lib/research.mjs';
 import {DEMAND_SOURCE_CATALOG} from '../lib/demand-sources.mjs';
+import {privateArtifactReasons} from '../lib/privacy.mjs';
 const now='2026-10-11T12:00:00.000Z';
 const definition=(kind,url='https://example.com/feed')=>({id:hash(canonicalURL(url)),name:'Public test source',url,kind});
 function page(text,url='https://example.com/feed',contentType='text/html'){
@@ -37,6 +38,15 @@ test('n8n listing adapter excludes navigation, scripts, foreign cards and unveri
  assert.throws(()=>parseSourcePage(definition('n8n-workflows',url),page(good,'https://outside.example.org/')),/public n8n HTML origin/);
  assert.throws(()=>parseSourcePage(definition('n8n-workflows',url),page(good,url,'application/json')),/public n8n HTML origin/);
  let fetched=false;const refused=await validateSource({name:'Forbidden template API',kind:'n8n-workflows',url:'https://api.n8n.io/api/templates/search'},{fetchPage:async()=>{fetched=true;throw Error('Must not fetch the API.');}});assert.equal(refused.eligible,false);assert.equal(refused.code,'invalid_definition');assert.equal(fetched,false);
+});
+
+test('n8n listing retains literal title and separate safe capability paragraph without creator/profile material',async()=>{
+ const url='https://n8n.io/workflows/categories/invoice-processing/',title='Process invoice emails for review',description='This workflow monitors an invoice inbox, extracts PDF fields and creates draft vendor bills for human review.';
+ const card=(id,body)=>`<a class="workflow-result-item" href="/workflows/${id}-invoice-review/"><h3>${title}</h3><div class="workflow-details"><p>Creator @private_contact</p></div>${body}</a>`;
+ const html=card(17582,`<div class="workflow-desc">Quick overview\n\n${description}\n\nTruncated next paragraph...</div>`)+card(16602,`<div class="workflow-desc"><p>${description} Contact @private_contact.</p></div>`)+card(6480,`<div>Unknown structure ${description}</div>`);
+ const items=parseSourcePage(definition('n8n-workflows',url),page(html,url));assert.equal(items.length,3);assert.equal(items[0].text,`${title} ${description}`);assert.equal(items[1].text,title);assert.equal(items[2].text,title);
+ for(const item of items){assert.equal(item.id,hash(item.url));assert.equal(item.productUrl,item.url);assert.deepEqual(privateArtifactReasons(item),[]);assert.doesNotMatch(item.text,/private_contact|Quick overview|Truncated/);}
+ const scan=await scanSourceDefinitions([definition('n8n-workflows',url)],{fetchPage:async()=>page(html,url)});assert.equal(scan.sources.length,3);assert.equal(scan.privacyOmissions,undefined);assert.deepEqual(scan.originMap.map(row=>row.sourceId),items.map(item=>item.id));
 });
 
 test('RSS and Atom parse complete bounded feeds and preserve contiguous literal evidence text',()=>{

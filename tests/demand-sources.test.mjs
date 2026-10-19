@@ -117,11 +117,31 @@ test('English public job feeds retain concrete literal tasks while omitting cont
  assert.ok(item.taskExcerpts.includes(task));assert.ok(item.taskExcerpts.includes('Manage the customer inbox and resolve refund requests'));assert.equal(demandTaskCount(item),2);assert.equal(item.demandEvidence.paid,true);assert.equal(item.demandKind,'paid_job');assert.ok(item.text.length<=1200);assert.deepEqual(privateArtifactReasons(item),[]);assert.doesNotMatch(JSON.stringify(item),/Private Person|Alice|resume|@/);
  assert.throws(()=>parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${task}</p>`,{title:'Senior Software Engineer'}))),/No current concrete/);
 });
+test('public job titles exclude technical customer-facing engineering while retaining nontechnical operations',()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='wwr-demand'),url='https://weworkremotely.com/remote-jobs/example-operations',task='Manage the customer inbox and resolve refund requests';
+ for(const title of ['Technical Account Manager','Senior Solutions Engineer','Sales Engineer','Customer Support Engineer','Software Integration Engineer','Integration Engineer'])assert.throws(()=>parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${task}</p>`,{title}))),failure=>failure.code==='no_eligible_demand_tasks');
+ for(const title of ['Customer Support Specialist','Account Manager','Office Administrator'])assert.equal(parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${task}</p>`,{title})))[0].taskExcerpts[0],task);
+});
 test('merchant feed requests establish a public problem without inventing willingness to pay or copying author identity',()=>{
  const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='woocommerce-demand'),url='https://wordpress.org/support/topic/repeated-invoice-export/';
  const task='I need to export paid orders into an invoice spreadsheet every week';
  const item=parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${task}</p><p>My email is private@example.org</p>`)))[0];
  assert.equal(item.segment,'ecommerce');assert.equal(item.demandKind,'community_request');assert.equal(item.demandEvidence.paid,undefined);assert.ok(item.text.includes(task));assert.match(item.text,/willingness to pay.*remain hypotheses/);assert.deepEqual(privateArtifactReasons(item),[]);assert.equal(item.creator,undefined);
+});
+
+test('merchant diagnostics and one-off plugin failures are excluded while literal bulk and shipping workflows remain',()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='woocommerce-demand'),url='https://wordpress.org/support/topic/business-workflow-request/';
+ for(const diagnostic of ['Order datastore: WC_Order_Data_Store_CPT','I modified meta.php in my child theme to manage all orders every day','The payment failed with an API error and the checkout stopped working','The customer profile shows the wrong product count across multiple orders','I need a plugin to assign shipping rates but the checkout crashes'])assert.throws(()=>parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${diagnostic}</p>`))),/No current concrete/);
+ for(const task of ['How can I bulk export paid orders into an invoice spreadsheet every week','I need to define custom locations and assign shipping rates using comma-separated lists','I need a tool to export customer records','I am looking for a service to process invoice documents']){
+  const item=parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${task}</p>`)))[0];assert.ok(item.taskExcerpts.includes(task));assert.equal(item.demandEvidence.paid,undefined);assert.deepEqual(privateArtifactReasons(item),[]);
+ }
+});
+
+test('valid RSS with no eligible business task has bounded typed exhaustion while malformed feeds remain failures',()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='woocommerce-demand'),url='https://wordpress.org/support/topic/diagnostic-only/';
+ assert.throws(()=>parseDemandSourcePage(def,publicPage(def,rss(url,'<p>Order datastore: WC_Order_Data_Store_CPT</p>'))),failure=>failure.code==='no_eligible_demand_tasks'&&assert.deepEqual(failure.emptyFeed,{schema:1,format:'rss',examinedItems:1,eligibleItems:0})===undefined);
+ assert.throws(()=>parseDemandSourcePage(def,publicPage(def,'<rss><channel><title>Public empty feed</title></channel></rss>')),failure=>failure.code==='no_eligible_demand_tasks'&&failure.emptyFeed.examinedItems===0);
+ for(const invalid of ['<rss><channel>','<feed><entry/></feed>','<rss/>','<rss><channel>Broken structure</channel></rss>'])assert.throws(()=>parseDemandSourcePage(def,publicPage(def,invalid)),failure=>failure.code!=='no_eligible_demand_tasks'&&!failure.emptyFeed);
 });
 test('TED competition records retain fresh task descriptions and refuse results, expired deadlines and incomplete searches',()=>{
  const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='ted-service-demand'),row={'publication-number':'721351-2026','publication-date':'2026-10-19+02:00','notice-type':'cn-standard','classification-cpv':['79500000'],'description-proc':{eng:'Provide document processing and weekly administration reports.'},'notice-title':{eng:'Public document administration services'},'deadline-date-lot':['2026-11-10+02:00'],buyer:{email:'private@example.org'}};

@@ -7,13 +7,18 @@ import {parseScoringPolicy} from '../lib/scoring.mjs';
 import {readPublicSourceRegistry,loadSourceRegistryData,registryDefinitions,createSourceScanReceipt} from '../lib/source-registry.mjs';
 import {validateCurationReceipts} from '../lib/curation.mjs';
 import {trustedScheduledMetadata} from './prepare-scheduled-job.mjs';
-import {enrichProductLeads,enrichBuilderFallback} from '../lib/product-evidence.mjs';
+import {enrichProductLeads,enrichBuilderFallback,enrichMixedRecoveryBatch} from '../lib/product-evidence.mjs';
 import {candidateHistory} from '../lib/candidate-input.mjs';
 import {loadLearningState,loadDemandFeedAvailability,selectLearningTargets,validResearchPolicy} from '../lib/learning.mjs';
 import {retainSafeBuildingScan,retainSafeBuildingEnrichment} from '../lib/research-privacy.mjs';
 import {privateArtifactReasons} from '../lib/privacy.mjs';
 import {createNoFreshLeadsReceipt} from '../lib/no-fresh-leads.mjs';
 import {loadSocialDemandArtifact} from '../lib/social-demand.mjs';
+
+export function recoveryBuildingDefinitions(registry,limit,ranked=registryDefinitions(registry)){
+ const useful=source=>['active','probation'].includes(source.status)&&sourceRole(source)==='building',primary=registry.sources.filter(source=>useful(source)&&source.kind==='n8n-workflows'&&/invoice|document/i.test(source.name+' '+source.url)),remaining=ranked.filter(source=>sourceRole(source)==='building'),seen=new Set();
+ return [...primary,...remaining].filter(source=>{if(seen.has(source.id))return false;seen.add(source.id);return true;}).slice(0,Math.max(0,Math.min(20,limit))).map(({id,name,url,kind})=>({id,name,url,kind}));
+}
 
 export async function registryInput(root=ROOT,now=new Date()){
  const currentPolicy=parseScoringPolicy(await fs.readFile(path.join(root,'RULES.md'),'utf8'));
@@ -39,7 +44,7 @@ export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=sca
   if(!validResearchPolicy(researchPolicy))throw new Error('Trusted watchdog research policy is invalid.');
   const recentAssessments=history.recentAssessments.filter(item=>Date.parse(item.assessedAt)>new Date(now).getTime()-researchPolicy.cooldownHours*3600000);
   const scoreboard=await loadLearningState({root,registry,posts:input?.posts||[],now}),availability=researchPolicy.fallbackEnabled?null:await loadDemandFeedAvailability({root,registry,recentAssessments,now});learningSelection=selectLearningTargets({runId,registry,scoreboard,posts:input?.posts||[],availability,researchPolicy,now,producer:{repository:env.GITHUB_REPOSITORY,runId:env.GITHUB_RUN_ID,runAttempt:Number(env.GITHUB_RUN_ATTEMPT),workflow:'loop.yml',stage:'pre_model',headSha:env.SOURCE_HEAD_SHA||env.GITHUB_SHA}});
-  const demand=(registry.sources||[]).filter(source=>learningSelection.demandSourceIds.includes(source.id)).map(({id,name,url,kind})=>({id,name,url,kind}));definitions=[...demand,...definitions.filter(source=>sourceRole(source)==='building').slice(0,20-demand.length)];
+  const demand=(registry.sources||[]).filter(source=>learningSelection.demandSourceIds.includes(source.id)).map(({id,name,url,kind})=>({id,name,url,kind}));definitions=[...demand,...(learningSelection.selectionStrategy==='mixed-recovery-v1'?recoveryBuildingDefinitions(registry,20-demand.length,definitions):definitions.filter(source=>sourceRole(source)==='building').slice(0,20-demand.length))];
   await writeJSON(path.join(root,'data','learning-selection',runId+'.json'),learningSelection,{immutable:true});
   // Preserve the search decision even if the subsequent guarded scan fails.
   if(env.GITHUB_OUTPUT)await fs.appendFile(env.GITHUB_OUTPUT,`learning_selection_sha256=${sha256(stableJSON(learningSelection))}\nsource_scan_head_sha=${learningSelection.producer.headSha}\n`);
@@ -55,9 +60,11 @@ export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=sca
  }
  // The feed receipt fingerprints exactly the original scan. Added documentation
  // never changes its feed item counts, original IDs, URLs or attribution tuples.
- let enriched=enrich?await enrich({sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),...(researchPolicy?{limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours}:{}),now:()=>new Date(now).getTime()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
- if(enrich===enrichProductLeads&&researchPolicy?.fallbackEnabled&&enriched.enrichment.status==='no_new_leads')enriched=await enrichBuilderFallback({initial:enriched,sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,learningSelection,demandDefinitions:definitions,now:()=>new Date(now).getTime(),limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours});
+ const enrichRunner=enrich===enrichProductLeads&&learningSelection?.selectionStrategy==='mixed-recovery-v1'?enrichMixedRecoveryBatch:enrich;
+ let enriched=enrichRunner?await enrichRunner({sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),...(researchPolicy?{limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours}:{}),now:()=>new Date(now).getTime()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
+ if(enrich===enrichProductLeads&&learningSelection?.selectionStrategy!=='mixed-recovery-v1'&&researchPolicy?.fallbackEnabled&&enriched.enrichment.status==='no_new_leads')enriched=await enrichBuilderFallback({initial:enriched,sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,learningSelection,demandDefinitions:definitions,now:()=>new Date(now).getTime(),limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours});
  const retained=retainSafeBuildingEnrichment(enriched.sources,result,definitions),sources=retained.sources,scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?env:{GITHUB_EVENT_NAME:env.GITHUB_EVENT_NAME});
+ if(enriched.enrichment.recoveryBatch)enriched.enrichment.recoveryBatch.leadAssignments=enriched.enrichment.recoveryBatch.leadAssignments.filter(item=>sources.some(source=>source.id===item.demandSourceId&&source.role==='demand'&&source.enriched===true)&&sources.some(source=>source.enriched===true&&[source.productUrl,source.url].includes(item.productUrl)));
  const enrichmentFailed=enrich&&enriched.enrichment.status==='failed';
  const snapshot={id:runId,runId,createdAt:new Date(now).toISOString(),sources,health,enrichment:enriched.enrichment,...(result.privacyOmissions?{privacyOmissions:result.privacyOmissions}: {}),...(retained.privacyOmissions?{enrichmentPrivacyOmissions:retained.privacyOmissions}: {}),...(learningSelection?{learningSelection}: {}),...(researchPolicy?{researchPolicy}:{}),...(socialDiscovery?{socialDiscovery}:{}),...scheduling,scheduleStatus:originalSources.length>=3&&sources.length>=3&&!enrichmentFailed?'completed':'failed',githubRunUrl:env.GITHUB_SERVER_URL&&env.GITHUB_REPOSITORY&&env.GITHUB_RUN_ID?`${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}`:null};
  if(privateArtifactReasons(snapshot).length)throw new Error('Strict privacy guard refused research evidence before storage.');

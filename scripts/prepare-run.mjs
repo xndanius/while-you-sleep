@@ -33,6 +33,7 @@ if(['writer','repair'].includes(role)){
  if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,'ready=true\nno_fresh_leads=false\n');
  context.originalResearchPath=context.researchPath;context.researchPath='.run/writer-research.json';
  context.researchPolicy=snapshot.learningSelection?.researchPolicy||null;context.builderFallback=readiness.fallback===true;context.demandSignalIds=context.builderFallback?snapshot.enrichment.demandSignalIds||[]:[];
+ context.mixedRecovery=readiness.mixedRecovery===true;context.recoveryBatch=context.mixedRecovery?snapshot.enrichment.recoveryBatch:null;
  context.selectedSegment=snapshot.learningSelection?.selectedSegment||null;
  if(context.demandContractVersion===1){const selection=await readJSON(dataPath('learning-selection',runId));if(selection.runId!==runId)throw new Error('Demand-first writer has no matching trusted learning selection.');context.selectedSegment=selection.selectedSegment;}
  if(role==='repair'){const frozen=await readJSON(dataPath('check-context',runId));context.selectedSegment=frozen.demandContext?.selectedSegment||context.selectedSegment;}

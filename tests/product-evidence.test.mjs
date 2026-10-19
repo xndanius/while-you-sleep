@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import {promises as fs} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import {PRODUCT_EVIDENCE_POLICY,PRODUCT_SELECTION_POLICY,selectProductLeads,enrichProductLeads,sourceEvidenceFetchOptions,recentProductAssessments} from '../lib/product-evidence.mjs';
+import {PRODUCT_EVIDENCE_POLICY,PRODUCT_SELECTION_POLICY,selectProductLeads,enrichProductLeads,enrichMixedRecoveryBatch,sourceEvidenceFetchOptions,recentProductAssessments} from '../lib/product-evidence.mjs';
 import {hash,sha256,stableJSON,canonicalURL,writeJSON} from '../lib/storage.mjs';
 import {emptySourceRegistry,applySourceTransition,createSourceScanReceipt,validateSourceScanReceipt} from '../lib/source-registry.mjs';
 import {researchSnapshot} from '../scripts/research-snapshot.mjs';
 import {DEMAND_SOURCE_CATALOG,parseDemandSourcePage,fetchDemandEvidence,demandEvidenceFingerprint} from '../lib/demand-sources.mjs';
 import {fetchPublic} from '../lib/source-fetch.mjs';
-import {writerResearchView} from '../lib/candidate-input.mjs';
+import {writerResearchView,writerReadiness} from '../lib/candidate-input.mjs';
 
 const now='2026-10-11T15:00:00.000Z';
 const capability='The product reads uploaded invoice documents, extracts structured fields, and exports CSV files for review. The operator chooses the documents and checks the result before sending records. It includes a command line interface and documented configuration; running it still requires a server, credentials and human approval. ';
@@ -51,6 +51,13 @@ function implementationFixture(){
  const sources=[demand,repository,product,unrelated],originMap=[origin(demand,definition.id),...[repository,product,unrelated].map(item=>origin(item))];
  return {row,demand,repository,product,unrelated,options:{sources,originMap,learningSelection:{selectedSegment:'professional_services',demandSourceIds:[definition.id]},demandDefinitions:[definition],now:()=>Date.parse(now),limit:10,cooldownHours:3}};
 }
+test('mixed recovery always fetches three builder leads and counts their public demand feed against cap three',async()=>{
+ const f=implementationFixture(),definition=f.options.demandDefinitions[0],builders=[1,2,3].map(i=>({...source(100+i,{url:`https://docs.example.org/invoice-${i}`}),title:'Invoice workflow',text:'This workflow monitors an invoice queue every day, extracts the invoice fields and prepares a reviewed accounting export for a human to approve. The recurring public workflow description establishes a retrieval lead only.'})),generic={...source(150,{url:'https://docs.example.org/documents'}),title:'Process large documents with OCR',text:'A technical toolkit for large document contexts and integration settings.'},learningSelection={selectionStrategy:'mixed-recovery-v1',selectedSegment:null,eligibleSegments:['professional_services'],demandSourceIds:[definition.id],researchPolicy:{mode:'repair',widened:true,fallbackEnabled:true,maxLeads:10,cooldownHours:3}},sources=[f.demand,generic,...builders],originMap=[origin(f.demand,definition.id),origin(generic),...builders.map(item=>origin(item))];let calls=0;
+ const result=await enrichMixedRecoveryBatch({...f.options,learningSelection,sources,originMap,fetchPage:async(url,options)=>{calls++;assert.notEqual(url,generic.url,'concrete described business chores outrank a broad document heading');return url===f.demand.url?page(url,JSON.stringify(f.row),{...options,contentType:'application/json'}):page(url,capability.repeat(3),options);}}),assignments=result.enrichment.recoveryBatch.leadAssignments;
+ assert.equal(result.enrichment.selected,3,'three builders consume the complete quota of this sole demand feed');assert.equal(assignments.length,3);assert.ok(assignments.every(item=>item.kind==='builder'&&item.demandSourceId===f.demand.id&&item.registrySourceId===definition.id));assert.equal(result.enrichment.observations.length,3);assert.equal(calls,4,'one separately fetched signal corroborates three distinct builder leads');assert.ok(result.enrichment.requests<=30);assert.equal(writerReadiness({...result,learningSelection},{demandRequired:true}).ready,true);
+ const unrelated='This workflow generates email notifications from supplied text and sends a draft message to a reviewer. A person chooses the message and reviews the generated text before it is sent. The page documents configuration of the message delivery and the human review step. '.repeat(3);
+ const mismatch=await enrichMixedRecoveryBatch({...f.options,learningSelection,sources,originMap,fetchPage:async(url,options)=>url===f.demand.url?page(url,JSON.stringify(f.row),{...options,contentType:'application/json'}):page(url,unrelated,options)});assert.equal(mismatch.enrichment.recoveryBatch.leadAssignments.length,0);assert.ok(mismatch.enrichment.observations.every(row=>row.code==='fresh_implementation_task_mismatch'));assert.equal(writerReadiness({...mismatch,learningSelection},{demandRequired:true}).ready,false,'fresh unrelated capability text cannot fabricate the mandatory three');
+});
 
 test('two matching implementation references get fresh bounded docs without becoming extra assessed leads',async()=>{
  const f=implementationFixture(),calls=[],raw='https://raw.githubusercontent.com/public/invoice-reports/main/README.md';
@@ -67,10 +74,10 @@ test('support documents share the original timeout and failed support does not e
  assert.ok(Date.now()-started<1000);assert.equal(result.enrichment.status,'completed');assert.equal(result.enrichment.fetched,1);assert.equal(result.enrichment.observations.length,1);assert.equal(result.enrichment.supportingReferences.observations.length,1);assert.equal(result.enrichment.supportingReferences.observations[0].code,'product_evidence_timeout');assert.ok(result.enrichment.requests+result.enrichment.supportingReferences.requests<=30);
 });
 
-test('ten demand candidates stay ten when support documentation is also retrieved',async()=>{
+test('one demand feed stays capped at three assessed leads while support docs remain separate',async()=>{
  const f=implementationFixture(),definition=f.options.demandDefinitions[0],rows=Array.from({length:12},(_,i)=>demandJob(111+i,'Registrera fakturor och sammanställa rapporter för granskning.')),demand=parseDemandSourcePage(definition,page(definition.url,JSON.stringify({hits:rows}),{contentType:'application/json'})),sources=[...demand,f.product,f.unrelated],byURL=new Map(demand.map((item,i)=>[item.url,rows[i]]));let requests=0;
  const result=await enrichProductLeads({...f.options,sources,originMap:[...demand.map(item=>origin(item,definition.id)),origin(f.product),origin(f.unrelated)],fetchPage:async(url,options)=>{requests++;assert.notEqual(url,f.unrelated.url);return byURL.has(url)?page(url,JSON.stringify(byURL.get(url)),{...options,contentType:'application/json'}):page(url,capability.repeat(8),options);}});
- assert.equal(result.enrichment.selected,10);assert.equal(result.enrichment.observations.length,10);assert.equal(result.enrichment.supportingReferences.observations.length,1);assert.equal(result.enrichment.requests+result.enrichment.supportingReferences.requests,requests);assert.ok(requests<=30);
+ assert.equal(result.enrichment.selected,3);assert.equal(result.enrichment.observations.length,3);assert.equal(result.enrichment.supportingReferences.observations.length,1);assert.equal(result.enrichment.requests+result.enrichment.supportingReferences.requests,requests);assert.ok(requests<=30);
 });
 
 test('demand retrieval prefers literal tasks to longer broad descriptions without assigning editorial scores',()=>{

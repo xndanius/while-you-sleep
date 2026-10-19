@@ -30,6 +30,11 @@ test('English support, merchant operations and marketing chores select matching 
  assert.deepEqual(selectBuildingReferences(sources,[{taskExcerpts:['Do a general service']}],{limit:2,matchedOnly:true}),[]);
 });
 
+test('shipping requests do not select invoice-email references from a generic order mention',()=>{
+ const invoice={...reference('invoice-email','invoice.example','Invoice emails and payment reminders'),text:'Read an email in order to prepare invoice payment reminders.'},shipping=reference('shipment-tracker','shipping.example','Track shipping rates and shipment status'),source={taskExcerpts:['I need to assign shipping rates to custom locations using comma-separated lists']};
+ assert.deepEqual(selectBuildingReferences([invoice,shipping],[source],{limit:2,matchedOnly:true}),[shipping]);
+});
+
 test('late relevant building references replace unrelated early items without changing source identity or the eight-item bound',()=>{
  const unrelated=Array.from({length:8},(_,i)=>reference('support-'+i,'news.example','Customer support inbox'));
  const invoice=reference('invoice-ocr','n8n.example','Extract invoice data from PDF documents');
