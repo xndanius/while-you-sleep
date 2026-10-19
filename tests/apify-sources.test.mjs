@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,readFile,readdir,rm,writeFile} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import {spawnSync} from 'node:child_process';
 import {APIFY_ACTORS,apifyAvailability,apifyArtifactProducer,canonicalApifyPostURL,normalizeApifyPosts,apifyJSON,reserveApifyBatch,collectApifyPool,loadApifyPool,validateApifyPoolProof,rereadApifyEvidence,apifyBudget,apifyHealthFromReceipts} from '../lib/apify-sources.mjs';
 import {runApifySources} from '../scripts/collect-apify-sources.mjs';
 const now=new Date('2026-10-19T08:00:00Z'),task='Every week I manually copy customer invoices into spreadsheets and check unpaid balances.';
@@ -53,4 +54,13 @@ test('provider transport blocks alternate paths, token query strings, redirects 
 test('the actual hosted research job is trusted and absent-token status is safe, visible and complete',async t=>{
  const producer={GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_REF:'refs/heads/main',GITHUB_RUN_ID:'123',GITHUB_RUN_ATTEMPT:'1',GITHUB_WORKFLOW_REF:'xndanius/while-you-sleep/.github/workflows/research.yml@refs/heads/main',GITHUB_JOB:'research',GITHUB_SHA:'a'.repeat(40)};assert.equal(apifyArtifactProducer(producer).job,'research');assert.throws(()=>apifyArtifactProducer({...producer,GITHUB_JOB:'writer'}));
  const root=await temp(t),output=path.join(root,'output');await runApifySources({root,runId:'research-123-1',env:{GITHUB_OUTPUT:output},now,fetchImpl:()=>{throw new Error('Never call a live actor in tests');}});const status=JSON.parse(await readFile(path.join(root,'data/apify/status.json'),'utf8'));assert.equal(status.status,'disabled');assert.equal(status.health.length,4);assert.ok(status.health.every(row=>row.reason==='awaiting_apify_token'&&row.status==='disabled'));assert.equal(status.budget.limitUsd,10);assert.match(await readFile(output,'utf8'),/apify_committed=false\ncommitted=false/);
+});
+test('disabled provider status persists on a fresh hosted checkout with no Git identity and no provider calls',async t=>{
+ const root=await temp(t),remote=path.join(await temp(t),'remote.git'),globalConfig=path.join(await temp(t),'empty-gitconfig');await writeFile(globalConfig,'');
+ const env={PATH:process.env.PATH,GIT_CONFIG_NOSYSTEM:'1',GIT_CONFIG_GLOBAL:globalConfig,GIT_CONFIG_COUNT:'1',GIT_CONFIG_KEY_0:'user.useConfigOnly',GIT_CONFIG_VALUE_0:'true',GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_REF:'refs/heads/main',GITHUB_RUN_ID:'123',GITHUB_RUN_ATTEMPT:'1',GITHUB_WORKFLOW_REF:'xndanius/while-you-sleep/.github/workflows/research.yml@refs/heads/main',GITHUB_JOB:'research'};
+ const git=(args,status=0)=>{const r=spawnSync('git',args,{cwd:root,env,encoding:'utf8'});assert.equal(r.status,status,r.stderr);return r.stdout.trim();};
+ git(['init','--bare',remote]);git(['init','-b','main']);await writeFile(path.join(root,'README'),'Fixture repository.\n');await writeFile(path.join(root,'.gitignore'),'.run/\noutputs\n');git(['add','.']);git(['-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-m','Fixture baseline']);git(['remote','add','origin',remote]);git(['push','-u','origin','main']);
+ git(['config','--get','user.name'],1);git(['config','--get','user.email'],1);env.GITHUB_SHA=git(['rev-parse','HEAD']);env.GITHUB_OUTPUT=path.join(root,'outputs');let calls=0;
+ await runApifySources({root,runId:'research-123-1',env,now,fetchImpl:()=>{calls++;throw new Error('No live provider request is permitted.');}});
+ assert.equal(calls,0);assert.equal(git(['status','--porcelain']),'');assert.equal(git(['rev-parse','HEAD']),git(['ls-remote','origin','refs/heads/main']).split(/\s/)[0]);assert.equal(JSON.parse(git(['show','HEAD:data/apify/status.json'])).status,'disabled');assert.match(await readFile(env.GITHUB_OUTPUT,'utf8'),/apify_committed=true\ncommitted=true/);
 });

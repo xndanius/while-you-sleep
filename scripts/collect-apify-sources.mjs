@@ -7,15 +7,16 @@ import {APIFY_ACTORS,collectApifyPool,rereadApifyEvidence,apifyHealth,apifyBudge
 
 const providerDirectories=['data/apify-reservations','data/apify-receipts','data/apify-pools','data/apify'];
 function gitFor(root,env){return args=>{const r=spawnSync('git',args,{cwd:root,encoding:'utf8',env});if(r.status!==0)throw new Error('Apify record persistence failed; no provider details were logged.');return r.stdout.trim();};}
+function configureBotIdentity(git){git(['config','user.name','Autonomous Startup Ideas retrieval']);git(['config','user.email','41898282+github-actions[bot]@users.noreply.github.com']);}
 function trustedHosted(env){if(env.GITHUB_ACTIONS!=='true')return false;apifyArtifactProducer(env);return true;}
 export async function persistApifyReservation({root=ROOT,receipt,file,env=process.env}){
  if(!trustedHosted(env))return;
  if(file!==`data/apify-reservations/${receipt.id}.json`)throw new Error('Provider reservation path is outside the fixed ledger.');
- const git=gitFor(root,env);git(['config','user.name','Autonomous Startup Ideas retrieval']);git(['config','user.email','41898282+github-actions[bot]@users.noreply.github.com']);git(['add','--',file]);git(['commit','-m',`source budget: ${receipt.id} · reserve bounded public-discussion retrieval`]);git(['pull','--rebase','origin','main']);git(['push','origin','HEAD:main']);
+ const git=gitFor(root,env);configureBotIdentity(git);git(['add','--',file]);git(['commit','-m',`source budget: ${receipt.id} · reserve bounded public-discussion retrieval`]);git(['pull','--rebase','origin','main']);git(['push','origin','HEAD:main']);
  const committed=JSON.parse(git(['show',`HEAD:${file}`]));if(sha256(stableJSON(committed))!==sha256(stableJSON(receipt)))throw new Error('Committed Apify reservation differs from its sealed request.');
 }
 export async function persistApifyRecords({root=ROOT,env=process.env,runId}){
- if(!trustedHosted(env))return false;const git=gitFor(root,env);
+ if(!trustedHosted(env))return false;const git=gitFor(root,env);configureBotIdentity(git);
  for(const dir of providerDirectories){try{await fs.access(path.join(root,dir));git(['add','--',dir]);}catch{/* No token or no eligible batch produces no provider record directory. */}}
  if(!git(['diff','--cached','--name-only']).split('\n').some(file=>providerDirectories.some(dir=>file.startsWith(dir+'/'))))return false;
  git(['commit','-m',`sources: ${runId} · record sanitized Apify batches and actor health`]);git(['pull','--rebase','origin','main']);git(['push','origin','HEAD:main']);return true;
