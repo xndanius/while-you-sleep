@@ -5,13 +5,19 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import os from 'node:os';
-import {candidateIdentity,sha256,stableJSON} from '../lib/storage.mjs';
-import {completedAssessmentReasons,assessmentJobReasons,verifyPublishedPost} from '../lib/validation.mjs';
+import {candidateIdentity,hash,sha256,stableJSON} from '../lib/storage.mjs';
+import {completedAssessmentReasons,assessmentJobReasons,verifyPublishedPost,checkApproval} from '../lib/validation.mjs';
 import {parseScoringPolicy,SCORING_KEYS} from '../lib/scoring.mjs';
 import {loopDecision} from '../lib/loop-schedule.mjs';
 import {checkerOutputSchema,acceptCheckerOutput,unverifiedAssessment} from '../lib/checker-output.mjs';
 import {slotOutcome} from '../lib/loop-schedule.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
+import {enrichProductLeads} from '../lib/product-evidence.mjs';
+import {writerResearchView} from '../lib/candidate-input.mjs';
+import {DEMAND_SOURCE_CATALOG,parseDemandSourcePage} from '../lib/demand-sources.mjs';
+import {selectLearningTargets} from '../lib/learning.mjs';
+import {plainText} from '../lib/research.mjs';
+import {privateArtifactCategories} from '../lib/privacy.mjs';
 
 const now='2026-10-11T12:20:00.000Z',runId='loop-123-1';
 const rules='# Rules\n<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n';
@@ -55,7 +61,7 @@ function fixture({count=1,legacy=false,mode='hourly'}={}){
  ],scoreChecks:SCORING_KEYS.map(criterion=>({criterion,supported:true,maxSupportedScore:6,reason:criterion==='profit'?'Hypothesis: an administration buyer without proven demand.':'The source supports a bounded extraction experiment with review.',sourceId:sources[index].id,evidenceQuote:'extracts structured fields for review'}))}));
  const value={scheduling,draft,context,manifest:{runId,checks,checkedAt:now},jobs:structuredClone(jobs)};bind(value);return value;
 }
-async function execute(t,{count=1,legacy=false,mode='hourly',mutate=()=>{},afterBind=()=>{},mutateResearch=()=>{},script='finalize-run',liveStatus=200,liveText=text,liveByUrl={},checkerResponse,missing,relayConfirmed=true}={}){
+async function execute(t,{count=1,legacy=false,mode='hourly',mutate=()=>{},afterBind=()=>{},mutateResearch=()=>{},script='finalize-run',liveStatus=200,liveText=text,liveByUrl={},checkerResponse,missing,relayConfirmed=true,extraRecords=[],envOverrides={}}={}){
  const root=await mkdtemp(path.join(os.tmpdir(),'wys-assessment-'));t.after(()=>rm(root,{recursive:true,force:true}));
  await cp(new URL('../lib',import.meta.url),path.join(root,'lib'),{recursive:true});
  await mkdir(path.join(root,'public'));for(const file of ['schedule.js','cadence-config.js'])await cp(new URL('../public/'+file,import.meta.url),path.join(root,'public',file));
@@ -67,13 +73,13 @@ async function execute(t,{count=1,legacy=false,mode='hourly',mutate=()=>{},after
  const schedulingSha256=sha256(stableJSON(f.scheduling));
  const research={runId,createdAt:now,sources:f.context.sources,health:[],githubRunUrl:f.scheduling.githubRunUrl};
  mutateResearch(research);
- for(const [directory,record] of [['scheduling',f.scheduling],['slot-reservations',{...f.scheduling,schedulingSha256}],['drafts',f.draft],['check-context',f.context],['checks',f.manifest],['research',research]]){
-  if(directory===missing)continue;await mkdir(path.join(root,'data',directory),{recursive:true});await writeFile(path.join(root,'data',directory,runId+'.json'),JSON.stringify(record));
+ for(const [directory,record,name=runId] of [['scheduling',f.scheduling],['slot-reservations',{...f.scheduling,schedulingSha256}],['drafts',f.draft],['check-context',f.context],['checks',f.manifest],['research',research],...extraRecords]){
+  if(directory===missing)continue;await mkdir(path.join(root,'data',directory),{recursive:true});await writeFile(path.join(root,'data',directory,name+'.json'),JSON.stringify(record));
  }
  if(checkerResponse){await mkdir(path.join(root,'.run'),{recursive:true});await writeFile(path.join(root,'.run','checker-response.json'),JSON.stringify(typeof checkerResponse==='function'?checkerResponse(f):checkerResponse));}
  const preload=`import dns from 'node:dns/promises';import {syncBuiltinESMExports} from 'node:module';const NativeDate=Date;globalThis.Date=class extends NativeDate{constructor(...args){super(...(args.length?args:[${JSON.stringify(now)}]));}static now(){return NativeDate.parse(${JSON.stringify(now)});}};dns.lookup=async()=>[{address:'203.0.113.10',family:4}];syncBuiltinESMExports();let count=0;const mapped=${JSON.stringify(liveByUrl)};globalThis.fetch=async url=>{count++;const match=mapped[url];return new Response(match?.text??${JSON.stringify(liveText)},{status:match?.status??${liveStatus},headers:{'content-type':'text/plain'}});};process.on('exit',()=>console.log('FETCH_COUNT '+count));`;
  await writeFile(path.join(root,'preload.mjs'),preload);
- const env={PATH:process.env.PATH,NODE_OPTIONS:`--import=${path.join(root,'preload.mjs')}`,GITHUB_ACTIONS:'true',GITHUB_EVENT_NAME:'workflow_dispatch',RUN_ID:runId,LOOP_SCHEDULING_SHA:schedulingSha256,EXPECTED_DRAFT_SHA:sha256(stableJSON(f.draft)),EXPECTED_CONTEXT_SHA:sha256(stableJSON(f.context)),RULES_SHA256:f.context.rulesSha256,MODEL_JOB_RESULTS:JSON.stringify(f.jobs),GITHUB_OUTPUT:path.join(root,'outputs')};
+ const env={PATH:process.env.PATH,NODE_OPTIONS:`--import=${path.join(root,'preload.mjs')}`,GITHUB_ACTIONS:'true',GITHUB_EVENT_NAME:'workflow_dispatch',RUN_ID:runId,LOOP_SCHEDULING_SHA:schedulingSha256,EXPECTED_DRAFT_SHA:sha256(stableJSON(f.draft)),EXPECTED_CONTEXT_SHA:sha256(stableJSON(f.context)),RULES_SHA256:f.context.rulesSha256,MODEL_JOB_RESULTS:JSON.stringify(f.jobs),GITHUB_OUTPUT:path.join(root,'outputs'),...envOverrides};
  const execution=spawnSync(process.execPath,[`scripts/${script}.mjs`,runId],{cwd:root,env,encoding:'utf8'});
  const record=async directory=>JSON.parse(await readFile(path.join(root,'data',directory,runId+'.json'),'utf8'));
  return {root,f,execution,record,outputs:await readFile(path.join(root,'outputs'),'utf8').catch(()=>''),env};
@@ -157,7 +163,7 @@ test('independently checked empty research stays green but never produces scored
  const result=await execute(t,{count:0});assert.equal(result.execution.status,0,result.execution.stderr);
  const run=await result.record('runs');assert.equal(run.assessmentOutcome,'completed');assert.equal(run.picked,0);assert.deepEqual(run.checkedAssessment.checkedPostIds,[]);assert.equal(run.checkedAssessment.decision,'no_supported_candidate');assert.equal((await result.record('slot-outcomes')).status,'no_post');
  const prepare=await execute(t,{count:0,script:'prepare-check'});assert.equal(prepare.execution.status,0,prepare.execution.stderr);assert.ok((await prepare.record('check-context')).sources.length);
- const unavailable=await execute(t,{count:0,script:'prepare-check',liveStatus:503});assert.equal(unavailable.execution.status,1);assert.match(unavailable.execution.stderr,/empty assessment needs at least one/);
+ const unavailable=await execute(t,{count:0,script:'prepare-check',liveStatus:503});assert.equal(unavailable.execution.status,1);assert.match(unavailable.execution.stderr,/successfully re-fetched privacy-safe/);
 });
 
 test('repair may legitimately return no posts without retaining a model-owned repair marker',async t=>{
@@ -315,7 +321,85 @@ test('workflow neutral content errors retain explicit model outcomes and only ve
 test('fresh private page content stops preparation before any checker input or model call',async t=>{
  const privateText=text+' Follow @fictionalprivatehandle for more details.';
  const result=await execute(t,{script:'prepare-check',liveText:privateText});
- assert.equal(result.execution.status,1);assert.match(result.execution.stderr,/Fresh independent evidence failed privacy checks \(username_pattern\)/);assert.match(result.outputs,/checker_preparation_failed/);
+ assert.equal(result.execution.status,1);assert.match(result.execution.stderr,/successfully re-fetched privacy-safe/);assert.match(result.outputs,/checker_preparation_failed/);
  assert.doesNotMatch(result.execution.stdout+result.execution.stderr+result.outputs,/fictionalprivatehandle/);
  assert.ok(!JSON.stringify(await result.record('check-context')).includes('fictionalprivatehandle'));
+});
+
+test('exact primary refetches retain a literal safe capability section for exclusions and proposed posts',async t=>{
+ const product='https://product.example.com/workflow',raw=`<main><p>${text}</p><p>Follow @private_contact for the creator profile.</p></main>`;
+ for(const empty of [true,false]){
+  const result=await execute(t,{count:empty?0:1,script:'prepare-check',liveByUrl:{[product]:{text:raw}},mutate:f=>{
+   f.context.sources[0].productUrl=product;
+   if(empty)f.draft.candidates=[{title:'A bounded receipt experiment',productUrl:product,sourceIds:[f.context.sources[0].id]}];
+   else f.draft.posts[0].productUrl=product;
+  }});
+  assert.equal(result.execution.status,0,result.execution.stderr);const context=await result.record('check-context'),fresh=context.sources.find(source=>source.url===product);
+  assert.ok(fresh,'The exact product URL, distinct from its discovery URL, must be freshly fetched.');assert.equal(fresh.text,text);assert.deepEqual(privateArtifactCategories(context),[]);
+  assert.equal(fresh.evidenceExtraction.rawSha256,sha256(raw));assert.equal(fresh.evidenceExtraction.normalizedSha256,sha256(plainText(raw)));assert.equal(plainText(raw).slice(fresh.evidenceExtraction.start,fresh.evidenceExtraction.end),fresh.text);assert.ok(fresh.evidenceExtraction.omittedCharacters>0);
+  assert.doesNotMatch(JSON.stringify(context),/@private_contact|creator profile/);
+  if(empty){assert.equal(context.primaryFetchDiagnostics[0].status,'fetched');assert.equal(context.primaryFetchDiagnostics[0].sourceId,fresh.id);}
+  else assert.ok((await result.record('drafts')).posts[0].sourceIds.includes(fresh.id));
+ }
+});
+
+test('a freshly re-fetched enriched README remains primary evidence for its exact repository identity',async t=>{
+ const product='https://github.com/public/receipt-review',readme='https://raw.githubusercontent.com/public/receipt-review/main/README.md';
+ const result=await execute(t,{count:0,script:'prepare-check',liveByUrl:{[product]:{status:403,text:'Forbidden'},[readme]:{text}},mutate:f=>{
+  Object.assign(f.context.sources[0],{url:readme,productUrl:product,enriched:true,evidenceKind:'github-readme',evidenceFetch:{maxBytes:350000,complete:true}});
+  f.draft.candidates=[{title:'A documented receipt workflow',productUrl:product,sourceIds:[f.context.sources[0].id]}];
+ }});
+ assert.equal(result.execution.status,0,result.execution.stderr);const context=await result.record('check-context');assert.equal(context.primaryFetchDiagnostics[0].status,'fetched');assert.equal(context.primaryFetchDiagnostics[0].sourceId,'source-0');assert.equal(context.sources[0].url,readme);assert.ok(context.sources[0].verifiedAt);assert.ok(!context.health.some(item=>item.url===product),'Verified exact repository documentation must not require its unrelated HTML landing page to work too.');
+});
+
+test('an unsafe primary capability paragraph cannot become a model-ready context for either batch shape',async t=>{
+ const product='https://product.example.com/workflow',raw=`<main><p>${text} Follow @private_contact for access.</p></main>`;
+ for(const empty of [true,false]){
+  const result=await execute(t,{count:empty?0:1,script:'prepare-check',liveStatus:503,liveByUrl:{[product]:{status:200,text:raw}},mutate:f=>{
+   f.context.sources[0].productUrl=product;
+   if(empty)f.draft.candidates=[{title:'An unavailable receipt experiment',productUrl:product,sourceIds:[f.context.sources[0].id]}];
+   else f.draft.posts[0].productUrl=product;
+  }});
+  assert.equal(result.execution.status,1);assert.match(result.execution.stderr,/successfully re-fetched privacy-safe/);assert.match(result.outputs,/checker_preparation_failed/);
+  assert.doesNotMatch(result.execution.stdout+result.execution.stderr+result.outputs,/@private_contact/);
+  assert.deepEqual(await result.record('check-context'),result.f.context,'Failed preparation must not replace the prior context with unsafe or empty evidence.');
+ }
+});
+
+test('demand and implementation acquisition reach a frozen draft and accepted independent fixture check without external publication',async t=>{
+ const definition=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='jobtech-demand'&&source.segments.includes('professional_services'));
+ const task='Register invoice documents and prepare weekly reports for review.',row={id:'111',headline:'Administrator',occupation:{label:'Administratör'},salary_type:{concept_id:'oG8G_9cW_nRf'},publication_date:'2026-10-10T08:00:00',application_deadline:'2026-11-01',description:{text:task}};
+ const implementation='The product reads uploaded invoice documents and extracts structured fields for review. It exports parsed fields as CSV. Human approval remains required before records are sent.',raw=`<main><p>${implementation}</p><p>Follow @private_contact for the creator profile.</p></main>`;
+ const page=(url,body,{maxBytes=2000000,contentType='application/json'}={})=>({url,text:body,status:200,contentType,fetchedAt:now,maxBytes,bytes:Buffer.byteLength(body),truncated:false,redirects:[],robots:[{origin:new URL(url).origin,evaluatedUrl:url,allowed:true,status:404,state:'missing'}]});
+ const demand=parseDemandSourcePage(definition,page(definition.url,JSON.stringify({hits:[row]})))[0],buildingURL='https://documents.example.com/invoice-reports',building={id:hash(buildingURL),url:buildingURL,title:'Invoice reports workflow',text:implementation,fetchedAt:now};
+ assert.ok(demand.taskExcerpts.includes(task));
+ const validation={publicHttps:true,robotsAllowed:true,readable:true,robots:[{origin:new URL(definition.url).origin,evaluatedUrl:definition.url,robotsUrl:new URL('/robots.txt',definition.url).toString(),status:404,state:'missing',allowed:true,contentType:'text/plain',fetchedAt:now,redirects:[]}],redirects:[],httpStatus:200,contentType:'application/json',resolvedUrl:definition.url,fetchedAt:now,maxBytes:2000000,truncated:false,parserVersion:'public-sources-v1',itemCount:1};
+ const registry={sources:[{...definition,status:'probation',validation}]},selection=selectLearningTargets({runId,registry,scoreboard:{segments:[],sources:[]},now,producer:{repository:'xndanius/while-you-sleep',runId:'123',runAttempt:1,workflow:'loop.yml',stage:'pre_model',headSha:'a'.repeat(40)}});
+ const requests=[],enriched=await enrichProductLeads({sources:[demand,building],originMap:[{sourceId:demand.id,url:demand.url,productUrl:demand.url,feedIds:[definition.id]},{sourceId:building.id,url:buildingURL,productUrl:buildingURL,feedIds:['building-feed']}],learningSelection:selection,demandDefinitions:[definition],now:()=>Date.parse(now),fetchPage:async(url,options)=>{requests.push(url);assert.ok([demand.url,buildingURL].includes(url),'The fixture must not access a live or unassigned source.');return url===demand.url?page(url,JSON.stringify(row),options):page(url,raw,{...options,contentType:'text/html'});}});
+ assert.equal(enriched.enrichment.fetched,1);assert.deepEqual(requests,[demand.url,buildingURL]);
+ const snapshot={runId,createdAt:now,...enriched,learningSelection:selection},view=writerResearchView(snapshot),document=view.sources.find(source=>source.enriched&&source.role!=='demand');
+ assert.equal(document.text,implementation);assert.deepEqual(privateArtifactCategories(view),[]);
+ const result=await execute(t,{script:'prepare-check',extraRecords:[['sources',registry,'registry'],['learning-selection',selection]],envOverrides:{DEMAND_CONTRACT_VERSION:'1',EXPECTED_LEARNING_SELECTION_SHA:sha256(stableJSON(selection))},liveByUrl:{[demand.url]:{text:JSON.stringify(row)},[buildingURL]:{text:raw}},mutateResearch:research=>Object.assign(research,snapshot),mutate:f=>{
+  const post=f.draft.posts[0];Object.assign(post,{id:candidateIdentity({productUrl:demand.url}),candidateId:candidateIdentity({productUrl:demand.url}),productUrl:demand.url,title:'Invoice review experiment',promise:'Turn invoice documents into a draft for review.',whatItIs:'A proposed invoice extraction experiment using synthetic inputs.',whoPays:'Hypothesis: administration teams with invoice document chores.',loop:['Upload a synthetic invoice document','Extract draft fields','Review and export CSV'],evidence:'The notice documents an invoice chore; separate documentation describes extraction and export.',uncertainty:'The proposed service has no verified customers or results; human review remains required.',first24Hours:['Choose a synthetic invoice format.','Extract proposed fields from a sample.','Build a human review screen.'],sourceIds:[demand.id,document.id],segment:'professional_services',demandEvidence:{kind:'paid_job',sourceIds:[demand.id],chore:task,evidenceQuote:task}});
+  for(const criterion of SCORING_KEYS)post.scoring.criteria[criterion]={value:6,reason:criterion==='profit'?'Hypothesis: administration teams may value help with the stated human chore.':'Documentation supports a bounded extraction experiment with human review.',sourceIds:[['profit','evidence'].includes(criterion)?demand.id:document.id]};
+ }});
+ assert.equal(result.execution.status,0,result.execution.stderr);
+ const draft=await result.record('drafts'),context=await result.record('check-context');assert.equal(context.demandContractVersion,1);assert.deepEqual(context.deterministicResults.map(item=>item.reasons),[[]]);assert.deepEqual(privateArtifactCategories(context),[]);
+ assert.ok(context.sources.find(source=>source.id===document.id).text.includes('extracts structured fields for review'));assert.ok(context.sources.find(source=>source.id===demand.id).text.includes(task));
+ const env={...result.env,EXPECTED_DRAFT_SHA:sha256(stableJSON(draft)),EXPECTED_CONTEXT_SHA:sha256(stableJSON(context))};
+ const runLocal=(script,args=[runId])=>spawnSync(process.execPath,[`scripts/${script}.mjs`,...args],{cwd:result.root,env,encoding:'utf8'});
+ const preparation=runLocal('prepare-run',['checker']);assert.equal(preparation.status,0,preparation.stderr);
+ const schema=JSON.parse(await readFile(path.join(result.root,'.run/checker-output-schema.json'),'utf8'));assert.ok(schema.properties.manifest.anyOf[1].properties.checks.items.required.includes('demandCheck'));
+ const post=draft.posts[0],check={postId:post.id,pass:true,reasons:[],claimChecks:[{claim:'The public vacancy identifies an invoice administration chore.',supported:true,sourceId:demand.id,evidenceQuote:task},{claim:'The implementation documentation describes structured extraction.',supported:true,sourceId:document.id,evidenceQuote:'extracts structured fields for review'},{claim:'The documentation describes CSV export.',supported:true,sourceId:document.id,evidenceQuote:'exports parsed fields as CSV'}],scoreChecks:SCORING_KEYS.map(criterion=>({criterion,supported:true,maxSupportedScore:6,reason:criterion==='profit'?'Hypothesis: the notice establishes human work, with no verified AI purchase.':'The fixture documentation supports a narrow proposed experiment requiring review.',sourceId:['profit','evidence'].includes(criterion)?demand.id:document.id,evidenceQuote:['profit','evidence'].includes(criterion)?task:'extracts structured fields for review'})),noveltyCheck:{recentPostsSha256:context.noveltyContext.postsSha256,windowDays:14,comparedPostCount:0,...Object.fromEntries(['product','workflow','customer'].map(dimension=>[dimension,{distinct:true,closestPostId:null,reason:'The complete frozen fixture index is empty.'}]))},demandCheck:{demandContextSha256:context.demandContextSha256,supported:true,segment:post.segment,sourceId:demand.id,kind:'paid_job',chore:task,evidenceQuote:task,reason:'A sanitized public fixture vacancy states the chore; AI demand and payment remain hypothetical.',noPersonalData:true}};
+ // This verdict is explicit test data, never a model decision or a production approval.
+ const checked={draft,context,manifest:{runId,checks:[check]}};bind(checked);
+ await writeFile(path.join(result.root,'.run/checker-response.json'),JSON.stringify({outcome:'completed',reason:'Synthetic independent fixture examination completed.',manifest:checked.manifest}));
+ const accepted=runLocal('accept-check-output');assert.equal(accepted.status,0,accepted.stderr);assert.match(accepted.stdout,/"completed":true/);
+ const manifest=await result.record('checks');assert.deepEqual(completedAssessmentReasons(draft,context,manifest),[]);assert.deepEqual(checkApproval(draft,context,manifest).map(item=>({pass:item.pass,reasons:item.reasons})),[{pass:true,reasons:[]}]);
+ const fabricated=structuredClone(manifest);fabricated.checks[0].claimChecks[0].evidenceQuote='An invented claim that is absent from every source.';assert.ok(completedAssessmentReasons(draft,context,fabricated).length);
+ await assert.rejects(readFile(path.join(result.root,'data/posts',post.id+'.json')),error=>error.code==='ENOENT','Checking must not publish even a local fixture.');
+ // Exercise the local no-post finalizer too: independently checked scores below six remain a terminal refusal.
+ for(const rating of Object.values(draft.posts[0].scoring.criteria))rating.value=5;bind(checked);Object.assign(env,{EXPECTED_DRAFT_SHA:context.draftSha256,EXPECTED_CONTEXT_SHA:sha256(stableJSON(context))});
+ for(const [directory,record] of [['drafts',draft],['check-context',context],['checks',checked.manifest]])await writeFile(path.join(result.root,'data',directory,runId+'.json'),JSON.stringify(record));
+ const finalized=runLocal('finalize-run');assert.equal(finalized.status,0,finalized.stderr);const run=await result.record('runs');assert.equal(run.status,'completed_no_post');assert.equal(run.assessmentOutcome,'completed');assert.deepEqual(run.published,[]);assert.deepEqual(run.operationalFailures,[]);
 });

@@ -1,3 +1,5 @@
+import {privateArtifactReasons} from '../lib/privacy.mjs';
+import {plainText} from '../lib/research.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {promises as fs} from 'node:fs';
@@ -218,4 +220,62 @@ test('only changed substantive demand evidence reopens a cooled notice, never a 
  const changed={...original,text:original.text+' Sammanställa fakturaunderlag för granskning.'};
  assert.equal(selectProductLeads([changed],options).length,1);assert.equal(selectProductLeads([changed],{...options,previous:[{productUrl:original.url}]}).length,0);
  assert.equal(selectProductLeads([changed],{...options,recentAssessments:[{productUrl:original.url,assessedAt:now}]}).length,0,'an unproven legacy fingerprint cannot claim changed evidence');
+});
+
+function mixedDemandFixture(){
+ const definitions=['ted-service-demand','wwr-demand','jobtech-demand'].map(kind=>DEMAND_SOURCE_CATALOG.find(item=>item.kind===kind));
+ definitions.push(DEMAND_SOURCE_CATALOG.find(item=>item.kind==='jobtech-demand'&&item.segments.includes('education')));
+ const sources=[],responses=new Map();
+ for(const [index,definition] of definitions.entries()){
+  let body;
+  if(definition.kind==='ted-service-demand')body=JSON.stringify({notices:Array.from({length:4},(_,i)=>({'publication-number':`${721351+i}-2026`,'publication-date':'2026-10-10+02:00','notice-type':'cn-standard','description-proc':{eng:'Process incoming invoices and prepare weekly payment reports.'},'deadline-date-lot':['2026-11-01+02:00']})),timedOut:false});
+  else if(definition.kind==='wwr-demand')body='<rss><channel>'+Array.from({length:4},(_,i)=>`<item><title>Operations administrator</title><link>https://weworkremotely.com/remote-jobs/invoice-operations-${i}</link><pubDate>2026-10-10T08:00:00Z</pubDate><description>Process invoice records and prepare weekly payment reports.</description></item>`).join('')+'</channel></rss>';
+  else{
+   const rows=Array.from({length:4},(_,i)=>({...demandJob(200+index*10+i,'Registrera fakturor och sammanställa rapporter för granskning.'),...(definition.segments.includes('education')?{headline:'Skoladministratör',occupation:{label:'Skoladministratör'}}:{})}));
+   body=JSON.stringify({hits:rows});for(const row of rows)responses.set(`https://jobsearch.api.jobtechdev.se/ad/${row.id}`,JSON.stringify(row));
+  }
+  responses.set(definition.url,body);sources.push(...parseDemandSourcePage(definition,page(definition.url,body,{contentType:definition.kind==='wwr-demand'?'application/rss+xml':'application/json'})));
+ }
+ const learningSelection={selectionStrategy:'mixed-recovery-v1',selectedSegment:null,eligibleSegments:[...new Set(definitions.flatMap(item=>item.segments))],demandSourceIds:definitions.map(item=>item.id),researchPolicy:{mode:'repair',widened:true,fallbackEnabled:true,maxLeads:10,cooldownHours:3}};
+ const fetchDemand=(url,options)=>{assert.ok(responses.has(url),'Only a fixed public demand fixture may be fetched.');return page(url,responses.get(url),{...options,contentType:url.startsWith('https://weworkremotely.com/')?'application/rss+xml':'application/json'});};
+ return {sources,definitions,learningSelection,fetchDemand,options:{sources,originMap:sources.map(item=>origin(item,item.registrySourceId)),learningSelection,demandDefinitions:definitions,now:()=>Date.parse(now),limit:10,cooldownHours:3}};
+}
+
+test('ten demand candidates stay ten when support documentation is also retrieved',async()=>{
+ const f=implementationFixture(),mixed=mixedDemandFixture(),sources=[...mixed.sources,f.product,f.unrelated];let requests=0;
+ const result=await enrichProductLeads({...mixed.options,sources,originMap:[...mixed.options.originMap,origin(f.product),origin(f.unrelated)],fetchPage:async(url,options)=>{requests++;assert.notEqual(url,f.unrelated.url);return url===f.product.url?page(url,capability.repeat(8),options):mixed.fetchDemand(url,options);}});
+ assert.equal(result.enrichment.selected,10);assert.equal(result.enrichment.observations.length,10);assert.equal(result.enrichment.supportingReferences.observations.length,1);assert.equal(result.enrichment.requests+result.enrichment.supportingReferences.requests,requests);assert.ok(requests<=30);
+ for(const definition of mixed.definitions)assert.ok(result.enrichment.observations.filter(item=>mixed.sources.some(source=>source.url===item.productUrl&&source.registrySourceId===definition.id)).length<=3);
+});
+
+function mixedRecoveryFixture(){
+ const demand=mixedDemandFixture(),builders=Array.from({length:3},(_,i)=>({...source(400+i,{url:`https://implementation-${i}.example.org/invoice-workflow`}),title:'Invoice report automation',text:'This workflow extracts invoice documents and prepares payment reports for human review.'})),sources=[...demand.sources,...builders],raw=`<main><p>${capability}</p><p>Follow @private_contact for the creator profile.</p></main>`;
+ const fetchPage=async(url,options)=>builders.some(item=>item.url===url)?page(url,raw,options):demand.fetchDemand(url,options);
+ return {...demand,builders,raw,fetchPage,options:{...demand.options,sources,originMap:[...demand.options.originMap,...builders.map(item=>origin(item))]}};
+}
+
+test('mixed recovery retrieves three builders with literal safe docs in a ten-lead feed-balanced batch',async()=>{
+ const f=mixedRecoveryFixture(),calls=[];
+ const result=await enrichMixedRecoveryBatch({...f.options,fetchPage:async(url,options)=>{calls.push(url);return f.fetchPage(url,options);}}),assignments=result.enrichment.recoveryBatch.leadAssignments,builders=assignments.filter(item=>item.kind==='builder');
+ assert.equal(result.enrichment.selected,10);assert.equal(result.enrichment.observations.length,10);assert.equal(assignments.length,10);assert.equal(builders.length,3);assert.equal(new Set(assignments.map(item=>item.productUrl)).size,10);assert.equal(result.enrichment.requests,calls.length);assert.ok(calls.length<=30);assert.ok(result.enrichment.corroboratingDemand.observations.length<=3);
+ for(const definition of f.definitions)assert.ok(assignments.filter(item=>item.registrySourceId===definition.id).length<=3);
+ for(const kind of ['ted-service-demand','wwr-demand','jobtech-demand'])assert.ok(assignments.some(item=>f.definitions.find(definition=>definition.id===item.registrySourceId).kind===kind));
+ for(const builder of builders){
+  const implementation=result.sources.find(item=>item.enriched&&item.productUrl===builder.productUrl),signal=result.sources.find(item=>item.id===builder.demandSourceId);
+  assert.equal(implementation.text,capability.trim());assert.ok(plainText(f.raw).includes(implementation.text));assert.equal(implementation.evidenceExtraction.version,1);assert.equal(implementation.evidenceExtraction.unsafeBlocks,1);assert.doesNotMatch(implementation.text,/@private_contact|creator profile/);assert.equal(signal.enriched,true);assert.equal(signal.role,'demand');assert.equal(signal.registrySourceId,builder.registrySourceId);assert.equal(signal.segment,builder.segment);
+  const observation=result.enrichment.observations.find(item=>item.productUrl===builder.productUrl);assert.ok(observation.evidenceIds.includes(implementation.id)&&observation.evidenceIds.includes(signal.id));
+ }
+ assert.deepEqual(privateArtifactReasons(result),[]);assert.equal(writerReadiness({...result,learningSelection:f.learningSelection},{demandRequired:true}).ready,true);
+});
+
+test('a builder with missing fresh corroboration is unavailable and cannot satisfy writer readiness',async()=>{
+ const f=mixedRecoveryFixture(),complete=await enrichMixedRecoveryBatch({...f.options,fetchPage:f.fetchPage}),assignment=complete.enrichment.recoveryBatch.leadAssignments.find(item=>item.kind==='builder'),signal=f.sources.find(item=>item.id===assignment.demandSourceId),definition=f.definitions.find(item=>item.id===assignment.registrySourceId),failedURL=['ted-service-demand','wwr-demand'].includes(definition.kind)?definition.url:signal.url;
+ const result=await enrichMixedRecoveryBatch({...f.options,fetchPage:async(url,options)=>{if(url===failedURL)throw new Error('Fixture demand source is unavailable.');return f.fetchPage(url,options);}}),observation=result.enrichment.observations.find(item=>item.productUrl===assignment.productUrl);
+ assert.equal(observation.status,'failed');assert.equal(observation.code,'fresh_demand_signal_unavailable');assert.ok(!result.enrichment.recoveryBatch.leadAssignments.some(item=>item.productUrl===assignment.productUrl));assert.ok(result.enrichment.recoveryBatch.leadAssignments.filter(item=>item.kind==='builder').length<3);assert.equal(writerReadiness({...result,learningSelection:f.learningSelection},{demandRequired:true}).ready,false);assert.ok(result.enrichment.requests<=30);
+});
+
+test('fresh implementation outside the verified demand task is a mismatch and cannot fill the builder quota',async()=>{
+ const f=mixedRecoveryFixture(),productUrl=f.builders[0].url,unrelated='This workflow schedules calendar appointments and sends booking reminders to a human operator for review. The operator chooses an available slot and approves the invitation before delivery.';
+ const result=await enrichMixedRecoveryBatch({...f.options,fetchPage:async(url,options)=>url===productUrl?page(url,`<main><p>${unrelated}</p></main>`,options):f.fetchPage(url,options)}),observation=result.enrichment.observations.find(item=>item.productUrl===productUrl),implementation=result.sources.find(item=>item.enriched&&item.productUrl===productUrl);
+ assert.equal(implementation.text,unrelated);assert.equal(observation.status,'failed');assert.equal(observation.code,'fresh_implementation_task_mismatch');assert.match(observation.reason,/no concrete task overlap/);assert.ok(result.sources.some(item=>item.enriched&&item.role==='demand'));assert.ok(!result.enrichment.recoveryBatch.leadAssignments.some(item=>item.productUrl===productUrl));assert.equal(result.enrichment.recoveryBatch.leadAssignments.filter(item=>item.kind==='builder').length,2);assert.equal(writerReadiness({...result,learningSelection:f.learningSelection},{demandRequired:true}).ready,false);assert.equal(result.enrichment.selected,10);assert.ok(result.enrichment.requests<=30);
 });

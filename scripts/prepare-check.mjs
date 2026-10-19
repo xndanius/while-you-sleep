@@ -1,4 +1,4 @@
-import { fetchPublic, plainText,sourceRole,sourceSegments,sourceDemandKind,fetchDemandEvidence } from '../lib/research.mjs';
+import { fetchPublic,sourceRole,sourceSegments,sourceDemandKind,fetchDemandEvidence } from '../lib/research.mjs';
 import { ROOT,dataPath, readJSON, writeJSON, records, candidateIdentity, canonicalURL, hash, sha256, stableJSON, safeError } from '../lib/storage.mjs';
 import { deterministicCheck } from '../lib/validation.mjs';
 import { promises as fs } from 'node:fs';
@@ -112,9 +112,9 @@ try{
   // evidence of a failed request. Re-fetch each exact known candidate product
   // here so empty-batch exclusions have current guarded diagnostics too.
   if(!draft.posts.length)for(const item of considerationEvidence){
-    const requestedAt=new Date().toISOString(),existing=sources.find(source=>sameURL(source.url,item.productUrl)||sameURL(source.productUrl,item.productUrl));
+    const requestedAt=new Date().toISOString(),existing=sources.find(source=>sameURL(source.url,item.productUrl)||(source.enriched===true&&['product-page','github-readme'].includes(source.evidenceKind)&&sameURL(source.productUrl,item.productUrl)));
     const denied=health.find(entry=>sameURL(entry.url,item.productUrl));
-    if(existing){primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId:existing.id,reason:'The candidate product URL was independently re-fetched in this check context.'});continue;}
+    if(existing){primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId:existing.id,reason:'The candidate product or its exact discovered implementation document was independently re-fetched in this check context.'});continue;}
     if(denied){primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'failed',sourceId:null,reason:denied.message});continue;}
     try{
       const original=research.sources.find(source=>sameURL(source.url,item.productUrl)),definition=original&&definitionFor(original);
@@ -124,22 +124,22 @@ try{
         primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId:fresh.id,reason:'The exact demand item was independently fetched by its fixed privacy-safe official adapter.'});continue;
       }
       if(demandRequired&&officialDemandURL(item.productUrl))throw new Error('Demand item has no authorized privacy-safe adapter; raw notice data will not be copied.');
-      const page=await fetchPublic(item.productUrl,{maxBytes:2000000,complete:true}),text=plainText(page.text).slice(0,18000);
-      if(text.length<100)throw new Error('Primary product page contained too little readable evidence.');
+      const page=await fetchPublic(item.productUrl,{maxBytes:2000000,complete:true}),extracted=extractImplementationEvidence(page.text,{maxCharacters:18000,minCharacters:100});
+      if(!extracted)throw new Error('Primary product page has no useful complete privacy-safe capability section.');
       const url=canonicalURL(page.url),sourceId=hash(url);
-      if(!sources.some(source=>source.id===sourceId))sources.push({id:sourceId,url,productUrl:item.productUrl,title:item.title+' · independently fetched product',publisher:new URL(url).hostname,text,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt,enriched:true,evidenceKind:'product-page',evidenceFetch:{maxBytes:2000000,complete:true}});
+      if(!sources.some(source=>source.id===sourceId))sources.push({id:sourceId,url,productUrl:item.productUrl,title:item.title+' · independently fetched product',publisher:new URL(url).hostname,...extracted,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt,enriched:true,evidenceKind:'product-page',evidenceFetch:{maxBytes:2000000,complete:true}});
       item.sourceIds=[...new Set([...item.sourceIds,sourceId])];
       primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId,reason:'The candidate product URL was independently re-fetched with public HTTPS, DNS and robots guards.'});
     }catch(error){const reason=safeError(error);health.push({url:item.productUrl,status:'failed',message:reason});primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'failed',sourceId:null,reason});}
   }
-  if(!draft.posts.length&&!sources.length)throw new Error('An empty assessment needs at least one successfully re-fetched public research source.');
   for(const post of draft.posts){
     const product=research.sources.find(s=>s.productUrl===post.productUrl||s.url===post.productUrl);
     if(!product||sources.some(s=>s.url===post.productUrl))continue;
     if(demandRequired&&officialDemandURL(post.productUrl)){health.push({url:post.productUrl,status:'failed',message:'The guarded demand item could not be verified; no raw notice data was stored.'});continue;}
-    try{const page=await fetchPublic(post.productUrl),text=plainText(page.text).slice(0,18000);if(text.length<100)continue;const sourceId=hash(post.productUrl);sources.push({id:sourceId,url:post.productUrl,title:post.title+' · official product',publisher:new URL(post.productUrl).hostname,text,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});post.sourceIds=[...new Set([...(post.sourceIds||[]),sourceId])].slice(0,4);}
+    try{const page=await fetchPublic(post.productUrl,{maxBytes:2000000,complete:true}),extracted=extractImplementationEvidence(page.text,{maxCharacters:18000,minCharacters:100});if(!extracted)throw new Error('Primary product page has no useful complete privacy-safe capability section.');const sourceId=hash(post.productUrl);sources.push({id:sourceId,url:post.productUrl,title:post.title+' · official product',publisher:new URL(post.productUrl).hostname,...extracted,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});post.sourceIds=[...new Set([...(post.sourceIds||[]),sourceId])].slice(0,4);}
     catch(error){health.push({url:post.productUrl,status:'failed',message:safeError(error)});}
   }
+  if(!sources.length)throw new Error('An assessment needs at least one successfully re-fetched privacy-safe public research source; no checker model call is permitted.');
   const demandContext=createDemandContext({registrySources,authorizedSources:[...new Map(authorizedSources.map(source=>[source.sourceId,source])).values()],posts:previous,selectedSegment,fallbackPolicy,recoveryBatchPolicy}),demandContextSha256=demandContextHash(demandContext);
   const demandContract=demandRequired?{demandContractVersion:1,demandContext,demandContextSha256}:{};
   const demandFailures=demandContextReasons(demandContract);if(demandFailures.length)throw new Error(demandFailures.join(' ')+(health.length?' Guarded evidence retrieval: '+health.map(item=>item.message).join(' ').slice(0,500):''));
