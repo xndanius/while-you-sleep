@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "id": "loop-39243793281-1",
+  "runId": "loop-39243793281-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-19T11:20:22.957Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-39243793281-1",
+  "registrySha256": "e328fcc85ebff81d4e348dfc836636bd85518d2bacee6ef31e3b4d6e94ad239a",
+  "scoreboardSha256": "a33724786d22999483268d0f525a026dd8cb150d6fc9250cedba947ac104874c",
+  "eligibleSegments": [
+    "professional_services",
+    "ecommerce",
+    "education",
+    "health_admin",
+    "public_sector"
+  ],
+  "selectedSegment": null,
+  "demandSourceIds": [
+    "bf36022f0a8cd761c338ce53",
+    "3718aeb8e8d67fe152a75278",
+    "a6747aa35096053cc2fc5f6d",
+    "086772a8008f7255f645d435",
+    "5c7690cd1ac3e604f884cfc2",
+    "57b6f5f4945019c919f6d35c",
+    "d7d95a60e6009c5d18b5920e",
+    "b36040a453674772f62166cb",
+    "3c18d6f9afb86838768b18fe",
+    "8ef335213e70b38904e7a504"
+  ],
+  "segmentDraws": [],
+  "sourceDraws": [
+    {
+      "id": "bf36022f0a8cd761c338ce53",
+      "value": 0.6005078223165967
+    },
+    {
+      "id": "3718aeb8e8d67fe152a75278",
+      "value": 0.5959444083644883
+    },
+    {
+      "id": "a6747aa35096053cc2fc5f6d",
+      "value": 0.46982077879371376
+    },
+    {
+      "id": "086772a8008f7255f645d435",
+      "value": 0.19968298886052815
+    },
+    {
+      "id": "5c7690cd1ac3e604f884cfc2",
+      "value": 0.14627532330206183
+    },
+    {
+      "id": "57b6f5f4945019c919f6d35c",
+      "value": 0.12141179023845458
+    },
+    {
+      "id": "d7d95a60e6009c5d18b5920e",
+      "value": 0.06179606013426296
+    },
+    {
+      "id": "b36040a453674772f62166cb",
+      "value": 0.02932414194921419
+    },
+    {
+      "id": "3c18d6f9afb86838768b18fe",
+      "value": 0.024787352552756957
+    },
+    {
+      "id": "8ef335213e70b38904e7a504",
+      "value": 0.015919877175352218
+    }
+  ],
+  "selectionStrategy": "mixed-recovery-v1",
+  "recoveryExploration": {
+    "schema": 1,
+    "segmentSelection": "per_lead_authorized_segments",
+    "sourceDraws": [
+      {
+        "id": "bf36022f0a8cd761c338ce53",
+        "value": 0.6005078223165967,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "3718aeb8e8d67fe152a75278",
+        "value": 0.5959444083644883,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "a6747aa35096053cc2fc5f6d",
+        "value": 0.46982077879371376,
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "086772a8008f7255f645d435",
+        "value": 0.19968298886052815,
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "5c7690cd1ac3e604f884cfc2",
+        "value": 0.14627532330206183,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "57b6f5f4945019c919f6d35c",
+        "value": 0.12141179023845458,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "d7d95a60e6009c5d18b5920e",
+        "value": 0.06179606013426296,
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "b36040a453674772f62166cb",
+        "value": 0.02932414194921419,
+        "segments": [
+          "education"
+        ]
+      },
+      {
+        "id": "3c18d6f9afb86838768b18fe",
+        "value": 0.024787352552756957,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "8ef335213e70b38904e7a504",
+        "value": 0.015919877175352218,
+        "segments": [
+          "health_admin"
+        ]
+      }
+    ]
+  },
+  "recoveryBatch": {
+    "version": 1,
+    "maxLeads": 10,
+    "maxPerDemandSource": 3,
+    "minBuilderLeads": 3,
+    "requiredFamilies": [
+      "ted-service-demand",
+      "wwr-demand",
+      "jobtech-demand"
+    ]
+  },
+  "researchPolicy": {
+    "mode": "repair",
+    "widened": true,
+    "fallbackEnabled": true,
+    "maxLeads": 10,
+    "cooldownHours": 3
+  },
+  "reason": "Try a mixed recovery batch across guarded demand source families and per-lead eligible customer segments; reserve three of ten lead slots for builders with fresh public demand signals. These reproducible search choices are never facts or approvals.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "39243793281",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "c55078e93ac6c92465b33d8c3c7619ce4d0f4da7"
+  }
+}
