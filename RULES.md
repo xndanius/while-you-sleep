@@ -1,5 +1,7 @@
 # While You Sleep rules · v1
 
+<!-- publish-threshold-lock:6 -->
+
 ## Purpose
 Research documented work and publish evidence-backed ideas for a small AI service a beginner could test in four weeks. In demand-first runs, the observed fact is the existing chore or requested paid work; the AI service is a clearly labelled proposal. Legacy product-example runs instead describe demonstrated products and operations. Explain the business in plain English. Every decision and its evidence belongs in public Git history.
 

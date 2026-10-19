@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {sha256,stableJSON} from '../lib/storage.mjs';
 import {SCORING_KEYS,parseScoringPolicy,replaceScoringPolicy} from '../lib/scoring.mjs';
 import {validateRuleProposal,policyTrialAssessment,evaluateImprovement} from '../lib/improvement.mjs';
-import {makeProposerInput} from '../lib/improvement-runtime.mjs';
+import {makeProposerInput,proposalTrialReadiness,isCompletedProposalRejection} from '../lib/improvement-runtime.mjs';
 
 const rules='# Rules\n\n## Pick\nEvidence, honest ratings and no duplicates.\n\n<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n\n## Write\nPlain words and truthful claims.\n\n## Safety\nNo unsafe topics or secrets.\n';
 const current=parseScoringPolicy(rules);
@@ -11,6 +11,11 @@ const source={id:'s',text:'This working product extracts receipt fields and expo
 const criteria=Object.fromEntries(SCORING_KEYS.map(key=>[key,{value:6,reason:key==='profit'?'Hypothesis: a small administration buyer could test this workflow.':'The source establishes a bounded extraction and review experiment.',sourceIds:['s']} ]));
 const scoreChecks=SCORING_KEYS.map(criterion=>({criterion,supported:true,maxSupportedScore:6,reason:criterion==='profit'?'Hypothesis: a buyer is plausible but demand remains unproved.':'The source supports this bounded experiment and its review limits.',sourceId:'s',evidenceQuote:'extracts receipt fields and exports reviewed records'}));
 const proposal={type:'scoring_policy',runId:'test-improve',rulesSha256:sha256(rules),policySha256:current.policySha256,section:'Pick',change:'Test a more selective publish threshold.',reason:'Test whether rejecting marginal ideas improves selection; traffic remains unavailable.',policy:{weights:current.weights,publishThreshold:7},newRules:replaceScoringPolicy(rules,{weights:current.weights,publishThreshold:7})};
+test('the operator threshold lock rejects lower or higher thresholds as completed refusals while allowing weight trials',()=>{
+ const locked='<!-- publish-threshold-lock:6 -->\n'+rules,input={runId:proposal.runId,baselineRules:locked,rulesSha256:sha256(locked),sources:[],sourceSnapshotSha256:sha256(stableJSON([])),candidates:[]},stages={seed:{result:'success'},propose:{result:'success'},'validate-proposal':{result:'success'}};
+ for(const threshold of [5,7]){const policy={weights:current.weights,publishThreshold:threshold},changed={...proposal,rulesSha256:sha256(locked),policy,newRules:replaceScoringPolicy(locked,policy)},validation=proposalTrialReadiness(input,changed);assert.equal(validation.status,'rejected');assert.match(validation.reasons.join(' '),/operator publish threshold is locked at 6/);assert.equal(isCompletedProposalRejection(input,changed,validation,stages),true,'successful deterministic refusal completes the slot without an error or fabricated evaluation');}
+ const policy={weights:{...current.weights,evidence:2},publishThreshold:6},weights={...proposal,rulesSha256:sha256(locked),policy,newRules:replaceScoringPolicy(locked,policy)};assert.deepEqual(validateRuleProposal(locked,weights),[]);assert.deepEqual(validateRuleProposal(rules,proposal),[],'historical unmarked threshold trials retain their validation semantics');assert.ok(validateRuleProposal(locked,{...weights,newRules:weights.newRules.replace('<!-- publish-threshold-lock:6 -->\n','')}).length,'the protected lock cannot be removed');
+});
 function fixtures(){
  const sources=[source],candidates=[1,2,3].map(n=>({candidateId:'c'+n,productUrl:'https://example.com/'+n,sourceIds:['s']}));
  const input={runId:'test-improve',baselineRules:rules,rulesSha256:sha256(rules),sources,sourceSnapshotSha256:sha256(stableJSON(sources)),candidates};
