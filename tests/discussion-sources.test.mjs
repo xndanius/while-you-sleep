@@ -15,6 +15,22 @@ function page(url,text,type='application/json'){return {url,text,status:200,cont
 function admission(definition){return {publicHttps:true,robotsAllowed:true,readable:true,robots:page(definition.url,'').robots,redirects:[],httpStatus:200,contentType:'application/rss+xml',resolvedUrl:definition.url,fetchedAt:now,maxBytes:2000000,truncated:false,parserVersion:'public-sources-v2',itemCount:1};}
 const problem='I need a tool to reconcile customer invoices against my daily spreadsheet.';
 const post={url:'https://news.ycombinator.com/item?id=33',title:'Ask HN: a tool for daily invoices?',excerpt:problem,date:now};
+test('all discussion providers reject job adverts, unrelated text and one-off bug reports while retaining actual business chores',()=>{
+ const providers=[{definition:ask,url:post.url},{definition:DISCUSSION_PROVIDER_CATALOG.find(source=>source.platform==='reddit'),url:'https://www.reddit.com/comments/abc12'}];
+ for(const {definition,url} of providers){
+  const admit=(title,excerpt=problem)=>makeDiscussionSource(definition,{url,title,excerpt,date:now},{fetchedAt:now});
+  for(const title of ['Ask HN: Who is hiring?','Who wants to be hired?','We are hiring a customer support administrator','Hiring: customer support administrator','Job opening: invoice administrator','Invitation to tender for invoice processing','Request for proposals: document service'])assert.equal(admit(title),null,title);
+  assert.equal(admit('Error when connecting my workflow','I cannot connect my workflow because an error appeared today.'),null);
+  assert.equal(admit('Webhook crashes after update','The webhook throws a fatal error after I updated the application.'),null);
+  assert.equal(admit('How can I fix this bug?','My customer order export is broken after the latest update.'),null);
+  assert.equal(admit('Workflow crashes when manually triggered','The application is broken when I manually trigger the webhook.'),null);
+  assert.equal(admit('A pleasant afternoon in the park','The clouds looked beautiful while I walked beside the river.'),null);
+  assert.ok(admit('How do you track hiring paperwork?','Every week I manually consolidate interview notes in a spreadsheet.'));
+  assert.ok(admit('Order export crashes during our daily process','Every day I manually copy customer orders into a spreadsheet.'));
+  assert.ok(admit('Bug reports need a better tool','I need a tool to collect customer bug reports into one support queue.'));
+  assert.ok(admit('Show HN: a service to reconcile invoices','I built a service to match customer invoices against bank records.'));
+ }
+});
 test('discussion adapters retain one bounded public excerpt and omit all author/profile data',()=>{
  const data={hits:[{objectID:'33',title:post.title,story_text:`<p>Contact @someone for help.</p><p>${problem}</p>`,created_at:now,author:'DO_NOT_RETAIN',profile:'PRIVATE'}]};
  const [source]=parseDiscussionSourcePage(ask,page(ask.url,JSON.stringify(data)));assert.equal(source.text,problem);assert.equal(source.text.length<=200,true);assert.equal(source.demandEvidence.kind,'community_request');assert.equal(source.community,'Hacker News Ask HN');assert.equal(JSON.stringify(source).includes('DO_NOT_RETAIN'),false);assert.equal(JSON.stringify(source).includes('@someone'),false);

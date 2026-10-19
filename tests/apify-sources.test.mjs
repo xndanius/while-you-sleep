@@ -36,6 +36,11 @@ test('failed/unknown requests consume day slots and monthly reservations; never 
 test('two empty or failed batches select the one backup and put the source on probation',()=>{
  const rows=[{kind:'collection',platform:'x',status:'failed',retained:0,actorIndex:0,finishedAt:'2026-10-19T01:00:00Z',reason:'unavailable'},{kind:'collection',platform:'x',status:'succeeded',retained:0,actorIndex:0,finishedAt:'2026-10-19T07:00:00Z',reason:'empty'}];const h=apifyHealthFromReceipts(rows).find(r=>r.platform==='x');assert.equal(h.status,'probation');assert.equal(h.actorIndex,1);assert.equal(h.consecutiveEmptyOrFailed,2);
 });
+test('low observed terminal cost never releases a monthly monetary reservation',async t=>{
+ const root=await temp(t),result=await collectApifyPool({root,runId:'loop-cost-1',env:{APIFY_TOKEN:'fixture'},platforms:['reddit'],now,fetchImpl:fixture()});
+ const budget=await apifyBudget(root,{now,monthlyBudgetUsd:.06});assert.equal(budget.measuredUsageUsd,.001);assert.equal(budget.usedOrReservedUsd,result.receipts[0].maxChargeUsd);assert.ok(budget.usedOrReservedUsd>budget.measuredUsageUsd);
+ const denied=await reserveApifyBatch({root,platform:'x',runId:'loop-cost-2',now,monthlyBudgetUsd:.06});assert.equal(denied.allowed,false);assert.equal(denied.reason,'apify_monthly_budget_cap');
+});
 test('private profiles, mock posts, personal details, jobs and launch descriptions cannot become pool demand',()=>{
  assert.equal(canonicalApifyPostURL('https://x.com/some_handle/status/123456789','x'),'https://x.com/i/status/123456789');assert.throws(()=>canonicalApifyPostURL('https://www.indiehackers.com/product/example','indiehackers'));
  const base={url:'https://x.com/handle/status/123456789',text:task,createdAt:now.toISOString(),lang:'en'};assert.equal(normalizeApifyPosts('x',[base],{now})[0].excerpt,task);for(const row of [{...base,isMock:true},{...base,text:task+' Contact person@example.invalid'},{...base,text:task+' @a_handle'}])assert.deepEqual(normalizeApifyPosts('x',[row],{now}),[]);
