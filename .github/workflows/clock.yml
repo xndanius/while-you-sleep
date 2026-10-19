@@ -97,6 +97,34 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/clock.mjs tick
+  watchdog:
+    needs: tick
+    if: needs.tick.result == 'success' && needs.tick.outputs.ticked == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    permissions:
+      contents: write
+      issues: write
+      actions: write
+    outputs:
+      committed: ${{ steps.health.outputs.committed }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - id: health
+        name: Check publication health and request bounded recovery
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/watchdog.mjs
   safety:
     needs: tick
     if: needs.tick.result == 'success' && needs.tick.outputs.ticked == 'true'
@@ -107,8 +135,8 @@ jobs:
       pages: write
       id-token: write
   pages:
-    needs: tick
-    if: needs.tick.outputs.ticked == 'true' && needs.tick.outputs.committed == 'true'
+    needs: [tick, watchdog]
+    if: always() && needs.tick.outputs.ticked == 'true' && (needs.tick.outputs.committed == 'true' || needs.watchdog.outputs.committed == 'true')
     uses: ./.github/workflows/pages.yml
     permissions:
       contents: read

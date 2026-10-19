@@ -76,6 +76,7 @@ export async function prepareScheduledJob({ kind, root = ROOT, env = process.env
   }))).filter(Boolean);
   cadence=normalizeCadenceConfig(cadence);
   const decision = scheduledDecision({ kind, eventName: env.GITHUB_EVENT_NAME || 'unknown', automatic:!!clock,now, completions,cadence });
+  if(kind==='research'&&env.FORCE_DISCOVERY==='true'&&clock?.verified===true){decision.due=true;decision.reason='watchdog_discovery';}
   const runId = env.RUN_ID || `${kind}-${env.GITHUB_RUN_ID || new Date(now).getTime()}-${env.GITHUB_RUN_ATTEMPT || 1}`;
   if (!validId(runId)) throw new Error('Invalid scheduled job run ID.');
   const record = { ...decision, runId, selectedAt: new Date(now).toISOString(),cadence,...(clock?{clock}:{} ) };

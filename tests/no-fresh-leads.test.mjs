@@ -1,0 +1,104 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {promises as fs} from 'node:fs';
+import path from 'node:path';
+import os from 'node:os';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {createNoFreshLeadsReceipt,noFreshLeadsReasons,noFreshLeadsSettlement} from '../lib/no-fresh-leads.mjs';
+import {createSourceScanReceipt} from '../lib/source-registry.mjs';
+import {selectLearningTargets,learningScoreboard,deriveLearningReceipt,validateLearningSelection} from '../lib/learning.mjs';
+import {DEMAND_SOURCE_CATALOG,demandSourceMetadata,parseDemandSourcePage} from '../lib/demand-sources.mjs';
+import {SOURCE_PARSER_VERSION} from '../lib/research.mjs';
+import {loopDecision,slotOutcome} from '../lib/loop-schedule.mjs';
+import {hash,sha256,stableJSON} from '../lib/storage.mjs';
+import {createDemandContext,demandContextHash,demandEvidenceReasons,demandApprovalReasons} from '../lib/demand.mjs';
+import {selectProductLeads} from '../lib/product-evidence.mjs';
+import {researchSnapshot} from '../scripts/research-snapshot.mjs';
+import {parseRedditDemand,SOCIAL_DEMAND_SOURCES} from '../lib/social-demand.mjs';
+import {writerResearchView} from '../lib/candidate-input.mjs';
+
+const now='2026-10-19T07:20:00.000Z',runId='loop-456-1',head='a'.repeat(40);
+const definition=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='jobtech-demand'&&source.segments.includes('professional_services'));
+const registry={schema:1,initializedAt:now,sources:[{...definition,status:'active'}]};
+const producer={repository:'xndanius/while-you-sleep',runId:'456',runAttempt:1,workflow:'loop.yml',stage:'pre_model',headSha:head};
+const policy={mode:'fallback',widened:true,fallbackEnabled:true,maxLeads:10,cooldownHours:3};
+function fixture(){
+ const scheduling=loopDecision({runId,githubRunId:'456',githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/456',eventName:'workflow_dispatch',now:new Date(now)}),schedulingSha256=sha256(stableJSON(scheduling));
+ const selection=selectLearningTargets({runId,registry,scoreboard:learningScoreboard({registry,now}),now,producer});
+ const url='https://jobsearch.api.jobtechdev.se/ad/123456',source={id:hash(url),url,text:'A current paid administration role involves filing documents, reconciling invoice rows and preparing a reviewed report for the finance team. The public notice establishes work, not demand for an AI tool.',role:'demand',demand:true,registrySourceId:definition.id,segment:'professional_services',demandKind:'paid_job',demandMetadataVersion:1,demandEvidence:{kind:'paid_job',paid:true,status:'open'},fetchedAt:now,verifiedAt:now};
+ const validation={publicHttps:true,robotsAllowed:true,readable:true,robots:[{origin:new URL(definition.url).origin,evaluatedUrl:definition.url,robotsUrl:new URL('/robots.txt',definition.url).toString(),status:404,state:'missing',allowed:true,contentType:'text/plain',fetchedAt:now}],redirects:[],httpStatus:200,contentType:'application/json',resolvedUrl:definition.url,fetchedAt:now,maxBytes:2000000,truncated:false,parserVersion:SOURCE_PARSER_VERSION,itemCount:1};
+ const scan=createSourceScanReceipt({runId,registry,sources:[source],observations:[{feedId:definition.id,url:definition.url,status:'ok',itemCount:1,fetchedAt:now,message:'One guarded fixture item.',validation}],originMap:[{sourceId:source.id,url,productUrl:null,feedIds:[definition.id]}],producer:{...producer,definitions:[definition]},now});
+ const snapshot={id:runId,runId,createdAt:now,sources:[source],health:[],learningSelection:selection,enrichment:{schema:1,status:'no_new_leads',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
+ const receipt=createNoFreshLeadsReceipt({runId,schedulingSha256,scan,selection,snapshot,now});
+ return {scheduling,schedulingSha256,selection,source,scan,snapshot,receipt};
+}
+async function isolated(t,f){
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'wys-no-lead-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ for(const directory of ['lib','scripts'])await fs.cp(new URL('../'+directory,import.meta.url),path.join(root,directory),{recursive:true});
+ await fs.mkdir(path.join(root,'public'));for(const name of ['schedule.js','cadence-config.js'])await fs.copyFile(new URL('../public/'+name,import.meta.url),path.join(root,'public',name));
+ await fs.symlink(fileURLToPath(new URL('../node_modules',import.meta.url)),path.join(root,'node_modules'),'dir');await fs.writeFile(path.join(root,'package.json'),'{"type":"module"}');await fs.copyFile(new URL('../RULES.md',import.meta.url),path.join(root,'RULES.md'));
+ for(const [directory,record] of [['scheduling',f.scheduling],['slot-reservations',{...f.scheduling,schedulingSha256:f.schedulingSha256}],['no-fresh-leads',f.receipt],['source-scans',f.scan],['learning-selection',f.selection],['research',f.snapshot]]){await fs.mkdir(path.join(root,'data',directory),{recursive:true});await fs.writeFile(path.join(root,'data',directory,runId+'.json'),JSON.stringify(record));}
+ const jobs={writer:{result:'success',outputs:{model_attempted:'false',model_completed:'false'}},checker:{result:'skipped'},repair:{result:'skipped'},final_check:{result:'skipped'}};
+ const env={PATH:process.env.PATH,GITHUB_ACTIONS:'true',GITHUB_EVENT_NAME:'workflow_dispatch',RUN_ID:runId,DEMAND_CONTRACT_VERSION:'1',LOOP_SCHEDULING_SHA:f.schedulingSha256,EXPECTED_NO_FRESH_LEADS_SHA:sha256(stableJSON(f.receipt)),MODEL_JOB_RESULTS:JSON.stringify(jobs),GITHUB_OUTPUT:path.join(root,'outputs')};
+ return {root,env,jobs};
+}
+
+test('no fresh lead is a clean deterministic completed_no_post without drafts, models, checker approval or reward',async t=>{
+ const f=fixture(),x=await isolated(t,f);
+ const prepare=spawnSync(process.execPath,['scripts/prepare-run.mjs','writer'],{cwd:x.root,env:x.env,encoding:'utf8'});assert.equal(prepare.status,0,prepare.stderr);assert.match(await fs.readFile(x.env.GITHUB_OUTPUT,'utf8'),/ready=false/);
+ const result=spawnSync(process.execPath,['scripts/finalize-run.mjs',runId],{cwd:x.root,env:x.env,encoding:'utf8'});assert.equal(result.status,0,result.stderr);assert.doesNotMatch(result.stderr,/ENOENT/);
+ const run=JSON.parse(await fs.readFile(path.join(x.root,'data/runs',runId+'.json'),'utf8')),outcome=JSON.parse(await fs.readFile(path.join(x.root,'data/slot-outcomes',runId+'.json'),'utf8'));
+ assert.equal(run.status,'completed_no_post');assert.equal(run.modelExecuted,false);assert.equal(run.assessmentOutcome,'retrieval_complete');assert.deepEqual(run.operationalFailures,[]);assert.equal(run.checkedAssessment,undefined);assert.equal(run.retrievalCompletion.independent,false);assert.equal(outcome.status,'no_post');assert.match(await fs.readFile(x.env.GITHUB_OUTPUT,'utf8'),/operational_failure=false/);await assert.rejects(fs.stat(path.join(x.root,'data/drafts',runId+'.json')),{code:'ENOENT'});
+ const attribution=spawnSync(process.execPath,['scripts/record-source-attribution.mjs',runId],{cwd:x.root,env:{...x.env,EXPECTED_SOURCE_SCAN_SHA:sha256(stableJSON(f.scan))},encoding:'utf8'});assert.equal(attribution.status,0,attribution.stderr);assert.doesNotMatch(attribution.stdout+attribution.stderr,/ENOENT/);assert.match(attribution.stdout,/no source quality verdict/);
+ const learning=deriveLearningReceipt({run,selection:f.selection,scan:f.scan,expectedSelectionSha256:sha256(stableJSON(f.selection)),expectedScanSha256:sha256(stableJSON(f.scan))});assert.equal(learning.outcome,'unverified');assert.equal(learning.samples[0].reward,null);assert.equal(learning.samples[0].status,'unknown');
+ for(const corrupt of [value=>value.retrievalCompletion.independent=true,value=>value.modelExecuted=true,value=>value.retrievalCompletion.sourceScanSha256='bad',value=>value.retrievalCompletion.slotIds=[],value=>value.checkedAssessment={completed:true}]){const changed=structuredClone(run);corrupt(changed);assert.equal(!!noFreshLeadsSettlement({...f.scheduling,schedulingSha256:f.schedulingSha256},changed,run.finishedAt),false);assert.equal(slotOutcome({...f.scheduling,schedulingSha256:f.schedulingSha256},changed).status,'failed_retryable');}
+});
+
+test('official social results reach the writer as fingerprinted discovery hints without acquiring primary-source authority',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'wys-social-hints-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.copyFile(new URL('../RULES.md',import.meta.url),path.join(root,'RULES.md'));await fs.mkdir(path.join(root,'.staging'));
+ const source=parseRedditDemand({data:{children:[{kind:'t3',data:{id:'abcdef',over_18:false,subreddit_type:'public',removed_by_category:null,created_utc:Date.parse(now)/1000-3600,title:'I manually reconcile invoices every week for my accounting practice.',selftext:'I would pay for a tool that reviews invoice rows for my accounting practice.',is_self:true}}]}},{now})[0];assert.ok(source);
+ const producer={repository:'xndanius/while-you-sleep',runId:'456',runAttempt:1,workflow:'loop.yml',job:'social_research',stage:'trusted_api_retrieval',headSha:head},definition=SOCIAL_DEMAND_SOURCES.find(row=>row.role==='demand'),receipt={id:runId+'-research-reddit',runId,phase:'research',platform:'reddit',sourceId:definition.id,status:'completed',retained:1,sourceSnapshotSha256:sha256(stableJSON([source])),independentlyRefetched:false},artifact={schema:1,runId,phase:'research',createdAt:now,producer,sources:[source],health:[],receipts:[receipt]},file=path.join(root,'.staging/social.json');await fs.writeFile(file,JSON.stringify(artifact));
+ const f=fixture(),scan=async()=>({sources:[f.source],observations:f.scan.observations,originMap:f.scan.originMap}),env={GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_RUN_ID:'456',GITHUB_RUN_ATTEMPT:'1',SOCIAL_DEMAND_PATH:file,EXPECTED_SOCIAL_DEMAND_SHA:sha256(stableJSON(artifact)),EXPECTED_SOCIAL_DEMAND_HEAD_SHA:head};
+ const result=await researchSnapshot({root,runId,env,scan,learningEnabled:false,now});assert.equal(result.snapshot.socialDiscovery.primaryEvidence,false);assert.equal(result.snapshot.socialDiscovery.hints.length,1);assert.equal(result.snapshot.socialDiscovery.hints[0].id,source.id);assert.equal(result.snapshot.sources.some(row=>row.id===source.id),false);assert.equal(writerResearchView(result.snapshot).socialDiscovery,result.snapshot.socialDiscovery);
+ await assert.rejects(researchSnapshot({root,runId:'loop-457-1',env:{...env,GITHUB_RUN_ID:'457',EXPECTED_SOCIAL_DEMAND_SHA:'b'.repeat(64)},scan,learningEnabled:false,now}),/bounded|Official social|official source/i);
+});
+
+test('no-lead closure refuses substituted original scans, reservation, producer or a real model attempt',async t=>{
+ const f=fixture(),options={runId,schedulingSha256:f.schedulingSha256,expectedSha256:sha256(stableJSON(f.receipt)),scan:f.scan,selection:f.selection};assert.deepEqual(noFreshLeadsReasons(f.receipt,options),[]);
+ for(const corrupt of [value=>value.schedulingSha256='b'.repeat(64),value=>value.producer.stage='post_model',value=>value.selectedLeads=1,value=>value.sourceScanSha256='b'.repeat(64)]){const changed=structuredClone(f.receipt);corrupt(changed);assert.ok(noFreshLeadsReasons(changed,{...options,expectedSha256:sha256(stableJSON(changed))}).length);}
+ const x=await isolated(t,f);x.jobs.writer.outputs.model_attempted='true';const result=spawnSync(process.execPath,['scripts/finalize-run.mjs',runId],{cwd:x.root,env:{...x.env,MODEL_JOB_RESULTS:JSON.stringify(x.jobs)},encoding:'utf8'});assert.equal(result.status,0);assert.match(result.stderr,/cannot conceal/);const run=JSON.parse(await fs.readFile(path.join(x.root,'data/runs',runId+'.json'),'utf8'));assert.equal(run.assessmentOutcome,'unverified');assert.equal(run.modelExecuted,true);assert.deepEqual(run.published,[]);assert.equal(run.checkedAssessment,undefined);assert.match(await fs.readFile(x.env.GITHUB_OUTPUT,'utf8'),/operational_failure=true/);
+});
+
+test('a selected demand feed failure cannot be mislabeled an empty successful search',()=>{
+ const f=fixture(),failed=structuredClone(f.scan);failed.observations[0].status='failed';assert.equal(createNoFreshLeadsReceipt({runId,schedulingSha256:f.schedulingSha256,scan:failed,selection:f.selection,snapshot:f.snapshot,now}),null);
+});
+
+test('recovery seals multiple matching demand feeds and keeps historical single-arm selections valid',()=>{
+ const reg={...registry,sources:DEMAND_SOURCE_CATALOG.filter(source=>source.segments.includes('public_sector')).map(source=>({...source,status:'active'}))};const board=learningScoreboard({registry:reg,now});
+ const normal=selectLearningTargets({runId,registry:reg,scoreboard:board,now,producer});assert.equal(normal.demandSourceIds.length,1);assert.deepEqual(validateLearningSelection(normal),[]);
+ const recovery=selectLearningTargets({runId,registry:reg,scoreboard:board,now,producer,researchPolicy:policy});assert.equal(recovery.demandSourceIds.length,Math.min(10,reg.sources.length));assert.deepEqual(validateLearningSelection(recovery),[]);const forged=structuredClone(recovery);forged.researchPolicy.mode='normal';assert.ok(validateLearningSelection(forged).length);
+});
+
+test('shorter cooldown changes retrieval only and the builder fallback still requires a literal fresh demand verdict',()=>{
+ const f=fixture(),builder='https://builder.example.com/invoice-review',recent=[{productUrl:builder,assessedAt:'2026-10-18T23:20:00.000Z',runId:'loop-1-1'}],sources=[{id:hash(builder),url:builder,productUrl:builder,title:'Invoice report review',text:'Prepare invoice report drafts for a reviewer.'}];
+ assert.equal(selectProductLeads(sources,{recentAssessments:recent,now:new Date(now),cooldownHours:24}).length,0);assert.equal(selectProductLeads(sources,{recentAssessments:recent,now:new Date(now),cooldownHours:3}).length,1);
+ const authority={sourceId:f.source.id,registrySourceId:definition.id,url:f.source.url,role:'demand',demandKind:'paid_job',segments:['professional_services']},base={registrySources:[{...definition,...demandSourceMetadata(definition)}],authorizedSources:[authority],selectedSegment:'professional_services'},candidate={productUrl:builder,segment:'professional_services',sourceIds:[f.source.id],demandEvidence:{kind:'paid_job',sourceIds:[f.source.id],chore:'Review invoice rows for a human.',evidenceQuote:'filing documents, reconciling invoice rows'}};
+ const plain=createDemandContext(base),plainContext={demandContractVersion:1,demandContext:plain,demandContextSha256:demandContextHash(plain)};assert.ok(demandEvidenceReasons(candidate,[f.source],{required:true,context:plainContext}).some(reason=>/identity/.test(reason)));
+ const fallbackPolicy={version:1,enabled:true,mode:'fallback',reason:'no_fresh_demand_lead',researchSha256:'c'.repeat(64),allowedBuilderUrls:[builder],demandSourceIds:[f.source.id]},context=createDemandContext({...base,fallbackPolicy}),wrapped={demandContractVersion:1,demandContext:context,demandContextSha256:demandContextHash(context),sources:[f.source],createdAt:now};assert.deepEqual(demandEvidenceReasons(candidate,[f.source],{required:true,context:wrapped}),[]);
+ assert.ok(demandApprovalReasons({},candidate,wrapped).length,'builder corroboration never substitutes for the independent demand verdict');const changed={...candidate,segment:'ai_software_builders'};assert.ok(demandEvidenceReasons(changed,[f.source],{required:true,context:wrapped}).length);
+});
+
+test('an empty builder-led batch independently refetches its corroborating demand and rejects a forged pre-model fingerprint',async t=>{
+ const f=fixture();f.selection.researchPolicy=policy;
+ const job={id:'123456',salary_type:{concept_id:'oG8G_9cW_nRf'},occupation:{label:'Administratör'},headline:'Administratör',publication_date:'2026-10-19T07:00:00',application_deadline:'2026-11-01',description:{text:'Hantera fakturor och sammanställ dokumentation för rapportering.'}},demandPage={url:f.source.url,text:JSON.stringify(job),fetchedAt:now,truncated:false};
+ f.source=parseDemandSourcePage(definition,demandPage,{expectedUrl:f.source.url})[0];assert.ok(f.source);
+ const builder='https://builder.example.com/filing',body='The public tool extracts invoice fields and prepares document rows for review. Human approval remains required before a reviewed export. This fixture demonstrates bounded documentation and no real customer or revenue.',primary={id:hash(builder),url:builder,productUrl:builder,title:'Reviewed invoice rows',text:body,role:'building',enriched:true,evidenceKind:'product-page',evidenceFetch:{maxBytes:2000000,complete:true},fetchedAt:now,verifiedAt:now};
+ f.snapshot={...f.snapshot,learningSelection:f.selection,researchPolicy:policy,sources:[f.source,primary],enrichment:{schema:1,status:'completed',selected:1,attempted:1,fetched:1,failed:0,fallback:true,fallbackFrom:{status:'no_new_leads',selected:0,attempted:0},demandSignalIds:[f.source.id],observations:[{productUrl:builder,originSourceIds:[primary.id],status:'fetched',evidenceIds:[primary.id,f.source.id]}]}};
+ const x=await isolated(t,f),draft={runId,targetCount:f.scheduling.targetCount,posts:[],candidates:[{title:'Reviewed invoice rows',productUrl:builder,sourceIds:[primary.id,f.source.id],segment:'professional_services',demandEvidence:{kind:'paid_job',sourceIds:[f.source.id],chore:'Prepare invoice rows for human review.',evidenceQuote:f.source.taskExcerpts[0]},reason:'The product provides implementation evidence; demand for the proposed adaptation remains a hypothesis.'}],rejected:[]};
+ await fs.mkdir(path.join(x.root,'data/drafts'));await fs.writeFile(path.join(x.root,'data/drafts',runId+'.json'),JSON.stringify(draft));await fs.mkdir(path.join(x.root,'data/sources'));await fs.writeFile(path.join(x.root,'data/sources/registry.json'),JSON.stringify({sources:[{...definition,status:'active',validation:f.scan.observations[0].validation}]}));
+ const preload="import dns from 'node:dns/promises';import {syncBuiltinESMExports} from 'node:module';dns.lookup=async()=>[{address:'203.0.113.10',family:4}];syncBuiltinESMExports();globalThis.fetch=async url=>String(url).endsWith('/robots.txt')?new Response('Not found',{status:404,headers:{'content-type':'text/plain'}}):new Response(String(url).includes('jobsearch.api.jobtechdev.se')?"+JSON.stringify(JSON.stringify(job))+":"+JSON.stringify(body)+",{status:200,headers:{'content-type':String(url).includes('jobsearch.api.jobtechdev.se')?'application/json':'text/plain'}});";
+ await fs.writeFile(path.join(x.root,'preload.mjs'),preload);const env={...x.env,EXPECTED_LEARNING_SELECTION_SHA:sha256(stableJSON(f.selection)),EXPECTED_RESEARCH_SHA:sha256(stableJSON(f.snapshot)),NODE_OPTIONS:'--import='+path.join(x.root,'preload.mjs')};
+ const checked=spawnSync(process.execPath,['scripts/prepare-check.mjs',runId],{cwd:x.root,env,encoding:'utf8'});assert.equal(checked.status,0,checked.stderr);const context=JSON.parse(await fs.readFile(path.join(x.root,'data/check-context',runId+'.json'),'utf8'));assert.equal(context.demandContext.fallbackPolicy.enabled,true);assert.ok(context.demandContext.authorizedSources.some(source=>source.sourceId===f.source.id));assert.ok(context.sources.some(source=>source.id===f.source.id));assert.equal(context.primaryFetchDiagnostics[0].status,'fetched');assert.equal(context.deterministicResults.length,0);assert.equal(context.checkedAssessment,undefined);
+ const forged=spawnSync(process.execPath,['scripts/prepare-check.mjs',runId],{cwd:x.root,env:{...env,EXPECTED_RESEARCH_SHA:'b'.repeat(64)},encoding:'utf8'});assert.notEqual(forged.status,0);assert.match(forged.stderr,/pre-model no-fresh-demand research fingerprint/);
+});

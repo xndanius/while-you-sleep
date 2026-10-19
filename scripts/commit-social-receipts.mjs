@@ -1,0 +1,4 @@
+import {readdir} from 'node:fs/promises';import {spawnSync} from 'node:child_process';
+const directory='data/social-demand-receipts';let files=[];try{files=(await readdir(directory)).filter(file=>/^[a-zA-Z0-9_.-]+\.json$/.test(file)).map(file=>directory+'/'+file);}catch(error){if(error.code!=='ENOENT')throw error;}
+const git=args=>{const result=spawnSync('git',args,{encoding:'utf8'});if(result.status!==0)throw new Error('Safe API receipt persistence failed.');return result.stdout;};
+if(files.length){git(['config','user.name','Autonomous Startup Ideas retrieval']);git(['config','user.email','41898282+github-actions[bot]@users.noreply.github.com']);git(['add','--',...files]);if(git(['diff','--cached','--name-only']).trim()){git(['commit','-m','sources: record bounded official API discovery receipts']);git(['pull','--rebase','origin','main']);git(['push','origin','HEAD:main']);}}

@@ -1,20 +1,36 @@
 import {spawnSync} from 'node:child_process';
-import {readJSON,writeJSON,dataPath,records,safeError} from '../lib/storage.mjs';
+import {readJSON,writeJSON,dataPath,records,safeError,sha256,stableJSON} from '../lib/storage.mjs';
 import {appendFile} from 'node:fs/promises';
 import {validateLoopScheduling} from '../lib/loop-schedule.mjs';
 import {settleLoop} from './settle-loop.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
 import {deriveModelExecution} from '../lib/usage.mjs';
+import {noFreshLeadsReasons} from '../lib/no-fresh-leads.mjs';
 const runId=process.argv[2];
 let scheduling;
+let noFreshFailure=null;
 if(process.env.LOOP_SCHEDULING_SHA)scheduling=validateLoopScheduling(await readJSON(dataPath('scheduling',runId)),{runId,expectedSha256:process.env.LOOP_SCHEDULING_SHA,eventName:process.env.GITHUB_EVENT_NAME});
 if(process.env.GITHUB_ACTIONS==='true'&&!scheduling)throw new Error('Trusted scheduling decision is required for loop finalization.');
+async function finalizeNoFreshLeads(){
+ if(!process.env.EXPECTED_NO_FRESH_LEADS_SHA||scheduling?.decision!=='run')return false;
+ try{
+ const receipt=await readJSON(dataPath('no-fresh-leads',runId)),scan=await readJSON(dataPath('source-scans',runId)),selection=await readJSON(dataPath('learning-selection',runId));
+ const reasons=noFreshLeadsReasons(receipt,{runId,schedulingSha256:process.env.LOOP_SCHEDULING_SHA,expectedSha256:process.env.EXPECTED_NO_FRESH_LEADS_SHA,scan,selection});if(reasons.length)throw new Error(reasons.join(' '));
+ let usage;try{usage=await readJSON(dataPath('usage',runId));}catch{usage={inputTokens:null,outputTokens:null,costUsd:null};}
+ const modelExecuted=deriveModelExecution({runId,githubRunUrl:scheduling.githubRunUrl,jobResults:process.env.MODEL_JOB_RESULTS,usage});if(modelExecuted!==false)throw new Error('A deterministic no-lead receipt cannot conceal an attempted or unknown model run.');
+ const finishedAt=new Date().toISOString(),retrievalCompletion={schema:1,completed:true,independent:false,runId,schedulingSha256:process.env.LOOP_SCHEDULING_SHA,slotIds:scheduling.slotIds||[scheduling.slotId],noFreshLeadsSha256:sha256(stableJSON(receipt)),sourceScanSha256:receipt.sourceScanSha256,selectionSha256:receipt.selectionSha256,researchSha256:receipt.researchSha256,completedAt:finishedAt,decision:'no_fresh_leads',reason:receipt.reason};
+ await writeJSON(dataPath('runs',runId),{id:runId,type:'loop',status:'completed_no_post',assessmentOutcome:'retrieval_complete',retrievalCompletion,operationalFailures:[],startedAt:scheduling.requestedAt,finishedAt,eventName:scheduling.eventName,scheduling,modelExecuted:false,candidatesFound:0,picked:0,published:[],rejected:[],steps:[{stage:'research',status:'completed_no_post',at:finishedAt,message:receipt.reason}],githubRunUrl:scheduling.githubRunUrl,engine:'GitHub Actions deterministic no-lead gate',usage},{immutable:true});
+ await settleLoop(runId);if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,'operational_failure=false\nunverified=false\nrun_status=completed_no_post\n');console.log(JSON.stringify({runId,status:'completed_no_post',assessmentOutcome:'retrieval_complete',independentAssessment:false,published:[]}));return true;
+ }catch(error){noFreshFailure=error.code==='ENOENT'?'Trusted no-lead receipt or original scan/selection proof was not imported; no candidate can be approved.':safeError(error);return false;}
+}
 if(scheduling?.decision==='skip'){
  const now=new Date().toISOString();
  await writeJSON(dataPath('runs',runId),{id:runId,type:'loop',status:`skipped_${scheduling.reason}`,startedAt:scheduling.requestedAt,finishedAt:now,eventName:scheduling.eventName,scheduling,modelExecuted:false,published:[],rejected:[],steps:[{stage:'schedule',status:'skipped',at:now,message:scheduling.reason}],githubRunUrl:scheduling.githubRunUrl,engine:'GitHub Actions trusted scheduling gate'},{immutable:true});
  console.log(JSON.stringify({runId,status:'skipped',reason:scheduling.reason,published:[]}));
-}else{
-const child=spawnSync(process.execPath,['scripts/publish-checked.mjs',runId],{encoding:'utf8'});
+}else if(!await finalizeNoFreshLeads()){
+let draftExists=true;try{await readJSON(dataPath('drafts',runId));}catch(error){if(error.code==='ENOENT')draftExists=false;else throw error;}
+let jobsForReadiness;try{jobsForReadiness=JSON.parse(process.env.MODEL_JOB_RESULTS||'{}');}catch{jobsForReadiness={};}
+const child=draftExists&&!noFreshFailure?spawnSync(process.execPath,['scripts/publish-checked.mjs',runId],{encoding:'utf8'}):{status:1,stdout:'',stderr:noFreshFailure||jobsForReadiness.writer?.outputs?.readiness_reason||'Writer preparation did not produce a draft. No candidate was independently checked or approved.'};
 if(child.stdout)process.stdout.write(child.stdout);
 if(child.stderr)process.stderr.write(safeError({message:child.stderr.trim()})+'\n');
 if(child.status!==0){

@@ -66,6 +66,14 @@ test('an empty independently completed batch learns a refusal while incomplete v
  const incomplete=fixture();delete incomplete.manifest.completedAssessment;const unknown=derive(incomplete),board=learningScoreboard({receipts:[unknown],registry,now});assert.equal(unknown.outcome,'unverified');assert.equal(unknown.samples[0].reward,null);assert.equal(board.sources[0].unknown,1);assert.equal(board.sources[0].alpha,1);assert.equal(board.sources[0].beta,1);
  const changed=fixture();changed.run.checkedAssessment.contextSha256='b'.repeat(64);assert.equal(derive(changed).outcome,'unverified');
 });
+test('a checked builder fallback credits its exact corroborating demand feed only after every independent check passes',()=>{
+ const f=fixture(),builder='https://builder.example.com/filing',oldUrl=f.post.productUrl;
+ f.selection.researchPolicy={mode:'fallback',widened:true,fallbackEnabled:true,maxLeads:10,cooldownHours:3};
+ f.post.productUrl=builder;f.post.id=f.post.candidateId=candidateIdentity({productUrl:builder});f.draft.candidates[0].productUrl=builder;f.check.postId=f.post.id;f.context.deterministicResults[0].postId=f.post.id;
+ f.context.demandContext.fallbackPolicy={version:1,enabled:true,mode:'fallback',reason:'no_fresh_demand_lead',researchSha256:'e'.repeat(64),allowedBuilderUrls:[builder],demandSourceIds:[f.source.id]};f.context.demandContextSha256=demandContextHash(f.context.demandContext);f.check.demandCheck.demandContextSha256=f.context.demandContextSha256;
+ bind(f);let receipt=derive(f);assert.equal(receipt.samples[0].reward,1);assert.deepEqual(receipt.samples[0].sourceIds,[definition.id]);assert.equal(f.source.url,oldUrl,'the demand item stays independent from the builder identity');
+ f.check.demandCheck.supported=false;bind(f);assert.equal(derive(f).samples[0].reward,0);delete f.manifest.completedAssessment;assert.equal(derive(f).samples[0].reward,null);
+});
 test('consideration identities deduplicate, sample bounds hold and scores alone cannot mint rewards',()=>{
  const f=fixture();f.draft.candidates=Array.from({length:30},()=>structuredClone(f.draft.candidates[0]));bind(f);assert.equal(derive(f).samples.length,1);delete f.run.checkedAssessment;assert.equal(derive(f).samples[0].status,'unknown');assert.throws(()=>learningScoreboard({receipts:[derive(f),derive(f)],registry,now}),/repeated/);
 });

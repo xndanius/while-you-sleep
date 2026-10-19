@@ -7,6 +7,7 @@ import {localParts} from '../lib/config.mjs';
 import {sourceSeedCatalog,normalizeSourceDefinition,validateSource,fetchPublic,extractPublicFeedLinks,inferSourceKind} from '../lib/research.mjs';
 import {readPublicSourceRegistry,readBoundedJSON,validSourceAdmission,validateSourceRegistry,applySourceTransition,sourceDefinitionReasons,sourceRunURL,SOURCE_POLICY,planSourceEvolution,dailyDiscoveryBudget} from '../lib/source-registry.mjs';
 import {weightedOverall} from '../lib/scoring.mjs';
+import {DEMAND_DISCOVERY_CATALOG,sourceRole} from '../lib/demand-sources.mjs';
 import {registryInput} from './research-snapshot.mjs';
 
 const definition=raw=>{const value=normalizeSourceDefinition(raw);return {id:value.id,name:value.name,url:value.url,kind:value.kind};};
@@ -22,11 +23,30 @@ export function transitionRecord({before,after,sourceId,reason,runId,validation=
  const source=after.sources.find(item=>item.id===sourceId),previous=before.sources.find(item=>item.id===sourceId),createdAt=at(now);
  return {schema:1,id:`source-change-${hash(runId+sourceId+source.status+createdAt)}`,type:'source-change',sourceId,name:source.name,url:source.url,fromStatus:previous?.status||null,toStatus:source.status,reason,createdAt,runId,runUrl:sourceRunURL(runId),beforeSha256:sha256(stableJSON(before)),afterSha256:sha256(stableJSON(after)),validation,statistics};
 }
-export async function discoverSourceProposals({registry,attributions,currentPolicy,fetchPage=fetchPublic,catalog=sourceSeedCatalog}){
- const attempted=new Set([...registry.sources,...registry.exclusions].map(item=>canonicalURL(item.url))),domains=new Map(),proposals=[];
+export function sourceProposalAvailable(source,registry,{now=new Date()}={}){
+ const url=canonicalURL(source.url),time=new Date(now).getTime();
+ // Retired entries require a distinct re-admission contract. Never silently
+ // reactivate them through an ordinary new-source discovery transition.
+ if(registry.sources.some(item=>canonicalURL(item.url)===url))return false;
+ const latest=registry.exclusions.filter(item=>canonicalURL(item.url)===url).reduce((at,item)=>Math.max(at,Date.parse(item.checkedAt)||0),0);
+ return Number.isFinite(time)&&(!latest||time-latest>=7*86400000);
+}
+export async function discoverSourceProposals({registry,attributions=[],currentPolicy,fetchPage=fetchPublic,catalog=sourceSeedCatalog,demandCatalog=catalog===sourceSeedCatalog?DEMAND_DISCOVERY_CATALOG:[],stats={bySource:{}},now=new Date()}){
+ const attempted=new Set(),domains=new Map(),proposals=[];
+ const add=(raw,reason)=>{let source;try{source=definition(raw);}catch{return false;}if(attempted.has(source.url)||!sourceProposalAvailable(source,registry,{now}))return false;proposals.push({...source,discoveryReason:reason});attempted.add(source.url);return true;};
+ // Demand exploration does not depend on already having a passing AI idea.
+ // That dependency exhausted the original finite seed list and then produced
+ // zero probes forever. Rotate the fixed public pool deterministically daily.
+ const day=localParts(now).day,pool=[...demandCatalog,...catalog.filter(source=>sourceRole(source)==='demand')],offset=pool.length?Number.parseInt(hash(day).slice(0,8),16)%pool.length:0;
+ for(let index=0;index<pool.length;index++){const raw=pool[(offset+index)%pool.length];add(raw,'Rotating untried public demand feed; a real guarded quota-counted probe is required before admission.');if(proposals.length>=SOURCE_POLICY.maxDiscoveriesPerDay)return proposals;}
+ // When the fixed demand pool is exhausted, inspect literal alternate feeds
+ // on successful demand origins. Unvetted feeds remain building-role inputs;
+ // a URL or a model label cannot manufacture demand authority.
+ const demandOrigins=new Map();for(const source of registry.sources){if(source.status==='retired'||sourceRole(source)!=='demand'||!(stats.bySource?.[source.id]?.yield?.successfulScans>0))continue;const url=new URL(source.url);if(!demandOrigins.has(url.origin))demandOrigins.set(url.origin,url.origin+'/');}
+ for(const homepage of [...demandOrigins.values()].slice(0,4)){try{const page=await fetchPage(homepage);for(const link of extractPublicFeedLinks(page)){const trusted=[...demandCatalog,...catalog].find(source=>canonicalURL(source.url)===canonicalURL(link.url));add(trusted||{name:`Discovered public feed · ${new URL(link.url).hostname}`,url:link.url,kind:link.kind},'Literal alternate RSS/Atom link on a successfully fetched demand-source origin; authority remains unverified until guarded admission.');if(proposals.length>=SOURCE_POLICY.maxDiscoveriesPerDay)return proposals;}}catch{/* Access refusals never become admissions. */}}
  for(const receipt of attributions)for(const candidate of receipt.candidates){if(candidate.checkStatus!=='passed'||!candidate.scoreSupported||!candidate.criteria||weightedOverall(candidate.criteria,currentPolicy.weights)<7)continue;for(const raw of candidate.evidenceUrls){const url=new URL(raw);if(!domains.has(url.origin))domains.set(url.origin,{products:new Set(),url:raw});domains.get(url.origin).products.add(candidate.productUrl);}}
- for(const [origin,value] of [...domains].sort((a,b)=>b[1].products.size-a[1].products.size||a[0].localeCompare(b[0]))){if(value.products.size<2)continue;try{const page=await fetchPage(value.url);for(const link of extractPublicFeedLinks(page)){const source=definition({name:`Discovered feed · ${new URL(link.url).hostname}`,url:link.url,kind:link.kind});if(!attempted.has(source.url)){proposals.push({...source,discoveryReason:'Literal public alternate feed on a recurring independently checked evidence domain.'});attempted.add(source.url);}}const url=canonicalURL(value.url);if(!attempted.has(url)){proposals.push({...definition({name:`Evidence page · ${new URL(url).hostname}`,url,kind:'html'}),discoveryReason:'Recurring primary evidence domain from at least two distinct independently checked products with current scores of seven or higher.'});attempted.add(url);}}catch{/* A guarded discovery failure never creates an eligible source. */}if(proposals.length>=3)break;}
- for(const raw of catalog){const source=definition(raw);if(attempted.has(source.url))continue;proposals.push({...source,discoveryReason:raw.reason||'Previously untried fixed public source catalog entry.'});attempted.add(source.url);if(proposals.length>=3)break;}
+ for(const [origin,value] of [...domains].sort((a,b)=>b[1].products.size-a[1].products.size||a[0].localeCompare(b[0]))){if(value.products.size<2)continue;try{const page=await fetchPage(value.url);for(const link of extractPublicFeedLinks(page)){add({name:`Discovered feed · ${new URL(link.url).hostname}`,url:link.url,kind:link.kind},'Literal public alternate feed on a recurring independently checked evidence domain.');if(proposals.length>=SOURCE_POLICY.maxDiscoveriesPerDay)return proposals;}const url=canonicalURL(value.url);add({name:`Evidence page · ${new URL(url).hostname}`,url,kind:'html'},'Recurring primary evidence domain from at least two distinct independently checked products with current scores of seven or higher.');}catch{/* A guarded discovery failure never creates an eligible source. */}if(proposals.length>=SOURCE_POLICY.maxDiscoveriesPerDay)return proposals;}
+ for(const raw of catalog){add(raw,raw.reason||'Previously untried fixed public source catalog entry.');if(proposals.length>=SOURCE_POLICY.maxDiscoveriesPerDay)break;}
  return proposals.slice(0,SOURCE_POLICY.maxDiscoveriesPerDay);
 }
 function git(root,args,optional=false){const result=spawnSync('git',args,{cwd:root,encoding:'utf8'});if(result.status!==0&&!optional)throw new Error(`Registry git operation failed: ${args[0]}`);return result;}
@@ -51,9 +71,9 @@ export async function updateSourceRegistry({mode,runId,root=ROOT,env=process.env
    }
    const record={schema:1,id:`source-evolution-${day}`,type:'source-evolution',day,runId,runUrl:sourceRunURL(runId),createdAt:at(now),statisticsSha256:sha256(stableJSON(input.stats)),policySha256:input.currentPolicy.policySha256,probes:[],changeIds:[...changeIds]};await writeJSON(dayFile,record,{immutable:true});git(root,['add','--',`data/source-evolution/${record.id}.json`]);git(root,['commit','-m',`source review: ${day} · ${changeIds.length} reasoned transitions; discovery budget retained`]);committed=true;budget.review=record;
   }
-  const proposed=mode==='bootstrap'?sourceSeedCatalog:(await discover({...input,registry}));
-  const attempted=new Set([...registry.sources,...registry.exclusions,...(budget?.receipts||[]).map(receipt=>receipt.probe)].map(item=>canonicalURL(item.url))),proposals=[];
-  for(const raw of proposed){const source=definition(raw);if(attempted.has(source.url))continue;attempted.add(source.url);proposals.push(raw);if(mode==='evolve'&&proposals.length>=budget.remaining)break;}
+  const proposed=mode==='bootstrap'?sourceSeedCatalog:(await discover({...input,registry,now}));
+  const attempted=new Set((mode==='bootstrap'?[...registry.sources,...registry.exclusions]:(budget?.receipts||[]).map(receipt=>receipt.probe)).map(item=>canonicalURL(item.url))),proposals=[];
+  for(const raw of proposed){const source=definition(raw);if(attempted.has(source.url)||mode==='evolve'&&!sourceProposalAvailable(source,registry,{now}))continue;attempted.add(source.url);proposals.push(raw);if(mode==='evolve'&&proposals.length>=budget.remaining)break;}
   const discoveryFor=(probe,changeId,exclusionId)=>{if(mode!=='evolve')return null;const number=budget.used+1,previous=budget.receipts.at(-1);return {schema:1,id:`source-discovery-${day}-${number}`,type:'source-discovery',day,probeNumber:number,runId,runUrl:sourceRunURL(runId),createdAt:at(now),evolutionId:budget.review.id,evolutionSha256:sha256(stableJSON(budget.review)),previousSha256:previous?sha256(stableJSON(previous)):null,quotaBefore:SOURCE_POLICY.maxDiscoveriesPerDay-budget.used,quotaAfter:SOURCE_POLICY.maxDiscoveriesPerDay-number,statisticsSha256:sha256(stableJSON(input.stats)),policySha256:input.currentPolicy.policySha256,probe,changeId,exclusionId};};
   for(const raw of proposals){const source=definition(raw),result=await validate(source,{now}),eligible=admissionDecision(result,source)&&sourceDefinitionReasons(source).length===0,admitted=eligible&&registry.sources.filter(item=>item.status!=='retired').length<SOURCE_POLICY.activeCap;
    const rejected=eligible&&!admitted?{...result,eligible:false,code:'REGISTRY_CAP',reason:'The forty-source non-retired cap is already full.'}:result;

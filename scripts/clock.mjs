@@ -6,6 +6,7 @@ import { ROOT,readJSON,writeJSON,safeError } from '../lib/storage.mjs';
 import { CLOCK_REPOSITORY,CLOCK_WAIT_MINUTES,clockAPI,clockClaim,clockRecords,clockRunURL,clockTickId,dueClockDispatches,dispatchClockWorkflow,validateClockTick,trustedClockRun } from '../lib/clock.mjs';
 import { loadClockState,persistClockRuntime,runtimeWritable } from '../lib/clock-runtime.mjs';
 import {readCurationRecords,validateCurationConfig,validateCurationReceipts} from '../lib/curation.mjs';
+import {loadWatchdogHealth,watchdogStateChanged} from '../lib/watchdog.mjs';
 
 function trustedEnvironment(env) {
   if (env.GITHUB_ACTIONS!=='true' || env.GITHUB_REPOSITORY!==CLOCK_REPOSITORY || env.GITHUB_EVENT_NAME!=='workflow_dispatch' || env.GITHUB_REF!=='refs/heads/main' || !/^\d+$/.test(env.GITHUB_RUN_ID||'') || !/^\d+$/.test(env.GITHUB_RUN_ATTEMPT||'')) throw new Error('Clock requires a trusted default-branch Actions runner.');
@@ -39,7 +40,9 @@ export async function claimClock({root=ROOT,env=process.env,now=new Date(),api=c
     const parentReceipt=await clockParentReceipt(root,state,runtime.receipt);
     if(parentReceipt.chainId!==state.chainId || parentReceipt.githubRunId!==String(state.parentRunId) || parentReceipt.githubRunAttempt!==state.parentRunAttempt || parentReceipt.child?.runId!==env.GITHUB_RUN_ID || parentReceipt.child?.generation!==state.generation || parentReceipt.child?.githubRunUrl!==clockRunURL(env.GITHUB_RUN_ID))throw new Error('Clock child is not bound to the immutable parent receipt.');
     const parent=await api(`repos/${CLOCK_REPOSITORY}/actions/runs/${state.parentRunId}`,{env});
-    if(!trustedClockRun(parent,state.parentRunId,state.parentRunAttempt)||parent.status!=='completed')throw new Error('Clock parent workflow identity is untrusted or still active.');
+    // Its exact immutable tick already proves the wait and this child. A
+    // post-tick watchdog or Pages job may still be finishing on the parent.
+    if(!trustedClockRun(parent,state.parentRunId,state.parentRunAttempt)||!['completed','in_progress','waiting'].includes(parent.status))throw new Error('Clock parent workflow identity is untrusted.');
   }
   if(claim.claimed){
     if(runtimeWritable(env)){
@@ -69,7 +72,9 @@ export async function tickClock({root=ROOT,env=process.env,now=new Date(),api=cl
     if([...validateCurationConfig(config),...validateCurationReceipts(receipts,{config})].length)throw new Error('Invalid curation gate.');
     curation={config,receipts};
   }catch{curationFailed=true;}
-  const plans=dueClockDispatches({posts,reservations,outcomes,completions:{research:trustedResearch,measure,improve},curation,runId:env.GITHUB_RUN_ID,now});
+  const watchdog=await loadWatchdogHealth({root,posts,now});
+  let previousWatchdog=null;try{previousWatchdog=await readJSON(path.join(root,'data','watchdog','state.json'));}catch(error){if(error.code!=='ENOENT')throw error;}
+  const plans=dueClockDispatches({posts,reservations,outcomes,completions:{research:trustedResearch,measure,improve},curation,watchdog,runId:env.GITHUB_RUN_ID,now});
   const id=clockTickId(env.GITHUB_RUN_ID,env.GITHUB_RUN_ATTEMPT),tickedAt=new Date(now).toISOString();
   const receipt={id,kind:'clock-tick',chainId:state.chainId,generation:state.generation,githubRunId:String(env.GITHUB_RUN_ID),githubRunAttempt:Number(env.GITHUB_RUN_ATTEMPT),githubRunUrl:clockRunURL(env.GITHUB_RUN_ID),parentRunId:state.parentRunId,environment:'clock',waitMinutes:CLOCK_WAIT_MINUTES,claimedAt:state.claimedAt,tickedAt,dispatches:[],dispatchFailures:[],child:null};
   if(curationFailed)receipt.dispatchFailures.push({kind:'curate',workflow:'curate.yml',jobKey:null,slotIds:[],scheduledAt:null,reason:'curation_gate_unavailable',dispatchId:`${id}-curate`,requestedAt:tickedAt,status:'planning_unverified',failure:'curation_config_or_receipts_unverified'});
@@ -83,10 +88,11 @@ export async function tickClock({root=ROOT,env=process.env,now=new Date(),api=cl
       if(active)continue;
     }
     const dispatchId=`${id}-${plan.kind}`;
-    const inputs={clock_tick_run_id:String(env.GITHUB_RUN_ID),clock_dispatch_id:dispatchId,clock_parent_attempt:String(env.GITHUB_RUN_ATTEMPT),...(plan.kind==='loop'?{bootstrap:false}:{})};
+    const inputs={clock_tick_run_id:String(env.GITHUB_RUN_ID),clock_dispatch_id:dispatchId,clock_parent_attempt:String(env.GITHUB_RUN_ATTEMPT),...(plan.kind==='loop'?{bootstrap:false}:{}),...(plan.forceDiscovery?{force_discovery:true}:{})};
     try{
       const dispatched=await dispatchClockWorkflow(plan.workflow,inputs,{api,env});
       receipt.dispatches.push({...plan,...dispatched,dispatchId,requestedAt:tickedAt});
+      if(plan.forceDiscovery)watchdog.actions={...watchdog.actions,discoveryRequestedAt:tickedAt,discoveryRunUrl:dispatched.githubRunUrl};
     }catch{
       // An uncertain target gets no binding and therefore no model authority.
       // It must not kill the independent timer; a later tick retries its slot.
@@ -96,12 +102,14 @@ export async function tickClock({root=ROOT,env=process.env,now=new Date(),api=cl
   const child=await dispatchClockWorkflow('clock.yml',{chain_id:state.chainId,parent_run_id:String(env.GITHUB_RUN_ID),parent_run_attempt:String(env.GITHUB_RUN_ATTEMPT),generation:String(state.generation+1)},{api,env});
   receipt.child={...child,generation:state.generation+1};
   const nextState={...state,generation:state.generation+1,expectedRunId:child.runId,expectedRunAttempt:1,parentRunId:String(env.GITHUB_RUN_ID),parentRunAttempt:Number(env.GITHUB_RUN_ATTEMPT),phase:'queued',lastTickAt:tickedAt,nextTickAt:new Date(new Date(now).getTime()+CLOCK_WAIT_MINUTES*60000).toISOString(),clockRunUrl:child.githubRunUrl,runtimeUpdatedAt:tickedAt};
-  const runtimeMode=runtimeWritable(env),committed=!runtimeMode||receipt.dispatches.length>0;
+  const healthChanged=watchdogStateChanged(previousWatchdog,watchdog);
+  const runtimeMode=runtimeWritable(env),committed=!runtimeMode||receipt.dispatches.length>0||healthChanged;
   if(runtimeMode)await persistClockRuntime({state:nextState,receipt,transition:'tick',env,now,api});
   if(committed){
     await writeJSON(path.join(root,'data','clock','ticks',id+'.json'),receipt,{immutable:true});
     await writeJSON(path.join(root,'data','clock','state.json'),nextState);
-    await commit({root,paths:['data/clock/state.json',`data/clock/ticks/${id}.json`],message:`clock: ${id} · timer released, ${receipt.dispatches.length} due gates, exact next run ${child.runId}`});
+    if(healthChanged)await writeJSON(path.join(root,'data','watchdog','state.json'),watchdog);
+    await commit({root,paths:['data/clock/state.json',`data/clock/ticks/${id}.json`,...(healthChanged?['data/watchdog/state.json']:[])],message:`clock: ${id} · timer released, ${receipt.dispatches.length} due gates, exact next run ${child.runId}`});
   }
   await output(env,{ticked:'true',committed:String(committed),clock_tick_id:id,child_run_id:child.runId,dispatch_count:String(receipt.dispatches.length),dispatch_failure_count:String(receipt.dispatchFailures.length)});return receipt;
 }

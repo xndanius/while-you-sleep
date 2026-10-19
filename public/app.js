@@ -1,7 +1,7 @@
-import {loopTiming} from './schedule.js?v=4d8e46e51b0c';
-import {currentDaySlots} from './slot-display.js?v=4d8e46e51b0c';
-import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=4d8e46e51b0c';
-import {historicalOverlapFor} from './historical-overlaps.js?v=4d8e46e51b0c';
+import {loopTiming} from './schedule.js?v=53f0febf9f67';
+import {currentDaySlots} from './slot-display.js?v=53f0febf9f67';
+import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=53f0febf9f67';
+import {historicalOverlapFor} from './historical-overlaps.js?v=53f0febf9f67';
 
 (() => {
   'use strict';
@@ -54,7 +54,7 @@ import {historicalOverlapFor} from './historical-overlaps.js?v=4d8e46e51b0c';
   function scoreMarkup(post,publicURL){
     const overall=overallScore(post);
     if(overall===null)return '<p class="feed-score-pending">Score pending independent check.</p>';
-    const criteria=[['ease','Ease','Ease to start'],['profit','Profit','Profit potential — a hypothesis'],['feasibility','Feasibility','Student build in 2 weeks'],['autonomy','Autonomy','Autonomy'],['evidence','Evidence','Evidence']];
+    const criteria=[['ease','Ease','Ease to start'],['profit','Profit','Profit potential — a hypothesis'],['feasibility','Feasibility','Student build in 4 weeks'],['autonomy','Autonomy','Autonomy'],['evidence','Evidence','Evidence']];
     return `<div class="feed-score"><a class="feed-overall-score" href="${escape(publicURL)}" aria-label="Overall score ${overall.toFixed(1)} out of 10. Read the score reasons."><span>Score</span><strong>${overall.toFixed(1)}<small> / 10</small></strong></a><dl class="feed-criterion-scores">${criteria.map(([key,label,title])=>{const value=post.scoring.criteria?.[key]?.value;return `<div title="${escape(title)}"><dt>${label}</dt><dd>${Number.isInteger(value)&&value>=1&&value<=10?value:'—'}<span class="sr-only"> out of 10</span></dd></div>`;}).join('')}</dl></div>`;
   }
 

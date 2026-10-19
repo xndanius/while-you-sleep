@@ -51,6 +51,12 @@ test('the same product is caught across homepage, documentation, subdomain and r
 test('different products on shared hosts do not become one product family',()=>{
  for(const [a,b] of [['https://github.com/company/first-kit','https://github.com/company/second-kit'],['https://first-kit.vercel.app','https://second-kit.vercel.app'],['https://huggingface.co/spaces/company/first-kit','https://huggingface.co/spaces/company/second-kit']])assert.equal(dimensions(idea({productUrl:b}),[idea({productUrl:a})]).has('product'),false);
 });
+test('distinct public tenders, job requests and merchant requests retain item identities on shared hosts',()=>{
+ for(const [a,b] of [['https://ted.europa.eu/en/notice/-/detail/721351-2026','https://ted.europa.eu/en/notice/-/detail/721352-2026'],['https://weworkremotely.com/remote-jobs/first-operations','https://weworkremotely.com/remote-jobs/second-operations'],['https://wordpress.org/support/topic/first-request/','https://wordpress.org/support/topic/second-request/']]){
+  const left=noveltyProfile(idea({productUrl:a})),right=noveltyProfile(idea({productUrl:b}));assert.ok(left.productKeys.length);assert.ok(!left.productKeys.some(key=>right.productKeys.includes(key)));
+  assert.deepEqual(noveltyProfile(idea({productUrl:a+'?utm_source=feed'})).productKeys,left.productKeys);
+ }
+});
 test('different n8n template projects with different tasks and customers are not duplicates solely from the vendor host',()=>{
  const a=idea({productUrl:'https://n8n.io/workflows/101-receipt-extraction',title:'Extract receipt rows',promise:'Extract receipt details into a CSV.',whoPays:'Hypothesis: bookkeepers.',loop:['Read receipts.','Extract expense fields.','Export expenses as CSV.']});
  const b=idea({productUrl:'https://n8n.io/workflows/202-meeting-minutes',title:'Summarize meeting decisions',promise:'Turn meeting transcripts into action items.',whoPays:'Hypothesis: architectural practices.',loop:['Read a meeting transcript.','Summarize decisions.','Send action items to attendees.']});

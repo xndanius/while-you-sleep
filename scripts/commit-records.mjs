@@ -12,7 +12,7 @@ for(const directory of ['scheduling','slot-reservations','slot-outcomes']){
  commit(matches,`schedule: ${runId} · ${directory} trusted slot decision`);
 }
 for(const directory of ['source-scans','source-attributions'])commit((await files(`data/${directory}`)).filter(file=>file===`data/${directory}/${runId}.json`),`source record: ${runId} · ${directory} trusted evidence`);
-for(const directory of ['learning-selection','learning'])commit((await files(`data/${directory}`)).filter(file=>file===`data/${directory}/${runId}.json`),`learning: ${runId} · ${directory} trusted demand decision`);
+for(const directory of ['learning-selection','learning','no-fresh-leads'])commit((await files(`data/${directory}`)).filter(file=>file===`data/${directory}/${runId}.json`),`learning: ${runId} · ${directory} trusted demand decision`);
 commit(await files('data/feedback/provenance'),`feedback: ${runId} · verified operator commit and blob provenance`);
 commit((await files('data/research')).filter(p=>p.includes(runId)),`research: ${runId} · public sources and feed health`);
 commit((await files('data/usage')).filter(p=>p===`data/usage/${runId}.json`),`usage: ${runId} · trusted cloud CLI token estimate`);

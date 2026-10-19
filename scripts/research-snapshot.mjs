@@ -7,11 +7,13 @@ import {parseScoringPolicy} from '../lib/scoring.mjs';
 import {readPublicSourceRegistry,loadSourceRegistryData,registryDefinitions,createSourceScanReceipt} from '../lib/source-registry.mjs';
 import {validateCurationReceipts} from '../lib/curation.mjs';
 import {trustedScheduledMetadata} from './prepare-scheduled-job.mjs';
-import {enrichProductLeads} from '../lib/product-evidence.mjs';
+import {enrichProductLeads,enrichBuilderFallback} from '../lib/product-evidence.mjs';
 import {candidateHistory} from '../lib/candidate-input.mjs';
-import {loadLearningState,loadDemandFeedAvailability,selectLearningTargets} from '../lib/learning.mjs';
+import {loadLearningState,loadDemandFeedAvailability,selectLearningTargets,validResearchPolicy} from '../lib/learning.mjs';
 import {retainSafeBuildingScan,retainSafeBuildingEnrichment} from '../lib/research-privacy.mjs';
 import {privateArtifactReasons} from '../lib/privacy.mjs';
+import {createNoFreshLeadsReceipt} from '../lib/no-fresh-leads.mjs';
+import {loadSocialDemandArtifact} from '../lib/social-demand.mjs';
 
 export async function registryInput(root=ROOT,now=new Date()){
  const currentPolicy=parseScoringPolicy(await fs.readFile(path.join(root,'RULES.md'),'utf8'));
@@ -21,12 +23,22 @@ export async function registryInput(root=ROOT,now=new Date()){
  const picks=curations.filter(receipt=>receipt.outcome==='picked').map(receipt=>receipt.pick);
  return {...await loadSourceRegistryData({root,posts,picks,currentPolicy,now}),posts,picks,currentPolicy};
 }
-export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=scanSourceDefinitions,enrich=null,learningEnabled=true,now=new Date()}={}){
+export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=scanSourceDefinitions,enrich=null,learningEnabled=true,researchPolicy=null,now=new Date()}={}){
  const registry=await readPublicSourceRegistry(root),input=registry.initializedAt?await registryInput(root,now):null;
+ let socialDiscovery=null;
+ if(env.SOCIAL_DEMAND_PATH||env.EXPECTED_SOCIAL_DEMAND_SHA){
+  const expectedProducer={repository:env.GITHUB_REPOSITORY,runId:env.GITHUB_RUN_ID,runAttempt:Number(env.GITHUB_RUN_ATTEMPT),workflow:runId.startsWith('loop-')?'loop.yml':'research.yml',job:'social_research',stage:'trusted_api_retrieval',headSha:env.EXPECTED_SOCIAL_DEMAND_HEAD_SHA};
+  const file=path.resolve(root,env.SOCIAL_DEMAND_PATH||''),relative=path.relative(root,file);if(relative.startsWith('..')||path.isAbsolute(relative))throw new Error('Official social discovery must be inside the trusted artifact workspace.');
+  const social=await loadSocialDemandArtifact({file,runId,phase:'research',expectedSha256:env.EXPECTED_SOCIAL_DEMAND_SHA,expectedProducer});
+  socialDiscovery={schema:1,primaryEvidence:false,artifactSha256:env.EXPECTED_SOCIAL_DEMAND_SHA,producer:social.producer,health:social.health,hints:social.sources.slice(0,20).map(source=>({id:source.id,url:source.url,title:source.title,text:source.text,segment:source.segment||null,publicEvidenceUrls:source.publicEvidenceUrls||[],evidenceAuthority:source.evidenceAuthority})),reason:'Officially retrieved discovery hints only. Publication still requires separately fetched vetted public demand evidence; these hints cannot serve as primary factual quotes or earn source credit.'};
+ }
  const history=enrich?await candidateHistory(root,now):{recentAssessments:[]};
  let definitions=input?registryDefinitions(registry,input.stats):sourceDefinitions.map(({id,name,url,kind})=>({id,name,url,kind})),learningSelection=null;
  if(learningEnabled&&runId.startsWith('loop-')&&env.GITHUB_ACTIONS==='true'){
-  const scoreboard=await loadLearningState({root,registry,posts:input?.posts||[],now}),availability=await loadDemandFeedAvailability({root,registry,recentAssessments:history.recentAssessments,now});learningSelection=selectLearningTargets({runId,registry,scoreboard,posts:input?.posts||[],availability,now,producer:{repository:env.GITHUB_REPOSITORY,runId:env.GITHUB_RUN_ID,runAttempt:Number(env.GITHUB_RUN_ATTEMPT),workflow:'loop.yml',stage:'pre_model',headSha:env.SOURCE_HEAD_SHA||env.GITHUB_SHA}});
+  if(!researchPolicy){const {loadWatchdogHealth}=await import('../lib/watchdog.mjs');researchPolicy=(await loadWatchdogHealth({root,now})).researchPolicy;}
+  if(!validResearchPolicy(researchPolicy))throw new Error('Trusted watchdog research policy is invalid.');
+  const recentAssessments=history.recentAssessments.filter(item=>Date.parse(item.assessedAt)>new Date(now).getTime()-researchPolicy.cooldownHours*3600000);
+  const scoreboard=await loadLearningState({root,registry,posts:input?.posts||[],now}),availability=researchPolicy.fallbackEnabled?null:await loadDemandFeedAvailability({root,registry,recentAssessments,now});learningSelection=selectLearningTargets({runId,registry,scoreboard,posts:input?.posts||[],availability,researchPolicy,now,producer:{repository:env.GITHUB_REPOSITORY,runId:env.GITHUB_RUN_ID,runAttempt:Number(env.GITHUB_RUN_ATTEMPT),workflow:'loop.yml',stage:'pre_model',headSha:env.SOURCE_HEAD_SHA||env.GITHUB_SHA}});
   const demand=(registry.sources||[]).filter(source=>learningSelection.demandSourceIds.includes(source.id)).map(({id,name,url,kind})=>({id,name,url,kind}));definitions=[...demand,...definitions.filter(source=>sourceRole(source)==='building').slice(0,20-demand.length)];
   await writeJSON(path.join(root,'data','learning-selection',runId+'.json'),learningSelection,{immutable:true});
   // Preserve the search decision even if the subsequent guarded scan fails.
@@ -43,14 +55,17 @@ export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=sca
  }
  // The feed receipt fingerprints exactly the original scan. Added documentation
  // never changes its feed item counts, original IDs, URLs or attribution tuples.
- const enriched=enrich?await enrich({sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),now:()=>Date.now()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
+ let enriched=enrich?await enrich({sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),...(researchPolicy?{limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours}:{}),now:()=>new Date(now).getTime()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
+ if(enrich===enrichProductLeads&&researchPolicy?.fallbackEnabled&&enriched.enrichment.status==='no_new_leads')enriched=await enrichBuilderFallback({initial:enriched,sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,learningSelection,demandDefinitions:definitions,now:()=>new Date(now).getTime(),limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours});
  const retained=retainSafeBuildingEnrichment(enriched.sources,result,definitions),sources=retained.sources,scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?env:{GITHUB_EVENT_NAME:env.GITHUB_EVENT_NAME});
  const enrichmentFailed=enrich&&enriched.enrichment.status==='failed';
- const snapshot={id:runId,runId,createdAt:new Date(now).toISOString(),sources,health,enrichment:enriched.enrichment,...(result.privacyOmissions?{privacyOmissions:result.privacyOmissions}: {}),...(retained.privacyOmissions?{enrichmentPrivacyOmissions:retained.privacyOmissions}: {}),...(learningSelection?{learningSelection}: {}),...scheduling,scheduleStatus:originalSources.length>=3&&sources.length>=3&&!enrichmentFailed?'completed':'failed',githubRunUrl:env.GITHUB_SERVER_URL&&env.GITHUB_REPOSITORY&&env.GITHUB_RUN_ID?`${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}`:null};
+ const snapshot={id:runId,runId,createdAt:new Date(now).toISOString(),sources,health,enrichment:enriched.enrichment,...(result.privacyOmissions?{privacyOmissions:result.privacyOmissions}: {}),...(retained.privacyOmissions?{enrichmentPrivacyOmissions:retained.privacyOmissions}: {}),...(learningSelection?{learningSelection}: {}),...(researchPolicy?{researchPolicy}:{}),...(socialDiscovery?{socialDiscovery}:{}),...scheduling,scheduleStatus:originalSources.length>=3&&sources.length>=3&&!enrichmentFailed?'completed':'failed',githubRunUrl:env.GITHUB_SERVER_URL&&env.GITHUB_REPOSITORY&&env.GITHUB_RUN_ID?`${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}`:null};
  if(privateArtifactReasons(snapshot).length)throw new Error('Strict privacy guard refused research evidence before storage.');
  await writeJSON(path.join(root,'data','research',runId+'.json'),snapshot,{immutable:true});
- return {snapshot,receipt,learningSelection,learning_selection_sha256:learningSelection?sha256(stableJSON(learningSelection)):'',source_scan_sha256:receipt?sha256(stableJSON(receipt)):'',source_scan_head_sha:receipt?.producer.headSha||''};
+ const noFreshLeads=receipt&&learningSelection&&env.LOOP_SCHEDULING_SHA?createNoFreshLeadsReceipt({runId,schedulingSha256:env.LOOP_SCHEDULING_SHA,scan:receipt,selection:learningSelection,snapshot,now}):null;
+ if(noFreshLeads)await writeJSON(path.join(root,'data/no-fresh-leads',runId+'.json'),noFreshLeads,{immutable:true});
+ return {snapshot,receipt,learningSelection,noFreshLeads,no_fresh_leads_sha256:noFreshLeads?sha256(stableJSON(noFreshLeads)):'',research_sha256:sha256(stableJSON(snapshot)),learning_selection_sha256:learningSelection?sha256(stableJSON(learningSelection)):'',source_scan_sha256:receipt?sha256(stableJSON(receipt)):'',source_scan_head_sha:receipt?.producer.headSha||''};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
- try{const runId=process.argv[2]||id('loop'),result=await researchSnapshot({runId,enrich:runId.startsWith('loop-')?enrichProductLeads:null});if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,`source_scan_sha256=${result.source_scan_sha256}\nsource_scan_head_sha=${result.source_scan_head_sha}\nlearning_selection_sha256=${result.learning_selection_sha256}\n`);console.log(JSON.stringify({runId,path:`data/research/${runId}.json`,sources:result.snapshot.sources.length,failedFeeds:result.snapshot.health.filter(record=>record.status==='failed').length,enrichment:{status:result.snapshot.enrichment.status,selected:result.snapshot.enrichment.selected,attempted:result.snapshot.enrichment.attempted,fetched:result.snapshot.enrichment.fetched,failed:result.snapshot.enrichment.failed}}));if(result.snapshot.scheduleStatus==='failed')process.exitCode=1;}catch(error){console.error(safeError(error));process.exitCode=1;}
+ try{const runId=process.argv[2]||id('loop'),result=await researchSnapshot({runId,enrich:runId.startsWith('loop-')?enrichProductLeads:null});if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,`source_scan_sha256=${result.source_scan_sha256}\nsource_scan_head_sha=${result.source_scan_head_sha}\nlearning_selection_sha256=${result.learning_selection_sha256}\nresearch_sha256=${result.research_sha256}\nno_fresh_leads_sha256=${result.no_fresh_leads_sha256}\n`);console.log(JSON.stringify({runId,path:`data/research/${runId}.json`,sources:result.snapshot.sources.length,failedFeeds:result.snapshot.health.filter(record=>record.status==='failed').length,enrichment:{status:result.snapshot.enrichment.status,selected:result.snapshot.enrichment.selected,attempted:result.snapshot.enrichment.attempted,fetched:result.snapshot.enrichment.fetched,failed:result.snapshot.enrichment.failed}}));if(result.snapshot.scheduleStatus==='failed'&&!result.noFreshLeads)process.exitCode=1;}catch(error){console.error(safeError(error));process.exitCode=1;}
 }

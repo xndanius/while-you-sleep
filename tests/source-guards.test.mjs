@@ -107,3 +107,8 @@ test('URL guards reject credentials, HTTP, unusual ports and all private or mapp
  assert.ok(h.calls.every(call=>!Object.keys(call.settings.headers).some(key=>/authorization|cookie/i.test(key))));
  await assert.rejects(validateURL('https://example.com/'+'a'.repeat(4096),{lookupHost:async()=>{throw new Error('Must reject before DNS.');}}),error=>error.code==='invalid_url');
 });
+
+test('read-only platform abort errors retain a safe fetch failure instead of throwing while replacing message',async()=>{
+ const error=new DOMException('A bounded source request timed out.','TimeoutError');const h=harness({'https://example.com/tender':error});
+ await assert.rejects(fetchPublic('https://example.com/tender',h.options),failure=>failure.code==='source_unavailable'&&failure.stage==='fetch'&&!failure.message.includes('Cannot set property'));
+});

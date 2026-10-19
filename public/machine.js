@@ -1,8 +1,8 @@
-import {loopTiming,nextLocalTime} from './schedule.js?v=4d8e46e51b0c';
-import {slotPresentation,currentDaySlots} from './slot-display.js?v=4d8e46e51b0c';
-import {clockTiming,runTriggerLabel} from './clock-display.js?v=4d8e46e51b0c';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=4d8e46e51b0c';
-import {renderLearningHTML} from './learning-display.js?v=4d8e46e51b0c';
+import {loopTiming,nextLocalTime} from './schedule.js?v=53f0febf9f67';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=53f0febf9f67';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=53f0febf9f67';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=53f0febf9f67';
+import {renderLearningHTML} from './learning-display.js?v=53f0febf9f67';
 
 (() => {
   'use strict';
@@ -91,6 +91,16 @@ import {renderLearningHTML} from './learning-display.js?v=4d8e46e51b0c';
     const now=Date.now(),active=now>=Date.parse(freeze.startsAt)&&now<Date.parse(freeze.endsAt);
     const state=active?'Freeze active':now<Date.parse(freeze.startsAt)?'Freeze scheduled':'Freeze ended';
     target.innerHTML=`<p><strong>${escape(state)}</strong> · ${escape(formatDate(freeze.startsAt))} to ${escape(formatDate(freeze.endsAt))} Vilnius.</p><p class="muted">Code deployments and rule adoption stop during this window. The hosted clock, hourly assessments, content and source records, and website/RSS publishing continue.</p><div class="relay-links">${link('https://github.com/xndanius/while-you-sleep/blob/main/data/maintenance/code-freeze-2026-10-12.json','Sealed code baseline')}</div>`;
+  }
+
+  function renderHealth(){
+    const target=$('publishing-health'),health=data?.health;
+    if(!target)return;
+    if(!health){target.innerHTML='<p>Publishing health is not available yet.</p>';return;}
+    const names={normal:'Normal',widened:'Wider search',fallback:'Demand-backed fallback',repair:'Repair requested'};
+    const reasons=Array.isArray(health.noPostRuns)?health.noPostRuns:[];
+    const actions=health.actions||{};
+    target.innerHTML=`<div class="clock-heading">${chip(health.mode==='normal'?'healthy':'recovering',names[health.mode]||health.mode)}<span>${number(health.postsLast12Hours)} checked posts in the last 12 hours</span></div><p>${escape(health.summary)}</p><dl class="clock-facts"><div><dt>Last publication</dt><dd>${escape(formatDate(health.lastPublishedAt))}</dd></div><div><dt>Recovery progress</dt><dd>${number(health.recoveryPosts)} of ${number(health.recoveryTarget)} new checked posts</dd></div><div><dt>Lead budget</dt><dd>At most ${number(health.researchPolicy?.maxLeads)} per run</dd></div><div><dt>Lead cooldown</dt><dd>${number(health.researchPolicy?.cooldownHours)} hours; published-idea novelty stays 14 days</dd></div></dl><div class="relay-links">${link(actions.issueUrl,'Diagnosis issue')}${link(actions.repairRunUrl,'Repair workflow')}${link(actions.reportUrl,'Recovery report')}${link('api/health.json','All no-post reasons')}</div><details><summary>Reasons for ${number(reasons.length)} no-post runs</summary><div class="slot-table-wrap"><table class="slot-table"><thead><tr><th>Time · Vilnius</th><th>Result</th><th>Reason</th></tr></thead><tbody>${reasons.map(row=>`<tr><td>${escape(formatDate(row.finishedAt))}${row.githubRunUrl?`<small>${link(row.githubRunUrl,'View run')}</small>`:''}</td><td>${escape(stateLabel(row.status))}</td><td>${escape(row.reason)}</td></tr>`).join('')}</tbody></table></div></details>`;
   }
 
   function renderClock(){
@@ -288,6 +298,7 @@ import {renderLearningHTML} from './learning-display.js?v=4d8e46e51b0c';
       renderRelay();
       renderVersions();
       renderSources();
+      renderHealth();
       $('learning').innerHTML=renderLearningHTML(data.learning);
       if(!loaded&&location.hash){
         try{$(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({block:'start',behavior:'instant'});}catch{}

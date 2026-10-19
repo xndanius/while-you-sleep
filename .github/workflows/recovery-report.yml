@@ -1,0 +1,30 @@
+name: Publishing recovery report
+on:
+  schedule:
+    - cron: '0 10 20 10 *'
+      timezone: Europe/Vilnius
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+  actions: write
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - name: Report checked posts, LinkedIn picks and watchdog mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/watchdog.mjs

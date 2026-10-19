@@ -5,6 +5,10 @@ on:
       timezone: Europe/Vilnius
   workflow_dispatch:
     inputs:
+      force_discovery:
+        description: Refresh sources now for a verified hosted watchdog request
+        type: boolean
+        default: false
       clock_tick_run_id:
         description: Trusted hosted clock parent run, verified against its receipt
         type: string
@@ -72,6 +76,7 @@ jobs:
           CLOCK_TICK_RUN_ID: ${{ inputs.clock_tick_run_id || '' }}
           CLOCK_DISPATCH_ID: ${{ inputs.clock_dispatch_id || '' }}
           CLOCK_PARENT_ATTEMPT: ${{ inputs.clock_parent_attempt || '' }}
+          FORCE_DISCOVERY: ${{ inputs.force_discovery && 'true' || 'false' }}
       - if: steps.gate.outputs.due == 'true'
         run: npm ci --ignore-scripts
       - if: steps.gate.outputs.due == 'true'

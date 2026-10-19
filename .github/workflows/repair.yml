@@ -1,0 +1,152 @@
+name: Propose a watchdog repair for human review
+on:
+  workflow_dispatch:
+    inputs:
+      episode_id:
+        description: Exact current publishing-starvation episode
+        type: string
+        required: true
+      issue_number:
+        description: Exact diagnosis issue bound to that episode
+        type: string
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: while-you-sleep-watchdog-repair
+  cancel-in-progress: false
+  queue: max
+env:
+  WATCHDOG_EPISODE_ID: ${{ inputs.episode_id }}
+  WATCHDOG_ISSUE_NUMBER: ${{ inputs.issue_number }}
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      ready: ${{ steps.gate.outputs.ready }}
+      base_sha: ${{ steps.gate.outputs.base_sha }}
+      context_sha256: ${{ steps.gate.outputs.context_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/prepare-watchdog-repair.mjs
+      - if: steps.gate.outputs.ready == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: watchdog-repair-context
+          path: .run/watchdog-repair/context.json
+          include-hidden-files: true
+          if-no-files-found: error
+  propose:
+    needs: gate
+    if: needs.gate.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ needs.gate.outputs.base_sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: watchdog-repair-context
+          path: .run/watchdog-repair
+      - uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        continue-on-error: true
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bot-users: github-actions[bot]
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          model: ${{ vars.CODEX_MODEL || 'gpt-6-luna' }}
+          effort: low
+          prompt-file: .github/codex/prompts/watchdog-repair.md
+          codex-args: '["--ephemeral", "--json"]'
+      - name: Keep only a regular bounded proposal before artifact upload
+        if: always()
+        run: |
+          node --input-type=module <<'NODE'
+          import {promises as fs} from 'node:fs';
+          import path from 'node:path';
+          const file='.run/watchdog-repair/proposal.patch';
+          try {
+            for(const directory of ['.run','.run/watchdog-repair']) {
+              const stat=await fs.lstat(directory);
+              if(!stat.isDirectory()||stat.isSymbolicLink())throw new Error();
+            }
+            const stat=await fs.lstat(file);
+            if(!stat.isFile()||stat.isSymbolicLink()||stat.nlink!==1||stat.size>2000000)throw new Error();
+            if(await fs.realpath(file)!==path.join(await fs.realpath('.'),file))throw new Error();
+            const text=await fs.readFile(file,'utf8');
+            if(/\x00|\bsk-(?:proj-)?[A-Za-z0-9_-]{24,}|\b(?:ghp_|github_pat_)[A-Za-z0-9_]{20,}|Bearer\s+[A-Za-z0-9_.-]{20,}/.test(text))throw new Error();
+            if(Object.entries(process.env).some(([key,value])=>/TOKEN|SECRET|KEY|PASSWORD/i.test(key)&&value&&value.length>=12&&text.includes(value)))throw new Error();
+          } catch {
+            for(const directory of ['.run','.run/watchdog-repair']) {
+              try {const stat=await fs.lstat(directory);if(!stat.isDirectory()||stat.isSymbolicLink()){await fs.rm(directory,{force:true,recursive:true});break;}} catch {}
+            }
+            await fs.mkdir('.run/watchdog-repair',{recursive:true});
+            await fs.rm(file,{force:true,recursive:true});
+          }
+          NODE
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: watchdog-repair-proposal
+          path: .run/watchdog-repair/proposal.patch
+          include-hidden-files: true
+          if-no-files-found: warn
+  publish-draft:
+    needs: [gate, propose]
+    if: always() && needs.gate.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      pull-requests: write
+    concurrency:
+      group: while-you-sleep-record
+      cancel-in-progress: false
+      queue: max
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: watchdog-repair-context
+          path: .staging/repair-context
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        continue-on-error: true
+        with:
+          name: watchdog-repair-proposal
+          path: .staging/repair-proposal
+      - name: Validate the proposal and open a draft pull request without executing it
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_REPAIR_CONTEXT_SHA: ${{ needs.gate.outputs.context_sha256 }}
+        run: node scripts/open-watchdog-repair.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: watchdog-repair-result
+          path: .run/watchdog-repair-result.json
+          include-hidden-files: true
+          if-no-files-found: warn

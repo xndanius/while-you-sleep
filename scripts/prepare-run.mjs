@@ -1,4 +1,4 @@
-import {mkdir,writeFile,readFile,rm} from 'node:fs/promises';
+import {mkdir,writeFile,readFile,rm,appendFile} from 'node:fs/promises';
 import {readJSON,dataPath,sha256,stableJSON,records} from '../lib/storage.mjs';
 import {validateLoopScheduling} from '../lib/loop-schedule.mjs';
 import {candidateHistory,writerResearchView,writerReadiness} from '../lib/candidate-input.mjs';
@@ -7,6 +7,7 @@ import {parseScoringPolicy} from '../lib/scoring.mjs';
 import {checkerOutputSchema} from '../lib/checker-output.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
 import {SEGMENTS,DEMAND_KINDS,DEMAND_MIX_POLICY,eligibleSegments,classifyPublishedSegment} from '../lib/demand.mjs';
+import {noFreshLeadsReasons} from '../lib/no-fresh-leads.mjs';
 const runId=process.env.RUN_ID||`loop-${Date.now()}`;
 if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
 let scheduling;
@@ -23,7 +24,15 @@ await mkdir('.run',{recursive:true});await mkdir('data/drafts',{recursive:true})
 if(['writer','repair'].includes(role)){
  const history=await candidateHistory(ROOT);context.recentRejectionsPath='.run/recent-rejections.json';
  await writeFile(context.recentRejectionsPath,JSON.stringify(history.rejections,null,2));
- const snapshot=await readJSON(dataPath('research',runId));const readiness=writerReadiness(snapshot,{demandRequired:context.demandContractVersion===1});if(!readiness.ready)throw new Error(readiness.reason);context.originalResearchPath=context.researchPath;context.researchPath='.run/writer-research.json';
+ const snapshot=await readJSON(dataPath('research',runId));const readiness=writerReadiness(snapshot,{demandRequired:context.demandContractVersion===1});
+ if(!readiness.ready){
+  let receipt;try{receipt=await readJSON(dataPath('no-fresh-leads',runId));}catch(error){if(error.code!=='ENOENT')throw error;}
+  if(receipt&&scheduling){const [scan,selection]=await Promise.all([readJSON(dataPath('source-scans',runId)),readJSON(dataPath('learning-selection',runId))]);const reasons=noFreshLeadsReasons(receipt,{runId,schedulingSha256:process.env.LOOP_SCHEDULING_SHA,expectedSha256:sha256(stableJSON(receipt)),scan,selection});if(reasons.length)throw new Error(reasons.join(' '));if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,`ready=false\nno_fresh_leads=true\nreadiness_reason=${receipt.reason}\n`);console.log('No fresh lead remained; the deterministic no-post receipt will settle the reserved slot without a model call.');process.exit(0);}
+  if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,`ready=false\nno_fresh_leads=false\nreadiness_reason=${readiness.reason}\n`);throw new Error(readiness.reason);
+ }
+ if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,'ready=true\nno_fresh_leads=false\n');
+ context.originalResearchPath=context.researchPath;context.researchPath='.run/writer-research.json';
+ context.researchPolicy=snapshot.learningSelection?.researchPolicy||null;context.builderFallback=readiness.fallback===true;context.demandSignalIds=context.builderFallback?snapshot.enrichment.demandSignalIds||[]:[];
  context.selectedSegment=snapshot.learningSelection?.selectedSegment||null;
  if(context.demandContractVersion===1){const selection=await readJSON(dataPath('learning-selection',runId));if(selection.runId!==runId)throw new Error('Demand-first writer has no matching trusted learning selection.');context.selectedSegment=selection.selectedSegment;}
  if(role==='repair'){const frozen=await readJSON(dataPath('check-context',runId));context.selectedSegment=frozen.demandContext?.selectedSegment||context.selectedSegment;}

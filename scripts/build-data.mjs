@@ -18,6 +18,7 @@ import {loadSourceRegistryState} from '../lib/source-registry.mjs';
 import {normalizedSourceView} from '../lib/source-presentation.mjs';
 import {codeFreezeStatus} from '../lib/code-freeze.mjs';
 import {loadLearningState} from '../lib/learning.mjs';
+import {loadWatchdogHealth} from '../lib/watchdog.mjs';
 
 const clockDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))?value:null;
 const clockRunURL=value=>typeof value==='string'&&/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/\d+$/.test(value)?value:null;
@@ -105,11 +106,13 @@ try{
   const sources=registryView.enabled===true?normalizedSourceView(registryView):fallbackSources;
   const registry=await readJSON(path.join(ROOT,'data','sources','registry.json'));
   const learning=await loadLearningState({root:ROOT,registry,posts,now:new Date()});
-  const machine={...feed,clock,curation,learning,freeze:codeFreezeStatus(),runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources:registryView,platforms,relay,metrics};
+  const health=await loadWatchdogHealth({root:ROOT,posts,runs});
+  const machine={...feed,clock,curation,learning,health,freeze:codeFreezeStatus(),runs:sortedRuns.slice(0,100),versions:versionHistory,sourceHealth:[...healthMap.values()],sources:registryView,platforms,relay,metrics};
   await writeJSON(path.join(ROOT,'public','api','feed.json'),feed);
   await writeJSON(path.join(ROOT,'public','api','machine.json'),machine);
   await writeJSON(path.join(ROOT,'public','api','sources.json'),registryView);
   await writeJSON(path.join(ROOT,'public','api','learning.json'),learning);
+  await writeJSON(path.join(ROOT,'public','api','health.json'),health);
   const counter=process.env.GOATCOUNTER_SITE||'';
   const validCounter=/^https:\/\/[a-z0-9-]+\.goatcounter\.com\/?$/.test(counter);
   await writeJSON(path.join(ROOT,'public','api','analytics.json'),{provider:validCounter?'goatcounter':null,site:validCounter?counter.replace(/\/$/,''):null});

@@ -5,15 +5,17 @@ import {sourceSeedCatalog,normalizeSourceDefinition,parseSourcePage,validateSour
 import {sourceDefinitionReasons,SOURCE_POLICY} from '../lib/source-registry.mjs';
 import {admissionDecision} from '../scripts/source-registry.mjs';
 import {hash,canonicalURL} from '../lib/storage.mjs';
+import {privateArtifactReasons} from '../lib/privacy.mjs';
+import {publicDemandFetchOptions,TED_SEARCH_FIELDS} from '../lib/public-demand-feeds.mjs';
 
 const now='2026-10-12T11:35:00.000Z';
 const job=()=>({id:'31578015',headline:'Administrator for Alice Example',occupation:{label:'Administratör'},salary_type:{concept_id:'oG8G_9cW_nRf',label:'Fixed salary'},publication_date:'2026-10-09T14:18:45',application_deadline:'2026-11-01T00:00:00',employer:{name:'Private Person',email:'private@example.org',phone:'0701234567'},application_contacts:[{name:'Alice Example',email:'alice@example.org'}],description:{text:'Du arbetar med registrering av fakturor och administrativa rapporter. Du kontaktar Alice Example för frågor om uppgiften. Du kan ringa 0701234567 eller maila alice@example.org. Du hanterar patientdata för John Example. Du utvecklar mjukvara och system.'}});
 const tender=()=>({id:'8c5c952b-376a-46d4-8635-c3fba0288d03-917384',date:'2026-10-12T10:56:01+01:00',tag:['tender'],buyer:{name:'Alice Example',contactPoint:{email:'alice@example.org'}},tender:{title:'Alice Example requires mailing help',description:'Private Person alice@example.org 0701234567',status:'active',classification:{scheme:'CPV',id:'79571000',description:'Mailing services Alice Example'},value:{amount:999999,currency:'GBP'}}});
 function page(def,data){return {url:def.url,text:JSON.stringify(data),fetchedAt:now,status:200,contentType:'application/json',maxBytes:2000000,truncated:false,redirects:[],robots:[{origin:new URL(def.url).origin,robotsUrl:new URL('/robots.txt',def.url).toString(),status:404,state:'missing',contentType:'text/plain',fetchedAt:now,evaluatedUrl:def.url,allowed:true}]};}
 
-test('five demand feeds have fixed licensed official scopes without changing the four-field definition schema',()=>{
- assert.equal(DEMAND_SOURCE_CATALOG.length,5);assert.equal(SOURCE_POLICY.maxDiscoveriesPerDay,3);
- for(const def of DEMAND_SOURCE_CATALOG){assert.equal(sourceRole(def),'demand');assert.ok(sourceSegments(def).length);assert.ok(['paid_job','public_tender'].includes(sourceDemandKind(def)));assert.ok(def.termsUrl.startsWith('https://'));assert.ok(sourceSeedCatalog.some(source=>source.id===def.id));assert.deepEqual(sourceDefinitionReasons(def),[]);assert.deepEqual(Object.keys(normalizeSourceDefinition(def)).sort(),['id','kind','name','url']);}
+test('fixed public demand feeds keep licensed scopes without changing the four-field definition schema',()=>{
+ assert.equal(DEMAND_SOURCE_CATALOG.length,10);assert.equal(SOURCE_POLICY.maxDiscoveriesPerDay,3);
+ for(const def of DEMAND_SOURCE_CATALOG){assert.equal(sourceRole(def),'demand');assert.ok(sourceSegments(def).length);assert.ok(['paid_job','public_tender','community_request'].includes(sourceDemandKind(def)));assert.ok(def.termsUrl.startsWith('https://'));assert.ok(sourceSeedCatalog.some(source=>source.id===def.id));assert.deepEqual(sourceDefinitionReasons(def),[]);assert.deepEqual(Object.keys(normalizeSourceDefinition(def)).sort(),['id','kind','name','url']);}
  for(const forged of [{...DEMAND_SOURCE_CATALOG[0],url:'https://other.example.org/'},{...DEMAND_SOURCE_CATALOG[2],url:DEMAND_SOURCE_CATALOG[2].url+'&profile=true'},{...DEMAND_SOURCE_CATALOG[2],id:'forged'}]){assert.equal(sourceRole(forged),'building');assert.throws(()=>normalizeSourceDefinition(forged),/definition|ID/);assert.ok(sourceDefinitionReasons(forged).length);}
  assert.equal(sourceRole({kind:'hn',url:'https://hn.algolia.com/api/v1/search',role:'demand'}),'building');assert.deepEqual(sourceSegments({kind:'hn',url:'https://hn.algolia.com/api/v1/search'}),[]);
 });
@@ -102,4 +104,41 @@ test('demand evidence identity ignores fetch timestamps but changes when a liter
  const def=DEMAND_SOURCE_CATALOG[2],item=parseDemandSourcePage(def,page(def,{hits:[job()]}))[0],fingerprint=demandEvidenceFingerprint(item);
  assert.match(fingerprint,/^[a-f0-9]{64}$/);assert.equal(demandEvidenceFingerprint({...item,fetchedAt:'2026-10-14T00:00:00.000Z',verifiedAt:'2026-10-14T00:00:00.000Z',taskExcerptVersion:999}),fingerprint);
  assert.notEqual(demandEvidenceFingerprint({...item,text:item.text+' A changed public task.'}),fingerprint);assert.equal(demandEvidenceFingerprint({...item,role:'building'}),null);
+});
+
+const liveDay='2026-10-19T08:30:00.000Z';
+const publicPage=(def,body)=>({...page(def,{}),text:body,fetchedAt:liveDay,contentType:def.kind==='ted-service-demand'?'application/json':'application/rss+xml'});
+const rss=(url,description,{title='Operations role',published='Mon, 19 Oct 2026 07:00:00 GMT'}={})=>`<?xml version="1.0"?><rss version="2.0"><channel><item><title>${title}</title><link>${url}</link><pubDate>${published}</pubDate><creator>Private Person</creator><description><![CDATA[${description}]]></description></item></channel></rss>`;
+test('English public job feeds retain concrete literal tasks while omitting contact and recruitment data',()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='wwr-demand'),url='https://weworkremotely.com/remote-jobs/example-operations';
+ const task='Process incoming invoices and prepare weekly payment reports';
+ const raw=rss(url,`<ul><li>${task}</li><li>Manage the customer inbox and resolve refund requests</li><li>Send your resume to private@example.org</li><li>Coordinate documents with Alice Example every day</li></ul>`);
+ const item=parseDemandSourcePage(def,publicPage(def,raw))[0];
+ assert.ok(item.taskExcerpts.includes(task));assert.ok(item.taskExcerpts.includes('Manage the customer inbox and resolve refund requests'));assert.equal(demandTaskCount(item),2);assert.equal(item.demandEvidence.paid,true);assert.equal(item.demandKind,'paid_job');assert.ok(item.text.length<=1200);assert.deepEqual(privateArtifactReasons(item),[]);assert.doesNotMatch(JSON.stringify(item),/Private Person|Alice|resume|@/);
+ assert.throws(()=>parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${task}</p>`,{title:'Senior Software Engineer'}))),/No current concrete/);
+});
+test('merchant feed requests establish a public problem without inventing willingness to pay or copying author identity',()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='woocommerce-demand'),url='https://wordpress.org/support/topic/repeated-invoice-export/';
+ const task='I need to export paid orders into an invoice spreadsheet every week';
+ const item=parseDemandSourcePage(def,publicPage(def,rss(url,`<p>${task}</p><p>My email is private@example.org</p>`)))[0];
+ assert.equal(item.segment,'ecommerce');assert.equal(item.demandKind,'community_request');assert.equal(item.demandEvidence.paid,undefined);assert.ok(item.text.includes(task));assert.match(item.text,/willingness to pay.*remain hypotheses/);assert.deepEqual(privateArtifactReasons(item),[]);assert.equal(item.creator,undefined);
+});
+test('TED competition records retain fresh task descriptions and refuse results, expired deadlines and incomplete searches',()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='ted-service-demand'),row={'publication-number':'721351-2026','publication-date':'2026-10-19+02:00','notice-type':'cn-standard','classification-cpv':['79500000'],'description-proc':{eng:'Provide document processing and weekly administration reports.'},'notice-title':{eng:'Public document administration services'},'deadline-date-lot':['2026-11-10+02:00'],buyer:{email:'private@example.org'}};
+ const item=parseDemandSourcePage(def,publicPage(def,JSON.stringify({notices:[row],timedOut:false})))[0];assert.equal(item.url,'https://ted.europa.eu/en/notice/-/detail/721351-2026');assert.equal(item.demandEvidence.status,'active');assert.equal(item.postedAt,'2026-10-19');assert.ok(item.taskExcerpts.some(line=>row['description-proc'].eng.includes(line)&&line.includes('document processing and weekly administration reports')));assert.ok(demandTaskCount(item)>0);assert.deepEqual(privateArtifactReasons(item),[]);assert.equal(item.buyer,undefined);
+ for(const changed of [{notices:[row],timedOut:true},{notices:[{...row,'notice-type':'can-standard'}]},{notices:[{...row,'deadline-date-lot':['2026-10-01Z']}]},{notices:[{...row,'deadline-date-lot':[]}]},{notices:[{...row,'publication-date':'2020-01-01Z'}]}])assert.throws(()=>parseDemandSourcePage(def,publicPage(def,JSON.stringify(changed))));
+});
+test('only the fixed anonymous TED endpoint receives a POST and redirects/robots remain GET requests',async()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='ted-service-demand'),calls=[],fetchImpl=async(url,init)=>{calls.push({url:String(url),init});return {status:200};};
+ const options=publicDemandFetchOptions(def,{fetchImpl,maxBytes:2000000,complete:true},'721351-2026');await options.fetchImpl(new URL(def.url),{method:'GET',headers:{'user-agent':'test'}});await options.fetchImpl('https://api.ted.europa.eu/robots.txt',{method:'GET',headers:{}});
+ assert.equal(calls[0].init.method,'POST');const body=JSON.parse(calls[0].init.body);assert.equal(body.query,'publication-number=721351-2026');assert.equal(body.checkQuerySyntax,false);assert.deepEqual(body.fields,[...TED_SEARCH_FIELDS]);assert.equal(calls[1].init.method,'GET');assert.equal(calls[1].init.body,undefined);
+ assert.throws(()=>publicDemandFetchOptions({...def,url:'https://other.example.org/'},{fetchImpl}),/exact public search/);assert.throws(()=>publicDemandFetchOptions(def,{fetchImpl},'injected OR notice'),/exact public search/);
+});
+test('public demand checker refetch reconstructs the exact advertised feed item and discards writer text',async()=>{
+ const def=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='wwr-demand'),url='https://weworkremotely.com/remote-jobs/example-operations',raw=rss(url,'<p>Process incoming invoices and prepare weekly payment reports</p>'),data=publicPage(def,raw),original=parseDemandSourcePage(def,data)[0];let request;
+ const fresh=await fetchDemandEvidence({...original,text:'Invented customer payments'},{definition:def,fetchPage:async(requested,options)=>{request={requested,options};return data;}});
+ assert.equal(request.requested,def.url);assert.equal(request.options.complete,true);assert.equal(fresh.url,url);assert.equal(fresh.verifiedAt,liveDay);assert.doesNotMatch(fresh.text,/Invented/);assert.deepEqual(privateArtifactReasons(fresh),[]);
+ await assert.rejects(fetchDemandEvidence({...original,url:'https://other.example.org/remote-jobs/fake'},{definition:def,fetchPage:async()=>data}),/fixed public item scope/);
+ await assert.rejects(fetchDemandEvidence(original,{definition:def,fetchPage:async()=>({...data,robots:[{allowed:false}]})}),/public guards/);
+ await assert.rejects(fetchDemandEvidence(original,{definition:def,fetchPage:async()=>publicPage(def,rss('https://weworkremotely.com/remote-jobs/different','<p>Process incoming invoices and prepare weekly payment reports</p>'))}),/No current concrete/);
 });
