@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "id": "loop-39229018061-1",
+  "runId": "loop-39229018061-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-19T09:21:29.577Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-39229018061-1",
+  "registrySha256": "8303300a8cb6c6fd0e6443a216b20ef8fd4ef58a0df0c698c9fc347931771015",
+  "scoreboardSha256": "e5b16192ba2e114368d70485dc6238e0583628ae30a90bbe0df39714dc3f0673",
+  "eligibleSegments": [
+    "professional_services",
+    "ecommerce",
+    "education",
+    "health_admin",
+    "public_sector"
+  ],
+  "selectedSegment": "ecommerce",
+  "demandSourceIds": [
+    "d7d95a60e6009c5d18b5920e"
+  ],
+  "segmentDraws": [],
+  "sourceDraws": [
+    {
+      "id": "d7d95a60e6009c5d18b5920e",
+      "value": 0.9136547759076787
+    }
+  ],
+  "selectionStrategy": "source-first-recovery-v1",
+  "recoveryExploration": {
+    "schema": 1,
+    "segmentSelection": "winning_source_first_eligible_segment",
+    "sourceDraws": [
+      {
+        "id": "d7d95a60e6009c5d18b5920e",
+        "value": 0.9136547759076787,
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "bf36022f0a8cd761c338ce53",
+        "value": 0.7109408081902171,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "5c7690cd1ac3e604f884cfc2",
+        "value": 0.5211486367599903,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "57b6f5f4945019c919f6d35c",
+        "value": 0.26377144402294883,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "086772a8008f7255f645d435",
+        "value": 0.2458387476926457,
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "8ef335213e70b38904e7a504",
+        "value": 0.030826955004706617,
+        "segments": [
+          "health_admin"
+        ]
+      },
+      {
+        "id": "3c18d6f9afb86838768b18fe",
+        "value": 0.0214942835527143,
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "b36040a453674772f62166cb",
+        "value": 0.010365051635330786,
+        "segments": [
+          "education"
+        ]
+      }
+    ]
+  },
+  "researchPolicy": {
+    "mode": "repair",
+    "widened": true,
+    "fallbackEnabled": true,
+    "maxLeads": 10,
+    "cooldownHours": 3
+  },
+  "reason": "Try ecommerce and up to ten guarded demand feeds during recovery using reproducible source-first recovery posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "39229018061",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "2ea990e3ee071932418ba6ee73b84ff7ab8f7e9c"
+  }
+}
