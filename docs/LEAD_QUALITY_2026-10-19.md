@@ -26,3 +26,29 @@ Waited bot clock `39229027146` released at 09:37:36 UTC. Its watchdog reserved a
 GitHub records both actors as `github-actions[bot]`, main, `repair.yml`, attempt two. Only `publish-draft` executed again, from 09:40:04 through 09:40:22 UTC; original gate/proposal execution timestamps and original artifact IDs were unchanged. No second model invocation occurred. The workflow completed green at 09:40:23.
 
 Result artifact `12177096037` binds context `6925c78231f0561d296d293a98e4444b420def1dee2e65604d66222cce98307e`, base `454e4a3e`, `diagnosisOnly: true`, and `autoMerge: false`. It records [draft PR #2](https://github.com/xndanius/while-you-sleep/pull/2), created at 09:40:18.216 UTC by the bot, containing one diagnosis document. GitHub reports a null auto-merge request. This proves the human-review repair path, not a functional code repair or recovered publication.
+
+## Next genuine automatic run: no publication
+
+The source-quality code was pushed as `fbf65cc435b2377101e8338b47f2a199d6d15e17`. [Automatic loop 39235799476](https://github.com/xndanius/while-you-sleep/actions/runs/39235799476) covered the 13:07 Vilnius slot on 19 October. Its existing bot clock parent `39233819496` claimed at 09:57:16.042 UTC, ticked at 10:12:36.458 after a 15-minute 20.416-second hosted wait, and dispatched the exact child with `clock-39233819496-1-loop`. The immutable tick has no dispatch failures. Both child actors are `github-actions[bot]`, attempt one, main, `loop.yml`; this was not a manually dispatched content run. The 10:05:17 UTC native cron was a preceding cheap gate before the slot, not this content assessment.
+
+The child was created at 13:12:39 Vilnius, reserved at 13:12:57.264 and recorded its durable result at 13:17:57.139. Result commit `a3e6eed4b78088069431b1be88cb2a8e7dfec281` was written at 13:17:58. The ten unique writer-considered leads comprised three builders and seven direct demand notices. All ten were fetched, using eleven requests; no demand feed supplied more than two assignments. Safe builder capability paragraphs retained 273, 262 and 296 characters. TED, We Work Remotely and JobTech were represented.
+
+There were ten scored writer candidate rows and duplicate exclusion rows for those same ten identities, **zero proposed posts, zero individual independent criterion checks, zero independently passed posts and zero publications**. The separate checker completed `no_supported_candidate`; its completed-assessment validation returned no failures. That batch refusal is not an individual approval of any writer score.
+
+| Builder | Writer-only ease / profit / feasibility / autonomy / evidence | Writer mean | Refusal evidence |
+| --- | --- | --- | --- |
+| 16602, overdue invoice reminders | 6 / 5 / 6 / 6 / 5 | 5.6 | Its paired notice concerned pre-billing job verification, rather than overdue collections. |
+| 17582, vendor-invoice extraction | 6 / 4 / 5 / 5 / 4 | 4.8 | Its paired notice concerned customer billing inquiries, a different operation. |
+| 6480, invoice PDF intake | 6 / 5 / 6 / 5 / 5 | 5.4 | The school process remained an unsupported repeat of a prior refusal. |
+
+The source cap and three-builder retrieval policy worked; task pairings and publishable yield remain insufficient. No score was raised, checker weakened or publication manufactured. The valid mixed learning receipt records ten reward-zero samples from the completed refusals, not ten individual criterion evaluations. It records no reward one.
+
+The trusted checker `EXPECTED_RESEARCH_SHA` exactly matched the original writer research hash `3c376267bff4599a1cc1ae85e98639ad28dad39cd4ef3d91f119e35da0cea02d`. At the immutable result commit, draft hash is `fdf93b48384aff9fc296bbeba0e9506b0048d02fd05917f5d7ee54cc77b5b2bc`, check-context hash `45886fe0fc65e7a763447ca28d83d3383364d38abab8f2dcffc298dc85e15065`, check hash `19e3df49c0c13ef6cf050ee687c817fd1d49d0e3f208f23cf9ff594c0b68884b`, and learning hash `b2208f372296eb0637ca1ee3c93bcaa31054f3b1bab23503bfca84fd552bdf2a`. The source-producer head contained only data commits after the code release; no intervening code change supplied this result.
+
+Writer, checker and record jobs were green, but the complete workflow ended **red at 13:18:49**: Pages build failed at 13:18:48 on the real discovery-versus-primary diagnostic regression and deployment was skipped. The same regression had blocked push Pages run `39233836346`. A discovery record's `productUrl` alias could incorrectly count as a fresh primary page. Local follow-up commit `a35779e608cf688bac1015c9db73dc335ef679c1` fixes this and the remaining safe-refetch paths; all 599 local tests, syntax checks and the build passed. Its release is held at the coordinating chat's explicit instruction. Neither that fix nor this appended audit has been pushed under the hold.
+
+Live verification at approximately 13:20 Vilnius returned HTTP 200 for `/machine/`, valid RSS with seven historical `feed.xml` items and zero `best.xml` picks, and repair mode with zero publications in twelve hours. The health projection remains from the preceding successful Pages release. There is no new post URL. Three new checked posts and a best-feed pick remain unachieved.
+
+## Release approval
+
+Dan explicitly lifted the coordinating chat's hold on 19 October: asked whether Codex may push the current fixes and the new discussion/Apify changes to main and deploy when tests pass, he answered “Taip, leidžiu” — yes, I allow. The held four-file checker fix was integrated onto the current main data as `fca0b33c`, preserving the original local `a35779e6` change. Five focused acquisition/checker regressions, syntax checks and the current-data build passed; the unchanged implementation had already passed all 599 tests locally. Release A proceeds before the discussion-only change. The historical hold statements above describe the earlier state, not a current restriction.
