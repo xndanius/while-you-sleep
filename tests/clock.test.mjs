@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,mkdir,writeFile,readFile,readdir,chmod,rm} from 'node:fs/promises';
+import {mkdtemp,mkdir,writeFile,readFile,readdir,chmod,rm,copyFile} from 'node:fs/promises';
+import {spawnSync} from 'node:child_process';
 import path from 'node:path';
 import os from 'node:os';
 import {clockAPI,clockClaim,clockLiveness,clockRunURL,clockTickId,dueClockDispatches,dispatchClockWorkflow,validateClockTick,CLOCK_REPOSITORY} from '../lib/clock.mjs';
@@ -15,6 +16,17 @@ const waiting=clockClaim({runId:'100',now:new Date('2026-10-11T05:07:00Z')}).sta
 async function fixture(t){const root=await mkdtemp(path.join(os.tmpdir(),'wys-clock-'));t.after(()=>rm(root,{recursive:true,force:true}));return root;}
 async function saveState(root,state){await mkdir(path.join(root,'data','clock'),{recursive:true});await writeFile(path.join(root,'data','clock','state.json'),JSON.stringify(state));}
 const fakeDispatch=(id)=>({workflow_run_id:id,html_url:clockRunURL(id),run_url:`https://api.github.com/repos/${CLOCK_REPOSITORY}/actions/runs/${id}`});
+
+test('clock, recovery and cheap due gates import in an isolated checkout without node_modules',async t=>{
+ const root=await fixture(t),checkout=new URL('../',import.meta.url);
+ await copyFile(new URL('package.json',checkout),path.join(root,'package.json'));
+ for(const directory of ['lib','scripts','public']){
+  await mkdir(path.join(root,directory));for(const file of await readdir(new URL(directory+'/',checkout)))if(/\.(?:mjs|js)$/.test(file))await copyFile(new URL(directory+'/'+file,checkout),path.join(root,directory,file));
+ }
+ await assert.rejects(readdir(path.join(root,'node_modules')),error=>error.code==='ENOENT');
+ const code="for(const entry of ['clock.mjs','ensure-clock.mjs','prepare-loop.mjs','prepare-scheduled-job.mjs','watchdog.mjs'])await import(new URL('./scripts/'+entry,import.meta.url));console.log('dependency-free gates loaded');";
+ const result=spawnSync(process.execPath,['--input-type=module','-e',code],{cwd:root,env:{PATH:process.env.PATH},encoding:'utf8'});assert.equal(result.status,0,result.stderr);assert.match(result.stdout,/dependency-free gates loaded/);
+});
 
 test('singleton claim stops duplicates before the environment and binds exact child generation',()=>{
  assert.equal(clockClaim({runId:'101',state:waiting,sourceRun:source(100),now}).claimed,false);
@@ -36,6 +48,43 @@ test('liveness respects recent waiting/queued runs but exposes a stale lease for
  assert.equal(clockLiveness(waiting,source(100,'completed'),now).alive,true);
  assert.equal(clockLiveness(waiting,source(100),new Date('2026-10-11T06:00:00Z')).alive,false);
  assert.equal(clockLiveness(null,null,now).alive,false);
+});
+
+test('an exact unsuccessful completed attempt is dead immediately despite a recent claim',()=>{
+ for(const conclusion of ['failure','cancelled','timed_out','action_required','startup_failure','neutral','skipped','stale']){
+  assert.deepEqual(clockLiveness(waiting,{...source(100,'completed'),conclusion},now),{alive:false,reason:'clock_run_terminal_non_success'});
+ }
+ for(const conclusion of [undefined,null,'','unknown','success'])assert.equal(clockLiveness(waiting,{...source(100,'completed'),conclusion},now).alive,true);
+ for(const status of ['waiting','queued','in_progress','requested','pending','unknown'])assert.equal(clockLiveness(waiting,{...source(100,status),conclusion:'failure'},now).alive,true);
+ for(const change of [{id:101},{run_attempt:2},{path:'.github/workflows/loop.yml'},{event:'schedule'},{head_branch:'other'},{repository:{full_name:'other/repo'}},{head_repository:{full_name:'other/repo'}}])assert.equal(clockLiveness(waiting,{...source(100,'completed'),conclusion:'failure',...change},now).alive,true);
+});
+
+test('backup immediately fences a recent failed attempt before dispatching one exact replacement',async t=>{
+ const root=await fixture(t);await saveState(root,waiting);const actions=[];
+ const result=await ensureClock({root,env:{...env,GITHUB_EVENT_NAME:'schedule',GITHUB_RUN_ID:'900'},now,api:async(endpoint,options={})=>{
+  if(options.method==='POST'){
+   assert.ok(endpoint.endsWith('/clock.yml/dispatches'),'a terminal source never needs cancellation');
+   assert.equal(JSON.parse(await readFile(path.join(root,'data','clock','state.json'),'utf8')).phase,'fenced');
+   actions.push('dispatch');return fakeDispatch(300);
+  }
+  assert.ok(endpoint.endsWith('/runs/100'));return {...source(100,'completed'),conclusion:'failure'};
+ },commit:async value=>actions.push(value.message.includes('fence')?'fence':'restart')});
+ assert.deepEqual(result,{restarted:true,runId:'300',reason:'clock_run_terminal_non_success'});
+ assert.deepEqual(actions,['fence','dispatch','restart']);
+ const replacement=JSON.parse(await readFile(path.join(root,'data','clock','state.json'),'utf8'));
+ assert.equal(replacement.expectedRunId,'300');assert.equal(replacement.phase,'queued');
+ await assert.rejects(tickClock({root,env,now,api:async()=>{throw new Error('Old failed attempt cannot tick.');},commit:async()=>{}}),/claim/);
+});
+
+test('recent uncertain terminal conclusions and a different attempt never trigger backup writes',async t=>{
+ for(const change of [{conclusion:null},{conclusion:'unknown'},{conclusion:'failure',run_attempt:2}]){
+  const root=await fixture(t);await saveState(root,waiting);let writes=0;
+  const result=await ensureClock({root,env:{...env,GITHUB_EVENT_NAME:'schedule',GITHUB_RUN_ID:'900'},now,api:async(endpoint,options={})=>{
+   if(options.method==='POST'){writes++;throw new Error('No replacement.');}
+   return {...source(100,'completed'),...change};
+  },commit:async()=>{writes++;}});
+  assert.equal(result.restarted,false);assert.equal(writes,0);
+ }
 });
 
 test('pure clock planner skips completed slots, preserves the cap and sends an unresolved lock to its real gate',()=>{

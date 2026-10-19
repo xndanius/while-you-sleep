@@ -172,6 +172,21 @@ test('stale runtime recovery fences before cancelling, persists one replacement 
  assert.equal(result.restarted,true);assert.deepEqual(actions,['fence','fence-commit','cancel','dispatch','restart','restart-commit']);assert.equal(row.payload.state.expectedRunId,'300');
 });
 
+test('recent terminal runtime failure is fenced immediately before its only replacement',async t=>{
+ const root=await fixture(t);await save(root,'clock','state',waiting);let row=deployment(claimPayload()),id=2;const actions=[];
+ const backup={...env,GITHUB_RUN_ID:'900',GITHUB_EVENT_NAME:'schedule'};
+ const result=await ensureClock({root,env:backup,now,api:async(endpoint,options={})=>{
+  if(endpoint===CLOCK_RUNTIME_ENDPOINT)return[row];
+  if(endpoint.endsWith('/actions/runs/100'))return {...source(100,'completed'),conclusion:'failure'};
+  if(endpoint.endsWith('/actions/runs/900'))return source(900,'in_progress','loop.yml','schedule');
+  if(endpoint.endsWith('/deployments')){row=deployment(options.body.payload,id++);actions.push(row.payload.transition);return row;}
+  if(endpoint.endsWith('/clock.yml/dispatches')){assert.equal(row.payload.state.phase,'fenced');actions.push('dispatch');return fakeDispatch(300);}
+  throw Error('No cancellation or unbound mutation is permitted.');
+ },commit:async value=>actions.push(value.message.includes('fence')?'fence-commit':'restart-commit')});
+ assert.deepEqual(result,{restarted:true,runId:'300',reason:'clock_run_terminal_non_success'});
+ assert.deepEqual(actions,['fence','fence-commit','dispatch','restart','restart-commit']);assert.equal(row.payload.state.expectedRunId,'300');
+});
+
 test('a fresh stale seed is not checked against the previous chain child receipt',async t=>{
  const root=await fixture(t);const stale={...waiting,expectedRunId:'200',clockRunUrl:clockRunURL(200),parentRunId:'99',parentRunAttempt:1,phase:'queued',generation:1,claimedAt:'2026-10-10T05:07:00Z',lastTickAt:'2026-10-10T05:00:00Z'};await save(root,'clock','state',stale);
  const legacy={...env};delete legacy.CLOCK_RUNTIME_MODE;
