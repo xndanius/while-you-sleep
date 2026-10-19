@@ -1,0 +1,128 @@
+{
+  "verifiedAt": "2026-10-19T14:13:09.099Z",
+  "child": {
+    "id": 39266657537,
+    "path": ".github/workflows/loop.yml",
+    "event": "workflow_dispatch",
+    "headBranch": "main",
+    "headSha": "f7ed8061d6e60053b42a19ce740785be4ff99ee6",
+    "attempt": 1,
+    "actor": {
+      "login": "github-actions[bot]",
+      "type": "Bot"
+    },
+    "triggeringActor": {
+      "login": "github-actions[bot]",
+      "type": "Bot"
+    },
+    "repository": "xndanius/while-you-sleep",
+    "headRepository": "xndanius/while-you-sleep",
+    "fork": false,
+    "createdAt": "2026-10-19T14:11:06Z",
+    "startedAt": "2026-10-19T14:11:06Z",
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "parent": {
+    "id": 39264133735,
+    "path": ".github/workflows/clock.yml",
+    "event": "workflow_dispatch",
+    "headBranch": "main",
+    "headSha": "e8d0dcd88c9bd0c09410129c57a3fdadfa260423",
+    "attempt": 1,
+    "actor": {
+      "login": "github-actions[bot]",
+      "type": "Bot"
+    },
+    "triggeringActor": {
+      "login": "github-actions[bot]",
+      "type": "Bot"
+    },
+    "repository": "xndanius/while-you-sleep",
+    "headRepository": "xndanius/while-you-sleep",
+    "fork": false,
+    "createdAt": "2026-10-19T13:54:07Z",
+    "startedAt": "2026-10-19T13:54:07Z",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "scheduling": {
+    "id": "loop-39266657537-1",
+    "slotIds": [
+      "publish-2026-10-19-17-07"
+    ],
+    "scheduledAt": "2026-10-19T14:07:00.000Z",
+    "reservedAt": "2026-10-19T14:11:23.493Z",
+    "decision": "run",
+    "targetCount": 1,
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-39264133735-1",
+      "clockRunId": "39264133735",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39264133735",
+      "dispatchId": "clock-39264133735-1-loop",
+      "runId": "39266657537",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-19T14:11:03.293Z",
+      "requestedAt": "2026-10-19T14:11:03.293Z",
+      "verifiedAt": "2026-10-19T14:11:23.493Z",
+      "parentHeadSha": "e8d0dcd88c9bd0c09410129c57a3fdadfa260423"
+    },
+    "canonicalSha256": "5accb601884d8ab7a158b142f41e9a1db012bb2f65181d6a9f35420e2dd7da3d",
+    "reservationSchedulingSha256": "5accb601884d8ab7a158b142f41e9a1db012bb2f65181d6a9f35420e2dd7da3d",
+    "validationPassed": true
+  },
+  "clock": {
+    "id": "clock-39264133735-1",
+    "claimedAt": "2026-10-19T13:55:45.322Z",
+    "tickedAt": "2026-10-19T14:11:03.293Z",
+    "waitMinutes": 15,
+    "elapsedWaitMs": 917971,
+    "trustedTick": true,
+    "dispatches": [
+      {
+        "kind": "loop",
+        "workflow": "loop.yml",
+        "jobKey": null,
+        "slotIds": [
+          "publish-2026-10-19-17-07"
+        ],
+        "scheduledAt": "2026-10-19T14:07:00.000Z",
+        "reason": "catch_up_elapsed_slot",
+        "runId": "39266657537",
+        "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39266657537",
+        "dispatchId": "clock-39264133735-1-loop",
+        "requestedAt": "2026-10-19T14:11:03.293Z"
+      }
+    ],
+    "child": {
+      "runId": "39266662181",
+      "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39266662181",
+      "generation": 18
+    },
+    "canonicalSha256": "8b5cc13bd3012dbfa1e3a9fb2a92ee968fb24a2c060de9c39dd0e0ca6818cb61",
+    "commit": "bae79f845da4cc900ba172c57543c2f5f718aea7",
+    "exactReceiptMatches": true
+  },
+  "baseline": {
+    "sha": "e8d0dcd88c9bd0c09410129c57a3fdadfa260423",
+    "isAncestor": true,
+    "changedPaths": [
+      "data/clock/state.json",
+      "data/clock/ticks/clock-39261427564-1.json",
+      "data/watchdog/state.json"
+    ]
+  },
+  "validation": {
+    "allBotActors": true,
+    "exactFirstAttempts": true,
+    "automaticClockEvent": true,
+    "receiptHashMatches": true,
+    "baselineUnchangedCode": true
+  }
+}

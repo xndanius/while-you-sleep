@@ -13,6 +13,7 @@ import {readProviderEvidence} from '../lib/provider-evidence.mjs';
 import {privateArtifactCategories} from '../lib/privacy.mjs';
 import {validateLearningSelection} from '../lib/learning.mjs';
 import {extractImplementationEvidence} from '../lib/implementation-evidence.mjs';
+import {assessmentEvidenceReasons,discussionEvidenceReasons} from '../lib/evidence-contract.mjs';
 const runId=process.argv[2];
 try{
   const draft=await readJSON(dataPath('drafts',runId));const research=await readJSON(dataPath('research',runId));
@@ -99,7 +100,7 @@ try{
       considerationEvidence.push({title:item.title.slice(0,200),productUrl,sourceIds:relevant.map(source=>source.id)});
     }
     if(known.size>32)throw new Error('Candidate exclusions exceed the bounded fresh assessment source budget.');
-    selected=known.size?[...known.values()]:research.sources.filter(source=>typeof source?.id==='string'&&typeof source?.url==='string'&&typeof source?.text==='string'&&source.text.trim().length>=100).slice(0,8);
+    selected=known.size?[...known.values()]:research.sources.filter(source=>typeof source?.id==='string'&&typeof source?.url==='string'&&typeof source?.text==='string'&&(source.discussionMetadataVersion===1?discussionEvidenceReasons(source,{definition:definitionFor(source),asOf:new Date().toISOString()}).length===0:source.text.trim().length>=100)).slice(0,8);
   }
   if(fallbackPolicy)selected=[...new Map([...selected,...fallbackPolicy.demandSourceIds.map(id=>research.sources.find(source=>source.id===id)).filter(Boolean)].map(source=>[source.id,source])).values()];
   if(recoveryBatchPolicy)selected=[...new Map([...selected,...recoveryBatchPolicy.leadAssignments.flatMap(item=>[research.sources.find(source=>source.id===item.demandSourceId),...research.sources.filter(source=>source.enriched===true&&sameProduct(source,item.productUrl))]).filter(Boolean)].map(source=>[source.id,source])).values()];
@@ -159,6 +160,8 @@ try{
   await writeJSON(dataPath('drafts',runId),draft);
   const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...demandContract,...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
   const privacyCategories=privateArtifactCategories(context);
+  const evidenceFailures=assessmentEvidenceReasons(context);
+  if(evidenceFailures.length)throw new Error(evidenceFailures.join(' '));
   if(privacyCategories.length)throw new Error('Fresh independent evidence failed privacy checks ('+[...new Set(privacyCategories)].join(', ')+'); no checker model call is permitted.');
   await writeJSON(dataPath('check-context',runId),context);
   console.log(JSON.stringify({runId,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,results:deterministicResults}));

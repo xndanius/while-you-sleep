@@ -12,6 +12,7 @@ import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
 import {demandContextReasons} from '../lib/demand.mjs';
 import {sourceValidationMatchesDefinition} from '../lib/source-registry.mjs';
 import {readProviderEvidence} from '../lib/provider-evidence.mjs';
+import {discussionEvidenceReasons} from '../lib/evidence-contract.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
 
 const runId=process.argv[2];
@@ -79,9 +80,10 @@ try{
             const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&sourceValidationMatchesDefinition(entry.validation,entry));
             if(!definition||sourceRole(definition)!=='demand')throw new Error('The demand feed is no longer admitted in the fixed registry.');
             const fresh=await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});text=fresh.text;
+            if(fresh.discussionMetadataVersion===1){const invalid=discussionEvidenceReasons(fresh,{definition,asOf:new Date().toISOString()});if(invalid.length)throw new Error(invalid.join(' '));}
             if(!text.includes(post.demandEvidence.evidenceQuote)||!text.includes(result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
           }else{const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));text=plainText(fetched.text);}
-          if(text.length<(source.discussionMetadataVersion===1?12:100))throw new Error('Live source contains too little readable evidence.');
+          if(source.discussionMetadataVersion!==1&&text.length<100)throw new Error('Live source contains too little readable evidence.');
           for(const claim of [...result.check.claimChecks,...result.check.scoreChecks].filter(c=>c.sourceId===sourceId)){
             const occurs=claim.criterion?text.includes(claim.evidenceQuote):text.toLowerCase().includes(plainText(claim.evidenceQuote).toLowerCase());
             if(!occurs)throw new Error('A checked claim or score evidence quote no longer exists on the live source.');
