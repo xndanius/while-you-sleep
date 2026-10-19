@@ -7,9 +7,21 @@ import {loadWatchdogHealth,watchdogStateChanged,RECOVERY_REPORT_DUE_AT} from '..
 
 const repo='xndanius/while-you-sleep';
 export function watchdogAPI(endpoint,{method='GET',body,env=process.env}={}){
- const allowed=typeof endpoint==='string'&&new RegExp(`^repos/${repo}/(?:actions/runs/[1-9]\\d*|issues(?:\\?state=all&per_page=100|/[1-9]\\d*)?|actions/workflows/repair\\.yml/dispatches)$`).test(endpoint);
- if(!allowed||!['GET','POST','PATCH'].includes(method))throw new Error('Unsupported watchdog API request.');
+ if(!watchdogRequestAllowed(endpoint,method))throw new Error('Unsupported watchdog API request.');
  return new Promise((resolve,reject)=>{const args=['api','--hostname','github.com','--method',method,'-H','X-GitHub-Api-Version: 2026-03-10',endpoint];if(body!==undefined)args.push('--input','-');const childEnv={...env,GH_PROMPT_DISABLED:'1'};delete childEnv.GH_DEBUG;const child=spawn('gh',args,{env:childEnv,stdio:['pipe','pipe','pipe']});let output='',bytes=0,done=false;const finish=(error,value)=>{if(done)return;done=true;clearTimeout(timer);if(error)reject(error);else resolve(value);};const timer=setTimeout(()=>{child.kill('SIGKILL');finish(new Error('Watchdog API request timed out.'));},30000);child.stdout.on('data',part=>{bytes+=part.length;if(bytes>2000000){child.kill('SIGKILL');finish(new Error('Watchdog API response exceeded its bound.'));}else output+=part;});child.stderr.on('data',()=>{});child.on('error',()=>finish(new Error('Watchdog API unavailable.')));child.on('close',code=>{if(code!==0)return finish(new Error('Watchdog API request failed.'));try{finish(null,output?JSON.parse(output):null);}catch{finish(new Error('Watchdog API response was not JSON.'));}});child.stdin.end(body===undefined?'':JSON.stringify(body));});
+}
+export function watchdogRequestAllowed(endpoint,method='GET'){
+ if(typeof endpoint!=='string')return false;
+ const prefix=`repos/${repo}/`,numeric='[1-9]\\d*';if(!endpoint.startsWith(prefix))return false;const route=endpoint.slice(prefix.length);
+ if(method==='GET')return new RegExp(`^(?:actions/runs/${numeric}(?:/attempts/1/jobs\\?per_page=100)?|issues\\?state=all&per_page=100|issues/${numeric})$`).test(route);
+ if(method==='POST')return new RegExp(`^(?:issues|actions/workflows/repair\\.yml/dispatches|actions/runs/${numeric}/rerun-failed-jobs)$`).test(route);
+ return method==='PATCH'&&new RegExp(`^issues/${numeric}$`).test(route);
+}
+export function repairPublisherRetryEligible(metadata,jobs,{runId,episodeId,actions}={}){
+ if(!/^[1-9]\d*$/.test(String(runId||''))||actions?.repairEpisode!==episodeId||actions.repairStatus!=='dispatched'||actions.repairRunUrl!==`https://github.com/${repo}/actions/runs/${runId}`||actions.publisherRetryEpisode===episodeId&&actions.publisherRetryRunId)return false;
+ if(String(metadata?.id)!==String(runId)||metadata.event!=='workflow_dispatch'||metadata.run_attempt!==1||metadata.status!=='completed'||metadata.conclusion!=='failure'||metadata.path!=='.github/workflows/repair.yml'||metadata.head_branch!=='main'||!/^[a-f0-9]{40}$/.test(metadata.head_sha||'')||metadata.repository?.full_name!==repo||metadata.head_repository?.full_name!==repo||metadata.head_repository?.fork!==false||metadata.actor?.login!=='github-actions[bot]'||metadata.actor?.type!=='Bot'||metadata.triggering_actor?.login!=='github-actions[bot]'||metadata.triggering_actor?.type!=='Bot')return false;
+ if(jobs?.total_count!==3||!Array.isArray(jobs.jobs)||jobs.jobs.length!==3)return false;
+ return ['gate','propose','publish-draft'].every(name=>{const rows=jobs.jobs.filter(job=>job.name===name);return rows.length===1&&rows[0].run_id===Number(runId)&&rows[0].run_attempt===1&&rows[0].head_sha===metadata.head_sha&&rows[0].status==='completed'&&rows[0].conclusion===(name==='publish-draft'?'failure':'success');});
 }
 export function diagnosisMarkdown(health){
  return `No checked post has been published for ${health.hoursWithoutPost.toFixed(1)} hours.\n\nMode: **${health.mode}**. Checked posts in last12hours: ${health.postsLast12Hours}. Recovery requires two new checked posts.\n\nAutomatic recovery: broader source types, at most10 leads per run, three-hour lead cooldown; fallback requires a named nontechnical customer and fresh public demand evidence. Publish threshold6 and independent checks remain intact.\n\nRecent no-post reasons:\n\n${health.noPostRuns.slice(0,40).map(row=>`- ${row.finishedAt}: ${row.reason} ${row.githubRunUrl?'[Run]('+row.githubRunUrl+')':''}`).join('\n')}\n\n[All no-post reasons and current health](https://xndanius.github.io/while-you-sleep/api/health.json) · [Machine](https://xndanius.github.io/while-you-sleep/machine/#health-heading)\n\nThe repair workflow may open a pull request. It must never merge it automatically.`;
@@ -37,6 +49,17 @@ export async function runWatchdog({root=ROOT,env=process.env,now=new Date(),api=
    actions.repairEpisode=health.episode.id;actions.repairStatus='dispatch_reserved';actions.repairRequestedAt=new Date(now).toISOString();
    committed=await commit(root,health,'watchdog: reserve one repair for stalled publishing')||committed;
    try{const repair=await api(`repos/${repo}/actions/workflows/repair.yml/dispatches`,{method:'POST',body:{ref:'main',inputs:{episode_id:health.episode.id,issue_number:String(actions.issueNumber)}},env});if(!/^\d+$/.test(String(repair?.workflow_run_id))||repair.html_url!==`https://github.com/${repo}/actions/runs/${repair.workflow_run_id}`)throw new Error('Repair dispatch lacks its exact workflow identity.');actions.repairStatus='dispatched';actions.repairRunUrl=repair.html_url;}catch{actions.repairStatus='dispatch_unverified';}
+  }
+  const botCaller=caller.actor?.login==='github-actions[bot]'&&caller.actor?.type==='Bot'&&caller.triggering_actor?.login==='github-actions[bot]'&&caller.triggering_actor?.type==='Bot';
+  if(botCaller&&actions.repairEpisode===health.episode.id&&actions.repairStatus==='dispatched'&&(!actions.publisherRetryRunId||actions.publisherRetryEpisode!==health.episode.id)){
+   const match=actions.repairRunUrl?.match(/^https:\/\/github\.com\/xndanius\/while-you-sleep\/actions\/runs\/([1-9]\d*)$/);let metadata,jobs;
+   // Read failures or uncertain status never reserve another model invocation.
+   if(match)try{metadata=await api(`repos/${repo}/actions/runs/${match[1]}`,{env});if(metadata?.status==='completed'&&metadata.conclusion==='failure')jobs=await api(`repos/${repo}/actions/runs/${match[1]}/attempts/1/jobs?per_page=100`,{env});}catch{}
+   if(match&&repairPublisherRetryEligible(metadata,jobs,{runId:match[1],episodeId:health.episode.id,actions})){
+    actions.publisherRetryRunId=match[1];actions.publisherRetryAttempt=2;actions.publisherRetryEpisode=health.episode.id;actions.publisherRetrySourceHeadSha=metadata.head_sha;actions.publisherRetryStatus='reserved';actions.publisherRetryReservedAt=new Date(now).toISOString();
+    committed=await commit(root,health,'watchdog: reserve one publisher-only retry without rerunning the model')||committed;
+    try{await api(`repos/${repo}/actions/runs/${match[1]}/rerun-failed-jobs`,{method:'POST',env});actions.publisherRetryStatus='requested';}catch{actions.publisherRetryStatus='unverified';}
+   }
   }
  }
  if(Date.parse(now)>=Date.parse(RECOVERY_REPORT_DUE_AT)&&!actions.reportSentAt){

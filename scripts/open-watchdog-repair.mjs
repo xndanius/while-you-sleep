@@ -19,18 +19,30 @@ export function repairPatchPaths(patch){
 }
 function diagnosisPatch(context,reason){
  const file=`docs/WATCHDOG_DIAGNOSIS_${context.episodeId}.md`,lines=[`# Publishing watchdog diagnosis`, '',`Episode: ${context.episodeId}`,`Diagnosis issue: #${context.issueNumber}`,`Recorded hours without a post: ${context.diagnosis.hoursWithoutPost??'unknown'}`,`Posts in the last twelve hours: ${context.diagnosis.postsLast12Hours??'unknown'}`,'',`No verified functional repair was generated. ${reason}`,'','This draft pull request preserves a reviewable diagnosis; it does not claim to restore publishing or to pass tests.','The publication threshold and all independent checks remain unchanged.','',...Object.entries(context.diagnosis.reasonCounts||{}).map(([value,count])=>`- ${count} runs: ${value.replace(/[\r\n]/g,' ')}`)];
- return `diff --git a/${file} b/${file}\nnew file mode 100644\n--- /dev/null\n+++ b/${file}\n@@ -0,0 +1,${lines.length} @@\n${lines.map(line=>'+'+line).join('\n')}\n`;
+ return `diff --git a/${file} b/${file}\nnew file mode 100644\n--- /dev/null\n+++ b/${file}\n@@ -0,0 +1,${lines.length} @@\n${lines.map(line=>'+'+line.trimEnd()).join('\n')}\n`;
+}
+export function publisherRetryAuthorized(state,context,env){
+ const actions=state?.actions;
+ return env.GITHUB_RUN_ATTEMPT==='2'&&context.runAttempt===1&&context.githubRunId===env.GITHUB_RUN_ID&&actions?.publisherRetryEpisode===context.episodeId&&actions.publisherRetryRunId===env.GITHUB_RUN_ID&&actions.publisherRetryAttempt===2&&['reserved','requested','unverified'].includes(actions.publisherRetryStatus)&&/^[a-f0-9]{40}$/.test(actions.publisherRetrySourceHeadSha||'');
+}
+function retryMetadataTrusted(metadata,context,actions){
+ return String(metadata?.id)===context.githubRunId&&metadata.event==='workflow_dispatch'&&metadata.run_attempt===2&&metadata.path==='.github/workflows/repair.yml'&&metadata.head_branch==='main'&&metadata.head_sha===actions.publisherRetrySourceHeadSha&&metadata.repository?.full_name===REPO&&metadata.head_repository?.full_name===REPO&&metadata.head_repository?.fork===false&&metadata.actor?.login==='github-actions[bot]'&&metadata.actor?.type==='Bot'&&metadata.triggering_actor?.login==='github-actions[bot]'&&metadata.triggering_actor?.type==='Bot';
 }
 export async function openWatchdogRepair({root=process.cwd(),env=process.env,execute=null,log=console.log}={}){
- if(env.GITHUB_ACTIONS!=='true'||env.GITHUB_REPOSITORY!==REPO||env.GITHUB_REF!=='refs/heads/main'||env.GITHUB_ACTOR!=='github-actions[bot]'||env.GITHUB_TRIGGERING_ACTOR!=='github-actions[bot]'||env.GITHUB_RUN_ATTEMPT!=='1')throw new Error('Repair publishing requires the trusted first-attempt watchdog bot job.');
+ if(env.GITHUB_ACTIONS!=='true'||env.GITHUB_REPOSITORY!==REPO||env.GITHUB_REF!=='refs/heads/main'||env.GITHUB_ACTOR!=='github-actions[bot]'||env.GITHUB_TRIGGERING_ACTOR!=='github-actions[bot]'||!['1','2'].includes(env.GITHUB_RUN_ATTEMPT))throw new Error('Repair publishing requires the trusted bounded watchdog bot job.');
  const invoke=execute||((command,args,options={})=>{const result=spawnSync(command,args,{cwd:root,env,encoding:'utf8',...options});if(result.status!==0)throw new Error('Trusted draft repair publication could not complete.');return result.stdout.trim();});
  const context=validateRepairContext(await boundedRepairJSON(path.join(root,'.staging','repair-context','context.json')),{expectedSha256:env.EXPECTED_REPAIR_CONTEXT_SHA,episodeId:env.WATCHDOG_EPISODE_ID,issueNumber:env.WATCHDOG_ISSUE_NUMBER});
  if(context.githubRunId!==env.GITHUB_RUN_ID)throw new Error('Repair context belongs to a different hosted run.');
  const state=await boundedRepairJSON(path.join(root,'data','watchdog','state.json'),3000000);if(!repairEpisodeMatches(state,{episodeId:context.episodeId,issueNumber:context.issueNumber}))return {status:'episode_resolved',pullRequestUrl:null};
+ if(env.GITHUB_RUN_ATTEMPT==='2'){
+  if(!publisherRetryAuthorized(state,context,env))throw new Error('Publisher retry lacks its exact committed reservation.');
+  const metadata=JSON.parse(invoke('gh',['api',`repos/${REPO}/actions/runs/${env.GITHUB_RUN_ID}`]));
+  if(!retryMetadataTrusted(metadata,context,state.actions))throw new Error('Publisher retry metadata is not the reserved bot attempt.');
+ }
  const branch='watchdog/repair-'+context.episodeId.slice('starvation-'.length),existing=JSON.parse(invoke('gh',['pr','list','--repo',REPO,'--head',branch,'--state','all','--json','url,state,isDraft','--limit','10']));
  if(!Array.isArray(existing)||existing.length>10)throw new Error('Repair pull request lookup was invalid.');if(existing.length){const row=existing[0];if(!/^https:\/\/github\.com\/xndanius\/while-you-sleep\/pull\/[1-9]\d*$/.test(row.url||''))throw new Error('Repair pull request URL is invalid.');return {status:'already_recorded',pullRequestUrl:row.url};}
  const proposal=path.join(root,'.staging','repair-proposal','proposal.patch');let patch,paths,diagnosisOnly=false;
- try{const stat=await fs.lstat(proposal);if(!stat.isFile()||stat.isSymbolicLink()||stat.size>2000000)throw new Error();patch=await fs.readFile(proposal,'utf8');paths=repairPatchPaths(patch);invoke('git',['apply','--check','--whitespace=error-all','-'],{input:patch});}
+ try{const stat=await fs.lstat(proposal);if(!stat.isFile()||stat.isSymbolicLink()||stat.size>2000000)throw new Error();patch=await fs.readFile(proposal,'utf8');paths=repairPatchPaths(patch);invoke('git',['apply','--check','--whitespace=error-all','-'],{input:patch});diagnosisOnly=paths.every(file=>file.startsWith('docs/'));}
  catch{diagnosisOnly=true;patch=diagnosisPatch(context,'The model proposal was missing, invalid, touched protected paths, or did not apply to current main.');paths=repairPatchPaths(patch);invoke('git',['apply','--check','--whitespace=error-all','-'],{input:patch});}
  invoke('git',['switch','-c',branch]);invoke('git',['apply','--whitespace=error-all','-'],{input:patch});
  const changed=invoke('git',['diff','--name-only','--no-renames']).split('\n').filter(Boolean);const untracked=invoke('git',['ls-files','--others','--exclude-standard']).split('\n').filter(Boolean).filter(file=>!file.startsWith('.staging/')&&!file.startsWith('.run/'));
