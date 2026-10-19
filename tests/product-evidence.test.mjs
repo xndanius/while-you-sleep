@@ -8,6 +8,7 @@ import {hash,sha256,stableJSON,canonicalURL,writeJSON} from '../lib/storage.mjs'
 import {emptySourceRegistry,applySourceTransition,createSourceScanReceipt,validateSourceScanReceipt} from '../lib/source-registry.mjs';
 import {researchSnapshot} from '../scripts/research-snapshot.mjs';
 import {DEMAND_SOURCE_CATALOG,parseDemandSourcePage,fetchDemandEvidence,demandEvidenceFingerprint} from '../lib/demand-sources.mjs';
+import {fetchPublic} from '../lib/source-fetch.mjs';
 
 const now='2026-10-11T15:00:00.000Z';
 const capability='The product reads uploaded invoice documents, extracts structured fields, and exports CSV files for review. The operator chooses the documents and checks the result before sending records. It includes a command line interface and documented configuration; running it still requires a server, credentials and human approval. ';
@@ -17,6 +18,31 @@ function origin(item,feedId='feed-a'){return {sourceId:item.id,url:item.url,prod
 function page(url,text=capability.repeat(8),options={}){const maxBytes=options.maxBytes??2000000;return {url,text,status:200,contentType:options.contentType||'text/html',fetchedAt:now,maxBytes,bytes:Buffer.byteLength(text),truncated:false,redirects:[],robots:[{origin:new URL(url).origin,evaluatedUrl:url,allowed:true,status:404,state:'missing'}]};}
 const fetchFixture=async(url,options)=>page(url,capability.repeat(8),options);
 const demandJob=(id,text)=>({id:String(id),headline:'Administrator',occupation:{label:'Administratör'},salary_type:{concept_id:'oG8G_9cW_nRf'},publication_date:'2026-10-10T08:00:00',application_deadline:'2026-11-01',description:{text}});
+
+function tedFixture(){
+ const definition=DEMAND_SOURCE_CATALOG.find(source=>source.kind==='ted-service-demand'),body=JSON.stringify({notices:[{'publication-number':'721351-2026','publication-date':'2026-10-10+02:00','notice-type':'cn-standard','description-proc':{eng:'Process incoming invoices and prepare weekly payment reports.'},'deadline-date-lot':['2026-11-01+02:00']}],timedOut:false});
+ const sources=parseDemandSourcePage(definition,page(definition.url,body,{contentType:'application/json'}));
+ return {definition,body,sources,options:{sources,originMap:sources.map(source=>origin(source,definition.id)),learningSelection:{selectedSegment:'public_sector',demandSourceIds:[definition.id]},demandDefinitions:[definition],now:()=>Date.parse(now),limit:1,cooldownHours:3}};
+}
+const guardedTEDFetch=(url,options)=>fetchPublic(url,{...options,lookupHost:async()=>[{address:'8.8.8.8'}],robotsCache:new Map(),now:()=>Date.parse(now)});
+
+test('TED writer enrichment preserves the exact anonymous POST adapter and GET robots guards',async t=>{
+ const fixture=tedFixture(),calls=[];
+ t.mock.method(globalThis,'fetch',async(url,init)=>{calls.push({url:String(url),init});if(String(url).endsWith('/robots.txt'))return new Response('User-agent: *\nAllow: /\n',{headers:{'content-type':'text/plain'}});assert.equal(String(url),fixture.definition.url);return new Response(fixture.body,{headers:{'content-type':'application/json'}});});
+ const result=await enrichProductLeads({...fixture.options,fetchPage:guardedTEDFetch});
+ assert.equal(result.enrichment.status,'completed');assert.equal(result.enrichment.fetched,1);assert.equal(result.enrichment.requests,1);assert.equal(calls.length,2);
+ assert.equal(calls[0].init.method||'GET','GET');assert.equal(calls[0].init.body,undefined);assert.equal(calls[1].init.method,'POST');assert.equal(JSON.parse(calls[1].init.body).query,'publication-number=721351-2026');
+ assert.ok(calls.every(call=>call.init.signal instanceof AbortSignal&&!call.init.signal.aborted));assert.equal(result.sources[0].id,fixture.sources[0].id);assert.equal(result.sources[0].evidenceKind,'demand-notice');assert.deepEqual(result.sources[0].evidenceFetch,{maxBytes:2000000,complete:true});
+});
+
+test('TED transport keeps byte limits, robots denials and the whole-enrichment timeout enforced',async t=>{
+ const fixture=tedFixture();let mode;
+ t.mock.method(globalThis,'fetch',async(url)=>{if(String(url).endsWith('/robots.txt'))return new Response(mode==='robots'?'User-agent: *\nDisallow: /\n':'User-agent: *\nAllow: /\n',{headers:{'content-type':'text/plain'}});if(mode==='timeout')return new Promise(()=>{});return new Response(mode==='bytes'?'x'.repeat(2000001):fixture.body,{headers:{'content-type':'application/json'}});});
+ for(const [variant,code] of [['bytes','body_oversized'],['robots','robots_disallowed'],['timeout','product_evidence_timeout']]){
+  mode=variant;const result=await enrichProductLeads({...fixture.options,fetchPage:guardedTEDFetch,...(variant==='timeout'?{timeBudgetMs:20}:{})});
+  assert.equal(result.enrichment.status,'failed',variant);assert.equal(result.enrichment.fetched,0,variant);assert.equal(result.enrichment.observations[0].code,code,variant);assert.equal(result.sources[0].enriched,undefined,variant);
+ }
+});
 
 test('demand retrieval prefers literal tasks to longer broad descriptions without assigning editorial scores',()=>{
  const def=DEMAND_SOURCE_CATALOG[2],rows=[demandJob(100,'Du är en strukturerad administratör med god servicekänsla. '.repeat(8)),demandJob(101,'Registrera dokument och arkivera inkommande underlag.\nSammanställa rapporter för granskning varje vecka.')];
