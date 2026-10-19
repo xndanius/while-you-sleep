@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {hash,canonicalURL} from '../lib/storage.mjs';
 import {parseSourcePage,validateSource,scanSourceDefinitions,sourceSeedCatalog,sourceDefinitions,inferSourceKind,extractPublicFeedLinks,plainText} from '../lib/research.mjs';
+import {DEMAND_SOURCE_CATALOG} from '../lib/demand-sources.mjs';
 const now='2026-10-11T12:00:00.000Z';
 const definition=(kind,url='https://example.com/feed')=>({id:hash(canonicalURL(url)),name:'Public test source',url,kind});
 function page(text,url='https://example.com/feed',contentType='text/html'){
@@ -11,7 +12,7 @@ function page(text,url='https://example.com/feed',contentType='text/html'){
 const rss=(url='https://product.example.com/one')=>`<?xml version="1.0"?><rss version="2.0"><channel><title>Public</title><item><title>Receipt parser</title><link>${url}</link><description><![CDATA[Extracts receipts &amp; exports CSV. Human review is required.]]></description></item></channel></rss>`;
 
 test('all original and requested seeds have canonical fixed IDs; no source is locally pre-admitted',()=>{
- assert.equal(sourceDefinitions.length,13);assert.equal(sourceSeedCatalog.length,40);assert.equal(new Set(sourceSeedCatalog.map(value=>value.id)).size,sourceSeedCatalog.length);
+ assert.equal(sourceDefinitions.length,13);assert.equal(sourceSeedCatalog.length,35+DEMAND_SOURCE_CATALOG.length);assert.equal(new Set(sourceSeedCatalog.map(value=>value.id)).size,sourceSeedCatalog.length);
  for(const value of sourceSeedCatalog){assert.equal(value.id,hash(canonicalURL(value.url)));assert.ok(value.reason);assert.equal(value.eligible,undefined);}
  for(const name of ['SaaS','microsaas','indiehackers','automation','LocalLLaMA','ChatGPTCoding'])assert.ok(sourceSeedCatalog.some(value=>value.name===`Reddit · r/${name}`));
  assert.ok(sourceSeedCatalog.some(value=>value.kind==='unparsed-listing'));assert.ok(sourceSeedCatalog.some(value=>value.url==='https://github.com/trending'));

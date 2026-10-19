@@ -167,11 +167,11 @@ test('post page shows all five checked criteria, evidence links and current weig
   const original=structuredClone(content),html=renderPostPage(content,baseURL);
   assert.match(html,/<strong>7\.3<\/strong><span> \/ 10<\/span>/);
   assert.equal((html.match(/class="criterion-heading"/g)||[]).length,5);
-  for(const label of ['Ease to start','Profit potential','Student build in 2 weeks','Autonomy','Evidence'])assert.ok(html.includes(`<h3>${label}</h3>`));
+  for(const label of ['Ease to start','Profit potential','Student build in 4 weeks','Autonomy','Evidence'])assert.ok(html.includes(`<h3>${label}</h3>`));
   for(const criterion of Object.values(content.scoring.criteria))assert.ok(html.includes(`<strong>${criterion.value}<span> / 10</span></strong>`));
   assert.equal((html.match(/class="score-evidence-links"><a href="https:\/\/example.org\/product\?a=one&amp;b=two"/g)||[]).length,5);
   assert.ok(html.includes('Profit potential is a hypothesis.'));
-  assert.ok(html.includes('student build in 2 weeks 2'));
+  assert.ok(html.includes('student build in 4 weeks 2'));
   assert.ok(html.includes(content.scoring.checkerRunId));
   assert.ok(html.includes(content.scoring.policySha256));
   assert.ok(html.includes(content.scoring.assessmentPolicySha256));
