@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "type": "publishing-health",
-  "updatedAt": "2026-10-19T12:26:40.357Z",
+  "updatedAt": "2026-10-19T13:54:05.393Z",
   "mode": "repair",
   "healthy": false,
   "lastPublishedAt": "2026-10-11T20:31:22.470Z",
-  "hoursWithoutPost": 183.92,
+  "hoursWithoutPost": 185.38,
   "postsLast12Hours": 0,
   "postsLast24Hours": 0,
   "recoveryPosts": 0,
@@ -36,6 +36,13 @@
     "cooldownHours": 3
   },
   "noPostRuns": [
+    {
+      "runId": "loop-39258940686-1",
+      "finishedAt": "2026-10-19T13:21:35.566Z",
+      "status": "no_post_unverified",
+      "reason": "A considered candidate did not begin with verifiable privacy-safe demand: Customer demand must come from an authorized demand-role source and matching signal kind/segment; building media cannot substitute.",
+      "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39258940686"
+    },
     {
       "runId": "loop-39249928520-1",
       "finishedAt": "2026-10-19T12:11:37.068Z",
@@ -1417,6 +1424,7 @@
     }
   ],
   "reasonCounts": {
+    "A considered candidate did not begin with verifiable privacy-safe demand: Customer demand must come from an authorized demand-role source and matching signal kind/segment; building media cannot substitute.": 1,
     "Mixed recovery retained 1 of the required three fresh builder leads with exact public demand signals; no model call or approval can be fabricated.": 2,
     "A fictional spreadsheet could flag overdue rows and draft a reminder for review, but the notice is about checking completed jobs before billing, not recovering overdue invoices; this proposed workflow is therefore a weak match. The public implementation example processes vendor invoice attachments, ": 1,
     "One customer profile shows 26 products while the request says about 150 units across orders. A mock comparison report is possible from supplied example values. No attached building reference documents data extraction or WooCommerce connections. Equal-weight provisional mean is below 6; no relevant a": 1,
@@ -1624,5 +1632,126 @@
     "publisherRetryStatus": "requested",
     "publisherRetryReservedAt": "2026-10-19T09:39:44.847Z"
   },
-  "summary": "183 hours since publication. Source recovery, a diagnosis issue and a repair pull request are required. Recovery continues until two new checked posts publish."
+  "summary": "185 hours since publication. Source recovery, a diagnosis issue and a repair pull request are required. Recovery continues until two new checked posts publish.",
+  "discussionProviders": {
+    "schema": 1,
+    "runId": "apify-config-2026-10-19",
+    "updatedAt": "2026-10-19T12:31:26.628Z",
+    "status": "disabled",
+    "health": [
+      {
+        "platform": "reddit",
+        "status": "disabled",
+        "reason": "awaiting_apify_token",
+        "actorName": "eiv/reddit-posts-comments-scraper"
+      },
+      {
+        "platform": "x",
+        "status": "disabled",
+        "reason": "awaiting_apify_token",
+        "actorName": "tweetapi/twitter-x-search-scraper"
+      },
+      {
+        "platform": "indiehackers",
+        "status": "disabled",
+        "reason": "awaiting_apify_token",
+        "actorName": "antishock/indiehackers-scraper"
+      },
+      {
+        "platform": "producthunt",
+        "status": "disabled",
+        "reason": "awaiting_apify_token",
+        "actorName": "philzx/ph-launch-intelligence"
+      }
+    ],
+    "availability": [
+      {
+        "platform": "reddit",
+        "enabled": false,
+        "reason": "awaiting_apify_token"
+      },
+      {
+        "platform": "x",
+        "enabled": false,
+        "reason": "awaiting_apify_token"
+      },
+      {
+        "platform": "indiehackers",
+        "enabled": false,
+        "reason": "awaiting_apify_token"
+      },
+      {
+        "platform": "producthunt",
+        "enabled": false,
+        "reason": "awaiting_apify_token"
+      }
+    ],
+    "sources": [
+      {
+        "platform": "reddit",
+        "status": "active",
+        "consecutiveEmptyOrFailed": 0,
+        "actorIndex": 0,
+        "lastReason": "not_collected",
+        "lastCollectedAt": null
+      },
+      {
+        "platform": "x",
+        "status": "active",
+        "consecutiveEmptyOrFailed": 0,
+        "actorIndex": 0,
+        "lastReason": "not_collected",
+        "lastCollectedAt": null
+      },
+      {
+        "platform": "indiehackers",
+        "status": "active",
+        "consecutiveEmptyOrFailed": 0,
+        "actorIndex": 0,
+        "lastReason": "not_collected",
+        "lastCollectedAt": null
+      },
+      {
+        "platform": "producthunt",
+        "status": "active",
+        "consecutiveEmptyOrFailed": 0,
+        "actorIndex": 0,
+        "lastReason": "not_collected",
+        "lastCollectedAt": null
+      }
+    ],
+    "lastCollection": [
+      {
+        "platform": "reddit",
+        "enabled": false,
+        "reason": "awaiting_apify_token",
+        "status": "disabled"
+      },
+      {
+        "platform": "x",
+        "enabled": false,
+        "reason": "awaiting_apify_token",
+        "status": "disabled"
+      },
+      {
+        "platform": "indiehackers",
+        "enabled": false,
+        "reason": "awaiting_apify_token",
+        "status": "disabled"
+      },
+      {
+        "platform": "producthunt",
+        "enabled": false,
+        "reason": "awaiting_apify_token",
+        "status": "disabled"
+      }
+    ],
+    "budget": {
+      "month": "2026-10",
+      "limitUsd": 10,
+      "usedOrReservedUsd": 0,
+      "remainingUsd": 10
+    },
+    "poolItems": 0
+  }
 }
