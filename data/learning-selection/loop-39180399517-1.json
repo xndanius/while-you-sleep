@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "id": "loop-39180399517-1",
+  "runId": "loop-39180399517-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-19T00:21:50.492Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-39180399517-1",
+  "registrySha256": "6485b181a3d9d38b7588062fe7afb586c0a001e26d536d0748faa1b47a5ceaa2",
+  "scoreboardSha256": "e28d23a34e445c1ee802ebcecbb548fd48fdd353b55cea17c19af60060567f99",
+  "eligibleSegments": [
+    "professional_services",
+    "health_admin"
+  ],
+  "selectedSegment": "professional_services",
+  "demandSourceIds": [
+    "3c18d6f9afb86838768b18fe"
+  ],
+  "segmentDraws": [
+    {
+      "id": "professional_services",
+      "value": 0.009980889064168712
+    },
+    {
+      "id": "health_admin",
+      "value": 0.003308426515727864
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "3c18d6f9afb86838768b18fe",
+      "value": 0.02911357111277478
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "b36040a453674772f62166cb",
+        "scanId": "loop-39175752429-1",
+        "scanSha256": "0be3938a50bca38cd32d88c1c825abba0ee9d075ca6f9f0eabe60cb27188cb32",
+        "items": 13,
+        "retryAt": "2026-10-19T01:16:06.356Z"
+      }
+    ]
+  },
+  "reason": "Try professional services and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "39180399517",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "680450c308ce4df699726d5ad0b10c7a9aa7f06e"
+  }
+}
