@@ -1,0 +1,1436 @@
+{
+  "runId": "loop-39235799476-1",
+  "createdAt": "2026-10-19T10:16:26.782Z",
+  "rulesSha256": "1d1b36c2fd0fb6268f148940fa07d9bf27dc40e678bae15cd4806ab97893aedb",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "fdf93b48384aff9fc296bbeba0e9506b0048d02fd05917f5d7ee54cc77b5b2bc",
+  "sourceSnapshotSha256": "a85cb750a3c3312fb4b0fb53f0490c91af6c47bc8cfcdd6aa4fcabe5752ad631",
+  "sources": [
+    {
+      "id": "3ecc3a5ea527357de5fa4165",
+      "title": "Recover overdue invoices with GPT-4o-mini, Gmail, Google Sheets and Slack · product evidence",
+      "url": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "publisher": "n8n.io",
+      "text": "This workflow runs every 24 hours to read overdue invoices from Google Sheets, uses OpenAI (GPT-4o-mini) to draft personalized recovery emails and determine escalation, sends emails via Gmail, logs outcomes back to Google Sheets, and posts status and error alerts to Slack.",
+      "fetchedAt": "2026-10-19T10:16:22.269Z",
+      "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "A literal capability section from first-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "3ecc3a5ea527357de5fa4165"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceExtraction": {
+        "version": 1,
+        "normalization": "public-plain-text-v1",
+        "rawSha256": "d1e96e8aa814883a61edfadf31d1ed6a2ae28dd7912abfb2d05b28c9db150fb7",
+        "normalizedSha256": "ba7e76e8db688db81b9660053bbdfb4a4604c1fa3465cd81e76eef27ff9cb274",
+        "start": 1113,
+        "end": 1386,
+        "fullCharacters": 5555,
+        "retainedCharacters": 273,
+        "omittedCharacters": 5282,
+        "totalBlocks": 42,
+        "retainedBlocks": 1,
+        "omittedBlocks": 41,
+        "unsafeBlocks": 11
+      },
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-19T10:13:55.073Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Recover overdue invoices with GPT-4o-mini, Gmail, Google Sheets and Slack Quick overview This workflow runs every 24 hours to read overdue invoices from Google Sheets, uses OpenAI (GPT-4o-mini) to draft personalized recovery emails and determine escalation, sends emails via Gmail, logs outcomes back to Google Sheets, and posts status and error alerts to Slack.",
+      "verifiedAt": "2026-10-19T10:16:22.269Z"
+    },
+    {
+      "id": "be8fa77dfa6f3364ffd4f537",
+      "title": "Process invoice emails to Zoho Books with Gmail, Parseur, and Google Drive · product evidence",
+      "url": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "publisher": "n8n.io",
+      "text": "This workflow monitors Gmail for invoice emails with PDF attachments, sends PDFs to Parseur for data extraction, checks and creates vendor bills in Zoho Books to prevent duplicates, and archives the original invoice PDFs into month-based folders in Google Drive.",
+      "fetchedAt": "2026-10-19T10:16:22.670Z",
+      "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "A literal capability section from first-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "be8fa77dfa6f3364ffd4f537"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceExtraction": {
+        "version": 1,
+        "normalization": "public-plain-text-v1",
+        "rawSha256": "9f2e40fe389a2e93f58f306ffdb8020455f49060e6d838fb79059655a622920a",
+        "normalizedSha256": "00774500bc40a686c59935ee92fe94108dc65ba999beba2f36053c0742454c26",
+        "start": 1095,
+        "end": 1357,
+        "fullCharacters": 5539,
+        "retainedCharacters": 262,
+        "omittedCharacters": 5277,
+        "totalBlocks": 42,
+        "retainedBlocks": 1,
+        "omittedBlocks": 41,
+        "unsafeBlocks": 11
+      },
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-19T10:13:55.073Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "Process invoice emails to Zoho Books with Gmail, Parseur, and Google Drive Quick overview This workflow monitors Gmail for invoice emails with PDF attachments, sends PDFs to Parseur for data extraction, checks and creates vendor bills in Zoho Books to prevent duplicates, and archives the original invoice PDFs into month-based folders in Google Drive.",
+      "verifiedAt": "2026-10-19T10:16:22.670Z"
+    },
+    {
+      "id": "ca6a664d20bd48cf57145f2e",
+      "title": "PDF Invoice Data Extraction & Tracking with Google Drive, Claude AI & Telegram · product evidence",
+      "url": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "publisher": "n8n.io",
+      "text": "This automated n8n workflow monitors a Google Drive folder for newly uploaded invoice PDFs, extracts essential information (like client name, invoice number, amount, due date), logs the data into a Google Sheet for recordkeeping, and sends a formatted Telegram message to notify the billing team.",
+      "fetchedAt": "2026-10-19T10:16:23.062Z",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "discoveryKind": "public-workflow-template",
+      "evidenceNote": "A literal capability section from first-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "originFeedIds": [
+        "b681f434d554a69a059ccf85"
+      ],
+      "originSourceIds": [
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceExtraction": {
+        "version": 1,
+        "normalization": "public-plain-text-v1",
+        "rawSha256": "2b488811d0d60b0ca2cb5df91ae3418cf097c09c852cbeeb784b3e423bfef2c8",
+        "normalizedSha256": "4431a27f724a29305210e95f99c10cf772ab9ee33026005ec646f94523000d69",
+        "start": 1182,
+        "end": 1478,
+        "fullCharacters": 5840,
+        "retainedCharacters": 296,
+        "omittedCharacters": 5544,
+        "totalBlocks": 61,
+        "retainedBlocks": 1,
+        "omittedBlocks": 60,
+        "unsafeBlocks": 11
+      },
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://n8n.io",
+            "robotsUrl": "https://n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-19T10:13:55.073Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 76,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html;charset=utf-8",
+        "resolvedUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "feedExcerpt": "PDF Invoice Data Extraction & Tracking with Google Drive, Claude AI & Telegram",
+      "verifiedAt": "2026-10-19T10:16:23.062Z"
+    },
+    {
+      "id": "397714774bd253e9a1b2d6c8",
+      "url": "https://ted.europa.eu/en/notice/-/detail/716613-2026",
+      "title": "Public EU business-service tender",
+      "publisher": "EU TED · English business-service tenders",
+      "text": "Public EU business-service tender The objective of the procurement is to ensure access to independent and professionally competent internal audit services that can contribute to good performance management, risk management and internal control The tenderer shall carry out internal audits within different disciplines, as well as as in need, assist with consultancy, method development and other audit related support Framework agreement for internal audit services Published 2026-10-16. A competition notice requests a service; it does not establish a completed contract or payment to an AI service.",
+      "taskExcerpts": [
+        "The objective of the procurement is to ensure access to independent and professionally competent internal audit services that can contribute to good performance management, risk management and internal control",
+        "The tenderer shall carry out internal audits within different disciplines, as well as as in need, assist with consultancy, method development and other audit related support",
+        "Framework agreement for internal audit services"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:23.491Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "086772a8008f7255f645d435",
+      "segment": "public_sector",
+      "demandKind": "public_tender",
+      "postedAt": "2026-10-16",
+      "demandEvidence": {
+        "kind": "public_tender",
+        "noticeId": "716613-2026",
+        "status": "active",
+        "postedAt": "2026-10-16"
+      },
+      "privacy": "Only literal non-personal task excerpts and public notice identity/date/status; no author, company, contact or profile objects.",
+      "productUrl": "https://ted.europa.eu/en/notice/-/detail/716613-2026",
+      "verifiedAt": "2026-10-19T10:16:23.491Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "be3fa67073fb47789996013b",
+      "url": "https://weworkremotely.com/remote-jobs/pagerduty-senior-director-solutions-consulting",
+      "title": "Paid nontechnical operations role",
+      "publisher": "We Work Remotely · customer support requests",
+      "text": "Paid nontechnical operations role You inspire your team to bring their best every day, providing coaching and mentorship to support their career development. Partnering with our sales and customer success leaders, you constantly challenge the way things are done, looking for creative solutions to optimize for both effectiveness and efficiency. Our values guide how we support customers, collaborate with colleagues, develop products, and foster a culture of belonging Published 2026-10-16T07:31:00.000Z. A public vacancy requests human work; it establishes neither payment to an AI service nor demand for the proposed AI service.",
+      "taskExcerpts": [
+        "You inspire your team to bring their best every day, providing coaching and mentorship to support their career development.",
+        "Partnering with our sales and customer success leaders, you constantly challenge the way things are done, looking for creative solutions to optimize for both effectiveness and efficiency.",
+        "Our values guide how we support customers, collaborate with colleagues, develop products, and foster a culture of belonging"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:23.774Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "57b6f5f4945019c919f6d35c",
+      "segment": "professional_services",
+      "demandKind": "paid_job",
+      "postedAt": "2026-10-16T07:31:00.000Z",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "noticeId": "be3fa67073fb47789996013b",
+        "status": "active",
+        "postedAt": "2026-10-16T07:31:00.000Z",
+        "paid": true,
+        "paymentBasis": "public paid staff vacancy"
+      },
+      "privacy": "Only literal non-personal task excerpts and public notice identity/date/status; no author, company, contact or profile objects.",
+      "productUrl": "https://weworkremotely.com/remote-jobs/pagerduty-senior-director-solutions-consulting",
+      "verifiedAt": "2026-10-19T10:16:23.774Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "e66c11ffb7bd20ced50ba56a",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+      "title": "Paid administrator role",
+      "publisher": "JobSearch · paid administration roles",
+      "text": "Paid administrator role Hantera fakturor och kontrollera underlag mot avtal och beställningar Administrera och följa upp ärenden i interna system Ditt huvudsakliga ansvar är att hantera fakturor och kontrollera att dessa stämmer överens med avtal och beställningar Published 2026-10-14. A paid staff vacancy is demand for human work; it does not prove anyone buys an AI tool.",
+      "taskExcerpts": [
+        "Hantera fakturor och kontrollera underlag mot avtal och beställningar",
+        "Administrera och följa upp ärenden i interna system",
+        "Ditt huvudsakliga ansvar är att hantera fakturor och kontrollera att dessa stämmer överens med avtal och beställningar"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:25.223Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "3c18d6f9afb86838768b18fe",
+      "segment": "professional_services",
+      "demandKind": "paid_job",
+      "postedAt": "2026-10-14",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "noticeId": "31594127",
+        "paid": true,
+        "paymentBasis": "fixed monthly, weekly or hourly salary",
+        "role": "administrator",
+        "status": "open",
+        "postedAt": "2026-10-14"
+      },
+      "privacy": "Whitelisted non-personal task excerpts and role/category/date/status fields; contact and employer/buyer profiles omitted.",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+      "verifiedAt": "2026-10-19T10:16:25.223Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "2e657f4873a374d15b94ef69",
+      "url": "https://weworkremotely.com/remote-jobs/planetscale-brand-designer",
+      "title": "Paid nontechnical operations role",
+      "publisher": "We Work Remotely · sales and marketing requests",
+      "text": "Paid nontechnical operations role Create compelling visual systems for campaigns, product launches, and marketing initiatives Create social media graphics, blog post imagery, and other digital marketing assets Document design decisions and maintain brand guidelines Published 2026-10-18T07:30:58.000Z. A public vacancy requests human work; it establishes neither payment to an AI service nor demand for the proposed AI service.",
+      "taskExcerpts": [
+        "Create compelling visual systems for campaigns, product launches, and marketing initiatives",
+        "Create social media graphics, blog post imagery, and other digital marketing assets",
+        "Document design decisions and maintain brand guidelines"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:25.749Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "5c7690cd1ac3e604f884cfc2",
+      "segment": "professional_services",
+      "demandKind": "paid_job",
+      "postedAt": "2026-10-18T07:30:58.000Z",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "noticeId": "2e657f4873a374d15b94ef69",
+        "status": "active",
+        "postedAt": "2026-10-18T07:30:58.000Z",
+        "paid": true,
+        "paymentBasis": "public paid staff vacancy"
+      },
+      "privacy": "Only literal non-personal task excerpts and public notice identity/date/status; no author, company, contact or profile objects.",
+      "productUrl": "https://weworkremotely.com/remote-jobs/planetscale-brand-designer",
+      "verifiedAt": "2026-10-19T10:16:25.749Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "91fa7885e45fb2d8b5ce9418",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+      "title": "Paid medical secretary role",
+      "publisher": "JobSearch · paid medical secretary roles",
+      "text": "Paid medical secretary role Vi lägger tidböcker och bokar besök till läkare, sjuksköterskor samt ortoptister Vi hanterar remisser, post och skickar journalkopior Published 2026-10-01. A paid staff vacancy is demand for human work; it does not prove anyone buys an AI tool.",
+      "taskExcerpts": [
+        "Vi lägger tidböcker och bokar besök till läkare, sjuksköterskor samt ortoptister",
+        "Vi hanterar remisser, post och skickar journalkopior"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:26.097Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "8ef335213e70b38904e7a504",
+      "segment": "health_admin",
+      "demandKind": "paid_job",
+      "postedAt": "2026-10-01",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "noticeId": "31539216",
+        "paid": true,
+        "paymentBasis": "fixed monthly, weekly or hourly salary",
+        "role": "medical secretary",
+        "status": "open",
+        "postedAt": "2026-10-01"
+      },
+      "privacy": "Whitelisted non-personal task excerpts and role/category/date/status fields; contact and employer/buyer profiles omitted.",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+      "verifiedAt": "2026-10-19T10:16:26.097Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "1a3d92cbfc29dbd97fe777f5",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "title": "Paid school administrator role",
+      "publisher": "JobSearch · paid school administration roles",
+      "text": "Paid school administrator role hantera elevärenden, till exempel dokumentation, elevunderlag, betyg och statistik hantera fakturor och ta fram ekonomiska underlag för budget och uppföljning diarieföra, arkivera och gallra dokument enligt gällande riktlinjer samt hantera inkommande och utgående post Published 2026-09-29. A paid staff vacancy is demand for human work; it does not prove anyone buys an AI tool.",
+      "taskExcerpts": [
+        "hantera elevärenden, till exempel dokumentation, elevunderlag, betyg och statistik",
+        "hantera fakturor och ta fram ekonomiska underlag för budget och uppföljning",
+        "diarieföra, arkivera och gallra dokument enligt gällande riktlinjer samt hantera inkommande och utgående post"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:26.273Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "b36040a453674772f62166cb",
+      "segment": "education",
+      "demandKind": "paid_job",
+      "postedAt": "2026-09-29",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "noticeId": "31532339",
+        "paid": true,
+        "paymentBasis": "fixed monthly, weekly or hourly salary",
+        "role": "school administrator",
+        "status": "open",
+        "postedAt": "2026-09-29"
+      },
+      "privacy": "Whitelisted non-personal task excerpts and role/category/date/status fields; contact and employer/buyer profiles omitted.",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "verifiedAt": "2026-10-19T10:16:26.273Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "b9c09649a62288de346cd8da",
+      "url": "https://weworkremotely.com/remote-jobs/talkspace-billing-and-claims-support-representative",
+      "title": "Paid nontechnical operations role",
+      "publisher": "We Work Remotely · finance and administration requests",
+      "text": "Paid nontechnical operations role This role would be responsible for educating clients on our billing and claims procedures, swiftly addressing escalated inquiries with empathy and accuracy. We are looking for someone who has experience providing white-glove service to our clients, ensuring they feel cared for and supported in every interaction You'll also contribute to process improvement initiatives, recommending updates to knowledge materials and suggesting improvements to support processes, all aimed at enhancing productivity and client satisfaction Medical records request for billing records Published 2026-10-19T07:31:12.000Z. A public vacancy requests human work; it establishes neither payment to an AI service nor demand for the proposed AI service.",
+      "taskExcerpts": [
+        "This role would be responsible for educating clients on our billing and claims procedures, swiftly addressing escalated inquiries with empathy and accuracy. We are looking for someone who has experience providing white-glove service to our clients, ensuring they feel cared for and supported in every interaction",
+        "You'll also contribute to process improvement initiatives, recommending updates to knowledge materials and suggesting improvements to support processes, all aimed at enhancing productivity and client satisfaction",
+        "Medical records request for billing records"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:26.623Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "bf36022f0a8cd761c338ce53",
+      "segment": "professional_services",
+      "demandKind": "paid_job",
+      "postedAt": "2026-10-19T07:31:12.000Z",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "noticeId": "b9c09649a62288de346cd8da",
+        "status": "active",
+        "postedAt": "2026-10-19T07:31:12.000Z",
+        "paid": true,
+        "paymentBasis": "public paid staff vacancy"
+      },
+      "privacy": "Only literal non-personal task excerpts and public notice identity/date/status; no author, company, contact or profile objects.",
+      "productUrl": "https://weworkremotely.com/remote-jobs/talkspace-billing-and-claims-support-representative",
+      "verifiedAt": "2026-10-19T10:16:26.623Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "cabc58d84f610404fb5ebd89",
+      "url": "https://jobsearch.api.jobtechdev.se/ad/31598759",
+      "title": "Paid administrator role",
+      "publisher": "JobSearch · paid administration roles",
+      "text": "Paid administrator role Följa upp och kontrollera utförda uppdrag inför fakturering Registrera avsättningar, inleveranser och insamlade volymer i affärssystem Granska leverantörsfakturor samt sammanställa faktureringsunderlag Published 2026-10-15. A paid staff vacancy is demand for human work; it does not prove anyone buys an AI tool.",
+      "taskExcerpts": [
+        "Följa upp och kontrollera utförda uppdrag inför fakturering",
+        "Registrera avsättningar, inleveranser och insamlade volymer i affärssystem",
+        "Granska leverantörsfakturor samt sammanställa faktureringsunderlag"
+      ],
+      "taskExcerptVersion": 2,
+      "fetchedAt": "2026-10-19T10:16:26.777Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "registrySourceId": "3c18d6f9afb86838768b18fe",
+      "segment": "professional_services",
+      "demandKind": "paid_job",
+      "postedAt": "2026-10-15",
+      "demandEvidence": {
+        "kind": "paid_job",
+        "noticeId": "31598759",
+        "paid": true,
+        "paymentBasis": "fixed monthly, weekly or hourly salary",
+        "role": "administrator",
+        "status": "open",
+        "postedAt": "2026-10-15"
+      },
+      "privacy": "Whitelisted non-personal task excerpts and role/category/date/status fields; contact and employer/buyer profiles omitted.",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31598759",
+      "verifiedAt": "2026-10-19T10:16:26.777Z",
+      "enriched": true,
+      "evidenceKind": "demand-notice",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    }
+  ],
+  "health": [],
+  "deterministicResults": [],
+  "noveltyContractVersion": 1,
+  "noveltyContext": {
+    "version": 1,
+    "windowDays": 14,
+    "asOf": "2026-10-19T10:16:20.670Z",
+    "cutoff": "2026-10-05T10:16:20.670Z",
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "title": "A small AI support inbox loop",
+        "productUrl": "https://auxx.ai",
+        "promise": "Triage one kind of ticket, draft a sourced reply, and leave approval to a person.",
+        "whatItIs": "Auxx describes a support CRM where an agent can read tickets, retrieve relevant customer records and knowledge, draft replies, and update records. A beginner version could handle one narrow ticket type using a small sample inbox and a written procedure, rather than rebuilding the full CRM.",
+        "whoPays": "Hypothesis: a small online shop or support team with repetitive questions might pay for less routine inbox work. The supplied page does not establish paying customers or demand.",
+        "loop": [
+          "A new test ticket or scheduled run starts the workflow.",
+          "The system finds the relevant customer record and approved policy text.",
+          "A written procedure routes the ticket to one supported category.",
+          "The model drafts a reply using retrieved material and marks uncertain cases.",
+          "A person reviews the draft and decides whether to send it.",
+          "The workflow records the category and outcome for later review."
+        ],
+        "noveltySignals": {
+          "productKeys": [
+            "domain:auxx.ai",
+            "brand:auxx"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers",
+            "support_staff"
+          ]
+        }
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "title": "A human checked support inbox loop",
+        "productUrl": "https://n8n.io/ai",
+        "promise": "Sort incoming questions and prepare reply drafts for a person to review.",
+        "whatItIs": "n8n is a workflow builder that connects services and can include AI steps. A small student version could take incoming support messages, label them by topic, and prepare a draft reply for review. A workflow is a set of connected steps that runs when an event occurs.",
+        "whoPays": "Hypothesis: a small online shop with a recurring support inbox might pay for setup or maintenance; the supplied page does not establish demand for this student service.",
+        "loop": [
+          "A new test support email triggers the workflow.",
+          "Rules remove obvious junk and pass the message to a classifier.",
+          "The classifier assigns a topic and priority.",
+          "The workflow retrieves an approved answer note and drafts a reply.",
+          "A person reviews and sends the draft, correcting uncertain cases.",
+          "The workflow records the outcome for later review."
+        ],
+        "noveltySignals": {
+          "productKeys": [
+            "domain:n8n.io"
+          ],
+          "workflowKeys": [
+            "support_inbox"
+          ],
+          "customerKeys": [
+            "online_retailers"
+          ]
+        }
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "title": "Track GPU prices and specs in one view",
+        "productUrl": "https://flopper.io/",
+        "promise": "Collect a small set of public GPU prices and compare them with published specifications.",
+        "whatItIs": "Flopper is a GPU hardware explorer. Its maker says it combines GPU specifications, workload estimates, and prices from dozens of providers. The maker also notes that reliable quotes for some large systems are difficult to obtain, so listings are not complete procurement quotes. A student version could track a few consumer GPUs and public provider pages, showing dated prices beside basic specifications. Small AI teams or hardware shoppers might pay for such a comparison, but this customer and willingness to pay are hypotheses. The automated part is checking selected pages and recording changes. A person should confirm the exact model, configuration, availability, and final price before relyin",
+        "whoPays": "Hypothesis: small AI teams or individuals comparing hardware may pay for a focused price and specification tracker; the source establishes no customers or revenue.",
+        "loop": [
+          "Keep a manually reviewed list of GPU models and public provider pages.",
+          "Fetch the selected pages on a schedule and extract visible price and configuration text.",
+          "Store each observation with its URL and timestamp.",
+          "Compare new observations with prior ones and flag changes or missing prices.",
+          "Show a comparison with the published hardware specifications.",
+          "Have a person verify configuration, availability, and quote details before purchase."
+        ],
+        "noveltySignals": {
+          "productKeys": [
+            "domain:flopper.io",
+            "brand:flopper"
+          ],
+          "workflowKeys": [],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "title": "Catch failures in production AI agents",
+        "productUrl": "https://github.com/tessaryai/tessary",
+        "promise": "Turn agent traces into grouped findings and a human-reviewed root-cause report.",
+        "whatItIs": "Tessary is an open-source tool for teams running AI agents in production. Its repository describes receiving traces (records of an agent’s operations), checking them with classifiers, grouping related findings into cases, and investigating likely causes using trace evidence and, when connected, repository code. A small student project could accept test traces, apply a few simple checks, group matching alerts, and prepare a report for a developer. Teams operating AI agents are a plausible customer, but the sources do not establish who pays. The repeating work is trace checking and case preparation; a person still needs to confirm whether a finding is a real problem and choose any fix.",
+        "whoPays": "Hypothesis: teams operating production AI agents may pay for help finding and investigating failures; the repository does not establish paying customers or revenue.",
+        "loop": [
+          "Receive an agent trace through an instrumentation endpoint.",
+          "Normalize the trace into a consistent format.",
+          "Run enabled classifiers and open findings when checks trigger.",
+          "Group related findings into a case.",
+          "Investigate the case using trace evidence and connected repository code when available.",
+          "Send the findings and explanation to a human owner, who decides whether and how to fix the system."
+        ],
+        "noveltySignals": {
+          "productKeys": [
+            "github:tessaryai/tessary",
+            "brand:tessary"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "title": "Test AI phone agents with repeatable calls",
+        "productUrl": "https://voicegremlin.com/",
+        "promise": "Run a scripted call against a phone agent and receive a reviewable pass or fail result.",
+        "whatItIs": "VoiceGremlin is described by its maker as an API for testing AI systems that answer phone calls. A user supplies a phone number and a test case, such as checking whether the agent performs a requested behavior. The service calls the agent, has the two bots converse, and uses an LLM judge—a language model asked to assess the result—to return pass or fail for a software pipeline. A small student version could run one scripted scenario against a test phone agent and save the call outcome. Teams building voice agents are a plausible customer, but the source does not establish who pays or whether customers use it. The repeated loop can run without a person placing each test call, while a human st",
+        "whoPays": "Hypothesis: companies building AI phone agents may pay to check that their agents keep meeting defined behaviors; the source provides no customer or revenue evidence.",
+        "loop": [
+          "An operator defines a test case and supplies a test phone number.",
+          "The API places a call to the phone agent being checked.",
+          "The test bot speaks with the phone agent about the scenario.",
+          "An LLM judge compares the conversation with the requested behavior.",
+          "The system returns a pass or fail result to a software pipeline.",
+          "A developer reviews unclear failures and updates the test or phone agent."
+        ],
+        "noveltySignals": {
+          "productKeys": [
+            "domain:voicegremlin.com",
+            "brand:voicegremlin"
+          ],
+          "workflowKeys": [
+            "voice_agent_tests"
+          ],
+          "customerKeys": []
+        }
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "title": "Check whether docs work for AI agents",
+        "productUrl": "https://www.veludocs.com/agent-friendly-documentation/",
+        "promise": "Scan a documentation URL for common access and format problems, then review a scorecard.",
+        "whatItIs": "Velu's agent-friendly documentation checker is described as scoring a documentation URL against the open Agent-Friendly Documentation Spec, using the spec's reference implementation called afdocs. The Show HN post names issues the spec is concerned with: pages rendered only in the browser, missing llms.txt or Markdown versions, soft 404 pages, and pages too large for an agent's context window. A beginner could build a small scheduled checker for one documentation site that records the score and lists detectable problems. Documentation teams are a plausible customer, but the source does not establish who pays. This is an audit and reporting loop, not an automatic documentation repair service.",
+        "whoPays": "Hypothesis: teams maintaining developer documentation may pay for recurring checks; the source does not establish customers or revenue.",
+        "loop": [
+          "Read a configured documentation site URL.",
+          "Check pages for supported agent access and format signals.",
+          "Run the reference checker and save its score.",
+          "Compare the result with the previous scan.",
+          "Send a report when the score or detected issues change.",
+          "A documentation owner verifies findings and chooses any fix."
+        ],
+        "noveltySignals": {
+          "productKeys": [
+            "domain:veludocs.com",
+            "brand:veludocs"
+          ],
+          "workflowKeys": [
+            "agent_documentation_audit",
+            "website_change_monitor"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "title": "Route visual feedback to a coding agent",
+        "productUrl": "https://circleit.ai",
+        "promise": "Turn a marked-up staging page into an agent task with a reviewable status trail.",
+        "whatItIs": "CircleIt is described as a Chrome extension plus a Claude Code or Codex plugin. A teammate can mark an area on a page, explain the requested change, and send the screenshot, comment, and page metadata to a running coding agent. The source says the system matches the page address to a repository and reports status back in the sender's browser. A small student version could capture one staging page and open a proposed task for a developer's agent. Small product teams are a plausible customer, but that is a hypothesis. The loop handles intake and handoff; a human still needs to judge whether the requested change is correct and review code before release.",
+        "whoPays": "Hypothesis: small software teams that collect frequent website feedback may pay; no customer or payment evidence is given.",
+        "loop": [
+          "A teammate opens a staging page and marks a visible issue.",
+          "Capture the screenshot, comment, page address, and relevant metadata.",
+          "Match the page address to a configured repository.",
+          "Send the feedback to the team's running coding agent after any required approval.",
+          "Show the sender the agent's status and response.",
+          "A developer reviews code changes and decides whether to merge."
+        ],
+        "noveltySignals": {
+          "productKeys": [
+            "domain:circleit.ai",
+            "brand:circleit"
+          ],
+          "workflowKeys": [
+            "code_review"
+          ],
+          "customerKeys": [
+            "software_developers"
+          ]
+        }
+      }
+    ],
+    "postsSha256": "71c387c5b34976b1c5537281ac9115dc13aa062c6611f553d8a5d1e32193afde"
+  },
+  "demandContractVersion": 1,
+  "demandContext": {
+    "version": 1,
+    "registrySha256": "6d8b90418a87435eb4b84f4ad35073370d2654d7a517dc95c5238c500c6c0447",
+    "registrySources": [
+      {
+        "id": "086772a8008f7255f645d435",
+        "url": "https://api.ted.europa.eu/v3/notices/search",
+        "kind": "ted-service-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "11df15447c6c0e0dfdc06be3",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "2ae9fd69127e82131f7ec675",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "3718aeb8e8d67fe152a75278",
+        "url": "https://wordpress.org/support/plugin/wpforms-lite/feed",
+        "kind": "wordpress-request-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "3733c65b9abe07b4b87156f9",
+        "url": "https://simonwillison.net/atom/everything",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "3c18d6f9afb86838768b18fe",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=administrat%C3%B6r&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "470ff63db8da1802b0ccc779",
+        "url": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+        "kind": "hf-spaces",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "498a696b45de80618b28713d",
+        "url": "https://betalist.com",
+        "kind": "betalist",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "529fe252f6662aa1472475a1",
+        "url": "https://n8n.io/workflows/categories/document-extraction",
+        "kind": "n8n-workflows",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "54649964a0a05f1bfa2b2d36",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "57b6f5f4945019c919f6d35c",
+        "url": "https://weworkremotely.com/categories/remote-customer-support-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "5c7690cd1ac3e604f884cfc2",
+        "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "63dbb54258e730e95fa20298",
+        "url": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+        "kind": "hf-spaces",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "7efc2c70ed9424b76bd7407b",
+        "url": "https://apify.com",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "8ef335213e70b38904e7a504",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=medicinsk%20sekreterare&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "health_admin"
+        ]
+      },
+      {
+        "id": "96fe006ed5f7b38bfc889c7d",
+        "url": "https://www.bensbites.com/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "a5689419c24836e7e0ce37dd",
+        "url": "https://www.latent.space/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "a654756600fbb68b9c75c45b",
+        "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "a6747aa35096053cc2fc5f6d",
+        "url": "https://wordpress.org/support/plugin/woo-advanced-shipment-tracking/feed",
+        "kind": "wordpress-request-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "af031577e7a7287449e227af",
+        "url": "https://www.ycombinator.com/companies/industry/artificial-intelligence",
+        "kind": "yc-directory",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "b36040a453674772f62166cb",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=skoladministrat%C3%B6r&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "education"
+        ]
+      },
+      {
+        "id": "b681f434d554a69a059ccf85",
+        "url": "https://n8n.io/workflows/categories/invoice-processing",
+        "kind": "n8n-workflows",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "bf36022f0a8cd761c338ce53",
+        "url": "https://weworkremotely.com/categories/remote-management-and-finance-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "cca981f46ee3fb8981413fee",
+        "url": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?stages=tender&limit=20",
+        "kind": "uk-contracts-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "d554ca3fc8b9fd3548600b86",
+        "url": "https://dify.ai",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "d7d95a60e6009c5d18b5920e",
+        "url": "https://wordpress.org/support/plugin/woocommerce/feed",
+        "kind": "woocommerce-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "d7da742b595e7ec512a8ef54",
+        "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=20",
+        "kind": "uk-tenders-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "url": "https://n8n.io/ai",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "ec389fe35523e6dbba11e744",
+        "url": "https://news.ycombinator.com/launches",
+        "kind": "hn-launches",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "ef244017b1460269fc687cea",
+        "url": "https://browser-use.com",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "fb41898e3878114109088fed",
+        "url": "https://github.com/trending",
+        "kind": "github-trending",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "fc96810c8981082bcd1a293c",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      }
+    ],
+    "authorizedSources": [
+      {
+        "sourceId": "1a3d92cbfc29dbd97fe777f5",
+        "registrySourceId": "b36040a453674772f62166cb",
+        "url": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "education"
+        ]
+      },
+      {
+        "sourceId": "2e657f4873a374d15b94ef69",
+        "registrySourceId": "5c7690cd1ac3e604f884cfc2",
+        "url": "https://weworkremotely.com/remote-jobs/planetscale-brand-designer",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "397714774bd253e9a1b2d6c8",
+        "registrySourceId": "086772a8008f7255f645d435",
+        "url": "https://ted.europa.eu/en/notice/-/detail/716613-2026",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "sourceId": "91fa7885e45fb2d8b5ce9418",
+        "registrySourceId": "8ef335213e70b38904e7a504",
+        "url": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "health_admin"
+        ]
+      },
+      {
+        "sourceId": "b9c09649a62288de346cd8da",
+        "registrySourceId": "bf36022f0a8cd761c338ce53",
+        "url": "https://weworkremotely.com/remote-jobs/talkspace-billing-and-claims-support-representative",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "be3fa67073fb47789996013b",
+        "registrySourceId": "57b6f5f4945019c919f6d35c",
+        "url": "https://weworkremotely.com/remote-jobs/pagerduty-senior-director-solutions-consulting",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "cabc58d84f610404fb5ebd89",
+        "registrySourceId": "3c18d6f9afb86838768b18fe",
+        "url": "https://jobsearch.api.jobtechdev.se/ad/31598759",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "e66c11ffb7bd20ced50ba56a",
+        "registrySourceId": "3c18d6f9afb86838768b18fe",
+        "url": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      }
+    ],
+    "selectedSegment": null,
+    "mixPolicy": {
+      "aiWindow": 10,
+      "aiMaximum": 1,
+      "segmentWindow": 20,
+      "segmentMaximum": 6,
+      "warmup": "Fixed window capacities apply while fewer posts exist; short-sample percentages are not claimed.",
+      "unknown": "Unknown legacy buyers consume the AI-risk allowance until displaced by newer known segments."
+    },
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "segment": "ecommerce",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "segment": "ecommerce",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      }
+    ],
+    "recoveryBatchPolicy": {
+      "version": 1,
+      "mode": "repair",
+      "widened": true,
+      "maxLeads": 10,
+      "maxPerDemandSource": 3,
+      "minBuilderLeads": 3,
+      "leadAssignments": [
+        {
+          "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+          "segment": "professional_services",
+          "kind": "builder",
+          "demandSourceId": "cabc58d84f610404fb5ebd89",
+          "registrySourceId": "3c18d6f9afb86838768b18fe"
+        },
+        {
+          "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+          "segment": "professional_services",
+          "kind": "builder",
+          "demandSourceId": "b9c09649a62288de346cd8da",
+          "registrySourceId": "bf36022f0a8cd761c338ce53"
+        },
+        {
+          "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+          "segment": "education",
+          "kind": "builder",
+          "demandSourceId": "1a3d92cbfc29dbd97fe777f5",
+          "registrySourceId": "b36040a453674772f62166cb"
+        },
+        {
+          "productUrl": "https://ted.europa.eu/en/notice/-/detail/716613-2026",
+          "segment": "public_sector",
+          "kind": "demand",
+          "demandSourceId": "397714774bd253e9a1b2d6c8",
+          "registrySourceId": "086772a8008f7255f645d435"
+        },
+        {
+          "productUrl": "https://weworkremotely.com/remote-jobs/pagerduty-senior-director-solutions-consulting",
+          "segment": "professional_services",
+          "kind": "demand",
+          "demandSourceId": "be3fa67073fb47789996013b",
+          "registrySourceId": "57b6f5f4945019c919f6d35c"
+        },
+        {
+          "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+          "segment": "professional_services",
+          "kind": "demand",
+          "demandSourceId": "e66c11ffb7bd20ced50ba56a",
+          "registrySourceId": "3c18d6f9afb86838768b18fe"
+        },
+        {
+          "productUrl": "https://weworkremotely.com/remote-jobs/planetscale-brand-designer",
+          "segment": "professional_services",
+          "kind": "demand",
+          "demandSourceId": "2e657f4873a374d15b94ef69",
+          "registrySourceId": "5c7690cd1ac3e604f884cfc2"
+        },
+        {
+          "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+          "segment": "health_admin",
+          "kind": "demand",
+          "demandSourceId": "91fa7885e45fb2d8b5ce9418",
+          "registrySourceId": "8ef335213e70b38904e7a504"
+        },
+        {
+          "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+          "segment": "education",
+          "kind": "demand",
+          "demandSourceId": "1a3d92cbfc29dbd97fe777f5",
+          "registrySourceId": "b36040a453674772f62166cb"
+        },
+        {
+          "productUrl": "https://weworkremotely.com/remote-jobs/talkspace-billing-and-claims-support-representative",
+          "segment": "professional_services",
+          "kind": "demand",
+          "demandSourceId": "b9c09649a62288de346cd8da",
+          "registrySourceId": "bf36022f0a8cd761c338ce53"
+        }
+      ],
+      "researchSha256": "3c376267bff4599a1cc1ae85e98639ad28dad39cd4ef3d91f119e35da0cea02d"
+    }
+  },
+  "demandContextSha256": "06c209138ed73a2354f125eeb9a6b89656b60b5d9f3ab318687ad401b076589f",
+  "assessmentContractVersion": 1,
+  "primaryFetchDiagnostics": [
+    {
+      "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "requestedAt": "2026-10-19T10:16:26.777Z",
+      "status": "fetched",
+      "sourceId": "3ecc3a5ea527357de5fa4165",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "requestedAt": "2026-10-19T10:16:26.777Z",
+      "status": "fetched",
+      "sourceId": "be8fa77dfa6f3364ffd4f537",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "requestedAt": "2026-10-19T10:16:26.777Z",
+      "status": "fetched",
+      "sourceId": "ca6a664d20bd48cf57145f2e",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://ted.europa.eu/en/notice/-/detail/716613-2026",
+      "requestedAt": "2026-10-19T10:16:26.777Z",
+      "status": "fetched",
+      "sourceId": "397714774bd253e9a1b2d6c8",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://weworkremotely.com/remote-jobs/pagerduty-senior-director-solutions-consulting",
+      "requestedAt": "2026-10-19T10:16:26.777Z",
+      "status": "fetched",
+      "sourceId": "be3fa67073fb47789996013b",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+      "requestedAt": "2026-10-19T10:16:26.778Z",
+      "status": "fetched",
+      "sourceId": "e66c11ffb7bd20ced50ba56a",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://weworkremotely.com/remote-jobs/planetscale-brand-designer",
+      "requestedAt": "2026-10-19T10:16:26.778Z",
+      "status": "fetched",
+      "sourceId": "2e657f4873a374d15b94ef69",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+      "requestedAt": "2026-10-19T10:16:26.778Z",
+      "status": "fetched",
+      "sourceId": "91fa7885e45fb2d8b5ce9418",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "requestedAt": "2026-10-19T10:16:26.778Z",
+      "status": "fetched",
+      "sourceId": "1a3d92cbfc29dbd97fe777f5",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://weworkremotely.com/remote-jobs/talkspace-billing-and-claims-support-representative",
+      "requestedAt": "2026-10-19T10:16:26.778Z",
+      "status": "fetched",
+      "sourceId": "b9c09649a62288de346cd8da",
+      "reason": "The candidate product URL was independently re-fetched in this check context."
+    }
+  ],
+  "considerationEvidence": [
+    {
+      "title": "Recover overdue invoices for a service firm",
+      "productUrl": "https://n8n.io/workflows/16602-recover-overdue-invoices-with-gpt-4o-mini-gmail-google-sheets-and-slack",
+      "sourceIds": [
+        "3ecc3a5ea527357de5fa4165"
+      ],
+      "availableSourceIds": [
+        "3ecc3a5ea527357de5fa4165"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Process invoice emails for billing staff",
+      "productUrl": "https://n8n.io/workflows/17582-process-invoice-emails-to-zoho-books-with-gmail-parseur-and-google-drive",
+      "sourceIds": [
+        "be8fa77dfa6f3364ffd4f537"
+      ],
+      "availableSourceIds": [
+        "be8fa77dfa6f3364ffd4f537"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Extract invoice fields for school review",
+      "productUrl": "https://n8n.io/workflows/6480-pdf-invoice-data-extraction-and-tracking-with-google-drive-claude-ai-and-telegram",
+      "sourceIds": [
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "availableSourceIds": [
+        "ca6a664d20bd48cf57145f2e"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Prepare a public audit work checklist",
+      "productUrl": "https://ted.europa.eu/en/notice/-/detail/716613-2026",
+      "sourceIds": [
+        "397714774bd253e9a1b2d6c8"
+      ],
+      "availableSourceIds": [
+        "397714774bd253e9a1b2d6c8"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Draft a coaching follow-up summary",
+      "productUrl": "https://weworkremotely.com/remote-jobs/pagerduty-senior-director-solutions-consulting",
+      "sourceIds": [
+        "be3fa67073fb47789996013b"
+      ],
+      "availableSourceIds": [
+        "be3fa67073fb47789996013b"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Check invoices against orders for review",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31594127",
+      "sourceIds": [
+        "e66c11ffb7bd20ced50ba56a"
+      ],
+      "availableSourceIds": [
+        "e66c11ffb7bd20ced50ba56a"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Create campaign design handoff notes",
+      "productUrl": "https://weworkremotely.com/remote-jobs/planetscale-brand-designer",
+      "sourceIds": [
+        "2e657f4873a374d15b94ef69"
+      ],
+      "availableSourceIds": [
+        "2e657f4873a374d15b94ef69"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Prepare a fictional clinic booking review list",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31539216",
+      "sourceIds": [
+        "91fa7885e45fb2d8b5ce9418"
+      ],
+      "availableSourceIds": [
+        "91fa7885e45fb2d8b5ce9418"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Prepare school invoice and records review rows",
+      "productUrl": "https://jobsearch.api.jobtechdev.se/ad/31532339",
+      "sourceIds": [
+        "1a3d92cbfc29dbd97fe777f5"
+      ],
+      "availableSourceIds": [
+        "1a3d92cbfc29dbd97fe777f5"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Draft billing inquiry reply notes for review",
+      "productUrl": "https://weworkremotely.com/remote-jobs/talkspace-billing-and-claims-support-representative",
+      "sourceIds": [
+        "b9c09649a62288de346cd8da"
+      ],
+      "availableSourceIds": [
+        "b9c09649a62288de346cd8da"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
