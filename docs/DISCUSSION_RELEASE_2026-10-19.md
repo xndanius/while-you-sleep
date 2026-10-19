@@ -25,3 +25,11 @@ Two failed/empty batches select the fixed backup and probation status. Machine h
 ## Validation before push
 
 621 existing and focused fixture tests passed; no live provider calls were made in tests. JavaScript syntax checks and the production build passed. New end-to-end discussion coverage verifies a zero-proposal exclusion reaches the independently fetched sealed context, and a forged original research hash fails before fetching. Provider fixtures cover absent token, pre-request durable reservations, unknown charges, daily/monthly limits, failover, privacy and bounded transport. Live publication and subsequent automatic-run evidence are recorded below after they actually occur.
+
+## Live deployment proof
+
+Code release 6ae38a36ff62687807aa0f27db73d38d94986e3d passed hosted Pages workflow 39261899034; completed green at 2026-10-19T13:39:59Z. The non-model operator bootstrap 39261948603 retired seven still-current job/tender feeds and admitted eight discussion feeds. Final migration commit 58d62103 preserves each separate reason transition; its Pages build/deploy completed green at 2026-10-19T13:41:04Z. The two UK tender scopes were already retired and remain historical. Both Software Recommendations routes are explicit robots exclusions.
+
+Live source JSON shows all nine legacy job/tender scopes retired and the eight new discussion scopes on probation. Machine UI was verified with the new discussion policy and expanded provider panel: all four platforms disabled, awaiting_apify_token, zero spent/reserved and $10 remaining. The live RSS feeds parse successfully: feed.xml has seven historical posts, best.xml has zero picks. These are not new publications. The hosted clock is still waiting and the next planned content slot is 17:07 Vilnius; no new discussion-content result is claimed in this deployment proof.
+
+The existing heartbeat was updated to verify and report the next genuine automatic discussion run here, with exact source counts and publication/check provenance, and report recovery totals/picks/mode at 10:00 Vilnius on 20 October. It stays quiet without a meaningful result or actionable failure. No key/account/secret or paid provider call was created.
