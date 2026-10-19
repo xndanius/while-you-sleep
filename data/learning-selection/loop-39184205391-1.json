@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "id": "loop-39184205391-1",
+  "runId": "loop-39184205391-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-19T01:12:04.272Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-39184205391-1",
+  "registrySha256": "6485b181a3d9d38b7588062fe7afb586c0a001e26d536d0748faa1b47a5ceaa2",
+  "scoreboardSha256": "922370aff04d2945781b920aa53f928e9a2a99866c8b8433245b87f29f53632b",
+  "eligibleSegments": [
+    "health_admin"
+  ],
+  "selectedSegment": "health_admin",
+  "demandSourceIds": [
+    "8ef335213e70b38904e7a504"
+  ],
+  "segmentDraws": [
+    {
+      "id": "health_admin",
+      "value": 0.025878314870623684
+    }
+  ],
+  "sourceDraws": [
+    {
+      "id": "8ef335213e70b38904e7a504",
+      "value": 0.01598140429066379
+    }
+  ],
+  "availability": {
+    "schema": 1,
+    "scanFreshnessHours": 2,
+    "exclusions": [
+      {
+        "sourceId": "3c18d6f9afb86838768b18fe",
+        "scanId": "loop-39180399517-1",
+        "scanSha256": "0b90fe5e4153a9bb5659d15d0a3b37a6a053fd22b36a675228ff1384b732c01a",
+        "items": 19,
+        "retryAt": "2026-10-19T02:21:50.492Z"
+      },
+      {
+        "sourceId": "b36040a453674772f62166cb",
+        "scanId": "research-39181642415-1",
+        "scanSha256": "664da3cc994682c2a1d4771977539736cf6d896eb145182ecead1e8c2b0a1fb5",
+        "items": 13,
+        "retryAt": "2026-10-19T02:17:24.888Z"
+      }
+    ]
+  },
+  "reason": "Try health admin and one guarded demand source using reproducible posterior draws; this is a search choice, never a fact or approval.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "39184205391",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "37bef1f8b3588f4d17714f1b220266eea6a70c7f"
+  }
+}
