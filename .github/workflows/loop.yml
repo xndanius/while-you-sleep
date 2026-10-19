@@ -30,6 +30,7 @@ concurrency:
 env:
   RUN_ID: loop-${{ github.run_id }}-${{ github.run_attempt }}
   DEMAND_CONTRACT_VERSION: '1'
+  DISCUSSION_ONLY: 'true'
   BOOTSTRAP: ${{ inputs.bootstrap || false }}
   PUBLIC_BASE_URL: https://xndanius.github.io/while-you-sleep
 jobs:

@@ -46,7 +46,7 @@ export async function verifyCommittedPost(post, root = ROOT) {
   const expectedContent = Object.fromEntries(Object.entries(original).filter(([key]) => key !== 'sourceIds'));
   const actualContent = Object.fromEntries(Object.keys(expectedContent).map(key => [key, post[key]]));
   const expectedSources = context.sources.filter(source => sourceIds.includes(source.id))
-    .map(source => Object.fromEntries(PUBLIC_SOURCE_FIELDS.map(key => [key, source[key]])));
+    .map(source => ({...Object.fromEntries(PUBLIC_SOURCE_FIELDS.map(key => [key, source[key]])),...(source.discussionMetadataVersion===1&&typeof source.community==='string'?{community:source.community}:{})}));
   if (stableJSON(expectedContent) !== stableJSON(actualContent) || stableJSON(expectedSources) !== stableJSON(post.sources)) {
     throw Error('Published text or attached sources differ from the checked draft.');
   }

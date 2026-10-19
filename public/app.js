@@ -1,7 +1,7 @@
-import {loopTiming} from './schedule.js?v=53f0febf9f67';
-import {currentDaySlots} from './slot-display.js?v=53f0febf9f67';
-import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=53f0febf9f67';
-import {historicalOverlapFor} from './historical-overlaps.js?v=53f0febf9f67';
+import {loopTiming} from './schedule.js?v=0ce5e9a00474';
+import {currentDaySlots} from './slot-display.js?v=0ce5e9a00474';
+import {DEFAULT_FEED_VIEW,readFeedView,feedViewURL,overallScore,filterAndSortPosts} from './feed-view.js?v=0ce5e9a00474';
+import {historicalOverlapFor} from './historical-overlaps.js?v=0ce5e9a00474';
 
 (() => {
   'use strict';
@@ -46,7 +46,9 @@ import {historicalOverlapFor} from './historical-overlaps.js?v=53f0febf9f67';
     const url = safeURL(raw.url || raw.link);
     if (!url) return '';
     const sourceTitle = plain(raw.title);
-    const label = sourceTitle ? sourceTitle.length > 80 ? `${sourceTitle.slice(0,77)}…` : sourceTitle : plain(raw.publisher) || hostname(url);
+    let origin='';
+    try{const parsed=new URL(url),host=parsed.hostname.replace(/^www\./,'');if(host==='reddit.com'){const community=parsed.pathname.match(/^\/r\/([A-Za-z0-9_]+)\//)?.[1]||plain(raw.community).match(/^Reddit r\/([A-Za-z0-9_]+)$/)?.[1];if(community)origin='Spotted on Reddit r/'+community;}else if(['x.com','twitter.com'].includes(host))origin='Spotted on X';else if(host==='indiehackers.com')origin='Spotted on Indie Hackers';else if(host==='producthunt.com')origin='Spotted on Product Hunt';}catch{}
+    const label = origin || (sourceTitle ? sourceTitle.length > 80 ? `${sourceTitle.slice(0,77)}…` : sourceTitle : plain(raw.publisher) || hostname(url));
     const title = [plain(raw.publisher),sourceTitle].filter(Boolean).join(' · ') || label;
     return `<a class="source-link" href="${escape(url)}" target="_blank" rel="noopener noreferrer" title="${escape(title)}">${escape(label)} <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>`;
   }

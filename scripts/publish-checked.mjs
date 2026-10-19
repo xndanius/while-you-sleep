@@ -10,7 +10,8 @@ import { weightedOverall,publishedScoring } from '../lib/scoring.mjs';
 import { readRelayStatus,relayPublicationReady } from '../lib/relay.mjs';
 import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
 import {demandContextReasons} from '../lib/demand.mjs';
-import {validSourceAdmission} from '../lib/source-registry.mjs';
+import {sourceValidationMatchesDefinition} from '../lib/source-registry.mjs';
+import {readProviderEvidence} from '../lib/provider-evidence.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
 
 const runId=process.argv[2];
@@ -75,12 +76,12 @@ try{
           const authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===sourceId);
           let text;
           if(authority?.role==='demand'){
-            const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&validSourceAdmission(entry.validation));
+            const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&sourceValidationMatchesDefinition(entry.validation,entry));
             if(!definition||sourceRole(definition)!=='demand')throw new Error('The demand feed is no longer admitted in the fixed registry.');
-            const fresh=await fetchDemandEvidence(source,{definition});text=fresh.text;
+            const fresh=await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});text=fresh.text;
             if(!text.includes(post.demandEvidence.evidenceQuote)||!text.includes(result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
           }else{const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));text=plainText(fetched.text);}
-          if(text.length<100)throw new Error('Live source contains too little readable evidence.');
+          if(text.length<(source.discussionMetadataVersion===1?12:100))throw new Error('Live source contains too little readable evidence.');
           for(const claim of [...result.check.claimChecks,...result.check.scoreChecks].filter(c=>c.sourceId===sourceId)){
             const occurs=claim.criterion?text.includes(claim.evidenceQuote):text.toLowerCase().includes(plainText(claim.evidenceQuote).toLowerCase());
             if(!occurs)throw new Error('A checked claim or score evidence quote no longer exists on the live source.');
@@ -92,7 +93,7 @@ try{
     const publishedAt=new Date().toISOString();
     if(scheduling&&localParts(publishedAt).day!==scheduling.localDate)throw new Error('Reserved publication date ended while checking sources.');
     const rulesSha256=process.env.RULES_SHA256||null;
-    const record={...post,publishedAt,version:rulesSha256?`rules-${rulesSha256.slice(0,12)}`:draft.version||'v1',rulesSha256,rulesCommit:process.env.RULES_COMMIT||null,origin:process.env.GITHUB_ACTIONS==='true'?'github-actions-codex-loop':'local-checked-publication',runId,githubRunUrl:research.githubRunUrl||null,sources:context.sources.filter(s=>post.sourceIds.includes(s.id)).map(({id,title,url,publisher,fetchedAt,verifiedAt})=>({id,title,url,publisher,fetchedAt,verifiedAt})),imageUrl:`./cards/${post.id}.jpg`,checker:{passed:true,checkedAt:manifest.checkedAt||context.createdAt,checkerRunId:manifest.checkerRunId||`${runId}-independent-check`,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,claimChecks:result.check.claimChecks}};
+    const record={...post,publishedAt,version:rulesSha256?`rules-${rulesSha256.slice(0,12)}`:draft.version||'v1',rulesSha256,rulesCommit:process.env.RULES_COMMIT||null,origin:process.env.GITHUB_ACTIONS==='true'?'github-actions-codex-loop':'local-checked-publication',runId,githubRunUrl:research.githubRunUrl||null,sources:context.sources.filter(s=>post.sourceIds.includes(s.id)).map(({id,title,url,publisher,fetchedAt,verifiedAt,discussionMetadataVersion,community})=>({id,title,url,publisher,fetchedAt,verifiedAt,...(discussionMetadataVersion===1&&typeof community==='string'?{community}: {})})),imageUrl:`./cards/${post.id}.jpg`,checker:{passed:true,checkedAt:manifest.checkedAt||context.createdAt,checkerRunId:manifest.checkerRunId||`${runId}-independent-check`,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,claimChecks:result.check.claimChecks}};
     record.scoring=publishedScoring(post.scoring.criteria,context.scoringPolicy,{checkedAt:record.checker.checkedAt,checkerRunId:record.checker.checkerRunId});
     record.checker.scoreChecks=result.check.scoreChecks;
     record.checker.scoreSources=context.sources;
@@ -121,9 +122,9 @@ try{
       try{
         const authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===source.id);
         if(authority?.role==='demand'){
-          const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&validSourceAdmission(entry.validation));
+          const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&sourceValidationMatchesDefinition(entry.validation,entry));
           if(!definition||sourceRole(definition)!=='demand')throw new Error('The demand feed is no longer admitted in the fixed registry.');
-          await fetchDemandEvidence(source,{definition});
+          await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});
         }else{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));if(plainText(page.text).length<100)throw new Error('Live source contains too little readable evidence.');}
         available++;
       }

@@ -1,8 +1,8 @@
-import {loopTiming,nextLocalTime} from './schedule.js?v=53f0febf9f67';
-import {slotPresentation,currentDaySlots} from './slot-display.js?v=53f0febf9f67';
-import {clockTiming,runTriggerLabel} from './clock-display.js?v=53f0febf9f67';
-import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=53f0febf9f67';
-import {renderLearningHTML} from './learning-display.js?v=53f0febf9f67';
+import {loopTiming,nextLocalTime} from './schedule.js?v=0ce5e9a00474';
+import {slotPresentation,currentDaySlots} from './slot-display.js?v=0ce5e9a00474';
+import {clockTiming,runTriggerLabel} from './clock-display.js?v=0ce5e9a00474';
+import {CLOCK_RUNTIME_URL,CLOCK_RUNTIME_REFRESH_MS,publicClockRuntime,newerClockRecord} from './clock-runtime.js?v=0ce5e9a00474';
+import {renderLearningHTML} from './learning-display.js?v=0ce5e9a00474';
 
 (() => {
   'use strict';
@@ -100,7 +100,9 @@ import {renderLearningHTML} from './learning-display.js?v=53f0febf9f67';
     const names={normal:'Normal',widened:'Wider search',fallback:'Demand-backed fallback',repair:'Repair mode'};
     const reasons=Array.isArray(health.noPostRuns)?health.noPostRuns:[];
     const actions=health.actions||{};
-    target.innerHTML=`<div class="clock-heading">${chip(health.mode==='normal'?'healthy':'recovering',names[health.mode]||health.mode)}<span>${number(health.postsLast12Hours)} checked posts in the last 12 hours</span></div><p>${escape(health.summary)}</p><dl class="clock-facts"><div><dt>Last publication</dt><dd>${escape(formatDate(health.lastPublishedAt))}</dd></div><div><dt>Recovery progress</dt><dd>${number(health.recoveryPosts)} of ${number(health.recoveryTarget)} new checked posts</dd></div><div><dt>Lead budget</dt><dd>At most ${number(health.researchPolicy?.maxLeads)} per run</dd></div><div><dt>Lead cooldown</dt><dd>${number(health.researchPolicy?.cooldownHours)} hours; published-idea novelty stays 14 days</dd></div></dl><div class="relay-links">${link(actions.issueUrl,'Diagnosis issue')}${link(actions.repairRunUrl,'Repair workflow')}${link(actions.reportUrl,'Recovery report')}${link('api/health.json','All no-post reasons')}</div><details><summary>Reasons for ${number(reasons.length)} no-post runs</summary><div class="slot-table-wrap"><table class="slot-table"><thead><tr><th>Time · Vilnius</th><th>Result</th><th>Reason</th></tr></thead><tbody>${reasons.map(row=>`<tr><td>${escape(formatDate(row.finishedAt))}${row.githubRunUrl?`<small>${link(row.githubRunUrl,'View run')}</small>`:''}</td><td>${escape(stateLabel(row.status))}</td><td>${escape(row.reason)}</td></tr>`).join('')}</tbody></table></div></details>`;
+    const provider=health.discussionProviders,providerRows=Array.isArray(provider?.health)?provider.health:[];
+    const providerHTML=`<details><summary>Discussion providers · monthly cap $${number(provider?.budget?.limitUsd??10)}</summary><p>${escape(provider?.status||'Public logged-out discussion captures; original capture times remain visible.')}</p>${provider?.budget?.usedOrReservedUsd!==undefined?`<p>Spent or conservatively reserved: $${escape(provider.budget.usedOrReservedUsd)}. Remaining: $${escape(provider.budget.remainingUsd)}.</p>`:''}<ul>${providerRows.map(row=>`<li>${escape(row.platform)}: ${escape(row.status||'unknown')} · ${escape(row.reason||row.lastReason||'No completed batch')} ${row.actorName?'· '+escape(row.actorName):''}</li>`).join('')}</ul></details>`;
+    target.innerHTML=`<div class="clock-heading">${chip(health.mode==='normal'?'healthy':'recovering',names[health.mode]||health.mode)}<span>${number(health.postsLast12Hours)} checked posts in the last 12 hours</span></div><p>${escape(health.summary)}</p><dl class="clock-facts"><div><dt>Last publication</dt><dd>${escape(formatDate(health.lastPublishedAt))}</dd></div><div><dt>Recovery progress</dt><dd>${number(health.recoveryPosts)} of ${number(health.recoveryTarget)} new checked posts</dd></div><div><dt>Lead budget</dt><dd>At most ${number(health.researchPolicy?.maxLeads)} per run</dd></div><div><dt>Lead cooldown</dt><dd>${number(health.researchPolicy?.cooldownHours)} hours; published-idea novelty stays 14 days</dd></div></dl>${providerHTML}<div class="relay-links">${link(actions.issueUrl,'Diagnosis issue')}${link(actions.repairRunUrl,'Repair workflow')}${link(actions.reportUrl,'Recovery report')}${link('api/health.json','All no-post reasons')}</div><details><summary>Reasons for ${number(reasons.length)} no-post runs</summary><div class="slot-table-wrap"><table class="slot-table"><thead><tr><th>Time · Vilnius</th><th>Result</th><th>Reason</th></tr></thead><tbody>${reasons.map(row=>`<tr><td>${escape(formatDate(row.finishedAt))}${row.githubRunUrl?`<small>${link(row.githubRunUrl,'View run')}</small>`:''}</td><td>${escape(stateLabel(row.status))}</td><td>${escape(row.reason)}</td></tr>`).join('')}</tbody></table></div></details>`;
   }
 
   function renderClock(){

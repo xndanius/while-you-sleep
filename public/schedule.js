@@ -1,5 +1,5 @@
 // Shared by the hosted jobs and browser so future times never depend on a build timestamp.
-import {DEFAULT_CADENCE_CONFIG,normalizeCadenceConfig,cadenceAt,dailyPublicationCap,researchEveryHours,MAX_PUBLICATION_BATCH_SIZE} from './cadence-config.js?v=53f0febf9f67';
+import {DEFAULT_CADENCE_CONFIG,normalizeCadenceConfig,cadenceAt,dailyPublicationCap,researchEveryHours,MAX_PUBLICATION_BATCH_SIZE} from './cadence-config.js?v=0ce5e9a00474';
 export const TIMEZONE = 'Europe/Vilnius';
 export const HOURS = Object.freeze([8, 13, 19]);
 export const PUBLICATION_MINUTE = 7;

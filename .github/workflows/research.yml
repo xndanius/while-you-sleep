@@ -29,6 +29,8 @@ concurrency:
   group: while-you-sleep-record
   cancel-in-progress: false
   queue: max
+env:
+  DISCUSSION_ONLY: 'true'
 jobs:
   ensure-clock:
     runs-on: ubuntu-latest
@@ -57,7 +59,7 @@ jobs:
       actions: read
     outputs:
       due: ${{ steps.gate.outputs.due }}
-      committed: ${{ steps.commit.outputs.committed == 'true' || steps.evolve.outputs.committed == 'true' }}
+      committed: ${{ steps.commit.outputs.committed == 'true' || steps.evolve.outputs.committed == 'true' || steps.apify.outputs.committed == 'true' || steps.provider_seed.outputs.committed == 'true' }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -79,6 +81,26 @@ jobs:
           FORCE_DISCOVERY: ${{ inputs.force_discovery && 'true' || 'false' }}
       - if: steps.gate.outputs.due == 'true'
         run: npm ci --ignore-scripts
+      - name: Collect bounded public discussion batches when their six-hour bucket is due
+        id: apify
+        if: steps.gate.outputs.due == 'true'
+        timeout-minutes: 15
+        run: node scripts/collect-apify-sources.mjs "$RUN_ID" research
+        env:
+          RUN_ID: ${{ steps.gate.outputs.runId }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          APIFY_MONTHLY_BUDGET_USD: ${{ vars.APIFY_MONTHLY_BUDGET_USD || '10' }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_API_ACCESS_APPROVED: ${{ vars.REDDIT_API_ACCESS_APPROVED || 'false' }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+      - name: Admit only explicitly approved provider seeds with real immutable public post captures
+        id: provider_seed
+        if: steps.gate.outputs.due == 'true'
+        run: node scripts/source-registry.mjs provider-seed "$RUN_ID"
+        env:
+          RUN_ID: ${{ steps.gate.outputs.runId }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
       - if: steps.gate.outputs.due == 'true'
         run: |
           SOURCE_HEAD_SHA="$(git rev-parse HEAD)" node scripts/research-snapshot.mjs "$RUN_ID"
