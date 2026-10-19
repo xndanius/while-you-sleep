@@ -9,6 +9,7 @@ import {emptySourceRegistry,applySourceTransition,createSourceScanReceipt,valida
 import {researchSnapshot} from '../scripts/research-snapshot.mjs';
 import {DEMAND_SOURCE_CATALOG,parseDemandSourcePage,fetchDemandEvidence,demandEvidenceFingerprint} from '../lib/demand-sources.mjs';
 import {fetchPublic} from '../lib/source-fetch.mjs';
+import {writerResearchView} from '../lib/candidate-input.mjs';
 
 const now='2026-10-11T15:00:00.000Z';
 const capability='The product reads uploaded invoice documents, extracts structured fields, and exports CSV files for review. The operator chooses the documents and checks the result before sending records. It includes a command line interface and documented configuration; running it still requires a server, credentials and human approval. ';
@@ -42,6 +43,34 @@ test('TED transport keeps byte limits, robots denials and the whole-enrichment t
   mode=variant;const result=await enrichProductLeads({...fixture.options,fetchPage:guardedTEDFetch,...(variant==='timeout'?{timeBudgetMs:20}:{})});
   assert.equal(result.enrichment.status,'failed',variant);assert.equal(result.enrichment.fetched,0,variant);assert.equal(result.enrichment.observations[0].code,code,variant);assert.equal(result.sources[0].enriched,undefined,variant);
  }
+});
+
+function implementationFixture(){
+ const definition=DEMAND_SOURCE_CATALOG[2],row=demandJob(111,'Registrera fakturor och sammanställa rapporter för granskning.'),demand=parseDemandSourcePage(definition,page(definition.url,JSON.stringify({hits:[row]}),{contentType:'application/json'}))[0];
+ const repository={...source(50,{url:'https://github.com/public/invoice-reports'}),title:'Invoice reports workflow'},product={...source(51,{url:'https://documents.example.org/invoice-review'}),title:'Invoice review workflow'},unrelated={...source(52,{url:'https://calendar.example.org/calendar'}),title:'Meeting calendar'};
+ const sources=[demand,repository,product,unrelated],originMap=[origin(demand,definition.id),...[repository,product,unrelated].map(item=>origin(item))];
+ return {row,demand,repository,product,unrelated,options:{sources,originMap,learningSelection:{selectedSegment:'professional_services',demandSourceIds:[definition.id]},demandDefinitions:[definition],now:()=>Date.parse(now),limit:10,cooldownHours:3}};
+}
+
+test('two matching implementation references get fresh bounded docs without becoming extra assessed leads',async()=>{
+ const f=implementationFixture(),calls=[],raw='https://raw.githubusercontent.com/public/invoice-reports/main/README.md';
+ const result=await enrichProductLeads({...f.options,fetchPage:async(url,options)=>{calls.push({url,options});if(url===f.demand.url)return page(url,JSON.stringify(f.row),{...options,contentType:'application/json'});if(url==='https://api.github.com/repos/public/invoice-reports')return page(url,JSON.stringify({private:false,full_name:'public/invoice-reports'}),{...options,contentType:'application/json'});if(url.endsWith('/readme'))return page(url,JSON.stringify({type:'file',download_url:raw}),{...options,contentType:'application/json'});assert.ok([raw,f.product.url].includes(url),'Only task-matched original references may be fetched.');return page(url,capability.repeat(8),options);}});
+ assert.equal(result.enrichment.selected,1);assert.equal(result.enrichment.observations.length,1);assert.equal(result.enrichment.observations[0].productUrl,f.demand.url);assert.equal(result.enrichment.supportingReferences.observations.length,2);assert.equal(result.enrichment.requests+result.enrichment.supportingReferences.requests,5);assert.ok(calls.length<=30);assert.ok(!calls.some(call=>call.url===f.unrelated.url));
+ const documents=result.sources.filter(item=>item.enriched&&item.role!=='demand');assert.equal(documents.length,2);assert.ok(documents.some(item=>item.url===raw&&item.originSourceIds.includes(f.repository.id)));
+ for(const document of documents){const independentOptions=sourceEvidenceFetchOptions(document);assert.equal(independentOptions.complete,true);assert.equal(independentOptions.maxBytes,document.evidenceKind==='github-readme'?350000:2000000);const fresh=await fetchFixture(document.url,independentOptions);assert.equal(fresh.url,document.url);assert.equal(fresh.maxBytes,independentOptions.maxBytes);}
+ const view=writerResearchView({...result,learningSelection:f.options.learningSelection});assert.ok(view.sources.some(item=>item.id===hash(raw)));assert.ok(view.sources.filter(item=>item.role!=='demand').length<=8);assert.equal(view.enrichment.observations.length,1);
+});
+
+test('support documents share the original timeout and failed support does not erase fetched demand',async()=>{
+ const f=implementationFixture(),started=Date.now();
+ const result=await enrichProductLeads({...f.options,timeBudgetMs:20,fetchPage:async(url,options)=>url===f.demand.url?page(url,JSON.stringify(f.row),{...options,contentType:'application/json'}):new Promise(()=>{})});
+ assert.ok(Date.now()-started<1000);assert.equal(result.enrichment.status,'completed');assert.equal(result.enrichment.fetched,1);assert.equal(result.enrichment.observations.length,1);assert.equal(result.enrichment.supportingReferences.observations.length,1);assert.equal(result.enrichment.supportingReferences.observations[0].code,'product_evidence_timeout');assert.ok(result.enrichment.requests+result.enrichment.supportingReferences.requests<=30);
+});
+
+test('ten demand candidates stay ten when support documentation is also retrieved',async()=>{
+ const f=implementationFixture(),definition=f.options.demandDefinitions[0],rows=Array.from({length:12},(_,i)=>demandJob(111+i,'Registrera fakturor och sammanställa rapporter för granskning.')),demand=parseDemandSourcePage(definition,page(definition.url,JSON.stringify({hits:rows}),{contentType:'application/json'})),sources=[...demand,f.product,f.unrelated],byURL=new Map(demand.map((item,i)=>[item.url,rows[i]]));let requests=0;
+ const result=await enrichProductLeads({...f.options,sources,originMap:[...demand.map(item=>origin(item,definition.id)),origin(f.product),origin(f.unrelated)],fetchPage:async(url,options)=>{requests++;assert.notEqual(url,f.unrelated.url);return byURL.has(url)?page(url,JSON.stringify(byURL.get(url)),{...options,contentType:'application/json'}):page(url,capability.repeat(8),options);}});
+ assert.equal(result.enrichment.selected,10);assert.equal(result.enrichment.observations.length,10);assert.equal(result.enrichment.supportingReferences.observations.length,1);assert.equal(result.enrichment.requests+result.enrichment.supportingReferences.requests,requests);assert.ok(requests<=30);
 });
 
 test('demand retrieval prefers literal tasks to longer broad descriptions without assigning editorial scores',()=>{

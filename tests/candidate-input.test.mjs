@@ -21,6 +21,15 @@ test('recent writer memory distinguishes provisional ratings and refuses an alte
 const demand={id:'notice',url:'https://jobsearch.api.jobtechdev.se/ad/123',role:'demand',demand:true,title:'Paid administrator role',text:'Hantera fakturering och dokumentation.',taskExcerpts:['Hantera fakturering och dokumentation.']};
 const reference=(id,host,title)=>({id,url:`https://${host}/${id}`,role:'building',title,text:title});
 
+test('English support, merchant operations and marketing chores select matching references without unrelated filler',()=>{
+ const support=reference('ticket-replies','support.example','Support ticket triage and customer replies'),orders=reference('inventory-tracker','orders.example','Inventory and shipping tracker'),marketing=reference('crm-campaigns','marketing.example','CRM campaign assistant'),unrelated=reference('recipe-book','recipes.example','Recipe collection');
+ const sources=[unrelated,support,orders,marketing];
+ for(const [task,expected] of [['Triage support tickets and draft customer replies',support],['Track orders, inventory and shipping status',orders],['Update CRM campaigns and marketing lists',marketing]]){
+  assert.deepEqual(selectBuildingReferences(sources,[{taskExcerpts:[task]}],{limit:2,matchedOnly:true}),[expected]);
+ }
+ assert.deepEqual(selectBuildingReferences(sources,[{taskExcerpts:['Do a general service']}],{limit:2,matchedOnly:true}),[]);
+});
+
 test('late relevant building references replace unrelated early items without changing source identity or the eight-item bound',()=>{
  const unrelated=Array.from({length:8},(_,i)=>reference('support-'+i,'news.example','Customer support inbox'));
  const invoice=reference('invoice-ocr','n8n.example','Extract invoice data from PDF documents');
