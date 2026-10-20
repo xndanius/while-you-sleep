@@ -113,7 +113,8 @@
     "watchdogMode": "repair",
     "originalThreePostOnePickTargetMet": false,
     "renewedTwoPostRecoveryMet": false,
-    "autonomousForwardVerification": "pending"
+    "autonomousForwardVerification": "pending",
+    "latestObservedAt": "2026-10-20T10:18:10Z"
   },
   "initialDeployment": {
     "commit": "d9f247fede64d291ca6c929953456827a33fc1aa",
@@ -191,7 +192,45 @@
       "writerAndRepairInventoryVerified": true,
       "draftUnchanged": true
     },
-    "deployment": "pending",
-    "autonomousForwardVerification": "pending"
+    "deployment": {
+      "commit": "84ee9dcdf4d4f669c246a33f413cf9469918581a",
+      "runId": "39401257910",
+      "conclusion": "success",
+      "buildCompletedAt": "2026-10-20T09:32:13Z",
+      "deployCompletedAt": "2026-10-20T09:32:48Z",
+      "hostedTests": {
+        "passed": 650,
+        "failed": 0
+      },
+      "buildPosts": 7,
+      "buildRuns": 226
+    },
+    "autonomousForwardVerification": {
+      "nonModelResearch": "DISCUSSION_RESEARCH_39401656860.json",
+      "content": "DISCUSSION_AUTO_39405925881.json",
+      "status": "blocked_by_guarded_robots_http_429",
+      "writerModelExecuted": true,
+      "checkerModelExecuted": false,
+      "fixedReferencesSelected": 0,
+      "specificUnattachedReferenceCaseExercised": false,
+      "acceptedManifest": false,
+      "published": 0
+    }
+  },
+  "diagnosticFollowup": {
+    "recordedAt": "2026-10-20T10:20:20.372Z",
+    "observedFailure": "The actual 13:07 run failed closed after a robots.txt HTTP 429; its aggregate failure discarded the public source identity before a check context was written. The historical denied host remains unknown.",
+    "repair": "Preserve at most two public host/hash identities and bounded safe error text in the existing trusted preparation-failure output, which the deterministic finalizer retains in the unverified run. No source body, new context, manifest, retry, fallback, cache or robots-policy change.",
+    "tests": {
+      "fullSuitePassed": 650,
+      "failed": 0,
+      "syntaxPassed": true,
+      "buildPassed": true,
+      "robotsFixtureFetches": 1,
+      "noPrimaryOrDocumentationFallback": true,
+      "durableUnverifiedIdentityPreserved": true,
+      "noSourceBodyInDiagnostics": true
+    },
+    "deployment": "pending"
   }
 }

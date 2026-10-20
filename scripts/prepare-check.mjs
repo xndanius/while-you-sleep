@@ -16,6 +16,7 @@ import {extractImplementationEvidence} from '../lib/implementation-evidence.mjs'
 import {assessmentEvidenceReasons,discussionEvidenceReasons} from '../lib/evidence-contract.mjs';
 import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
 const runId=process.argv[2];
+const preparationHealth=[];
 try{
   const draft=await readJSON(dataPath('drafts',runId));const research=await readJSON(dataPath('research',runId));
   const rules=await fs.readFile(path.join(ROOT,'RULES.md'),'utf8'),rulesSha256=sha256(rules),scoringPolicy=parseScoringPolicy(rules);
@@ -40,7 +41,7 @@ try{
       try{canonicalURL(item.productUrl);}catch{throw new Error('Writer '+field+' entry has an invalid productUrl; no exclusion may be silently dropped.');}
     }
   }
-  const previous=await records('posts'),sources=[],health=[];
+  const previous=await records('posts'),sources=[],health=preparationHealth;
   const noveltyContext=createNoveltyContext(previous);
   const demandRequired=process.env.DEMAND_CONTRACT_VERSION==='1'||!!process.env.EXPECTED_LEARNING_SELECTION_SHA;
   if(demandRequired&&process.env.GITHUB_ACTIONS==='true'&&!process.env.EXPECTED_LEARNING_SELECTION_SHA)throw new Error('Demand-first checking requires the independently sealed pre-model learning selection.');
@@ -194,7 +195,12 @@ try{
   await writeJSON(dataPath('check-context',runId),context);
   console.log(JSON.stringify({runId,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,results:deterministicResults}));
 }catch(error){
-  const reason=safeError(error).replace(/[\r\n\x00-\x1f\x7f]/g,' ').trim();
-  if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,`verified=false\nunverified_code=checker_preparation_failed\nunverified_reason=${reason}\n`);
-  console.error(reason);process.exitCode=1;
+  // A failed context is deliberately never published as evidence. Preserve
+  // bounded public identities in its trusted failure output instead, so the
+  // durable unverified run can identify a guarded denial without a retry.
+  const diagnostics=preparationHealth.slice(0,2).map(item=>{let host;try{host=new URL(item.url).hostname;}catch{return null;}const sourceId=/^[a-f0-9]{24}$/.test(item.sourceId||'')?` [${item.sourceId}]`:'';return `${host}${sourceId}: ${safeError(new Error(item.message)).slice(0,85)}`;}).filter(Boolean);
+  const reason=(diagnostics.length?`Guarded sources: ${diagnostics.join('; ')}. `:'')+safeError(error);
+  const boundedReason=reason.replace(/[\r\n\x00-\x1f\x7f]/g,' ').trim().slice(0,300);
+  if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,`verified=false\nunverified_code=checker_preparation_failed\nunverified_reason=${boundedReason}\n`);
+  console.error(boundedReason);process.exitCode=1;
 }
