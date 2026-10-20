@@ -114,5 +114,42 @@
     "originalThreePostOnePickTargetMet": false,
     "renewedTwoPostRecoveryMet": false,
     "autonomousForwardVerification": "pending"
+  },
+  "initialDeployment": {
+    "commit": "d9f247fede64d291ca6c929953456827a33fc1aa",
+    "runId": "39396725359",
+    "url": "https://github.com/xndanius/while-you-sleep/actions/runs/39396725359",
+    "buildCompletedAt": "2026-10-20T08:54:47Z",
+    "deployCompletedAt": "2026-10-20T08:55:00Z",
+    "conclusion": "success",
+    "hostedTests": {
+      "passed": 650,
+      "failed": 0
+    },
+    "liveVerifiedAt": "2026-10-20T08:55:55.559Z",
+    "live": {
+      "siteStatus": 200,
+      "feedStatus": 200,
+      "feedItems": 7,
+      "bestStatus": 200,
+      "bestItems": 0,
+      "newCheckedPosts": 0,
+      "watchdogMode": "repair"
+    }
+  },
+  "finalReviewFollowup": {
+    "recordedAt": "2026-10-20T09:07:18.792Z",
+    "problem": "A proposed post A could be vetoed by unrelated rejected discussion B becoming unavailable when both originally shared one fixed reference.",
+    "repair": "Keep full frozen catalog/task binding validation; make a per-use copy bound to the exact proposed post demand IDs, require their original membership, then fetch and validate only those live demands. Do not mutate the archived reference. Empty assessments retain every fresh original binding.",
+    "regression": {
+      "fixture": "tests/assessment-pipeline.test.mjs",
+      "before": "The real offline finalizer published no fixture post when unrelated rejected B returned 403.",
+      "after": "The real offline finalizer publishes only the explicitly checked synthetic fixture A; B is not needed for its evidence. Late changes to A or doc redirects still refuse both proposed and empty batches.",
+      "fullTestsPassed": 650,
+      "failed": 0,
+      "syntaxPassed": true,
+      "buildPassed": true
+    },
+    "deployment": "pending"
   }
 }

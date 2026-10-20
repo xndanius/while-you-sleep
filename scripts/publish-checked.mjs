@@ -94,11 +94,16 @@ try{
             if(!text.includes(post.demandEvidence.evidenceQuote)||!text.includes(result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
           }else{
             if(implementationSource(source)&&!discussionImplementationReference(source,{demandSources:context.sources.filter(item=>item.role==='demand')}))throw new Error('Implementation reference lost its exact fixed catalog and discussion-task binding.');
-            const liveDemands=implementationSource(source)?await Promise.all(source.supportsDemandSourceIds.map(readLiveDemand)):[];
-            if(implementationSource(source)&&(!post.demandEvidence?.sourceIds?.every(id=>source.supportsDemandSourceIds.includes(id))||!discussionImplementationReference(source,{demandSources:liveDemands})))throw new Error('Implementation reference lost its freshly fetched discussion-task binding.');
+            // A shared document may also support rejected batch assignments.
+            // Preserve the full frozen binding above, then independently
+            // revalidate only this post's exact demand, which its claims use.
+            const liveReference=implementationSource(source)?{...source,supportsDemandSourceIds:post.demandEvidence?.sourceIds}:null;
+            if(liveReference&&(!discussionImplementationReference(liveReference)||!liveReference.supportsDemandSourceIds.every(id=>source.supportsDemandSourceIds.includes(id))))throw new Error('Implementation reference is not attached to this post\'s exact demand.');
+            const liveDemands=liveReference?await Promise.all(liveReference.supportsDemandSourceIds.map(readLiveDemand)):[];
+            if(liveReference&&!discussionImplementationReference(liveReference,{demandSources:liveDemands}))throw new Error('Implementation reference lost its freshly fetched discussion-task binding.');
             const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));
             if(implementationSource(source)&&canonicalURL(fetched.url)!==source.url)throw new Error('Implementation reference redirected away from its exact catalog URL.');
-            if(implementationSource(source)){const extracted=extractDiscussionImplementationEvidence(source,fetched.text,{demandSources:liveDemands});if(!extracted)throw new Error('Live implementation reference has no privacy-safe task-matched literal section.');text=extracted.text;}
+            if(implementationSource(source)){const extracted=extractDiscussionImplementationEvidence(liveReference,fetched.text,{demandSources:liveDemands});if(!extracted)throw new Error('Live implementation reference has no privacy-safe task-matched literal section.');text=extracted.text;}
             else text=plainText(fetched.text);
           }
           if(source.discussionMetadataVersion!==1&&text.length<100)throw new Error('Live source contains too little readable evidence.');
