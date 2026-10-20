@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "recordedAt": "2026-10-20T11:36:17.706Z",
-  "phase": "offline_verified_release_preparation",
+  "phase": "deployed_green_forward_automatic_coverage_pending",
   "problem": "A saved full structured checker envelope exactly matched the returned full envelope, but the acceptor compared the saved object only with the nested manifest and incorrectly reported disagreement.",
   "historicalRun": {
     "runId": "loop-39414302092-1",
@@ -291,8 +291,31 @@
     }
   ],
   "release": {
-    "codeCommit": null,
-    "deployment": "pending"
+    "codeCommit": "ae8578352e37fed1f374f71a8c2a597c07b81427",
+    "pagesRunId": "39416204650",
+    "url": "https://github.com/xndanius/while-you-sleep/actions/runs/39416204650",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:36:57Z",
+        "completedAt": "2026-10-20T11:38:07Z"
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:38:11Z",
+        "completedAt": "2026-10-20T11:38:20Z"
+      }
+    ],
+    "hostedTests": 671,
+    "hostedFailed": 0,
+    "hostedSyntaxPassed": true,
+    "hostedBuild": {
+      "posts": 7,
+      "runs": 228
+    }
   },
   "recovery": {
     "newCheckedPosts": 0,
@@ -309,5 +332,116 @@
     "secretValuesReadOrWritten": false,
     "historicalOutcomeOrRewardRewrite": false,
     "heartbeatRestarted": false
-  }
+  },
+  "liveVerification": {
+    "verifiedAt": "2026-10-20T11:39:06.750Z",
+    "http": {
+      "/": 200,
+      "api/feed.json": 200,
+      "api/machine.json": 200,
+      "api/learning.json": 200,
+      "api/health.json": 200,
+      "feed.xml": 200,
+      "best.xml": 200
+    },
+    "rss": {
+      "feed.xml": {
+        "valid": true,
+        "http": 200,
+        "items": 7
+      },
+      "best.xml": {
+        "valid": true,
+        "http": 200,
+        "items": 0
+      }
+    },
+    "historicalPostChecks": [
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "contentHashValid": true,
+        "publicHashPinMatches": true
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "contentHashValid": true,
+        "publicHashPinMatches": true
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "contentHashValid": true,
+        "publicHashPinMatches": true
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "contentHashValid": true,
+        "publicHashPinMatches": true
+      },
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "contentHashValid": true,
+        "publicHashPinMatches": true
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "contentHashValid": true,
+        "publicHashPinMatches": true
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "contentHashValid": true,
+        "publicHashPinMatches": true
+      }
+    ],
+    "newCheckedPosts": [],
+    "watchdog": {
+      "mode": "repair",
+      "recoveryPosts": 0,
+      "recoveryTarget": 2
+    },
+    "historicalRun": {
+      "id": "loop-39414302092-1",
+      "status": "no_post_unverified",
+      "assessmentOutcome": "unverified",
+      "published": [],
+      "operationalFailures": [
+        {
+          "stage": "check",
+          "code": "checker_output_unverified",
+          "reason": "Independent checker file and final response disagree."
+        }
+      ]
+    },
+    "clock": {
+      "phase": "queued",
+      "lastTickAt": "2026-10-20T11:20:49.875Z",
+      "nextTickAt": "2026-10-20T11:35:49.875Z",
+      "claimedAt": "2026-10-20T11:05:26.753Z",
+      "fencedAt": null,
+      "runtimeUpdatedAt": "2026-10-20T11:20:49.875Z",
+      "runtimeSource": "committed-fallback",
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39414305077",
+      "lastTickRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39412413863",
+      "waitMinutes": 15,
+      "dispatches": [
+        {
+          "workflow": "loop.yml",
+          "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39414302092",
+          "requestedAt": "2026-10-20T11:20:49.875Z"
+        }
+      ]
+    },
+    "historicalLearning": {
+      "outcome": "unverified",
+      "rewards": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "published": 0
+    }
+  },
+  "forwardAutomaticVerification": "Pending; no content/model run was manually dispatched. The immutable historical 39414302092 outcome and all five null rewards are unchanged."
 }
