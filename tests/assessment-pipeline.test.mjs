@@ -216,6 +216,39 @@ test('fresh structured checker output can carry an independently completed empty
  assert.equal(schema.properties.outcome.enum.includes('operational_failure'),true);
 });
 
+test('exact completed response envelopes agree with their canonical payload without changing frozen checks',()=>{
+ for(const count of [0,1]){
+  const f=fixture({count}),response={outcome:'completed',reason:'The exact synthetic batch was independently examined.',manifest:f.manifest};
+  const pins={expectedDraftSha256:sha256(stableJSON(f.draft)),expectedContextSha256:sha256(stableJSON(f.context))},before=stableJSON({draft:f.draft,context:f.context,response});
+  assert.equal(acceptCheckerOutput(response,f.draft,f.context,{...pins,existing:structuredClone(response)}),f.manifest,'A byte-equivalent complete response file is the same validated answer, not a contradictory manifest.');
+  for(const existing of [undefined,structuredClone(f.manifest)])assert.equal(acceptCheckerOutput(response,f.draft,f.context,{...pins,existing}),f.manifest);
+  assert.deepEqual(completedAssessmentReasons(f.draft,f.context,f.manifest),[]);assert.equal(f.manifest.checks.length,count);assert.equal(stableJSON({draft:f.draft,context:f.context,response}),before);
+ }
+});
+
+test('the real accept script normalizes exact completed envelopes to payload-only files for empty and proposed batches',async t=>{
+ for(const count of [0,1]){
+  const result=await execute(t,{count,script:'accept-check-output',afterBind:f=>{f.manifest={outcome:'completed',reason:'The exact synthetic batch was independently examined.',manifest:f.manifest};},checkerResponse:f=>structuredClone(f.manifest)});
+  assert.equal(result.execution.status,0,result.execution.stderr);assert.match(result.outputs,/verified=true/);const saved=await result.record('checks'),canonical=result.f.manifest.manifest;
+  assert.deepEqual(saved,canonical);assert.equal(sha256(stableJSON(saved)),sha256(stableJSON(canonical)));assert.equal(Object.hasOwn(saved,'outcome'),false);assert.equal(Object.hasOwn(saved,'manifest'),false);assert.equal(saved.checks.length,count);
+  assert.deepEqual(await result.record('drafts'),result.f.draft);assert.deepEqual(await result.record('check-context'),result.f.context);assert.deepEqual(completedAssessmentReasons(result.f.draft,result.f.context,saved),[]);
+ }
+});
+
+test('envelope compatibility rejects changed outer answers, nonobjects and invalid nested completions',()=>{
+ const f=fixture(),response={outcome:'completed',reason:'The exact synthetic batch was independently examined.',manifest:f.manifest},pins={expectedDraftSha256:sha256(stableJSON(f.draft)),expectedContextSha256:sha256(stableJSON(f.context))};
+ const outerMutations=[value=>value.reason='A different final answer about the same payload.',value=>value.outcome='operational_failure',value=>value.extraField='Unvalidated outer metadata'];
+ for(const change of outerMutations){const existing=structuredClone(response);change(existing);assert.deepEqual(existing.manifest,response.manifest);assert.throws(()=>acceptCheckerOutput(response,f.draft,f.context,{...pins,existing}),/disagree/);}
+ for(const existing of [null,false,0,'',42,'scalar',[],{}])assert.throws(()=>acceptCheckerOutput(response,f.draft,f.context,{...pins,existing}),/disagree/);
+ for(const mutate of [value=>value.manifest.draftSha256='b'.repeat(64),value=>value.manifest.completedAssessment.contextSha256='b'.repeat(64),value=>delete value.manifest.checks[0].claimChecks[0].evidenceQuote,value=>value.manifest.checks[0].scoreChecks[0].maxSupportedScore=11]){
+  const invalid=structuredClone(response);mutate(invalid);assert.throws(()=>acceptCheckerOutput(invalid,f.draft,f.context,{...pins,existing:structuredClone(invalid)}),'An identical outer file cannot validate a stale or malformed inner manifest.');
+ }
+ assert.throws(()=>acceptCheckerOutput({...response,extraField:true},f.draft,f.context,{...pins,existing:{...response,extraField:true}}),/envelope/);
+ assert.throws(()=>acceptCheckerOutput(response,f.draft,f.context,{...pins,existing:response,expectedContextSha256:'b'.repeat(64)}),/trusted frozen/);
+ const failure={outcome:'operational_failure',reason:'The synthetic independent examination did not complete.',manifest:null};
+ for(const existing of [undefined,null,structuredClone(failure),structuredClone(f.manifest)])assert.throws(()=>acceptCheckerOutput(failure,f.draft,f.context,{...pins,existing}),/operational failure/);
+});
+
 test('a genuinely checked below-threshold refusal settles green without publishing, repair or quota retry',async t=>{
  const result=await execute(t,{mode:'legacy',mutate:f=>{for(const rating of Object.values(f.draft.posts[0].scoring.criteria))rating.value=5;}});
  assert.equal(result.execution.status,0,result.execution.stderr);assert.match(result.outputs,/operational_failure=false/);

@@ -42,6 +42,21 @@ test('one exact unscored discussion exclusion can authenticate feedback without 
  assert.equal(f.record.completedAssessment,undefined);assert.equal(f.record.checks,undefined);assert.equal(stableJSON(f),before);
 });
 
+test('initial omitted-candidate feedback accepts only its exact payload or complete validated envelope',async()=>{
+ const f=await fixture(),options={allowOmittedCandidateRepair:true,...expected(f)},before=stableJSON(f);
+ for(const existing of [undefined,structuredClone(f.record),structuredClone(f.response)])assert.equal(acceptCheckerOutput(f.response,f.draft,f.context,{...options,existing}),f.record);
+ for(const mutate of [value=>value.reason='A changed outer answer about the same omission.',value=>value.outcome='completed',value=>value.extraField='Unvalidated outer metadata']){
+  const existing=structuredClone(f.response);mutate(existing);assert.deepEqual(existing.repairFeedback,f.record);assert.throws(()=>acceptCheckerOutput(f.response,f.draft,f.context,{...options,existing}),/disagree/);
+ }
+ for(const existing of [null,false,0,'',42,'scalar',[],{}])assert.throws(()=>acceptCheckerOutput(f.response,f.draft,f.context,{...options,existing}),/disagree/);
+ for(const mutate of [value=>value.repairFeedback.contextSha256='b'.repeat(64),value=>delete value.repairFeedback.omission.evidenceQuote,value=>value.repairFeedback.omission.extraField='Unvalidated nested metadata']){
+  const invalid=structuredClone(f.response);mutate(invalid);assert.throws(()=>acceptCheckerOutput(invalid,f.draft,f.context,{...options,existing:structuredClone(invalid)}));
+ }
+ assert.throws(()=>acceptCheckerOutput(f.response,f.draft,f.context,{...options,existing:f.response,allowOmittedCandidateRepair:false}),/phase|batch/);
+ const failure={outcome:'operational_failure',reason:'The synthetic independent examination did not complete.',manifest:null,repairFeedback:null};assert.throws(()=>acceptCheckerOutput(failure,f.draft,f.context,{...options,existing:failure}),/operational failure/);
+ assert.equal(stableJSON(f),before);
+});
+
 test('final, legacy, nonempty, already scored and non-discussion batches cannot open this route',async()=>{
  const f=await fixture();assert.throws(()=>acceptCheckerOutput(f.response,f.draft,f.context,expected(f)),/phase|batch/);
  assert.equal(checkerOutputSchema(f.draft,f.context).properties.outcome.enum.includes('needs_repair'),false);
@@ -123,6 +138,19 @@ async function isolated(t,f){
  const pins=expected(f),env={PATH:process.env.PATH,NODE_OPTIONS:`--import=${path.join(root,'offline.mjs')}`,RUN_ID:runId,GITHUB_ACTIONS:'true',GITHUB_EVENT_NAME:'workflow_dispatch',CHECKER_PHASE:'initial',LOOP_SCHEDULING_SHA:sha256(stableJSON(records.scheduling)),EXPECTED_DRAFT_SHA:pins.expectedDraftSha256,EXPECTED_CONTEXT_SHA:pins.expectedContextSha256,EXPECTED_FIRST_DRAFT_SHA:pins.expectedDraftSha256,EXPECTED_FIRST_CONTEXT_SHA:pins.expectedContextSha256,EXPECTED_REPAIR_FEEDBACK_SHA:pins.expectedFeedbackSha256,RULES_SHA256:f.context.rulesSha256,GITHUB_OUTPUT:path.join(root,'outputs')};
  return {root,env,records,invoke:(name,extra={},args=[])=>spawnSync(process.execPath,[`scripts/${name}.mjs`,runId,...args],{cwd:root,env:{...env,...extra},encoding:'utf8'}),read:directory=>readFile(path.join(root,'data',directory,runId+'.json'),'utf8').then(JSON.parse)};
 }
+
+test('the real accept script canonicalizes an exact initial feedback envelope and denies it in the final phase',async t=>{
+ const f=await fixture(),sandbox=await isolated(t,f),target=path.join(sandbox.root,'data/checks',runId+'.json');
+ // Only isolated future-compatibility copies change here. The historical
+ // refusal, its manifest absence and unknown learning result remain untouched.
+ const before=await Promise.all(['drafts','check-context'].map(directory=>readFile(path.join(sandbox.root,'data',directory,runId+'.json'),'utf8')));
+ await writeFile(target,JSON.stringify(f.response));
+ const initial=sandbox.invoke('accept-check-output');assert.equal(initial.status,0,initial.stderr);assert.match(initial.stdout,/"completed":false/);assert.match(initial.stdout,/"repairFeedback":true/);
+ const canonical=await sandbox.read('checks');assert.deepEqual(canonical,f.record);assert.equal(sha256(stableJSON(canonical)),expected(f).expectedFeedbackSha256);assert.equal(Object.hasOwn(canonical,'outcome'),false);assert.equal(Object.hasOwn(canonical,'repairFeedback'),false);assert.equal(canonical.completedAssessment,undefined);assert.equal(canonical.checks,undefined);
+ const outputs=await readFile(sandbox.env.GITHUB_OUTPUT,'utf8');assert.match(outputs,/verified=true/);assert.match(outputs,/repair_feedback_verified=true/);
+ for(const [index,directory] of ['drafts','check-context'].entries())assert.equal(await readFile(path.join(sandbox.root,'data',directory,runId+'.json'),'utf8'),before[index]);
+ await writeFile(target,JSON.stringify(f.response));const final=sandbox.invoke('accept-check-output',{CHECKER_PHASE:'final'});assert.equal(final.status,0,final.stderr);assert.match(final.stdout,/"verified":false/);await assert.rejects(sandbox.read('checks'),{code:'ENOENT'});
+});
 
 test('trusted CLI authenticates and pins feedback, then final acceptance rejects it without another repair',async t=>{
  const f=await fixture(),sandbox=await isolated(t,f);

@@ -1,0 +1,313 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-10-20T11:36:17.706Z",
+  "phase": "offline_verified_release_preparation",
+  "problem": "A saved full structured checker envelope exactly matched the returned full envelope, but the acceptor compared the saved object only with the nested manifest and incorrectly reported disagreement.",
+  "historicalRun": {
+    "runId": "loop-39414302092-1",
+    "workflowRunId": "39414302092",
+    "workflowHeadSha": "228a20036c2c15f7a9d84312cdb2c0dba53adf64",
+    "finalCheckerJobId": "118601536451",
+    "scheduledAt": "2026-10-20T11:07:00.000Z",
+    "startedAt": "2026-10-20T11:21:09.080Z",
+    "finishedAt": "2026-10-20T11:27:38.969Z",
+    "status": "no_post_unverified",
+    "assessmentOutcome": "unverified",
+    "published": [],
+    "operationalFailures": [
+      {
+        "stage": "check",
+        "code": "checker_output_unverified",
+        "reason": "Independent checker file and final response disagree."
+      }
+    ],
+    "checksFileAfterAcceptor": "Absent: the old acceptor deleted the mismatched-shape model file. Exact pre-delete contents come from the logged write/readback, not a restored historical manifest.",
+    "evidenceSources": 9,
+    "sourceFailures": 0,
+    "freshPrimaryDiagnostics": 9,
+    "provisionalWriterMeans": [
+      4.2,
+      4.6,
+      4.4,
+      4.6,
+      4.6
+    ],
+    "proposedPosts": 0,
+    "individualIndependentChecks": 0,
+    "learningOutcome": "unverified",
+    "learningRewards": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "rewritten": false
+  },
+  "provenance": {
+    "childActor": "github-actions[bot]",
+    "childTriggeringActor": "github-actions[bot]",
+    "childBranch": "main",
+    "childAttempt": 1,
+    "parent": {
+      "actor": "github-actions[bot]",
+      "conclusion": "success",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "228a20036c2c15f7a9d84312cdb2c0dba53adf64",
+      "id": 39412413863,
+      "run_attempt": 1,
+      "status": "completed",
+      "triggering_actor": "github-actions[bot]"
+    },
+    "boundSchedulingClock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-39412413863-1",
+      "clockRunId": "39412413863",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39412413863",
+      "dispatchId": "clock-39412413863-1-loop",
+      "runId": "39414302092",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-20T11:20:49.875Z",
+      "requestedAt": "2026-10-20T11:20:49.875Z",
+      "verifiedAt": "2026-10-20T11:21:09.080Z",
+      "parentHeadSha": "228a20036c2c15f7a9d84312cdb2c0dba53adf64"
+    },
+    "sourceRecordBlobs": [
+      {
+        "path": "data/runs/loop-39414302092-1.json",
+        "blobSha": "c0a89b04d2915bc3caf4bce1cbfee9b897cb8f60",
+        "url": "https://github.com/xndanius/while-you-sleep/blob/main/data/runs/loop-39414302092-1.json"
+      },
+      {
+        "path": "data/research/loop-39414302092-1.json",
+        "blobSha": "de37447db626f0f988e8325fbb709ebab442df46",
+        "url": "https://github.com/xndanius/while-you-sleep/blob/main/data/research/loop-39414302092-1.json"
+      },
+      {
+        "path": "data/check-context/loop-39414302092-1.json",
+        "blobSha": "640c7dd3bddb57d12e50420747cb480d66c6d407",
+        "url": "https://github.com/xndanius/while-you-sleep/blob/main/data/check-context/loop-39414302092-1.json"
+      },
+      {
+        "path": "data/drafts/loop-39414302092-1.json",
+        "blobSha": "6f38c4ecda938525a875419ad7c9d28f61924d4c",
+        "url": "https://github.com/xndanius/while-you-sleep/blob/main/data/drafts/loop-39414302092-1.json"
+      },
+      {
+        "path": "data/learning/loop-39414302092-1.json",
+        "blobSha": "830f844aa71a8621f30722bfeb062a1555d12587",
+        "url": "https://github.com/xndanius/while-you-sleep/blob/main/data/learning/loop-39414302092-1.json"
+      }
+    ],
+    "workflowJobs": [
+      {
+        "name": "gate",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:21:03Z",
+        "completedAt": "2026-10-20T11:21:14Z"
+      },
+      {
+        "name": "social_research",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:21:41Z",
+        "completedAt": "2026-10-20T11:21:52Z"
+      },
+      {
+        "name": "writer",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:21:55Z",
+        "completedAt": "2026-10-20T11:23:51Z"
+      },
+      {
+        "name": "checker",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:23:54Z",
+        "completedAt": "2026-10-20T11:25:02Z"
+      },
+      {
+        "name": "repair",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:25:05Z",
+        "completedAt": "2026-10-20T11:26:12Z"
+      },
+      {
+        "name": "final_check",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:26:16Z",
+        "completedAt": "2026-10-20T11:27:22Z"
+      },
+      {
+        "name": "record",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:27:25Z",
+        "completedAt": "2026-10-20T11:27:43Z"
+      },
+      {
+        "name": "pages / build",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:27:47Z",
+        "completedAt": "2026-10-20T11:28:55Z"
+      },
+      {
+        "name": "pages / deploy",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T11:29:00Z",
+        "completedAt": "2026-10-20T11:29:09Z"
+      },
+      {
+        "name": "report-status",
+        "conclusion": "failure",
+        "startedAt": "2026-10-20T11:29:12Z",
+        "completedAt": "2026-10-20T11:29:15Z"
+      }
+    ],
+    "parentTick": {
+      "id": "clock-39412413863-1",
+      "kind": "clock-tick",
+      "chainId": "clock-restart-39226833587-1",
+      "generation": 87,
+      "githubRunId": "39412413863",
+      "githubRunAttempt": 1,
+      "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39412413863",
+      "parentRunId": "39410256112",
+      "environment": "clock",
+      "waitMinutes": 15,
+      "claimedAt": "2026-10-20T11:05:26.753Z",
+      "tickedAt": "2026-10-20T11:20:49.875Z",
+      "dispatches": [
+        {
+          "kind": "loop",
+          "workflow": "loop.yml",
+          "jobKey": null,
+          "slotIds": [
+            "publish-2026-10-20-14-07"
+          ],
+          "scheduledAt": "2026-10-20T11:07:00.000Z",
+          "reason": "catch_up_elapsed_slot",
+          "runId": "39414302092",
+          "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39414302092",
+          "dispatchId": "clock-39412413863-1-loop",
+          "requestedAt": "2026-10-20T11:20:49.875Z"
+        }
+      ],
+      "dispatchFailures": [],
+      "child": {
+        "runId": "39414305077",
+        "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39414305077",
+        "generation": 88
+      }
+    },
+    "parentWaitMs": 923122
+  },
+  "offlineActualPairReplay": {
+    "before": {
+      "schema": 1,
+      "kind": "offline_readonly_regression",
+      "historicalRunId": "loop-39414302092-1",
+      "historicalOutcomeUnchanged": true,
+      "fileEqualsWholeEnvelope": true,
+      "fileEqualsManifest": false,
+      "fileSha256": "d658f90eca370105c0aa8a383d20a5856dc5dbb2c17c82a1305de83b3b1d19e5",
+      "responseSha256": "d658f90eca370105c0aa8a383d20a5856dc5dbb2c17c82a1305de83b3b1d19e5",
+      "draftSha256": "cceb6ec77d49090b588aa4740e1015bb8a67ffee2caac822161ec893ee679498",
+      "contextSha256": "ca40124d320b898e4f92165e88e3ac86f388f318715e7d4f25c5f09421edc1d1",
+      "failureWithoutCompatibility": "Independent checker file and final response disagree.",
+      "returnedManifestValidWithoutExistingFile": true,
+      "proposedPosts": 0,
+      "individualChecks": 0
+    },
+    "after": {
+      "schema": 1,
+      "kind": "offline_readonly_regression",
+      "historicalRunId": "loop-39414302092-1",
+      "historicalOutcomeUnchanged": true,
+      "inputEnvelopeSha256": "d658f90eca370105c0aa8a383d20a5856dc5dbb2c17c82a1305de83b3b1d19e5",
+      "inputDraftSha256": "cceb6ec77d49090b588aa4740e1015bb8a67ffee2caac822161ec893ee679498",
+      "inputContextSha256": "ca40124d320b898e4f92165e88e3ac86f388f318715e7d4f25c5f09421edc1d1",
+      "returnedOnlyCanonicalManifest": true,
+      "canonicalManifestSha256": "5421eaeb76f08c58e39776a73ba6537c1730c0d7d082fd4b1dd1b47a2344d294",
+      "decision": "no_supported_candidate",
+      "proposedPosts": 0,
+      "individualChecks": 0
+    },
+    "scope": "Pure acceptor calls against copied immutable records. No historical write, reclassification, learning update, content/model run or public-source request."
+  },
+  "repair": {
+    "allowedStoredShapes": [
+      "missing file (existing===undefined)",
+      "exact canonical payload",
+      "exact entire validated returned envelope"
+    ],
+    "comparison": "Stable JSON equality of whole objects; no blind nested-payload unwrapping. A stored different outcome, reason or extra envelope field remains a contradiction.",
+    "acceptedStorage": "Canonical manifest or allowed initial omitted-candidate feedback only",
+    "presentNullOrScalarStoredFile": "Rejected rather than treated as missing",
+    "qualityValidation": "Frozen hashes, completedAssessment, all claim/criterion/demand/novelty checks, threshold and initial-only feedback rules remain unchanged. Operational_failure is always refused.",
+    "promptClarification": "Save the bare payload to context.checkPath and return its outer structured envelope as the final response.",
+    "additionalModelOrRepairRounds": 0
+  },
+  "validation": {
+    "fullOfflineTests": 671,
+    "failed": 0,
+    "syntaxPassed": true,
+    "productionBuild": {
+      "posts": 7,
+      "runs": 227
+    },
+    "newRegressions": 5,
+    "priorFullSuite": 666,
+    "preFixPositiveRegressionFailures": 2,
+    "negativeCoverage": [
+      "changed outer outcome/reason or extra fields with identical inner payload",
+      "stored null/scalar/array/object contradictions",
+      "stale frozen pins and invalid nested completion/check evidence",
+      "operational refusal with or without prior payload",
+      "initial feedback only; final feedback refusal"
+    ],
+    "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
+    "trackedDataAndRulesChangedByRepair": false
+  },
+  "files": [
+    {
+      "path": "lib/checker-output.mjs",
+      "sha256": "307bd437b4dd58ec92becde5a856232a6c7a6a82721eaa29112460692f500c17"
+    },
+    {
+      "path": ".github/codex/prompts/checker.md",
+      "sha256": "ccb70be6e662f42db866b45d1f0202698cd4b364e3701b207dc8a1a78f0d5323"
+    },
+    {
+      "path": "tests/assessment-pipeline.test.mjs",
+      "sha256": "eb36ae294391368d4995abdd6ef840588397b07a30634050fa9470ae4a385c9e"
+    },
+    {
+      "path": "tests/omitted-candidate-repair.test.mjs",
+      "sha256": "7a4b6914cb6c1bd30e698b3bf4d6789016ffdc2c2806ca30de3b92a749348c10"
+    }
+  ],
+  "release": {
+    "codeCommit": null,
+    "deployment": "pending"
+  },
+  "recovery": {
+    "newCheckedPosts": 0,
+    "target": 2,
+    "bestPicks": 0,
+    "watchdogMode": "repair",
+    "fixtureAcceptanceIsPublicationProof": false
+  },
+  "execution": {
+    "manualContentOrModelDispatch": false,
+    "paidProviderCalls": false,
+    "deniedPublicSourceRetry": false,
+    "browserUsed": false,
+    "secretValuesReadOrWritten": false,
+    "historicalOutcomeOrRewardRewrite": false,
+    "heartbeatRestarted": false
+  }
+}
