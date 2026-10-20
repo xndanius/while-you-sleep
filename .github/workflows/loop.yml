@@ -250,6 +250,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
+      CHECKER_PHASE: initial
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
       EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
       EXPECTED_RESEARCH_SHA: ${{ needs.writer.outputs.research_sha256 }}
@@ -257,6 +258,8 @@ jobs:
       repair: ${{ steps.verdict.outputs.repair }}
       privacy_safe: ${{ steps.privacy.outputs.safe }}
       verified: ${{ steps.prepare.outputs.verified || steps.accept.outputs.verified }}
+      repair_feedback_verified: ${{ steps.accept.outputs.repair_feedback_verified }}
+      repair_feedback_sha256: ${{ steps.accept.outputs.repair_feedback_sha256 }}
       unverified_code: ${{ steps.prepare.outputs.unverified_code || steps.accept.outputs.unverified_code }}
       unverified_reason: ${{ steps.prepare.outputs.unverified_reason || steps.accept.outputs.unverified_reason }}
       model_completed: ${{ steps.model.outcome == 'success' }}
@@ -327,6 +330,8 @@ jobs:
         if: steps.accept.outputs.verified == 'true' && steps.model.outcome == 'success'
         continue-on-error: true
         id: verdict
+        env:
+          EXPECTED_REPAIR_FEEDBACK_SHA: ${{ steps.accept.outputs.repair_feedback_sha256 }}
         run: node scripts/check-verdict.mjs "$RUN_ID"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always() && steps.privacy.outputs.safe == 'true'
@@ -344,7 +349,7 @@ jobs:
       model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       privacy_safe: ${{ steps.privacy.outputs.safe }}
     needs: [gate, writer, checker]
-    if: needs.checker.outputs.verified == 'true' && needs.checker.outputs.repair == 'true' && needs.checker.outputs.privacy_safe == 'true'
+    if: needs.checker.outputs.verified == 'true' && needs.checker.outputs.repair == 'true' && needs.checker.outputs.privacy_safe == 'true' && (needs.checker.outputs.repair_feedback_verified == 'false' || (needs.checker.outputs.repair_feedback_verified == 'true' && needs.checker.outputs.repair_feedback_sha256 != ''))
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
@@ -377,6 +382,10 @@ jobs:
         run: node scripts/import-learning-selection.mjs .staging/learning-selection "$RUN_ID"
       - id: prepare
         continue-on-error: true
+        env:
+          EXPECTED_FIRST_DRAFT_SHA: ${{ needs.checker.outputs.draft_sha256 }}
+          EXPECTED_FIRST_CONTEXT_SHA: ${{ needs.checker.outputs.context_sha256 }}
+          EXPECTED_REPAIR_FEEDBACK_SHA: ${{ needs.checker.outputs.repair_feedback_sha256 }}
         run: node scripts/save-first-check.mjs "$RUN_ID" && node scripts/prepare-run.mjs repair
       - name: Codex repairs once
         id: model
@@ -416,6 +425,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
+      CHECKER_PHASE: final
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
       EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
       EXPECTED_RESEARCH_SHA: ${{ needs.writer.outputs.research_sha256 }}
@@ -459,6 +469,7 @@ jobs:
         env:
           EXPECTED_FIRST_DRAFT_SHA: ${{ needs.checker.outputs.draft_sha256 }}
           EXPECTED_FIRST_CONTEXT_SHA: ${{ needs.checker.outputs.context_sha256 }}
+          EXPECTED_REPAIR_FEEDBACK_SHA: ${{ needs.checker.outputs.repair_feedback_sha256 }}
         run: node scripts/preserve-repair-considerations.mjs "$RUN_ID"
       - id: prepare
         if: steps.preserve.outcome == 'success'
@@ -496,6 +507,13 @@ jobs:
           EXPECTED_DRAFT_SHA: ${{ steps.fingerprint.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ steps.fingerprint.outputs.context_sha256 }}
         run: node scripts/accept-check-output.mjs "$RUN_ID"
+      - name: Verify the original omission record after final model access
+        if: always() && steps.prepare.outcome == 'success' && steps.privacy.outputs.safe == 'true' && needs.checker.outputs.repair_feedback_verified == 'true'
+        env:
+          EXPECTED_FIRST_DRAFT_SHA: ${{ needs.checker.outputs.draft_sha256 }}
+          EXPECTED_FIRST_CONTEXT_SHA: ${{ needs.checker.outputs.context_sha256 }}
+          EXPECTED_REPAIR_FEEDBACK_SHA: ${{ needs.checker.outputs.repair_feedback_sha256 }}
+        run: node scripts/preserve-repair-considerations.mjs "$RUN_ID" --verify-only
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always() && steps.privacy.outputs.safe == 'true'
         with:

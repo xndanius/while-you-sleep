@@ -1,6 +1,7 @@
 import {readFile,lstat,rm,appendFile} from 'node:fs/promises';
-import {dataPath,readJSON,writeJSON} from '../lib/storage.mjs';
+import {dataPath,readJSON,writeJSON,sha256,stableJSON} from '../lib/storage.mjs';
 import {acceptCheckerOutput,checkerFailure} from '../lib/checker-output.mjs';
+import {isOmittedCandidateRepair} from '../lib/omitted-candidate-repair.mjs';
 const runId=process.argv[2];
 const target=dataPath('checks',runId);
 try{
@@ -10,16 +11,19 @@ try{
  const response=JSON.parse(await readFile(file,'utf8'));
  const [draft,context]=await Promise.all(['drafts','check-context'].map(dir=>readJSON(dataPath(dir,runId))));
  let existing;try{existing=await readJSON(dataPath('checks',runId));}catch(error){if(error.code!=='ENOENT')throw error;}
- const manifest=acceptCheckerOutput(response,draft,context,{existing,expectedDraftSha256:process.env.EXPECTED_DRAFT_SHA,expectedContextSha256:process.env.EXPECTED_CONTEXT_SHA});
+ const manifest=acceptCheckerOutput(response,draft,context,{existing,expectedDraftSha256:process.env.EXPECTED_DRAFT_SHA,expectedContextSha256:process.env.EXPECTED_CONTEXT_SHA,allowOmittedCandidateRepair:process.env.CHECKER_PHASE==='initial'});
  await writeJSON(target,manifest);
- if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,'verified=true\n');
- console.log(JSON.stringify({runId,completed:true,decision:manifest.completedAssessment?.decision||'legacy',checks:manifest.checks.length}));
+ const feedback=isOmittedCandidateRepair(manifest);
+ // verified authenticates an output record, never a post approval. The final
+ // publisher still requires a strict completed manifest after the one repair.
+ if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,`verified=true\nrepair_feedback_verified=${feedback}\nrepair_feedback_sha256=${feedback?sha256(stableJSON(manifest)):''}\n`);
+ console.log(JSON.stringify({runId,completed:!feedback,decision:feedback?'omitted_candidate':manifest.completedAssessment?.decision||'legacy',checks:feedback?0:manifest.checks.length,repairFeedback:feedback}));
 }catch(error){
  // A missing, contradictory or unbound checker answer authorizes no content.
  // Delete any model-written manifest, record the trusted step outcome and let
  // the no-model finalizer settle this hour without inventing an assessment.
  await rm(target,{force:true});
  const failure=checkerFailure(error);
- if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,`verified=false\nunverified_code=${failure.code}\nunverified_reason=${failure.reason}\n`);
+ if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,`verified=false\nrepair_feedback_verified=false\nrepair_feedback_sha256=\nunverified_code=${failure.code}\nunverified_reason=${failure.reason}\n`);
  console.log(JSON.stringify({runId,completed:false,verified:false,...failure}));
 }

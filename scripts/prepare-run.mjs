@@ -51,8 +51,10 @@ if(['checker','final-checker'].includes(role)){
  noveltyContext=frozen.noveltyContext||noveltyContext;context.noveltyContractVersion=frozen.noveltyContractVersion||null;
  context.demandContractVersion=frozen.demandContractVersion||null;context.demandContextSha256=frozen.demandContextSha256||null;
  context.checkerOutputSchemaPath='.run/checker-output-schema.json';context.checkerResponsePath='.run/checker-response.json';
+ const checkerSchema=checkerOutputSchema(draft,frozen,{allowOmittedCandidateRepair:role==='checker'&&process.env.CHECKER_PHASE==='initial'});
+ context.omittedCandidateRepairAllowed=Boolean(checkerSchema.properties.repairFeedback);
  await rm(dataPath('checks',runId),{force:true});await rm(context.checkerResponsePath,{force:true});
- await writeFile(context.checkerOutputSchemaPath,JSON.stringify(checkerOutputSchema(draft,frozen),null,2));
+ await writeFile(context.checkerOutputSchemaPath,JSON.stringify(checkerSchema,null,2));
  const stamp={schema:1,completed:false,decision:draft.posts.length?'assessed':'no_supported_candidate',reason:'Independent checker must supply its own verdict and reason.',contextSha256:context.checkContextSha256,rulesSha256:frozen.rulesSha256,draftSha256:frozen.draftSha256,sourceSnapshotSha256:frozen.sourceSnapshotSha256,policySha256:frozen.scoringPolicy.policySha256};
  context.checkerTemplatePath='.run/checker-template.json';
  await writeFile(context.checkerTemplatePath,JSON.stringify({runId,draftSha256:frozen.draftSha256,sourceSnapshotSha256:frozen.sourceSnapshotSha256,policySha256:frozen.scoringPolicy.policySha256,checks:[],...(frozen.assessmentContractVersion===1?{completedAssessment:stamp}: {})},null,2));

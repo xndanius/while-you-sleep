@@ -14,6 +14,7 @@ import {privateArtifactCategories} from '../lib/privacy.mjs';
 import {validateLearningSelection} from '../lib/learning.mjs';
 import {extractImplementationEvidence} from '../lib/implementation-evidence.mjs';
 import {assessmentEvidenceReasons,discussionEvidenceReasons} from '../lib/evidence-contract.mjs';
+import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
 const runId=process.argv[2];
 try{
   const draft=await readJSON(dataPath('drafts',runId));const research=await readJSON(dataPath('research',runId));
@@ -72,6 +73,15 @@ try{
   }
   if(research.researchPolicy?.maxLeads===10){const considered=new Set([...draft.posts,...(draft.candidates||[]),...(draft.rejected||[])].map(item=>canonicalURL(item.productUrl)));if(considered.size>10)throw new Error('A recovery run may assess at most ten distinct leads.');}
   const sameProduct=(source,url)=>{try{return [source.url,source.productUrl].filter(Boolean).some(value=>canonicalURL(value)===canonicalURL(url));}catch{return false;}};
+  const assignedDiscussionSources=discussionBatchPolicy?discussionBatchPolicy.leadAssignments.map(item=>research.sources.find(source=>source.id===item.demandSourceId&&sameProduct(source,item.productUrl))).filter(Boolean):[];
+  const supportsDiscussion=(source,url)=>discussionBatchPolicy&&discussionImplementationReference(source,{demandSources:assignedDiscussionSources})&&discussionBatchPolicy.leadAssignments.some(item=>sameProduct({url:item.productUrl},url)&&source.supportsDemandSourceIds.includes(item.demandSourceId));
+  const attachedIds=item=>[...new Set([...(Array.isArray(item.sourceIds)?item.sourceIds:[]),...Object.values(item.scoring?.criteria||{}).flatMap(criterion=>Array.isArray(criterion?.sourceIds)?criterion.sourceIds:[])])];
+  // Implementation references stay attached to the exact assigned discussion.
+  // A model cannot turn a support page into a new primary or demand source.
+  if(discussionBatchPolicy)for(const item of [...draft.posts,...(draft.candidates||[]),...(draft.rejected||[])])for(const id of attachedIds(item)){
+    const source=research.sources.find(source=>source.id===id);
+    if(implementationSource(source)&&!supportsDiscussion(source,item.productUrl))throw new Error('Discussion implementation reference is not bound to this exact assigned post.');
+  }
   // Primary enrichment is evidence for a discovered product, not a new model-
   // invented origin. Retain matching original discovery IDs before hashing.
   for(const item of [...draft.posts,...(Array.isArray(draft.candidates)?draft.candidates:[])]){
@@ -93,9 +103,9 @@ try{
     if(considerations.size>12)throw new Error('An empty assessment may cover at most 12 distinct candidate exclusions.');
     const known=new Map();
     for(const [productUrl,item] of considerations){
-      const attached=(Array.isArray(item.sourceIds)?item.sourceIds:[]).map(id=>research.sources.find(source=>source.id===id)).filter(source=>source&&sameProduct(source,productUrl));
+      const attached=attachedIds(item).map(id=>research.sources.find(source=>source.id===id)).filter(source=>source&&(sameProduct(source,productUrl)||supportsDiscussion(source,productUrl)));
       const matched=research.sources.filter(source=>sameProduct(source,productUrl));
-      const relevant=[...new Map([...attached,...matched].map(source=>[source.id,source])).values()].sort((a,b)=>Number(b.enriched===true)-Number(a.enriched===true)).slice(0,4);
+      const relevant=[...new Map([...attached,...matched].map(source=>[source.id,source])).values()].sort((a,b)=>Number(sameProduct(b,productUrl))-Number(sameProduct(a,productUrl))||Number(b.enriched===true)-Number(a.enriched===true)).slice(0,4);
       for(const source of relevant)known.set(source.id,source);
       considerationEvidence.push({title:item.title.slice(0,200),productUrl,sourceIds:relevant.map(source=>source.id)});
     }
@@ -105,14 +115,27 @@ try{
   if(fallbackPolicy)selected=[...new Map([...selected,...fallbackPolicy.demandSourceIds.map(id=>research.sources.find(source=>source.id===id)).filter(Boolean)].map(source=>[source.id,source])).values()];
   if(recoveryBatchPolicy)selected=[...new Map([...selected,...recoveryBatchPolicy.leadAssignments.flatMap(item=>[research.sources.find(source=>source.id===item.demandSourceId),...research.sources.filter(source=>source.enriched===true&&sameProduct(source,item.productUrl))]).filter(Boolean)].map(source=>[source.id,source])).values()];
   if(discussionBatchPolicy)selected=[...new Map([...selected,...discussionBatchPolicy.leadAssignments.map(item=>research.sources.find(source=>source.id===item.demandSourceId)).filter(Boolean)].map(source=>[source.id,source])).values()];
+  const implementationReferences=selected.filter(source=>implementationSource(source));
+  if(implementationReferences.length>2||implementationReferences.some(source=>!discussionBatchPolicy||!discussionImplementationReference(source,{demandSources:assignedDiscussionSources})))throw new Error('Discussion assessment exceeds its fixed implementation-reference authority or two-reference budget.');
+  // Revalidate task bindings against independently fetched demand before the
+  // optional documentation read, including empty and below-threshold batches.
+  selected.sort((a,b)=>Number(implementationSource(a))-Number(implementationSource(b)));
   for(const source of selected){
     try{
+      if(implementationSource(source)&&!discussionImplementationReference(source,{demandSources:sources.filter(item=>item.role==='demand')}))throw new Error('Discussion implementation reference lost its independently fetched task binding.');
       const definition=definitionFor(source);
       if(demandRequired&&(source.role==='demand'||source.demand===true||officialDemandURL(source.url))&&(!definition||sourceRole(definition)!=='demand'))throw new Error('Demand evidence has no currently admitted fixed-registry authority; raw notice data will not be copied.');
       if(definition&&sourceRole(definition)==='demand'){
         const fresh=await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});sources.push(fresh);
         authorizedSources.push({sourceId:fresh.id,registrySourceId:definition.id,url:fresh.url,role:'demand',demandKind:sourceDemandKind(definition),segments:[fresh.segment]});
-      }else{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source)),extracted=extractImplementationEvidence(page.text,{maxCharacters:source.enriched===true?8000:18000,minCharacters:100});if(!extracted)throw new Error('Evidence source has no useful complete privacy-safe capability section.');sources.push({...source,...extracted,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});}
+      }else{
+        const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));
+        if(implementationSource(source)&&canonicalURL(page.url)!==source.url)throw new Error('Implementation reference redirected away from its exact catalog URL.');
+        const extracted=implementationSource(source)?extractDiscussionImplementationEvidence(source,page.text,{demandSources:sources.filter(item=>item.role==='demand')}):extractImplementationEvidence(page.text,{maxCharacters:source.enriched===true?8000:18000,minCharacters:100});
+        if(!extracted)throw new Error('Evidence source has no useful complete privacy-safe capability section.');
+        const validation=implementationSource(source)?{evidenceExcerpted:extracted.evidenceExtraction.omittedCharacters>0,evidenceValidation:{robots:page.robots,redirects:page.redirects||[],httpStatus:page.status,contentType:page.contentType,resolvedUrl:page.url,maxBytes:page.maxBytes,truncated:false}}:{};
+        sources.push({...source,...extracted,...validation,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});
+      }
     }
     catch(error){health.push({sourceId:source.id,url:source.url,status:'failed',message:safeError(error)});}
   }

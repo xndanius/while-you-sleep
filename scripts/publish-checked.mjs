@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { ROOT, dataPath, readJSON, writeJSON, records, sha256, stableJSON, safeError, hash } from '../lib/storage.mjs';
+import { ROOT, dataPath, readJSON, writeJSON, records, sha256, stableJSON, safeError, hash, canonicalURL } from '../lib/storage.mjs';
 import { checkApproval, deterministicCheck, contentHash,frozenScoringPolicyReasons,completedAssessmentReasons,assessmentJobReasons } from '../lib/validation.mjs';
 import { fetchPublic, plainText,sourceRole,fetchDemandEvidence } from '../lib/research.mjs';
 import { renderCard } from '../lib/card.mjs';
@@ -14,6 +14,7 @@ import {sourceValidationMatchesDefinition} from '../lib/source-registry.mjs';
 import {readProviderEvidence} from '../lib/provider-evidence.mjs';
 import {discussionEvidenceReasons} from '../lib/evidence-contract.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
+import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
 
 const runId=process.argv[2];
 try{
@@ -26,6 +27,18 @@ try{
   if(process.env.DEMAND_CONTRACT_VERSION==='1'&&context.demandContractVersion!==1)throw new Error('Demand-first publication requires the new independent fixed-registry demand contract.');
   const demandFailures=demandContextReasons(context);if(demandFailures.length)throw new Error(demandFailures.join(' '));
   const demandRegistry=context.demandContractVersion===1?await readJSON(path.join(ROOT,'data','sources','registry.json')):null;
+  const liveDemandCache=new Map();
+  const readLiveDemand=sourceId=>{
+    if(!liveDemandCache.has(sourceId))liveDemandCache.set(sourceId,(async()=>{
+      const source=context.sources.find(row=>row.id===sourceId),authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===sourceId);
+      const definition=authority?.role==='demand'&&demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&sourceValidationMatchesDefinition(entry.validation,entry));
+      if(!source||!definition||sourceRole(definition)!=='demand')throw new Error('The exact demand item is no longer admitted in the fixed registry.');
+      const fresh=await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});
+      if(fresh.discussionMetadataVersion===1){const invalid=discussionEvidenceReasons(fresh,{definition,asOf:new Date().toISOString()});if(invalid.length)throw new Error(invalid.join(' '));}
+      return fresh;
+    })());
+    return liveDemandCache.get(sourceId);
+  };
   let trustedUsage;try{trustedUsage=await readJSON(dataPath('usage',runId));}catch{trustedUsage={inputTokens:null,outputTokens:null,costUsd:null};}
   if(process.env.GITHUB_ACTIONS==='true'){
     if(!process.env.EXPECTED_DRAFT_SHA||!process.env.EXPECTED_CONTEXT_SHA)throw new Error('Trusted pre-check fingerprints are missing.');
@@ -71,18 +84,23 @@ try{
       if(!operationalFailures.some(failure=>failure.stage==='relay'))operationalFailures.push({stage:'relay',code:'relay_confirmation_pending',reason});
     }
     if(!reasons.length){
-      for(const sourceId of post.sourceIds){
+      for(const sourceId of post.sourceIds.slice().sort((a,b)=>Number(implementationSource(context.sources.find(source=>source.id===a)))-Number(implementationSource(context.sources.find(source=>source.id===b))))){
         const source=context.sources.find(s=>s.id===sourceId);
         try{
           const authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===sourceId);
           let text;
           if(authority?.role==='demand'){
-            const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&sourceValidationMatchesDefinition(entry.validation,entry));
-            if(!definition||sourceRole(definition)!=='demand')throw new Error('The demand feed is no longer admitted in the fixed registry.');
-            const fresh=await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});text=fresh.text;
-            if(fresh.discussionMetadataVersion===1){const invalid=discussionEvidenceReasons(fresh,{definition,asOf:new Date().toISOString()});if(invalid.length)throw new Error(invalid.join(' '));}
+            text=(await readLiveDemand(sourceId)).text;
             if(!text.includes(post.demandEvidence.evidenceQuote)||!text.includes(result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
-          }else{const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));text=plainText(fetched.text);}
+          }else{
+            if(implementationSource(source)&&!discussionImplementationReference(source,{demandSources:context.sources.filter(item=>item.role==='demand')}))throw new Error('Implementation reference lost its exact fixed catalog and discussion-task binding.');
+            const liveDemands=implementationSource(source)?await Promise.all(source.supportsDemandSourceIds.map(readLiveDemand)):[];
+            if(implementationSource(source)&&(!post.demandEvidence?.sourceIds?.every(id=>source.supportsDemandSourceIds.includes(id))||!discussionImplementationReference(source,{demandSources:liveDemands})))throw new Error('Implementation reference lost its freshly fetched discussion-task binding.');
+            const fetched=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));
+            if(implementationSource(source)&&canonicalURL(fetched.url)!==source.url)throw new Error('Implementation reference redirected away from its exact catalog URL.');
+            if(implementationSource(source)){const extracted=extractDiscussionImplementationEvidence(source,fetched.text,{demandSources:liveDemands});if(!extracted)throw new Error('Live implementation reference has no privacy-safe task-matched literal section.');text=extracted.text;}
+            else text=plainText(fetched.text);
+          }
           if(source.discussionMetadataVersion!==1&&text.length<100)throw new Error('Live source contains too little readable evidence.');
           for(const claim of [...result.check.claimChecks,...result.check.scoreChecks].filter(c=>c.sourceId===sourceId)){
             const occurs=claim.criterion?text.includes(claim.evidenceQuote):text.toLowerCase().includes(plainText(claim.evidenceQuote).toLowerCase());
@@ -119,15 +137,19 @@ try{
   // No-candidate decisions still need a currently reachable public evidence
   // snapshot. Empty model output cannot turn a network outage into success.
   if(contract&&!draft.posts.length){
-    let available=0;
-    for(const source of context.sources){
+    let available=0;const liveDemands=[];
+    for(const source of context.sources.slice().sort((a,b)=>Number(implementationSource(a))-Number(implementationSource(b)))){
       try{
         const authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===source.id);
         if(authority?.role==='demand'){
-          const definition=demandRegistry.sources.find(entry=>entry.id===authority.registrySourceId&&['active','probation'].includes(entry.status)&&sourceValidationMatchesDefinition(entry.validation,entry));
-          if(!definition||sourceRole(definition)!=='demand')throw new Error('The demand feed is no longer admitted in the fixed registry.');
-          await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});
-        }else{const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));if(plainText(page.text).length<100)throw new Error('Live source contains too little readable evidence.');}
+          liveDemands.push(await readLiveDemand(source.id));
+        }else{
+          if(implementationSource(source)&&!discussionImplementationReference(source,{demandSources:liveDemands}))throw new Error('Implementation reference lost its freshly fetched discussion-task binding.');
+          const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));
+          if(implementationSource(source)&&canonicalURL(page.url)!==source.url)throw new Error('Implementation reference redirected away from its exact catalog URL.');
+          const text=implementationSource(source)?extractDiscussionImplementationEvidence(source,page.text,{demandSources:liveDemands})?.text:plainText(page.text);
+          if(!text||text.length<100)throw new Error('Live source contains too little task-matched readable evidence.');
+        }
         available++;
       }
       catch(error){operationalFailures.push({stage:'live_source',code:'empty_assessment_evidence_unavailable',sourceId:source.id,url:source.url,reason:safeError(error)});}
