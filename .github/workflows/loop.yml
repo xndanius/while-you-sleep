@@ -266,6 +266,8 @@ jobs:
       model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
       context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
+      check_diagnostics_sha256: ${{ steps.prepare.outputs.check_diagnostics_sha256 }}
+      check_diagnostics_draft_sha256: ${{ steps.prepare.outputs.check_diagnostics_draft_sha256 }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -342,6 +344,14 @@ jobs:
             data/drafts/${{ env.RUN_ID }}.json
             data/check-context/${{ env.RUN_ID }}.json
             data/checks/${{ env.RUN_ID }}.json
+          retention-days: 7
+      - name: Preserve separately sealed unavailable-evidence diagnostics
+        if: always() && steps.privacy.outputs.safe == 'true' && steps.prepare.outputs.check_diagnostics_sha256 != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: check-diagnostics-initial-${{ env.RUN_ID }}
+          path: data/check-diagnostics/${{ env.RUN_ID }}.json
+          if-no-files-found: error
           retention-days: 7
   repair:
     outputs:
@@ -438,6 +448,8 @@ jobs:
       model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
       draft_sha256: ${{ steps.fingerprint.outputs.draft_sha256 }}
       context_sha256: ${{ steps.fingerprint.outputs.context_sha256 }}
+      check_diagnostics_sha256: ${{ steps.prepare.outputs.check_diagnostics_sha256 }}
+      check_diagnostics_draft_sha256: ${{ steps.prepare.outputs.check_diagnostics_draft_sha256 }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -527,6 +539,14 @@ jobs:
             data/check-context/${{ env.RUN_ID }}-first.json
             data/checks/${{ env.RUN_ID }}-first.json
           retention-days: 7
+      - name: Preserve separately sealed final preparation diagnostics
+        if: always() && steps.privacy.outputs.safe == 'true' && steps.prepare.outputs.check_diagnostics_sha256 != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: check-diagnostics-final-${{ env.RUN_ID }}
+          path: data/check-diagnostics/${{ env.RUN_ID }}.json
+          if-no-files-found: error
+          retention-days: 7
   record:
     outputs:
       operational_failure: ${{ steps.finalize.outputs.operational_failure }}
@@ -615,12 +635,34 @@ jobs:
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}
           RULES_COMMIT: ${{ needs.writer.outputs.repo_sha }}
         run: node scripts/import-artifact.mjs .staging/data "$RUN_ID"
+      - name: Fetch the separately sealed preparation failure receipt
+        if: needs.final_check.outputs.check_diagnostics_sha256 != '' || needs.checker.outputs.check_diagnostics_sha256 != ''
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: ${{ needs.final_check.outputs.check_diagnostics_sha256 != '' && format('check-diagnostics-final-{0}', env.RUN_ID) || format('check-diagnostics-initial-{0}', env.RUN_ID) }}
+          path: .staging/check-diagnostics/
+      - name: Import diagnostic-only failure evidence through its trusted fingerprint
+        if: needs.final_check.outputs.check_diagnostics_sha256 != '' || needs.checker.outputs.check_diagnostics_sha256 != ''
+        continue-on-error: true
+        env:
+          EXPECTED_CHECK_DIAGNOSTICS_SHA: ${{ needs.final_check.outputs.check_diagnostics_sha256 || needs.checker.outputs.check_diagnostics_sha256 }}
+          EXPECTED_DIAGNOSTIC_PHASE: ${{ needs.final_check.outputs.check_diagnostics_sha256 != '' && 'final' || 'initial' }}
+          EXPECTED_DIAGNOSTIC_DRAFT_SHA: ${{ needs.final_check.outputs.check_diagnostics_sha256 != '' && needs.final_check.outputs.check_diagnostics_draft_sha256 || needs.checker.outputs.check_diagnostics_draft_sha256 }}
+          EXPECTED_RESEARCH_SHA: ${{ needs.writer.outputs.research_sha256 }}
+          EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
+        run: node scripts/import-check-diagnostics.mjs .staging/check-diagnostics "$RUN_ID"
       - name: Finalize checked publication and settle every reserved slot
         id: finalize
         if: always()
         env:
           MODEL_JOB_RESULTS: ${{ toJSON(needs) }}
           EXPECTED_NO_FRESH_LEADS_SHA: ${{ needs.writer.outputs.no_fresh_leads_sha256 }}
+          EXPECTED_CHECK_DIAGNOSTICS_SHA: ${{ needs.final_check.outputs.check_diagnostics_sha256 || needs.checker.outputs.check_diagnostics_sha256 }}
+          EXPECTED_DIAGNOSTIC_PHASE: ${{ needs.final_check.outputs.check_diagnostics_sha256 != '' && 'final' || 'initial' }}
+          EXPECTED_DIAGNOSTIC_DRAFT_SHA: ${{ needs.final_check.outputs.check_diagnostics_sha256 != '' && needs.final_check.outputs.check_diagnostics_draft_sha256 || needs.checker.outputs.check_diagnostics_draft_sha256 }}
+          EXPECTED_RESEARCH_SHA: ${{ needs.writer.outputs.research_sha256 }}
+          EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
           EXPECTED_DRAFT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
           RULES_SHA256: ${{ needs.writer.outputs.rules_sha256 }}

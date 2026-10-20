@@ -9,8 +9,8 @@ export {privateArtifactReasons} from '../lib/privacy.mjs';
 // phase loses its complete artifact set and returns a neutral unverified signal.
 export async function guardPrivateArtifacts({root=ROOT,runId,phase='content',env=process.env}={}){
  if(!validId(runId)||!['scan','writer','checker','repair','final_check','content'].includes(phase))throw new Error('Invalid bounded privacy phase.');
- const directories=phase==='scan'?['source-scans','research','learning-selection']:['research','drafts','check-context','checks'],files=[],failures=[],safeSelectionFiles=new Set();
- for(const directory of directories)for(const suffix of ['',...(phase==='scan'?[]:['-first'])]){
+ const directories=phase==='scan'?['source-scans','research','learning-selection']:['research','drafts','check-context','checks','check-diagnostics'],files=[],failures=[],safeSelectionFiles=new Set();
+ for(const directory of directories)for(const suffix of ['',...(phase==='scan'||directory==='check-diagnostics'?[]:['-first'])]){
   const file=path.join(root,'data',directory,runId+suffix+'.json');let bytes;
   try{const stat=await fs.lstat(file);if(!stat.isFile()||stat.isSymbolicLink()){failures.push('Content artifact must be an ordinary file.');files.push(file);continue;}bytes=await fs.readFile(file);}catch(error){if(error.code==='ENOENT')continue;throw error;}
   files.push(file);if(bytes.length>2500000){failures.push('Content artifact exceeded its bounded size.');continue;}

@@ -15,6 +15,8 @@ import {validateLearningSelection} from '../lib/learning.mjs';
 import {extractImplementationEvidence} from '../lib/implementation-evidence.mjs';
 import {assessmentEvidenceReasons,discussionEvidenceReasons} from '../lib/evidence-contract.mjs';
 import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
+import {discussionEvidenceURL} from '../lib/discussion-sources.mjs';
+import {sealedDiscussionAssignmentReasons,checkDiagnosticsReasons,CHECK_DIAGNOSTIC_STAGES,CHECK_DIAGNOSTIC_CODES_BY_STAGE} from '../lib/check-diagnostics.mjs';
 const runId=process.argv[2];
 const preparationHealth=[];
 try{
@@ -62,6 +64,10 @@ try{
   if(learningSelection?.selectionStrategy==='discussion-first-v1'){
     const batch=research.enrichment?.discussionBatch;
     if(!/^[a-f0-9]{64}$/.test(process.env.EXPECTED_RESEARCH_SHA||'')||sha256(stableJSON(research))!==process.env.EXPECTED_RESEARCH_SHA||!batch||batch.version!==1||batch.postIsDemand!==true||!Array.isArray(batch.leadAssignments)||batch.leadAssignments.some(item=>!learningSelection.eligibleSegments.includes(item.segment)||!learningSelection.demandSourceIds.includes(item.registrySourceId)))throw new Error('Discussion assignments lack their exact sealed research and eligible source/segment binding.');
+    // Original identity is validated before retrieval. Fresh availability is a
+    // separate gate: a guarded refusal cannot mutate or erase an assignment.
+    const identityFailures=sealedDiscussionAssignmentReasons({research,selection:learningSelection,runId,expectedResearchSha256:process.env.EXPECTED_RESEARCH_SHA,expectedSelectionSha256:process.env.EXPECTED_LEARNING_SELECTION_SHA});
+    if(identityFailures.length)throw new Error(identityFailures.join(' '));
     discussionBatchPolicy={...batch,researchSha256:process.env.EXPECTED_RESEARCH_SHA};
     const accounted=new Set([...draft.posts,...(draft.candidates||[]),...(draft.rejected||[])].map(item=>canonicalURL(item.productUrl)));
     if(batch.leadAssignments.some(item=>!accounted.has(canonicalURL(item.productUrl))))throw new Error('The discussion writer omitted an assigned post; each needs an explicit assessment or exclusion.');
@@ -126,16 +132,19 @@ try{
   // Revalidate task bindings against independently fetched demand before the
   // optional documentation read, including empty and below-threshold batches.
   selected.sort((a,b)=>Number(implementationSource(a))-Number(implementationSource(b)));
+  const checkerRobotsCache=new Map();
+  const fetchPage=(url,options)=>fetchPublic(url,{...options,robotsCache:checkerRobotsCache,cacheRobots429:true});
+  const failedAssignments=new Map();
   for(const source of selected){
     try{
       if(implementationSource(source)&&!discussionImplementationReference(source,{demandSources:sources.filter(item=>item.role==='demand')}))throw new Error('Discussion implementation reference lost its independently fetched task binding.');
       const definition=definitionFor(source);
       if(demandRequired&&(source.role==='demand'||source.demand===true||officialDemandURL(source.url))&&(!definition||sourceRole(definition)!=='demand'))throw new Error('Demand evidence has no currently admitted fixed-registry authority; raw notice data will not be copied.');
       if(definition&&sourceRole(definition)==='demand'){
-        const fresh=await fetchDemandEvidence(source,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});sources.push(fresh);
+        const fresh=await fetchDemandEvidence(source,{definition,fetchPage,providerFetch:(source)=>readProviderEvidence(ROOT,source)});sources.push(fresh);
         authorizedSources.push({sourceId:fresh.id,registrySourceId:definition.id,url:fresh.url,role:'demand',demandKind:sourceDemandKind(definition),segments:[fresh.segment]});
       }else{
-        const page=await fetchPublic(source.url,sourceEvidenceFetchOptions(source));
+        const page=await fetchPage(source.url,sourceEvidenceFetchOptions(source));
         if(implementationSource(source)&&canonicalURL(page.url)!==source.url)throw new Error('Implementation reference redirected away from its exact catalog URL.');
         const extracted=implementationSource(source)?extractDiscussionImplementationEvidence(source,page.text,{demandSources:sources.filter(item=>item.role==='demand')}):extractImplementationEvidence(page.text,{maxCharacters:source.enriched===true?8000:18000,minCharacters:100});
         if(!extracted)throw new Error('Evidence source has no useful complete privacy-safe capability section.');
@@ -143,7 +152,36 @@ try{
         sources.push({...source,...extracted,...validation,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});
       }
     }
-    catch(error){health.push({sourceId:source.id,url:source.url,status:'failed',message:safeError(error)});}
+    catch(error){
+      health.push({sourceId:source.id,url:source.url,status:'failed',message:safeError(error)});
+      const assignment=discussionBatchPolicy?.leadAssignments.find(row=>row.demandSourceId===source.id);
+      if(assignment){
+        const definition=definitionFor(source);let adapterUrl=null;
+        try{adapterUrl=discussionEvidenceURL(definition,source);}catch{}
+        const candidateRobots=error.validation?.robotsUrl;
+        const robotsUrl=adapterUrl&&candidateRobots===new URL('/robots.txt',adapterUrl).toString()?candidateRobots:null;
+        const stage=CHECK_DIAGNOSTIC_STAGES.includes(error.stage)?error.stage:'validation';
+        const code=CHECK_DIAGNOSTIC_CODES_BY_STAGE[stage].includes(error.code)?error.code:'evidence_unavailable';
+        const status=error.validation?.status??error.validation?.httpStatus;
+        failedAssignments.set(source.id,{sourceId:source.id,productUrl:assignment.productUrl,registrySourceId:assignment.registrySourceId,adapterUrl,robotsUrl,stage,code,httpStatus:Number.isInteger(status)&&status>=100&&status<=599?status:null,observedAt:new Date().toISOString()});
+      }
+    }
+  }
+  if(discussionBatchPolicy){
+    const successfulSourceIds=discussionBatchPolicy.leadAssignments.filter(row=>authorizedSources.some(source=>source.sourceId===row.demandSourceId)).map(row=>row.demandSourceId);
+    const unavailable=discussionBatchPolicy.leadAssignments.filter(row=>!successfulSourceIds.includes(row.demandSourceId));
+    if(unavailable.length){
+      // This receipt is diagnostic-only, outside the checker evidence namespace.
+      // Keep the whole batch unverified and every original tuple, even when
+      // other sources succeeded. No checker context or model call is created.
+      const receipt={schema:1,kind:'check_preparation_diagnostics',runId,phase:process.env.CHECKER_PHASE||'initial',draftSha256:sha256(stableJSON(await readJSON(dataPath('drafts',runId)))),researchSha256:process.env.EXPECTED_RESEARCH_SHA,selectionSha256:process.env.EXPECTED_LEARNING_SELECTION_SHA,assignments:discussionBatchPolicy.leadAssignments,successfulSourceIds,failures:unavailable.map(row=>failedAssignments.get(row.demandSourceId))};
+      const expectedSha256=sha256(stableJSON(receipt));
+      const reasons=checkDiagnosticsReasons(receipt,{runId,phase:receipt.phase,expectedSha256,research,draft:await readJSON(dataPath('drafts',runId)),selection:learningSelection,expectedResearchSha256:process.env.EXPECTED_RESEARCH_SHA,expectedDraftSha256:receipt.draftSha256,expectedSelectionSha256:process.env.EXPECTED_LEARNING_SELECTION_SHA});
+      if(reasons.length)throw new Error('Unavailable-evidence diagnostic could not be sealed: '+reasons.join(' '));
+      await writeJSON(dataPath('check-diagnostics',runId),receipt,{immutable:true});
+      if(process.env.GITHUB_OUTPUT)await fs.appendFile(process.env.GITHUB_OUTPUT,`check_diagnostics_sha256=${expectedSha256}\ncheck_diagnostics_draft_sha256=${receipt.draftSha256}\n`);
+      throw new Error(`${unavailable.length} of ${discussionBatchPolicy.leadAssignments.length} sealed discussion assignments lack independently fetched evidence; original identities are unchanged. The whole batch remains unverified.`);
+    }
   }
   const primaryFetchDiagnostics=[];
   const sameURL=(left,right)=>{try{return canonicalURL(left)===canonicalURL(right);}catch{return false;}};
@@ -158,12 +196,12 @@ try{
     try{
       const original=research.sources.find(source=>sameURL(source.url,item.productUrl)),definition=original&&definitionFor(original);
       if(definition&&sourceRole(definition)==='demand'){
-        const fresh=await fetchDemandEvidence(original,{definition,providerFetch:(source)=>readProviderEvidence(ROOT,source)});sources.push(fresh);item.sourceIds=[...new Set([...item.sourceIds,fresh.id])];
+        const fresh=await fetchDemandEvidence(original,{definition,fetchPage,providerFetch:(source)=>readProviderEvidence(ROOT,source)});sources.push(fresh);item.sourceIds=[...new Set([...item.sourceIds,fresh.id])];
         authorizedSources.push({sourceId:fresh.id,registrySourceId:definition.id,url:fresh.url,role:'demand',demandKind:sourceDemandKind(definition),segments:[fresh.segment]});
         primaryFetchDiagnostics.push({productUrl:item.productUrl,requestedAt,status:'fetched',sourceId:fresh.id,reason:'The exact demand item was independently fetched by its fixed privacy-safe official adapter.'});continue;
       }
       if(demandRequired&&(officialDemandURL(item.productUrl)||discussionBatchPolicy||original?.discussionMetadataVersion===1||original?.providerEvidence))throw new Error('Demand item has no available authorized privacy-safe adapter; no generic page or alternate provider fetch is permitted.');
-      const page=await fetchPublic(item.productUrl,{maxBytes:2000000,complete:true}),extracted=extractImplementationEvidence(page.text,{maxCharacters:18000,minCharacters:100});
+      const page=await fetchPage(item.productUrl,{maxBytes:2000000,complete:true}),extracted=extractImplementationEvidence(page.text,{maxCharacters:18000,minCharacters:100});
       if(!extracted)throw new Error('Primary product page has no useful complete privacy-safe capability section.');
       const url=canonicalURL(page.url),sourceId=hash(url);
       if(!sources.some(source=>source.id===sourceId))sources.push({id:sourceId,url,productUrl:item.productUrl,title:item.title+' · independently fetched product',publisher:new URL(url).hostname,...extracted,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt,enriched:true,evidenceKind:'product-page',evidenceFetch:{maxBytes:2000000,complete:true}});
@@ -176,7 +214,7 @@ try{
     if(!product||sources.some(s=>s.url===post.productUrl))continue;
     if(discussionBatchPolicy||product.discussionMetadataVersion===1||product.providerEvidence){health.push({url:post.productUrl,status:'failed',message:'The exact discussion adapter or immutable provider proof was unavailable; no generic fetch is permitted.'});continue;}
     if(demandRequired&&officialDemandURL(post.productUrl)){health.push({url:post.productUrl,status:'failed',message:'The guarded demand item could not be verified; no raw notice data was stored.'});continue;}
-    try{const page=await fetchPublic(post.productUrl,{maxBytes:2000000,complete:true}),extracted=extractImplementationEvidence(page.text,{maxCharacters:18000,minCharacters:100});if(!extracted)throw new Error('Primary product page has no useful complete privacy-safe capability section.');const sourceId=hash(post.productUrl);sources.push({id:sourceId,url:post.productUrl,title:post.title+' · official product',publisher:new URL(post.productUrl).hostname,...extracted,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});post.sourceIds=[...new Set([...(post.sourceIds||[]),sourceId])].slice(0,4);}
+    try{const page=await fetchPage(post.productUrl,{maxBytes:2000000,complete:true}),extracted=extractImplementationEvidence(page.text,{maxCharacters:18000,minCharacters:100});if(!extracted)throw new Error('Primary product page has no useful complete privacy-safe capability section.');const sourceId=hash(post.productUrl);sources.push({id:sourceId,url:post.productUrl,title:post.title+' · official product',publisher:new URL(post.productUrl).hostname,...extracted,fetchedAt:page.fetchedAt,verifiedAt:page.fetchedAt});post.sourceIds=[...new Set([...(post.sourceIds||[]),sourceId])].slice(0,4);}
     catch(error){health.push({url:post.productUrl,status:'failed',message:safeError(error)});}
   }
   if(!sources.length)throw new Error('An assessment needs at least one successfully re-fetched privacy-safe public research source; no checker model call is permitted.');
