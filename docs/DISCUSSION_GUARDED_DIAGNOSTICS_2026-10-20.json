@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "recordedAt": "2026-10-20T10:35:33.979Z",
-  "phase": "offline_verified_release_preparation",
+  "phase": "deployed_green_forward_automatic_coverage_pending",
   "historicalFailure": {
     "runId": "loop-39405925881-1",
     "workflowRunId": "39405925881",
@@ -125,8 +125,31 @@
     }
   ],
   "release": {
-    "codeCommit": null,
-    "deployment": "pending"
+    "codeCommit": "4e38cdb4fcf33f21b8b23653b084cbf46c8467f2",
+    "pagesRunId": "39409036921",
+    "url": "https://github.com/xndanius/while-you-sleep/actions/runs/39409036921",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T10:35:43Z",
+        "completedAt": "2026-10-20T10:36:48Z"
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "startedAt": "2026-10-20T10:36:53Z",
+        "completedAt": "2026-10-20T10:37:02Z"
+      }
+    ],
+    "hostedTests": 666,
+    "hostedFailed": 0,
+    "hostedSyntaxPassed": true,
+    "hostedBuild": {
+      "posts": 7,
+      "runs": 227
+    }
   },
   "recovery": {
     "newCheckedPosts": 0,
@@ -141,5 +164,90 @@
     "secretValuesReadOrWritten": false,
     "historicalOutcomeOrRewardChanges": false,
     "heartbeatRestarted": false
-  }
+  },
+  "liveVerification": {
+    "verifiedAt": "2026-10-20T10:37:35.775Z",
+    "http": {
+      "/": 200,
+      "api/machine.json": 200,
+      "api/feed.json": 200,
+      "api/learning.json": 200,
+      "api/health.json": 200,
+      "feed.xml": 200,
+      "best.xml": 200
+    },
+    "feed.xml": {
+      "valid": true,
+      "items": 7
+    },
+    "best.xml": {
+      "valid": true,
+      "items": 0
+    },
+    "newCheckedPostsSinceRecovery": [],
+    "totalHistoricalAndNewPosts": 7,
+    "latestPublishedAt": "2026-10-11T20:31:22.470Z",
+    "historicalHashesValid": true,
+    "historicalHashVerification": {
+      "method": "Validate original committed publication hashes; compare public original fields and hash pins. Public scoring is hydrated presentation from separately validated sidecars, not the original hashed content.",
+      "records": [
+        {
+          "id": "f8fa768c80d28297a81242e1",
+          "storedHashValid": true,
+          "publicHashMatchesStored": true,
+          "publicOriginalNonPresentationFieldsMatch": true
+        },
+        {
+          "id": "e20bcacf021524725d3fc275",
+          "storedHashValid": true,
+          "publicHashMatchesStored": true,
+          "publicOriginalNonPresentationFieldsMatch": true
+        },
+        {
+          "id": "b97635582c646fbff97c7e77",
+          "storedHashValid": true,
+          "publicHashMatchesStored": true,
+          "publicOriginalNonPresentationFieldsMatch": true
+        },
+        {
+          "id": "b89af4e5c65cc81c424c080b",
+          "storedHashValid": true,
+          "publicHashMatchesStored": true,
+          "publicOriginalNonPresentationFieldsMatch": true
+        },
+        {
+          "id": "98b4f6281cc3de4ecdfa95f6",
+          "storedHashValid": true,
+          "publicHashMatchesStored": true,
+          "publicOriginalNonPresentationFieldsMatch": true
+        },
+        {
+          "id": "1b30245f8580f86bcc4685c8",
+          "storedHashValid": true,
+          "publicHashMatchesStored": true,
+          "publicOriginalNonPresentationFieldsMatch": true
+        },
+        {
+          "id": "0d455200b5ff2b5b39d4eac6",
+          "storedHashValid": true,
+          "publicHashMatchesStored": true,
+          "publicOriginalNonPresentationFieldsMatch": true
+        }
+      ]
+    },
+    "watchdog": {
+      "mode": "repair",
+      "recoveryPosts": 0,
+      "recoveryTarget": 2,
+      "postsLast12Hours": 0,
+      "postsLast24Hours": 0
+    },
+    "clock": {
+      "lastTickAt": "2026-10-20T10:26:41.397Z",
+      "nextTickAt": "2026-10-20T10:41:41.397Z",
+      "lastTickRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39405928253",
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/39407982836"
+    }
+  },
+  "forwardAutomaticVerification": "Pending. Historical 39405925881 predates this receipt code and remains unknown-host no_post_unverified; no manual content/model dispatch was made."
 }
