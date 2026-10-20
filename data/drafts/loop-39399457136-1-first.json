@@ -1,0 +1,122 @@
+{
+  "runId": "loop-39399457136-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-20T09:30:00.000Z",
+  "candidates": [
+    {
+      "title": "Count open and urgent support tickets",
+      "productUrl": "https://community.n8n.io/t/322807",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "e23e92cbadb95f1bbac2cfff"
+        ],
+        "chore": "Count open support tickets and count which open tickets are urgent.",
+        "evidenceQuote": "Build a native n8n workflow to count how many are open, then how many of those open tickets are urgent."
+      },
+      "sourceIds": [
+        "e23e92cbadb95f1bbac2cfff",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 7,
+            "reason": "A beginner can test counts on supplied fictional rows; the n8n reference documents Count and Count Unique, but not ticket access or urgency rules.",
+            "sourceIds": [
+              "e23e92cbadb95f1bbac2cfff",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: a support team might pay to summarize a queue, but this challenge supplies no buyer, repeated demand, or payment evidence.",
+            "sourceIds": [
+              "e23e92cbadb95f1bbac2cfff"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week fictional-row prototype can count open and operator-labeled urgent items; the reference supports aggregation only, not live integration or urgency classification.",
+            "sourceIds": [
+              "e23e92cbadb95f1bbac2cfff",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A manual test run can calculate and report counts using the documented summarize operation; a person must supply rows, define urgency, and verify results.",
+            "sourceIds": [
+              "e23e92cbadb95f1bbac2cfff",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The discussion states the exact counting chore and n8n docs support aggregation, but neither establishes a customer, urgency logic, or production integration.",
+            "sourceIds": [
+              "e23e92cbadb95f1bbac2cfff",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a narrow fictional-row experiment: operator supplies ticket status and urgency labels, a manual run counts open rows and urgent open rows, then a person checks the result. The documented Summarize node supports counts, not urgency classification or live ticket access. Excluded as a duplicate workflow and customer of recent post 98b4f6281cc3de4ecdfa95f6, which covers support inbox handling for online shops/support teams; this is support-ticket queue triage for support teams. Equal-weight mean 5.2 is below threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Cut scope when AI makes adding features easy",
+      "productUrl": "https://news.ycombinator.com/item?id=50161914",
+      "reason": "The excerpt says people value complete software but gives no specific requested chore, recurring output, or distinct buyer to support an experiment."
+    },
+    {
+      "title": "Combine stronger agent insights with tool access",
+      "productUrl": "https://news.ycombinator.com/item?id=50161627",
+      "reason": "The excerpt describes a capability tradeoff between an agent and a Pro level, not an existing operational chore or request for a bounded service; a tool-combination workflow and buyer would be invented."
+    },
+    {
+      "title": "Share privately built AI software ideas",
+      "productUrl": "https://news.ycombinator.com/item?id=50159886",
+      "reason": "This is a broad invitation to share project ideas, not a concrete repeated chore or service request suitable for a demand-backed experiment."
+    },
+    {
+      "title": "Manage homelab servers from Android",
+      "productUrl": "https://news.ycombinator.com/item?id=50163274",
+      "reason": "The Show HN title announces XuTerm, but the supplied excerpt states no separate customer chore or request; bulk server management tasks and a buyer cannot be inferred from the product description alone."
+    },
+    {
+      "title": "Make dance videos from two photos",
+      "productUrl": "https://news.ycombinator.com/item?id=50163258",
+      "reason": "The excerpt is a product launch title, not evidence of an existing customer chore, request, or repeatable service demand."
+    },
+    {
+      "title": "Pass trusted metadata to workflow tools",
+      "productUrl": "https://community.n8n.io/t/322700",
+      "reason": "The excerpt describes a missing n8n feature, not a concrete nontechnical customer's recurring business chore; a paid buyer and service workflow would be speculative."
+    },
+    {
+      "title": "Debug and finish an existing Make outreach build",
+      "productUrl": "https://community.make.com/t/117567",
+      "reason": "The post describes one request to debug and finish an existing outreach scenario but identifies no failure, diagnostic steps, or repeatable output. No attached Make reference supports debugging mechanics, and prior decisions repeatedly found no new evidence for this same request."
+    },
+    {
+      "title": "Learn Make automation for small businesses",
+      "productUrl": "https://community.make.com/t/117457",
+      "reason": "The excerpt is a learner's broad goal, not a concrete business chore or customer request; inventing a small-business workflow would not be supported by the assigned post."
+    },
+    {
+      "title": "Resolve Shopify B2B pickup and carrier rates",
+      "productUrl": "https://community.shopify.com/t/700879",
+      "reason": "The excerpt is a single checkout behavior complaint phrased as a question, with no stated desired service or repeatable operational task. It does not support inventing a Shopify configuration or diagnostic workflow."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten assigned discussion identities. One concrete support-ticket counting task was scored against an attached n8n aggregation reference, then excluded as a duplicate of recent support-inbox workflow/customer 98b4f6281cc3de4ecdfa95f6 and as below threshold (mean 5.2). The other nine lack a distinct supported chore; no post proposed."
+    }
+  ]
+}
