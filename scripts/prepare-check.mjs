@@ -75,6 +75,10 @@ try{
   const sameProduct=(source,url)=>{try{return [source.url,source.productUrl].filter(Boolean).some(value=>canonicalURL(value)===canonicalURL(url));}catch{return false;}};
   const assignedDiscussionSources=discussionBatchPolicy?discussionBatchPolicy.leadAssignments.map(item=>research.sources.find(source=>source.id===item.demandSourceId&&sameProduct(source,item.productUrl))).filter(Boolean):[];
   const supportsDiscussion=(source,url)=>discussionBatchPolicy&&discussionImplementationReference(source,{demandSources:assignedDiscussionSources})&&discussionBatchPolicy.leadAssignments.some(item=>sameProduct({url:item.productUrl},url)&&source.supportsDemandSourceIds.includes(item.demandSourceId));
+  // This reference set was sealed before either model. A writer's missing
+  // citation cannot hide a preassigned capability from independent examination.
+  const sealedImplementationReferences=discussionBatchPolicy?research.sources.filter(implementationSource):[];
+  if(sealedImplementationReferences.length>2||new Set(sealedImplementationReferences.map(source=>source.id)).size!==sealedImplementationReferences.length||sealedImplementationReferences.some(source=>!discussionImplementationReference(source,{demandSources:assignedDiscussionSources})))throw new Error('Sealed discussion implementation references exceed their exact fixed authority or two-reference budget.');
   const attachedIds=item=>[...new Set([...(Array.isArray(item.sourceIds)?item.sourceIds:[]),...Object.values(item.scoring?.criteria||{}).flatMap(criterion=>Array.isArray(criterion?.sourceIds)?criterion.sourceIds:[])])];
   // Implementation references stay attached to the exact assigned discussion.
   // A model cannot turn a support page into a new primary or demand source.
@@ -105,7 +109,8 @@ try{
     for(const [productUrl,item] of considerations){
       const attached=attachedIds(item).map(id=>research.sources.find(source=>source.id===id)).filter(source=>source&&(sameProduct(source,productUrl)||supportsDiscussion(source,productUrl)));
       const matched=research.sources.filter(source=>sameProduct(source,productUrl));
-      const relevant=[...new Map([...attached,...matched].map(source=>[source.id,source])).values()].sort((a,b)=>Number(sameProduct(b,productUrl))-Number(sameProduct(a,productUrl))||Number(b.enriched===true)-Number(a.enriched===true)).slice(0,4);
+      const references=sealedImplementationReferences.filter(source=>supportsDiscussion(source,productUrl));
+      const relevant=[...new Map([...matched,...references,...attached].map(source=>[source.id,source])).values()].sort((a,b)=>Number(sameProduct(b,productUrl))-Number(sameProduct(a,productUrl))||Number(b.enriched===true)-Number(a.enriched===true)).slice(0,4);
       for(const source of relevant)known.set(source.id,source);
       considerationEvidence.push({title:item.title.slice(0,200),productUrl,sourceIds:relevant.map(source=>source.id)});
     }
@@ -114,7 +119,7 @@ try{
   }
   if(fallbackPolicy)selected=[...new Map([...selected,...fallbackPolicy.demandSourceIds.map(id=>research.sources.find(source=>source.id===id)).filter(Boolean)].map(source=>[source.id,source])).values()];
   if(recoveryBatchPolicy)selected=[...new Map([...selected,...recoveryBatchPolicy.leadAssignments.flatMap(item=>[research.sources.find(source=>source.id===item.demandSourceId),...research.sources.filter(source=>source.enriched===true&&sameProduct(source,item.productUrl))]).filter(Boolean)].map(source=>[source.id,source])).values()];
-  if(discussionBatchPolicy)selected=[...new Map([...selected,...discussionBatchPolicy.leadAssignments.map(item=>research.sources.find(source=>source.id===item.demandSourceId)).filter(Boolean)].map(source=>[source.id,source])).values()];
+  if(discussionBatchPolicy)selected=[...new Map([...selected,...discussionBatchPolicy.leadAssignments.map(item=>research.sources.find(source=>source.id===item.demandSourceId)).filter(Boolean),...sealedImplementationReferences].map(source=>[source.id,source])).values()];
   const implementationReferences=selected.filter(source=>implementationSource(source));
   if(implementationReferences.length>2||implementationReferences.some(source=>!discussionBatchPolicy||!discussionImplementationReference(source,{demandSources:assignedDiscussionSources})))throw new Error('Discussion assessment exceeds its fixed implementation-reference authority or two-reference budget.');
   // Revalidate task bindings against independently fetched demand before the

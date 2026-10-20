@@ -8,6 +8,7 @@ import {checkerOutputSchema} from '../lib/checker-output.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
 import {SEGMENTS,DEMAND_KINDS,DEMAND_MIX_POLICY,eligibleSegments,classifyPublishedSegment} from '../lib/demand.mjs';
 import {noFreshLeadsReasons} from '../lib/no-fresh-leads.mjs';
+import {hasDiscussionImplementationReference,discussionImplementationReference} from '../lib/discussion-implementation.mjs';
 const runId=process.env.RUN_ID||`loop-${Date.now()}`;
 if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
 let scheduling;
@@ -38,7 +39,13 @@ if(['writer','repair'].includes(role)){
  context.selectedSegment=snapshot.learningSelection?.selectedSegment||null;
  if(context.demandContractVersion===1){const selection=await readJSON(dataPath('learning-selection',runId));if(selection.runId!==runId)throw new Error('Demand-first writer has no matching trusted learning selection.');context.selectedSegment=selection.selectedSegment;}
  if(role==='repair'){const frozen=await readJSON(dataPath('check-context',runId));context.selectedSegment=frozen.demandContext?.selectedSegment||context.selectedSegment;}
- await writeFile(context.researchPath,JSON.stringify(writerResearchView(snapshot),null,2));
+ const view=writerResearchView(snapshot);
+ if(context.discussionFirst){
+  const references=view.sources.filter(hasDiscussionImplementationReference),demands=view.sources.filter(source=>source.role==='demand');
+  if(references.length>2||references.some(source=>!discussionImplementationReference(source,{demandSources:demands})))throw new Error('Writer implementation-reference inventory lacks its fixed task-bound authority.');
+  context.discussionImplementationReferences=context.discussionBatch.leadAssignments.map(assignment=>({productUrl:assignment.productUrl,demandSourceId:assignment.demandSourceId,availableSourceIds:references.filter(source=>source.supportsDemandSourceIds.includes(assignment.demandSourceId)).map(source=>source.id)}));
+ }
+ await writeFile(context.researchPath,JSON.stringify(view,null,2));
 }
 const previous=await records('posts');
 await writeFile(context.demandPolicyPath,JSON.stringify({version:1,segments:SEGMENTS,kinds:DEMAND_KINDS,mixPolicy:DEMAND_MIX_POLICY,eligibleSegments:eligibleSegments(previous),selectedSegment:context.selectedSegment||null,posts:previous.map(post=>({id:post.id,publishedAt:post.publishedAt,...classifyPublishedSegment(post)}))},null,2));
