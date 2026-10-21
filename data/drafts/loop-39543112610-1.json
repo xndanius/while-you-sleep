@@ -1,0 +1,229 @@
+{
+  "runId": "loop-39543112610-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-21T06:00:00.000Z",
+  "candidates": [
+    {
+      "title": "Weekly agent run summary",
+      "productUrl": "https://community.n8n.io/t/323013",
+      "sourceIds": [
+        "05a27a574bd6864b5f4a801a"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "05a27a574bd6864b5f4a801a"
+        ],
+        "chore": "Summarize agent runs per agent for a team lead.",
+        "evidenceQuote": "Schedule Trigger (weekly): summarize runs per agent for the team lead."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A sample table could support a summary mock; the discussion supplies no implementation reference.",
+            "sourceIds": [
+              "05a27a574bd6864b5f4a801a"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams supervising agents may pay for run summaries; this single post establishes no payment.",
+            "sourceIds": [
+              "05a27a574bd6864b5f4a801a"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week report on sample run rows is bounded, but input format and useful metrics are unspecified.",
+            "sourceIds": [
+              "05a27a574bd6864b5f4a801a"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable summary could be drafted weekly; a person must supply and verify run records.",
+            "sourceIds": [
+              "05a27a574bd6864b5f4a801a"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post specifies weekly per-agent summaries, but not frequency of need beyond that proposal or implementation support.",
+            "sourceIds": [
+              "05a27a574bd6864b5f4a801a"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a proposed weekly report from operator-supplied sample run records. Equal-weight mean 4.6 is below the threshold; no matching implementation reference is supplied."
+    },
+    {
+      "title": "Log agent runs to a sheet",
+      "productUrl": "https://community.make.com/t/117728",
+      "sourceIds": [
+        "694a82336a9c765bd603a65c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "694a82336a9c765bd603a65c"
+        ],
+        "chore": "Record agent name, task ID, status, and time when a task finishes or fails.",
+        "evidenceQuote": "Every time an agent finishes or fails a task, Make should record the agent name, task ID, status and time in a Google Sheet."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A mock table can accept the four named fields; the supplied post offers no reference for connecting Make and Sheets.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams tracking agent operations may pay for setup; the request does not establish payment.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test with fictional completion events is narrow, but trigger and sheet integration remain unverified.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The proposed event-to-row loop is repeatable; a person must check mappings and failed writes.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request names an event and four fields, but provides no corroboration or implementation evidence.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a proposed mock event-to-row log using fictional events and a review step. Equal-weight mean 4.8 is below threshold; no relevant implementation reference is supplied."
+    },
+    {
+      "title": "Notify a team when an agent finishes a ticket",
+      "productUrl": "https://community.n8n.io/t/322880",
+      "sourceIds": [
+        "13a04c699a355f355a5602fc"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "13a04c699a355f355a5602fc"
+        ],
+        "chore": "Notify a team after an AI agent finishes a Jira-like ticket.",
+        "evidenceQuote": "I’m working on how to add AI agents to Jira-like workflows, and n8n turned out to be the perfect glue around it."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A manual test with supplied completion events is possible, but no notification integration reference is attached.",
+            "sourceIds": [
+              "13a04c699a355f355a5602fc"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams coordinating agent-assisted ticket work may pay for setup; no payment is shown.",
+            "sourceIds": [
+              "13a04c699a355f355a5602fc"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A mock completion notice is bounded, but event fields, recipient and ticket system are unspecified.",
+            "sourceIds": [
+              "13a04c699a355f355a5602fc"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A configured event could trigger a notice; humans must configure access and verify delivery.",
+            "sourceIds": [
+              "13a04c699a355f355a5602fc"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The title suggests a completion notification, while the excerpt only describes exploring AI in Jira-like workflows.",
+            "sourceIds": [
+              "13a04c699a355f355a5602fc"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a proposed test-only completion notice, but the attached excerpt does not specify fields, recipient, or an actual recurring chore; equal-weight mean 4.0 is below threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Ask HN: Is Wikipedia going to be obsolete soon?",
+      "productUrl": "https://news.ycombinator.com/item?id=50175857",
+      "reason": "Excluded: the post asks whether Wikipedia is going away after seeing an app advertisement; it states no concrete manual task, repeated chore, or tool request to prototype."
+    },
+    {
+      "title": "Show HN: One click flight booking in Claude",
+      "productUrl": "https://news.ycombinator.com/item?id=50174185",
+      "reason": "Excluded: this is a Show HN launch description of BonBook, an existing flight-booking product. It is not a request for a distinct manual service experiment; the source does not support inventing a separate buyer or workflow."
+    },
+    {
+      "title": "Building a lightweight AI agent governance log with n8n",
+      "productUrl": "https://community.n8n.io/t/323013",
+      "reason": "Assessed a proposed weekly report from operator-supplied sample run records. Equal-weight mean 4.6 is below the threshold; no matching implementation reference is supplied."
+    },
+    {
+      "title": "How to log AI agent runs to Google Sheets for governance with Make?",
+      "productUrl": "https://community.make.com/t/117728",
+      "reason": "Assessed a proposed mock event-to-row log using fictional events and a review step. Equal-weight mean 4.8 is below threshold; no relevant implementation reference is supplied."
+    },
+    {
+      "title": "How to display unit prices dynamically based on variant selection in Dawn theme?",
+      "productUrl": "https://community.shopify.com/t/701410",
+      "reason": "Excluded: the captured excerpt is generic advice to make a forum title specific, not evidence of the unit-price variant task named in the title. The concrete task cannot be confirmed from supplied text."
+    },
+    {
+      "title": "Is caravan living a realistic answer to Australia's rental crisis?",
+      "productUrl": "https://news.ycombinator.com/item?id=50173946",
+      "reason": "Excluded: the post asks for opinions about caravan living and rental affordability; it gives no concrete requested chore or service to automate."
+    },
+    {
+      "title": "N8n workflow idea: notify your team when an AI agent finishes a Jira ticket",
+      "productUrl": "https://community.n8n.io/t/322880",
+      "reason": "Assessed a proposed test-only completion notice, but the attached excerpt does not specify fields, recipient, or an actual recurring chore; equal-weight mean 4.0 is below threshold."
+    },
+    {
+      "title": "Beginner in workflow autmations",
+      "productUrl": "https://community.make.com/t/117579",
+      "reason": "Excluded: “looking for guidance” is a broad learning request with no specific existing task to scope."
+    },
+    {
+      "title": "URGENT – Locked out of Shopify account – Business operations blocked",
+      "productUrl": "https://community.shopify.com/t/701361",
+      "reason": "Excluded: the post describes account lockout and blocked store operations, an access incident requiring platform support. It supplies no safely automatable bounded task, and an assistant cannot restore account access."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all nine sealed discussion assignments against their literal excerpts and recent posts. Three concrete automation concepts received five provisional scores but remain below the 6/10 mean threshold; the other six lack a supported bounded chore or distinct experiment. No post proposed."
+    }
+  ]
+}
