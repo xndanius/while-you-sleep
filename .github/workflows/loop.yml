@@ -214,12 +214,18 @@ jobs:
         id: prepare
         if: steps.scan.outcome == 'success' && steps.scan_privacy.outputs.safe == 'true'
         continue-on-error: true
+        env:
+          EXPECTED_RESEARCH_SHA: ${{ steps.scan.outputs.research_sha256 }}
+          EXPECTED_LEARNING_SELECTION_SHA: ${{ steps.scan.outputs.learning_selection_sha256 }}
         run: node scripts/prepare-run.mjs writer
       - name: Codex picks and writes
         id: model
         if: steps.prepare.outcome == 'success' && steps.prepare.outputs.ready != 'false'
         continue-on-error: true
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
+        env:
+          EXPECTED_RESEARCH_SHA: ${{ steps.scan.outputs.research_sha256 }}
+          EXPECTED_LEARNING_SELECTION_SHA: ${{ steps.scan.outputs.learning_selection_sha256 }}
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           allow-bot-users: ${{ needs.gate.outputs.clock_verified == 'true' && 'github-actions[bot]' || '' }}
@@ -365,6 +371,7 @@ jobs:
     env:
       LOOP_SCHEDULING_SHA: ${{ needs.gate.outputs.scheduling_sha256 }}
       EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
+      EXPECTED_RESEARCH_SHA: ${{ needs.writer.outputs.research_sha256 }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:

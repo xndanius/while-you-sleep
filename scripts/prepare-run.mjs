@@ -9,14 +9,17 @@ import {createNoveltyContext} from '../lib/novelty.mjs';
 import {SEGMENTS,DEMAND_KINDS,DEMAND_MIX_POLICY,eligibleSegments,classifyPublishedSegment} from '../lib/demand.mjs';
 import {noFreshLeadsReasons} from '../lib/no-fresh-leads.mjs';
 import {hasDiscussionImplementationReference,discussionImplementationReference} from '../lib/discussion-implementation.mjs';
+import {sealedDiscussionAssignmentReasons} from '../lib/check-diagnostics.mjs';
 const runId=process.env.RUN_ID||`loop-${Date.now()}`;
 if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
+const role=process.argv[2]||'writer';
+if(!['writer','repair','checker','final-checker'].includes(role))throw new Error('Unknown execution role; expected writer, repair, checker or final-checker.');
 let scheduling;
 if(process.env.LOOP_SCHEDULING_SHA)scheduling=validateLoopScheduling(await readJSON(dataPath('scheduling',runId)),{runId,expectedSha256:process.env.LOOP_SCHEDULING_SHA,eventName:process.env.GITHUB_EVENT_NAME});
 if(scheduling&&scheduling.decision!=='run')throw new Error('This loop was not reserved for model execution.');
 const targetCount=scheduling?.targetCount||(process.env.BOOTSTRAP==='true'?3:1);
-const role=process.argv[2]||'writer';
 const context={runId,targetCount,maxBatchSize:scheduling?.maxBatchSize||3,rulesSha256:sha256(await readFile('RULES.md','utf8')),role,researchPath:`data/research/${runId}.json`,draftPath:`data/drafts/${runId}.json`,checkContextPath:`data/check-context/${runId}.json`,checkPath:`data/checks/${runId}.json`,priorPostsPath:'.run/prior-posts.json',githubRunUrl:process.env.GITHUB_REPOSITORY?`https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`:null};
+context.executionPhase={role,requiresRepairFeedback:role==='repair'};
 if(scheduling){context.scheduling={slotId:scheduling.slotId,scheduledAt:scheduling.scheduledAt,eventName:scheduling.eventName,targetCount,slots:scheduling.slots||[],dailyCap:scheduling.dailyCap,maxBatchSize:scheduling.maxBatchSize||3,cadence:scheduling.cadence};context.assessmentContractVersion=scheduling.assessmentContractVersion||null;}
 context.scoringPolicy=parseScoringPolicy(await readFile('RULES.md','utf8'));
 context.demandContractVersion=process.env.DEMAND_CONTRACT_VERSION==='1'?1:null;context.demandPolicyPath='.run/demand-policy.json';
@@ -41,6 +44,13 @@ if(['writer','repair'].includes(role)){
  if(role==='repair'){const frozen=await readJSON(dataPath('check-context',runId));context.selectedSegment=frozen.demandContext?.selectedSegment||context.selectedSegment;}
  const view=writerResearchView(snapshot);
  if(context.discussionFirst){
+  const selection=await readJSON(dataPath('learning-selection',runId));
+  const researchSha256=process.env.EXPECTED_RESEARCH_SHA||sha256(stableJSON(snapshot)),selectionSha256=process.env.EXPECTED_LEARNING_SELECTION_SHA||sha256(stableJSON(selection));
+  const identityFailures=sealedDiscussionAssignmentReasons({research:snapshot,selection,runId,expectedResearchSha256:researchSha256,expectedSelectionSha256:selectionSha256});
+  if(identityFailures.length)throw new Error(identityFailures.join(' '));
+  const ledgerPath='.run/writer-assignments.json';
+  await writeFile(ledgerPath,JSON.stringify({schema:1,runId,researchSha256,selectionSha256,assignments:context.discussionBatch.leadAssignments},null,2));
+  context.writerCoverage={researchSha256,selectionSha256,assignmentCount:context.discussionBatch.leadAssignments.length,ledgerPath,command:`node scripts/check-writer-coverage.mjs ${runId}`};
   const references=view.sources.filter(hasDiscussionImplementationReference),demands=view.sources.filter(source=>source.role==='demand');
   if(references.length>2||references.some(source=>!discussionImplementationReference(source,{demandSources:demands})))throw new Error('Writer implementation-reference inventory lacks its fixed task-bound authority.');
   context.discussionImplementationReferences=context.discussionBatch.leadAssignments.map(assignment=>({productUrl:assignment.productUrl,demandSourceId:assignment.demandSourceId,availableSourceIds:references.filter(source=>source.supportsDemandSourceIds.includes(assignment.demandSourceId)).map(source=>source.id)}));

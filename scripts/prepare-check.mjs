@@ -17,6 +17,7 @@ import {assessmentEvidenceReasons,discussionEvidenceReasons} from '../lib/eviden
 import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
 import {discussionEvidenceURL} from '../lib/discussion-sources.mjs';
 import {sealedDiscussionAssignmentReasons,checkDiagnosticsReasons,CHECK_DIAGNOSTIC_STAGES,CHECK_DIAGNOSTIC_CODES_BY_STAGE} from '../lib/check-diagnostics.mjs';
+import {sealedWriterCoverage} from '../lib/writer-coverage.mjs';
 const runId=process.argv[2];
 const preparationHealth=[];
 try{
@@ -69,8 +70,12 @@ try{
     const identityFailures=sealedDiscussionAssignmentReasons({research,selection:learningSelection,runId,expectedResearchSha256:process.env.EXPECTED_RESEARCH_SHA,expectedSelectionSha256:process.env.EXPECTED_LEARNING_SELECTION_SHA});
     if(identityFailures.length)throw new Error(identityFailures.join(' '));
     discussionBatchPolicy={...batch,researchSha256:process.env.EXPECTED_RESEARCH_SHA};
-    const accounted=new Set([...draft.posts,...(draft.candidates||[]),...(draft.rejected||[])].map(item=>canonicalURL(item.productUrl)));
-    if(batch.leadAssignments.some(item=>!accounted.has(canonicalURL(item.productUrl))))throw new Error('The discussion writer omitted an assigned post; each needs an explicit assessment or exclusion.');
+    const coverage=sealedWriterCoverage(draft,{runId,research,selection:learningSelection,expectedResearchSha256:process.env.EXPECTED_RESEARCH_SHA,expectedSelectionSha256:process.env.EXPECTED_LEARNING_SELECTION_SHA});
+    if(!coverage.valid){
+      const missing=coverage.missing.map(item=>`${item.productUrl} [${item.demandSourceId}]`).join(', ');
+      const detail=missing?`The discussion writer omitted an assigned post: ${missing}.`:'Discussion writer coverage no longer matches its exact sealed discussion post assignments (foreign identity, within-list duplicate or changed binding).';
+      throw new Error(`${detail} ${coverage.coveredAssignedCount} of ${coverage.assignedCount} unique assigned discussions considered. ${coverage.reasons.join(' ')}`);
+    }
   }
   if(research.enrichment?.fallback===true){
     if(!learningSelection?.researchPolicy?.fallbackEnabled||!['fallback','repair'].includes(learningSelection.researchPolicy.mode)||research.enrichment.fallbackFrom?.status!=='no_new_leads'||research.enrichment.fallbackFrom.selected!==0||research.enrichment.fallbackFrom.attempted!==0||!/^[a-f0-9]{64}$/.test(process.env.EXPECTED_RESEARCH_SHA||'')||sha256(stableJSON(research))!==process.env.EXPECTED_RESEARCH_SHA)throw new Error('Builder fallback lacks the original pre-model no-fresh-demand research fingerprint.');

@@ -7,7 +7,7 @@
   "repairs": [
     {
       "area": "discussion excerpt",
-      "behavior": "Prefer one literal privacy-safe task block over a generic opening; preserve 25\u2013200 characters and admission."
+      "behavior": "Prefer one literal privacy-safe task block over a generic opening; preserve 25–200 characters and admission."
     },
     {
       "area": "cooldown fingerprint",
@@ -334,6 +334,42 @@
       ],
       "watchdogMode": "repair",
       "newCheckedPosts": 0
+    }
+  },
+  "writerRoleCoverageFollowup": {
+    "recordedAt": "2026-10-21T14:26:51.242024Z",
+    "audit": "docs/DISCUSSION_WRITER_CONTRACT_2026-10-21.json",
+    "historicalRuns": [
+      "loop-39575989318-1",
+      "loop-39605344833-1"
+    ],
+    "scope": "Clarify writer execution role and verify the canonical union of every sealed discussion assignment within the existing writer invocation; retain strict independent pre-fetch coverage verification.",
+    "fullOfflineTests": 684,
+    "historicalOutcomesAndNullRewardsUnchanged": true,
+    "autonomousForwardVerification": "pending",
+    "liveBefore": {
+      "verifiedAt": "2026-10-21T14:22:39.479Z",
+      "http": {
+        "api/health.json": 200,
+        "api/feed.json": 200,
+        "feed.xml": 200,
+        "best.xml": 200
+      },
+      "watchdog": {
+        "mode": "repair",
+        "recoveryPosts": 0,
+        "recoveryTarget": 2
+      },
+      "postCount": 7,
+      "newPosts": [],
+      "feed.xml": {
+        "valid": true,
+        "items": 7
+      },
+      "best.xml": {
+        "valid": true,
+        "items": 0
+      }
     }
   }
 }
