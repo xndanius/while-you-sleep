@@ -1,0 +1,227 @@
+{
+  "runId": "loop-39829652693-1",
+  "createdAt": "2026-10-22T18:16:09.470Z",
+  "candidates": [
+    {
+      "title": "Compare supplier confirmations with purchase orders",
+      "productUrl": "https://community.n8n.io/t/323755",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a1ca2e915814ce6cc5c75bbe"
+        ],
+        "chore": "Manually compare supplier confirmation line items with the original purchase order for SKU, quantity, price, and delivery date.",
+        "evidenceQuote": "When a supplier confirmation contains dozens of line items, manually comparing every SKU, quantity, price, and delivery date against the original Purchase Order becomes time-consuming."
+      },
+      "sourceIds": [
+        "a1ca2e915814ce6cc5c75bbe"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student could compare supplied sample rows, but the post documents no accessible comparison tool or input format.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: ecommerce operators handling supplier orders might pay to reduce manual comparisons; payment is not evidenced.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prototype could flag differences in two operator-supplied sample tables; parsing varied documents and checking matches remain unresolved.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed comparison could flag mismatches, but a person must supply records and verify every discrepancy; no implementation reference is attached.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The primary post states the specific manual comparison and fields, but gives no frequency, sample data, or corroboration.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore supports a narrow proposed test: compare synthetic confirmation and purchase-order rows, flag field differences for human verification. No supplied implementation evidence supports the automation, and its provisional mean is below threshold."
+    },
+    {
+      "title": "Send reminders from spreadsheet due dates",
+      "productUrl": "https://community.make.com/t/117803",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "616163f2e6535ba2d1888246"
+        ],
+        "chore": "Send reminders based on due dates stored in a Google Sheet.",
+        "evidenceQuote": "I want to connect Google Sheets to my Make scenario using the Search Rows module so I can automate reminders based on due dates stored in a spreadsheet."
+      },
+      "sourceIds": [
+        "616163f2e6535ba2d1888246"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A mock can read operator-supplied due-date rows, but the excerpt supplies no tested setup or implementation reference.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms tracking deadlines in sheets might pay for reminder setup; the request does not establish payment.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test could schedule checks against synthetic dates and draft reminders; sending and date edge cases need human review.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A proposed scheduled check can identify due rows, but no supplied reference proves the integration; a person should approve messages.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The primary request names Google Sheets, due dates, and reminders, but no frequency, recipient, or implementation evidence.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          }
+        }
+      },
+      "reason": "The chore is concrete, but the connection issue is described as stuck and no matching building reference is supplied. A spreadsheet-to-draft reminder experiment is possible as a proposal, yet the unsupported integration and limited context keep its provisional mean below threshold."
+    },
+    {
+      "title": "Log AI agent runs in a spreadsheet",
+      "productUrl": "https://community.make.com/t/117728",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "694a82336a9c765bd603a65c"
+        ],
+        "chore": "Record each agent task's name, task ID, status, and time in a Google Sheet.",
+        "evidenceQuote": "Every time an agent finishes or fails a task, Make should record the agent name, task ID, status and time in a Google Sheet."
+      },
+      "sourceIds": [
+        "694a82336a9c765bd603a65c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A sample event can be mapped to four spreadsheet columns, but the post provides no tested connector evidence.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional teams tracking agent operations might pay for a lightweight run log; no buyer or payment is established.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can append supplied completion or failure events to a sheet; real event capture and access are unproven.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The proposed loop records each supplied event, while event delivery and data correctness need a person to verify; no reference is attached.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request identifies trigger events and four fields, but provides no measured recurrence beyond the stated desired behavior or corroboration.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          }
+        }
+      },
+      "reason": "A narrow event-to-row logging experiment can be scoped from the stated fields, but no implementation reference supports capture or spreadsheet integration. The provisional mean remains below threshold."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Compare supplier confirmations with purchase orders",
+      "productUrl": "https://community.n8n.io/t/323755",
+      "reason": "Below threshold on provisional five-criterion assessment: a useful synthetic comparison can be scoped, but implementation support and workflow detail are absent."
+    },
+    {
+      "title": "Send reminders from spreadsheet due dates",
+      "productUrl": "https://community.make.com/t/117803",
+      "reason": "Below threshold on provisional five-criterion assessment; the specific integration is not supported by any supplied implementation reference."
+    },
+    {
+      "title": "Log AI agent runs in a spreadsheet",
+      "productUrl": "https://community.make.com/t/117728",
+      "reason": "Below threshold on provisional five-criterion assessment; real event capture and spreadsheet integration are not supported by supplied implementation evidence."
+    },
+    {
+      "title": "Show HN: Halv – open-source agent coding software that reduces your usage",
+      "productUrl": "https://news.ycombinator.com/item?id=50198250",
+      "reason": "The supplied text is only a product launch title. It states no concrete user chore or request, so a demand-backed experiment would require inventing one."
+    },
+    {
+      "title": "Weekly keyword search volume to Google Sheets (Apify)",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The captured excerpt only states a configurable schedule. It does not establish the actual keyword-search chore, inputs, or requested outcome."
+    },
+    {
+      "title": "Show HN: Kino Transcode – Open Red and Blackmagic Raw Files in the Browser",
+      "productUrl": "https://news.ycombinator.com/item?id=50198052",
+      "reason": "The text describes a launched browser tool and a general need for a desktop app, not a specific manual chore or request for an AI service; proposing beyond that would invent demand."
+    },
+    {
+      "title": "Please help me acquire my first client",
+      "productUrl": "https://community.n8n.io/t/323737",
+      "reason": "The excerpt expresses a broad business goal but identifies no customer task or repeated chore to automate."
+    },
+    {
+      "title": "Show HN: Groundhog – local email catcher that also emulates provider HTTP APIs",
+      "productUrl": "https://news.ycombinator.com/item?id=50198003",
+      "reason": "The supplied text is only a product launch title and establishes no concrete chore or request that could ground a demand-first proposal."
+    },
+    {
+      "title": "Free Workflow: Automated German B2B Lead Generation & DDG Impressum Scraper",
+      "productUrl": "https://community.n8n.io/t/323734",
+      "reason": "The excerpt describes a built workflow, but states no user problem, request, or existing manual chore; its functionality alone is not demand evidence."
+    },
+    {
+      "title": "Beginner in workflow automations",
+      "productUrl": "https://community.make.com/t/117579",
+      "reason": "The excerpt asks for general guidance and names no concrete task, so a proposed automation would require inventing a duty."
+    }
+  ]
+}
