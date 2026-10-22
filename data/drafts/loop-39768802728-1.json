@@ -1,0 +1,219 @@
+{
+  "runId": "loop-39768802728-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-22T11:14:31.000Z",
+  "candidates": [
+    {
+      "title": "Compare supplier confirmations with purchase orders",
+      "productUrl": "https://community.n8n.io/t/323755",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a1ca2e915814ce6cc5c75bbe"
+        ],
+        "chore": "Compare supplier confirmation line items with the original purchase order, including SKU, quantity, price and delivery date.",
+        "evidenceQuote": "When a supplier confirmation contains dozens of line items, manually comparing every SKU, quantity, price, and delivery date against the original Purchase Order becomes time-consuming."
+      },
+      "sourceIds": [
+        "a1ca2e915814ce6cc5c75bbe"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner could compare synthetic line items in a spreadsheet, but no supplied reference supports document extraction or matching.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: small online retailers handling many supplier confirmations might pay for review preparation; the post establishes no buyers or payment.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can compare operator-entered sample rows and flag differences; document intake and accuracy remain untested.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A prototype could repeat field comparisons, while a person must verify source data and approve any purchase-order change.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a specific manual comparison task and its fields, but gives no frequency, rules or corroboration.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore is scorable, but provisional mean 5.2 is below threshold; no implementation reference is supplied."
+    },
+    {
+      "title": "Send a triggered email through Make",
+      "productUrl": "https://community.make.com/t/117571",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "db47bbc16da76cf241c085d9"
+        ],
+        "chore": "Send an email through an SMTP service when a trigger occurs in another app.",
+        "evidenceQuote": "I want a Make scenario to send an email through DigitalAka when a trigger occurs in another app."
+      },
+      "sourceIds": [
+        "db47bbc16da76cf241c085d9"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can mock a trigger and test message, but no supplied reference supports provider setup or delivery.",
+            "sourceIds": [
+              "db47bbc16da76cf241c085d9"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent automation consultants may pay for setup help; the request establishes no service buyers or payment.",
+            "sourceIds": [
+              "db47bbc16da76cf241c085d9"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can use a sample trigger and test inbox; live SMTP configuration and delivery remain unverified.",
+            "sourceIds": [
+              "db47bbc16da76cf241c085d9"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A configured trigger might repeat the send, but a person must authorize credentials, verify delivery and handle failures.",
+            "sourceIds": [
+              "db47bbc16da76cf241c085d9"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request names provider email after another app trigger, but gives no volume, constraints or implementation evidence.",
+            "sourceIds": [
+              "db47bbc16da76cf241c085d9"
+            ]
+          }
+        }
+      },
+      "reason": "The narrow mock is assessable, but provisional mean 4.6 is below threshold and this exact task has recent below-threshold assessments with no new implementation evidence."
+    },
+    {
+      "title": "Review business directory lead fields",
+      "productUrl": "https://community.n8n.io/t/323734",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3a4b256eae36110f89a35067"
+        ],
+        "chore": "Extract business directory information into lead-enrichment fields; the source title specifically includes a manager name and email.",
+        "evidenceQuote": "I built an end-to-end n8n pipeline for DACH/German B2B lead enrichment that chains German directory scraping with an automated § 5 DDG Impressum extractor ."
+      },
+      "sourceIds": [
+        "3a4b256eae36110f89a35067"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic business-only sample could be categorized, but the described workflow includes personal contact details and no supplied reference supports safe collection.",
+            "sourceIds": [
+              "3a4b256eae36110f89a35067"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional-service firms may pay for business research, but this post offers a free workflow and establishes no paying buyers.",
+            "sourceIds": [
+              "3a4b256eae36110f89a35067"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week synthetic-data demonstration is possible, but replicating scraped personal contact extraction would need authorization and privacy review.",
+            "sourceIds": [
+              "3a4b256eae36110f89a35067"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A prototype could structure approved sample fields, while a person must check source permission, data minimization and each result.",
+            "sourceIds": [
+              "3a4b256eae36110f89a35067"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post describes a specific directory-to-lead-enrichment workflow, but not repeated buyer demand or authorized data use.",
+            "sourceIds": [
+              "3a4b256eae36110f89a35067"
+            ]
+          }
+        }
+      },
+      "reason": "The described contact-harvesting workflow cannot be proposed as a service without evidence of authorized collection and appropriate privacy controls; the privacy-limited synthetic version is below threshold (4.2)."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Open dataset of MCP tool definitions",
+      "productUrl": "https://news.ycombinator.com/item?id=50193565",
+      "reason": "The assigned Show HN excerpt is only a dataset launch title; it states no specific existing chore, request for help or buyer task from which to scope a demand-first experiment."
+    },
+    {
+      "title": "Moin peer-to-peer voice app",
+      "productUrl": "https://news.ycombinator.com/item?id=50193108",
+      "reason": "The assigned excerpt only praises simplicity and self-hosting; it identifies no concrete task or unmet need. A voice-app implementation would be invented."
+    },
+    {
+      "title": "Compare supplier confirmations with purchase orders",
+      "productUrl": "https://community.n8n.io/t/323755",
+      "reason": "The exact chore was assessed: provisional mean 5.2 is below the threshold of 6, and no supplied implementation reference documents extraction or matching."
+    },
+    {
+      "title": "Send a triggered email through Make",
+      "productUrl": "https://community.make.com/t/117571",
+      "reason": "Below threshold (mean 4.6); the assigned request names triggered SMTP email, but no supplied implementation reference documents provider configuration or delivery, and recent assessments add no new support."
+    },
+    {
+      "title": "Acquire a first automation client",
+      "productUrl": "https://community.n8n.io/t/323737",
+      "reason": "The excerpt says only that the poster wants to build a business and earn income; it names no customer chore or service task, so a workflow would be invented."
+    },
+    {
+      "title": "German B2B directory lead enrichment",
+      "productUrl": "https://community.n8n.io/t/323734",
+      "reason": "The concrete workflow was assessed as a synthetic, privacy-limited experiment (mean 4.2), but the described manager-name and email harvesting lacks evidence of authorized collection and is not proposed."
+    },
+    {
+      "title": "Cloudflare R2 signer configuration",
+      "productUrl": "https://community.make.com/t/117569",
+      "reason": "This is a one-off technical support question about an exact signer setting, not a repeatable customer chore; no supplied source establishes the correct configuration or supports a reliable proposed answer."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all seven sealed discussion assignments. Three concrete tasks received full provisional criterion scores; none met the threshold or supported a safe, distinct proposal. Four assignments lacked a concrete task or safe answer, so no post is proposed."
+    }
+  ]
+}
