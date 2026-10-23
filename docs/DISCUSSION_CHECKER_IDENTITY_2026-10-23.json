@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "recordedAt": "2026-10-23T07:45:59.489397Z",
-  "phase": "pre_deployment",
+  "phase": "deployed",
   "baseline": "512672766e5ef218180736250806c9a15742d2a2",
   "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
   "scope": "Bind newly generated initial omission feedback to one eligible identity and its own exact fresh excerpt; remove duplicate model-written verdict files. Preserve runtime validation and historical outcomes.",
@@ -573,6 +573,134 @@
   },
   "autonomousForwardVerification": {
     "status": "pending",
-    "reason": "No genuine automatic content run has yet verified this unreleased patch. Tests and schema-valid feedback are not publication recovery."
+    "reason": "The code is deployed and verified by offline/hosted tests. A genuine automatic content run must independently exercise the new generation contract; no publication or recovery is inferred from Pages success."
+  },
+  "deployment": {
+    "codeCommit": "eefd5c475ffd284d126e455c0b9bca325e8a7ec6",
+    "pagesRunId": "39920028941",
+    "url": "https://github.com/xndanius/while-you-sleep/actions/runs/39920028941",
+    "event": "push",
+    "actor": "xndanius",
+    "triggeringActor": "xndanius",
+    "attempt": 1,
+    "conclusion": "success",
+    "createdAt": "2026-10-23T07:46:26Z",
+    "jobs": [
+      {
+        "completed_at": "2026-10-23T07:47:39Z",
+        "conclusion": "success",
+        "id": 120302751081,
+        "name": "build",
+        "started_at": "2026-10-23T07:46:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-23T07:48:36Z",
+        "conclusion": "success",
+        "id": 120303190196,
+        "name": "deploy",
+        "started_at": "2026-10-23T07:47:44Z",
+        "status": "completed"
+      }
+    ],
+    "terminalSuccessObservedAt": "2026-10-23T07:49:13Z",
+    "hostedTests": {
+      "passed": 690,
+      "failed": 0
+    },
+    "hostedSyntaxPassed": true,
+    "hostedBuild": {
+      "posts": 7,
+      "runs": 296
+    },
+    "checkoutCommitVerifiedInBuildLog": true,
+    "manualDispatchRequired": false,
+    "timingNote": "Actual job started_at/completed_at and the later observed clock time are recorded separately; API updated_at is not used as deployment completion."
+  },
+  "liveAfter": {
+    "verifiedAt": "2026-10-23T07:49:15.491Z",
+    "http": {
+      "/": 200,
+      "api/feed.json": 200,
+      "api/machine.json": 200,
+      "api/learning.json": 200,
+      "api/health.json": 200,
+      "feed.xml": 200,
+      "best.xml": 200
+    },
+    "rss": {
+      "feed.xml": {
+        "http": 200,
+        "valid": true,
+        "items": 7
+      },
+      "best.xml": {
+        "http": 200,
+        "valid": true,
+        "items": 0
+      }
+    },
+    "postCount": 7,
+    "durablePicks": 0,
+    "recoveryStartedAt": "2026-10-19T08:37:49.639Z",
+    "newCheckedPosts": [],
+    "watchdog": {
+      "mode": "repair",
+      "recoveryPosts": 0,
+      "recoveryTarget": 2
+    },
+    "postChecks": [
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "contentHashValid": true,
+        "publicHashPinMatches": true,
+        "publicOriginalFieldsMatch": true
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "contentHashValid": true,
+        "publicHashPinMatches": true,
+        "publicOriginalFieldsMatch": true
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "contentHashValid": true,
+        "publicHashPinMatches": true,
+        "publicOriginalFieldsMatch": true
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "contentHashValid": true,
+        "publicHashPinMatches": true,
+        "publicOriginalFieldsMatch": true
+      },
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "contentHashValid": true,
+        "publicHashPinMatches": true,
+        "publicOriginalFieldsMatch": true
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "contentHashValid": true,
+        "publicHashPinMatches": true,
+        "publicOriginalFieldsMatch": true
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "contentHashValid": true,
+        "publicHashPinMatches": true,
+        "publicOriginalFieldsMatch": true
+      }
+    ],
+    "machineParsed": true,
+    "learningParsed": true
   }
 }
