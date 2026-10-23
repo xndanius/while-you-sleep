@@ -1,0 +1,441 @@
+{
+  "id": "loop-40033140594-1",
+  "type": "loop",
+  "status": "completed_no_post",
+  "startedAt": "2026-10-23T22:22:20.997Z",
+  "finishedAt": "2026-10-23T22:28:42.737Z",
+  "candidatesFound": 3,
+  "picked": 0,
+  "rejected": [
+    {
+      "title": "Scheduled order-count check and daily email",
+      "productUrl": "https://community.n8n.io/t/323835",
+      "reason": "The title suggests an order-count workflow, but the only literal task excerpt says the Schedule Trigger started every run itself. That supports a one-off trigger/debug report, not a repeated customer chore; the supplied Summarize reference (02eb5e542dc08527b0ee2cd8) documents counts only, not trigger setup or a demand-backed recurring service."
+    },
+    {
+      "title": "Draft order updates from changing store data",
+      "productUrl": "https://community.make.com/t/118000",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ed00d8f5e0e82a602a9e317a"
+        ],
+        "chore": "Prepare customer-facing order status updates when internal operational data is incomplete or changes frequently.",
+        "evidenceQuote": "customer-facing status updates when internal operational data is incomplete or changes frequently"
+      },
+      "sourceIds": [
+        "ed00d8f5e0e82a602a9e317a"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can draft from operator-supplied sample order facts, but no implementation reference is attached.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: online shops may pay for clearer order updates; this request establishes no buyer or payment.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can draft from synthetic status changes, while live data access and accuracy remain untested.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed trigger could prepare drafts, but a person must verify changing facts and approve every message.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request names customer-facing updates and incomplete or changing data, but not frequency, fields or implementation.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a bounded draft-from-sample-data experiment. Rejected as a duplicate of recent post 98b4f6281cc3de4ecdfa95f6: both target online shops and handling customer support communications; its provisional mean is also below 6."
+    },
+    {
+      "title": "Prepare restaurant order arrival alerts",
+      "productUrl": "https://community.make.com/t/117948",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bace566c5f8ffc3779b64f08"
+        ],
+        "chore": "Build a system that notifies a restaurant when a new website order is placed.",
+        "evidenceQuote": "automated restaurant order notification system using Make.com"
+      },
+      "sourceIds": [
+        "bace566c5f8ffc3779b64f08"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic order can support a simple alert mock, but no supplied building reference supports the trigger or delivery.",
+            "sourceIds": [
+              "bace566c5f8ffc3779b64f08"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: restaurants taking web orders may pay for alerts; this request establishes no paying customer.",
+            "sourceIds": [
+              "bace566c5f8ffc3779b64f08"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can format a test alert, but live order access and WhatsApp delivery are unsupported here.",
+            "sourceIds": [
+              "bace566c5f8ffc3779b64f08"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed event-to-alert loop is narrow, though a person must configure access and verify each destination.",
+            "sourceIds": [
+              "bace566c5f8ffc3779b64f08"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request explicitly names restaurant web-order notifications, but gives no frequency, detailed fields or implementation evidence.",
+            "sourceIds": [
+              "bace566c5f8ffc3779b64f08"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a narrow synthetic order-to-alert experiment; provisional mean 4.2 is below the threshold of 6. No supplied implementation reference supports the trigger or WhatsApp delivery, and the request does not establish repeat demand."
+    },
+    {
+      "title": "Private support ticket access issue",
+      "productUrl": "https://community.make.com/t/117821",
+      "reason": "The excerpt only asks “What is the problem & what have you tried?” and does not identify a task or requested service. Treating this as a support workflow would invent the chore."
+    },
+    {
+      "title": "Review unnecessary trusted root authorities",
+      "productUrl": "https://news.ycombinator.com/item?id=50215473",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "da7cfc6db19974e6a0450393"
+        ],
+        "chore": "Identify root signing authorities a system may not need and review a proposed block list.",
+        "evidenceQuote": "After the recent eMudhra CA incident, I wondered why my system trusts over 150 root signing authorities, most of which I don't need? I decided to scratch my own itch and make a tool to block the long"
+      },
+      "sourceIds": [
+        "da7cfc6db19974e6a0450393"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A read-only report over synthetic trust entries is a small mock, but no supplied reference documents certificate-store parsing.",
+            "sourceIds": [
+              "da7cfc6db19974e6a0450393"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: security consultants might pay for trust-list review, but the post describes the maker’s own itch and proves no buyer.",
+            "sourceIds": [
+              "da7cfc6db19974e6a0450393"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week test could flag user-selected entries in a synthetic list; real certificate formats and safe deployment remain unverified.",
+            "sourceIds": [
+              "da7cfc6db19974e6a0450393"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed scan can flag entries, but a security professional must verify every change; automated blocking could disrupt secure connections.",
+            "sourceIds": [
+              "da7cfc6db19974e6a0450393"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The Show HN excerpt names excess trusted roots and a blocking tool, but is truncated and gives no external demand or workflow detail.",
+            "sourceIds": [
+              "da7cfc6db19974e6a0450393"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a read-only synthetic-list review experiment. Provisional mean 18/5 = 3.6, below threshold; the post describes a maker’s own itch rather than an external professional-services request, and live blocking carries security risk."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-23T22:23:19.561Z",
+      "message": "Fetched 20 live source records; 0 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-23T22:27:31.192Z",
+      "message": "Codex CLI wrote 0 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "passed",
+      "at": "2026-10-23T22:27:31.192Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Reassessed the one named omitted assignment with an explicit five-criterion score. Its bounded read-only mock remains below threshold; all other original assignment decisions and the empty posts batch are preserved."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40033140594",
+  "version": "rules-82935b274a3f",
+  "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
+  "rulesCommit": "f23200243a78014ce06c8870f2bf2811dd56a454",
+  "usage": {
+    "id": "loop-40033140594-1",
+    "type": "usage",
+    "runId": "loop-40033140594-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-23T22:28:34.063Z",
+    "localDate": "2026-10-24",
+    "githubRunId": "40033140594",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40033140594/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "recorded",
+    "inputTokens": 766229,
+    "cachedInputTokens": 594669,
+    "cacheWriteInputTokens": 171479,
+    "outputTokens": 10779,
+    "reasoningOutputTokens": 3559,
+    "costUsd": 0.032779165,
+    "observedCounts": {
+      "inputTokens": 766229,
+      "cachedInputTokens": 594669,
+      "cacheWriteInputTokens": 171479,
+      "outputTokens": 10779,
+      "reasoningOutputTokens": 3559,
+      "costUsd": 0.032779165
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 4,
+      "notRunModelJobs": 0,
+      "unknownModelJobs": 0
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [
+      "gpt-6-luna"
+    ],
+    "pricingStatus": "recorded_token_estimate",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 120686386581,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40033140594/job/120686386581",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 295674,
+        "cachedInputTokens": 247269,
+        "cacheWriteInputTokens": 48378,
+        "outputTokens": 5122,
+        "reasoningOutputTokens": 1655,
+        "costUsd": 0.011083639999999999,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "checker",
+        "jobId": 120687065056,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40033140594/job/120687065056",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 182286,
+        "cachedInputTokens": 141084,
+        "cacheWriteInputTokens": 41181,
+        "outputTokens": 2356,
+        "reasoningOutputTokens": 1065,
+        "costUsd": 0.007738564999999999,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "repair",
+        "jobId": 120687520280,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40033140594/job/120687520280",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 167620,
+        "cachedInputTokens": 124669,
+        "cacheWriteInputTokens": 42933,
+        "outputTokens": 2056,
+        "reasoningOutputTokens": 638,
+        "costUsd": 0.007643115,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "final_check",
+        "jobId": 120687883875,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40033140594/job/120687883875",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 120649,
+        "cachedInputTokens": 81647,
+        "cacheWriteInputTokens": 38987,
+        "outputTokens": 1245,
+        "reasoningOutputTokens": 201,
+        "costUsd": 0.006313845,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "8544a838f0a4415feb4fba0772a4e634096288e3806c2b6c41b99a139b0b5ef6",
+  "assessmentOutcome": "completed",
+  "operationalFailures": [],
+  "checkedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "contractVersion": 1,
+    "runId": "loop-40033140594-1",
+    "schedulingSha256": "abead91ae14223bb3ae9c8ddf6a281f6f4dab06fd0a6e71a04e5d71c7932ec6e",
+    "slotIds": [
+      "publish-2026-10-24-01-07"
+    ],
+    "draftSha256": "cf91f0a3372d6d2a54c24425830d96be6d2dc558da0a078b733cad27ce78d9ff",
+    "contextSha256": "e8a495facda6c2ffad30a6322327c7aebe5627e4067be01ec1dc1f5f18f64bde",
+    "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
+    "sourceSnapshotSha256": "8544a838f0a4415feb4fba0772a4e634096288e3806c2b6c41b99a139b0b5ef6",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkerRunId": "loop-40033140594-1-independent-check",
+    "completedAt": "2026-10-23T22:28:42.737Z",
+    "decision": "no_supported_candidate",
+    "reason": "The three scored proposals were rejected for a below-threshold score and/or unsupported demand or a recent-workflow/customer overlap. The other assignments lack a concrete chore in their fresh excerpts; no candidate is omitted without an explicit assessment.",
+    "checkedPostIds": []
+  },
+  "eventName": "workflow_dispatch",
+  "modelExecuted": true,
+  "scheduling": {
+    "id": "loop-40033140594-1",
+    "runId": "loop-40033140594-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "40033140594",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40033140594",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-40030984932-1",
+      "clockRunId": "40030984932",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40030984932",
+      "dispatchId": "clock-40030984932-1-loop",
+      "runId": "40033140594",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-23T22:22:02.406Z",
+      "requestedAt": "2026-10-23T22:22:02.406Z",
+      "verifiedAt": "2026-10-23T22:22:20.997Z",
+      "parentHeadSha": "9431ddfa4ecf5729852aeb731684f8e628ec1d84"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-24-01-07",
+    "scheduledAt": "2026-10-23T22:07:00.000Z",
+    "localDate": "2026-10-24",
+    "localTime": "01:07",
+    "requestedAt": "2026-10-23T22:22:20.997Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 0,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-24-00-07",
+        "scheduledAt": "2026-10-23T21:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "00:07"
+      },
+      {
+        "id": "publish-2026-10-24-01-07",
+        "scheduledAt": "2026-10-23T22:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "01:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-24-01-07",
+        "scheduledAt": "2026-10-23T22:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "01:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-24-01-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-24-01-07": 1
+    },
+    "reservationId": "loop-40033140594-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot"
+  }
+}
