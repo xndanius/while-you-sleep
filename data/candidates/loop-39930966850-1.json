@@ -1,0 +1,197 @@
+{
+  "runId": "loop-39930966850-1",
+  "createdAt": "2026-10-23T09:20:37.333Z",
+  "candidates": [
+    {
+      "title": "Compare supplier confirmations with purchase orders",
+      "productUrl": "https://community.n8n.io/t/323755",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a1ca2e915814ce6cc5c75bbe"
+        ],
+        "chore": "Manually compare each supplier confirmation against the purchase order across SKU, quantity, price, and delivery date.",
+        "evidenceQuote": "manually comparing every SKU, quantity, price, and delivery date against the original Purchase Order becomes time-consuming."
+      },
+      "sourceIds": [
+        "a1ca2e915814ce6cc5c75bbe"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "An operator can enter synthetic line items in a table, but no supplied reference supports document extraction or matching.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: small online retailers handling supplier confirmations might pay for review preparation; the post proves no buyer or payment.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can compare operator-entered sample rows and flag differences; document intake and accuracy remain untested.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A prototype could repeat field comparisons, while a person verifies source rows and approves any purchase-order change.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a specific manual comparison task and fields, but gives no frequency, rules, or implementation corroboration.",
+            "sourceIds": [
+              "a1ca2e915814ce6cc5c75bbe"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete task assessed with a narrow synthetic row comparison; provisional mean 5.2 is below threshold, and prior assessments found no new evidence."
+    },
+    {
+      "title": "Draft reminders from spreadsheet due dates",
+      "productUrl": "https://community.make.com/t/117803",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "616163f2e6535ba2d1888246"
+        ],
+        "chore": "Use spreadsheet due dates to trigger reminders.",
+        "evidenceQuote": "automate reminders based on due dates stored in a spreadsheet."
+      },
+      "sourceIds": [
+        "616163f2e6535ba2d1888246"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can mock spreadsheet rows and reminder drafts, but no supplied reference supports the live connection.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: service teams managing due dates might pay for reminder setup; this connection question establishes no buyers or payment.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can use operator-supplied rows and prepare drafts; live spreadsheet access and sending remain untested.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A proposed trigger can identify due rows, while a person verifies dates and authorizes any real reminder delivery.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request names due-date reminders from spreadsheet rows, but supplies little context and no implementation evidence.",
+            "sourceIds": [
+              "616163f2e6535ba2d1888246"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore assessed as a spreadsheet-to-draft test; provisional mean 5.0 is below threshold, with no new implementation evidence."
+    },
+    {
+      "title": "Log AI agent runs in a spreadsheet",
+      "productUrl": "https://community.make.com/t/117728",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "694a82336a9c765bd603a65c"
+        ],
+        "chore": "Record each AI agent run’s name, task ID, status, and time when it finishes or fails.",
+        "evidenceQuote": "Every time an agent finishes or fails a task, Make should record the agent name, task ID, status and time in a Google Sheet."
+      },
+      "sourceIds": [
+        "694a82336a9c765bd603a65c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can map fictional event fields into rows, but no supplied reference documents event capture or sheet integration.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams operating AI agents might pay for run logs; this request establishes no buyers, repeated commercial need, or payment.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week mock can map sample events to a sheet-shaped table; real event delivery and integration remain untested.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A proposed listener can append run fields, while a person checks missed events and interprets failures.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post specifies four fields and finish-or-fail timing, but gives no corroboration or implementation evidence.",
+            "sourceIds": [
+              "694a82336a9c765bd603a65c"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete task assessed, but its logging workflow and AI-agent-operations customer duplicate recent post 0d455200b5ff2b5b39d4eac6; its provisional mean is also below threshold."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Draft replies for WhatsApp and email queries",
+      "productUrl": "https://community.n8n.io/t/323862",
+      "reason": "The request concerns handling customer questions, which repeats the support-inbox workflow and online-shop/support customer of recent post 98b4f6281cc3de4ecdfa95f6; no distinct bounded task is supported."
+    },
+    {
+      "title": "Weekly keyword search volume to Google Sheets (Apify)",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The captured text only states that a schedule is Monday 9 am UTC and can be changed. It does not establish a concrete chore or request, so scoring a proposed service would require inventing the task."
+    },
+    {
+      "title": "Feature for ecommerce website",
+      "productUrl": "https://wordpress.org/support/topic/feature-for-ecommerec-website",
+      "reason": "The supplied source excerpt is truncated at “To implement this in WordPress, you’ll need a store plugin, such as” and establishes no concrete chore. Do not infer the missing request."
+    },
+    {
+      "title": "Schedule and batch Pinterest posts",
+      "productUrl": "https://community.n8n.io/t/323817",
+      "reason": "The excerpt describes functionality in a built node (schedules, batch publishing, CSV import, uploads, analytics, and webhooks), not an unmet chore or request for a service; demand for a new experiment is unsupported."
+    }
+  ]
+}
