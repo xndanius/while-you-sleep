@@ -1,0 +1,58 @@
+{
+  "title": "Review unnecessary trusted root authorities",
+  "productUrl": "https://news.ycombinator.com/item?id=50215473",
+  "segment": "professional_services",
+  "demandEvidence": {
+    "kind": "community_request",
+    "sourceIds": [
+      "da7cfc6db19974e6a0450393"
+    ],
+    "chore": "Identify root signing authorities a system may not need and review a proposed block list.",
+    "evidenceQuote": "After the recent eMudhra CA incident, I wondered why my system trusts over 150 root signing authorities, most of which I don't need? I decided to scratch my own itch and make a tool to block the long"
+  },
+  "sourceIds": [
+    "da7cfc6db19974e6a0450393"
+  ],
+  "scoring": {
+    "criteria": {
+      "ease": {
+        "value": 4,
+        "reason": "A read-only report over synthetic trust entries is a small mock, but no supplied reference documents certificate-store parsing.",
+        "sourceIds": [
+          "da7cfc6db19974e6a0450393"
+        ]
+      },
+      "profit": {
+        "value": 3,
+        "reason": "Hypothesis: security consultants might pay for trust-list review, but the post describes the maker’s own itch and proves no buyer.",
+        "sourceIds": [
+          "da7cfc6db19974e6a0450393"
+        ]
+      },
+      "feasibility": {
+        "value": 4,
+        "reason": "A four-week test could flag user-selected entries in a synthetic list; real certificate formats and safe deployment remain unverified.",
+        "sourceIds": [
+          "da7cfc6db19974e6a0450393"
+        ]
+      },
+      "autonomy": {
+        "value": 3,
+        "reason": "A proposed scan can flag entries, but a security professional must verify every change; automated blocking could disrupt secure connections.",
+        "sourceIds": [
+          "da7cfc6db19974e6a0450393"
+        ]
+      },
+      "evidence": {
+        "value": 4,
+        "reason": "The Show HN excerpt names excess trusted roots and a blocking tool, but is truncated and gives no external demand or workflow detail.",
+        "sourceIds": [
+          "da7cfc6db19974e6a0450393"
+        ]
+      }
+    }
+  },
+  "reason": "Assessed a read-only synthetic-list review experiment. Provisional mean 18/5 = 3.6, below threshold; the post describes a maker’s own itch rather than an external professional-services request, and live blocking carries security risk.",
+  "runId": "loop-40033140594-1",
+  "at": "2026-10-23T22:28:42.737Z"
+}
