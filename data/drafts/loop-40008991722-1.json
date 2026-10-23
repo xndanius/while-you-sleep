@@ -1,0 +1,88 @@
+{
+  "runId": "loop-40008991722-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-23T19:12:00Z",
+  "candidates": [
+    {
+      "title": "Check accounting transaction accuracy",
+      "productUrl": "https://news.ycombinator.com/item?id=50213770",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9eb04330c3e35ef450a75f47"
+        ],
+        "chore": "Building and checking accounting modules for transaction accuracy.",
+        "evidenceQuote": "Campfire raised $65m and built an entire accounting module from scratch, they only managed to achieve ~95% accuracy rate. It might feel like 95% is very close to 100%, but that is not how it works."
+      },
+      "sourceIds": [
+        "9eb04330c3e35ef450a75f47"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner could compare operator-supplied fictional transactions against fixed expected totals, but the post gives no implementation method or reference.",
+            "sourceIds": [
+              "9eb04330c3e35ef450a75f47"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small accounting software teams may pay for transaction-checking support; this post establishes no service buyer or payment.",
+            "sourceIds": [
+              "9eb04330c3e35ef450a75f47"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prototype could flag discrepancies in synthetic transaction batches; reliable accounting coverage and production integration remain untested.",
+            "sourceIds": [
+              "9eb04330c3e35ef450a75f47"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed batch checker could repeat fixed comparisons, but humans must verify source records and every flagged transaction; no automation capability is documented.",
+            "sourceIds": [
+              "9eb04330c3e35ef450a75f47"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post reports an accounting module build and its approximate accuracy, but does not describe a requested service, repeated workflow, inputs or corroboration.",
+            "sourceIds": [
+              "9eb04330c3e35ef450a75f47"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the post reports the challenge of building an accounting module and its accuracy, supporting only a narrow synthetic discrepancy-checking experiment; it does not establish an external request, recurring task or implementation capability."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Accounting software accuracy concern",
+      "productUrl": "https://news.ycombinator.com/item?id=50213770",
+      "reason": "Below threshold after assessment: the discussion reports that a built accounting module reached about 95% accuracy, but supplies no implementation reference or direct service request. A synthetic discrepancy check is scorable, but the provisional criteria do not reach the threshold."
+    },
+    {
+      "title": "Amgi interface feedback",
+      "productUrl": "https://news.ycombinator.com/item?id=50213299",
+      "reason": "The post says the software's UI is a downside, but gives no specific user task, requested redesign, or concrete chore. A workflow or paying customer cannot be grounded in this brief product critique."
+    },
+    {
+      "title": "Generic billing support prompt",
+      "productUrl": "https://community.make.com/t/117817",
+      "reason": "The captured text is only the forum template question, ‘What is the problem & what have you tried?’ It contains no actual billing issue or task evidence, so inferring a recurring billing-support workflow would invent demand."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Reassessed the single feedback-named omission as a bounded synthetic transaction-checking experiment; its evidence and implementation limits keep it below threshold. The other two assigned discussion posts remain explicit evidence-based exclusions."
+    }
+  ],
+  "repairAttempt": 1
+}
