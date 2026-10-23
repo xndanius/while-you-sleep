@@ -1,0 +1,112 @@
+{
+  "runId": "loop-40017878957-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-23T20:30:00.000Z",
+  "candidates": [
+    {
+      "title": "Sort frequent customer questions for review",
+      "productUrl": "https://community.n8n.io/t/323862",
+      "segment": "professional_services",
+      "sourceIds": [
+        "1ccfc2529fc79999406f0b96"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccfc2529fc79999406f0b96"
+        ],
+        "chore": "Handle frequent customer questions arriving through WhatsApp and email.",
+        "evidenceQuote": "We get 50–100 customer queries a day on WhatsApp and email, and want an AI agent to handle most of them."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A mock inbox could classify supplied sample questions, but the request provides no implementation reference or setup evidence.",
+            "sourceIds": [
+              "1ccfc2529fc79999406f0b96"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms handling frequent WhatsApp and email questions might pay; the request does not establish payment.",
+            "sourceIds": [
+              "1ccfc2529fc79999406f0b96"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic test could sort sample questions and draft replies; live messaging access and language quality remain unverified.",
+            "sourceIds": [
+              "1ccfc2529fc79999406f0b96"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed classifier and draft step could repeat, but a person must approve replies and handle uncertain cases; no implementation is documented.",
+            "sourceIds": [
+              "1ccfc2529fc79999406f0b96"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The post states 50–100 daily customer queries across WhatsApp and email and asks for an agent, but provides no corroboration.",
+            "sourceIds": [
+              "1ccfc2529fc79999406f0b96"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed as a narrow sample-inbox classification and reply-drafting experiment, then rejected: it duplicates the support inbox workflow and customer in recent post 98b4f6281cc3de4ecdfa95f6."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Tell HN: Don't use Fathom Analytics (founder is blocking criticism)",
+      "productUrl": "https://news.ycombinator.com/item?id=50210534",
+      "reason": "No bounded manual task is stated: the excerpt questions whether a product serves its customers and says to use another analytics product. It does not describe an automatable chore."
+    },
+    {
+      "title": "Show HN: Robin – Non-algorithmic Twitter client",
+      "productUrl": "https://news.ycombinator.com/item?id=50214199",
+      "reason": "The excerpt only says “Information pollution affects all of us.” It identifies no concrete task or repeatable workflow to assess."
+    },
+    {
+      "title": "Self-hosted n8n on Railway, locked out of owner account after upgrade, reset email fails (no SMTP)",
+      "productUrl": "https://community.n8n.io/t/324024",
+      "reason": "This is a one-off account recovery/access problem. It is not a recurring professional-services chore, and automating account recovery risks changing access or losing workflows."
+    },
+    {
+      "title": "Google Sheets connection stuck on \"Creating a connection...\"",
+      "productUrl": "https://community.make.com/t/117803",
+      "reason": "This is a one-off connection failure report; the stated reminder automation is a desired future scenario, not an established repeated manual chore. Prior assessments of this exact notice also found no implementation evidence."
+    },
+    {
+      "title": "Weekly keyword search volume to Google Sheets (Apify)",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The only excerpt says the schedule is Monday 9 am UTC and configurable; it does not state a concrete task or problem."
+    },
+    {
+      "title": "Show HN: MXValidation – Send an email and get an authentication and DNS report",
+      "productUrl": "https://news.ycombinator.com/item?id=50214140",
+      "reason": "The excerpt is a product title describing an existing email-to-DNS-report tool, not evidence of a manual task or request for an AI service."
+    },
+    {
+      "title": "Built an n8n Lead Capture Workflow with Apollo, AI Scoring & Failure Handling",
+      "productUrl": "https://community.n8n.io/t/323942",
+      "reason": "The post says its author already built a lead-capture and qualification workflow. It states no unresolved chore or service request; proposing another lead qualification workflow would invent demand."
+    },
+    {
+      "title": "N8n Expert Needed: AI WhatsApp Support Agent (Hindi + English)",
+      "productUrl": "https://community.n8n.io/t/323862",
+      "reason": "The concrete inbox task is assessable, but it duplicates the support-inbox workflow and online customer-support buyer in recent post 98b4f6281cc3de4ecdfa95f6."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight assigned discussion identities. One concrete repeated support chore was scored, but it overlaps the recent support-inbox workflow and customer; the other excerpts do not establish an eligible distinct repeatable chore. No post proposed."
+    }
+  ]
+}
