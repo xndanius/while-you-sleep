@@ -1,0 +1,256 @@
+{
+  "id": "loop-40024612743-1",
+  "type": "loop",
+  "status": "completed_no_post",
+  "startedAt": "2026-10-23T21:09:11.683Z",
+  "finishedAt": "2026-10-23T21:12:15.006Z",
+  "candidatesFound": 1,
+  "picked": 0,
+  "rejected": [
+    {
+      "title": "Prepare Pinterest posts from a CSV",
+      "productUrl": "https://community.n8n.io/t/323817",
+      "reason": "Below threshold: the narrow CSV-to-batch preparation experiment is plausible, but no supplied building source supports implementation, and the discussion does not establish repeat demand or payment."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-23T21:10:06.597Z",
+      "message": "Fetched 20 live source records; 0 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-23T21:11:18.619Z",
+      "message": "Codex CLI wrote 0 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "passed",
+      "at": "2026-10-23T21:11:18.619Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Assessed the sole sealed discussion assignment. A CSV-to-Pinterest batch preparation experiment is plausible, but its provisional mean is 5.0 and it lacks implementation evidence, so no post is proposed."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40024612743",
+  "version": "rules-82935b274a3f",
+  "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
+  "rulesCommit": "4487cc2d49ab65623b23faea1c9a2dc808311e8c",
+  "usage": {
+    "id": "loop-40024612743-1",
+    "type": "usage",
+    "runId": "loop-40024612743-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-23T21:12:09.509Z",
+    "localDate": "2026-10-24",
+    "githubRunId": "40024612743",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40024612743/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "recorded",
+    "inputTokens": 283160,
+    "cachedInputTokens": 212362,
+    "cacheWriteInputTokens": 70765,
+    "outputTokens": 3854,
+    "reasoningOutputTokens": 1402,
+    "costUsd": 0.012899545,
+    "observedCounts": {
+      "inputTokens": 283160,
+      "cachedInputTokens": 212362,
+      "cacheWriteInputTokens": 70765,
+      "outputTokens": 3854,
+      "reasoningOutputTokens": 1402,
+      "costUsd": 0.012899545
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 2,
+      "notRunModelJobs": 2,
+      "unknownModelJobs": 0
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [
+      "gpt-6-luna"
+    ],
+    "pricingStatus": "recorded_token_estimate",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 120657932003,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40024612743/job/120657932003",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 177326,
+        "cachedInputTokens": 138078,
+        "cacheWriteInputTokens": 39230,
+        "outputTokens": 2266,
+        "reasoningOutputTokens": 726,
+        "costUsd": 0.00741933,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "checker",
+        "jobId": 120658418168,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40024612743/job/120658418168",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 105834,
+        "cachedInputTokens": 74284,
+        "cacheWriteInputTokens": 31535,
+        "outputTokens": 1588,
+        "reasoningOutputTokens": 676,
+        "costUsd": 0.005480215,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "repair",
+        "jobId": 120658782634,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40024612743/job/120658782634",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "final_check",
+        "jobId": 120658782601,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40024612743/job/120658782601",
+        "status": "not_run",
+        "reason": "github_job_skipped",
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteInputTokens": null,
+        "outputTokens": null,
+        "reasoningOutputTokens": null,
+        "costUsd": null,
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "58ce1f9fa601e77688f5318561a4bfd3f015619d2714472a8551e380eaab2e7d",
+  "assessmentOutcome": "completed",
+  "operationalFailures": [],
+  "checkedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "contractVersion": 1,
+    "runId": "loop-40024612743-1",
+    "schedulingSha256": "401606d629e0e395ca1e77b9f6192dd22ddcbd831906675736acfa0dba2a8e13",
+    "slotIds": [
+      "publish-2026-10-24-00-07"
+    ],
+    "draftSha256": "d5933fab890193dec52e8d6d1b63e7cbb6f07fee512fef9f07b4e7ef242fe9b9",
+    "contextSha256": "9d05e0f2f4ec3dad94d12c00a61c7cae3489aa5e6145e95823adc125308ceb19",
+    "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
+    "sourceSnapshotSha256": "58ce1f9fa601e77688f5318561a4bfd3f015619d2714472a8551e380eaab2e7d",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkerRunId": "loop-40024612743-1-independent-check",
+    "completedAt": "2026-10-23T21:12:15.006Z",
+    "decision": "no_supported_candidate",
+    "reason": "The independently re-fetched discussion supports a narrow Pinterest scheduling and CSV chore, but limited task context and no validated buyer or payment support leave the sole assessed experiment below the six-point threshold.",
+    "checkedPostIds": []
+  },
+  "eventName": "workflow_dispatch",
+  "modelExecuted": true,
+  "scheduling": {
+    "id": "loop-40024612743-1",
+    "runId": "loop-40024612743-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "40024612743",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40024612743",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-40022618556-1",
+      "clockRunId": "40022618556",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40022618556",
+      "dispatchId": "clock-40022618556-1-loop",
+      "runId": "40024612743",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-23T21:08:53.746Z",
+      "requestedAt": "2026-10-23T21:08:53.746Z",
+      "verifiedAt": "2026-10-23T21:09:11.683Z",
+      "parentHeadSha": "1f484809be22c89e8899be651ad05f80d70d6027"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-24-00-07",
+    "scheduledAt": "2026-10-23T21:07:00.000Z",
+    "localDate": "2026-10-24",
+    "localTime": "00:07",
+    "requestedAt": "2026-10-23T21:09:11.683Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 0,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-24-00-07",
+        "scheduledAt": "2026-10-23T21:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "00:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-24-00-07",
+        "scheduledAt": "2026-10-23T21:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "00:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-24-00-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-24-00-07": 1
+    },
+    "reservationId": "loop-40024612743-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot"
+  }
+}
