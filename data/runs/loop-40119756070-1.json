@@ -1,0 +1,388 @@
+{
+  "id": "loop-40119756070-1",
+  "type": "loop",
+  "status": "completed_no_post",
+  "startedAt": "2026-10-24T18:14:18.145Z",
+  "finishedAt": "2026-10-24T18:19:10.887Z",
+  "candidatesFound": 1,
+  "picked": 0,
+  "rejected": [
+    {
+      "title": "Route email into a webhook payload",
+      "productUrl": "https://news.ycombinator.com/item?id=50223617",
+      "reason": "Below threshold (provisional mean 4.4): the assigned professional_services discussion names email-to-webhook routing but gives no inputs, frequency, buyer context or implementation evidence. A synthetic one-email-to-payload test is scorable, yet setup, delivery and any live mailbox use remain unsupported; no paying customer is established."
+    }
+  ],
+  "published": [],
+  "steps": [
+    {
+      "stage": "research",
+      "status": "completed",
+      "at": "2026-10-24T18:15:09.264Z",
+      "message": "Fetched 23 live source records; 0 feeds reported failure."
+    },
+    {
+      "stage": "write",
+      "status": "completed",
+      "at": "2026-10-24T18:18:12.769Z",
+      "message": "Codex CLI wrote 0 proposed posts."
+    },
+    {
+      "stage": "check",
+      "status": "passed",
+      "at": "2026-10-24T18:18:12.769Z",
+      "message": "Separate Codex checker decisions bound to exact draft and evidence hashes."
+    },
+    {
+      "stage": "pick",
+      "message": "Reassessed the sole assigned discussion as a narrow synthetic email-to-webhook experiment. It merits five provisional criterion scores, but the mean is below 6 and implementation, repeat demand and payment remain unproved; no post proposed."
+    }
+  ],
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40119756070",
+  "version": "rules-82935b274a3f",
+  "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
+  "rulesCommit": "ed19158aa7f6acc0d4d876263ee8f55158c1e59c",
+  "usage": {
+    "id": "loop-40119756070-1",
+    "type": "usage",
+    "runId": "loop-40119756070-1",
+    "workflowKind": "loop",
+    "collectedAt": "2026-10-24T18:19:06.019Z",
+    "localDate": "2026-10-24",
+    "githubRunId": "40119756070",
+    "runAttempt": 1,
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40119756070/attempts/1",
+    "model": "gpt-6-luna",
+    "source": "github_actions_logs_codex_exec_jsonl",
+    "status": "recorded",
+    "inputTokens": 645372,
+    "cachedInputTokens": 489504,
+    "cacheWriteInputTokens": 155799,
+    "outputTokens": 6421,
+    "reasoningOutputTokens": 1608,
+    "costUsd": 0.027587315,
+    "observedCounts": {
+      "inputTokens": 645372,
+      "cachedInputTokens": 489504,
+      "cacheWriteInputTokens": 155799,
+      "outputTokens": 6421,
+      "reasoningOutputTokens": 1608,
+      "costUsd": 0.027587315
+    },
+    "coverage": {
+      "expectedModelJobs": 4,
+      "observedModelJobs": 4,
+      "notRunModelJobs": 0,
+      "unknownModelJobs": 0
+    },
+    "rates": {
+      "inputUsdPerMillion": 0.1,
+      "cachedInputUsdPerMillion": 0.01,
+      "cacheWriteInputUsdPerMillion": 0.125,
+      "outputUsdPerMillion": 0.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-10-10",
+      "tier": "standard_short_context",
+      "currency": "USD"
+    },
+    "observedModels": [
+      "gpt-6-luna"
+    ],
+    "pricingStatus": "recorded_token_estimate",
+    "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Missing job usage leaves totals unknown; observedCounts covers only reported jobs.",
+    "jobs": [
+      {
+        "name": "writer",
+        "jobId": 120948737148,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40119756070/job/120948737148",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 144363,
+        "cachedInputTokens": 103545,
+        "cacheWriteInputTokens": 40803,
+        "outputTokens": 1031,
+        "reasoningOutputTokens": 126,
+        "costUsd": 0.006652825,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "checker",
+        "jobId": 120948962460,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40119756070/job/120948962460",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 143927,
+        "cachedInputTokens": 109568,
+        "cacheWriteInputTokens": 34341,
+        "outputTokens": 1548,
+        "reasoningOutputTokens": 491,
+        "costUsd": 0.006164105,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "repair",
+        "jobId": 120949223267,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40119756070/job/120949223267",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 225440,
+        "cachedInputTokens": 181004,
+        "cacheWriteInputTokens": 44415,
+        "outputTokens": 2270,
+        "reasoningOutputTokens": 450,
+        "costUsd": 0.008499014999999999,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      },
+      {
+        "name": "final_check",
+        "jobId": 120949454135,
+        "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40119756070/job/120949454135",
+        "status": "observed",
+        "reason": null,
+        "inputTokens": 131642,
+        "cachedInputTokens": 95387,
+        "cacheWriteInputTokens": 36240,
+        "outputTokens": 1572,
+        "reasoningOutputTokens": 541,
+        "costUsd": 0.00627137,
+        "conclusion": "success",
+        "model": "gpt-6-luna",
+        "cacheWriteAccounting": "reported_by_cli",
+        "pricingStatus": "standard_token_estimate"
+      }
+    ]
+  },
+  "engine": "official openai/codex-action",
+  "sourceSnapshotSha256": "cb1e6d30da334dd4b9e10a71a2ade05cb111639c0ec9b9fa2246dc5f20d05a04",
+  "assessmentOutcome": "completed",
+  "operationalFailures": [],
+  "checkedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "contractVersion": 1,
+    "runId": "loop-40119756070-1",
+    "schedulingSha256": "ca5ffa70e9005988f2fdd85550d9384bcb931d56e087ac67e284fee9a56b89ad",
+    "slotIds": [
+      "publish-2026-10-24-21-07"
+    ],
+    "draftSha256": "a1c4bb43057ff0614d12e8a7f2f0052edb4100a61601529530e1c87958dbda63",
+    "contextSha256": "100d2cd1e96cf9b883743eb10086335ee0daab6681c8ed9d4ae8399db905e637",
+    "rulesSha256": "82935b274a3f041408d2c86d1b76bd72c377c16bf216c3438a46f54d4951101c",
+    "sourceSnapshotSha256": "cb1e6d30da334dd4b9e10a71a2ade05cb111639c0ec9b9fa2246dc5f20d05a04",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+    "checkerRunId": "loop-40119756070-1-independent-check",
+    "completedAt": "2026-10-24T18:19:10.887Z",
+    "decision": "no_supported_candidate",
+    "reason": "The only sealed discussion assignment has a fresh, independently fetched Show HN title identifying an email-to-webhook product, but no concrete user problem or requested chore. This does not support the proposed demand-first candidate.",
+    "checkedPostIds": []
+  },
+  "eventName": "workflow_dispatch",
+  "modelExecuted": true,
+  "scheduling": {
+    "id": "loop-40119756070-1",
+    "runId": "loop-40119756070-1",
+    "type": "loop-scheduling",
+    "eventName": "workflow_dispatch",
+    "event": "workflow_dispatch",
+    "triggerCron": null,
+    "githubRunId": "40119756070",
+    "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40119756070",
+    "clock": {
+      "source": "github-environment-clock",
+      "verified": true,
+      "tickId": "clock-40118524409-1",
+      "clockRunId": "40118524409",
+      "parentAttempt": 1,
+      "clockRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40118524409",
+      "dispatchId": "clock-40118524409-1-loop",
+      "runId": "40119756070",
+      "workflow": "loop.yml",
+      "runAttempt": 1,
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "tickedAt": "2026-10-24T18:13:58.457Z",
+      "requestedAt": "2026-10-24T18:13:58.457Z",
+      "verifiedAt": "2026-10-24T18:14:18.145Z",
+      "parentHeadSha": "e6549f95534626f2e38ac8dca040468b038e863b"
+    },
+    "timezone": "Europe/Vilnius",
+    "slotId": "publish-2026-10-24-21-07",
+    "scheduledAt": "2026-10-24T18:07:00.000Z",
+    "localDate": "2026-10-24",
+    "localTime": "21:07",
+    "requestedAt": "2026-10-24T18:14:18.145Z",
+    "catchUp": true,
+    "bootstrap": false,
+    "cadence": {
+      "schema": 1,
+      "mode": "hourly",
+      "activatedAt": "2026-10-11T12:15:05.785Z",
+      "relayConfirmedAt": "2026-10-11T12:10:58.834Z"
+    },
+    "assessmentContractVersion": 1,
+    "maxBatchSize": 6,
+    "dailyCap": 24,
+    "dailyCount": 0,
+    "missedSlots": [
+      {
+        "id": "publish-2026-10-24-00-07",
+        "scheduledAt": "2026-10-23T21:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "00:07"
+      },
+      {
+        "id": "publish-2026-10-24-01-07",
+        "scheduledAt": "2026-10-23T22:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "01:07"
+      },
+      {
+        "id": "publish-2026-10-24-02-07",
+        "scheduledAt": "2026-10-23T23:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "02:07"
+      },
+      {
+        "id": "publish-2026-10-24-03-07",
+        "scheduledAt": "2026-10-24T00:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "03:07"
+      },
+      {
+        "id": "publish-2026-10-24-04-07",
+        "scheduledAt": "2026-10-24T01:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "04:07"
+      },
+      {
+        "id": "publish-2026-10-24-05-07",
+        "scheduledAt": "2026-10-24T02:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "05:07"
+      },
+      {
+        "id": "publish-2026-10-24-06-07",
+        "scheduledAt": "2026-10-24T03:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "06:07"
+      },
+      {
+        "id": "publish-2026-10-24-07-07",
+        "scheduledAt": "2026-10-24T04:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "07:07"
+      },
+      {
+        "id": "publish-2026-10-24-08-07",
+        "scheduledAt": "2026-10-24T05:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "08:07"
+      },
+      {
+        "id": "publish-2026-10-24-09-07",
+        "scheduledAt": "2026-10-24T06:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "09:07"
+      },
+      {
+        "id": "publish-2026-10-24-10-07",
+        "scheduledAt": "2026-10-24T07:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "10:07"
+      },
+      {
+        "id": "publish-2026-10-24-11-07",
+        "scheduledAt": "2026-10-24T08:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "11:07"
+      },
+      {
+        "id": "publish-2026-10-24-12-07",
+        "scheduledAt": "2026-10-24T09:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "12:07"
+      },
+      {
+        "id": "publish-2026-10-24-13-07",
+        "scheduledAt": "2026-10-24T10:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "13:07"
+      },
+      {
+        "id": "publish-2026-10-24-14-07",
+        "scheduledAt": "2026-10-24T11:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "14:07"
+      },
+      {
+        "id": "publish-2026-10-24-15-07",
+        "scheduledAt": "2026-10-24T12:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "15:07"
+      },
+      {
+        "id": "publish-2026-10-24-16-07",
+        "scheduledAt": "2026-10-24T13:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "16:07"
+      },
+      {
+        "id": "publish-2026-10-24-17-07",
+        "scheduledAt": "2026-10-24T14:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "17:07"
+      },
+      {
+        "id": "publish-2026-10-24-18-07",
+        "scheduledAt": "2026-10-24T15:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "18:07"
+      },
+      {
+        "id": "publish-2026-10-24-19-07",
+        "scheduledAt": "2026-10-24T16:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "19:07"
+      },
+      {
+        "id": "publish-2026-10-24-20-07",
+        "scheduledAt": "2026-10-24T17:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "20:07"
+      },
+      {
+        "id": "publish-2026-10-24-21-07",
+        "scheduledAt": "2026-10-24T18:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "21:07"
+      }
+    ],
+    "slots": [
+      {
+        "id": "publish-2026-10-24-21-07",
+        "scheduledAt": "2026-10-24T18:07:00.000Z",
+        "localDate": "2026-10-24",
+        "localTime": "21:07"
+      }
+    ],
+    "slotIds": [
+      "publish-2026-10-24-21-07"
+    ],
+    "attemptCounts": {
+      "publish-2026-10-24-21-07": 1
+    },
+    "reservationId": "loop-40119756070-1",
+    "targetCount": 1,
+    "decision": "run",
+    "reason": "catch_up_elapsed_slot"
+  }
+}
