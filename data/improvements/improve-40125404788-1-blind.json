@@ -1,0 +1,404 @@
+{
+  "runId": "improve-40125404788-1",
+  "trialKind": "prose",
+  "sourceSnapshotSha256": "0e005b33411e275ac285d9b2a78f148f9f6a339aaa5b610388c6092c1b678ccd",
+  "trialsSha256": "94c673c798117df3be276c7a0c00a831145d3ba7077dfcb56869498eb8b08425",
+  "cases": [
+    {
+      "candidateId": "f6cd1a419da29fc9f9a7fc62",
+      "productUrl": "https://latch.tools",
+      "sources": [
+        {
+          "id": "f6cd1a419da29fc9f9a7fc62",
+          "url": "https://latch.tools",
+          "title": "Show HN: Latch – Make any website usable by AI agents in one line (WebMCP)",
+          "publisher": "latch.tools",
+          "text": "GA4 + Stripe client_reference_id pass-through. Mirror of inkurate's attribution.js. Reads ?ref=/utm_source, stores the FIRST-touch channel in localStorage (latch_ref), mirrors it into GA4 (ref_visit event + channel user property), and appends it as client_reference_id to the buy.stripe.com Pro link so a paid checkout is attributable (read back via `scripts/stripe.py revenue`). Skips any link that already carries a client_reference_id so the dashboard's project-key passthrough is never clobbered. Pure client-side; runs on DOMContentLoaded so the JS-set Pro CTA href is already in place. Slug sanitised to [a-z0-9-] (NOT [a-z0-9_.-]): this first-touch value is later read on /app and appended to the license-key checkout as \" __ch_ \". Stripe's client_reference_id allows only alphanumeric/-/_, so a dot is dropped (corrupting the whole reference and breaking the paid customer's key unlock) and an underscore collides with the \"__ch_\" webhook delimiter. Keep in lockstep with the [a-z0-9-] sanitiser used elsewhere in index.html (#ref capture) and server/app.html. --> Latch — one line of code makes your site work inside AI browsers 🔗 \"> 🔗 Latch . How it works Agent's-eye view WebMCP guide Pricing Analytics GitHub WebMCP · W3C standard · Chrome 149 origin trial · Edge 147 · Atlas · Comet One line makes your site work inside AI browsers. AI agents are already clicking through your site — and failing on your buttons and forms. Latch exposes your search, cart, and contact forms as WebMCP tools an agent can actually use. No server. No rewrite. <script src = \"https://latch.tools/latch.js\" defer ></script> Copy Drop it before </body> . Zero dependencies · ~6 KB · degrades silently where WebMCP isn't present. What Latch does It reads your page (read-only) and registers the actions an agent needs — nothing else. 🔎 search_site Finds your search box, types the query, and submits — so an agent can look things up. 🛒 add_to_cart Detects \"Add to cart / Buy now\" controls and clicks them on the agent's behalf. ✉️ submit_form Maps your contact / booking / signup fields into a tool an agent can fill and send. 🧭 navigate Surfaces your main nav links so an agent can move around the site reliably. 🛡️ Safe by default Read-only discovery. If WebMCP isn't there, Latch does nothing and never breaks your page. ⚡ Zero backend One static script. No MCP server to host, no API keys, no build step. Agent's-eye view — live This page runs Latch on itself . Below is exactly what an AI agent now sees. Try the demo search and contact form — they're real, and Latch turned them into tools. detecting… Scanning the page… Demo surface (so there's something to detect) Send message Pricing The script is free and open source forever. Pay only if you want the hosted dashboard that shows what agents actually do on your site. Open source Free €0 / forever The one-line script — all WebMCP tools Self-host or load from latch.tools Opt-in analytics, last 14 days Tool calls, success rate & recent feed Create a project key → Hosted control plane Pro €19 / month · per project Everything in Free, plus: 90-day history Per-agent breakdown (which AI browsers) Full event feed & weekly email summary Priority support Upgrade to Pro → Install free first — Pro shows your agent traffic, so upgrade from your dashboard once agents start visiting. Analytics is opt-in and metadata-only : add data-key to your script tag and Latch reports tool name, outcome, and page path — never form contents, query strings, or PII. No key, and Latch makes zero network calls. Questions? Send us a message Tell us what you need — we read every message and reply by email. Send message Guides: WebMCP guide · WebMCP for Shopify · WebMCP for WordPress 🔗 Latch — make your site agent-ready in one line. Open source (MIT) · github.com/r0bertini/latch \"Latch\" is a common word used by other companies in unrelated classes; this is an independent open-source WebMCP dev tool.",
+          "fetchedAt": "2026-10-24T19:30:17.349Z",
+          "verifiedAt": "2026-10-24T19:30:17.349Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "f6cd1a419da29fc9f9a7fc62",
+          "candidateId": "f6cd1a419da29fc9f9a7fc62",
+          "title": "Make a small site easier for AI agents to use",
+          "promise": "Try Latch on a demo page and review the actions it exposes.",
+          "whatItIs": "Latch is an open-source WebMCP script that can expose a site's search, cart, contact or booking form actions as tools for an AI agent. A beginner's small experiment could install it on a test page and inspect the discovered actions; that student adaptation is hypothetical.",
+          "whoPays": "Hypothesis: a small website operator might pay for Latch's hosted dashboard if they want its opt-in agent activity analytics. The source lists a Pro plan at €19 per month per project; it does not establish customer demand.",
+          "loop": [
+            "Add the provided script to a test site's page.",
+            "Let Latch inspect the page and register supported actions when WebMCP is available.",
+            "Use a test agent request such as searching for a sample item; the hypothetical output is a search result returned through the exposed search action.",
+            "Review the registered action and its result manually; a person must approve any purchase or form submission."
+          ],
+          "evidence": "Latch's site describes a one-line static script that exposes search, cart and contact or booking form actions as WebMCP tools, with no backend. It says the script is open source and offers an optional hosted analytics dashboard. The described demo includes a search and contact form.",
+          "uncertainty": "The source describes product capabilities but provides no independent usage or customer evidence. WebMCP availability varies; the site says Latch does nothing when it is unavailable. An exposed form or cart action can have consequences, so review inputs and results before submission or purchase. A beginner's test setup is a proposal, not an established customer workflow.",
+          "first24Hours": [
+            "Create a disposable test page with a search field and contact form.",
+            "Add Latch's script and check which actions it detects in a supported browser.",
+            "Try a harmless sample search and manually inspect the result before enabling any send or purchase action."
+          ],
+          "sourceIds": [
+            "f6cd1a419da29fc9f9a7fc62"
+          ],
+          "productUrl": "https://latch.tools",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 6,
+                "reason": "The site says installation is one static script with no backend or build step, though a beginner still needs a test page and compatible browser.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: site operators might pay for the listed hosted dashboard, but the source gives no evidence of buyers or demand.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "feasibility": {
+                "value": 6,
+                "reason": "A test page can exercise the documented search action, while WebMCP availability and consequential form or cart actions need care.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "The script can discover and register actions, but a person must review form submissions and purchases.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The first-party site describes the working demo and product actions but supplies no independently documented real-use evidence.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": {
+          "id": "f6cd1a419da29fc9f9a7fc62",
+          "candidateId": "f6cd1a419da29fc9f9a7fc62",
+          "title": "Test agent-ready tools on a small website",
+          "promise": "Try a one-page script that lets an AI agent find and use a few site controls.",
+          "whatItIs": "Latch says its free, open-source script exposes search, navigation, cart, and contact-form actions to AI agents through WebMCP, a browser tool interface. A student could test a tiny version on a personal demo site, using Latch as a reference. That student project is hypothetical.",
+          "whoPays": "Hypothesis: a small business that wants its website to work with AI agents might pay for setup or monitoring; the source does not establish customer demand.",
+          "loop": [
+            "Choose a test page and list the controls an agent may use.",
+            "Add a script that exposes only those controls as tools.",
+            "Ask an agent to search or navigate the test page.",
+            "Review each action and check that forms are not submitted without approval.",
+            "Record tool name and outcome locally, then inspect the results by hand."
+          ],
+          "evidence": "Latch's site describes a free open-source script that registers search, cart, contact-form, and navigation tools, and says it uses read-only page discovery. It describes opt-in analytics as metadata-only. Source: https://latch.tools",
+          "uncertainty": "The source describes Latch's product, not independent results or buyer demand. A student build would need to limit available actions and require a person to review purchases and form submissions; browser support for WebMCP may vary.",
+          "first24Hours": [
+            "Make a demo page with a search box and a navigation link.",
+            "Read the Latch guide and identify which actions are safe to test.",
+            "Try one agent search and manually verify the page and resulting action."
+          ],
+          "sourceIds": [
+            "f6cd1a419da29fc9f9a7fc62"
+          ],
+          "productUrl": "https://latch.tools",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 6,
+                "reason": "A beginner can start on a demo page; adding a script and testing agent actions still requires basic web skills.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: a small business might pay for setup or monitoring, but the source gives no evidence of buyers or demand.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "feasibility": {
+                "value": 6,
+                "reason": "A limited test of search and navigation fits a four-week project; broader site actions and browser support add uncertainty.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "The described script registers repeatable page actions, while a person must set boundaries and review consequential form or cart actions.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The first-party site describes a working live demo and the script's actions, but supplies no independent use evidence here.",
+                "sourceIds": [
+                  "f6cd1a419da29fc9f9a7fc62"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    },
+    {
+      "candidateId": "f4c154ed20b0a3aaba92b426",
+      "productUrl": "https://sideos.ai",
+      "sources": [
+        {
+          "id": "f4c154ed20b0a3aaba92b426",
+          "url": "https://sideos.ai",
+          "title": "Show HN: Local AI for dictation, meetings, background tasks and more",
+          "publisher": "sideos.ai",
+          "text": "sideOS — The AI that lives in your notch side OS Agent Dictation Features Privacy Pricing Download for Mac Projects Designs PDF Q3 report.pdf Screenshot.png Finder File Edit View Go Window Help ✦ Tue Aug 12 9:41 AM mail.google.com Gmail Search mail B Compose Inbox 12 Starred Sent Drafts Partnership offer Inbox A Alex Carter <alex@partner.co> 9:24 AM to me ▾ Hi, We’re opening our partner program to a small group of teams this quarter, and sideOS is at the top of our list. Any interest in a quick call this week to talk terms? — Alex Reply Forward Alex Carter alex@partner.co Send sideOS Tasks Remind Meeting Connections Talk Write Your data never leaves you with local AI’s or your own api keys. Talk to your Mac. It actually does the work and tells no one. Hold Control Option , say what you want, let go. sideOS reads your screen, decides what to do, opens apps, clicks, types — and tells you when it’s done. Download for macOS Private by default The film · 0:45 See it in 45 seconds. Everything it does Seven things, every single day. The core of sideOS, playing itself. Pick any of them — or let it run. Talk to it Dictation Background tasks Meetings Reminders Connections Activity history Talk to it Say what you want. It reads your screen and does it for you. Hold, speak, let go Control Option The work starts the moment you release, and it tells you the result out loud. Draw on the screen while you talk The pointer becomes a laser. Circle something and that region travels with your question — “fix this” is a whole sentence. It reads the screen properly Through the accessibility tree in about 50 ms, knowing every button by name. Images are the fallback, not the method. It drives your apps Opens them, clicks, types, presses key combinations, runs AppleScript. Mail, Notes, Calendar, the browser — same road. Look-ups never hijack your screen Weather, news, rates and scores are searched in the background. No browser window opens on your behalf. Listening · point at anything Listening Revenue · last six months “Why is this month down? Draft a note to the team.” Dictation What you say lands at your cursor, in any app. No key, no bill, no internet. Hold, speak, it types Control fn Let go and the text appears wherever your cursor is, whichever app you happen to be in. Hands free Control fn tap Tap instead of holding and dictation stays on. Tap again, press the island button, or hit Esc to finish. Free, and it never phones home Recognition runs on macOS's own engines. Nothing reaches a cloud model, nothing is billed. Nothing gets lost No editable field in focus? The text goes to your clipboard and the island says so. Two engines, picked for you 62 languages on the classic engine, no time limit on the new one. Automatic uses whichever is ready. Any app · at your cursor Dictation on Untitled note Ship the beta on Friday and move the review to Monday morning No API request No key needed 62 languages Background tasks Long jobs run in their own loop while you carry on. They never touch your screen or keyboard. Hand it the job and walk away “Research this market and write me a report.” Say it out loud and it becomes a task on its own. Its own toolbox Shell commands, files, web search, page reads, rendered PDFs, AppleScript — in a loop separate from the chat. Anything with teeth asks first When a command can't be undone the island opens by itself and asks. Some are blocked outright. Output lands in one folder Everything it makes goes to Documents › sideOS Tasks, and the finished page opens in one click. It tells you when it's done A notification on completion, another when it needs you. Meanwhile a coloured strip sits in the notch. Running in the background web_search Q3 competitor pricing read_file ~/Notes/pricing.md write_file report.md render_pdf Q3-summary.pdf run_shell needs your approval Meetings It records, transcribes on-device, writes the summary and pulls out the actions. It notices the call A Zoom, Meet or Teams window opens and the island offers one-tap recording. It never starts on its own. Transcription never leaves the Mac Whisper downloads once and runs entirely here. No audio is sent anywhere, in any language. Who said what Speakers are split apart rather than lumped together — with real names when the call window shows them. Summary, decisions, actions Written the moment recording stops. Any action item becomes a reminder in one click. You decide how long audio lives Delete it the second it's transcribed, or keep it for a year. The transcript stays either way. Recording · transcribed on device Recording · 12:04 Ayşe Can we push the launch to the 14th? You Works for me — I'll tell support today. Marc I'll redo the pricing slide before then. Summary 2 decisions 1 action → reminder Reminders They go off in the notch — and some of them finish the work before they do. Set them by voice “Remind me to send Maya the deck at two tomorrow.” Typing or the bell panel work the same. Reminders that do the job Ask for a news digest every morning and it runs before it rings — the finished page is waiting when it does. It rings in the island The island stays open until you deal with it. Hard to miss, and snoozed in one tap. Repeats that hold Once, daily, weekdays, weekly or monthly — and overdue ones stay marked until you clear them. Straight out of a meeting Action items from a call become reminders with the meeting attached, so the context comes with them. 09:00 · it already ran You said “Every morning at nine, give me the news digest.” 08:52 — preparing in the background Reminder · 09:00 Result ready — 6 stories Open Connections Gmail, Calendar, Notion, Slack, GitHub — their tools join the ones it already has. Ready-made services, one click Hit Connect, sign in through your browser, and the tools land in the list. Nothing to install. They become its tools Once connected they sit beside the built-in ones, so “reply to that and put it on my calendar” is a single request. Anything that writes starts off Tools that send, delete or change something arrive flagged and switched off. Enabling them is your call. Paste anything else For servers outside the catalogue, paste their JSON — configs written for Claude Desktop work too. Secrets go to the Keychain Values from the config move into the Keychain; only the variable names stay in the file. MCP · tools joining the toolbox Gmail + 9 Calendar + 6 Notion + 11 Slack + 7 GitHub + 14 Tools available 17 Activity history Switch it on and it can answer questions about your own past. Off by default — the call is yours. Ask about last Tuesday “Which film did I watch five days ago?” stops being a question only you can answer. Basic Every ten seconds, just the frontmost app and its window title. The processor barely notices. Detailed Once a minute the text on screen is read on-device. Only text is kept — no image ever hits the disk. You draw the line Retention and excluded apps are yours to set, and password managers are always excluded. It stays here The database lives on this Mac. Only what matches your question is ever sent anywhere. Local log · never leaves the Mac “Which film did I watch on Tuesday?” Tue 21:40 TV · “Perfect Days” Tue 15:12 Safari · Pricing teardown Mon 09:58 Figma · Onboarding v3 “Perfect Days — Tuesday evening, about nine forty.” Playing through all seven — click any tab to take over. Works in every app on your Mac Mail Safari Notes Slack Calendar Finder VS Code Messages Terminal Pages Reminders Chrome Figma Numbers Music Preview Mail Safari Notes Slack Calendar Finder VS Code Messages Terminal Pages Reminders Chrome Figma Numbers Music Preview You hold Control + Option wakes the notch. Listening macOS transcribes on-device. No API call. Thinking Reads the live screen in about 50 ms. Acting Opens, clicks, types, scripts — for real. Speaking Says what it did, out loud. Agent mode It doesn’t just answer. It acts. Chatbots hand you a paragraph and leave the work to you. sideOS has hands — a toolbox that reaches straight into the apps already open on your screen. It reads the screen, not a screenshot sideOS pulls the accessibility tree macOS already maintains for every window: real buttons, real labels, real text fields. Same understanding as a screenshot, a fraction of the time and tokens. Images are the fallback, not the default. ~50 ms to read the screen 20 tools in the agent's hands The toolbox read_screen Reads the live state of the screen open_app Launches or focuses an app click_element Hits buttons, links, menu items click_at Clicks exact coordinates when needed focus_element Puts the caret in a text field type_text Types into whatever is focused press_keys Sends any keyboard shortcut run_applescript Drives Apple apps directly take_screenshot Visual fallback for canvas & video wait Waits for the UI to settle read_attachment Opens files you drop into the chat clipboard_history Looks through your last 20 copies paste_clipboard Pastes a chosen clipboard entry create_reminder Sets reminders and scheduled tasks list_reminders Lists what is scheduled cancel_reminder Cancels a reminder search_meetings Searches your meeting notes search_activity_history Searches the opt-in activity log forget Deletes a remembered fact on request start_background_task Hands long jobs to a background agent Things people actually say “ Open Notes, create a new note and write hello. ” “ Reply to this email in a professional tone and politely decline. ” “ Summarise this page and save it as a new note. ” “ Find the invoice from last month and put it in my downloads. ” A brake stops the agent if it starts repeating itself. Longer jobs belong in background tasks — press Esc at any moment and everything stops instantly. Region select Point at anything on your screen. No more describing what you're looking at. Frame it, ask, and sideOS sees exactly what you see. Drag while you talk Holding the keys turns the cursor into a crosshair. Frame a chart, an error, a paragraph — anywhere on screen. Pixels and elements, together The accessibility tree can't see charts or video. An image misreads long numbers and code. sideOS sends both, so they cover each other. Cropped at native resolution Only the region travels, at full sharpness — clearer than a whole screenshot and a lot cheaper. Safari File Edit View ✦ Tue 9:41 AM 612 × 318 “What’s driving the spike here?” Dictation mode Dictation that costs nothing. Hold Control fn and talk. What you say is typed exactly where your cursor is — a note, an address bar, a form field, a terminal. It never touches the model. Four gestures Hold, speak, release Push-to-talk. The text lands the moment you let go. Tap once (under 400 ms) Hands-free. Let go of the keys — the island keeps listening. Tap again Wraps up and types everything you said. Press Esc Cancels. Nothing gets typed. Dictation on On-device Ship the beta on Friday, tell the team we are moving the review to Monday Zero API requests Works without an API key 62 languages, including yours No API, no bill Dictation never reaches a cloud model. It runs on macOS's own engines and works without an API key. Your clipboard survives Text is pasted at the caret, then whatever you had copied is put right back. Nothing gets lost No editable field in focus? The text waits on your clipboard and the island tells you so. Two engines, picked for you Automatic by default — the newer engine when your language is supported, the classic one otherwise. Classic SFSpeechRecognizer Languages 62 languages Length ~1 minute per take Available on every macOS version. New SpeechAnalyzer · macOS 26 Languages 30 languages Length No time limit Fully on-device. We fed it 7 min 10 s of audio in one pass — about 50× faster than real time. Beyond commands A whole workspace, folded into a notch. The voice loop is the front door. Behind it sits everything you'd expect from a real assistant — and it all stays on your Mac. Hand it a job and walk away Background tasks run in their own loop while you get on with something else. They can search the web, read and write files, run shell commands and render a finished PDF. Anything with teeth asks you first. Running · step 12 of 60 web_search Q3 competitor pricing read_file ~/Notes/pricing.md write_file report.md render_pdf Q3-summary.pdf run_shell needs your approval Meetings, handled It notices when a call window opens and offers to record. Afterwards it transcribes on-device, writes the summary, works out who said what — and turns every action item into a reminder. It remembers How you write, what you're working on, who matters. Ask what it knows, edit it, or just say “forget that”. Switch memory off and nothing is stored or sent. Reminders that nudge “Remind me to send this at five.” It lands in the notch at five — overdue ones stay marked until you deal with them. Or just type Double-tap Control and a chat field opens in the island; answers stream down as bubbles. Drop in images, PDFs or text files and it reads them. Bring your own tools Connect any MCP server — HTTP or stdio, OAuth included — and those tools join the toolbox the assistant already has. Searchable history Every run is logged locally, so “what did I do about that invoice last Tuesday?” is a question it can actually answer. 32 interface languages Esc stops everything Approval before shell commands Runs offline with a local model Prefer the keyboard? Control Control opens the chat field. Move the pointer to the notch and the island unfolds into a full control menu. And the rest Everything else, quietly. The parts you'll find on your second day: the things that shape how it talks, what it remembers and where any of it lives. Type instead The same assistant, in a chat field inside the island. Double-tap Control to open it Voice and text share one thread Chats are kept and searchable Hand it a document Drop a file on the notch and ask your question about it. Drag from Finder onto the notch PDF text, image OCR, plain text read once Images, PDFs, Markdown, CSV, JSON, code Files are referenced, never copied Memory It gets to know you, and all of it stays on your Mac. Learns from your conversations Worked out afterwards, never in your way See every entry, edit it, delete it Personalisation How it addresses you and the tone it speaks in. Tell it your name and your work Nine personalities, or write your own Short, balanced or detailed answers Your choice of model Claude, OpenAI, Gemini or Grok — the same assistant behind any of them. Three tiers each: top, balanced, light Every provider keeps its own key Switch without pasting anything twice Offline mode Run the model on your Mac: no internet, no API key. On-device models, 4B to 30B MoE One of them reads screenshots too Not a byte leaves the machine Voice & language How it sounds, and which language it answers in. Answers read aloud, or not at all Pick the voice, hear it first 32 interface languages The island Nothing on screen when idle — the island is the notch itself. Move the pointer to the notch Drag the edges to resize it Pin it so it stays open Permissions in plain sight Privacy & updates Where everything lives, and how new versions arrive. API key in the Keychain, never a file Recordings, memory and history stay local Screenshots only when nothing else works It updates itself, signed and notarised Privacy Your Mac stays yours. An assistant that can see your screen and press your keys has to earn that. So the design starts from the other end: keep everything local, and send only what the request cannot do without. Speech recognition and dictation run on macOS's own engines, on your Mac Your API key lives in the Keychain — never written to a file Meeting recordings, transcripts, memory and history stay in local storage No account, and no server of ours between you and the model Nothing you say or show is used to train anything Screen data is read only for the request you just made Usage statistics are anonymous counters only, and you can turn them off Your key, your bill The only paid part is the model — Claude, OpenAI, Gemini or Grok — billed to you by that provider directly. We never see it. Screenshots are the exception The accessibility tree covers almost everything. Images are captured only when a request truly needs one. Or go fully offline Point sideOS at a local MLX model — Gemma, Mistral, Llama, Qwen and more — and not a single byte leaves your Mac. What we do count Once a day the app sends a random install id with counters: version, macOS, which provider you picked, how many runs, which tools fired, which errors hit, how long runs took, how many tokens your model calls used, and whether a licence is active. No text, no prompts, no screen data, no file or app names, no IP stored. Switch it off in Settings and nothing is sent. The id is yours to hand over That install id is shown in Settings as your support code. We cannot connect it to you — send it with a bug report and we can look up your counters, or send it to have them deleted. Without it we have no way to find your rows, which is also why the code exists. Pricing Buy it once. Keep it. One payment, one Mac, every future update. No subscription, no seat, no expiry — and you can move the licence to a new machine whenever you like. The only other cost is the model you point it at, and you pay that provider directly, or nothing at all if you run it on your own machine. The app Most used $89.90 once A lifetime licence. Buy it once, keep it forever — no subscription, no expiry. Reads the screen, clicks, types, scripts Region select, background tasks, meetings Memory, reminders, MCP servers No account to sign into — one key, pasted once Moves to a new Mac in one click when you upgrade Every future update included Buy a licence The model Yours to choose The agent needs a model to think with. Bring your own key and pay that provider directly, or run one locally and pay nothing. Claude, OpenAI, Gemini or Grok — switch whenever you like Roughly 2–5¢ per command on the default models Or an on-d",
+          "fetchedAt": "2026-10-24T19:30:17.606Z",
+          "verifiedAt": "2026-10-24T19:30:17.606Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "f4c154ed20b0a3aaba92b426",
+          "candidateId": "f4c154ed20b0a3aaba92b426",
+          "title": "Try a local dictation and meeting-notes workflow",
+          "promise": "See how sideOS describes dictation, meeting summaries and review points.",
+          "whatItIs": "sideOS is a Mac assistant whose site describes on-device dictation and meeting transcription, plus summaries and action items. A beginner could try a short, non-sensitive recording and check the transcript and summary; this test adaptation is hypothetical.",
+          "whoPays": "Hypothesis: an individual Mac user may pay for the app's listed lifetime licence. The source lists a one-time price of $89.90 but does not establish buyer demand or sales.",
+          "loop": [
+            "Start dictation or manually choose to record a meeting; the site says recording is offered and does not start on its own.",
+            "For the hypothetical test, use a short sample recording with consent from everyone involved.",
+            "Let the app transcribe the audio on the Mac and draft a summary and action items.",
+            "A person checks names, wording and action items against the recording before sharing or creating reminders.",
+            "Choose whether to keep or delete the audio using the app's retention setting."
+          ],
+          "evidence": "The product site describes dictation using macOS speech engines and says meeting transcription runs on-device. It says a call window prompts the user to record, then the app produces a transcript, summary and actions; action items can become reminders. It lists a $89.90 one-time licence.",
+          "uncertainty": "These are first-party product claims; the attached page does not establish accuracy or independent customer use. A person should obtain recording consent, verify names and decisions, and approve any reminder or shared summary. The short sample workflow is a hypothetical test, and performance may depend on macOS and the audio.",
+          "first24Hours": [
+            "Check that you have a compatible Mac and choose a non-sensitive short audio sample.",
+            "If recording other people, ask for their consent before starting; otherwise use your own sample speech.",
+            "Compare the generated transcript and summary with the audio, correcting errors before using any action items."
+          ],
+          "sourceIds": [
+            "f4c154ed20b0a3aaba92b426"
+          ],
+          "productUrl": "https://sideos.ai",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 5,
+                "reason": "The source describes a simple dictation gesture and meeting prompt, but the experiment requires a compatible Mac and careful handling of recordings.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: Mac users might buy the listed lifetime licence, but the source supplies no customer or sales evidence.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "feasibility": {
+                "value": 5,
+                "reason": "A short recording can demonstrate the described transcription and summary loop, though Mac access, consent and transcript review are required.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "Transcription and drafting are automated, while recording is user-started and a person must verify the summary and actions.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The first-party site provides detailed feature descriptions and demonstrations, but no independent evidence of actual customer use.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": {
+          "id": "f4c154ed20b0a3aaba92b426",
+          "candidateId": "f4c154ed20b0a3aaba92b426",
+          "title": "Try a human-reviewed meeting notes loop",
+          "promise": "Prototype a flow that turns a meeting recording into notes and reminder suggestions.",
+          "whatItIs": "The sideOS site describes offering to record after a meeting window opens, transcribing on-device, writing a summary, and extracting action items. A student could prototype a flow that drafts notes and reminder suggestions from a recording they have permission to use. This adaptation is hypothetical.",
+          "whoPays": "Hypothesis: a person or small team that wants help turning meetings into follow-ups might pay; the source does not establish demand or customers.",
+          "loop": [
+            "Choose a meeting recording that participants have agreed may be used.",
+            "Transcribe it with an on-device tool.",
+            "Draft a summary and a list of possible action items.",
+            "Have a person correct names, decisions, and deadlines.",
+            "Create reminders only after the person approves each one."
+          ],
+          "evidence": "The sideOS site says it offers one-tap recording after a meeting window opens, on-device transcription, summaries, and action items that can become reminders. Source: https://sideos.ai",
+          "uncertainty": "The page is a product description, not independent proof of transcription accuracy or user demand. Meeting participants must consent; a person should check the transcript and approve every reminder. This student workflow is not established as a sideOS feature.",
+          "first24Hours": [
+            "Write down a consent checklist for a test recording.",
+            "Use a short recording with permission and produce a draft transcript.",
+            "Manually compare a summary and action list with the recording."
+          ],
+          "sourceIds": [
+            "f4c154ed20b0a3aaba92b426"
+          ],
+          "productUrl": "https://sideos.ai",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 5,
+                "reason": "A small prototype can use a permitted short recording, but transcription and careful review require setup and time.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "profit": {
+                "value": 4,
+                "reason": "Hypothesis: people or small teams may pay for meeting follow-up help; the source establishes no demand or paying customer.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "feasibility": {
+                "value": 5,
+                "reason": "A draft transcript and summary are a plausible four-week experiment, with consent and accuracy checks as real constraints.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "autonomy": {
+                "value": 5,
+                "reason": "The described product automates recording support, transcription, and draft action extraction; consent and review remain human tasks.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              },
+              "evidence": {
+                "value": 5,
+                "reason": "The first-party page gives a concrete meeting workflow and product demonstration, but no independent real-use evidence.",
+                "sourceIds": [
+                  "f4c154ed20b0a3aaba92b426"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      }
+    },
+    {
+      "candidateId": "4cabbb28004903d976b8e4e5",
+      "productUrl": "https://github.com/Aldyernesto/shotstash",
+      "sources": [
+        {
+          "id": "4cabbb28004903d976b8e4e5",
+          "url": "https://github.com/Aldyernesto/shotstash",
+          "title": "Show HN: Shotstash – Self-hosted media cloud for creators (MIT, BYO-AI)",
+          "publisher": "github.com",
+          "text": "GitHub - Aldyernesto/shotstash: Self-hosted media cloud for creators. Your footage, your hardware, your cloud. · GitHub Skip to content Navigation Menu Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code changes Code Quality Enforce quality at merge APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities Code security Secure your code as you build Secret protection Stop leaks before they start EXPLORE Why GitHub Documentation Blog Changelog Marketplace View all features Solutions BY COMPANY SIZE Enterprises Small and medium teams Startups Nonprofits BY USE CASE App Modernization DevSecOps DevOps CI/CD View all use cases BY INDUSTRY Healthcare Financial services Manufacturing Government See all industries View all solutions Resources EXPLORE BY TOPIC AI Software Development DevOps Security View all topics EXPLORE BY TYPE Customer stories Events & webinars Ebooks & reports Business insights GitHub Skills SUPPORT & SERVICES Documentation Customer support Community forum Trust center Partners View all resources Open Source COMMUNITY GitHub Sponsors Fund open source developers PROGRAMS Security Lab Maintainer Community GitHub Stars Archive Program REPOSITORIES Topics Trending Collections Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features Copilot for Business Enterprise-grade AI features Premium Support Enterprise-grade 24/7 support Pricing Search / Sign in Sign up Appearance settings You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert {{ message }} Aldyernesto shotstash Repository navigation Code Issues Pull requests Actions Projects Security and quality Insights More items shotstash Public Notifications You must be signed in to change notification settings Fork 0 ( 0 ) Star 5 ( 5 ) You must be signed in to star a repository About Self-hosted media cloud for creators. Your footage, your hardware, your cloud. Resources Readme MIT license Code of conduct Code of conduct Contributing Contributing Security policy Security policy Activity Stars 5 stars Watchers 0 watching Forks 0 forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 50 Commits 50 Commits Folders and files Name Name Last commit message Last commit date .github .github docker docker docs docs eslint eslint launch launch messages messages prisma prisma promo promo public public scripts scripts src src worker worker .dockerignore .dockerignore .env.example .env.example .gitattributes .gitattributes .gitignore .gitignore .release-please-manifest.json .release-please-manifest.json AGENTS.md AGENTS.md CHANGELOG.md CHANGELOG.md CODE_OF_CONDUCT.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTING.md LICENSE LICENSE README.md README.md SECURITY.md SECURITY.md audit-allowlist.json audit-allowlist.json docker-compose.demo.yml docker-compose.demo.yml docker-compose.images.yml docker-compose.images.yml docker-compose.yml docker-compose.yml eslint.config.mjs eslint.config.mjs next.config.ts next.config.ts openapi-gen.config.ts openapi-gen.config.ts openapi.json openapi.json package-lock.json package-lock.json package.json package.json prisma.config.ts prisma.config.ts release-please-config.json release-please-config.json schema.graphql schema.graphql server.ts server.ts tsconfig.json tsconfig.json View all files Repository files navigation README Code of conduct Contributing <a href=\"",
+          "fetchedAt": "2026-10-24T19:30:18.094Z",
+          "verifiedAt": "2026-10-24T19:30:18.094Z"
+        }
+      ],
+      "A": {
+        "post": {
+          "id": "4cabbb28004903d976b8e4e5",
+          "candidateId": "4cabbb28004903d976b8e4e5",
+          "title": "Test a self-hosted media library idea",
+          "promise": "Explore whether creators want to keep media on hardware they control.",
+          "whatItIs": "Shotstash's repository describes it as a self-hosted media cloud for creators. A student could interview a few creators and sketch a small, local media-library workflow without claiming that Shotstash provides any specific organizing or AI feature. This proposed experiment is hypothetical.",
+          "whoPays": "Hypothesis: creators who want media hosted on their own hardware might pay for a setup or support service; the source does not show that they will.",
+          "loop": [
+            "Ask a creator what media they keep and where they store it.",
+            "Record only the storage needs they choose to share.",
+            "Sketch a simple library workflow for files on hardware they control.",
+            "Have the creator review whether the sketch matches their needs.",
+            "Do not move or upload any files without explicit permission."
+          ],
+          "evidence": "The GitHub repository identifies Shotstash as a self-hosted media cloud for creators. Its repository page also shows an MIT license. Source: https://github.com/Aldyernesto/shotstash",
+          "uncertainty": "The attached source excerpt establishes the project's description but not its detailed features, working behavior, or creator demand. The proposed interview and sketch are hypothetical; a person must control any file access or hosting decisions.",
+          "first24Hours": [
+            "Read the repository description and note what it does and does not establish.",
+            "Draft five neutral questions about creators' media storage needs.",
+            "Ask one creator for an interview, without requesting access to files."
+          ],
+          "sourceIds": [
+            "4cabbb28004903d976b8e4e5"
+          ],
+          "productUrl": "https://github.com/Aldyernesto/shotstash",
+          "scoring": {
+            "criteria": {
+              "ease": {
+                "value": 5,
+                "reason": "A beginner can start with interviews and a sketch, but the source gives too little detail to build against specific features.",
+                "sourceIds": [
+                  "4cabbb28004903d976b8e4e5"
+                ]
+              },
+              "profit": {
+                "value": 3,
+                "reason": "Hypothesis: creators might pay for setup or support, but neither a buyer nor a concrete purchasing need is evidenced.",
+                "sourceIds": [
+                  "4cabbb28004903d976b8e4e5"
+                ]
+              },
+              "feasibility": {
+                "value": 5,
+                "reason": "Interviews and a workflow sketch fit four weeks; implementing a useful product cannot be scoped from this brief source excerpt.",
+                "sourceIds": [
+                  "4cabbb28004903d976b8e4e5"
+                ]
+              },
+              "autonomy": {
+                "value": 2,
+                "reason": "The attached description does not establish an automatable loop; the proposed discovery and review work is manual.",
+                "sourceIds": [
+                  "4cabbb28004903d976b8e4e5"
+                ]
+              },
+              "evidence": {
+                "value": 4,
+                "reason": "The repository establishes a named project and its self-hosted media-cloud purpose, but the excerpt provides no working demonstration details.",
+                "sourceIds": [
+                  "4cabbb28004903d976b8e4e5"
+                ]
+              }
+            }
+          }
+        },
+        "refusal": null,
+        "deterministicReasons": []
+      },
+      "B": {
+        "post": null,
+        "refusal": "The attached repository page identifies Shotstash as a self-hosted media cloud for creators and shows repository metadata, but provides no usable product workflow or demonstration evidence from which to write a beginner post without inventing capabilities.",
+        "deterministicReasons": [
+          "Trial produced no draft."
+        ]
+      }
+    }
+  ]
+}
