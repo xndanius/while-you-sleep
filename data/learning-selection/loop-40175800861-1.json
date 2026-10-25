@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "id": "loop-40175800861-1",
+  "runId": "loop-40175800861-1",
+  "type": "learning-selection",
+  "createdAt": "2026-10-25T08:15:04.850Z",
+  "algorithm": "seeded-beta-bernoulli-thompson",
+  "seed": "loop-40175800861-1",
+  "registrySha256": "ec35e1f4ee6d4603c8af7c1b6f63536e3883fdebcffdf91c07b670cfebd3a8a4",
+  "scoreboardSha256": "cf54f3f77b881135cd4390d4111a4bcf2c0f750118ea8b85e0fcd9e2111f3489",
+  "eligibleSegments": [
+    "local_services",
+    "professional_services",
+    "ecommerce",
+    "education",
+    "health_admin",
+    "construction_property",
+    "public_sector",
+    "households"
+  ],
+  "selectedSegment": null,
+  "demandSourceIds": [
+    "94ff0c81c5bf3c749b6fb828",
+    "9786484d3d14e516ae5d6495",
+    "939a755c20e133b519039302",
+    "e935ee0506560f4175ecd570",
+    "5c64e7df38b6e81294e26f29",
+    "31fb2b3a59fe1a234dfff556",
+    "9cda068854be7266ca517af9",
+    "9357203ec00a097f7f2cdfaa"
+  ],
+  "segmentDraws": [],
+  "sourceDraws": [
+    {
+      "id": "94ff0c81c5bf3c749b6fb828",
+      "value": 0.6435984328292806
+    },
+    {
+      "id": "9786484d3d14e516ae5d6495",
+      "value": 0.42544090472642787
+    },
+    {
+      "id": "939a755c20e133b519039302",
+      "value": 0.09801526740841367
+    },
+    {
+      "id": "e935ee0506560f4175ecd570",
+      "value": 0.024022724470966594
+    },
+    {
+      "id": "5c64e7df38b6e81294e26f29",
+      "value": 0.020491510828398042
+    },
+    {
+      "id": "31fb2b3a59fe1a234dfff556",
+      "value": 0.01949934594493293
+    },
+    {
+      "id": "9cda068854be7266ca517af9",
+      "value": 0.007834246333936765
+    },
+    {
+      "id": "9357203ec00a097f7f2cdfaa",
+      "value": 0.004704862235436671
+    }
+  ],
+  "selectionStrategy": "discussion-first-v1",
+  "discussionExploration": {
+    "schema": 1,
+    "segmentSelection": "per_lead_authorized_segments",
+    "sourceDraws": [
+      {
+        "id": "94ff0c81c5bf3c749b6fb828",
+        "value": 0.6435984328292806,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      },
+      {
+        "id": "9786484d3d14e516ae5d6495",
+        "value": 0.42544090472642787,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      },
+      {
+        "id": "939a755c20e133b519039302",
+        "value": 0.09801526740841367,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      },
+      {
+        "id": "e935ee0506560f4175ecd570",
+        "value": 0.024022724470966594,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      },
+      {
+        "id": "5c64e7df38b6e81294e26f29",
+        "value": 0.020491510828398042,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      },
+      {
+        "id": "31fb2b3a59fe1a234dfff556",
+        "value": 0.01949934594493293,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      },
+      {
+        "id": "9cda068854be7266ca517af9",
+        "value": 0.007834246333936765,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      },
+      {
+        "id": "9357203ec00a097f7f2cdfaa",
+        "value": 0.004704862235436671,
+        "segments": [
+          "construction_property",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "households",
+          "local_services",
+          "professional_services",
+          "public_sector"
+        ]
+      }
+    ]
+  },
+  "discussionBatch": {
+    "version": 1,
+    "maxLeads": 10,
+    "maxPerDemandSource": 3,
+    "postIsDemand": true
+  },
+  "researchPolicy": {
+    "mode": "repair",
+    "widened": true,
+    "fallbackEnabled": true,
+    "maxLeads": 10,
+    "cooldownHours": 3
+  },
+  "reason": "Try up to ten admitted public discussion feeds with eligible customer segments assigned to each exact post. A post is its own demand signal; optional builder documentation describes implementation only. Search choices are never claims, scores or approvals.",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "40175800861",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "d913e26d679184db49bda13e0da3b90830dd6a93"
+  }
+}
