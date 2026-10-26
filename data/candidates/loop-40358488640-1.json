@@ -1,0 +1,105 @@
+{
+  "runId": "loop-40358488640-1",
+  "createdAt": "2026-10-26T16:24:24.103Z",
+  "candidates": [
+    {
+      "title": "Review coding-agent commands for risk",
+      "productUrl": "https://news.ycombinator.com/item?id=50245260",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "2fefaa821678081cc010432a"
+        ],
+        "chore": "Check whether a coding agent ran commands judged sketchy.",
+        "evidenceQuote": "The tool also checks if your coding agent ran any sketchy commands."
+      },
+      "sourceIds": [
+        "2fefaa821678081cc010432a"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner could mock command checks on operator-supplied examples, but no implementation reference supports command capture or classification.",
+            "sourceIds": [
+              "2fefaa821678081cc010432a"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: teams using coding agents might pay for command review; this maker post establishes no external demand or payment.",
+            "sourceIds": [
+              "2fefaa821678081cc010432a"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week offline test can flag a few supplied command patterns; real execution capture and reliable risk judgments are unsupported.",
+            "sourceIds": [
+              "2fefaa821678081cc010432a"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed checker could scan supplied command logs, but collecting logs and deciding whether a command is unsafe remain human tasks.",
+            "sourceIds": [
+              "2fefaa821678081cc010432a"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The maker explicitly describes checking whether a coding agent ran sketchy commands, but gives no frequency, user request, or corroboration.",
+            "sourceIds": [
+              "2fefaa821678081cc010432a"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a narrow offline command-log checker, but the proposed scores average below threshold and the monitoring workflow/customer overlaps recent post 0d455200b5ff2b5b39d4eac6 (AI-agent trace failure monitoring for teams operating agents)."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Browsers made easy, I built tabie after closing 47th Tab of my browser",
+      "productUrl": "https://news.ycombinator.com/item?id=50241975",
+      "reason": "The captured text only says “This extension is beest tabie.web.app”; the title hints at tab overload but the excerpt supplies no concrete task to assess or quote as demand."
+    },
+    {
+      "title": "Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT",
+      "productUrl": "https://news.ycombinator.com/item?id=50246238",
+      "reason": "This is the maker’s description of an on-device software architecture and business model, not a user request or concrete professional-services chore; no task can be proposed without inventing one."
+    },
+    {
+      "title": "How Can I Automate Food Delivery Order Notifications Using n8n?",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "reason": "The captured request says only that the poster is exploring workflows for a food-delivery application; it identifies no notification event, fields, trigger, or other concrete task."
+    },
+    {
+      "title": "Handle text and images replies",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "The concrete task is handling Facebook Messenger customer messages, but this exact identity was already assessed in recent refusal loop-40329184030-1 with unchanged evidence, and the customer-communication workflow duplicates recent post 98b4f6281cc3de4ecdfa95f6 (ecommerce support inbox triage and reply drafts). No new evidence changes that assessment."
+    },
+    {
+      "title": "Show HN: git-dupe – Version private files alongside a public Git repo",
+      "productUrl": "https://news.ycombinator.com/item?id=50245820",
+      "reason": "The excerpt is truncated before the described solution or workflow is complete. It does not establish a bounded recurring task or user request beyond the maker’s personal file-management concern."
+    },
+    {
+      "title": "[Show & Tell] Building a Self-Hosted Chemical Quality Assurance & Batch Validation Pipeline in n8n",
+      "productUrl": "https://community.n8n.io/t/324676",
+      "reason": "The captured excerpt ends mid-sentence after saying batch records require automation. It does not specify a concrete validation output or decision boundary; inventing a quality-control workflow from this fragment would be unsafe."
+    },
+    {
+      "title": "Need help with a broken automation? Airtable, Google Sheets, Telegram, Webhooks & APIs",
+      "productUrl": "https://community.make.com/t/118231",
+      "reason": "The excerpt says only that the poster is building a business around practical automations and small technical fixes; it names no specific customer chore to assess. The attached Make error-handling reference supports error routes only and cannot supply the missing demand task."
+    },
+    {
+      "title": "Show HN: Ranwhat.com",
+      "productUrl": "https://news.ycombinator.com/item?id=50245260",
+      "reason": "Below threshold and duplicate of recent post 0d455200b5ff2b5b39d4eac6 on monitoring AI-agent behavior for teams operating agents; the excerpt supports only a proposed offline command-log check, not safe live execution monitoring."
+    }
+  ]
+}
