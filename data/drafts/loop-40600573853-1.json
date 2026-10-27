@@ -1,0 +1,363 @@
+{
+  "runId": "loop-40600573853-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-27T23:20:00.000Z",
+  "candidates": [
+    {
+      "title": "Map resume facts into application fields",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "The post describes repeated manual entry of resume data into forms tailored to one or two companies.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can map supplied resume facts to sample fields; company-specific formats remain unknown.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a narrow setup service might interest this group, but the discussion shows no purchase intent or payment.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week manual-input mock can prepare values; company-specific forms and accuracy need human checks.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed loop prepares a draft; a person must verify the inputs and complete the external action.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a daily two-hour resume-data entry task for company-specific forms, but gives no fields or examples.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Prepare a reviewable mapping of supplied resume facts to a few manually entered application fields.",
+        "inputs": [
+          "Fictional resume facts, 3–10 fields",
+          "Operator supplied sample company form labels",
+          "Explicit rules for fields that must not be inferred"
+        ],
+        "trigger": "An operator supplies a resume excerpt and a sample set of application field labels.",
+        "steps": [
+          "Extract only facts explicitly present in the supplied resume.",
+          "Match each fact to a supplied field label.",
+          "Mark unmatched fields as blank and uncertain matches for review.",
+          "Show the proposed values beside their source facts.",
+          "Have the applicant correct and submit each form manually."
+        ],
+        "acceptanceCheck": "On fictional examples, every filled value must match an explicitly supplied fact and uncertain or unsupported fields must remain blank.",
+        "humanBoundary": "The applicant supplies permitted test material, checks every mapped value, decides what to disclose, and submits applications.",
+        "unverified": [
+          "No browser or hiring-form integration is documented.",
+          "Resume privacy, varied form structures and reliable matching are untested."
+        ]
+      },
+      "reason": "Concrete daily chore; below threshold because matching must remain manually checked, there is no implementation reference, and buyer willingness to pay is unknown."
+    },
+    {
+      "title": "Summarize multi-service order activity",
+      "productUrl": "https://community.n8n.io/t/324888",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bd365fd1a282ac04aa03e211"
+        ],
+        "chore": "The post proposes daily summaries of completed orders, cancellations and pending requests.",
+        "evidenceQuote": "Daily reports: Generate summaries of completed orders, cancellations, and pending requests."
+      },
+      "sourceIds": [
+        "bd365fd1a282ac04aa03e211",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can use test order rows; n8n Summarize documents counts and grouping, not live order intake.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a narrow setup service might interest this group, but the discussion shows no purchase intent or payment.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can summarize supplied order rows; the reference supports aggregation, not source connections or business accuracy.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Aggregation is documented by n8n Summarize, but no trigger or report delivery is documented; a person checks results.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context asks about summaries of completed, cancelled and pending orders; recurrence and business demand are limited.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Create a grouped summary of supplied order rows, counting completed, cancelled and pending requests.",
+        "inputs": [
+          "Fictional order rows with a status field",
+          "Operator supplied status-to-group mapping",
+          "A selected reporting period"
+        ],
+        "trigger": "An operator provides a batch of sample order records for a reporting period.",
+        "steps": [
+          "Check that each supplied row has an allowed status.",
+          "Group rows by the operator supplied status values.",
+          "Count orders in each group using documented aggregation behavior.",
+          "Format the counts as a draft report and flag unknown statuses.",
+          "Have an operator compare totals with the supplied rows before use."
+        ],
+        "acceptanceCheck": "For a small hand-counted fictional batch, each status count and the grand total must match exactly; unknown statuses must be reported separately.",
+        "humanBoundary": "An operator chooses permitted input fields and status definitions, checks the counts, and decides whether to share the report.",
+        "unverified": [
+          "No live multi-service order source or trigger is documented.",
+          "The reference documents numeric and grouped aggregation, not semantic status interpretation or report delivery."
+        ]
+      },
+      "reason": "A bounded reporting experiment is assessable, but its provisional mean is below six and source integration and buyer demand are unproved."
+    },
+    {
+      "title": "Map CRM arrays into invoice rows",
+      "productUrl": "https://community.make.com/t/118145",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b407a896ba8504e91a52df04"
+        ],
+        "chore": "The post asks to map a changing number of CRM array values into rows for an external invoice request.",
+        "evidenceQuote": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section."
+      },
+      "sourceIds": [
+        "b407a896ba8504e91a52df04",
+        "e73220ebd327caecbae34a3c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A small test can use fictional CRM rows; Make documents indexed array mapping, not invoice API execution.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a narrow setup service might interest this group, but the discussion shows no purchase intent or payment.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can map fictional arrays; the reference covers array indexing, not invoice delivery or persistence.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed loop prepares a draft; a person must verify the inputs and complete the external action.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans identify dynamic invoice-row mapping from Airtable CRM data to an external REST API; posting and persistence are unverified.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Prepare a reviewable list of invoice-row values mapped from fictional CRM arrays to operator supplied field labels.",
+        "inputs": [
+          "Fictional CRM record with parallel arrays",
+          "Operator supplied invoice row field labels",
+          "Expected row count and sample output"
+        ],
+        "trigger": "An operator supplies a fictional CRM record and the target row-field labels.",
+        "steps": [
+          "Check that the supplied arrays contain the expected number of values.",
+          "Pair each item by its array index.",
+          "Flag missing or mismatched lengths instead of guessing.",
+          "Display proposed invoice rows with their original input values.",
+          "Have a person verify amounts, tax treatment and destination before any manual submission."
+        ],
+        "acceptanceCheck": "For a fictional record with two values per array, output must contain two rows with index-aligned values and flag any unequal array lengths.",
+        "humanBoundary": "A person supplies authorized test data, verifies every amount and tax field, and manually decides whether to create an invoice.",
+        "unverified": [
+          "Make documentation supports array item indexing but not invoice endpoint execution.",
+          "Tax correctness, external API behavior and invoice persistence are unverified."
+        ]
+      },
+      "reason": "The task is concrete and a synthetic mapping test is feasible; its provisional mean is below six, while invoice delivery, persistence and tax correctness are unsupported."
+    },
+    {
+      "title": "Draft restaurant order status notifications",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ea2016bda7c0f26522b8ff64"
+        ],
+        "chore": "The post asks about connecting restaurant order records with customer notifications and delivery updates.",
+        "evidenceQuote": "I want to understand how n8n can help connect restaurant order systems, customer notifications, and delivery updates."
+      },
+      "sourceIds": [
+        "ea2016bda7c0f26522b8ff64"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can draft a notification from fictional order inputs; no integration capability is documented.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a narrow setup service might interest this group, but the discussion shows no purchase intent or payment.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can draft from test orders; live order access and delivery remain unsupported.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed loop prepares a draft; a person must verify the inputs and complete the external action.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post asks about connecting restaurant orders, notifications and delivery updates, but supplies no operational examples or recurrence.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Draft a customer order-status message from one operator supplied fictional order update.",
+        "inputs": [
+          "Fictional order identifier",
+          "Operator supplied current order state",
+          "Approved short message template"
+        ],
+        "trigger": "An operator enters a test order update that is ready for a customer status message.",
+        "steps": [
+          "Check that the order state is present and allowed.",
+          "Select the matching approved template.",
+          "Insert only the supplied state and order reference.",
+          "Flag missing or unexpected values for manual handling.",
+          "Have a staff member verify and send the draft through an approved channel."
+        ],
+        "acceptanceCheck": "For each fictional status, the output must match its approved template and include no unsupplied delivery promise; unknown states must be held for review.",
+        "humanBoundary": "Restaurant staff supply accurate state changes, approve every message and handle failed or unusual orders.",
+        "unverified": [
+          "No order-system webhook, messaging integration or delivery status source is documented.",
+          "The discussion asks about a workflow but gives no live implementation evidence or repeated operational results."
+        ]
+      },
+      "reason": "A bounded fictional notification draft can be scoped, but the post is exploratory, has no implementation reference, and its provisional mean is below six."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "GameMaker compatibility quirks",
+      "productUrl": "https://news.ycombinator.com/item?id=50261794",
+      "reason": "The excerpt describes technical compatibility details (event order, random behavior and sound timing), not an existing manual chore or requested business service; no demand task can be grounded."
+    },
+    {
+      "title": "Crulon business phone system",
+      "productUrl": "https://news.ycombinator.com/item?id=50261381",
+      "reason": "This is a product description saying an AI answers calls alongside a team, not a concrete community request or manual chore; the excerpt does not establish a new demand task."
+    },
+    {
+      "title": "Reduce founder workload",
+      "productUrl": "https://news.ycombinator.com/item?id=50246546",
+      "reason": "The excerpt says product building and customer acquisition consume more founder time but names no specific repeated task or requested service; proposing one would invent the chore."
+    },
+    {
+      "title": "Shopify customer status updates",
+      "productUrl": "https://community.make.com/t/118000",
+      "reason": "The specific ecommerce customer-status communication workflow and buyer overlap published post 98b4f6281cc3de4ecdfa95f6; the post adds no distinct task that avoids that duplicate."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight assigned discussion identities. Four concrete tasks received scoped plans and provisional scores, all below the threshold of six; four were excluded for absent concrete chore or duplicate ecommerce customer-status workflow. No post proposed."
+    }
+  ]
+}
