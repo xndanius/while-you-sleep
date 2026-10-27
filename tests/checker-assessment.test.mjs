@@ -87,6 +87,7 @@ test('both checker phases prepare a bound complete view and the inspector prints
   const prepared=s.invoke('prepare-run',[role],{CHECKER_PHASE:role==='checker'?'initial':'final'});assert.equal(prepared.status,0,prepared.stderr);
   const session=await s.read('.run/context.json'),view=await s.read('.run/checker-assessment.json');
   assert.equal(session.role,role);assert.deepEqual(session.checkerAssessment,{path:'.run/checker-assessment.json',sha256:sha256(stableJSON(view)),counts:view.counts,command:`node scripts/inspect-check-assessment.mjs ${runId}`});
+  assert.equal(sha256(await readFile(path.join(s.root,session.checkerAssessment.path))),session.checkerAssessment.sha256,'The advertised assessment fingerprint must also match its exact file bytes for independent sha256sum checks.');
   assert.deepEqual(view,checkerAssessmentView(f.draft,f.context,{role}));assert.deepEqual(view.counts,{posts:0,candidates:3,rejected:8,uniqueConsidered:8});
   const before=await fileHashes(s.root),inspected=s.invoke('inspect-check-assessment');assert.equal(inspected.status,0,inspected.stderr);assert.deepEqual(JSON.parse(inspected.stdout),view);assert.deepEqual(await fileHashes(s.root),before);
   assert.deepEqual(await readFile(path.join(s.root,`data/drafts/${runId}.json`)),beforeDraft);assert.deepEqual(await readFile(path.join(s.root,`data/check-context/${runId}.json`)),beforeContext);

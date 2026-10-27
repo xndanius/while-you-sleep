@@ -70,7 +70,9 @@ if(['checker','final-checker'].includes(role)){
  context.demandContractVersion=frozen.demandContractVersion||null;context.demandContextSha256=frozen.demandContextSha256||null;
  const assessmentView=checkerAssessmentView(draft,frozen,{role});
  context.checkerAssessment={path:'.run/checker-assessment.json',sha256:sha256(stableJSON(assessmentView)),counts:assessmentView.counts,command:`node scripts/inspect-check-assessment.mjs ${runId}`};
- await writeFile(context.checkerAssessment.path,JSON.stringify(assessmentView,null,2));
+ // The advertised fingerprint must also be the hash of the exact file bytes.
+ // Keep the reading aid canonical so sha256sum and the inspector agree.
+ await writeFile(context.checkerAssessment.path,stableJSON(assessmentView));
  context.checkerOutputSchemaPath='.run/checker-output-schema.json';context.checkerResponsePath='.run/checker-response.json';
  const checkerSchema=checkerOutputSchema(draft,frozen,{allowOmittedCandidateRepair:role==='checker'&&process.env.CHECKER_PHASE==='initial'});
  context.omittedCandidateRepairAllowed=Boolean(checkerSchema.properties.repairFeedback);
