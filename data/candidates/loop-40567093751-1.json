@@ -1,0 +1,208 @@
+{
+  "runId": "loop-40567093751-1",
+  "createdAt": "2026-10-27T19:14:22.473Z",
+  "candidates": [
+    {
+      "title": "Draft daily order-status summaries",
+      "productUrl": "https://community.n8n.io/t/324888",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bd365fd1a282ac04aa03e211"
+        ],
+        "chore": "Generate a daily summary of completed orders, cancellations, and pending requests.",
+        "evidenceQuote": "Daily reports: Generate summaries of completed orders, cancellations, and pending requests."
+      },
+      "sourceIds": [
+        "bd365fd1a282ac04aa03e211",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied n8n Summarize documentation supports grouping operator-supplied fields; the proposed workflow and inputs are untested, and live access is unverified.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: multi-service operators might pay for daily summaries, but the request establishes no buyer intent or payment.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A synthetic-row prototype using documented aggregation is plausible in four weeks; field mapping, workflow execution, and live connections are untested.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "A proposed aggregation can prepare a draft from supplied rows; a person must validate data and decide actions, and execution is untested.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post names a daily summary and three categories, but gives no workflow detail beyond that request, demand corroboration, or implementation test.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily draft summary of completed orders, cancellations, and pending requests from operator-supplied rows.",
+        "inputs": [
+          "Synthetic rows with order status and service category",
+          "Operator-supplied field names and reporting date"
+        ],
+        "trigger": "Proposed daily run after an operator supplies or exports the day’s order rows.",
+        "steps": [
+          "Accept a small CSV or pasted table of fictional order rows.",
+          "Ask the operator to map status and service-category fields.",
+          "Group rows by status and count completed, cancelled, and pending items.",
+          "Format the counts and list rows with missing or unrecognized statuses.",
+          "Show the draft for an operator to compare with the input and approve."
+        ],
+        "acceptanceCheck": "On a fixed synthetic table, verify each status count against a hand-counted expected result and confirm unrecognized rows are surfaced instead of silently counted.",
+        "humanBoundary": "An operator supplies the data and field mapping, checks the summary against source records, and decides what to do with exceptions; no customer or provider action is automated.",
+        "unverified": [
+          "The assigned post does not establish an actual business or recurring customer demand.",
+          "No supplied source documents access to order systems or scheduled delivery.",
+          "The n8n Summarize reference documents aggregation fields, not execution of this proposed workflow."
+        ]
+      },
+      "reason": "Reassessed against checker feedback: the specific daily-summary chore supports a bounded synthetic-data experiment, but corrected supported ratings average below the 6 threshold; withdrawn from posts."
+    },
+    {
+      "title": "Prepare company-specific resume forms",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Enter resume information into forms customized for one or two companies.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can test a draft that maps a supplied resume to one sample form, but no implementation reference supports form filling.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: career-service providers or job seekers might pay for reducing repeated form entry; the post does not establish buying intent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week mock can compare a supplied resume with a manually provided sample form; extracting varied forms remains unverified.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed tool could prepare field-by-field answers, but a person must check accuracy and submit each application.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The author reports filling company-specific resume forms every day for two hours; no other affected users or workflow details are given.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft mapping of fields from an operator-supplied resume to one sample employer form.",
+        "inputs": [
+          "Fictional resume text",
+          "Operator-provided sample form fields",
+          "Operator-approved mapping examples"
+        ],
+        "trigger": "A user provides a resume and a new sample form that they want to prepare.",
+        "steps": [
+          "Extract the listed fields from the fictional resume.",
+          "Compare them with the operator-provided form field names.",
+          "Draft answers only where the resume explicitly contains matching information.",
+          "Mark missing or ambiguous fields for the user.",
+          "Let the user compare every answer before any manual submission."
+        ],
+        "acceptanceCheck": "On a fictional resume and sample form, check that each drafted answer matches its source text and that absent fields are marked missing.",
+        "humanBoundary": "The user provides the materials, checks every answer, decides whether it belongs in an application, and submits the form manually.",
+        "unverified": [
+          "No supplied implementation reference supports reading or filling employer forms.",
+          "The post describes one author’s experience and does not establish buyer demand or permission to process another person’s data."
+        ]
+      },
+      "reason": "Concrete repeated chore, assessed as a bounded draft-only experiment; provisional mean is below 6 because supported implementation and paying-buyer evidence are absent."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Report IP abuse to Cloudflare",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The only retained task text is “which clearly doesn’t apply here.” It identifies no concrete chore, so a demand-first experiment would require inventing the task."
+    },
+    {
+      "title": "Shop via a multi-store API",
+      "productUrl": "https://news.ycombinator.com/item?id=50264240",
+      "reason": "This is a maker description of an API being built, not an existing manual customer chore or request for a service; its product ambition does not establish demand."
+    },
+    {
+      "title": "Enable Execute Command in self-hosted n8n",
+      "productUrl": "https://community.n8n.io/t/324889",
+      "reason": "The retained spans describe a one-off configuration troubleshooting question about an unrecognized node, not a repeated business chore suitable for this service."
+    },
+    {
+      "title": "AI chatbots and booking automations",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained post advertises the author’s services and examples; it does not state an unmet task/request from a prospective customer."
+    },
+    {
+      "title": "Weekly keyword search volume to Sheets",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The retained spans describe an existing showcase workflow and its schedule, not an unmet chore or request. It is evidence of a build, not new demand."
+    },
+    {
+      "title": "Offer simple Make.com automation tasks",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The retained post is a service provider’s offer and practice-workflow description. It names possible capabilities but no concrete customer chore or customer request."
+    },
+    {
+      "title": "Draft daily order-status summaries",
+      "productUrl": "https://community.n8n.io/t/324888",
+      "reason": "Withdrawn in the single repair after applying the checker-supported ceilings: ease 6, profit 4, feasibility 6, autonomy 6, and evidence 5 average 5.4, below threshold 6. The proposed synthetic-row aggregation remains untested and the discussion does not establish a buyer or payment."
+    }
+  ]
+}
