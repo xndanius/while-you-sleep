@@ -1,0 +1,210 @@
+{
+  "runId": "loop-40594002037-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-27T22:30:00.000Z",
+  "candidates": [
+    {
+      "title": "Prepare recovery checks for agent workflows",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Developers need to add checkpoints, recovery logic, and idempotency handling to agent workflows.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable recovery checklist for one agent workflow, listing checkpoint locations, retry behavior, and operations that must not repeat.",
+        "inputs": [
+          "A fictional workflow description",
+          "A list of steps that may fail",
+          "A proposed side-effect such as sending a message",
+          "A desired recovery point"
+        ],
+        "trigger": "An operator supplies one workflow and asks for a recovery review.",
+        "steps": [
+          "List its steps and mark those with external side effects.",
+          "Choose a fictional interruption point and expected restart state.",
+          "Draft checkpoint and retry questions for each step.",
+          "Flag operations that need an idempotency key or human approval.",
+          "Show the checklist for an operator to verify."
+        ],
+        "acceptanceCheck": "A reviewer checks whether every marked side effect has a stated duplicate-prevention or approval rule and whether restart resumes from the chosen point.",
+        "humanBoundary": "A developer must supply accurate workflow details, inspect the checklist, and design and authorize any real recovery changes. No workflow execution or production modification is included.",
+        "unverified": [
+          "Whether supplied workflow descriptions capture real state",
+          "How to model checkpoints for different agent frameworks",
+          "Whether any proposed retry is safe or idempotent"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can draft a checklist from a fictional workflow, but the source describes the chore without a tested implementation method.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: agent developers or consultants may pay for recovery reviews; this discussion establishes neither a buyer nor payment.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can review fictional workflows and interruption cases; framework-specific correctness remains unverified.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed tool can organize failure cases and draft checks, while a developer must verify safety and implement recovery.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh post names checkpoints, recovery logic, and idempotency as developer work but gives no frequency or workflow details.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete developer chore assessed as a bounded fictional-workflow checklist experiment; provisional mean 4.6 is below the 6 threshold, and no supplied building reference supports implementation."
+    },
+    {
+      "title": "Draft compact summaries of email threads",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "The author describes saving email summaries with a stable reference to the original email and preparing draft context from conversation history.",
+        "evidenceQuote": "To save email resume properly, i need immutable id to reference original email of the resume."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A compact draft summary of a fictional email thread with a stable sample reference and links to the messages represented.",
+        "inputs": [
+          "A fictional thread of 3–6 messages",
+          "A synthetic stable message ID",
+          "A short summary format",
+          "A list of facts that must be preserved"
+        ],
+        "trigger": "An operator submits a fictional thread and requests a summary.",
+        "steps": [
+          "Keep the supplied synthetic ID attached to the draft.",
+          "Extract the main request and relevant prior context.",
+          "Draft a short summary without adding unsupported facts.",
+          "List source message positions for each retained fact.",
+          "Flag ambiguity and send the draft to a human reviewer."
+        ],
+        "acceptanceCheck": "A reviewer compares each summary fact with the fictional messages and confirms the ID points to the intended sample message.",
+        "humanBoundary": "A person must choose the thread, verify the summary and authorize any use with real email. Use fictional records only; no live mailbox access or identity handling is proposed.",
+        "unverified": [
+          "Whether stable message identifiers are available in a real mailbox",
+          "Whether the proposed summary preserves context across varied conversations",
+          "Whether email clients permit the desired reference behavior"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test summaries on fictional threads, but the post gives no attached software capability for email retrieval or stable IDs.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: consultants handling long client email threads might pay for summary drafts; the post establishes a need, not purchase intent.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week offline prototype can summarize synthetic threads and check traceability; mailbox integration and identifier behavior remain unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed draft loop can extract and summarize supplied text, but a person must supply, verify, and approve every thread.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post states a need for stable email references and compact draft context, but gives no frequency or independent corroboration.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete bounded task assessed using fictional threads; provisional mean 4.4 is below threshold and there is no supplied implementation reference."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Shop via CLI; for agents and software engineers",
+      "productUrl": "https://news.ycombinator.com/item?id=50264240",
+      "reason": "The retained excerpt describes a team building a search/browse API for ecommerce stores; it does not identify an existing manual chore or request for a service, so the assigned discussion does not support demandEvidence."
+    },
+    {
+      "title": "AI chatbots, WhatsApp agents and booking automations for small businesses",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained span is a service provider advertising chatbot, booking, lead-capture, and repair offerings. It does not establish a buyer asking for a concrete task; treating its offered services as customer demand would reverse the evidence."
+    },
+    {
+      "title": "Weekly keyword search volume to Google Sheets (Apify)",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The retained span documents an existing weekly automation and its schedule, not a customer request or unmet manual chore. The scheduled workflow itself is not evidence of demand for another service."
+    },
+    {
+      "title": "How to report IP abuse to Cloudflare?",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The only retained source text is “which clearly doesn’t apply here.” It does not identify a task or chore, so a scored demand experiment would require invented context."
+    },
+    {
+      "title": "How do I enable Execute Command in self-hosted n8n?",
+      "productUrl": "https://community.n8n.io/t/324889",
+      "reason": "The retained post reports a one-off configuration problem asking how to enable a node. This is a bug/configuration support question, not a repeated business chore suitable for a bounded service experiment."
+    },
+    {
+      "title": "Make.com Automation for Simple Business Tasks",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The retained span is an automation provider seeking clients and listing tasks they can perform. It does not show a customer requesting any one of those tasks, so no demand chore can be assigned without inventing one."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight assigned discussions. Two contain concrete chores and received five provisional criterion scores plus proposed experiment plans; both average below the threshold. The other six do not establish a buyer-side chore or are one-off support issues. No post proposed."
+    }
+  ]
+}
