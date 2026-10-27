@@ -113,6 +113,43 @@ test('a named signoff omits its entire block and separate signature line without
  }
 });
 
+test('extended standalone signatures are omitted whole and cannot be forged into a valid packet',async()=>{
+ const signatures=['Alice A. Smith','Dr. Alice Smith','Alice van der Smith','Alice Smith, PhD','Alice Smith / Operations','Alice Smith (Operations)','Alice Smith, Operations','ALICE','alice','Alice Fields','Élodie de la Cruz'];
+ const baseline=await fresh(`<p>${task}</p>`);
+ for(const signature of signatures){
+  const body=`<p>${task}</p><p>${detail}</p><p>${signature}</p>${exampleHtml}`;
+  const source=await fresh(body),packet=source.nativeReadingContext,normalized=normalizeNativePost(body);
+  assert.ok(packet,signature);assert.deepEqual(nativeReadingContextReasons(source),[],signature);
+  assert.equal(sourceQuoteOccurs(source,signature),false,signature);
+  assert.equal(JSON.stringify(packet.spans).includes(signature),false,signature);
+  assert.equal(sourceQuoteOccurs(source,detail),true,signature);assert.equal(sourceQuoteOccurs(source,example),true,signature);
+  assert.equal(source.text,baseline.text);assert.deepEqual(source.taskExcerpts,baseline.taskExcerpts);
+  assert.equal(demandEvidenceFingerprint(source),demandEvidenceFingerprint(baseline),signature);
+  for(const span of packet.spans)assert.equal(normalized.slice(span.start,span.end),span.text,signature);
+  const forged=structuredClone(baseline),p=forged.nativeReadingContext,start=p.normalizedLength+1,end=start+signature.length;
+  p.spans.push({kind:'context',start,end,text:signature,sha256:sha256(signature)});p.normalizedLength=end;p.normalizedSha256=sha256(task+' '+signature);p.retainedCharacters+=signature.length;p.omittedCharacters=end-p.retainedCharacters;reseal(p);
+  assert.ok(nativeReadingContextReasons(forged).length,signature);assert.equal(sourceQuoteOccurs(forged,signature),false,signature);
+ }
+});
+
+test('short technical labels and complete numeric examples survive signature filtering literally',async()=>{
+ const labels=['Input data','Tax rates','Item codes','HTTP POST','JSON'];
+ const body=`<p>${task}</p>`+labels.map(label=>`<p>${label}</p>`).join('')+`<p>${detail}</p>${exampleHtml}`;
+ const source=await fresh(body),normalized=normalizeNativePost(body);
+ for(const label of labels)assert.equal(sourceQuoteOccurs(source,label),true,label);
+ assert.equal(sourceQuoteOccurs(source,example),true);assert.deepEqual(nativeReadingContextReasons(source),[]);
+ for(const span of source.nativeReadingContext.spans)assert.equal(normalized.slice(span.start,span.end),span.text);
+});
+
+test('ordinary comma-led task context is not mistaken for a role suffix',async()=>{
+ const context=['Currently, I use Airtable to collect invoice rows before sending them to the REST API.','First, map each input position to an invoice row and preserve its tax category.'];
+ const body=`<p>${task}</p>`+context.map(text=>`<p>${text}</p>`).join('')+exampleHtml;
+ const source=await fresh(body),normalized=normalizeNativePost(body);
+ for(const text of context)assert.equal(sourceQuoteOccurs(source,text),true,text);
+ assert.equal(sourceQuoteOccurs(source,example),true);
+ for(const span of source.nativeReadingContext.spans)assert.equal(normalized.slice(span.start,span.end),span.text);
+});
+
 test('exceeding the native paragraph bound falls back to the unchanged short source after one request',async()=>{
  const body=`<p>${task}</p>`+'<p>Supplemental input context.</p>'.repeat(401);
  assert.equal(buildNativeReadingContext(buildArguments(body)),null);
