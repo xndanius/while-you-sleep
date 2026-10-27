@@ -1,0 +1,216 @@
+{
+  "runId": "loop-40538177966-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-27T16:30:00Z",
+  "candidates": [
+    {
+      "title": "Flag invoice mismatches for review",
+      "productUrl": "https://news.ycombinator.com/item?id=50261285",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "fe42abd6926120382bede5b9"
+        ],
+        "chore": "Identify when an invoice PDF is missing a signature or its total differs from the order amount.",
+        "evidenceQuote": "The PDF does not contain your signature"
+      },
+      "sourceIds": [
+        "fe42abd6926120382bede5b9"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue marking supplied invoice examples as missing-signature, amount-mismatch, or needs-human-check.",
+        "inputs": [
+          "fictional invoice text",
+          "fictional order amount",
+          "operator-defined required-signature flag"
+        ],
+        "trigger": "A shop operator supplies a sample invoice and matching order amount for review.",
+        "steps": [
+          "Read only fictional or operator-supplied invoice text and order amount.",
+          "Check whether the required-signature marker is present.",
+          "Compare the stated invoice total with the supplied order amount.",
+          "Label a mismatch or uncertain extraction for review.",
+          "Show the source values beside the proposed label."
+        ],
+        "acceptanceCheck": "On a small hand-labeled synthetic set, each label must match the known signature marker and arithmetic comparison; uncertain text must be sent to review.",
+        "humanBoundary": "A person supplies permissible test inputs, defines required fields, checks every flagged case, and decides whether to contact a customer.",
+        "unverified": [
+          "PDF text extraction is not supported by supplied implementation evidence.",
+          "Invoice totals may be formatted or obscured in ways the prototype cannot parse.",
+          "No source establishes how often shops encounter these cases or willingness to pay."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic text and amount comparison is a small mock, but no supplied source supports PDF extraction.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online shops might pay to catch invoice exceptions; this Show HN example proves neither demand nor payment.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week test can compare supplied text and amounts, while real PDF parsing and varied invoice formats remain unverified.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed labels can repeat on supplied examples, but a person must check every exception and decide customer follow-up.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The source gives two concrete mismatch examples, but they come from a product description with no frequency or independent demand evidence.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the post illustrates missing-signature and invoice-total checks, but is a maker product description, not corroborated demand; PDF parsing is unsupported."
+    },
+    {
+      "title": "Draft booking and provider updates",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Automate booking confirmations, provider assignment notifications, payment status updates, and customer alerts.",
+        "evidenceQuote": "How can n8n help automate booking confirmations, provider assignment notifications, payment status updates, and customer alerts?"
+      },
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue with a proposed booking confirmation or provider assignment message, plus a payment-status alert draft when a supplied test record changes.",
+        "inputs": [
+          "Synthetic booking ID and requested service",
+          "Synthetic booking status and assigned provider label",
+          "Synthetic payment status",
+          "Operator-written confirmation and alert templates"
+        ],
+        "trigger": "An operator adds or changes a synthetic booking row in a local test table.",
+        "steps": [
+          "Read the changed synthetic booking row and its status.",
+          "Check whether the booking ID already has a processed event key.",
+          "Map confirmed or assigned status to the matching operator-written message template.",
+          "For a payment-status change, prepare an alert draft without asserting the payment is correct.",
+          "Place the drafts and any unknown status in a human review queue."
+        ],
+        "acceptanceCheck": "For a hand-labeled synthetic set, each known status must produce only its mapped draft, a repeated event key must not create a second draft, and an unknown state must be flagged for review.",
+        "humanBoundary": "A person supplies lawful test records and message templates, verifies all booking and payment states, handles failed or ambiguous cases, and approves every customer-facing message.",
+        "unverified": [
+          "No supplied implementation reference documents booking, payment or external notification integrations for this post.",
+          "The requester gives no actual field schema, event frequency, provider system or failure examples.",
+          "Duplicate protection is only a proposed mock event-key check, not verified across concurrent live events.",
+          "Willingness to pay and recurrence of this chore are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A synthetic booking table can test the status-to-message draft; no supplied reference supports live booking, payment or notification integrations.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small on-demand service operators might pay for fewer missed updates; this request establishes neither payment nor frequency.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prototype can map supplied booking states to confirmation and assignment message drafts; real APIs and concurrent events remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A bounded mock can prepare repeatable alerts, but people must confirm payment state, resolve failures and approve customer messages.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained post explicitly asks about confirmations, provider assignment, payment updates, alerts, retries and duplicate prevention; it gives no frequency or system detail.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: a useful synthetic status-to-message experiment is scopeable, but the post gives no field schema or frequency, and live integrations, payment accuracy and event handling lack supplied implementation support."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Invite to build your business on KeilHQ",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "Excluded: “you focus on building your startup, we manage your operations” is a broad promotional claim, with no specific existing chore to scope without inventing duties."
+    },
+    {
+      "title": "Catch credential leaks in AI agents",
+      "productUrl": "https://news.ycombinator.com/item?id=50261335",
+      "reason": "Excluded: the excerpt describes the product problem area (“credentials crossing the boundaries”) but supplies no concrete manual task, request, or testable workflow; credential handling also needs a narrower safe scope."
+    },
+    {
+      "title": "Draft booking and provider updates",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "reason": "Below threshold after the single repair assessment: a synthetic booking status-to-message draft can be tested, but live integrations, payment-state accuracy, event frequency and concurrency handling are not established by the retained request."
+    },
+    {
+      "title": "Handle Messenger text and image replies",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Excluded as a completed refusal: the existing decision on this exact post assessed its full retained native spans; it is a builder troubleshooting report and no new implementation evidence changes that assessment."
+    },
+    {
+      "title": "Review affordable AWS scaling options",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "reason": "Excluded as a completed refusal: the recent decision index already assessed this exact request as a narrow sample-cost memo below threshold; fresh text adds no task detail or implementation support."
+    },
+    {
+      "title": "Food delivery order notifications",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "reason": "Excluded: the post asks generally about connecting order systems, restaurant notifications, and delivery updates, but no supplied implementation reference supports those integrations; the task is broad and the proposed automation lacks evidence."
+    },
+    {
+      "title": "Triage failed business automations",
+      "productUrl": "https://community.make.com/t/118231",
+      "reason": "Excluded: the retained native span describes concrete automation failures, but the assigned source.text excerpt (“I’m building Ecom Sync Solutions, focusing on practical business automations and small technical fixes.”) does not contain a literal task quote required for demandEvidence. The specific failures are visible only in nativeReadingContext; no candidate can be scored under this demand-quote contract."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Reassessed the one named omitted chore from all retained native spans. Its concrete booking, assignment, payment-update and alert request supports a bounded synthetic experiment, but the five provisional scores average below 6; no post is proposed."
+    }
+  ],
+  "repairAttempt": 1
+}
