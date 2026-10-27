@@ -1,0 +1,305 @@
+{
+  "runId": "loop-40575631907-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-27T20:13:10.000Z",
+  "candidates": [
+    {
+      "title": "Prepare booking event notices for review",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Prepare booking confirmation and provider assignment notices from a test booking record, with payment state and customer alert as separate fields.",
+        "evidenceQuote": "How can n8n help automate booking confirmations, provider assignment notifications, payment status updates, and customer alerts?"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable set of booking and provider notification drafts from one synthetic booking record.",
+        "inputs": [
+          "Synthetic booking ID and service type",
+          "Synthetic customer and provider labels",
+          "Synthetic payment state",
+          "Approved message templates"
+        ],
+        "trigger": "An operator enters a synthetic booking or starts a test run.",
+        "steps": [
+          "Validate required fields and reject incomplete test records.",
+          "Select a template for booking confirmation and provider assignment.",
+          "Draft separate customer and provider messages.",
+          "Mark payment status as supplied input without attempting payment processing.",
+          "Show all drafts for operator review and record approval in a test log."
+        ],
+        "acceptanceCheck": "For a fixed synthetic booking, check that the right two drafts contain the matching booking ID and supplied status, with no invented fields.",
+        "humanBoundary": "An operator supplies fictional records, verifies assignments and payment state, and approves every message; no real customer or payment data is needed.",
+        "unverified": [
+          "n8n node and API capabilities for this exact flow",
+          "External endpoint behavior and payment persistence",
+          "Whether operators repeat this chore or would pay for a tool"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A student can mock a booking record and draft notices, but no supplied implementation reference supports these integrations.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small on-demand service operators may pay for setup; the request establishes no buyer intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week prototype can generate reviewable notices from synthetic bookings; live APIs and payment persistence remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A proposed event-to-draft loop can repeat, but an operator must verify assignment and payment state and approve messages.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post names bookings, provider assignment, payment updates and customer alerts, but gives no frequency or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed as a proposed bounded experiment; provisional mean is below 6. The source establishes the chore only, not a working AI service or paying customer."
+    },
+    {
+      "title": "Flag webhook record update mismatches",
+      "productUrl": "https://community.make.com/t/118231",
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01",
+        "428eda549e557f199c3af452"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bc3afc6e8c2a63bbd4b7ae01"
+        ],
+        "chore": "Create a review checklist for webhook events that arrive but do not update the intended record.",
+        "evidenceQuote": "Webhooks receiving data but not updating the correct records"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short mismatch report comparing a supplied webhook example with its expected synthetic record.",
+        "inputs": [
+          "Synthetic webhook payload",
+          "Expected record key and values",
+          "Operator supplied mapping notes",
+          "Synthetic prior record"
+        ],
+        "trigger": "An operator submits a sample event and expected record for review.",
+        "steps": [
+          "Read the expected key and mapped fields supplied by the operator.",
+          "Compare those fields with the synthetic event and prior record.",
+          "Flag missing values or mismatches without proposing live edits.",
+          "If the event is marked as failed, add a note that Make error handlers can route module errors.",
+          "Produce a checklist for an operator to verify in a test scenario."
+        ],
+        "acceptanceCheck": "On a small set of fixed synthetic payloads, report every deliberately missing or mismatched key and no other fields.",
+        "humanBoundary": "An operator supplies test payloads and mapping expectations, checks any diagnosis, and applies changes manually after permission and privacy review.",
+        "unverified": [
+          "Whether Make can expose the needed payload and mapping details",
+          "Actual cause of any reported production mismatch",
+          "Support for record lookup, deduplication, retries or safe repairs"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can test a checklist on synthetic webhook and record pairs; Make documentation supports error handling routes, not record matching.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: automation consultants may pay for faster troubleshooting; the post establishes no independent buyer or payment.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week mock can compare supplied fields; Make documents error routes that keep scenarios running, but not record matching or live connections.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The checker could flag differences in a proposed mock; no source supports this automation, and an operator must diagnose and change the workflow.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The full post lists webhook updates and wrong records among small fixes, then offers fixed-price help; frequency is not established.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed as a proposed bounded experiment; provisional mean is below 6. The source establishes the chore only, not a working AI service or paying customer."
+    },
+    {
+      "title": "Compare AWS scaling options from test inputs",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "sourceIds": [
+        "a6b1f94743a6b7e17995034c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a6b1f94743a6b7e17995034c"
+        ],
+        "chore": "Draft a comparison memo from operator supplied workload and cost examples.",
+        "evidenceQuote": "If you are a bootstrapped startup and need to scale on AWS but can't afford it"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A comparison memo organizing supplied workload goals and cost options for human review.",
+        "inputs": [
+          "Synthetic workload description",
+          "Operator supplied candidate configurations",
+          "Sample monthly cost figures",
+          "Budget ceiling and constraints"
+        ],
+        "trigger": "An operator enters a fictional scaling question and candidate options.",
+        "steps": [
+          "Check that each option has a supplied cost and configuration label.",
+          "Group options by the operator supplied workload goal.",
+          "Draft a plain language comparison using only entered facts.",
+          "Flag missing costs and assumptions instead of filling them in.",
+          "Return a memo with a human verification checklist."
+        ],
+        "acceptanceCheck": "For a fixed synthetic example, verify every displayed cost and configuration matches the inputs and missing values are flagged.",
+        "humanBoundary": "A qualified operator validates AWS pricing and architecture and authorizes any real change; the prototype uses fictional inputs only.",
+        "unverified": [
+          "Current AWS pricing and workload suitability",
+          "Access to verified architecture and cost information",
+          "Whether a customer would pay for this proposed memo"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can organize fictional cost and workload inputs, but the post supplies no AWS implementation or cost reference.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: bootstrapped startups may pay for affordable scaling advice; the post offers help but proves no AI service buyer or payment.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can format operator supplied options; accurate AWS recommendations and live account analysis remain unverified.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A tool could format inputs and draft comparisons, but an operator must validate costs and approve every infrastructure change.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post explicitly offers AWS scaling help to bootstrapped startups, but gives no repeated task, workload details or implementation evidence.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed as a proposed bounded experiment; provisional mean is below 6. The source establishes the chore only, not a working AI service or paying customer."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Prepare booking event notices for review",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "reason": "Below threshold: the bounded proposed experiment has an honest provisional mean below 6; source evidence establishes the task but not a paying AI customer or proven implementation."
+    },
+    {
+      "title": "Flag webhook record update mismatches",
+      "productUrl": "https://community.make.com/t/118231",
+      "reason": "Below threshold: the bounded proposed experiment has an honest provisional mean below 6; source evidence establishes the task but not a paying AI customer or proven implementation."
+    },
+    {
+      "title": "Compare AWS scaling options from test inputs",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "reason": "Below threshold: the bounded proposed experiment has an honest provisional mean below 6; source evidence establishes the task but not a paying AI customer or proven implementation."
+    },
+    {
+      "title": "Invite to build your business on KeilHQ",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "Excluded: “we manage your operations” is a broad service claim, not a specific existing chore; the retained text supplies no task to scope without inventing duties."
+    },
+    {
+      "title": "HackerDome programming interview process",
+      "productUrl": "https://news.ycombinator.com/item?id=50264623",
+      "reason": "Excluded: the retained statement that the process can feel like a race to the bottom gives no concrete requested task or chore; inventing an interview workflow would exceed the evidence."
+    },
+    {
+      "title": "Weir credential leak detection",
+      "productUrl": "https://news.ycombinator.com/item?id=50261335",
+      "reason": "Excluded: the retained text is a product positioning statement about credentials crossing agent boundaries, not a concrete task request or existing chore."
+    },
+    {
+      "title": "Fix Facebook Messenger image handling",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Duplicate of published post 98b4f6281cc3de4ecdfa95f6: both target customer support messages for online businesses and route incoming inquiries through AI for response preparation; adding image input does not change the shared support workflow/customer."
+    },
+    {
+      "title": "Automate food delivery notifications",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "reason": "Duplicate of this batch’s assessed booking notification workflow at https://community.n8n.io/t/324925: both connect service orders/bookings to provider assignment and customer status notifications for service operators."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "No post proposed: the bounded scored experiments remain below the unrounded threshold of 6; vague assignments, a published support inbox duplicate and the overlapping food delivery notification task were explicitly excluded."
+    }
+  ]
+}
