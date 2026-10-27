@@ -1,0 +1,126 @@
+{
+  "runId": "loop-40549856676-1",
+  "createdAt": "2026-10-27T17:23:20.448Z",
+  "candidates": [
+    {
+      "title": "Map changing CRM items into invoice rows",
+      "productUrl": "https://community.make.com/t/118145",
+      "sourceIds": [
+        "b407a896ba8504e91a52df04"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b407a896ba8504e91a52df04"
+        ],
+        "chore": "Map a changing number of CRM item values into invoice rows for an external system.",
+        "evidenceQuote": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable table that converts each supplied CRM item into one proposed invoice row, with uncertain mappings flagged.",
+        "inputs": [
+          "Synthetic CRM record with item description and quantity",
+          "Synthetic unit price and tax category supplied by an operator",
+          "Operator-written mapping rules for the fictional invoice API"
+        ],
+        "trigger": "An operator starts a batch after supplying fictional CRM records and approved mapping rules.",
+        "steps": [
+          "Read the supplied fictional CRM fields and mapping rules.",
+          "Propose one invoice row for each supplied item using only the provided values.",
+          "Flag missing or ambiguous fields instead of guessing.",
+          "Compare the proposed row count with the supplied item count.",
+          "Show the draft table to an operator for correction and approval."
+        ],
+        "acceptanceCheck": "For a small synthetic record with multiple items, verify that the draft contains the same number of rows, preserves each supplied quantity and price, and flags an intentionally missing mapping.",
+        "humanBoundary": "The operator supplies and approves mapping rules, checks every row and amount, and handles any real accounting system entry. Do not send requests, persist invoices, calculate tax, or use live customer data.",
+        "unverified": [
+          "No supplied reference documents dynamic array mapping into an HTTP POST invoice payload.",
+          "No evidence establishes external endpoint behavior or invoice persistence.",
+          "Tax correctness and the business's field mapping are unverified.",
+          "Any AI-assisted extraction or workflow execution is untested."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can prototype a table from fictional records, but no supplied reference supports dynamic invoice-row mapping or HTTP payload construction.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms that prepare invoices might pay for row preparation; this forum question establishes no buyer intent or payment.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic-data table test is narrow, while API mapping, invoice persistence and tax behavior remain unverified.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed draft can flag gaps and compare row counts, but no execution capability is documented and an operator must verify every row.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The original post gives a concrete variable invoice-row mapping problem and sample CRM arrays, but no recurrence or corroborating demand evidence.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete task assessed as a proposed synthetic-data row-drafting experiment. Its provisional mean is 4.2, below threshold; supplied Make error-handling documentation does not support array mapping, external endpoint execution, or invoice persistence."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Optimize a founder's time",
+      "productUrl": "https://news.ycombinator.com/item?id=50246546",
+      "reason": "The post says product building and customer acquisition consume more of the founder's time, but gives no bounded repeated task or workflow to automate. A specific chore would have to be invented."
+    },
+    {
+      "title": "Recreate legacy GameMaker behavior",
+      "productUrl": "https://news.ycombinator.com/item?id=50261794",
+      "reason": "This is a Show HN product description about compatibility quirks, not a request for a concrete business chore or service; the supplied excerpt does not establish an automatable customer task."
+    },
+    {
+      "title": "Troubleshoot automatic email sorting",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "reason": "The retained spans describe a single Code Node/IF Node troubleshooting incident and ask for configuration advice. This is a one-off bug report, not a repeated business chore; the supplied If-node reference documents conditional comparisons but does not turn this incident into recurring demand."
+    },
+    {
+      "title": "Automate business phone calls",
+      "productUrl": "https://news.ycombinator.com/item?id=50261381",
+      "reason": "The excerpt describes Crulon's phone product and its AI agent; it does not state a separate unmet request or a concrete chore for a proposed service."
+    },
+    {
+      "title": "Draft order updates from changing data",
+      "productUrl": "https://community.make.com/t/118000",
+      "reason": "Duplicate: the ecommerce customer and customer-status communication workflow match published post 98b4f6281cc3de4ecdfa95f6. The retained task span adds no materially different workflow."
+    },
+    {
+      "title": "Organize browser tabs",
+      "productUrl": "https://news.ycombinator.com/item?id=50241975",
+      "reason": "The supplied excerpt only identifies a browser extension and provides no concrete task request, repeated chore, or business buyer evidence."
+    },
+    {
+      "title": "Review chemical batch records",
+      "productUrl": "https://community.n8n.io/t/324676",
+      "reason": "The supplied excerpt truncates after saying laboratory records require automation, and the post is a maker's build description rather than a separate request. The retained text does not establish the specific review task or a safe bounded output."
+    }
+  ]
+}
