@@ -1,0 +1,290 @@
+{
+  "runId": "loop-40558277416-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-27T18:20:00.000Z",
+  "candidates": [
+    {
+      "title": "Prepare a browser task outline for review",
+      "productUrl": "https://news.ycombinator.com/item?id=50263081",
+      "sourceIds": [
+        "b6070321ea43ed254b7e58dc"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b6070321ea43ed254b7e58dc"
+        ],
+        "chore": "Control an existing browser from a terminal agent without interrupting the operator workflow.",
+        "evidenceQuote": "let the agent control your existing browser directly from the terminal without interrupting the workflow."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed sequence of browser actions for one operator-supplied, repeatable browser task.",
+        "inputs": [
+          "Synthetic page text and URLs",
+          "Operator-written task goal",
+          "Expected final page state"
+        ],
+        "trigger": "An operator submits a browser task that can be tested on a non-sensitive sample site.",
+        "steps": [
+          "Turn the goal into a short action sequence.",
+          "List the expected page state after each action.",
+          "Compare the sequence with operator-provided screenshots or notes.",
+          "Revise ambiguous or unsafe actions for human review."
+        ],
+        "acceptanceCheck": "On a sample task, each proposed action matches the operator’s expected sequence and the final state is visibly verifiable.",
+        "humanBoundary": "The operator supplies the goal and test site, reviews every action, and performs or authorizes any real browser action.",
+        "unverified": [
+          "No supplied implementation reference documents browser control or agent execution.",
+          "Reliable page-state detection, permissions, and interruption behavior are unverified.",
+          "The source is a maker description, not evidence of repeat demand or payment."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A text outline can be drafted from an operator task, but no supplied source supports browser-control mechanics.",
+            "sourceIds": [
+              "b6070321ea43ed254b7e58dc"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: professional service operators may pay to save time on repeated browser work; this maker post proves no buyer or payment.",
+            "sourceIds": [
+              "b6070321ea43ed254b7e58dc"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week sample-site outline test is possible, while reliable browser state and action execution are unsupported.",
+            "sourceIds": [
+              "b6070321ea43ed254b7e58dc"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed loop drafts steps only; a person must execute and verify them because browser automation is undocumented.",
+            "sourceIds": [
+              "b6070321ea43ed254b7e58dc"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a browser-control use case, but provides no demonstrated use, external request, or corroborated demand.",
+            "sourceIds": [
+              "b6070321ea43ed254b7e58dc"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: this is a maker description of browser control, and no supplied implementation reference supports the proposed action loop."
+    },
+    {
+      "title": "Plan a guarded workflow repair",
+      "productUrl": "https://community.n8n.io/t/324665",
+      "sourceIds": [
+        "d7794a9371530463541655bf"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "d7794a9371530463541655bf"
+        ],
+        "chore": "Plan restoration of one missing node and its two connections while preserving the rest of an inactive workflow.",
+        "evidenceQuote": "Only the missing node and its two connections should be restored."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A pre-change checklist comparing a proposed one-node repair with an operator-supplied workflow snapshot and backup.",
+        "inputs": [
+          "Synthetic workflow node and connection list",
+          "Synthetic backup node and connection list",
+          "Operator-stated intended change",
+          "Expected unchanged workflow properties"
+        ],
+        "trigger": "An operator requests review of a narrowly described missing-node repair using fictional workflow data.",
+        "steps": [
+          "Compare the current and backup node lists.",
+          "Identify the single proposed node and its two proposed connections.",
+          "List workflow properties that must remain unchanged.",
+          "Generate a checklist of differences and unresolved questions.",
+          "Ask a human to verify the checklist against the real workflow before any edit."
+        ],
+        "acceptanceCheck": "For synthetic fixtures, the checklist identifies the intended node and connections and flags every deliberately introduced unrelated change.",
+        "humanBoundary": "A human supplies and validates the snapshots, decides whether a repair is safe, performs any real edit, and confirms the result; no credentials or live workflow access are used.",
+        "unverified": [
+          "No supplied implementation reference supports n8n version behavior, concurrency protection, or safe workflow edits.",
+          "The exact node configuration and connection semantics are unverified.",
+          "Synthetic comparisons do not establish safe execution or persistence in n8n."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can compare fictional node and connection lists, but the post gives no supported repair procedure.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: workflow consultants may pay for repair planning; this single request establishes no payment or repeat buyer demand.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic checklist test is scoped, though real version behavior and safe edits remain unverified.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable comparison can flag differences, but a human must validate and apply every real change.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained post spans specify a missing node, two connections, preservation constraints, and uncertainty about safe updates; no implementation evidence is supplied.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: fresh retained spans specify a concrete repair task, but no implementation source supports safe or version-specific changes."
+    },
+    {
+      "title": "Prepare a warm-introduction matching brief",
+      "productUrl": "https://community.n8n.io/t/324646",
+      "sourceIds": [
+        "c7431dc598ace1837fcfeff6"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "c7431dc598ace1837fcfeff6"
+        ],
+        "chore": "Find business partners who can make warm introductions to decision-makers with operational problems.",
+        "evidenceQuote": "introduce me to the right ones: companies with a real operational problem"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed shortlist of partner categories and introduction questions from operator-supplied business descriptions.",
+        "inputs": [
+          "Fictional partner category descriptions",
+          "Fictional business problem summaries",
+          "Operator-defined matching rules",
+          "Consent status for any real introduction"
+        ],
+        "trigger": "An operator supplies fictional descriptions and asks for possible partner-to-business matches.",
+        "steps": [
+          "Extract only business category and stated problem from each fictional record.",
+          "Match records using operator-defined criteria.",
+          "Draft a short reason for each suggested match.",
+          "Flag missing consent or insufficient information.",
+          "Have a person approve any real outreach or introduction."
+        ],
+        "acceptanceCheck": "On a fictional test set, every suggested match satisfies the operator-defined criteria and includes no unsupported contact detail.",
+        "humanBoundary": "The operator supplies lawful, consented information and criteria, reviews every match, and makes or authorizes any introduction; no personal profiles or contact details are collected.",
+        "unverified": [
+          "No supplied implementation reference supports matching or outreach automation.",
+          "The post gives no matching criteria, repeat frequency, or evidence that a shortlist tool is wanted.",
+          "Any payer remains hypothetical; the author’s revenue-share offer does not verify buyer demand."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A fictional matching brief is easy to outline, but no source documents matching or outreach tools.",
+            "sourceIds": [
+              "c7431dc598ace1837fcfeff6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent consultants may pay for partner matching; the post requests introductions but does not establish tool buyers or payment.",
+            "sourceIds": [
+              "c7431dc598ace1837fcfeff6"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week fictional matching exercise is possible, but criteria and recurring volume are unspecified.",
+            "sourceIds": [
+              "c7431dc598ace1837fcfeff6"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposal can suggest matches only; a human must verify fit, consent, and every introduction.",
+            "sourceIds": [
+              "c7431dc598ace1837fcfeff6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span explicitly asks for warm introductions to business decision-makers, but supplies no repeat workflow or corroboration.",
+            "sourceIds": [
+              "c7431dc598ace1837fcfeff6"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the request is for warm introductions, but a repeatable software workflow and buyer for a matching service are unsubstantiated."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Generate one Word document per spreadsheet row",
+      "productUrl": "https://news.ycombinator.com/item?id=50261239",
+      "reason": "The assigned post is a maker listing and the retained source text only names existing workarounds; it does not contain a literal task request or enough task detail for demandEvidence without relying on the title."
+    },
+    {
+      "title": "Deploy AI agents with a serverless backend",
+      "productUrl": "https://news.ycombinator.com/item?id=50260969",
+      "reason": "The assigned source is the maker describing a backend they are building; the supplied text names no distinct unmet chore, request, or concrete workflow to assess as demand."
+    },
+    {
+      "title": "Monitor companies for investor breakout signals",
+      "productUrl": "https://community.n8n.io/t/324639",
+      "reason": "The assigned post describes an existing workflow the author built for investors and growth teams. It supplies no separate unmet request or evidence of a recurring customer chore; the post excerpt is a product pitch."
+    },
+    {
+      "title": "Prepare a browser task outline for review",
+      "productUrl": "https://news.ycombinator.com/item?id=50263081",
+      "reason": "Below threshold: this is a maker description of browser control, and no supplied implementation reference supports the proposed action loop."
+    },
+    {
+      "title": "Plan a guarded workflow repair",
+      "productUrl": "https://community.n8n.io/t/324665",
+      "reason": "Below threshold: fresh retained spans specify a concrete repair task, but no implementation source supports safe or version-specific changes."
+    },
+    {
+      "title": "Prepare a warm-introduction matching brief",
+      "productUrl": "https://community.n8n.io/t/324646",
+      "reason": "Below threshold: the request is for warm introductions, but a repeatable software workflow and buyer for a matching service are unsubstantiated."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all six sealed discussion assignments. Three lacked a sufficiently evidenced concrete unmet task; three bounded proposals were scored below the 6 threshold because implementation support and buyer evidence are limited. No post proposed."
+    }
+  ]
+}
