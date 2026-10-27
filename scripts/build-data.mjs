@@ -3,7 +3,7 @@ import path from 'node:path';
 import { ROOT, records, readJSON, writeJSON, safeError,hash } from '../lib/storage.mjs';
 import { INITIAL_RULES, schedule, previousLocalTime } from '../lib/config.mjs';
 import { verifyPublishedPost } from '../lib/validation.mjs';
-import { effectiveUsageRecords,effectiveModelExecution } from '../lib/usage.mjs';
+import { effectiveUsageRecords,effectiveModelExecution,usageCostSummary,usageCountersComplete } from '../lib/usage.mjs';
 import { schedulerProof,standaloneResearchRecords } from '../lib/scheduler-proof.mjs';
 import { publicationSlotStatus } from '../lib/slot-status.mjs';
 import { writeSiteArtifacts,publicPostURL } from '../lib/site-artifacts.mjs';
@@ -70,10 +70,10 @@ try{
   const healthMap=new Map();
   for(const snapshot of sortedResearch)for(const health of snapshot.health||[])if(health.name!=='X'&&!healthMap.has(health.name))healthMap.set(health.name,health);
   const candidates=(await records('candidates')).reduce((n,r)=>n+(r.candidates?.length||0),0);
-  const measuredCost=usageRecords.map(r=>r.costUsd).filter(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
-  const scoringRunIds=new Set(usageRecords.filter(record=>record.workflowKind==='score').map(record=>record.runId));
-  const modelRunCount=runs.filter(run=>run.modelExecuted!==false).length+improvementRuns.length+scoringRunIds.size;
-  const stats={published:posts.length,candidates,rejected:rejections.length,views:metrics.site?.views??null,saves:metrics.site?.saves??null,totalCostUsd:measuredCost.length?measuredCost.reduce((a,b)=>a+b,0):null,costStatus:measuredCost.length===modelRunCount&&modelRunCount?'recorded_token_estimate':'invoice_or_usage_not_connected'};
+  const zeroModelIds=new Set(usageRecords.filter(record=>usageCountersComplete(record)&&record.coverage.observedModelJobs===0).map(record=>record.runId));
+  const scoringRunIds=new Set(usageRecords.filter(record=>record.workflowKind==='score'&&!zeroModelIds.has(record.runId)).map(record=>record.runId));
+  const modelRunCount=runs.filter(run=>run.modelExecuted!==false).length+improvementRuns.filter(run=>!zeroModelIds.has(run.id)).length+scoringRunIds.size;
+  const stats={published:posts.length,candidates,rejected:rejections.length,views:metrics.site?.views??null,saves:metrics.site?.saves??null,...usageCostSummary(usageRecords,modelRunCount)};
   // Loop research files cross a model workspace; only the standalone no-model
   // research job can contribute scheduler metadata from this collection.
   const trustedResearch=await standaloneResearchRecords(path.join(ROOT,'data','research'));

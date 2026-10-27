@@ -2,7 +2,7 @@ import {readFile,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ROOT,records} from '../lib/storage.mjs';
-import {effectiveUsageRecords} from '../lib/usage.mjs';
+import {effectiveUsageRecords,usageCountersComplete} from '../lib/usage.mjs';
 const start='<!-- MODEL_COSTS_START -->',end='<!-- MODEL_COSTS_END -->';
 export async function updateCostReadme({root=ROOT,usageRecords}={}) {
 const groups=new Map();
@@ -15,7 +15,9 @@ const rows=dates.map(date=>{
  const runs=groups.get(date),costs=runs.map(r=>r.costUsd);
  const complete=costs.every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
  const estimate=complete?`$${costs.reduce((a,b)=>a+b,0).toFixed(5)}`:'Unknown';
- return `| ${date} | ${runs.length} | ${estimate} | ${complete?'Reported CLI counters':'Missing or partial counters'} |`;
+ const noModel=runs.filter(record=>usageCountersComplete(record)&&record.coverage.observedModelJobs===0).length;
+ const coverage=!complete?'Missing or partial counters':noModel===runs.length?'Verified no model execution':noModel?'Reported counters and verified skipped models':'Reported CLI counters';
+ return `| ${date} | ${runs.length} | ${estimate} | ${coverage} |`;
 });
 const body=rows.length?`| Vilnius date | Cloud runs | Estimated USD | Coverage |\n| --- | ---: | ---: | --- |\n${rows.join('\n')}\n\nStandard-rate token estimates, not invoices. Unreported billing adjustments remain unknown. [Calculation and rates](docs/COSTS.md).`:'No model usage is recorded yet.';
 const file=path.join(root,'README.md'),source=await readFile(file,'utf8');

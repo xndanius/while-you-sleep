@@ -5,6 +5,7 @@ import {candidateHistory,writerResearchView,writerReadiness} from '../lib/candid
 import {ROOT} from '../lib/storage.mjs';
 import {parseScoringPolicy} from '../lib/scoring.mjs';
 import {checkerOutputSchema} from '../lib/checker-output.mjs';
+import {checkerAssessmentView} from '../lib/checker-assessment.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
 import {SEGMENTS,DEMAND_KINDS,DEMAND_MIX_POLICY,eligibleSegments,classifyPublishedSegment} from '../lib/demand.mjs';
 import {noFreshLeadsReasons} from '../lib/no-fresh-leads.mjs';
@@ -67,6 +68,9 @@ if(['checker','final-checker'].includes(role)){
  context.checkContextSha256=sha256(stableJSON(frozen));context.rulesSha256=frozen.rulesSha256;context.assessmentContractVersion=frozen.assessmentContractVersion||null;
  noveltyContext=frozen.noveltyContext||noveltyContext;context.noveltyContractVersion=frozen.noveltyContractVersion||null;
  context.demandContractVersion=frozen.demandContractVersion||null;context.demandContextSha256=frozen.demandContextSha256||null;
+ const assessmentView=checkerAssessmentView(draft,frozen,{role});
+ context.checkerAssessment={path:'.run/checker-assessment.json',sha256:sha256(stableJSON(assessmentView)),counts:assessmentView.counts,command:`node scripts/inspect-check-assessment.mjs ${runId}`};
+ await writeFile(context.checkerAssessment.path,JSON.stringify(assessmentView,null,2));
  context.checkerOutputSchemaPath='.run/checker-output-schema.json';context.checkerResponsePath='.run/checker-response.json';
  const checkerSchema=checkerOutputSchema(draft,frozen,{allowOmittedCandidateRepair:role==='checker'&&process.env.CHECKER_PHASE==='initial'});
  context.omittedCandidateRepairAllowed=Boolean(checkerSchema.properties.repairFeedback);
