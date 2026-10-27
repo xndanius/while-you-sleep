@@ -18,6 +18,7 @@ import {hasDiscussionImplementationReference as implementationSource,discussionI
 import {discussionEvidenceURL} from '../lib/discussion-sources.mjs';
 import {sealedDiscussionAssignmentReasons,checkDiagnosticsReasons,CHECK_DIAGNOSTIC_STAGES,CHECK_DIAGNOSTIC_CODES_BY_STAGE} from '../lib/check-diagnostics.mjs';
 import {sealedWriterCoverage} from '../lib/writer-coverage.mjs';
+import {candidatePlanReasons} from '../lib/candidate-plan.mjs';
 const runId=process.argv[2];
 const preparationHealth=[];
 try{
@@ -30,6 +31,8 @@ try{
   if(draft.runId!==runId||!Array.isArray(draft.posts)||draft.posts.length<(assessmentContractVersion?0:1)||draft.posts.length>6)throw new Error('Writer output must have matching runId and a bounded assessed post batch.');
   if(scheduling&&draft.targetCount!==scheduling.targetCount)throw new Error('Writer target differs from its trusted reservation.');
   if(!Array.isArray(research.sources))throw new Error('Research source records are missing.');
+  const planFailures=candidatePlanReasons(draft,{candidatePlanVersion:research.candidatePlanVersion});
+  if(planFailures.length)throw new Error(planFailures.join(' '));
   if(research.enrichment&&research.enrichment.status!=='not_requested'){
     if(!['completed','failed','no_new_leads'].includes(research.enrichment.status)||!Array.isArray(research.enrichment.observations)||research.enrichment.observations.length>12)throw new Error('Product evidence selection is missing or exceeds its bounded lead budget.');
     const selectedProducts=new Set(research.enrichment.observations.map(item=>canonicalURL(item.productUrl)));
@@ -230,7 +233,7 @@ try{
   const sameBatch=new Set(),earlierProposals=[];
   const deterministicResults=draft.posts.map(post=>{const reasons=deterministicCheck(post,[...research.sources,...sources],[...previous,...earlierProposals],{scoringPolicy,noveltyNow:new Date(noveltyContext.asOf),demandContext:demandContract,demandRequired});if(sameBatch.has(post.id))reasons.push('Duplicate product in this writer batch.');sameBatch.add(post.id);earlierProposals.push({...post,publishedAt:noveltyContext.asOf,...(demandRequired?{demandContractVersion:1,checker:{demandCheck:{supported:true}}}:{})});if(post.sourceIds?.some(sourceId=>!sources.some(s=>s.id===sourceId)))reasons.push('Attached evidence source could not be re-fetched.');return {postId:post.id,pass:reasons.length===0,reasons};});
   await writeJSON(dataPath('drafts',runId),draft);
-  const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...demandContract,...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
+  const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...demandContract,...(research.candidatePlanVersion!==undefined?{candidatePlanVersion:research.candidatePlanVersion}:{}),...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
   const privacyCategories=privateArtifactCategories(context);
   const evidenceFailures=assessmentEvidenceReasons(context);
   if(evidenceFailures.length)throw new Error(evidenceFailures.join(' '));
