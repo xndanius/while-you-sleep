@@ -1,0 +1,299 @@
+{
+  "runId": "loop-40529047678-1",
+  "targetCount": 2,
+  "createdAt": "2026-10-27T15:30:00.000Z",
+  "candidates": [
+    {
+      "title": "Map resume facts into application fields",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Repeatedly enter resume details into company-specific application forms.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "whoPays": "Hypothesis: job seekers who repeatedly complete company-specific application forms might pay for help; this discussion does not establish willingness to pay.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed draft mapping of supplied resume facts to a small set of manually copied application fields.",
+        "inputs": [
+          "A fictional resume with verified work and education facts",
+          "A manually supplied sample form field list",
+          "A mapping table of each field to its resume source",
+          "An operator supplied rule for fields that must remain unanswered"
+        ],
+        "trigger": "A job seeker supplies one target form field list and asks for a draft mapping.",
+        "steps": [
+          "Extract only facts explicitly present in the supplied resume.",
+          "Match each requested field to a resume fact or mark it unknown.",
+          "Draft concise field values without adding qualifications or dates.",
+          "Show each value with its source fact for review.",
+          "Have the person correct the mapping and enter or submit every answer manually."
+        ],
+        "acceptanceCheck": "On fictional resume and form pairs, every drafted value must match a cited resume fact, unknown fields must remain blank, and a person must approve all entries.",
+        "humanBoundary": "The job seeker supplies the resume and field list, verifies each value, handles sensitive application data, and enters and submits the form; no live form access is proposed.",
+        "unverified": [
+          "Whether common application fields repeat enough across forms to be useful",
+          "Reliable extraction from varied resume formats",
+          "Any live browser or application integration",
+          "Whether job seekers would pay for the proposed assistance"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A manually supplied resume and field list allow a small mock, but no implementation reference is available.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: job seekers may value less repetitive entry, but the post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can map a few supplied fields; varied forms and extraction quality remain untested.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed mapping can repeat, but a person must verify and submit every field; no automation capability is documented.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post directly reports daily resume entry for forms tailored to one or two companies, without field examples or corroboration.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the literal chore supports a narrow manual-input mapping experiment, but there is no implementation reference, broader demand evidence, or supported live-form capability."
+    },
+    {
+      "title": "Draft daily summaries from order records",
+      "productUrl": "https://community.n8n.io/t/324888",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bd365fd1a282ac04aa03e211"
+        ],
+        "chore": "Generate daily summaries of completed orders, cancellations, and pending requests.",
+        "evidenceQuote": "Daily reports: Generate summaries of completed orders, cancellations, and pending requests."
+      },
+      "sourceIds": [
+        "bd365fd1a282ac04aa03e211"
+      ],
+      "whoPays": "Hypothesis: operators of multi-service platforms might pay for report preparation; the discussion establishes no buyer intent or payment.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A concise daily summary counting completed, canceled, and pending orders from supplied sample rows.",
+        "inputs": [
+          "Fictional order rows with an order identifier",
+          "A supplied order status for each row",
+          "A sample reporting date",
+          "A proposed summary format with counts and exceptions"
+        ],
+        "trigger": "An operator starts a daily test run after supplying that day’s sample order rows.",
+        "steps": [
+          "Check that each supplied row has an identifier and one of the supplied statuses.",
+          "Group rows into completed, canceled, and pending categories.",
+          "Calculate category counts from the supplied rows.",
+          "Draft a short summary and list rows with missing or unrecognized statuses.",
+          "Compare every count against the source rows and have an operator approve the report."
+        ],
+        "acceptanceCheck": "For a fixed fictional dataset, each category count must equal a manual count of matching rows, and every missing or unrecognized status must be listed instead of silently classified.",
+        "humanBoundary": "An operator defines the statuses and reporting format, supplies records, checks counts and exceptions, and approves any report; no access to a real platform or production data is proposed.",
+        "unverified": [
+          "Whether operators have this recurring reporting need",
+          "The production platform data fields and access method",
+          "Whether the proposed draft can be generated reliably",
+          "Whether any supplied integration can schedule or persist reports"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test counting and summarizing fictional rows, but no supplied implementation reference supports automation.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: multi-service platform operators might pay for reporting help; the idea post gives no buyer or payment evidence.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week sample-data prototype is bounded, though production fields and accuracy remain unknown.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed batch can draft a report, but no execution capability is documented and a person must validate it.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post names daily reports and three order states, but gives no field details, examples, or corroboration.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: a sample-data report draft is assessable, but implementation support and evidence of a recurring unmet need are limited."
+    },
+    {
+      "title": "Review hosting plans for single-provider risk",
+      "productUrl": "https://news.ycombinator.com/item?id=50260093",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1b80aa046e92c65b0ed5b62b"
+        ],
+        "chore": "Review a service architecture for reliance on one hosting provider and identify proposed resilience questions.",
+        "evidenceQuote": "The design goal from the beginning was to prepare a tool with minimized risk of single point of failure and independent from single hosting."
+      },
+      "sourceIds": [
+        "1b80aa046e92c65b0ed5b62b"
+      ],
+      "whoPays": "Hypothesis: small software consultancies operating client services across hosting providers might pay for a resilience review; the post establishes neither buyers nor payment.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed checklist of single-provider dependencies and unanswered resilience questions from an operator-supplied architecture summary.",
+        "inputs": [
+          "A fictional service and hosting architecture summary",
+          "An operator-supplied list of hosting providers and critical components",
+          "A proposed checklist of dependencies, backups, and recovery questions"
+        ],
+        "trigger": "An operator supplies one architecture summary for a proposed resilience review.",
+        "steps": [
+          "List each service component and its stated hosting provider.",
+          "Mark components whose only listed provider is the same provider.",
+          "Compare the summary with the operator-supplied resilience checklist.",
+          "Draft questions for missing backup, recovery, or alternate-provider details.",
+          "Have an operator verify every dependency and decide whether any change is appropriate."
+        ],
+        "acceptanceCheck": "On fictional summaries with known provider assignments, every single-provider dependency in the input must appear in the checklist, and no backup or recovery capability may be marked present unless the input states it.",
+        "humanBoundary": "The operator supplies and verifies the architecture facts, reviews the generated questions, and decides or authorizes any infrastructure change; no hosting configuration or failover is executed.",
+        "unverified": [
+          "Whether this design goal reflects a repeated chore for other operators",
+          "Which architecture fields are needed for a useful review",
+          "Whether a model can reliably identify dependencies from supplied summaries",
+          "Any software capability for parsing architecture or checking hosting state",
+          "Whether a consultancy would pay for this proposed review"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can manually test a checklist on fictional architecture summaries, but the source supplies no review method or implementation capability.",
+            "sourceIds": [
+              "1b80aa046e92c65b0ed5b62b"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: software consultancies might pay for resilience reviews, but this maker goal shows no external buyer intent or payment.",
+            "sourceIds": [
+              "1b80aa046e92c65b0ed5b62b"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can compare supplied provider lists with a proposed checklist; useful architecture inputs and accuracy remain unverified.",
+            "sourceIds": [
+              "1b80aa046e92c65b0ed5b62b"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed comparison is bounded, but no implementation support is supplied and an operator must verify dependencies and decide changes.",
+            "sourceIds": [
+              "1b80aa046e92c65b0ed5b62b"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a goal of reducing single-hosting risk, but gives no specific task, repeated need, user evidence, or corroboration.",
+            "sourceIds": [
+              "1b80aa046e92c65b0ed5b62b"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the post supports assessing a proposed resilience checklist, but it is a maker design goal with no demonstrated recurring chore, implementation support, or buyer evidence."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "How to report IP abuse to Cloudflare?",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The retained demand text is only “which clearly doesn’t apply here.” These spans do not identify a concrete reporting task or enough context to infer one, so no chore or experiment is invented."
+    },
+    {
+      "title": "Review hosting plans for single-provider risk",
+      "productUrl": "https://news.ycombinator.com/item?id=50260093",
+      "reason": "Below threshold after scoring the concrete proposed resilience-review experiment: the source states a hosting-resilience design goal, but does not establish a recurring customer chore, implementation capability, or buyer demand."
+    },
+    {
+      "title": "Enable Execute Command in self-hosted n8n",
+      "productUrl": "https://community.n8n.io/t/324889",
+      "reason": "The original-post spans describe a one-off configuration troubleshooting question about an unavailable node. This is a product support issue, not a repeatable service demand suitable for an AI business experiment."
+    },
+    {
+      "title": "WhatsApp agents and booking automations",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained spans are a provider’s service list and self-promotion, including existing examples, rather than a request for help. They do not establish an unmet chore or buyer need."
+    },
+    {
+      "title": "Weekly keyword volume to Google Sheets",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The retained text describes an already built weekly workflow and its operating schedule and cost. It is a maker demonstration, not evidence of an unmet customer chore."
+    },
+    {
+      "title": "Make.com automation for simple business tasks",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The post is an offer to perform small automation jobs and lists broad capabilities, but supplies no specific requested task from a customer. The offer itself does not establish demand for a distinct experiment."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Repaired the single named omitted discussion assignment with a scoped architecture-resilience checklist experiment and five provisional ratings. Its mean remains below threshold; the other seven assigned decisions are preserved, and no post is proposed."
+    }
+  ],
+  "repairAttempt": 1
+}
