@@ -1,0 +1,438 @@
+{
+  "runId": "loop-40586116457-1",
+  "createdAt": "2026-10-27T21:22:50.880Z",
+  "candidates": [
+    {
+      "title": "Draft booking and provider updates",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "segment": "professional_services",
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Prepare a draft customer or provider update from an operator-supplied booking status and flag missing or failed updates.",
+        "evidenceQuote": "How can n8n help automate booking confirmations, provider assignment notifications, payment status updates, and customer alerts?"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test status-to-message drafts with fictional bookings, but no supplied reference supports live bookings or notifications.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small on-demand service operators might pay for fewer missed updates; the post establishes no buying intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can map fictional statuses to draft notices; event handling, payment accuracy and external APIs remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed draft loop can apply fixed status rules, but a person must verify payment facts and approve every message; execution is unsupported.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post span requests booking confirmations, provider assignment notices, payment updates, customer alerts and failure handling, but gives no frequency or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Draft one booking or provider status message and flag missing status fields.",
+        "inputs": [
+          "Fictional booking status",
+          "Fictional provider assignment",
+          "Fictional payment state",
+          "Approved message templates"
+        ],
+        "trigger": "An operator enters a fictional booking row for a draft run.",
+        "steps": [
+          "Read the supplied status fields.",
+          "Match the status to a proposed message template.",
+          "Flag missing or contradictory fields.",
+          "Draft a notice without sending it.",
+          "Show the draft and flags to an operator."
+        ],
+        "acceptanceCheck": "For a fixed fictional row, verify that the selected template matches its status and that missing fields produce a visible flag.",
+        "humanBoundary": "An operator supplies and verifies all fields, checks payment state, and approves any message; no live API or customer data is used.",
+        "unverified": [
+          "Live booking and payment integrations are unsupported.",
+          "Status rules, message templates and event triggers are design assumptions.",
+          "Duplicate prevention and retry behavior are untested."
+        ]
+      },
+      "reason": "Concrete discussion chore assessed as a narrow proposed experiment; provisional scores remain below the threshold of 6."
+    },
+    {
+      "title": "Share text and image context with one agent",
+      "productUrl": "https://community.make.com/t/118271",
+      "segment": "professional_services",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Pass an already-received image together with its customer message into one draft response context.",
+        "evidenceQuote": "I want the AI agent to recognize that the image has already been received and use the available image to identify the product, rather than asking the customer to resend it."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A mock can pair a fictional message with an image reference, but no supplied source supports Make routing or image interpretation.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small commerce service firms may pay to reduce repeated image requests; this single post establishes no payment or buyer intent.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can compare text-only and text-plus-image mock inputs; actual image access and recognition remain unverified.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed loop can assemble context for review, but image interpretation and any customer reply require human checking; integration is unsupported.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span describes separate text and image routes and asks that the already-downloaded image reach the same agent; recurrence and implementation evidence are absent.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Prepare a reviewable input bundle containing a customer message and its supplied image reference.",
+        "inputs": [
+          "Fictional customer message",
+          "Synthetic image file",
+          "Image-reference label",
+          "Expected product description for comparison"
+        ],
+        "trigger": "An operator submits a synthetic message and image in a test form.",
+        "steps": [
+          "Store the message and image reference in one test record.",
+          "Check whether both fields are present.",
+          "Generate a draft description using a proposed image model.",
+          "Mark missing image context or uncertain output.",
+          "Show the bundle and draft for human review."
+        ],
+        "acceptanceCheck": "Test paired samples where the image reference is present or missing; confirm the result flags the missing case and preserves the provided message and image association.",
+        "humanBoundary": "A person supplies synthetic samples, checks every image interpretation, and approves any response; no real customer images or messages are used.",
+        "unverified": [
+          "Make route aggregation is not supported by supplied implementation evidence.",
+          "Image-analysis capability and model accuracy are unverified.",
+          "The reported scenario cannot be inspected from the retained spans."
+        ]
+      },
+      "reason": "Concrete discussion chore assessed as a narrow proposed experiment; provisional scores remain below the threshold of 6."
+    },
+    {
+      "title": "Compare supplied AWS scaling options",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "segment": "professional_services",
+      "sourceIds": [
+        "a6b1f94743a6b7e17995034c"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a6b1f94743a6b7e17995034c"
+        ],
+        "chore": "Prepare a comparison memo from operator-supplied workload and cost assumptions for an AWS scaling question.",
+        "evidenceQuote": "If you are a bootstrapped startup and need to scale on AWS but can't afford it, reply with your email and I will help you out"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can draft a comparison from fictional workload and cost inputs, but the post supplies no fields or technical method.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: bootstrapped startups seeking affordable AWS scaling might pay for advisory help; the post proves neither intent nor payment.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare operator-supplied options and assumptions; AWS-specific correctness is unverified.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposal can organize inputs into a memo, but a person must validate every infrastructure recommendation; no automation capability is documented.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post offers help to startups that need to scale on AWS but cannot afford it, without a concrete workflow, task detail or corroboration.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Produce a comparison memo listing supplied cost assumptions, options and unresolved questions.",
+        "inputs": [
+          "Fictional workload description",
+          "Operator-entered monthly cost estimates",
+          "Two operator-selected scaling options",
+          "Stated budget limit"
+        ],
+        "trigger": "An operator submits a fictional scaling question and comparison inputs.",
+        "steps": [
+          "Check that each option has a supplied cost estimate.",
+          "Summarize the workload and budget as provided.",
+          "Compare the supplied estimates without forecasting.",
+          "List missing assumptions and questions.",
+          "Present the memo for technical review."
+        ],
+        "acceptanceCheck": "Use fixed fictional inputs with known estimates; confirm the memo repeats values accurately and marks any missing option data instead of inventing it.",
+        "humanBoundary": "A qualified operator supplies and validates technical assumptions and makes all infrastructure changes; no AWS account or real cost data is accessed.",
+        "unverified": [
+          "No supplied source documents AWS analysis or pricing capability.",
+          "The estimates and comparison method are operator supplied.",
+          "The requester’s offer is not evidence of a buyer for this service."
+        ]
+      },
+      "reason": "Concrete discussion chore assessed as a narrow proposed experiment; provisional scores remain below the threshold of 6."
+    },
+    {
+      "title": "Draft an email-sorting rule checklist",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "segment": "professional_services",
+      "sourceIds": [
+        "b00708562d0e2aeefbf5e0c1",
+        "d3c31f318baa92cd9c697d56"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b00708562d0e2aeefbf5e0c1"
+        ],
+        "chore": "Use supplied sample email text and an expected category to prepare a review checklist for a sorting rule.",
+        "evidenceQuote": "I’m having a problem with my Code Node and the subsequent IF Node. My Code Node apparently doesn’t reliably recognize emails that contain certain text. Additionally, the IF Node doesn’t output the Boolean value (true or false) as expected, so the emails aren’t being sorted correctly."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The n8n If-node reference (d3c31f318baa92cd9c697d56) documents conditional comparisons useful for a mock rule checklist, but does not explain the reported Code Node issue.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: workflow consultants might pay for sorting-rule diagnosis; the post establishes no buyer intent, recurring need or payment.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can compare fictional email text and expected categories and inspect proposed conditions; the If-node reference (d3c31f318baa92cd9c697d56) does not establish Code Node repair.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed checklist can repeat comparisons against supplied expected labels; the If-node reference (d3c31f318baa92cd9c697d56) supports conditional splitting only, and a person must verify and change the workflow.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe email text recognition and Boolean sorting problems, but this is a single troubleshooting request with no recurrence or corroboration.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Prepare a checklist comparing sample email text, expected category and proposed sorting conditions.",
+        "inputs": [
+          "Synthetic email subject and body",
+          "Operator supplied expected category",
+          "Proposed keyword condition",
+          "Expected true or false result"
+        ],
+        "trigger": "An operator enters a synthetic message and its expected sorting label.",
+        "steps": [
+          "Apply the operator supplied keyword condition to the sample.",
+          "Record the expected Boolean outcome.",
+          "Compare the proposed condition with the expected label.",
+          "List mismatches and uncertain cases.",
+          "Present a checklist for an operator to review."
+        ],
+        "acceptanceCheck": "Run fixed synthetic cases with known labels and confirm the checklist flags mismatches between condition result and expected category.",
+        "humanBoundary": "An operator supplies the conditions and expected labels, validates any suggested change, and applies it; never process real email.",
+        "unverified": [
+          "The n8n If node reference documents conditional comparison/splitting only; Code Node behavior and safe repair are unsupported.",
+          "The reported workflow and error details are incomplete in the retained spans.",
+          "No live n8n execution is established."
+        ]
+      },
+      "reason": "Concrete discussion chore assessed as a narrow proposed experiment; provisional scores remain below the threshold of 6."
+    },
+    {
+      "title": "Prepare a Make error-triage note",
+      "productUrl": "https://community.make.com/t/118231",
+      "segment": "professional_services",
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bc3afc6e8c2a63bbd4b7ae01"
+        ],
+        "chore": "Review supplied automation symptoms and prepare a short triage note for duplicate-record creation.",
+        "evidenceQuote": "Duplicate records being created"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can organize fictional symptoms into a triage note, but the supplied Make error-handling reference covers error routes, not duplicate-record prevention.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small service firms might pay for help resolving repeated automation faults; this offer does not establish paying customers for the proposed tool.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can classify operator-supplied symptoms and draft questions; diagnosing live integrations or preventing duplicates is unverified.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed intake can structure a repeatable report, but a person must inspect systems and approve any fix; the reference does not document deduplication.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span advertises fixed-price help for small automation issues and lists duplicate records, but provides no specific case details or demand corroboration.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Create a triage note listing the reported duplicate-record symptom, affected tool and missing diagnostic facts.",
+        "inputs": [
+          "Synthetic description of a duplicate-record issue",
+          "Operator supplied service names",
+          "Expected record count",
+          "Observed record count"
+        ],
+        "trigger": "An operator submits a fictional automation symptom for triage.",
+        "steps": [
+          "Capture the described symptom and involved services.",
+          "Compare expected and observed record counts if supplied.",
+          "Mark unknown trigger and record identifiers.",
+          "Draft diagnostic questions without proposing an unverified fix.",
+          "Show the note to a human consultant."
+        ],
+        "acceptanceCheck": "On fixed synthetic cases, confirm counts are repeated correctly and missing identifiers are marked as questions rather than guessed.",
+        "humanBoundary": "A human consultant supplies context, inspects the actual workflow and authorizes any change; no production records are accessed.",
+        "unverified": [
+          "The Make reference documents configured error handling, not duplicate detection or data deduplication.",
+          "The discussion is a service offer, not verified demand for this proposed AI product.",
+          "Any root cause and fix remain unknown."
+        ]
+      },
+      "reason": "Concrete discussion chore assessed as a narrow proposed experiment; provisional scores remain below the threshold of 6."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Invite to build your business on KeilHQ",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "The only retained text says “you focus on building your startup, we manage your operations.” It names no specific chore, inputs or workflow; assigning operations duties would invent demand evidence."
+    },
+    {
+      "title": "HackerDome programming interview process",
+      "productUrl": "https://news.ycombinator.com/item?id=50264623",
+      "reason": "The retained text only says the programming interview process can feel like a race to the bottom. It identifies no concrete task or requested output, so an experiment would require inventing the chore."
+    },
+    {
+      "title": "TheGitAI browser-control extension",
+      "productUrl": "https://news.ycombinator.com/item?id=50263081",
+      "reason": "The retained text describes a maker-built Chrome extension controlling a browser from a terminal. It states a product capability, not an outside task request or concrete manual chore; do not infer buyer demand from the feature."
+    }
+  ]
+}
