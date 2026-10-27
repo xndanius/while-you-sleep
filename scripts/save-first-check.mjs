@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {ROOT,dataPath,readJSON,writeJSON,sha256,stableJSON} from '../lib/storage.mjs';
 import {checkApproval} from '../lib/validation.mjs';
 import {plainText} from '../lib/research.mjs';
+import {sourceQuoteOccurs} from '../lib/evidence-contract.mjs';
 import {isOmittedCandidateRepair,validateOmittedCandidateRepair} from '../lib/omitted-candidate-repair.mjs';
 
 export function repairFeedback(draft,context,manifest,{expectedDraftSha256,expectedContextSha256,expectedFeedbackSha256}={}) {
@@ -20,7 +21,7 @@ export function repairFeedback(draft,context,manifest,{expectedDraftSha256,expec
       quoteIssues:[...(result.check?.claimChecks||[]),...(result.check?.scoreChecks||[])].flatMap(claim=>{
         const source=context.sources.find(source=>source.id===claim.sourceId);
         const quote=typeof claim.evidenceQuote==='string'?plainText(claim.evidenceQuote):'';
-        const occurs=claim.criterion?typeof claim.evidenceQuote==='string'&&source?.text?.includes(claim.evidenceQuote):plainText(source?.text||'').toLowerCase().includes(quote.toLowerCase());
+        const occurs=sourceQuoteOccurs(source,claim.evidenceQuote,claim.criterion?{}:{normalize:value=>plainText(value).toLowerCase()});
         return !source||quote.length<12||!occurs
           ? [{...(claim.criterion?{criterion:claim.criterion}:{claim:claim.claim}),sourceId:claim.sourceId,evidenceQuote:claim.evidenceQuote,reason:'This quote is missing, too short, or is not a contiguous substring of its verified source. Copy a literal source span; do not paraphrase.'}] : [];
       }),scoreIssues:(result.check?.scoreChecks||[]).filter(check=>check.supported!==true||draft.posts.find(post=>post.id===result.postId)?.scoring?.criteria?.[check.criterion]?.value>check.maxSupportedScore)

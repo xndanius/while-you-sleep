@@ -12,7 +12,7 @@ import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
 import {demandContextReasons} from '../lib/demand.mjs';
 import {sourceValidationMatchesDefinition} from '../lib/source-registry.mjs';
 import {readProviderEvidence} from '../lib/provider-evidence.mjs';
-import {discussionEvidenceReasons} from '../lib/evidence-contract.mjs';
+import {discussionEvidenceReasons,sourceQuoteOccurs} from '../lib/evidence-contract.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
 import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
 
@@ -88,9 +88,9 @@ try{
         const source=context.sources.find(s=>s.id===sourceId);
         try{
           const authority=context.demandContext?.authorizedSources.find(row=>row.sourceId===sourceId);
-          let text;
+          let text,liveSource;
           if(authority?.role==='demand'){
-            text=(await readLiveDemand(sourceId)).text;
+            liveSource=await readLiveDemand(sourceId);text=liveSource.text;
             if(!text.includes(post.demandEvidence.evidenceQuote)||!text.includes(result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
           }else{
             if(implementationSource(source)&&!discussionImplementationReference(source,{demandSources:context.sources.filter(item=>item.role==='demand')}))throw new Error('Implementation reference lost its exact fixed catalog and discussion-task binding.');
@@ -108,7 +108,7 @@ try{
           }
           if(source.discussionMetadataVersion!==1&&text.length<100)throw new Error('Live source contains too little readable evidence.');
           for(const claim of [...result.check.claimChecks,...result.check.scoreChecks].filter(c=>c.sourceId===sourceId)){
-            const occurs=claim.criterion?text.includes(claim.evidenceQuote):text.toLowerCase().includes(plainText(claim.evidenceQuote).toLowerCase());
+            const occurs=sourceQuoteOccurs(liveSource||{text},claim.evidenceQuote,claim.criterion?{}:{normalize:value=>plainText(value).toLowerCase()});
             if(!occurs)throw new Error('A checked claim or score evidence quote no longer exists on the live source.');
           }
         }catch(error){const reason=safeError(error);reasons.push(`${source.url}: ${reason}`);operationalFailures.push({stage:'live_source',code:'live_evidence_unavailable',sourceId,url:source.url,reason});}
