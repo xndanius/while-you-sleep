@@ -42,7 +42,9 @@ export async function claimClock({root=ROOT,env=process.env,now=new Date(),api=c
     const parent=await api(`repos/${CLOCK_REPOSITORY}/actions/runs/${state.parentRunId}`,{env});
     // Its exact immutable tick already proves the wait and this child. A
     // post-tick watchdog or Pages job may still be finishing on the parent.
-    if(!trustedClockRun(parent,state.parentRunId,state.parentRunAttempt)||!['completed','in_progress','waiting'].includes(parent.status))throw new Error('Clock parent workflow identity is untrusted.');
+    // GitHub can label that aggregate tail pending; the exact tick and child
+    // bindings above remain mandatory, as does the authoritative run identity.
+    if(!trustedClockRun(parent,state.parentRunId,state.parentRunAttempt)||!['completed','in_progress','waiting','pending'].includes(parent.status))throw new Error('Clock parent workflow identity is untrusted.');
   }
   if(claim.claimed){
     if(runtimeWritable(env)){

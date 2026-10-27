@@ -125,6 +125,25 @@ test('expected child requires the exact immutable parent receipt and authoritati
  await writeFile(path.join(root,'data','clock','ticks',clockTickId(100)+'.json'),JSON.stringify({...parent,child:{...parent.child,runId:'999'}}));await assert.rejects(claimClock({root,env:childEnv,now,api:async()=>source(100,'completed'),commit:async()=>{}}),/receipt/);
 });
 
+test('an exact tick-bound child can claim while its trusted parent has a pending post-tick tail',async t=>{
+ const root=await fixture(t),queued={...waiting,phase:'queued',expectedRunId:'200',generation:1,parentRunId:'100',parentRunAttempt:1,clockRunUrl:clockRunURL(200)};
+ const parent={chainId:queued.chainId,githubRunId:'100',githubRunAttempt:1,child:{runId:'200',generation:1,githubRunUrl:clockRunURL(200)}};
+ const receiptFile=path.join(root,'data','clock','ticks',clockTickId(100)+'.json');
+ await saveState(root,queued);await mkdir(path.dirname(receiptFile),{recursive:true});await writeFile(receiptFile,JSON.stringify(parent));
+ const childEnv={...env,GITHUB_RUN_ID:'200',CLOCK_CHAIN_ID:queued.chainId,CLOCK_PARENT_RUN_ID:'100',CLOCK_PARENT_RUN_ATTEMPT:'1',CLOCK_GENERATION:'1'};
+ let commits=0,dispatches=0;const api=async(endpoint,options={})=>{if(options.method&&options.method!=='GET')dispatches++;assert.match(endpoint,/actions\/runs\/100$/);return source(100,'pending');};
+ assert.equal((await claimClock({root,env:childEnv,now,api,commit:async()=>commits++})).claimed,true);assert.equal(commits,1);assert.equal(dispatches,0);
+ assert.equal((await claimClock({root,env:childEnv,now,api,commit:async()=>commits++})).claimed,false);assert.equal(commits,1);
+ for(const change of [{id:99},{run_attempt:2},{repository:{full_name:'other/repo'}},{head_repository:{full_name:'other/repo'}},{head_branch:'other'},{path:'.github/workflows/other.yml'},{event:'push'},{status:'unknown'},{status:'queued'}]){
+  await saveState(root,queued);const before=await readFile(path.join(root,'data','clock','state.json'),'utf8');
+  await assert.rejects(claimClock({root,env:childEnv,now,api:async()=>({...source(100,'pending'),...change}),commit:async()=>commits++}),/untrusted/);
+  assert.equal(await readFile(path.join(root,'data','clock','state.json'),'utf8'),before);
+ }
+ await saveState(root,queued);await writeFile(receiptFile,JSON.stringify({...parent,child:{...parent.child,generation:2}}));
+ await assert.rejects(claimClock({root,env:childEnv,now,api,commit:async()=>commits++}),/receipt/);
+ await rm(receiptFile);await assert.rejects(claimClock({root,env:childEnv,now,api,commit:async()=>commits++}));assert.equal(commits,1);assert.equal(dispatches,0);
+});
+
 test('healthy backup makes no writes, dispatches or cancellation',async t=>{
  const root=await fixture(t);await saveState(root,waiting);const before=await readFile(path.join(root,'data','clock','state.json'),'utf8');let calls=0;
  const result=await ensureClock({root,env:{...env,GITHUB_EVENT_NAME:'schedule'},now,api:async(endpoint)=>{calls++;assert.match(endpoint,/runs\/100$/);return source(100);},commit:async()=>{throw new Error('No commit expected.');}});
