@@ -22,6 +22,7 @@ import {DISCUSSION_SOURCE_CATALOG,makeDiscussionSource} from '../lib/discussion-
 import {demandContextReasons} from '../lib/demand.mjs';
 import {SOURCE_PARSER_VERSION} from '../lib/research.mjs';
 import {selectDiscussionImplementationReferences} from '../lib/discussion-implementation.mjs';
+import {buildNativeReadingContext,nativeReadingContextReasons,normalizeNativePost} from '../lib/native-reading-context.mjs';
 
 const now='2026-10-11T12:20:00.000Z',runId='loop-123-1';
 const rules='# Rules\n<!-- scoring-policy:start -->\n```json\n{"weights":{"ease":1,"profit":1,"feasibility":1,"autonomy":1,"evidence":1},"publishThreshold":6}\n```\n<!-- scoring-policy:end -->\n';
@@ -88,6 +89,43 @@ async function execute(t,{count=1,legacy=false,mode='hourly',mutate=()=>{},after
  const record=async directory=>JSON.parse(await readFile(path.join(root,'data',directory,runId+'.json'),'utf8'));
  return {root,f,execution,record,outputs:await readFile(path.join(root,'outputs'),'utf8').catch(()=>''),env};
 }
+
+test('identified native first-post context reaches the real checker preparation and inspector without private text or extra reads',async t=>{
+ const definition=DISCUSSION_SOURCE_CATALOG.find(source=>source.community==='Make community'),url='https://community.make.com/t/54321',createdAt='2026-10-11T10:00:00.000Z';
+ const task='Our team manually maps invoice rows every week. We need a draft mapping for review.';
+ const detail='Each input row contains an amount and a tax rate. Keep both numeric values together in the draft invoice request.';
+ const example='{"invoice_rows":[{"amount":390.4382470119522,"tax":24},{"amount":79.6812749003984,"tax":24}]}';
+ const privateBlock='Please contact fixture.person@example.invalid about this input.';
+ const body=`<p>${task}</p><p>${detail}</p><pre>${example}</pre><p>${privateBlock}</p><p>Kind regards,</p><p>Casey Fixture</p>`;
+ const source={...makeDiscussionSource(definition,{url,title:'How can I map invoice rows?',excerpt:task,date:createdAt},{fetchedAt:now}),verifiedAt:now,enriched:true,evidenceKind:'discussion-post',evidenceFetch:{maxBytes:2000000,complete:true}};
+ const validation={publicHttps:true,robotsAllowed:true,readable:true,robots:[{origin:new URL(definition.url).origin,evaluatedUrl:definition.url,robotsUrl:new URL('/robots.txt',definition.url).toString(),status:404,state:'missing',allowed:true,contentType:'text/plain',fetchedAt:now}],redirects:[],httpStatus:200,contentType:'application/rss+xml',resolvedUrl:definition.url,fetchedAt:now,maxBytes:2000000,truncated:false,parserVersion:SOURCE_PARSER_VERSION,itemCount:1};
+ const registry={sources:[{...definition,status:'active',validation}]},selection=selectLearningTargets({runId,registry,scoreboard:{segments:[],sources:[]},discussionOnly:true,now,producer:{repository:'xndanius/while-you-sleep',runId:'123',runAttempt:1,workflow:'loop.yml',stage:'pre_model',headSha:'a'.repeat(40)}});
+ const assignment={productUrl:url,segment:source.segment,kind:'discussion',demandSourceId:source.id,registrySourceId:definition.id};
+ const research={runId,createdAt:now,sources:[source],health:[],githubRunUrl:'https://github.com/xndanius/while-you-sleep/actions/runs/123',enrichment:{schema:1,status:'completed',selected:1,attempted:1,fetched:1,failed:0,observations:[{productUrl:url,status:'fetched',originSourceIds:[source.id],evidenceIds:[source.id]}],discussionBatch:{version:1,maxLeads:10,maxPerDemandSource:3,postIsDemand:true,leadAssignments:[assignment]}},learningSelection:selection};
+ const historical={id:'research-111-1',runId:'research-111-1',createdAt:'2026-10-10T10:00:00.000Z',sources:[],health:[]};
+ const response=JSON.stringify({id:54321,title:source.title,created_at:createdAt,post_stream:{posts:[{id:765432,topic_id:54321,post_number:1,created_at:createdAt,cooked:body},{id:765433,topic_id:54321,post_number:2,created_at:createdAt,cooked:'A reply must not be retained as original-post context.'}]}});
+ source.nativeReadingContext=buildNativeReadingContext({source,raw:body,topicId:54321,postId:765432,postNumber:1,postCreatedAt:createdAt,postUpdatedAt:null,responseUrl:url+'.json',responseText:response,fetchedAt:now});
+ assert.ok(source.nativeReadingContext,'The trusted pre-model producer seals the new body contract before checker preparation.');
+ const researchBefore=stableJSON(research),selectionBefore=stableJSON(selection);
+ const result=await execute(t,{count:0,script:'prepare-check',mutate:f=>{f.context.sources=[source];f.draft.rejected=[{title:source.title,productUrl:url,sourceIds:[source.id],reason:'The synthetic request does not establish a paid service.'}];},mutateResearch:value=>Object.assign(value,research),extraRecords:[['sources',registry,'registry'],['learning-selection',selection],['research',historical,historical.id]],envOverrides:{DEMAND_CONTRACT_VERSION:'1',EXPECTED_LEARNING_SELECTION_SHA:sha256(selectionBefore),EXPECTED_RESEARCH_SHA:sha256(researchBefore)},liveByUrl:{[new URL('/robots.txt',url).toString()]:{status:404,text:''},[url+'.json']:{text:response,headers:{'content-type':'application/json'}}}});
+ assert.equal(result.execution.status,0,result.execution.stderr);assert.match(result.execution.stdout,/FETCH_COUNT 2/);
+ const context=await result.record('check-context'),fresh=context.sources.find(row=>row.id===source.id),packet=fresh.nativeReadingContext,normalized=normalizeNativePost(body);
+ assert.deepEqual(demandContextReasons(context),[]);assert.deepEqual(nativeReadingContextReasons(fresh),[]);assert.deepEqual(privateArtifactCategories(context),[]);
+ assert.equal(fresh.text,source.text);assert.deepEqual(fresh.taskExcerpts,source.taskExcerpts);assert.equal(fresh.taskExample,undefined);
+ assert.equal(packet.version,2);assert.equal(packet.postId,765432);assert.equal(packet.postNumber,1);assert.equal(packet.responseSha256,sha256(response));
+ assert.ok(packet.retainedCharacters>200&&packet.retainedCharacters<=1200);assert.ok(packet.spans.some(span=>span.text.includes(detail)));assert.ok(packet.spans.some(span=>span.text.includes(example)));
+ for(const span of packet.spans)assert.equal(normalized.slice(span.start,span.end),span.text);
+ assert.equal(JSON.stringify(context).includes(privateBlock),false);assert.equal(JSON.stringify(context).includes('Casey Fixture'),false);assert.equal(JSON.stringify(context).includes('A reply must not be retained'),false);
+ assert.equal(context.sourceSnapshotSha256,sha256(stableJSON(context.sources)));assert.deepEqual(context.health,[]);assert.deepEqual(context.considerationEvidence[0].availableSourceIds,[source.id]);
+ assert.equal(stableJSON(await result.record('research')),researchBefore);assert.equal(stableJSON(await result.record('learning-selection')),selectionBefore);assert.deepEqual(await result.record('drafts'),result.f.draft);
+ assert.deepEqual(JSON.parse(await readFile(path.join(result.root,'data/research',historical.id+'.json'),'utf8')),historical);
+ const frozenContext=stableJSON(context),env={...result.env,EXPECTED_DRAFT_SHA:context.draftSha256,EXPECTED_CONTEXT_SHA:sha256(frozenContext)};
+ const prepared=spawnSync(process.execPath,['scripts/prepare-run.mjs','checker'],{cwd:result.root,env,encoding:'utf8'});assert.equal(prepared.status,0,prepared.stderr);assert.match(prepared.stdout,/FETCH_COUNT 0/);
+ const session=JSON.parse(await readFile(path.join(result.root,'.run/context.json'),'utf8'));assert.equal(session.checkContextSha256,sha256(frozenContext));
+ const inspected=spawnSync(process.execPath,['scripts/inspect-check-assessment.mjs',runId],{cwd:result.root,env,encoding:'utf8'});assert.equal(inspected.status,0,inspected.stderr);assert.match(inspected.stdout,/FETCH_COUNT 0/);
+ const view=JSON.parse(inspected.stdout.split('\n').find(line=>line.startsWith('{')));assert.equal(view.bindings.sourceSnapshotSha256,context.sourceSnapshotSha256);assert.equal(view.counts.uniqueConsidered,1);
+ assert.equal(stableJSON(await result.record('check-context')),frozenContext);assert.equal(stableJSON(await result.record('research')),researchBefore);assert.deepEqual(await result.record('drafts'),result.f.draft);
+});
 
 test('sealed discussion exclusions prepare an independent exact-post context without raw fallback or proposals',async t=>{
  const definition=DISCUSSION_SOURCE_CATALOG.find(source=>source.kind==='discourse-discussion'&&source.community==='n8n community'),url='https://community.n8n.io/t/12345',body='Our store manually reviews inventory reports every week. Is there a tool that prepares the report for review?',source={...makeDiscussionSource(definition,{url,title:'How do merchants handle weekly inventory reports?',excerpt:body,date:'2026-10-11T10:00:00.000Z'},{fetchedAt:now}),verifiedAt:now,enriched:true,evidenceKind:'demand-notice',evidenceFetch:{maxBytes:2000000,complete:true}};
