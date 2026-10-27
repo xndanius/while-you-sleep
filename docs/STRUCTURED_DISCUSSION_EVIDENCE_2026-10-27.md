@@ -21,6 +21,15 @@ Claim and score quotes must occur wholly in one valid span; demand and omitted
 candidate quotes still require the main task text. An absent or changed live
 example cannot satisfy the earlier quote.
 
+These spans are the entire retained original-post body, not just citation
+limits. A complete HTTP response is reduced by the adapter before either model
+reads it. The remaining CRM/API context, other arrays and relationships may be
+absent, so neither model may infer that missing excerpt support is missing from
+the original post. The prompts explicitly disclose this boundary and use the
+same optional-example quote gate as deterministic acceptance. A future richer
+reading context would need its own bounded, sanitized, identity-bound policy;
+the current change does not silently enlarge the 200-character body allowance.
+
 A guarded read at 2026-10-27 11:25:23 UTC verified that this topic retains its
 108-character task plus a 72-character numeric array, 180 characters total.
 Both values were copied unchanged; the existing source contract passed and the
@@ -32,12 +41,16 @@ solution, recurring commercial demand, payment or a qualifying score. The
 6-point threshold, independent assessment, original posts and historical
 receipts remain unchanged. No model cycle was dispatched to obtain a post.
 
-Validation: `npm test` passed all 737 tests, including 12 new extraction,
+Initial validation: `npm test` passed all 737 tests, including 12 new extraction,
 privacy, freshness, scoring and actual-publisher regressions. The isolated
 publisher accepts the synthetic valid fixture, but blocks both a missing and
 a changed example on its final native reread. `npm run check`,
 `npm run build` and `git diff --check` passed. No separate lint or TypeScript
 command exists in this JavaScript repository.
+
+The follow-up prompt consistency fix passed all 738 tests, syntax checks and
+the production build. Its regression prevents the later quote instructions
+from overriding the optional-example gate or implying full-body visibility.
 
 The recorded 11:07 assessment remains `completed_no_post` at 3.8 for this
 candidate. Its unchanged task fingerprint keeps the existing three-hour

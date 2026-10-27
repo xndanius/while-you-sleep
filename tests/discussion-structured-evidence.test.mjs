@@ -6,6 +6,7 @@ import {discussionEvidenceReasons,sourceQuoteOccurs} from '../lib/evidence-contr
 import {SCORING_KEYS,checkScoringApproval,weightedOverall,parseScoringPolicy} from '../lib/scoring.mjs';
 import {sha256,stableJSON} from '../lib/storage.mjs';
 import {enrichProductLeads} from '../lib/product-evidence.mjs';
+import {readFile} from 'node:fs/promises';
 
 // Only these two short spans are real. The page structure, metadata and
 // surrounding text are synthetic offline fixtures, not new source evidence.
@@ -87,6 +88,18 @@ test('quotes match wholly inside either span and normalization never joins the s
  const source=await fresh(),normalize=value=>value.replace(/\s+/g,' ').toLowerCase();
  assert.equal(sourceQuoteOccurs(source,task),true);assert.equal(sourceQuoteOccurs(source,example),true);assert.equal(sourceQuoteOccurs(source,example.toUpperCase()),false);assert.equal(sourceQuoteOccurs(source,example.toUpperCase(),{normalize}),true);
  const crossing=task.slice(-24)+' '+example.slice(0,25);assert.equal(sourceQuoteOccurs(source,crossing),false);assert.equal(sourceQuoteOccurs(source,crossing,{normalize}),false);assert.equal(sourceQuoteOccurs(source,''),false);
+});
+
+test('checker quote instructions use the same optional-example gate and disclose retained context limits',async()=>{
+ const checker=await readFile(new URL('../.github/codex/prompts/checker.md',import.meta.url),'utf8');
+ const writer=await readFile(new URL('../.github/codex/prompts/writer.md',import.meta.url),'utf8');
+ assert.match(checker,/require sourceQuoteOccurs\(source,evidenceQuote\) to be true/);
+ assert.doesNotMatch(checker,/source\.text\.includes\(evidenceQuote\) must be true/);
+ assert.match(checker,/Demand and omission quotes continue to require source\.text\.includes\(evidenceQuote\)/);
+ for(const prompt of [checker,writer]){
+  assert.match(prompt,/entire original-post body supplied here, not merely a citation limit/);
+  assert.match(prompt,/Offline transforms or synthetic checks do not establish Make execution/);
+ }
 });
 
 test('strict scoring may cite an actual input example without changing scores, threshold or unsupported ceilings',async()=>{
