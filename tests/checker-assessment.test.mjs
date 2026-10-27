@@ -94,6 +94,57 @@ test('both checker phases prepare a bound complete view and the inspector prints
  }
 });
 
+test('writer artifact transfer through fresh checker preparation advertises the actual canonical view bytes',async t=>{
+ const f=await fixture();
+ // Replay the original writer-side draft rather than claiming the later
+ // repaired draft was uploaded by the first writer invocation.
+ f.draft=JSON.parse(await readFile(new URL(`../data/drafts/${runId}-first.json`,import.meta.url),'utf8'));
+ const s=await sandbox(t,f,{settlement:true}),research=s.records.research,selection=s.records['learning-selection'];
+ const writerArtifact=path.join(s.root,'writer-artifact'),selectionArtifact=path.join(s.root,'.staging/learning-selection');
+ await put(writerArtifact,`drafts/${runId}.json`,f.draft);await put(writerArtifact,`research/${runId}.json`,research);
+ assert.deepEqual(Object.keys(await fileHashes(writerArtifact)).sort(),[`drafts/${runId}.json`,`research/${runId}.json`]);
+ const originalDraft=structuredClone(f.draft),researchBytes=await readFile(path.join(writerArtifact,`research/${runId}.json`));
+ // upload-artifact's common root is data/. download-artifact restores these
+ // two relative directories under the checker job's data/ destination.
+ await rm(path.join(s.root,'data/check-context'),{recursive:true,force:true});
+ await rm(path.join(s.root,'data/learning-selection'),{recursive:true,force:true});
+ await rm(path.join(s.root,`data/drafts/${runId}.json`));await rm(path.join(s.root,`data/research/${runId}.json`));
+ await cp(writerArtifact,path.join(s.root,'data'),{recursive:true});
+ await assert.rejects(readFile(path.join(s.root,`data/check-context/${runId}.json`)),{code:'ENOENT'});
+ await put(selectionArtifact,runId+'.json',selection);
+ const transferred={CHECKER_PHASE:'initial',GITHUB_REPOSITORY:'xndanius/while-you-sleep',GITHUB_RUN_ID:selection.producer.runId,GITHUB_RUN_ATTEMPT:String(selection.producer.runAttempt),EXPECTED_RESEARCH_SHA:sha256(stableJSON(research)),EXPECTED_LEARNING_SELECTION_SHA:sha256(stableJSON(selection)),EXPECTED_SOURCE_SCAN_HEAD_SHA:selection.producer.headSha};
+ const imported=s.invoke('import-learning-selection',[selectionArtifact,runId],transferred);assert.equal(imported.status,0,imported.stderr);
+ assert.deepEqual(await s.read(`data/learning-selection/${runId}.json`),selection);
+ const prepared=s.invoke('prepare-check',[runId],transferred);assert.equal(prepared.status,0,prepared.stderr);
+ const fresh=await s.read(`data/check-context/${runId}.json`),checkedDraft=await s.read(`data/drafts/${runId}.json`);
+ assert.deepEqual(checkedDraft,originalDraft);assert.deepEqual(fresh.health,[]);assert.equal(fresh.sources.length,8);
+ assert.ok(fresh.sources.every(source=>source.verifiedAt===f.context.createdAt));
+ const preparedRole=s.invoke('prepare-run',['checker'],transferred);assert.equal(preparedRole.status,0,preparedRole.stderr);
+ const fingerprints=s.invoke('fingerprint-check',[runId],transferred);assert.equal(fingerprints.status,0,fingerprints.stderr);
+ const values=Object.fromEntries(fingerprints.stdout.trim().split('\n').map(line=>line.split('=')));
+ assert.equal(values.draft_sha256,sha256(stableJSON(checkedDraft)));assert.equal(values.context_sha256,sha256(stableJSON(fresh)));
+ const session=await s.read('.run/context.json'),raw=await readFile(path.join(s.root,session.checkerAssessment.path),'utf8'),view=JSON.parse(raw);
+ assert.equal(raw,stableJSON(view));assert.equal(sha256(raw),session.checkerAssessment.sha256);
+ assert.deepEqual(view,checkerAssessmentView(checkedDraft,fresh,{role:'checker'}));assert.deepEqual(view.draft,originalDraft);assert.deepEqual(view.counts,{posts:0,candidates:2,rejected:8,uniqueConsidered:8});
+ const external={...transferred,EXPECTED_DRAFT_SHA:values.draft_sha256,EXPECTED_CONTEXT_SHA:values.context_sha256},before=await fileHashes(s.root);
+ const inspected=s.invoke('inspect-check-assessment',[runId],external);assert.equal(inspected.status,0,inspected.stderr);assert.deepEqual(JSON.parse(inspected.stdout),view);assert.deepEqual(await fileHashes(s.root),before);
+ assert.deepEqual(await readFile(path.join(s.root,`data/research/${runId}.json`)),researchBytes);
+ // Exact old serialization expression, reconstructed only in the temporary
+ // prepare-run copy. All artifact-transfer and fresh preparation inputs stay
+ // identical; this isolates the deployed raw-byte hash counterexample.
+ const script=path.join(s.root,'scripts/prepare-run.mjs'),current=await readFile(script,'utf8'),canonical='await writeFile(context.checkerAssessment.path,stableJSON(assessmentView));';
+ assert.ok(current.includes(canonical));await writeFile(script,current.replace(canonical,'await writeFile(context.checkerAssessment.path,JSON.stringify(assessmentView,null,2));'));
+ const legacyPrepared=s.invoke('prepare-run',['checker'],external);assert.equal(legacyPrepared.status,0,legacyPrepared.stderr);
+ const legacySession=await s.read('.run/context.json'),pretty=await readFile(path.join(s.root,legacySession.checkerAssessment.path),'utf8');
+ assert.deepEqual(JSON.parse(pretty),view);assert.equal(legacySession.checkerAssessment.sha256,session.checkerAssessment.sha256);
+ assert.notEqual(sha256(pretty),legacySession.checkerAssessment.sha256,'Pre-fix pretty bytes violate the advertised canonical hash despite identical parsed content.');
+ await writeFile(script,current);await writeFile(path.join(s.root,session.checkerAssessment.path),raw);
+ const changed=structuredClone(view);changed.draft.candidates[0].reason='A semantically changed assessment must not be accepted.';
+ await writeFile(path.join(s.root,session.checkerAssessment.path),stableJSON(changed));
+ const refused=s.invoke('inspect-check-assessment',[runId],external);assert.equal(refused.status,1);assert.equal(JSON.parse(refused.stdout).available,false);
+ assert.deepEqual(await s.read(`data/drafts/${runId}.json`),originalDraft);assert.deepEqual(await s.read(`data/check-context/${runId}.json`),fresh);
+});
+
 test('view construction refuses mismatches, malformed lists, private inputs and oversized complete views',async()=>{
  const changes=[
   f=>f.draft.runId='loop-999-1',f=>f.draft.candidates[0].reason='Changed without a new hash',f=>f.context.sources[0].text+=' changed',
