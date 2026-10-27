@@ -95,7 +95,8 @@ test('checker quote instructions use the same optional-example gate and disclose
  const writer=await readFile(new URL('../.github/codex/prompts/writer.md',import.meta.url),'utf8');
  assert.match(checker,/require sourceQuoteOccurs\(source,evidenceQuote\) to be true/);
  assert.doesNotMatch(checker,/source\.text\.includes\(evidenceQuote\) must be true/);
- assert.match(checker,/Demand and omission quotes continue to require source\.text\.includes\(evidenceQuote\)/);
+ assert.match(checker,/Check demand quotes with demandQuoteOccurs from lib\/demand-quotes\.mjs/);
+ assert.match(checker,/legacy taskExample or a numeric-example span cannot establish a chore/);
  for(const prompt of [checker,writer]){
   assert.match(prompt,/entire original-post body supplied here, not merely a citation limit/);
   assert.match(prompt,/Offline transforms or synthetic checks do not establish Make execution/);

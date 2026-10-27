@@ -19,7 +19,7 @@ import {selectLearningTargets} from '../lib/learning.mjs';
 import {plainText} from '../lib/research.mjs';
 import {privateArtifactCategories} from '../lib/privacy.mjs';
 import {DISCUSSION_SOURCE_CATALOG,makeDiscussionSource} from '../lib/discussion-sources.mjs';
-import {demandContextReasons} from '../lib/demand.mjs';
+import {demandContextReasons,demandContextHash} from '../lib/demand.mjs';
 import {SOURCE_PARSER_VERSION} from '../lib/research.mjs';
 import {selectDiscussionImplementationReferences} from '../lib/discussion-implementation.mjs';
 import {buildNativeReadingContext,nativeReadingContextReasons,normalizeNativePost} from '../lib/native-reading-context.mjs';
@@ -217,6 +217,30 @@ test('empty and below-threshold discussion batches keep only attached fixed task
  for(const [directory,record] of [['drafts',sharedDraft],['check-context',sharedContext],['checks',sharedFixture.manifest]])await writeFile(path.join(shared.root,'data',directory,runId+'.json'),JSON.stringify(record));
  const sharedMap=JSON.parse(preload.slice(start,end));sharedMap['https://community.make.com/t/12346.json']={status:403,text:'Unavailable unrelated rejected discussion'};await writeFile(path.join(shared.root,'preload.mjs'),preload.slice(0,start)+JSON.stringify(sharedMap)+preload.slice(end));
  const allowed=spawnSync(process.execPath,['scripts/finalize-run.mjs',runId],{cwd:shared.root,env:{...shared.env,EXPECTED_DRAFT_SHA:sha256(stableJSON(sharedDraft)),EXPECTED_CONTEXT_SHA:sha256(stableJSON(sharedContext))},encoding:'utf8'});assert.equal(allowed.status,0,allowed.stderr);const sharedRun=await shared.record('runs');assert.deepEqual(sharedRun.published,[post.id],'Unrelated rejected discussion B cannot veto checked post A using their shared fixed documentation.');assert.deepEqual(sharedRun.operationalFailures,[]);
+ // The final publisher must use the same literal native task range as the
+ // candidate/checker gates, and must refuse it when the fresh page loses it.
+ const nativeQuote='The invoice webhook loses the submitted totals after the form trigger.';
+ for(const keepQuote of [true,false]){
+  const native=await prepare(),nativeContext=await native.record('check-context'),nativeDraft=await native.record('drafts'),nativeSource=nativeContext.sources.find(source=>source.id===demand.id);
+  const nativeBody=`<p>${body}</p><p>${nativeQuote}</p>`,createdAt=demand.postedAt;
+  const nativeResponse=JSON.stringify({id:12345,title:demand.title,created_at:createdAt,post_stream:{posts:[{id:987654,topic_id:12345,post_number:1,created_at:createdAt,updated_at:null,cooked:nativeBody}]}});
+  nativeSource.nativeReadingContext=buildNativeReadingContext({source:nativeSource,raw:nativeBody,topicId:12345,postId:987654,postNumber:1,postCreatedAt:createdAt,postUpdatedAt:null,responseUrl:url+'.json',responseText:nativeResponse,fetchedAt:now});
+  assert.ok(nativeSource.nativeReadingContext);assert.equal(nativeSource.text.includes(nativeQuote),false);
+  const nativeResearch=await native.record('research');nativeResearch.sources=nativeResearch.sources.map(source=>source.id===nativeSource.id?structuredClone(nativeSource):source);
+  nativeContext.demandContext.discussionBatchPolicy.researchSha256=sha256(stableJSON(nativeResearch));nativeContext.demandContextSha256=demandContextHash(nativeContext.demandContext);
+  const nativePost=structuredClone(post);nativePost.demandEvidence.evidenceQuote=nativeQuote;
+  nativeDraft.posts=[nativePost];nativeDraft.candidates=[];nativeDraft.rejected=[];nativeContext.deterministicResults=[{postId:post.id,pass:true,reasons:[]}];
+  const nativeCheck=structuredClone(check);nativeCheck.demandCheck.evidenceQuote=nativeQuote;nativeCheck.demandCheck.demandContextSha256=nativeContext.demandContextSha256;
+  const checked={draft:nativeDraft,context:nativeContext,manifest:{runId,checkedAt:now,checks:[nativeCheck]}};bind(checked);
+  assert.deepEqual(completedAssessmentReasons(nativeDraft,nativeContext,checked.manifest),[]);assert.equal(checkApproval(nativeDraft,nativeContext,checked.manifest)[0].pass,true);
+  for(const [directory,record] of [['drafts',nativeDraft],['check-context',nativeContext],['checks',checked.manifest],['research',nativeResearch]])await writeFile(path.join(native.root,'data',directory,runId+'.json'),JSON.stringify(record));
+  const nativePreload=await readFile(path.join(native.root,'preload.mjs'),'utf8'),nativeStart=nativePreload.indexOf(marker)+marker.length,nativeEnd=nativePreload.indexOf(';globalThis.fetch',nativeStart),nativeMap=JSON.parse(nativePreload.slice(nativeStart,nativeEnd));
+  nativeMap[url+'.json']={text:keepQuote?nativeResponse:nativeResponse.replace(nativeQuote,'The old task detail is no longer supplied.')};
+  await writeFile(path.join(native.root,'preload.mjs'),nativePreload.slice(0,nativeStart)+JSON.stringify(nativeMap)+nativePreload.slice(nativeEnd));
+  const result=spawnSync(process.execPath,['scripts/finalize-run.mjs',runId],{cwd:native.root,env:{...native.env,EXPECTED_DRAFT_SHA:sha256(stableJSON(nativeDraft)),EXPECTED_CONTEXT_SHA:sha256(stableJSON(nativeContext))},encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr);const run=await native.record('runs');assert.deepEqual(run.published,keepQuote?[post.id]:[],JSON.stringify({run,stdout:result.stdout,stderr:result.stderr}));
+  if(!keepQuote)assert.ok(run.rejected.some(row=>(row.reasons||[row.reason]).some(reason=>reason?.includes('checked demand chore quote'))));
+ }
  const changed=await prepare({freshBody:'Our team manually reconciles customer invoices every week. Is there a tool that prepares those records for review?'});assert.equal(changed.execution.status,0,changed.execution.stderr);const context=await changed.record('check-context');assert.equal(context.sources.some(source=>source.id===document.id),false);assert.ok(context.health.some(source=>source.sourceId===document.id&&/task binding/.test(source.message)));assert.equal(context.primaryFetchDiagnostics[0].sourceId,demand.id);
 });
 

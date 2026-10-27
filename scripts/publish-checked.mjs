@@ -13,6 +13,7 @@ import {demandContextReasons} from '../lib/demand.mjs';
 import {sourceValidationMatchesDefinition} from '../lib/source-registry.mjs';
 import {readProviderEvidence} from '../lib/provider-evidence.mjs';
 import {discussionEvidenceReasons,sourceQuoteOccurs} from '../lib/evidence-contract.mjs';
+import {demandQuoteOccurs} from '../lib/demand-quotes.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
 import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
 
@@ -91,7 +92,7 @@ try{
           let text,liveSource;
           if(authority?.role==='demand'){
             liveSource=await readLiveDemand(sourceId);text=liveSource.text;
-            if(!text.includes(post.demandEvidence.evidenceQuote)||!text.includes(result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
+            if(!demandQuoteOccurs(liveSource,post.demandEvidence.evidenceQuote)||!demandQuoteOccurs(liveSource,result.check.demandCheck.evidenceQuote))throw new Error('The checked demand chore quote no longer exists in the live privacy-safe notice.');
           }else{
             if(implementationSource(source)&&!discussionImplementationReference(source,{demandSources:context.sources.filter(item=>item.role==='demand')}))throw new Error('Implementation reference lost its exact fixed catalog and discussion-task binding.');
             // A shared document may also support rejected batch assignments.

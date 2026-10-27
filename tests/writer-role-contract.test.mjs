@@ -92,3 +92,18 @@ test('writer instructions distinguish execution authority from retrieval repair 
  const generic=paragraphs.find(value=>/at least 8 candidates/i.test(value));assert.match(generic,/assigned discussion batch.*entire sealed assignment ledger.*For other research/s);
  const localCheck=paragraphs.find(value=>value.includes('context.writerCoverage.command'));assert.match(localCheck,/read-only command.*before finishing this same invocation/s);assert.match(localCheck,/identities and required plan structure only.*no score, semantic assessment or approval/s);assert.match(localCheck,/no model call or repair round/);
 });
+
+test('writer and checker use the native task-quote contract without turning missing references or old refusals into an exclusion rule',async()=>{
+ const [writer,checker]=await Promise.all(['writer','checker'].map(name=>readFile(new URL(`../.github/codex/prompts/${name}.md`,import.meta.url),'utf8')));
+ for(const prompt of [writer,checker]){
+  assert.match(prompt,/demandQuoteOccurs from lib\/demand-quotes\.mjs/);
+  assert.match(prompt,/one validated nativeReadingContext task\/context span/);
+  assert.doesNotMatch(prompt,/Demand and omitted-task quotes must still come from source\.text|quotes continue to require source\.text\.includes/);
+  assert.match(prompt,/never join spans/);
+ }
+ assert.match(writer,/currently assigned discussion has already passed.*cooldown gate/);
+ assert.match(writer,/missing implementation references or an earlier below-threshold assessment alone do not justify skipping.*five provisional scores/s);
+ assert.match(writer,/resulting scores can remain low/);
+ assert.match(checker,/schema 2.*quoteSpanSha256.*same validated native task\/context span/s);
+ assert.match(checker,/final checker cannot issue omission feedback or request another round/);
+});
