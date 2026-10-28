@@ -1,0 +1,189 @@
+{
+  "schema": 2,
+  "type": "candidate-research-intent",
+  "runId": "loop-40786081280-1",
+  "createdAt": "2026-10-28T23:17:16.268Z",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "40786081280",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "44fa77ea40442686401cbac7beea86158e8bc7e0"
+  },
+  "dossier": {
+    "version": 1,
+    "id": "bb41e49c777b7f2a0ce9505b",
+    "gapId": "a54cb788202950fcdb6b76bc6c9387aeb4fbeeb92ad435034af66fe66bb1a661",
+    "status": "proposed_research",
+    "provenance": {
+      "runId": "loop-40752010258-1",
+      "runSha256": "86dd4807913e3f42bc0e791983cff952d7327917993500eb687df850b0487a4c",
+      "draftSha256": "d4a3248918f4b754b0b028fcff935e984bc06238822900e11cdcbf9498d98e67",
+      "contextSha256": "1d26cd4ba1d5b3cb3c7db4a8bc8ecce45da7262a1c1955073b82f04167f5c7a3",
+      "researchSha256": "cbc95e770dfe6a6922dde5ac18e6b9260d1d616ab499eabe45585b3f866cfdb1",
+      "scanSha256": "0e2bd184552a10f45d7b7238adc598a68f92250af1bfe452f20374787b0c68a7",
+      "manifestSha256": "a8124ff37c95d4abc1d212496ec4c3e925df99c64ad708e4fbe0709e3f7a2114",
+      "selectionSha256": "4e63199a8f5b4cc222d5ce2be6ee187d15d463413b75b62d26a657d32c2b678c",
+      "learningSha256": "4953dc9e7cee9ab0362666217e520199fb6e176c86ae6f025be65d396bae4899"
+    },
+    "catalogSha256": "4ef85fd0fe49b5d6ffbbf360797abc8780e241468ef178739166663b57eed354",
+    "candidateIndex": 1,
+    "candidateSha256": "dc741b20875625daaae17232385e4eb183db57a979f6349af5be62ee2c207ba4",
+    "candidate": {
+      "title": "Prepare resume answers for job forms",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Enter resume information into forms tailored to each company’s hiring process.",
+        "evidenceQuote": "filling my resume data to freshly developed forms made specifically to the hiring process"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet that maps supplied resume facts to draft answers for repeated job-application fields.",
+        "inputs": [
+          "Fictional resume facts supplied by the tester",
+          "A small set of manually transcribed sample form field labels",
+          "Operator-approved mapping rules"
+        ],
+        "trigger": "When a tester receives another application form with fields represented in the sample set.",
+        "steps": [
+          "Enter fictional resume facts into a structured table.",
+          "Add the sample form field labels.",
+          "Suggest matching facts for each field.",
+          "Flag fields with no clear match instead of guessing.",
+          "Have a person review and copy approved answers manually."
+        ],
+        "acceptanceCheck": "For each sample field, verify the suggested answer matches the corresponding fictional resume fact and leaves uncertain fields blank.",
+        "humanBoundary": "A person must provide lawful test inputs, check every answer, handle sensitive information safely, and complete the actual application.",
+        "unverified": [
+          "Actual employer form layouts and field variations are unavailable.",
+          "No supplied source supports form reading, browser automation, or automatic submission.",
+          "Whether job seekers or career services would pay is unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test extraction into a review table, but the source gives no form fields or supported software reference.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers or career services might value reducing repeated form entry; this post establishes no payment intent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A draft-only test with fictional resume facts and sample fields is bounded; real employer forms and validation are unavailable.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A tool could suggest field values, but a person must verify every answer and submit each application; submission is unsupported.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states repeated resume-data entry into company-specific forms, but gives no form examples, frequency beyond this account, or corroboration.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "reason": "The concrete repeated data-entry chore supports a proposed draft-only test, but there is no field-level or implementation evidence and the provisional mean is below six."
+    },
+    "assignment": {
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "kind": "discussion",
+      "demandSourceId": "bb41e49c777b7f2a0ce9505b",
+      "registrySourceId": "939a755c20e133b519039302"
+    },
+    "source": {
+      "id": "bb41e49c777b7f2a0ce9505b",
+      "url": "https://news.ycombinator.com/item?id=50254751",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "title": "Tech market feels like a data entry job",
+      "text": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies.",
+      "community": "Hacker News Ask HN",
+      "postedAt": "2026-10-27T04:37:18.000Z",
+      "fetchedAt": "2026-10-28T19:18:01.661Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "939a755c20e133b519039302",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "bb41e49c777b7f2a0ce9505b",
+        "status": "active",
+        "postedAt": "2026-10-27T04:37:18.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T19:18:01.661Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    "sourceSha256": "ea0c76e1dd0317cb1dd436216def4b9a4c594698d23355d6a279c34f25ead358",
+    "discoverySha256": "aa132fb955d8f5c300bc487866b2d2c0d32b0532a8c250ad68b9b733fede0efb",
+    "unresolved": [
+      "Actual employer form layouts and field variations are unavailable.",
+      "No supplied source supports form reading, browser automation, or automatic submission.",
+      "Whether job seekers or career services would pay is unknown."
+    ],
+    "referenceRequests": [
+      {
+        "id": "b100f221383c5b74ce29f37b",
+        "url": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+        "productUrl": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+        "title": "n8n Information Extractor schema documentation",
+        "role": "building",
+        "demand": false,
+        "originSourceIds": [],
+        "implementationReferenceVersion": 1,
+        "implementationSelectionVersion": 2,
+        "implementationReferenceId": "n8n-resume-schema-v1",
+        "supportsDemandSourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ]
+      }
+    ],
+    "provisionalMean": 4.6,
+    "coverage": "missing_capability_evidence",
+    "notice": "The preserved plan and requested documentation are not execution, demand validation, a checked score or publication approval."
+  },
+  "referenceIds": [
+    "n8n-resume-schema-v1"
+  ],
+  "refreshReferenceIds": [],
+  "purpose": "acquire_evidence"
+}
