@@ -19,6 +19,8 @@ import {readProviderEvidence} from '../lib/provider-evidence.mjs';
 import {discussionSourceDefinition,makeDiscussionSource,createProviderSourceValidation} from '../lib/discussion-sources.mjs';
 import {CANDIDATE_PLAN_VERSION} from '../lib/candidate-plan.mjs';
 import {loadDiscussionDiscovery} from '../lib/discussion-discovery.mjs';
+import {readBoundedJSON} from '../lib/source-registry.mjs';
+import {verifyContinuationIntent,startContinuation} from '../lib/research-continuation.mjs';
 
 // Provider pools have their own immutable control proof. They never pass through
 // our HTTP fetcher and never impersonate a robots-allowed public response.
@@ -87,7 +89,14 @@ export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=sca
  const providerReader=providerFetch||(source=>readProviderEvidence(root,source,{now:new Date(now)}));
  const enrichRunner=enrich===enrichProductLeads?(learningSelection?.selectionStrategy==='discussion-first-v1'?enrichDiscussionLeads:learningSelection?.selectionStrategy==='mixed-recovery-v1'?enrichMixedRecoveryBatch:enrich):enrich;
  const discovery=enrichRunner&&learningSelection?.selectionStrategy==='discussion-first-v1'?await loadDiscussionDiscovery(root,{currentSources:originalSources,currentOriginMap:result.originMap,definitions,selection:learningSelection,now}):{sources:originalSources,originMap:result.originMap,provenance:null};
- let enriched=enrichRunner?await enrichRunner({sources:discovery.sources,originMap:discovery.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(providerReader?{providerFetch:providerReader}:{}),...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),...(researchPolicy?{limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours}:{}),now:()=>new Date(now).getTime()}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
+ const selectionInput={sources:discovery.sources,originMap:discovery.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),...(researchPolicy?{limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours}:{}),now:()=>new Date(now).getTime()};
+ let continuation=null;
+ if(env.EXPECTED_RESEARCH_INTENT_SHA&&learningSelection?.selectionStrategy==='discussion-first-v1'){
+  const intent=await readBoundedJSON(path.join(root,'data/research-intents',runId+'.json'));
+  await verifyContinuationIntent(root,intent,{runId,expectedSha256:env.EXPECTED_RESEARCH_INTENT_SHA,headSha:env.SOURCE_HEAD_SHA||env.GITHUB_SHA});
+  continuation=await startContinuation({root,intent,scan:receipt,selection:learningSelection,selectionInput});
+ }
+ let enriched=enrichRunner?await enrichRunner({...selectionInput,...(providerReader?{providerFetch:providerReader}:{}),...(continuation?{priorityProductUrl:continuation.priorityProductUrl,onLeadEvent:continuation.onLeadEvent,onReferenceEvent:continuation.onReferenceEvent,referencePriority:continuation.referencePriority}:{})}):{sources:originalSources,enrichment:{schema:1,status:'not_requested',selected:0,attempted:0,fetched:0,failed:0,observations:[]}};
  if(enrich===enrichProductLeads&&!['mixed-recovery-v1','discussion-first-v1'].includes(learningSelection?.selectionStrategy)&&researchPolicy?.fallbackEnabled&&enriched.enrichment.status==='no_new_leads')enriched=await enrichBuilderFallback({initial:enriched,sources:originalSources,originMap:result.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,learningSelection,demandDefinitions:definitions,now:()=>new Date(now).getTime(),limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours});
  const retained=retainSafeBuildingEnrichment(enriched.sources,result,definitions),sources=retained.sources,scheduling=trustedScheduledMetadata('research',runId.startsWith('research-')?env:{GITHUB_EVENT_NAME:env.GITHUB_EVENT_NAME});
  if(enriched.enrichment.recoveryBatch)enriched.enrichment.recoveryBatch.leadAssignments=enriched.enrichment.recoveryBatch.leadAssignments.filter(item=>sources.some(source=>source.id===item.demandSourceId&&source.role==='demand'&&source.enriched===true)&&sources.some(source=>source.enriched===true&&[source.productUrl,source.url].includes(item.productUrl)));

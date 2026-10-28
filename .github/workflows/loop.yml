@@ -131,11 +131,13 @@ jobs:
     outputs:
       repo_sha: ${{ steps.trust.outputs.repo_sha }}
       rules_sha256: ${{ steps.trust.outputs.rules_sha256 }}
-      source_scan_sha256: ${{ steps.scan.outputs.source_scan_sha256 }}
-      source_scan_head_sha: ${{ steps.scan.outputs.source_scan_head_sha }}
-      learning_selection_sha256: ${{ steps.scan.outputs.learning_selection_sha256 }}
+      source_scan_sha256: ${{ steps.scan.outputs.source_scan_sha256 || steps.continuation_seal.outputs.source_scan_sha256 }}
+      source_scan_head_sha: ${{ steps.scan.outputs.source_scan_head_sha || steps.trust.outputs.repo_sha }}
+      learning_selection_sha256: ${{ steps.scan.outputs.learning_selection_sha256 || steps.continuation_seal.outputs.learning_selection_sha256 }}
       no_fresh_leads_sha256: ${{ steps.scan.outputs.no_fresh_leads_sha256 }}
       research_sha256: ${{ steps.scan.outputs.research_sha256 }}
+      research_intent_sha256: ${{ steps.continuation_plan.outputs.intent_sha256 }}
+      research_result_sha256: ${{ steps.continuation_seal.outputs.result_sha256 }}
       readiness_reason: ${{ steps.prepare.outputs.readiness_reason }}
       model_completed: ${{ steps.model.outcome == 'success' }}
       model_attempted: ${{ contains(fromJSON('["success", "failure", "cancelled"]'), steps.model.outcome) }}
@@ -172,6 +174,19 @@ jobs:
             echo '::error::OPENAI_API_KEY is not installed. Complete secure setup, then dispatch bootstrap.'
             exit 1
           fi
+      - name: Seal one bounded continuation intent before acquisition
+        id: continuation_plan
+        env:
+          SOURCE_HEAD_SHA: ${{ steps.trust.outputs.repo_sha }}
+        run: node scripts/prepare-research-continuation.mjs "$RUN_ID"
+      - name: Preserve continuation intent before any acquisition starts
+        if: steps.continuation_plan.outputs.intent_sha256 != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: research-intent-${{ env.RUN_ID }}
+          path: data/research-intents/${{ env.RUN_ID }}.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Freeze the original guarded scan before model access
         id: scan
         continue-on-error: true
@@ -180,7 +195,23 @@ jobs:
           SOCIAL_DEMAND_PATH: ${{ needs.social_research.outputs.social_demand_sha256 != '' && '.staging/social-discovery/social-demand-research.json' || '' }}
           EXPECTED_SOCIAL_DEMAND_SHA: ${{ needs.social_research.outputs.social_demand_sha256 }}
           EXPECTED_SOCIAL_DEMAND_HEAD_SHA: ${{ needs.social_research.outputs.social_demand_head_sha }}
+          EXPECTED_RESEARCH_INTENT_SHA: ${{ steps.continuation_plan.outputs.intent_sha256 }}
         run: node scripts/research-snapshot.mjs "$RUN_ID"
+      - name: Seal continuation results including interrupted acquisition
+        id: continuation_seal
+        if: always() && steps.continuation_plan.outputs.intent_sha256 != ''
+        env:
+          EXPECTED_RESEARCH_INTENT_SHA: ${{ steps.continuation_plan.outputs.intent_sha256 }}
+          SOURCE_HEAD_SHA: ${{ steps.trust.outputs.repo_sha }}
+        run: node scripts/seal-research-continuation.mjs "$RUN_ID"
+      - name: Preserve continuation result outside model-owned files
+        if: always() && steps.continuation_seal.outputs.result_sha256 != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: research-result-${{ env.RUN_ID }}
+          path: data/research-results/${{ env.RUN_ID }}.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Seal a deterministic empty-lead completion before any model access
         if: always() && steps.scan.outputs.no_fresh_leads_sha256 != ''
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -195,7 +226,7 @@ jobs:
         continue-on-error: true
         run: node scripts/guard-private-artifacts.mjs "$RUN_ID" scan
       - name: Seal the original scan in a separate pre-model artifact
-        if: always() && steps.scan.outputs.source_scan_sha256 != '' && steps.scan_privacy.outputs.safe == 'true'
+        if: always() && (steps.scan.outputs.source_scan_sha256 != '' || steps.continuation_seal.outputs.source_scan_sha256 != '') && steps.scan_privacy.outputs.safe == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: source-scan-${{ env.RUN_ID }}
@@ -203,7 +234,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
       - name: Seal the customer selection before any model access
-        if: always() && steps.scan.outputs.learning_selection_sha256 != '' && steps.scan_privacy.outputs.selection_safe == 'true'
+        if: always() && (steps.scan.outputs.learning_selection_sha256 != '' || steps.continuation_seal.outputs.learning_selection_sha256 != '') && steps.scan_privacy.outputs.selection_safe == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: learning-selection-${{ env.RUN_ID }}
@@ -217,6 +248,8 @@ jobs:
         env:
           EXPECTED_RESEARCH_SHA: ${{ steps.scan.outputs.research_sha256 }}
           EXPECTED_LEARNING_SELECTION_SHA: ${{ steps.scan.outputs.learning_selection_sha256 }}
+          EXPECTED_RESEARCH_INTENT_SHA: ${{ steps.continuation_plan.outputs.intent_sha256 }}
+          EXPECTED_RESEARCH_RESULT_SHA: ${{ steps.continuation_seal.outputs.result_sha256 }}
         run: node scripts/prepare-run.mjs writer
       - name: Codex picks and writes
         id: model
@@ -614,6 +647,30 @@ jobs:
           EXPECTED_LEARNING_SELECTION_SHA: ${{ needs.writer.outputs.learning_selection_sha256 }}
           EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.source_scan_head_sha }}
         run: node scripts/import-learning-selection.mjs .staging/learning-selection "$RUN_ID"
+      - name: Fetch the original continuation intent
+        if: always() && needs.writer.outputs.research_intent_sha256 != ''
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: research-intent-${{ env.RUN_ID }}
+          path: .staging/research-intent/
+      - name: Import continuation intent through its pre-model hash
+        if: always() && needs.writer.outputs.research_intent_sha256 != ''
+        env:
+          EXPECTED_CONTINUATION_SHA: ${{ needs.writer.outputs.research_intent_sha256 }}
+          EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.repo_sha }}
+        run: node scripts/import-research-continuation.mjs .staging/research-intent intent "$RUN_ID"
+      - name: Fetch the sealed continuation result
+        if: always() && needs.writer.outputs.research_result_sha256 != ''
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: research-result-${{ env.RUN_ID }}
+          path: .staging/research-result/
+      - name: Import continuation result through its pre-model hash
+        if: always() && needs.writer.outputs.research_result_sha256 != ''
+        env:
+          EXPECTED_CONTINUATION_SHA: ${{ needs.writer.outputs.research_result_sha256 }}
+          EXPECTED_SOURCE_SCAN_HEAD_SHA: ${{ needs.writer.outputs.repo_sha }}
+        run: node scripts/import-research-continuation.mjs .staging/research-result result "$RUN_ID"
       - name: Fetch the separately sealed empty-lead decision
         if: needs.writer.outputs.no_fresh_leads_sha256 != ''
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093

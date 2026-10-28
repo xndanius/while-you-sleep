@@ -12,6 +12,7 @@ import {noFreshLeadsReasons} from '../lib/no-fresh-leads.mjs';
 import {hasDiscussionImplementationReference,discussionImplementationReference} from '../lib/discussion-implementation.mjs';
 import {sealedDiscussionAssignmentReasons} from '../lib/check-diagnostics.mjs';
 import {candidatePlanVersionReasons} from '../lib/candidate-plan.mjs';
+import {verifyContinuationIntent,continuationResultReasons} from '../lib/research-continuation.mjs';
 const runId=process.env.RUN_ID||`loop-${Date.now()}`;
 if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
 const role=process.argv[2]||'writer';
@@ -47,6 +48,12 @@ if(['writer','repair'].includes(role)){
  if(context.demandContractVersion===1){const selection=await readJSON(dataPath('learning-selection',runId));if(selection.runId!==runId)throw new Error('Demand-first writer has no matching trusted learning selection.');context.selectedSegment=selection.selectedSegment;}
  if(role==='repair'){const frozen=await readJSON(dataPath('check-context',runId));context.selectedSegment=frozen.demandContext?.selectedSegment||context.selectedSegment;}
  const view=writerResearchView(snapshot);
+ if(role==='writer'&&process.env.EXPECTED_RESEARCH_INTENT_SHA&&process.env.EXPECTED_RESEARCH_RESULT_SHA){
+  const intent=await readJSON(dataPath('research-intents',runId)),result=await readJSON(dataPath('research-results',runId));
+  await verifyContinuationIntent(ROOT,intent,{runId,expectedSha256:process.env.EXPECTED_RESEARCH_INTENT_SHA});
+  if(sha256(stableJSON(result))!==process.env.EXPECTED_RESEARCH_RESULT_SHA||continuationResultReasons(result,intent,{sealed:true}).length)throw new Error('Writer continuation receipt failed its trusted pre-model binding.');
+  if(result.outcome==='completed'&&view.sources.some(source=>source.id===intent.dossier.source.id))context.researchContinuation={version:1,productUrl:intent.dossier.source.url,sourceId:intent.dossier.source.id,priorPlan:intent.dossier.candidate.experimentPlan,unresolved:intent.dossier.unresolved,intentSha256:sha256(stableJSON(intent)),resultSha256:sha256(stableJSON(result)),notice:'Prior proposed design and limitations only. Use the current independently verifiable sources; this is no execution, score or approval.'};
+ }
  if(context.discussionFirst){
   const selection=await readJSON(dataPath('learning-selection',runId));
   const researchSha256=process.env.EXPECTED_RESEARCH_SHA||sha256(stableJSON(snapshot)),selectionSha256=process.env.EXPECTED_LEARNING_SELECTION_SHA||sha256(stableJSON(selection));

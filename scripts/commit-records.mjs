@@ -13,6 +13,7 @@ for(const directory of ['scheduling','slot-reservations','slot-outcomes']){
 }
 for(const directory of ['source-scans','source-attributions'])commit((await files(`data/${directory}`)).filter(file=>file===`data/${directory}/${runId}.json`),`source record: ${runId} · ${directory} trusted evidence`);
 for(const directory of ['learning-selection','learning','no-fresh-leads'])commit((await files(`data/${directory}`)).filter(file=>file===`data/${directory}/${runId}.json`),`learning: ${runId} · ${directory} trusted demand decision`);
+for(const directory of ['research-intents','research-results'])commit((await files(`data/${directory}`)).filter(file=>file===`data/${directory}/${runId}.json`),`research continuation: ${runId} · ${directory} trusted acquisition record`);
 commit((await files('data/check-diagnostics')).filter(file=>file===`data/check-diagnostics/${runId}.json`),`check diagnostics: ${runId} · sealed unavailable evidence`);
 commit(await files('data/feedback/provenance'),`feedback: ${runId} · verified operator commit and blob provenance`);
 commit((await files('data/research')).filter(p=>p.includes(runId)),`research: ${runId} · public sources and feed health`);
