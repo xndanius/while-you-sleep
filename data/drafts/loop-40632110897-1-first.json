@@ -1,0 +1,133 @@
+{
+  "runId": "loop-40632110897-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T04:35:00.000Z",
+  "candidates": [
+    {
+      "title": "Draft restaurant order status messages",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "segment": "ecommerce",
+      "sourceIds": [
+        "ea2016bda7c0f26522b8ff64"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ea2016bda7c0f26522b8ff64"
+        ],
+        "chore": "Connect restaurant order systems with customer notifications and delivery updates, including order confirmations, delivery assignments, and failed notifications.",
+        "evidenceQuote": "I want to understand how n8n can help connect restaurant order systems, customer notifications, and delivery updates."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue of concise draft messages for fictional order confirmations, delivery assignments, status updates, and notification failures.",
+        "inputs": [
+          "Fictional order ID and restaurant label",
+          "Fictional order status and delivery assignment",
+          "Operator-written message template",
+          "Fictional notification failure flag"
+        ],
+        "trigger": "An operator submits one fictional order event to a manually started test run.",
+        "steps": [
+          "Accept a fictional order event in a fixed sample format.",
+          "Check that its status and delivery assignment use allowed sample values.",
+          "Select a proposed message template for that event type.",
+          "Draft a short customer update using only supplied fields.",
+          "Flag missing fields or a failure state for human review.",
+          "Show the draft and event side by side for approval."
+        ],
+        "acceptanceCheck": "For a fixed set of fictional events, verify each draft repeats the supplied order status and assignment accurately, flags missing values, and never sends a message.",
+        "humanBoundary": "An operator supplies fictional test records and approved wording, checks every draft and failure flag, and authorizes any later live integration or message sending.",
+        "unverified": [
+          "No supplied implementation reference documents webhook receipt, restaurant system access, messaging integrations, retry behavior, or delivery.",
+          "The post does not establish field schemas, event frequency, commercial demand, or whether automated wording is acceptable."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can mock one status-to-message path with synthetic rows, but no supplied reference supports webhooks or messaging integrations.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: restaurant operators may pay to reduce manual order updates; this request proves neither purchase intent nor payment.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can draft confirmation and status messages from sample events; integrations, delivery and failure handling remain unverified.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed event-to-draft loop is repeatable, but no implementation capability is documented and a person must verify and approve messages.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post span asks about order data, restaurant notifications, customer updates and failures, but supplies no field details or corroboration.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          }
+        }
+      },
+      "reason": "The retained post span states a concrete order-notification workflow, so I scoped a synthetic draft-only experiment. No matching implementation reference is supplied; the honest mean is below the threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Show HN: Binary – hiring tool (ATS) for startups that is MCP friendly",
+      "productUrl": "https://news.ycombinator.com/item?id=50269124",
+      "reason": "The supplied text only says some tools require speaking to sales. It does not state a concrete task or request for an AI service; inferring a sales-access workaround would invent the chore."
+    },
+    {
+      "title": "What is the best way founders optimize their time?",
+      "productUrl": "https://news.ycombinator.com/item?id=50246546",
+      "reason": "The supplied text says product building and customer acquisition consume more time, but names no specific task, repeatable workflow, or requested output. A proposed task breakdown would be invented."
+    },
+    {
+      "title": "Show HN: Clippa – Record your screen. Send a link",
+      "productUrl": "https://news.ycombinator.com/item?id=50269031",
+      "reason": "The supplied excerpt says the author uses Loom for quick video notes. It describes an existing use, not a concrete chore or request for a distinct service."
+    },
+    {
+      "title": "Browsers made easy, I built tabie after closing 47th Tab of my browser",
+      "productUrl": "https://news.ycombinator.com/item?id=50241975",
+      "reason": "The supplied body excerpt only identifies an extension and its URL. The title alone does not provide an eligible literal task quote or enough retained evidence to define a chore."
+    },
+    {
+      "title": "Building a Self-Hosted Chemical Quality Assurance & Batch Validation Pipeline in n8n",
+      "productUrl": "https://community.n8n.io/t/324676",
+      "reason": "The supplied excerpt mentions high-frequency batch records requiring automation but truncates before identifying the task. The prior decision index also records this assigned item as below threshold due to omitted task details; no fresh detail here supports a specific experiment."
+    },
+    {
+      "title": "Show HN: Instance – a clean-room GameMaker reimplementation in Rust",
+      "productUrl": "https://news.ycombinator.com/item?id=50261794",
+      "reason": "The supplied excerpt describes compatibility quirks in old games, not a concrete requested chore or business workflow. An emulator-testing service would be an invented duty."
+    },
+    {
+      "title": "Draft restaurant order status messages",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "reason": "Assessed the explicit order-notification request as a synthetic draft-only experiment. No supplied implementation reference supports the integrations, and the five provisional scores average 4.4, below the threshold of 6."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all seven assigned discussion posts. One concrete ecommerce notification chore supports a scoped synthetic draft experiment, but the available evidence and implementation support yield a below-threshold score; no post proposed."
+    }
+  ]
+}
