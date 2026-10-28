@@ -1,0 +1,282 @@
+{
+  "runId": "loop-40752010258-1",
+  "createdAt": "2026-10-28T19:15:33.482Z",
+  "candidates": [
+    {
+      "title": "Daily hiring alerts for target companies",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "84dd42b26c54d12b4f52a07c"
+        ],
+        "chore": "Track new hiring postings at target companies and notify the operator when new postings appear.",
+        "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily digest of newly found public job postings for a supplied list of target companies.",
+        "inputs": [
+          "Synthetic list of target company career-site URLs",
+          "Public job posting title, location, and URL returned by an accessible scraper",
+          "Operator-defined target list and alert channel"
+        ],
+        "trigger": "Once each morning, check the supplied target-company sources for new public postings.",
+        "steps": [
+          "Read the operator-supplied target list.",
+          "Run an available public job scraper for each supported source.",
+          "Keep only postings returned as new by the scraper.",
+          "Format title, location, and URL into a digest.",
+          "Show the digest to an operator for review before sharing."
+        ],
+        "acceptanceCheck": "On a fixed test list, compare a sample run with manually checked public postings and confirm each included item has a title, location, and working source URL.",
+        "humanBoundary": "The operator must authorize target sources, verify scraper terms and access, check relevance and duplicates, and approve any shared digest.",
+        "unverified": [
+          "Reliable access to each selected career site and scraper is unverified.",
+          "The post reports the maker’s workflow; this does not independently verify its current operation, cost, or coverage.",
+          "Buyer willingness to pay and repeat demand are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The described daily trigger, scraper, filter, and alert give a concrete starting pattern, but the required scraper access and setup remain unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small recruiting or consulting teams may value target-company alerts; this post establishes no buying intent or payment.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week alert prototype is bounded, but account access, scraper reliability, costs, and coverage need validation.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "The described loop filters new postings and sends alerts; a person must choose targets, validate results, and review alerts.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans give a specific hiring-tracking workflow and maker-reported operation, but no independent use or recurring buyer evidence.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          }
+        }
+      },
+      "reason": "The post supports a concrete proposed alert workflow, but the provisional mean is below six because buyer willingness and current scraper operation are unverified."
+    },
+    {
+      "title": "Prepare resume answers for job forms",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Enter resume information into forms tailored to each company’s hiring process.",
+        "evidenceQuote": "filling my resume data to freshly developed forms made specifically to the hiring process"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet that maps supplied resume facts to draft answers for repeated job-application fields.",
+        "inputs": [
+          "Fictional resume facts supplied by the tester",
+          "A small set of manually transcribed sample form field labels",
+          "Operator-approved mapping rules"
+        ],
+        "trigger": "When a tester receives another application form with fields represented in the sample set.",
+        "steps": [
+          "Enter fictional resume facts into a structured table.",
+          "Add the sample form field labels.",
+          "Suggest matching facts for each field.",
+          "Flag fields with no clear match instead of guessing.",
+          "Have a person review and copy approved answers manually."
+        ],
+        "acceptanceCheck": "For each sample field, verify the suggested answer matches the corresponding fictional resume fact and leaves uncertain fields blank.",
+        "humanBoundary": "A person must provide lawful test inputs, check every answer, handle sensitive information safely, and complete the actual application.",
+        "unverified": [
+          "Actual employer form layouts and field variations are unavailable.",
+          "No supplied source supports form reading, browser automation, or automatic submission.",
+          "Whether job seekers or career services would pay is unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test extraction into a review table, but the source gives no form fields or supported software reference.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers or career services might value reducing repeated form entry; this post establishes no payment intent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A draft-only test with fictional resume facts and sample fields is bounded; real employer forms and validation are unavailable.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A tool could suggest field values, but a person must verify every answer and submit each application; submission is unsupported.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states repeated resume-data entry into company-specific forms, but gives no form examples, frequency beyond this account, or corroboration.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "reason": "The concrete repeated data-entry chore supports a proposed draft-only test, but there is no field-level or implementation evidence and the provisional mean is below six."
+    },
+    {
+      "title": "Check invoice rows before an API handoff",
+      "productUrl": "https://community.make.com/t/118145",
+      "sourceIds": [
+        "b407a896ba8504e91a52df04",
+        "e73220ebd327caecbae34a3c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b407a896ba8504e91a52df04"
+        ],
+        "chore": "Map a variable number of CRM invoice rows into an external system’s HTTP request.",
+        "evidenceQuote": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft invoice-row payload from fictional CRM rows, with a visible field-by-field mapping for operator review.",
+        "inputs": [
+          "Fictional CRM record with two or more invoice rows",
+          "Operator-supplied field names for a mock invoice request",
+          "Array-index mapping notes"
+        ],
+        "trigger": "When the operator supplies a fictional CRM record with a variable number of invoice rows.",
+        "steps": [
+          "Represent the fictional line items as an array.",
+          "Map each chosen line-item field to a mock request field.",
+          "Display the resulting payload without sending it.",
+          "Flag missing or mismatched fields for review.",
+          "Have an operator compare the draft against the input rows."
+        ],
+        "acceptanceCheck": "For two fictional rows, verify that both appear in the displayed draft with their supplied values and that no external request is sent.",
+        "humanBoundary": "A person must define field mappings, check arithmetic and tax treatment, and authorize any real endpoint use; this proposal does not create or persist invoices.",
+        "unverified": [
+          "The Make reference (e73220ebd327caecbae34a3c) documents array indexing, not invoice APIs or a complete row-mapping workflow.",
+          "The named external endpoint and its schema are unavailable.",
+          "Invoice persistence and tax correctness are unverified.",
+          "Buyer willingness to pay is unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The Make reference (e73220ebd327caecbae34a3c) explains array indexes, useful for a synthetic mapping mock; invoice payload mechanics remain unsupported.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms might pay for invoice preparation help; one troubleshooting post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic payload comparison is bounded, but external endpoint behavior, persistence, and tax correctness are unverified.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A draft can map supplied rows, but a person must verify totals and authorize any external submission; no execution is documented.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post gives a specific dynamic invoice-row mapping problem and sample arrays; it does not verify an endpoint, persisted invoice, or tax result.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          }
+        }
+      },
+      "reason": "A specific chore and the supplied array-indexing reference support a narrow mock, but key invoice mechanics are absent and the provisional mean is below six."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Tax software trust principles",
+      "productUrl": "https://news.ycombinator.com/item?id=50278678",
+      "reason": "The only supplied source text is a clipped description of trust principles in tax software; it identifies no concrete chore or bounded user task, so scoring an experiment would require inventing demand."
+    },
+    {
+      "title": "Research utilities inspired by version control",
+      "productUrl": "https://news.ycombinator.com/item?id=50274235",
+      "reason": "The supplied excerpt says the project includes utilities for research but does not identify a specific repeated chore or requested outcome; a proposed workflow would be invented."
+    },
+    {
+      "title": "Recover deleted production workflows",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "reason": "The retained spans describe a one-time accidental deletion and business interruption, not a requested repeatable service. The post exposes workflow identifiers, which are unnecessary to reproduce; no scored experiment is warranted."
+    },
+    {
+      "title": "Startup operations service",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "The supplied text is a generic operations-service tagline with no concrete task, so the duties and workflow cannot be inferred."
+    },
+    {
+      "title": "Daily hiring alerts for target companies",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "reason": "The post supports a concrete proposed alert workflow, but the provisional mean is below six because buyer willingness and current scraper operation are unverified."
+    }
+  ]
+}
