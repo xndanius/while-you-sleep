@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {researchDossiers,planResearchContinuation,pickResearchContinuation} from '../prototypes/candidate-research.mjs';
 import {DISCUSSION_SOURCE_CATALOG} from '../lib/discussion-sources.mjs';
-import {enrichDiscussionLeads,recentProductAssessments} from '../lib/product-evidence.mjs';
+import {enrichDiscussionLeads,recentProductAssessments,selectProductLeads} from '../lib/product-evidence.mjs';
 import {stableJSON} from '../lib/storage.mjs';
 
 const directories={run:'runs',draft:'drafts',context:'check-context',manifest:'checks',research:'research',scan:'source-scans',learning:'learning'};
@@ -57,6 +57,22 @@ test('ordinary cooldown, source eligibility and published identity remain author
  assert.throws(()=>planResearchContinuation(d,b,{selectionInput:{...after,cooldownHours:1}}));
  for(const now of [NaN,Infinity,'not-a-time',undefined])assert.throws(()=>planResearchContinuation(d,b,{selectionInput:{...after,now}}));
  assert.equal(result.plan.advisoryOnly,true);assert.equal(result.plan.currentSelectionVerified,false);
+});
+
+test('a continuation behind three same-feed leads receives a bounded research slot without bypassing admission',async()=>{
+ const b=await bundle('40734809732'),d=target(b,'/325109');
+ const frozen=JSON.parse(await readFile(new URL('../data/research/loop-40752010258-1.json',import.meta.url)));
+ const preceding=frozen.sources.filter(source=>source.registrySourceId===d.source.registrySourceId&&source.url!==d.source.url).slice(0,3);
+ assert.equal(preceding.length,3);
+ const sources=[...preceding,structuredClone(d.source)],input={...selection(b),sources,originMap:sources.map(source=>({sourceId:source.id,url:source.url,productUrl:source.url,feedIds:[source.registrySourceId]}))};
+ assert.equal(selectProductLeads(sources,input).some(row=>row.productUrl===d.source.url),false,'Frozen competing leads demonstrate the unprioritized cutoff.');
+ const plan=planResearchContinuation(d,b,{selectionInput:input});
+ assert.equal(plan.status,'ready_for_scheduled_research');
+ const selected=selectProductLeads(sources,{...input,priorityProductUrl:plan.priorityProductUrl});
+ assert.equal(selected.length,3);assert.equal(selected[0].productUrl,d.source.url);
+ assert.equal(planResearchContinuation(d,b,{selectionInput:{...input,now:Date.parse(b.run.checkedAssessment.completedAt)+60000}}).status,'not_currently_eligible');
+ assert.equal(planResearchContinuation(d,b,{selectionInput:{...input,previous:[{productUrl:d.source.url}]}}).status,'not_currently_eligible');
+ assert.equal(planResearchContinuation(d,b,{selectionInput:{...input,originMap:input.originMap.filter(row=>row.sourceId!==d.source.id)}}).status,'not_currently_eligible');
 });
 
 test('a changed chore matching the same references cannot reuse the old dossier or gap',async()=>{

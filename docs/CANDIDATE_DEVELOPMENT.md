@@ -62,3 +62,8 @@ into facts. Missing catalog support means no permitted automatic acquisition pat
 it does not establish that a solution or demand is absent. Source changes require
 a new source-bound revision. The original cooldown, privacy, literal evidence,
 source-access and independent publication gates still apply.
+
+An eligible continuation competes for its research slot through the ordinary
+selector with its priority supplied. It can replace one of that feed's other
+leads; it cannot increase the three-per-feed or ten-total limit. Testing only the
+unprioritized winners before applying priority would starve a queued fourth lead.
