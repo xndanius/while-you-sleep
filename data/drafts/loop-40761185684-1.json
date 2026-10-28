@@ -1,0 +1,547 @@
+{
+  "runId": "loop-40761185684-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T20:20:00.000Z",
+  "candidates": [
+    {
+      "title": "Connect a front end to a harness gateway",
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "sourceIds": [
+        "150bdf3f56424d1d2307f837"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "150bdf3f56424d1d2307f837"
+        ],
+        "chore": "Connect a chosen front end to a multi-harness gateway through its HTTP client.",
+        "evidenceQuote": "with a http client that you can connect any frontend to"
+      },
+      "segment": "professional_services",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A mock request and response can be mapped, but the post supplies no endpoint details or implementation reference.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: consultants integrating agent front ends may pay for setup; this Show HN excerpt establishes no buyer or payment.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can document one request path; the gateway protocol, authentication and working behavior are unverified.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed map can prepare request data, while a person must configure and verify the actual gateway connection.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "evidence": {
+            "value": 3,
+            "reason": "The excerpt describes a gateway and HTTP client connection, but gives no concrete integration steps, usage or demand corroboration.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A one-page request/response mapping for one chosen front end and gateway.",
+        "inputs": [
+          "A fictional frontend request",
+          "A fictional gateway response",
+          "Operator-supplied field names"
+        ],
+        "trigger": "When an operator chooses one front end and one gateway route.",
+        "steps": [
+          "List required request fields from operator notes.",
+          "Map fictional input fields to a proposed request.",
+          "Record the fictional response shape.",
+          "Flag missing fields for manual review."
+        ],
+        "acceptanceCheck": "Check that every required field in the operator-provided example appears once in the mapped request and that the response fields are labeled.",
+        "humanBoundary": "The operator must supply protocol details, configure credentials and verify any real connection; do not send requests or expose secrets.",
+        "unverified": [
+          "Actual gateway API schema",
+          "Authentication and error behavior",
+          "Buyer willingness to pay"
+        ]
+      },
+      "reason": "Below threshold: the literal connection task supports a mock interface map, but the post provides no operational detail or evidence of a distinct paying customer."
+    },
+    {
+      "title": "Summarize long email threads for review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "Create a compact, traceable summary of a supplied email conversation for a draft reply.",
+        "evidenceQuote": "To save email resume properly, i need immutable id to reference original email of the resume."
+      },
+      "segment": "professional_services",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test summaries on fictional threads, but no supplied reference supports email retrieval or stable identifiers.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: client-facing professionals may pay for thread summaries; the post establishes a workflow need, not purchase intent or payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week offline prototype can summarize synthetic threads and cite supplied message IDs; mailbox integration and ID behavior remain unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A text-only draft loop can summarize supplied material, but a person must provide, verify and approve every thread and reply.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes stable email references and compact conversation context, but gives no measured frequency or independent corroboration.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A compact conversation summary with source message references and a draft reply outline.",
+        "inputs": [
+          "Fictional email messages",
+          "Operator-supplied stable message labels",
+          "A fictional reply goal"
+        ],
+        "trigger": "When an operator supplies a conversation and asks for a review draft.",
+        "steps": [
+          "Keep each supplied message label beside its text.",
+          "Draft a short chronology of the conversation.",
+          "List unresolved questions and relevant facts.",
+          "Prepare a reply outline using only supplied facts.",
+          "Flag unsupported details for human review."
+        ],
+        "acceptanceCheck": "Compare each factual statement in the summary and outline with the supplied fictional messages and verify its message label.",
+        "humanBoundary": "The operator supplies and checks all content; a person authorizes any mailbox access and sends any reply. No real personal data is needed.",
+        "unverified": [
+          "Mailbox connector and immutable-ID behavior",
+          "Accuracy on real long threads",
+          "Buyer willingness to pay"
+        ]
+      },
+      "reason": "Below threshold: a fictional-thread summary can be tested, but no supplied implementation reference supports mailbox access, stable IDs or summary quality."
+    },
+    {
+      "title": "Compare operator-supplied AWS scaling options",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "sourceIds": [
+        "a6b1f94743a6b7e17995034c"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a6b1f94743a6b7e17995034c"
+        ],
+        "chore": "Organize supplied infrastructure options and constraints into a review memo for a startup seeking affordable AWS scaling.",
+        "evidenceQuote": "need to scale on AWS but can't afford it"
+      },
+      "segment": "professional_services",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can structure operator-supplied options in a memo, but no attached source documents AWS analysis methods.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: bootstrapped startups may pay for affordable scaling advice; the post offers help but proves neither buyer intent nor payment.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare fictional options and stated constraints; AWS-specific correctness and cost estimates remain unverified.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposal can organize inputs into a memo, but a qualified person must validate every infrastructure recommendation.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post mentions startups needing affordable AWS scaling and offers help, but contains no specific workflow, costs or corroboration.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A side-by-side memo of operator-provided scaling options, assumptions and unanswered questions.",
+        "inputs": [
+          "Fictional workload description",
+          "Operator-provided candidate options",
+          "Stated budget ceiling",
+          "Operator-provided constraints"
+        ],
+        "trigger": "When an operator asks for a comparison of listed options.",
+        "steps": [
+          "Record each option exactly as supplied.",
+          "Separate stated facts from assumptions.",
+          "Compare options against the stated constraints.",
+          "List missing inputs and questions.",
+          "Draft a recommendation section marked for expert review."
+        ],
+        "acceptanceCheck": "Verify that every comparison row traces to supplied inputs and that the memo makes no unsupported price or performance claim.",
+        "humanBoundary": "An infrastructure professional must confirm costs, security and production suitability; the prototype uses fictional data only.",
+        "unverified": [
+          "AWS pricing and performance accuracy",
+          "Access to current service configuration",
+          "Buyer willingness to pay"
+        ]
+      },
+      "reason": "Below threshold: a comparison memo can be scoped from supplied inputs, but no AWS-specific method or buyer intent appears in the source."
+    },
+    {
+      "title": "Draft safe storage cleanup suggestions",
+      "productUrl": "https://news.ycombinator.com/item?id=50271417",
+      "sourceIds": [
+        "c853ab1f158b31c64ddf2e01"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "c853ab1f158b31c64ddf2e01"
+        ],
+        "chore": "Identify operator-selected large files or categories and prepare a review list for freeing computer storage.",
+        "evidenceQuote": "help me free up some storage on my Mac"
+      },
+      "segment": "professional_services",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A mock review list is simple to draft, but the post supplies no file inventory method or cleanup capability.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent Mac support providers might pay for cleanup assistance; this personal-use post establishes no commercial buyer or payment.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week prototype can sort fictional file inventory rows, but safe discovery and device access are unverified.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposal can rank supplied rows, but a person must inspect each item and perform any deletion.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a need to free storage on a Mac, but gives no specific recurring workflow, user group or corroboration.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A sorted review list of operator-supplied file inventory entries that may be candidates for manual cleanup.",
+        "inputs": [
+          "Fictional file names and sizes",
+          "Operator-selected file categories",
+          "A stated keep/remove rule"
+        ],
+        "trigger": "When an operator supplies an inventory and asks to review it.",
+        "steps": [
+          "Group the supplied rows by category.",
+          "Sort rows by supplied size.",
+          "Flag rows that match the operator rule.",
+          "Create a review checklist without changing files."
+        ],
+        "acceptanceCheck": "Check that sorting matches the supplied sizes and every flag matches the stated rule.",
+        "humanBoundary": "A person must inspect all files and perform any deletion; never delete automatically or inspect real device data in the prototype.",
+        "unverified": [
+          "Safe file inventory acquisition",
+          "Reliable category rules",
+          "Buyer demand beyond one self-use example"
+        ]
+      },
+      "reason": "Below threshold: storage cleanup is a concrete task, but this single personal-use post offers little professional buyer evidence and no implementation support."
+    },
+    {
+      "title": "Draft booking and provider status notices",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Prepare booking confirmation and status message drafts from fictional booking, provider assignment and payment-status fields.",
+        "evidenceQuote": "booking confirmations, provider assignment notifications, payment status updates, and customer alerts"
+      },
+      "segment": "professional_services",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can draft messages from fictional status rows, but no supplied reference supports booking or notification integrations.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: on-demand service operators may pay to reduce missed updates; this post establishes no buying intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week sample-data test can map statuses to drafts; event handling, payment accuracy and external APIs remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed loop can apply fixed status rules, but a person must verify payment facts and approve every message.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span names booking, assignment, payment updates, customer alerts, retries and duplicate prevention, but gives no frequency or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue of booking status message drafts with duplicate and failure flags.",
+        "inputs": [
+          "Fictional booking ID",
+          "Fictional booking status",
+          "Fictional provider assignment",
+          "Fictional payment status",
+          "Approved message templates"
+        ],
+        "trigger": "When an operator adds a fictional booking status row to the test sheet.",
+        "steps": [
+          "Check required fields are present.",
+          "Match the status to an approved template.",
+          "Draft the corresponding customer or provider notice.",
+          "Flag repeated booking IDs and unknown statuses.",
+          "Hold every draft for human review."
+        ],
+        "acceptanceCheck": "Use sample rows covering each status, a repeated ID and a missing field; verify the right template or hold flag appears.",
+        "humanBoundary": "An operator supplies rules and verifies payment status; a person approves delivery. No live API, invoice persistence or payment action is established.",
+        "unverified": [
+          "n8n/webhook and external API behavior",
+          "Retry and idempotency mechanics",
+          "Correctness of payment status inputs",
+          "Buyer willingness to pay"
+        ]
+      },
+      "reason": "Below threshold: the detailed request supports a draft-only fictional workflow, while no implementation reference or buyer validation supports live operation."
+    },
+    {
+      "title": "Test text rules for email sorting",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "sourceIds": [
+        "b00708562d0e2aeefbf5e0c1",
+        "d3c31f318baa92cd9c697d56",
+        "113bfbf5643238079ad1295d"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b00708562d0e2aeefbf5e0c1"
+        ],
+        "chore": "Compare supplied sample email text with operator-defined sorting rules and flag uncertain classifications for review.",
+        "evidenceQuote": "automatic email sorting"
+      },
+      "segment": "professional_services",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The If-node reference d3c31f318baa92cd9c697d56 documents conditional comparisons and the Code-node reference 113bfbf5643238079ad1295d documents data transformation; neither fixes the reported workflow.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56",
+              "113bfbf5643238079ad1295d"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: workflow consultants might pay for sorting-rule diagnosis; this single troubleshooting post establishes no buyer intent, recurring need or payment.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic test can transform sample text and branch on operator rules using d3c31f318baa92cd9c697d56 and 113bfbf5643238079ad1295d; matching accuracy remains unverified.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56",
+              "113bfbf5643238079ad1295d"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A test can repeat comparisons and route uncertain samples for review with d3c31f318baa92cd9c697d56; a person must verify labels and change the workflow.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe text recognition and Boolean sorting failures, but this is one troubleshooting request without recurrence or corroboration.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A test report showing the proposed category, matched rule and review flag for each sample email.",
+        "inputs": [
+          "Fictional email text",
+          "Operator-defined match terms",
+          "Expected category labels"
+        ],
+        "trigger": "When an operator adds or changes a sorting rule for a test batch.",
+        "steps": [
+          "Transform sample text into a consistent test field.",
+          "Compare each sample with the supplied terms.",
+          "Route matches to the proposed category.",
+          "Flag no-match and multiple-match cases.",
+          "Compare results with operator-provided expected labels."
+        ],
+        "acceptanceCheck": "Run labeled fictional examples including a no-match and ambiguous case; confirm every result and review flag against expected labels.",
+        "humanBoundary": "An operator defines terms and expected labels; a person reviews uncertain cases and authorizes workflow changes. Do not process real email.",
+        "unverified": [
+          "Whether Code-node behavior matches a live workflow",
+          "Email ingestion and connector permissions",
+          "Quality on real-world message variation",
+          "Buyer willingness to pay"
+        ]
+      },
+      "reason": "Below threshold: Code and If documentation support a synthetic transform-and-branch test, but not email access, reliable recognition or a paid service."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Local private-data MCP workloads",
+      "productUrl": "https://news.ycombinator.com/item?id=50270574",
+      "reason": "Evidence-based exclusion: the retained excerpt says a local MCP server hosts private information and uses client-side model subscriptions for workloads, but names no particular task, input or output. A scoped experiment would require inventing the chore."
+    },
+    {
+      "title": "Connect a front end to a harness gateway",
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "reason": "Below threshold: the literal connection task supports a mock interface map, but the post provides no operational detail or evidence of a distinct paying customer."
+    },
+    {
+      "title": "Summarize long email threads for review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "reason": "Below threshold: a fictional-thread summary can be tested, but no supplied implementation reference supports mailbox access, stable IDs or summary quality."
+    },
+    {
+      "title": "Compare operator-supplied AWS scaling options",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "reason": "Below threshold: a comparison memo can be scoped from supplied inputs, but no AWS-specific method or buyer intent appears in the source."
+    },
+    {
+      "title": "Draft safe storage cleanup suggestions",
+      "productUrl": "https://news.ycombinator.com/item?id=50271417",
+      "reason": "Below threshold: storage cleanup is a concrete task, but this single personal-use post offers little professional buyer evidence and no implementation support."
+    },
+    {
+      "title": "Draft booking and provider status notices",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "reason": "Below threshold: the detailed request supports a draft-only fictional workflow, while no implementation reference or buyer validation supports live operation."
+    },
+    {
+      "title": "Test text rules for email sorting",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "reason": "Below threshold: Code and If documentation support a synthetic transform-and-branch test, but not email access, reliable recognition or a paid service."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all seven sealed discussion assignments. Six concrete chores received scoped proposed experiments and five provisional scores; the remaining excerpt lacks a specific task. All scored experiments are below the unrounded threshold of 6, so no post is proposed."
+    }
+  ]
+}
