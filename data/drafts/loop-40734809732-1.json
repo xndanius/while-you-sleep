@@ -1,0 +1,384 @@
+{
+  "runId": "loop-40734809732-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T17:27:04.600Z",
+  "candidates": [
+    {
+      "title": "Draft logistics event notifications",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Prepare a draft alert or daily logistics report from operator-supplied shipment and order events.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed, copy an order update into a CRM, alert a buyer when inventory drops, or send a daily report to a team channel."
+      },
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A synthetic rule-and-alert mock is approachable, but no attached source documents event intake or delivery.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: ecommerce operations teams may value delay alerts; this discussion establishes no buyer intent or payment.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic alert draft is bounded; carrier data access and live delivery are unverified.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed draft can repeat a rule check, but a person must approve and send each message; no execution is documented.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained task span lists examples but gives no recurrence, input fields, or corroborating demand.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft shipment-delay alert or daily logistics summary from supplied event rows.",
+        "inputs": [
+          "Synthetic shipment ID, expected date, and current status",
+          "Synthetic order ID and update text",
+          "Operator-selected alert rule and recipient role"
+        ],
+        "trigger": "An operator supplies a new shipment or order event row for review.",
+        "steps": [
+          "Validate required fields and flag missing values.",
+          "Compare the supplied status and date with the operator-selected rule.",
+          "Draft a concise alert or daily summary from matching rows.",
+          "Show the source rows beside the draft for operator review.",
+          "Require a person to approve and send any message."
+        ],
+        "acceptanceCheck": "On a small synthetic set, every matching event appears once, nonmatching events are excluded, and each draft matches its input row.",
+        "humanBoundary": "An operator supplies accurate events and rules, checks every draft, and sends it; no live logistics system or message delivery is established.",
+        "unverified": [
+          "No implementation reference documents event intake or delivery.",
+          "Carrier data access, rule correctness, and live notification are unverified."
+        ]
+      },
+      "reason": "Concrete chore assessed as a narrow proposed experiment; provisional mean is below the threshold of 6 because demand is single-post and implementation is unverified."
+    },
+    {
+      "title": "Organize game-test CSV logs",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Organize mobile game-test observations from a phone log and CSV into a Google Sheet while avoiding missed or repeated files.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A table mock is approachable, but no attached source documents CSV parsing or deduplication.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: game-testing contractors might value cleaner logs; this one post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic table test is scoped, while reliable parsing and file intake remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed checklist can flag possible repeats, but a human must import and verify; no workflow execution is documented.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe the manual log and repeated or missed file triggers, but provide no corroborating demand.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A checked table of supplied game-test observations, with suspected duplicate files flagged for review.",
+        "inputs": [
+          "Synthetic device label",
+          "Synthetic battery percentage, temperature, and frame-drop values",
+          "Short synthetic gameplay note",
+          "CSV file name and upload time supplied by an operator"
+        ],
+        "trigger": "An operator provides a sample CSV export or a row of fictional game-test observations.",
+        "steps": [
+          "Read the supplied rows without connecting to a phone or Drive.",
+          "Check required columns and flag missing values.",
+          "Compare file names and row keys to identify possible repeats.",
+          "Prepare a normalized table for a sample sheet.",
+          "Ask a person to verify flagged rows and perform any import."
+        ],
+        "acceptanceCheck": "For a labeled synthetic CSV set, the output preserves each expected observation, flags planted repeated file keys, and reports missing fields without inventing values.",
+        "humanBoundary": "A tester supplies fictional or authorized test data and confirms each flagged duplicate; the proposal does not control a phone, execute n8n, or write to Sheets.",
+        "unverified": [
+          "No supplied implementation reference supports CSV parsing, phone upload, or deduplication.",
+          "Correct duplicate keys and reliable file-trigger behavior remain unverified."
+        ]
+      },
+      "reason": "Concrete chore assessed as a narrow proposed experiment; provisional mean is below the threshold of 6 because demand is single-post and implementation is unverified."
+    },
+    {
+      "title": "Prepare booking exception summaries",
+      "productUrl": "https://community.make.com/t/118303",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ccf5a6a14f8320d9f96a4e55"
+        ],
+        "chore": "Review operator-supplied booking records for conflicts and draft a human-reviewed exception summary.",
+        "evidenceQuote": "Booking flows: check slots, confirm, remind, no double-bookings"
+      },
+      "sourceIds": [
+        "ccf5a6a14f8320d9f96a4e55"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A synthetic exception list is a modest prototype, but no source supports booking-check mechanics.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small appointment businesses may pay for fewer booking errors; the service listing proves no buyers or payment.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare supplied slots, but calendar access and availability rules are unverified.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposal can draft flags for review; a person must verify and contact customers because no booking execution is documented.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The source advertises booking checks but gives no concrete case, repeated demand, or corroboration.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft list of possible booking conflicts and missing confirmation details.",
+        "inputs": [
+          "Synthetic booking reference",
+          "Synthetic requested time slot",
+          "Synthetic confirmed slot",
+          "Operator-provided availability rule"
+        ],
+        "trigger": "A small batch of synthetic booking rows is supplied for a conflict review.",
+        "steps": [
+          "Check that required booking fields are present.",
+          "Compare requested and confirmed slots against the supplied availability rule.",
+          "Flag possible overlaps or missing confirmations.",
+          "Draft a short exception summary with the relevant row identifiers.",
+          "Require a person to verify availability and contact any customer."
+        ],
+        "acceptanceCheck": "In a labeled synthetic set containing known overlaps and missing confirmations, every planted case is flagged and no clean case is marked as a confirmed conflict.",
+        "humanBoundary": "A business operator supplies permitted test records and authoritative availability rules, verifies every flag, and confirms bookings; no calendar or live customer connection is documented.",
+        "unverified": [
+          "No assigned implementation reference supports booking checks or reminders.",
+          "Availability rules, calendar access, and reliable duplicate prevention remain unverified."
+        ]
+      },
+      "reason": "Concrete chore assessed as a narrow proposed experiment; provisional mean is below the threshold of 6 because demand is single-post and implementation is unverified."
+    },
+    {
+      "title": "Prepare form responses for a Sheets review",
+      "productUrl": "https://community.make.com/t/118274",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "47619eeb8a75939d683d967f"
+        ],
+        "chore": "Connect Google Forms responses to Google Sheets as a small automation task.",
+        "evidenceQuote": "Connecting Google Forms to Google Sheets"
+      },
+      "sourceIds": [
+        "47619eeb8a75939d683d967f"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test fictional form responses and expected rows, but no supplied reference documents Forms or Sheets integration.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small professional service operators may pay to reduce manual form transfer; this single listing establishes no buyer intent or payment.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can map sample answers into reviewed rows; actual Make execution, field mapping, and persistence are unverified.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed mapping is repeatable, but a person must check each row and handle exceptions; no integration execution is documented.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained post explicitly offers Google Forms-to-Sheets connection help, but gives no task details, recurrence, or corroboration.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft Sheets-style row for each supplied sample form response, with missing answers flagged.",
+        "inputs": [
+          "Fictional form response with three labeled answers",
+          "Proposed destination column names",
+          "Expected row for each fictional response"
+        ],
+        "trigger": "An operator supplies one fictional form response for a mapping review.",
+        "steps": [
+          "List the supplied answer labels and values.",
+          "Map each answer to an operator-selected destination column.",
+          "Flag missing or extra fields without guessing values.",
+          "Prepare a draft row and show its source answers beside it.",
+          "Ask a person to verify the mapping before any manual entry."
+        ],
+        "acceptanceCheck": "For labeled fictional responses, every supplied answer appears in its expected column, missing values are flagged, and no output row is presented as saved to Sheets.",
+        "humanBoundary": "A person provides authorized test examples and column names, checks the proposed mapping, and performs any real connection or write; no Make execution or external endpoint is established.",
+        "unverified": [
+          "Make Forms trigger behavior and Google Sheets write capability are undocumented in the supplied sources.",
+          "Field mapping reliability, permissions, and live persistence are untested."
+        ]
+      },
+      "reason": "Concrete chore assessed as a proposed mock mapping experiment; provisional mean is 4.8, below threshold, because implementation and buyer evidence are limited."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Draft logistics event notifications",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "reason": "Below threshold: one general discussion lists examples without recurrence, event fields, or implementation support; assessed mean 4.8."
+    },
+    {
+      "title": "Organize game-test CSV logs",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "Below threshold: one troubleshooting post describes a manual workflow, but no supplied implementation reference supports CSV parsing or file deduplication; mean 4.8."
+    },
+    {
+      "title": "Prepare booking exception summaries",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "Below threshold: the service listing describes booking checks, but no implementation reference, independent demand corroboration, or verified buyer intent is supplied; mean 4.6."
+    },
+    {
+      "title": "Choose MCP or built-in AI",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "Excluded: the retained post asks for a preference between software approaches and states no concrete manual chore or requested service."
+    },
+    {
+      "title": "Review LLM output copyright risk",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "Excluded: the retained excerpt expresses a general concern about licensing but gives no concrete task or requested service to scope."
+    },
+    {
+      "title": "Galaxy Movies streaming discovery",
+      "productUrl": "https://news.ycombinator.com/item?id=50276432",
+      "reason": "Excluded: this is a product announcement with a consumer discovery pain, not a concrete business chore or requested service supported in the retained excerpt."
+    },
+    {
+      "title": "Fan of Sleep white-noise app",
+      "productUrl": "https://news.ycombinator.com/item?id=50276263",
+      "reason": "Excluded: the source announces an existing consumer white-noise app and states no concrete business chore or requested service."
+    },
+    {
+      "title": "Prepare form responses for a Sheets review",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "Below threshold: the retained post offers help connecting Google Forms to Sheets, but supplies no integration details or corroborating demand; the proposed mock mapping has no supported execution capability and scores 4.8."
+    },
+    {
+      "title": "Weekly keyword volume workflow",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "Excluded: this is an existing workflow advertisement, not a separate requested chore; the retained excerpt describes a product and does not establish a new demand task."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all nine sealed discussion assignments. Four concrete chores received bounded proposed plans and five provisional scores; all remain below threshold. Five assignments lacked a qualifying distinct concrete chore in retained evidence. No post proposed."
+    }
+  ],
+  "repairAttempt": 1
+}
