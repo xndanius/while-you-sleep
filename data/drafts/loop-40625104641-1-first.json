@@ -1,0 +1,297 @@
+{
+  "runId": "loop-40625104641-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T04:00:00.000Z",
+  "candidates": [
+    {
+      "title": "Map resume details into application fields",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies.",
+        "evidenceQuote": "filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A checked draft mapping of supplied resume facts to a few manually supplied application fields.",
+        "inputs": [
+          "Synthetic resume facts without personal data",
+          "Manually supplied sample application field labels",
+          "A mapping table of expected field types"
+        ],
+        "trigger": "An operator supplies one sample resume and a blank set of application fields.",
+        "steps": [
+          "List facts in the synthetic resume.",
+          "Compare each field label with available facts.",
+          "Draft one value per clearly matched field.",
+          "Flag missing or ambiguous matches.",
+          "Have a person review and enter approved values."
+        ],
+        "acceptanceCheck": "For a fixed synthetic resume and sample fields, every drafted value must match its source fact and every unmatched field must be flagged.",
+        "humanBoundary": "A person supplies redacted test inputs, checks each mapping, handles sensitive real applicant data outside the prototype, and submits every form.",
+        "unverified": [
+          "No supplied source supports reading resumes or interacting with application forms.",
+          "Company-specific field interpretation and live browser entry are untested."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test field mapping with supplied resume and sample form text; no form-filling capability is documented.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers might pay to reduce repeated form entry; this post does not establish willingness to pay.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can prepare values for manually supplied fields; company-specific forms and live entry remain untested.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed mapping can draft values, but no implementation support is attached and a person must check and submit each form.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a daily two-hour resume-entry chore for forms tailored to one or two companies.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore assessed as a draft-only experiment; provisional mean is below six because implementation and buyer evidence are absent."
+    },
+    {
+      "title": "Prepare daily multi-service order summaries",
+      "productUrl": "https://community.n8n.io/t/324888",
+      "sourceIds": [
+        "bd365fd1a282ac04aa03e211",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bd365fd1a282ac04aa03e211"
+        ],
+        "chore": "Daily reports: Generate summaries of completed orders, cancellations, and pending requests.",
+        "evidenceQuote": "Daily reports: Generate summaries of completed orders, cancellations, and pending requests."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily draft listing counts and concise summaries for completed, canceled and pending sample orders.",
+        "inputs": [
+          "Synthetic order rows",
+          "Status value for each row",
+          "Optional service category for grouping",
+          "A requested report date"
+        ],
+        "trigger": "An operator starts a daily batch using supplied sample order rows.",
+        "steps": [
+          "Check that each row has a status.",
+          "Group rows by status and optional service category.",
+          "Count rows in each group with the documented Summarize capability.",
+          "Draft a short report with the count and supplied date.",
+          "Compare totals with input rows and flag unknown statuses.",
+          "Have an operator review before sharing."
+        ],
+        "acceptanceCheck": "For a fixed synthetic dataset, status counts and their total must match a manual count, and unknown statuses must appear in a flagged list.",
+        "humanBoundary": "A person supplies and validates records, resolves ambiguous statuses, confirms the report, and decides where to share it; use fictional data only.",
+        "unverified": [
+          "No source documents connection to real multi-service order systems.",
+          "The reference supports aggregation, not natural-language report accuracy or scheduled delivery."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can test grouped counts on synthetic order rows; the n8n Summarize reference supports count, sum and grouping by fields, with no live data connection documented.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: multi-service operators may pay for daily reporting help; this exploratory post establishes no purchase intent.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week sample-data report is scopeable; the n8n Summarize reference supports grouped counts, but source integrations and report delivery remain unverified.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A proposed batch can group and summarize supplied rows using the n8n Summarize reference; scheduling and automated data access are not established.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post names daily summaries of completed, canceled and pending orders, but provides no fields, examples or corroboration.",
+            "sourceIds": [
+              "bd365fd1a282ac04aa03e211",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete daily-summary idea scored with the supplied n8n Summarize reference; its provisional mean is below six."
+    },
+    {
+      "title": "Map CRM arrays into invoice rows",
+      "productUrl": "https://community.make.com/t/118145",
+      "sourceIds": [
+        "b407a896ba8504e91a52df04",
+        "e73220ebd327caecbae34a3c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b407a896ba8504e91a52df04"
+        ],
+        "chore": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section.",
+        "evidenceQuote": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft invoice-row payload from synthetic Airtable-like arrays for operator inspection.",
+        "inputs": [
+          "Synthetic product amount arrays",
+          "Synthetic tax-rate arrays",
+          "Manually supplied destination row labels",
+          "A sample expected payload shape"
+        ],
+        "trigger": "An operator supplies sample arrays and the expected row shape for a mapping review.",
+        "steps": [
+          "Read the supplied array names and lengths.",
+          "Use the documented indexed mapping concept to identify elements.",
+          "Draft row objects for the supplied sample only.",
+          "Flag length mismatches or missing labels.",
+          "Compare every draft value with its input.",
+          "Have a person approve any real endpoint request separately."
+        ],
+        "acceptanceCheck": "For a fixed two-item synthetic example, each drafted row must preserve its source amount and tax value, and an independent manual comparison must find no omitted or extra values.",
+        "humanBoundary": "A person defines the destination schema, validates amounts and tax treatment, approves any real request, and confirms invoice persistence; the prototype must not issue real invoices.",
+        "unverified": [
+          "The reference does not document dynamically generating invoice rows from arrays.",
+          "HTTP endpoint execution, invoice persistence and tax correctness are not established."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can reproduce indexed array mapping using the Make array-mapping reference; it documents selecting an array element, not dynamic invoice row construction.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: automation consultants may pay for mapping help; this troubleshooting post proves no buyer intent or payment.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic payload mock can compare source arrays with manually assembled rows; the Make reference covers indexed array access only.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed transform can draft a payload from supplied arrays, but the Make reference does not establish dynamic row creation, endpoint execution or invoice persistence; human review is required.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post context names Airtable CRM arrays, multiple invoice rows and a mapping problem, with a small two-value example.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          }
+        }
+      },
+      "reason": "Specific mapping chore assessed against the supplied Make mapping reference; the narrow documented capability does not support the full requested dynamic invoice workflow, so the mean remains below six."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Assess copyright risk in generated code",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The retained post says maintainers should worry about whether LLM output can be licensed, but states no concrete manual task or requested tool. A copyright-risk workflow would require inventing duties and legal conclusions."
+    },
+    {
+      "title": "Improve electrical design documentation",
+      "productUrl": "https://news.ycombinator.com/item?id=50268880",
+      "reason": "The post only describes a documentation tool goal for electrical engineers; the supplied text names no specific chore, inputs or requested output, so a concrete demand-backed experiment cannot be scoped."
+    },
+    {
+      "title": "Create AI creator-style product videos",
+      "productUrl": "https://news.ycombinator.com/item?id=50268879",
+      "reason": "The supplied post text defines AI UGC video creation but does not state a concrete requested chore or unmet need; treating this description as demand would invent one."
+    },
+    {
+      "title": "Enable the Execute Command node",
+      "productUrl": "https://community.n8n.io/t/324889",
+      "reason": "The retained spans describe a one-off n8n node availability/configuration troubleshooting report, not a repeated business chore; proposing a support service from this bug report would invent recurring demand."
+    },
+    {
+      "title": "Prepare customer order-status updates",
+      "productUrl": "https://community.make.com/t/118000",
+      "reason": "Duplicate: the specific ecommerce customer and order-status communication workflow match prior post 98b4f6281cc3de4ecdfa95f6. The recent task/context spans describe incomplete or changing order data and customer-facing status updates."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight assigned discussion identities. Three concrete chores received scoped plans and five provisional scores; their means remain below 6. Excluded three vague descriptions and a one-off troubleshooting report for lack of a concrete repeated chore, and excluded one ecommerce order-status workflow as duplicate of prior post 98b4f6281cc3de4ecdfa95f6. No post proposed."
+    }
+  ]
+}
