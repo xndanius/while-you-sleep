@@ -67,3 +67,12 @@ An eligible continuation competes for its research slot through the ordinary
 selector with its priority supplied. It can replace one of that feed's other
 leads; it cannot increase the three-per-feed or ten-total limit. Testing only the
 unprioritized winners before applying priority would starve a queued fourth lead.
+
+Continuations can also use a post that rotated out of the newest feed page but
+remains in the existing 24-hour validated discovery inventory. Its original
+snapshot and scan hashes, native URL, feed admission and observation time are
+rechecked before any attempted read. Equal discovery text is not already
+verified primary evidence. The fresh primary response must still match the
+preserved task before documentation priority is enabled; absent, expired or
+forged discovery cannot authorize a read. This uses the existing discovery
+bounds and request budgets, not a longer retention window or new source route.

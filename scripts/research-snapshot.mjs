@@ -89,7 +89,7 @@ export async function researchSnapshot({root=ROOT,runId,env=process.env,scan=sca
  const providerReader=providerFetch||(source=>readProviderEvidence(root,source,{now:new Date(now)}));
  const enrichRunner=enrich===enrichProductLeads?(learningSelection?.selectionStrategy==='discussion-first-v1'?enrichDiscussionLeads:learningSelection?.selectionStrategy==='mixed-recovery-v1'?enrichMixedRecoveryBatch:enrich):enrich;
  const discovery=enrichRunner&&learningSelection?.selectionStrategy==='discussion-first-v1'?await loadDiscussionDiscovery(root,{currentSources:originalSources,currentOriginMap:result.originMap,definitions,selection:learningSelection,now}):{sources:originalSources,originMap:result.originMap,provenance:null};
- const selectionInput={sources:discovery.sources,originMap:discovery.originMap,previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),...(researchPolicy?{limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours}:{}),now:()=>new Date(now).getTime()};
+ const selectionInput={sources:discovery.sources,originMap:discovery.originMap,...(discovery.provenance?{discoveryCarryover:discovery.provenance}:{}),previous:input?.posts||[],recentAssessments:history.recentAssessments,...(learningSelection?{learningSelection,demandDefinitions:definitions}: {}),...(researchPolicy?{limit:researchPolicy.maxLeads,cooldownHours:researchPolicy.cooldownHours}:{}),now:()=>new Date(now).getTime()};
  let continuation=null;
  if(env.EXPECTED_RESEARCH_INTENT_SHA&&learningSelection?.selectionStrategy==='discussion-first-v1'){
   const intent=await readBoundedJSON(path.join(root,'data/research-intents',runId+'.json'));
