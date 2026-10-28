@@ -1,0 +1,127 @@
+{
+  "runId": "loop-40655630179-1",
+  "draftSha256": "3f51c470b2b91a2fcb4d26bf5b8bb68f5ffe574b3e3a5294d2b93a94ea213983",
+  "sourceSnapshotSha256": "54744e74fc64c3b87e0f29b5f8fba8dd7c3866a8e0eef6e67c5c86d669a668e9",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "84dd42b26c54d12b4f52a07c",
+      "pass": false,
+      "reasons": [
+        "The writer's ease score of 7 exceeds the supported maximum of 6: the post gives a concrete workflow, but does not establish unusually straightforward implementation.",
+        "The writer's feasibility score of 7 exceeds the supported maximum of 6: a small test is plausible, but the source describes one author's workflow and does not establish the proposed broader career-site coverage or matching notes.",
+        "The writer's autonomy score of 7 exceeds the supported maximum of 6: the source describes a daily new-listing loop, while the proposed permissions and relevance checks remain human responsibilities."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The source author describes a pattern for tracking hiring at target companies.",
+          "supported": true,
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies."
+        },
+        {
+          "claim": "The described workflow runs daily and sends an alert through Slack when there are new items.",
+          "supported": true,
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+        },
+        {
+          "claim": "The described Actor remembers previously seen jobs and returns only new postings.",
+          "supported": true,
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Because the Actor remembers which jobs it has already seen between runs, each run returns only new postings"
+        },
+        {
+          "claim": "The author's Slack alert includes listing title, location, and URL.",
+          "supported": true,
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "In the Slack node, post {{$json.title}} – {{$json.location}} – {{$json.url}} ."
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The source lays out a daily schedule, new-item check, and alert, supporting a plausible small start; it does not establish an unusually straightforward build.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 4,
+          "reason": "A customer remains a hypothesis: the author describes personal target-company tracking, with no buyer intent or payment evidence.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies."
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The source gives a concrete daily flow and new-listing behavior, supporting a narrow experiment; broader site coverage and AI matching are unverified.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Because the Actor remembers which jobs it has already seen between runs, each run returns only new postings"
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The described flow returns only new listings on repeated runs, but the proposed operator must still verify access, relevance, and next actions.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "each run returns only new postings, so no dedupe logic is needed in n8n."
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "A fresh first-party post gives a concrete workflow and output fields, but it is one author's account without independent corroboration or buyer evidence.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "In the Slack node, post {{$json.title}} – {{$json.location}} – {{$json.url}} ."
+        }
+      ],
+      "noveltyCheck": {
+        "recentPostsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "windowDays": 14,
+        "comparedPostCount": 0,
+        "product": {
+          "distinct": true,
+          "closestPostId": null,
+          "reason": "The frozen 14-day index is empty, so no recent product identity overlaps."
+        },
+        "workflow": {
+          "distinct": true,
+          "closestPostId": null,
+          "reason": "The frozen 14-day index is empty, so no recent operational workflow overlaps."
+        },
+        "customer": {
+          "distinct": true,
+          "closestPostId": null,
+          "reason": "The frozen 14-day index is empty, so no recent proposed customer overlaps."
+        }
+      },
+      "demandCheck": {
+        "demandContextSha256": "dfe53ee15cf5d8d2c8975ac9cec0ba1838abf7e8dc7599b44bae0bc34becf536",
+        "supported": true,
+        "segment": "professional_services",
+        "sourceId": "84dd42b26c54d12b4f52a07c",
+        "kind": "community_request",
+        "chore": "Track target companies' career pages and send an alert when a new job appears.",
+        "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies. Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack.",
+        "reason": "The assigned fresh community post describes a concrete target-company hiring-tracking workflow. The proposed recruiting consultancy payer remains a hypothesis, not an established buyer or payment.",
+        "noPersonalData": true
+      }
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The proposed post and all eight assigned discussions were examined. The post's task and claims are supported, but three writer scores exceed the evidence-supported maxima; the other concrete scored ideas were below threshold, and the remaining exclusions lacked a supported chore.",
+    "contextSha256": "74dcff7d8ba0ab83164e1f4d7492f02ec15527998ad53a2f227328585254c56f",
+    "rulesSha256": "dd4d993c93904273f257ac4cda5921cd4e692f17f2c75ef2e499067347149fd8",
+    "draftSha256": "3f51c470b2b91a2fcb4d26bf5b8bb68f5ffe574b3e3a5294d2b93a94ea213983",
+    "sourceSnapshotSha256": "54744e74fc64c3b87e0f29b5f8fba8dd7c3866a8e0eef6e67c5c86d669a668e9",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
