@@ -1,0 +1,213 @@
+{
+  "runId": "loop-40649791438-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T07:29:09.000Z",
+  "candidates": [
+    {
+      "title": "Log mobile game test sessions",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Record mobile game battery, temperature, frame drops and session notes, then move exported logs into a Google Sheet.",
+        "evidenceQuote": "Right now I type it into a notes app during the session, then later export a CSV from that app and paste it into a Google Sheet."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable CSV row for each supplied game test log, with duplicate files flagged before entry.",
+        "inputs": [
+          "Synthetic test row with date, device label, battery, temperature, frame drops and session note",
+          "Operator supplied CSV export from the notes app",
+          "Synthetic file name and upload timestamp"
+        ],
+        "trigger": "An operator starts a test run after supplying a completed CSV export; no phone or Drive trigger is assumed.",
+        "steps": [
+          "Read the supplied CSV rows and check the expected columns.",
+          "Normalize dates and device labels into a proposed row format.",
+          "Compare row content and file name against prior test inputs to flag likely duplicates.",
+          "Prepare a Google Sheets ready CSV and a short list of rejected rows.",
+          "Ask a person to review the rows and import the approved file."
+        ],
+        "acceptanceCheck": "With a small synthetic CSV containing valid, malformed and repeated rows, confirm that valid values are preserved and repeated rows are flagged for review.",
+        "humanBoundary": "A tester supplies and checks the test records, confirms duplicate flags, and imports approved rows; no live phone, Drive or Google Sheets connection is proposed.",
+        "unverified": [
+          "No supplied implementation reference supports CSV parsing, deduplication, file triggers or Sheets writes.",
+          "Actual log fields, file formats and reliable duplicate keys are unknown.",
+          "The post describes one tester; a recurring paying customer group is only a hypothesis."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test proposed row checks with synthetic logs, but no supplied reference supports the workflow.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: game QA contractors may pay for tidier session logs; the post shows no buying intent or payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week CSV mock is bounded; actual formats and duplicate rules remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed import-preparation loop repeats, but no automation support is supplied and a tester must review and import.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context describes log fields and a notes-to-CSV-to-Sheets chore; frequency beyond the stated habit and wider demand are unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the retained context supports a concrete logging chore, but implementation support and evidence of a paying customer are absent."
+    },
+    {
+      "title": "Plan recovery for failed agent runs",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Developers write checkpointers and recovery logic and handle idempotency for agent runs.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human reviewed recovery checklist draft for one supplied failed agent run.",
+        "inputs": [
+          "Synthetic run log with failed step and timestamp",
+          "Operator supplied description of expected task result",
+          "Operator supplied list of safe retry limits"
+        ],
+        "trigger": "An operator starts a review after a synthetic or authorized test agent run reports a failure.",
+        "steps": [
+          "Read the supplied failure summary and expected result.",
+          "Group the issue as retry, checkpoint or duplicate-action risk using operator supplied rules.",
+          "Draft a bounded recovery checklist with the evidence for each suggested step.",
+          "Flag missing state or uncertain actions instead of proposing an automatic retry.",
+          "Have an operator verify the checklist before changing or rerunning any agent."
+        ],
+        "acceptanceCheck": "For synthetic logs with a transient error, missing checkpoint and possible duplicate action, verify that each checklist cites an input and flags uncertain or irreversible actions for human review.",
+        "humanBoundary": "A developer supplies logs and retry rules, reviews every suggestion, and authorizes any code change or rerun; no agent execution or recovery integration is proposed.",
+        "unverified": [
+          "No supplied implementation reference supports log ingestion, checkpointing, idempotency or agent recovery.",
+          "The source does not specify agent types, failure classes or safe retry rules.",
+          "No repeat frequency or buyer willingness to pay is established."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can draft a checklist from synthetic logs, but no supplied reference supports recovery mechanics.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agents may pay for recovery support; this comment does not show buying intent or payment.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A checklist mock is bounded, but agent types, retry rules and safe recovery behavior are unspecified.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed output is a human reviewed checklist; no automated execution or recovery capability is documented.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The comment names checkpointers, recovery logic and idempotency, but gives no example, recurrence or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the comment identifies agent recovery work, but the exact workflow is underspecified and no implementation evidence is supplied."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Ask HN: Why aren't maintainers worried about the Copyright status of LLM output?",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The text states a concern about rights in model output, but gives no concrete existing chore, requested service, or bounded recurring task."
+    },
+    {
+      "title": "Show HN: Cirkit – Annotate, Trace, and Ask AI About Schematic PDFs",
+      "productUrl": "https://news.ycombinator.com/item?id=50268880",
+      "reason": "The retained text is a general description of an electronics documentation product, not a concrete unmet task or request that supports a proposed service."
+    },
+    {
+      "title": "How to Make AI UGC Ads in 2026 Using an AI Video Generator",
+      "productUrl": "https://news.ycombinator.com/item?id=50268879",
+      "reason": "The retained text defines an advertising format; it does not identify a concrete existing task or request from a prospective customer."
+    },
+    {
+      "title": "Finding Shopify stores that actually need help: an n8n lead-gen workflow",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "The only literal task span says missed schedule triggers can duplicate data. This is an isolated troubleshooting statement without enough retained detail to establish a bounded recurring customer chore."
+    },
+    {
+      "title": "AI chatbots, WhatsApp agents and booking automations for small businesses",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained context is a service provider’s offer and portfolio, not an existing customer task or request; buyer and chore would have to be invented."
+    },
+    {
+      "title": "Weekly keyword search volume to Google Sheets (Apify)",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The post describes an already built weekly workflow and its pricing, but not an unmet task or request for a separate proposed service."
+    },
+    {
+      "title": "Make.com Automation for Simple Business Tasks",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The author advertises general automation services and a practice workflow; no specific existing customer chore or requested service is identified."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all nine sealed discussion assignments. Two concrete chores were scoped and scored below threshold; the other seven lack a concrete unmet chore in their retained evidence. No idea reaches the six-point threshold."
+    }
+  ]
+}
