@@ -1,0 +1,376 @@
+{
+  "runId": "loop-40619854085-1",
+  "createdAt": "2026-10-28T02:16:47.232Z",
+  "candidates": [
+    {
+      "title": "Plan recovery steps for failed agent runs",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Developers must write checkpoints and recovery logic and handle idempotency for agent runs.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable recovery checklist for one simulated failed agent run.",
+        "inputs": [
+          "Synthetic agent step sequence",
+          "One simulated interruption point",
+          "Expected final state",
+          "Operator supplied retry rule"
+        ],
+        "trigger": "A developer submits a synthetic run and selects a failure point.",
+        "steps": [
+          "Represent each step and its expected side effect.",
+          "Mark the interruption point and proposed checkpoint.",
+          "Draft a retry and duplicate-prevention checklist.",
+          "Compare the checklist with the expected final state.",
+          "Return unresolved decisions for human review."
+        ],
+        "acceptanceCheck": "For the simulated failure, check that the checklist names the expected checkpoint and avoids applying the same side effect twice.",
+        "humanBoundary": "A developer must define valid state changes, review retry safety, and authorize any production recovery.",
+        "unverified": [
+          "No source documents an implementation reference or existing recovery product.",
+          "Production integrations, durable checkpoint storage, and safe replay are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can mock one run, but implementing safe replay requires engineering beyond the cited discussion.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agent workflows may pay for recovery help; the post establishes no purchase intent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week synthetic checklist test is possible; durable state and side-effect safety remain unverified.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed workflow can draft a checklist, but a person must validate state and authorize recovery.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The discussion explicitly names checkpoints, recovery logic, and idempotency, but gives no frequency or system detail.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete agent-run recovery work is stated, but the bounded synthetic checklist has no implementation support and the provisional mean is below six."
+    },
+    {
+      "title": "Summarize email threads for faster review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "Summarize each new email thread into a compact history and prepare draft-prefill context.",
+        "evidenceQuote": "To save email resume properly, i need immutable id to reference original email of the resume."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A compact, source-linked summary of a supplied email thread.",
+        "inputs": [
+          "Fictional email thread text",
+          "Operator supplied thread boundary",
+          "Requested summary format"
+        ],
+        "trigger": "An operator supplies a fictional thread for summarization.",
+        "steps": [
+          "Separate messages using supplied boundaries.",
+          "Extract the latest request and relevant prior context.",
+          "Draft a concise summary with source-message references.",
+          "Check that each detail appears in the input.",
+          "Return uncertain references for human review."
+        ],
+        "acceptanceCheck": "Compare the summary with the supplied messages and confirm every stated detail has a source message reference.",
+        "humanBoundary": "A person supplies the thread and boundaries, checks names and meaning, and decides whether to use any draft context.",
+        "unverified": [
+          "No supplied implementation reference supports email ingestion, immutable identifiers, or draft-prefill integration.",
+          "Real email access, privacy review, and summary accuracy are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test summaries on fictional threads, though no implementation reference supports email handling.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional teams handling long email threads may pay for review assistance; the post establishes no payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week text-only prototype is feasible with synthetic threads; live mailbox access remains unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed text-to-summary loop is repeatable, but a person must verify context and choose whether to use it.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post describes summarizing each new email thread and preparing draft context, but gives limited task detail.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "reason": "The author describes a concrete email summarization task. A text-only mock is assessable, but absent integration support and unverified buyer demand keep the provisional mean below six."
+    },
+    {
+      "title": "Prepare weekly keyword metrics in Sheets",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "Collect weekly search volume, CPC, and difficulty for keywords into spreadsheet rows.",
+        "evidenceQuote": "Runs VNCNT Labs’ Keyword Search Volume Actor on Apify every week and adds each keyword’s Google search volume, CPC and difficulty as rows in Google Sheets."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A weekly spreadsheet of keyword metrics from operator supplied sample data.",
+        "inputs": [
+          "Synthetic keyword list",
+          "Sample search volume, CPC, and difficulty values",
+          "Spreadsheet column template"
+        ],
+        "trigger": "An operator supplies a keyword list and sample metric rows.",
+        "steps": [
+          "Match each metric row to its keyword.",
+          "Format rows to the supplied spreadsheet columns.",
+          "Flag missing or duplicate values.",
+          "Produce a reviewable weekly sheet export.",
+          "Ask a person to verify anomalies before use."
+        ],
+        "acceptanceCheck": "Compare the output rows with a hand-prepared sample and verify every value and keyword match.",
+        "humanBoundary": "A person supplies keywords, checks source values, and decides whether the report is suitable for business decisions.",
+        "unverified": [
+          "The source describes an existing Apify actor and workflow, but no implementation reference is attached for a new service.",
+          "Live Apify access, account setup, and data reliability are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can format supplied sample metrics, but no source supports implementation of the actor workflow.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: SEO consultants may pay for recurring keyword reports; the post does not establish customer demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week sample-data report can be tested; live data access and reliability remain unverified.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A batch can format rows and flag blanks, but a person must verify data and interpret results.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post explicitly describes weekly keyword volume, CPC, and difficulty rows, though it is one maker workflow.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "reason": "A concrete weekly metrics chore is shown, but a new service would lack implementation support and the provisional mean is below six."
+    },
+    {
+      "title": "Prepare a checklist for workflow recovery",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "sourceIds": [
+        "3a0462f13b2ec26f27b112c8"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3a0462f13b2ec26f27b112c8"
+        ],
+        "chore": "Restore accidentally deleted active production workflows so the business can recover service.",
+        "evidenceQuote": "Several of them were active production workflows (our customer WhatsApp chatbot), so our business is currently down."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed recovery checklist for a simulated accidental workflow deletion.",
+        "inputs": [
+          "Synthetic workflow inventory with generic labels",
+          "Simulated deletion event and recovery objective",
+          "Operator-supplied backup and access assumptions"
+        ],
+        "trigger": "An operator starts a tabletop exercise after a simulated workflow deletion.",
+        "steps": [
+          "List the affected synthetic workflows and their business functions.",
+          "Record which backup or export is available for each item.",
+          "Draft an ordered restore and verification checklist from operator-supplied procedures.",
+          "Flag missing backups, permissions, or undocumented steps.",
+          "Require an operator to approve every proposed recovery action."
+        ],
+        "acceptanceCheck": "For a fictional deletion scenario, verify each checklist action maps to an operator-supplied recovery procedure and includes a human verification point.",
+        "humanBoundary": "A qualified operator must supply approved recovery procedures, confirm backups and permissions, and perform and verify any real restoration; the proposed tool cannot access or restore production workflows.",
+        "unverified": [
+          "No supplied implementation reference documents workflow backups, restoration, or n8n access.",
+          "The discussion spans establish an outage but do not specify a restoration procedure or repeat frequency.",
+          "A synthetic tabletop checklist would not establish safe or successful production recovery."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "A synthetic tabletop checklist is simple to outline, but the cited spans provide no restoration procedure or supporting software capability.",
+            "sourceIds": [
+              "3a0462f13b2ec26f27b112c8"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: workflow operators may pay for recovery planning; this incident shows disruption, not purchase intent or payment.",
+            "sourceIds": [
+              "3a0462f13b2ec26f27b112c8"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A four-week tabletop mock is possible, but the source gives no recovery steps and real restoration needs authorized access and tested backups.",
+            "sourceIds": [
+              "3a0462f13b2ec26f27b112c8"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposal can organize supplied procedures, but a qualified person must verify backups and perform every real recovery action.",
+            "sourceIds": [
+              "3a0462f13b2ec26f27b112c8"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The retained context supports accidental deletion of active workflows and an outage, but lacks a procedure, recurrence, or corroboration.",
+            "sourceIds": [
+              "3a0462f13b2ec26f27b112c8"
+            ]
+          }
+        }
+      },
+      "reason": "The retained context confirms active workflows were deleted and service was disrupted. A synthetic recovery checklist can be scoped, but the supplied evidence documents no restoration method or implementation support; provisional mean 3.0 is below six."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Plan recovery steps for failed agent runs",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "reason": "Assessed a narrow synthetic recovery checklist, but the cited post provides no implementation support for checkpoints or safe replay; the five provisional ratings average 4.0, below the 6 threshold."
+    },
+    {
+      "title": "Summarize email threads for faster review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "reason": "Assessed a text-only summary experiment using fictional threads. No supplied source supports email ingestion or draft-prefill integration, and the five provisional ratings average 4.6, below the 6 threshold."
+    },
+    {
+      "title": "Prepare weekly keyword metrics in Sheets",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "Assessed a weekly report mock from sample data. The source demonstrates an existing actor workflow but no supplied reference supports a new service; the five provisional ratings average 4.6, below the 6 threshold."
+    },
+    {
+      "title": "Search and browse ecommerce stores via one API",
+      "productUrl": "https://news.ycombinator.com/item?id=50264240",
+      "reason": "The retained excerpt describes a team building a search/browse API, not a concrete existing chore or request from a paying customer. It does not support a demand-first experiment without inventing the buyer task."
+    },
+    {
+      "title": "Restore deleted production workflows",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "reason": "Assessed a bounded synthetic recovery checklist with five provisional scores. The retained spans confirm deleted active workflows and an outage, but give no restoration procedure or implementation support; mean 3.0 is below the 6 threshold."
+    },
+    {
+      "title": "Offer chatbot and booking automation services",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained span is a service advertisement listing capabilities and experience, not a customer request or observed chore. Treating its examples as customer demand would invent demand."
+    },
+    {
+      "title": "Ask how to report IP abuse",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The only retained excerpt is “which clearly doesn’t apply here.” It supplies no task or context from which a safe demand-first experiment can be identified."
+    },
+    {
+      "title": "Control a browser from an agent terminal",
+      "productUrl": "https://news.ycombinator.com/item?id=50263081",
+      "reason": "The retained excerpt describes the maker’s Chrome extension, not a customer chore or request. The assigned segment cannot be used to infer a buyer task."
+    },
+    {
+      "title": "Offer help with simple Make automations",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The post offers help with small automation tasks but names no actual task in the retained span. A specific chore and experiment would have to be invented."
+    }
+  ]
+}
