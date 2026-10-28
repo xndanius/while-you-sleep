@@ -1,0 +1,295 @@
+{
+  "runId": "loop-40786081280-1",
+  "createdAt": "2026-10-28T23:17:19.787Z",
+  "candidates": [
+    {
+      "title": "Daily job alerts for target companies",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "84dd42b26c54d12b4f52a07c"
+        ],
+        "chore": "Track target-company job postings and send an alert when new postings appear.",
+        "evidenceQuote": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+      },
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied post shows a daily scheduled scraper-to-Slack loop; setup and actor availability still need validation.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recruiting consultants or job-search services might pay for monitored alerts; no buyer or payment is established.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week prototype can track a small supplied company list; source coverage and actor costs vary and need operator checks.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "The post describes daily retrieval and notification; a person must choose targets and verify listings, and the node reference supports only counts.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native spans show a daily job-scraping alert and remembered seen jobs; the reference documents count and unique count only.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily digest of newly observed postings for a short operator-supplied company list.",
+        "inputs": [
+          "A short list of company career pages or supported job sources",
+          "A small set of fictional or public sample job records",
+          "An operator-defined target role filter"
+        ],
+        "trigger": "At a daily scheduled run, process the selected sources and prepare a digest only when new matching records appear.",
+        "steps": [
+          "Load the selected company and role filters.",
+          "Retrieve the supported sample or configured source records.",
+          "Compare records with a saved seen-item list.",
+          "Count and group new records for a digest.",
+          "Send the draft digest to an operator for review."
+        ],
+        "acceptanceCheck": "On repeated sample inputs, previously seen records are not shown again, and each new record appears once with its source URL.",
+        "humanBoundary": "An operator must select permitted sources, check listing accuracy, control any paid actor usage, and approve recipients; no automated applications are proposed.",
+        "unverified": [
+          "Supported source coverage beyond the described actors is unknown.",
+          "The supplied Summarize documentation supports counts, not deduplication or scheduling.",
+          "Delivery reliability, operating cost and customer willingness to pay are unverified."
+        ]
+      },
+      "reason": "Concrete daily alert workflow, but a limited documented building reference and unproven buyer make its provisional mean below six."
+    },
+    {
+      "title": "Prepare answers for repeated application fields",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Repeatedly enter resume information into newly developed forms for one or two companies.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b",
+        "b100f221383c5b74ce29f37b"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can test sample resume text against a manually supplied field list; n8n documents structured extraction from text, not employer-form reading.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers or career-support services might pay for answer preparation; this post shows a chore, not purchase intent or payment.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week review-sheet prototype is bounded; the Information Extractor supports schema-based text extraction but not browser automation or form submission.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Structured extraction can suggest fields, but a person must check every answer and manually complete each employer form.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post reports daily resume entry into company-specific forms; n8n documentation supports structured extraction only, with no workflow or buyer corroboration.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet that maps supplied resume facts to draft answers for repeated job-application fields.",
+        "inputs": [
+          "Fictional resume facts supplied by the tester",
+          "A small set of manually transcribed sample form field labels",
+          "Operator-approved mapping rules"
+        ],
+        "trigger": "When a tester receives another application form with fields represented in the sample set.",
+        "steps": [
+          "Enter fictional resume facts into a structured table.",
+          "Add the sample form field labels.",
+          "Use the documented Information Extractor with a declared output schema to suggest matching facts.",
+          "Flag fields with no clear match instead of guessing.",
+          "Have a person review and copy approved answers manually."
+        ],
+        "acceptanceCheck": "For each sample field, verify the suggested answer matches the corresponding fictional resume fact and leaves uncertain fields blank.",
+        "humanBoundary": "A person must provide lawful test inputs, check every answer, handle sensitive information safely, and complete the actual application.",
+        "unverified": [
+          "Actual employer form layouts and field variations are unavailable.",
+          "No supplied source supports browser automation or automatic submission.",
+          "Whether job seekers or career services would pay is unknown."
+        ]
+      },
+      "reason": "The refreshed chore and structured-extraction reference support a bounded review-sheet experiment; provisional mean remains below six."
+    },
+    {
+      "title": "Draft recovery checks for AI agent workflows",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Developers must write checkpointing and recovery logic and handle idempotency for agents.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can draft a checklist from operator-supplied scenarios, but no supplied reference documents checkpoint or idempotency behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agents may pay for recovery setup help; the post states a problem without purchase intent or payment.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic scenario checklist is possible, while safe retry semantics depend on each agent and external side effects.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed output is a human-reviewed design checklist; no automated recovery capability is documented and an engineer must authorize retries.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The excerpt identifies checkpointers, recovery logic and idempotency work, but gives no concrete failure scenario, inputs or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review checklist for retry and checkpoint decisions in one fictional agent workflow.",
+        "inputs": [
+          "A fictional workflow step list",
+          "A set of synthetic failure and retry scenarios",
+          "Operator-defined side-effect and duplicate-risk notes"
+        ],
+        "trigger": "When a developer supplies a proposed workflow and wants to review its recovery cases.",
+        "steps": [
+          "List each step and any external side effect.",
+          "Mark the proposed checkpoint location for each step.",
+          "Describe synthetic failures before and after each checkpoint.",
+          "Flag retries that could repeat an external side effect.",
+          "Ask an engineer to review and approve any recovery design."
+        ],
+        "acceptanceCheck": "For each synthetic scenario, check that the checklist identifies whether retrying could repeat a side effect and leaves unresolved cases flagged.",
+        "humanBoundary": "An engineer must supply the workflow, define safe idempotency behavior, and approve all production changes; no recovery code execution is proposed.",
+        "unverified": [
+          "No supplied reference supports checkpointing or idempotency mechanics.",
+          "Safe retry rules depend on workflow-specific side effects.",
+          "Buyer willingness to pay and frequency are unknown."
+        ]
+      },
+      "reason": "The excerpt identifies a real engineering burden but lacks scenario detail or implementation support; a synthetic checklist is below threshold."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Daily job alerts for target companies",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "reason": "Concrete daily alert workflow, but a limited documented building reference and unproven buyer make its provisional mean below six."
+    },
+    {
+      "title": "Prepare answers for repeated application fields",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "reason": "The refreshed chore and structured-extraction reference support a bounded review-sheet experiment; provisional mean remains below six."
+    },
+    {
+      "title": "Draft recovery checks for AI agent workflows",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "reason": "The excerpt identifies a real engineering burden but lacks scenario detail or implementation support; a synthetic checklist is below threshold."
+    },
+    {
+      "title": "Gitby git management tool",
+      "productUrl": "https://news.ycombinator.com/item?id=50278264",
+      "reason": "The supplied excerpt says only “A convenient git management tool”; it does not identify a concrete existing manual task, so a scored experiment would require inventing the chore."
+    },
+    {
+      "title": "Fan of Sleep white noise app",
+      "productUrl": "https://news.ycombinator.com/item?id=50276263",
+      "reason": "The excerpt states a personal preference for a white-noise fan, not a repeatable task or request for a service; the assigned professional_services segment also does not fit this household use."
+    },
+    {
+      "title": "Context for data agents",
+      "productUrl": "https://news.ycombinator.com/item?id=50274358",
+      "reason": "The excerpt gives an abstract principle that agents need context but no specific chore, inputs, or repeatable workflow; a proposed service task would be invented."
+    },
+    {
+      "title": "Restore deleted n8n workflows",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "reason": "The retained spans describe a single accidental deletion incident and business disruption, not a recurring recovery chore. The visible workflow IDs are incident-specific and do not support a safe general restoration experiment."
+    }
+  ]
+}
