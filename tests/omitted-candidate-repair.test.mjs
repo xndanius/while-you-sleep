@@ -17,10 +17,10 @@ import {SCORING_KEYS} from '../lib/scoring.mjs';
 
 const runId='loop-39368251410-1',makeUrl='https://community.make.com/t/117567';
 const load=async(directory)=>JSON.parse(await readFile(new URL(`../data/${directory}/${runId}.json`,import.meta.url),'utf8'));
-async function fixture(){
+async function fixture(schema=1){
  const [draft,context]=await Promise.all([load('drafts'),load('check-context')]);
  const assignment=context.demandContext.discussionBatchPolicy.leadAssignments.find(row=>row.productUrl===makeUrl),source=context.sources.find(row=>row.id===assignment.demandSourceId);
- const record={schema:1,kind:'omitted_candidate',runId,contextSha256:sha256(stableJSON(context)),rulesSha256:context.rulesSha256,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,policySha256:context.scoringPolicy.policySha256,demandContextSha256:context.demandContextSha256,omission:{...assignment,chore:'Examine a narrow diagnosis report for an existing Make build.',evidenceQuote:source.text,reason:'The explicit debugging chore received no criterion assessment; examine a bounded proposed output and its limits.'}};
+ const record={schema,kind:'omitted_candidate',runId,contextSha256:sha256(stableJSON(context)),rulesSha256:context.rulesSha256,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,policySha256:context.scoringPolicy.policySha256,demandContextSha256:context.demandContextSha256,omission:{...assignment,chore:'Examine a narrow diagnosis report for an existing Make build.',evidenceQuote:source.text,reason:'The explicit debugging chore received no criterion assessment; examine a bounded proposed output and its limits.',...(schema===3?{quoteAnchorSha256:sha256(source.text)}:{})}};
  return {draft,context,record,response:{outcome:'needs_repair',reason:'An original concrete discussion chore was excluded without a criterion assessment.',manifest:null,repairFeedback:record}};
 }
 const expected=f=>({expectedDraftSha256:sha256(stableJSON(f.draft)),expectedContextSha256:sha256(stableJSON(f.context)),expectedFeedbackSha256:sha256(stableJSON(f.record))});
@@ -85,8 +85,9 @@ test('rebound stale, private, unavailable or forged evidence still cannot authen
  for(const change of changes){const f=await fixture();change(f);rebind(f);assert.throws(()=>validateOmittedCandidateRepair(f.record,f.draft,f.context,{allowInitial:true,...expected(f),requireFeedbackSha256:true}),undefined,change.toString());}
 });
 
-test('one repair preserves the batch and reaches a fresh independent no-post check through real preparation',async t=>{
- const f=await fixture(),pins=expected(f),feedback=repairFeedback(f.draft,f.context,f.record,pins);
+test('schema 3 anchor feedback preserves the batch through one repair and a fresh independent no-post check',async t=>{
+ const f=await fixture(3),pins=expected(f),feedback=repairFeedback(f.draft,f.context,f.record,pins);
+ assert.equal(f.record.schema,3);assert.equal(feedback.omittedCandidate.quoteAnchorSha256,f.record.omission.quoteAnchorSha256);
  assert.deepEqual(feedback.approvedPostIds,[]);assert.deepEqual(feedback.repairPostIds,[]);assert.deepEqual(feedback.omittedCandidate,f.record.omission);assert.equal(feedback.initialFeedbackSha256,pins.expectedFeedbackSha256);
  const id=f.record.omission.demandSourceId,quote=f.record.omission.evidenceQuote;
  const considered={title:'A bounded Make diagnosis hypothesis',productUrl:makeUrl,sourceIds:[id],segment:f.record.omission.segment,demandEvidence:{kind:'community_request',sourceIds:[id],chore:f.record.omission.chore,evidenceQuote:quote},scoring:{criteria:Object.fromEntries(SCORING_KEYS.map(key=>[key,{value:4,reason:key==='profit'?'Hypothesis: a small operations team may value diagnosis; payment is unproved.':key==='evidence'?'The literal discussion excerpt identifies debugging, with no implementation or outcome proof.':'An unproved diagnosis-report hypothesis needs supplied examples, human review and implementation evidence.',sourceIds:[id]}]))},reason:'The proposed diagnosis output remains below threshold with limited implementation evidence.'};
