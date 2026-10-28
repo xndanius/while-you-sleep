@@ -1,0 +1,1409 @@
+{
+  "runId": "loop-40685855932-1",
+  "createdAt": "2026-10-28T12:14:58.207Z",
+  "rulesSha256": "dd4d993c93904273f257ac4cda5921cd4e692f17f2c75ef2e499067347149fd8",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "87da22a486a6707010b6e5e104e0a2a8238441338c165db45796a92ce02bc04f",
+  "sourceSnapshotSha256": "395a53f2b8ca85cdfe8522c7d043aadf1b716634bd86705fdcbe88a8ebffa19f",
+  "sources": [
+    {
+      "id": "bb41e49c777b7f2a0ce9505b",
+      "url": "https://news.ycombinator.com/item?id=50254751",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "title": "Tech market feels like a data entry job",
+      "text": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies.",
+      "community": "Hacker News Ask HN",
+      "postedAt": "2026-10-27T04:37:18.000Z",
+      "fetchedAt": "2026-10-28T12:14:55.026Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "939a755c20e133b519039302",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "bb41e49c777b7f2a0ce9505b",
+        "status": "active",
+        "postedAt": "2026-10-27T04:37:18.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T12:14:55.026Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "a53a6bc89a5cdac92d4ab658",
+      "url": "https://community.n8n.io/t/325081",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "title": "AI Booking Agent with 0% Double-Booking Risk: n8n + PostgreSQL + Gemini [Clean Architecture]",
+      "text": "I want to share an AI-powered Telegram booking architecture I built for beauty salons using self-hosted n8n, PostgreSQL, and Google Gemini .",
+      "community": "n8n community",
+      "postedAt": "2026-10-28T06:35:59.536Z",
+      "fetchedAt": "2026-10-28T12:14:55.976Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "e935ee0506560f4175ecd570",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I want to share an AI-powered Telegram booking architecture I built for beauty salons using self-hosted n8n, PostgreSQL, and Google Gemini ."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "a53a6bc89a5cdac92d4ab658",
+        "status": "active",
+        "postedAt": "2026-10-28T06:35:59.536Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.n8n.io/t/325081",
+        "topicId": 325081,
+        "postId": 606919,
+        "postNumber": 1,
+        "postUrl": "https://community.n8n.io/t/325081/1",
+        "postCreatedAt": "2026-10-28T06:35:59.592Z",
+        "postUpdatedAt": "2026-10-28T06:35:59.592Z",
+        "fetchedAt": "2026-10-28T12:14:55.976Z",
+        "responseUrl": "https://community.n8n.io/t/325081.json",
+        "responseSha256": "1a2b974fc86329dd58424f4e86d862fad56e806c1e77eb72286d8b02c25becaf",
+        "normalizedSha256": "14ba777621b16bbf1096c799b1c91b04c5731e0a430becf57a3770233ad672cf",
+        "normalizedLength": 1925,
+        "retainedCharacters": 1112,
+        "omittedCharacters": 813,
+        "spans": [
+          {
+            "kind": "task",
+            "start": 13,
+            "end": 153,
+            "text": "I want to share an AI-powered Telegram booking architecture I built for beauty salons using self-hosted n8n, PostgreSQL, and Google Gemini .",
+            "sha256": "d13ff0a0d1e47ab715899430c280ffdb612a9edf980c65c21367907c6d0a9155"
+          },
+          {
+            "kind": "context",
+            "start": 185,
+            "end": 544,
+            "text": "Many AI booking assistants fail in production because LLMs can hallucinate relative dates (“next Friday”) or register double-bookings. To solve this, I applied a strict separation of concerns: The LLM is responsible ONLY for natural language intent extraction, while deterministic code (n8n JS nodes) and SQL queries handle all calendar logic and validations.",
+            "sha256": "23c90f85d8cb7d68bc435c15dadbf81e1d82417f01adaf68be055e675657b581"
+          },
+          {
+            "kind": "context",
+            "start": 673,
+            "end": 845,
+            "text": "Atomic Slot Validation: Every booking request checks salon working hours, master availability, and existing appointments in PostgreSQL at the SQL level before confirmation.",
+            "sha256": "64c170009e668414ac7dfac4b871f26339f505deb3c88bff479c71bf5e850b67"
+          },
+          {
+            "kind": "context",
+            "start": 1484,
+            "end": 1925,
+            "text": "Orchestration: n8n (self-hosted Docker on VPS) Database & CRM: PostgreSQL (schema: ai_agent_booking ) + NocoDB interface AI Model: Google Gemini ( gemini-2.5-flash ) via LangChain Node Interface: Telegram Bot API Feel free to check out live demonstrations and system details on my portfolio: My Portfolio Landing Page I’d love to hear your thoughts on this architecture! How do you usually handle LLM intent validation in your n8n workflows?",
+            "sha256": "ec8443927236eabc4dddbbc7a8cb08a8f7f2d130156b2de94285224f65512fa6"
+          }
+        ],
+        "packetSha256": "d7b71d24f68549a004a7aff21171479ecb95452fa01dbbd67bf89062ea47fcfe"
+      },
+      "verifiedAt": "2026-10-28T12:14:55.976Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "1ccb6ac28f87d8a3d3a3955c",
+      "url": "https://community.make.com/t/118271",
+      "productUrl": "https://community.make.com/t/118271",
+      "title": "Handle text and images replies",
+      "text": "I am building a scenario in Make.com to handle customer messages received through Facebook Messenger.",
+      "community": "Make community",
+      "postedAt": "2026-10-26T12:57:51.960Z",
+      "fetchedAt": "2026-10-28T12:14:56.828Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "9cda068854be7266ca517af9",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I am building a scenario in Make.com to handle customer messages received through Facebook Messenger."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "1ccb6ac28f87d8a3d3a3955c",
+        "status": "active",
+        "postedAt": "2026-10-26T12:57:51.960Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.make.com/t/118271",
+        "topicId": 118271,
+        "postId": 279260,
+        "postNumber": 1,
+        "postUrl": "https://community.make.com/t/118271/1",
+        "postCreatedAt": "2026-10-26T12:57:52.019Z",
+        "postUpdatedAt": "2026-10-26T12:57:54.894Z",
+        "fetchedAt": "2026-10-28T12:14:56.828Z",
+        "responseUrl": "https://community.make.com/t/118271.json",
+        "responseSha256": "0f83e01e8dbb6f541812e8bba0665662f920d0925b7908e3e994c4098e90b5ad",
+        "normalizedSha256": "44900f09c97572d858c11403eb0d1d008a2bb6396a3d864a1e974994e6a4eb84",
+        "normalizedLength": 986,
+        "retainedCharacters": 986,
+        "omittedCharacters": 0,
+        "spans": [
+          {
+            "kind": "context",
+            "start": 0,
+            "end": 986,
+            "text": "I am building a scenario in Make.com to handle customer messages received through Facebook Messenger. Customers can send either text messages or images. I use a Router to separate incoming messages into two routes: Text route: Processes text messages. Image route: Detects image messages and downloads the images so they can be used later in the scenario. The problem occurs when a customer sends an image along with a message such as, “I want this product.” Even though the image has already been received and downloaded, the AI agent asks the customer to send the image again. I want the AI agent to recognize that the image has already been received and use the available image to identify the product, rather than asking the customer to resend it. How can I structure my Make.com scenario so that both the text and image routes provide the necessary information to the same AI agent, allowing it to understand the customer’s message and analyze the image when one has been provided?",
+            "sha256": "44900f09c97572d858c11403eb0d1d008a2bb6396a3d864a1e974994e6a4eb84"
+          }
+        ],
+        "packetSha256": "0feeb4ff7178d641fd7648d601157b73059fbe3fe5975a448beb47172fdbd424"
+      },
+      "verifiedAt": "2026-10-28T12:14:56.828Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "84dd42b26c54d12b4f52a07c",
+      "url": "https://community.n8n.io/t/325067",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "title": "Workflow: daily alert for new jobs at target companies (Greenhouse/Lever/Ashby/Workday) to Slack",
+      "text": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack.",
+      "community": "n8n community",
+      "postedAt": "2026-10-28T06:32:56.020Z",
+      "fetchedAt": "2026-10-28T12:14:57.030Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "e935ee0506560f4175ecd570",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "84dd42b26c54d12b4f52a07c",
+        "status": "active",
+        "postedAt": "2026-10-28T06:32:56.020Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.n8n.io/t/325067",
+        "topicId": 325067,
+        "postId": 606897,
+        "postNumber": 1,
+        "postUrl": "https://community.n8n.io/t/325067/1",
+        "postCreatedAt": "2026-10-28T06:32:56.072Z",
+        "postUpdatedAt": "2026-10-28T06:32:56.072Z",
+        "fetchedAt": "2026-10-28T12:14:57.030Z",
+        "responseUrl": "https://community.n8n.io/t/325067.json",
+        "responseSha256": "3deab9aec147c32bea1489d5094ec0f7482ffcd812d4384c45dbef1c46eb5af7",
+        "normalizedSha256": "45a152e72373c302db7bce57cd251f65c7e67ac19697cebdbcce37f694c07edc",
+        "normalizedLength": 1023,
+        "retainedCharacters": 928,
+        "omittedCharacters": 95,
+        "spans": [
+          {
+            "kind": "context",
+            "start": 0,
+            "end": 262,
+            "text": "Sharing a simple pattern I use for tracking hiring at target companies. Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack. In the Apify node, run the Actor birchwood-data/ats-job-scraper with input like:",
+            "sha256": "57bf2db7b206d1f69c4f00c5662fd79323bf690d722ad96b84835d615ec027bc"
+          },
+          {
+            "kind": "context",
+            "start": 357,
+            "end": 1023,
+            "text": "For Workday career sites use birchwood-data/workday-jobs-scraper the same way. In the Slack node, post {{$json.title}} – {{$json.location}} – {{$json.url}} . Because the Actor remembers which jobs it has already seen between runs, each run returns only new postings, so no dedupe logic is needed in n8n. A quiet day costs almost nothing, since the Actors are pay-per-result (Workday is $0.002 per returned job). Actors: Greenhouse, Lever & Ashby Job Scraper | ATS Jobs API · Apify and Workday Jobs Scraper | myworkdayjobs.com API · Apify Disclosure: I built both Actors. Happy to share the workflow JSON if that’s useful, and feedback on what to add next is welcome.",
+            "sha256": "757fa149df8e6c2f35cb2c7e1f576cc6bafca549842107bd255db201a6d4a469"
+          }
+        ],
+        "packetSha256": "5d5df71fbcfb2bd6b369fba9eb486eaa68f72889c2b1470db0133fe4b5f66cbc"
+      },
+      "verifiedAt": "2026-10-28T12:14:57.030Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "bc3afc6e8c2a63bbd4b7ae01",
+      "url": "https://community.make.com/t/118231",
+      "productUrl": "https://community.make.com/t/118231",
+      "title": "Need help with a broken automation? Airtable, Google Sheets, Telegram, Webhooks & APIs",
+      "text": "I’m building Ecom Sync Solutions, focusing on practical business automations and small technical fixes.",
+      "community": "Make community",
+      "postedAt": "2026-10-26T11:32:21.096Z",
+      "fetchedAt": "2026-10-28T12:14:57.274Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "9cda068854be7266ca517af9",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I’m building Ecom Sync Solutions, focusing on practical business automations and small technical fixes."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "bc3afc6e8c2a63bbd4b7ae01",
+        "status": "active",
+        "postedAt": "2026-10-26T11:32:21.096Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.make.com/t/118231",
+        "topicId": 118231,
+        "postId": 279183,
+        "postNumber": 1,
+        "postUrl": "https://community.make.com/t/118231/1",
+        "postCreatedAt": "2026-10-26T11:32:21.159Z",
+        "postUpdatedAt": "2026-10-26T15:39:45.393Z",
+        "fetchedAt": "2026-10-28T12:14:57.274Z",
+        "responseUrl": "https://community.make.com/t/118231.json",
+        "responseSha256": "99c000ed424dcbceb0a607e487dadefb687e242228d777ab76801e4ddb43cd8e",
+        "normalizedSha256": "0ef00f7858a2be1f759ab83ff426d69462405b44e13d9843b114dd06a6abb8ab",
+        "normalizedLength": 1243,
+        "retainedCharacters": 1191,
+        "omittedCharacters": 52,
+        "spans": [
+          {
+            "kind": "context",
+            "start": 13,
+            "end": 1204,
+            "text": "I’m building Ecom Sync Solutions, focusing on practical business automations and small technical fixes. I’m especially interested in the problems that seem small but become frustrating when they keep happening. For example: Form submissions not reaching Airtable or Google Sheets Webhooks receiving data but not updating the correct records Telegram notifications going to the wrong place or not arriving Duplicate records being created Email workflows not triggering reliably Data not syncing correctly between different services I’ve built and tested workflows involving website forms, Airtable, Google Sheets, Telegram notifications and email classification. I’m also open to reviewing smaller Make scenario issues involving these integrations, depending on the setup. I prefer starting with one clearly defined problem rather than rebuilding an entire system unnecessarily. If you’re dealing with something similar, feel free to reply with which tools you’re using, what should happen and what’s actually going wrong. We can discuss whether it’s something I can help fix and agree on a fixed price before starting. I’m available for remote projects and communicate through email or chat.",
+            "sha256": "2d9c5d7bcc8791f39552aee082d3fbd1ab5ac819eca5aec0f7d682bc6569929f"
+          }
+        ],
+        "packetSha256": "12ca219f915483c82b0de33691ed0740373c673a3c7ac6ee20e0c79727f0fe29"
+      },
+      "verifiedAt": "2026-10-28T12:14:57.274Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "e3300dcf3d260773e48454c8",
+      "url": "https://news.ycombinator.com/item?id=50257159",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "title": "Ask HN: How to report IP abuse to Cloudflare?",
+      "text": "which clearly doesn't apply here.",
+      "community": "Hacker News Ask HN",
+      "postedAt": "2026-10-27T10:49:29.000Z",
+      "fetchedAt": "2026-10-28T12:14:57.464Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "939a755c20e133b519039302",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "which clearly doesn't apply here."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "e3300dcf3d260773e48454c8",
+        "status": "active",
+        "postedAt": "2026-10-27T10:49:29.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T12:14:57.464Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "150bdf3f56424d1d2307f837",
+      "url": "https://news.ycombinator.com/item?id=50272329",
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "title": "Show HN: Multi-platform remote-control for any harness",
+      "text": "This is Jep, a multi-harness gateway, with a http client that you can connect any frontend to.",
+      "community": "Hacker News Show HN",
+      "postedAt": "2026-10-28T12:10:43.000Z",
+      "fetchedAt": "2026-10-28T12:14:57.575Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "9357203ec00a097f7f2cdfaa",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "This is Jep, a multi-harness gateway, with a http client that you can connect any frontend to."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "150bdf3f56424d1d2307f837",
+        "status": "active",
+        "postedAt": "2026-10-28T12:10:43.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T12:14:57.575Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "476f0eefd59ad6f4972f112b",
+      "url": "https://news.ycombinator.com/item?id=50270271",
+      "productUrl": "https://news.ycombinator.com/item?id=50270271",
+      "title": "Show HN: NoVul – Open-source Mac app to Find and fix vulnerabilities on your Mac",
+      "text": "Built an open source tool that monitors new vulnerabilities every 15 mins and lets you or your agent know on what to fix.",
+      "community": "Hacker News Show HN",
+      "postedAt": "2026-10-28T07:32:53.000Z",
+      "fetchedAt": "2026-10-28T12:14:57.692Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "9357203ec00a097f7f2cdfaa",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "Built an open source tool that monitors new vulnerabilities every 15 mins and lets you or your agent know on what to fix."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "476f0eefd59ad6f4972f112b",
+        "status": "active",
+        "postedAt": "2026-10-28T07:32:53.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T12:14:57.692Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "b100f221383c5b74ce29f37b",
+      "url": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+      "title": "n8n Information Extractor schema documentation · product evidence",
+      "publisher": "docs.n8n.io",
+      "text": "Use the Information Extractor node to extract structured information from incoming data. On this page, you'll find the node parameters for the Information Extractor node, and links to more resources. Node parameters Text defines the input text to extract information from. This is usually an expression that references a field from the input items. For example, this could be {{ $json.chatInput }} if the input is a chat trigger, or {{ $json.text }} if a previous node is Extract from PDF. Use Schema Type to choose how you want to describe the desired output data format. You can choose between: From Attribute Descriptions : This option allows you to define the schema by specifying the list of attributes and their descriptions. Generate From JSON Example : Input an example JSON object to automatically generate the schema. The node uses the object property types and names. It ignores the actual values. n8n treats every field as mandatory when generating schemas from JSON examples. Define using JSON Schema : Manually input the JSON schema. Read the JSON Schema guides and examples for help creating a valid JSON schema.",
+      "fetchedAt": "2026-10-28T12:14:57.952Z",
+      "productUrl": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+      "originSourceIds": [],
+      "role": "building",
+      "demand": false,
+      "implementationReferenceVersion": 1,
+      "implementationSelectionVersion": 2,
+      "implementationReferenceId": "n8n-resume-schema-v1",
+      "supportsDemandSourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceExtraction": {
+        "version": 1,
+        "normalization": "public-plain-text-v1",
+        "rawSha256": "f498e2aa656cae4741612f41464e9f3e7c508b28586a0faae5b8363678719998",
+        "normalizedSha256": "e11cc72e4980317ec1bbc0ef8a925284181f09d446603df951915e9f1108463e",
+        "start": 1090,
+        "end": 2217,
+        "fullCharacters": 2850,
+        "retainedCharacters": 1127,
+        "omittedCharacters": 1723,
+        "totalBlocks": 36,
+        "retainedBlocks": 7,
+        "omittedBlocks": 29,
+        "unsafeBlocks": 0
+      },
+      "evidenceNote": "A literal capability section from first-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://docs.n8n.io",
+            "robotsUrl": "https://docs.n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-28T12:14:57.823Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 188,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-28T12:14:57.952Z"
+    },
+    {
+      "id": "02eb5e542dc08527b0ee2cd8",
+      "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+      "title": "n8n Summarize node documentation · product evidence",
+      "publisher": "docs.n8n.io",
+      "text": "Count : Count the total number of values in your input data. Count Unique : Count the number of unique values in your input data.",
+      "fetchedAt": "2026-10-28T12:14:58.199Z",
+      "productUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+      "originSourceIds": [],
+      "role": "building",
+      "demand": false,
+      "implementationReferenceVersion": 1,
+      "implementationSelectionVersion": 2,
+      "implementationReferenceId": "n8n-summarize-records-v1",
+      "supportsDemandSourceIds": [
+        "84dd42b26c54d12b4f52a07c"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceExtraction": {
+        "version": 1,
+        "normalization": "public-plain-text-v1",
+        "rawSha256": "1888fda0521a84c64e92a3b7e5f3141beafaf8d9566aff18edf52a8da55cbe00",
+        "normalizedSha256": "7ff61cddf62b80f343f5ccf49d1abf1c15d8e6e86b2e76e705051ecd24fe5bcc",
+        "start": 2042,
+        "end": 2171,
+        "fullCharacters": 4529,
+        "retainedCharacters": 129,
+        "omittedCharacters": 4400,
+        "totalBlocks": 64,
+        "retainedBlocks": 2,
+        "omittedBlocks": 62,
+        "unsafeBlocks": 0
+      },
+      "evidenceNote": "A literal capability section from first-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://docs.n8n.io",
+            "robotsUrl": "https://docs.n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-28T12:14:57.823Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 188,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-28T12:14:58.199Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [],
+  "noveltyContractVersion": 1,
+  "noveltyContext": {
+    "version": 1,
+    "windowDays": 14,
+    "asOf": "2026-10-28T12:14:54.337Z",
+    "cutoff": "2026-10-14T12:14:54.337Z",
+    "posts": [],
+    "postsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "demandContractVersion": 1,
+  "demandContext": {
+    "version": 1,
+    "registrySha256": "d4d6810b08d1b3d97879b37de021f160caecbbee6e9a44276c265b1031dbecb6",
+    "registrySources": [
+      {
+        "id": "086772a8008f7255f645d435",
+        "url": "https://api.ted.europa.eu/v3/notices/search",
+        "kind": "ted-service-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "11df15447c6c0e0dfdc06be3",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "2ae9fd69127e82131f7ec675",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "31fb2b3a59fe1a234dfff556",
+        "url": "https://community.shopify.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "3718aeb8e8d67fe152a75278",
+        "url": "https://wordpress.org/support/plugin/wpforms-lite/feed",
+        "kind": "wordpress-request-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "3733c65b9abe07b4b87156f9",
+        "url": "https://simonwillison.net/atom/everything",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "3c18d6f9afb86838768b18fe",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=administrat%C3%B6r&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "470ff63db8da1802b0ccc779",
+        "url": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+        "kind": "hf-spaces",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "498a696b45de80618b28713d",
+        "url": "https://betalist.com",
+        "kind": "betalist",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "529fe252f6662aa1472475a1",
+        "url": "https://n8n.io/workflows/categories/document-extraction",
+        "kind": "n8n-workflows",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "54649964a0a05f1bfa2b2d36",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "57b6f5f4945019c919f6d35c",
+        "url": "https://weworkremotely.com/categories/remote-customer-support-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "5c64e7df38b6e81294e26f29",
+        "url": "https://community.activepieces.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "5c7690cd1ac3e604f884cfc2",
+        "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "63dbb54258e730e95fa20298",
+        "url": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+        "kind": "hf-spaces",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "7efc2c70ed9424b76bd7407b",
+        "url": "https://apify.com",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "8ef335213e70b38904e7a504",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=medicinsk%20sekreterare&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "health_admin"
+        ]
+      },
+      {
+        "id": "9357203ec00a097f7f2cdfaa",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40",
+        "kind": "hn-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "939a755c20e133b519039302",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=ask_hn&hitsPerPage=40",
+        "kind": "hn-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "94ff0c81c5bf3c749b6fb828",
+        "url": "https://wordpress.org/support/forum/requests-and-feedback/feed",
+        "kind": "wordpress-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "96fe006ed5f7b38bfc889c7d",
+        "url": "https://www.bensbites.com/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "9786484d3d14e516ae5d6495",
+        "url": "https://discourse.metabase.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "9cda068854be7266ca517af9",
+        "url": "https://community.make.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "a5689419c24836e7e0ce37dd",
+        "url": "https://www.latent.space/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "a654756600fbb68b9c75c45b",
+        "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "a6747aa35096053cc2fc5f6d",
+        "url": "https://wordpress.org/support/plugin/woo-advanced-shipment-tracking/feed",
+        "kind": "wordpress-request-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "af031577e7a7287449e227af",
+        "url": "https://www.ycombinator.com/companies/industry/artificial-intelligence",
+        "kind": "yc-directory",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "b36040a453674772f62166cb",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=skoladministrat%C3%B6r&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "education"
+        ]
+      },
+      {
+        "id": "b681f434d554a69a059ccf85",
+        "url": "https://n8n.io/workflows/categories/invoice-processing",
+        "kind": "n8n-workflows",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "bf36022f0a8cd761c338ce53",
+        "url": "https://weworkremotely.com/categories/remote-management-and-finance-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "cca981f46ee3fb8981413fee",
+        "url": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?stages=tender&limit=20",
+        "kind": "uk-contracts-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "d554ca3fc8b9fd3548600b86",
+        "url": "https://dify.ai",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "d7d95a60e6009c5d18b5920e",
+        "url": "https://wordpress.org/support/plugin/woocommerce/feed",
+        "kind": "woocommerce-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "d7da742b595e7ec512a8ef54",
+        "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=20",
+        "kind": "uk-tenders-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "url": "https://n8n.io/ai",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "e935ee0506560f4175ecd570",
+        "url": "https://community.n8n.io/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "ec389fe35523e6dbba11e744",
+        "url": "https://news.ycombinator.com/launches",
+        "kind": "hn-launches",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "ef244017b1460269fc687cea",
+        "url": "https://browser-use.com",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "fb41898e3878114109088fed",
+        "url": "https://github.com/trending",
+        "kind": "github-trending",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "fc96810c8981082bcd1a293c",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      }
+    ],
+    "authorizedSources": [
+      {
+        "sourceId": "150bdf3f56424d1d2307f837",
+        "registrySourceId": "9357203ec00a097f7f2cdfaa",
+        "url": "https://news.ycombinator.com/item?id=50272329",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "1ccb6ac28f87d8a3d3a3955c",
+        "registrySourceId": "9cda068854be7266ca517af9",
+        "url": "https://community.make.com/t/118271",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "476f0eefd59ad6f4972f112b",
+        "registrySourceId": "9357203ec00a097f7f2cdfaa",
+        "url": "https://news.ycombinator.com/item?id=50270271",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "84dd42b26c54d12b4f52a07c",
+        "registrySourceId": "e935ee0506560f4175ecd570",
+        "url": "https://community.n8n.io/t/325067",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "a53a6bc89a5cdac92d4ab658",
+        "registrySourceId": "e935ee0506560f4175ecd570",
+        "url": "https://community.n8n.io/t/325081",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "bb41e49c777b7f2a0ce9505b",
+        "registrySourceId": "939a755c20e133b519039302",
+        "url": "https://news.ycombinator.com/item?id=50254751",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "bc3afc6e8c2a63bbd4b7ae01",
+        "registrySourceId": "9cda068854be7266ca517af9",
+        "url": "https://community.make.com/t/118231",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "e3300dcf3d260773e48454c8",
+        "registrySourceId": "939a755c20e133b519039302",
+        "url": "https://news.ycombinator.com/item?id=50257159",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      }
+    ],
+    "selectedSegment": null,
+    "mixPolicy": {
+      "aiWindow": 10,
+      "aiMaximum": 1,
+      "segmentWindow": 20,
+      "segmentMaximum": 6,
+      "warmup": "Fixed window capacities apply while fewer posts exist; short-sample percentages are not claimed.",
+      "unknown": "Unknown legacy buyers consume the AI-risk allowance until displaced by newer known segments."
+    },
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "segment": "ecommerce",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "segment": "ecommerce",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      }
+    ],
+    "discussionBatchPolicy": {
+      "version": 1,
+      "maxLeads": 10,
+      "maxPerDemandSource": 3,
+      "postIsDemand": true,
+      "leadAssignments": [
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50257159",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "e3300dcf3d260773e48454c8",
+          "registrySourceId": "939a755c20e133b519039302"
+        },
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50272329",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "150bdf3f56424d1d2307f837",
+          "registrySourceId": "9357203ec00a097f7f2cdfaa"
+        },
+        {
+          "productUrl": "https://community.n8n.io/t/325081",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "a53a6bc89a5cdac92d4ab658",
+          "registrySourceId": "e935ee0506560f4175ecd570"
+        },
+        {
+          "productUrl": "https://community.make.com/t/118271",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "1ccb6ac28f87d8a3d3a3955c",
+          "registrySourceId": "9cda068854be7266ca517af9"
+        },
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50254751",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "bb41e49c777b7f2a0ce9505b",
+          "registrySourceId": "939a755c20e133b519039302"
+        },
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50270271",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "476f0eefd59ad6f4972f112b",
+          "registrySourceId": "9357203ec00a097f7f2cdfaa"
+        },
+        {
+          "productUrl": "https://community.n8n.io/t/325067",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "84dd42b26c54d12b4f52a07c",
+          "registrySourceId": "e935ee0506560f4175ecd570"
+        },
+        {
+          "productUrl": "https://community.make.com/t/118231",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "bc3afc6e8c2a63bbd4b7ae01",
+          "registrySourceId": "9cda068854be7266ca517af9"
+        }
+      ],
+      "researchSha256": "cb95ea42a774e3e1f5bc1d22e7c302e0f12ac95e3fb308af5aff437a14fdf13e"
+    }
+  },
+  "demandContextSha256": "1b2b94522d748f16b921d516ddfefa1b1f66923e434dbe1e15abee8b14ca60e2",
+  "discoveryCarryover": {
+    "version": 1,
+    "records": [
+      {
+        "sourceId": "bc3afc6e8c2a63bbd4b7ae01",
+        "url": "https://community.make.com/t/118231",
+        "textSha256": "fbe4d30a811e96624397db5b6b7bc3a4632a9519400a15371ba88b5188ada476",
+        "observedAt": "2026-10-28T10:26:08.528Z",
+        "sourceRunId": "research-40671941471-1",
+        "sourceSnapshotSha256": "93b414fc152e50e64a9fbc754f0875015a84c6c82851fdb0d62d1967df74b4fc",
+        "sourceScanSha256": "c3b43f37796b9b54733edc8d07dc4f6a66c7361d5a978f15e7eb422eca44417a",
+        "feedIds": [
+          "9cda068854be7266ca517af9"
+        ]
+      }
+    ]
+  },
+  "candidatePlanVersion": 1,
+  "assessmentContractVersion": 1,
+  "primaryFetchDiagnostics": [
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "requestedAt": "2026-10-28T12:14:58.202Z",
+      "status": "fetched",
+      "sourceId": "bb41e49c777b7f2a0ce9505b",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://community.n8n.io/t/325081",
+      "requestedAt": "2026-10-28T12:14:58.202Z",
+      "status": "fetched",
+      "sourceId": "a53a6bc89a5cdac92d4ab658",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://community.make.com/t/118271",
+      "requestedAt": "2026-10-28T12:14:58.202Z",
+      "status": "fetched",
+      "sourceId": "1ccb6ac28f87d8a3d3a3955c",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://community.n8n.io/t/325067",
+      "requestedAt": "2026-10-28T12:14:58.202Z",
+      "status": "fetched",
+      "sourceId": "84dd42b26c54d12b4f52a07c",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://community.make.com/t/118231",
+      "requestedAt": "2026-10-28T12:14:58.202Z",
+      "status": "fetched",
+      "sourceId": "bc3afc6e8c2a63bbd4b7ae01",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "requestedAt": "2026-10-28T12:14:58.202Z",
+      "status": "fetched",
+      "sourceId": "e3300dcf3d260773e48454c8",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "requestedAt": "2026-10-28T12:14:58.203Z",
+      "status": "fetched",
+      "sourceId": "150bdf3f56424d1d2307f837",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50270271",
+      "requestedAt": "2026-10-28T12:14:58.203Z",
+      "status": "fetched",
+      "sourceId": "476f0eefd59ad6f4972f112b",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    }
+  ],
+  "considerationEvidence": [
+    {
+      "title": "Map resume facts into application fields",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b",
+        "b100f221383c5b74ce29f37b"
+      ],
+      "availableSourceIds": [
+        "bb41e49c777b7f2a0ce9505b",
+        "b100f221383c5b74ce29f37b"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Prototype salon booking safeguards",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "sourceIds": [
+        "a53a6bc89a5cdac92d4ab658"
+      ],
+      "availableSourceIds": [
+        "a53a6bc89a5cdac92d4ab658"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Pass received images into message review",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "availableSourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Review a daily new-job alert loop",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "availableSourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Triage recurring Make automation faults",
+      "productUrl": "https://community.make.com/t/118231",
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01"
+      ],
+      "availableSourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Ask HN: How to report IP abuse to Cloudflare?",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "sourceIds": [
+        "e3300dcf3d260773e48454c8"
+      ],
+      "availableSourceIds": [
+        "e3300dcf3d260773e48454c8"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: Multi-platform remote-control for any harness",
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "sourceIds": [
+        "150bdf3f56424d1d2307f837"
+      ],
+      "availableSourceIds": [
+        "150bdf3f56424d1d2307f837"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Show HN: NoVul – Open-source Mac app to Find and fix vulnerabilities on your Mac",
+      "productUrl": "https://news.ycombinator.com/item?id=50270271",
+      "sourceIds": [
+        "476f0eefd59ad6f4972f112b"
+      ],
+      "availableSourceIds": [
+        "476f0eefd59ad6f4972f112b"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
