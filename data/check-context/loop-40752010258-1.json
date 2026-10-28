@@ -1,0 +1,1360 @@
+{
+  "runId": "loop-40752010258-1",
+  "createdAt": "2026-10-28T19:18:05.263Z",
+  "rulesSha256": "dd4d993c93904273f257ac4cda5921cd4e692f17f2c75ef2e499067347149fd8",
+  "scoringPolicy": {
+    "weights": {
+      "ease": 1,
+      "profit": 1,
+      "feasibility": 1,
+      "autonomy": 1,
+      "evidence": 1
+    },
+    "threshold": 6,
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  },
+  "draftSha256": "d4a3248918f4b754b0b028fcff935e984bc06238822900e11cdcbf9498d98e67",
+  "sourceSnapshotSha256": "66ca7f731b774ce790054ef9adf02444b1cf36e078f6b24b3ce2be4811ce892b",
+  "sources": [
+    {
+      "id": "84dd42b26c54d12b4f52a07c",
+      "url": "https://community.n8n.io/t/325067",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "title": "Workflow: daily alert for new jobs at target companies (Greenhouse/Lever/Ashby/Workday) to Slack",
+      "text": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack.",
+      "community": "n8n community",
+      "postedAt": "2026-10-28T06:32:56.020Z",
+      "fetchedAt": "2026-10-28T19:18:01.256Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "e935ee0506560f4175ecd570",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "84dd42b26c54d12b4f52a07c",
+        "status": "active",
+        "postedAt": "2026-10-28T06:32:56.020Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.n8n.io/t/325067",
+        "topicId": 325067,
+        "postId": 606897,
+        "postNumber": 1,
+        "postUrl": "https://community.n8n.io/t/325067/1",
+        "postCreatedAt": "2026-10-28T06:32:56.072Z",
+        "postUpdatedAt": "2026-10-28T06:32:56.072Z",
+        "fetchedAt": "2026-10-28T19:18:01.256Z",
+        "responseUrl": "https://community.n8n.io/t/325067.json",
+        "responseSha256": "7dd4522e9bb4777d049da843d323ae6f5f35a68314092a3478a220adef9db062",
+        "normalizedSha256": "45a152e72373c302db7bce57cd251f65c7e67ac19697cebdbcce37f694c07edc",
+        "normalizedLength": 1023,
+        "retainedCharacters": 928,
+        "omittedCharacters": 95,
+        "spans": [
+          {
+            "kind": "context",
+            "start": 0,
+            "end": 262,
+            "text": "Sharing a simple pattern I use for tracking hiring at target companies. Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack. In the Apify node, run the Actor birchwood-data/ats-job-scraper with input like:",
+            "sha256": "57bf2db7b206d1f69c4f00c5662fd79323bf690d722ad96b84835d615ec027bc"
+          },
+          {
+            "kind": "context",
+            "start": 357,
+            "end": 1023,
+            "text": "For Workday career sites use birchwood-data/workday-jobs-scraper the same way. In the Slack node, post {{$json.title}} – {{$json.location}} – {{$json.url}} . Because the Actor remembers which jobs it has already seen between runs, each run returns only new postings, so no dedupe logic is needed in n8n. A quiet day costs almost nothing, since the Actors are pay-per-result (Workday is $0.002 per returned job). Actors: Greenhouse, Lever & Ashby Job Scraper | ATS Jobs API · Apify and Workday Jobs Scraper | myworkdayjobs.com API · Apify Disclosure: I built both Actors. Happy to share the workflow JSON if that’s useful, and feedback on what to add next is welcome.",
+            "sha256": "757fa149df8e6c2f35cb2c7e1f576cc6bafca549842107bd255db201a6d4a469"
+          }
+        ],
+        "packetSha256": "50e83d6333b02432fb127ddcdbcd5abde439e4ec5fa33fa65abc44f9a7c43d0c"
+      },
+      "verifiedAt": "2026-10-28T19:18:01.256Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "bb41e49c777b7f2a0ce9505b",
+      "url": "https://news.ycombinator.com/item?id=50254751",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "title": "Tech market feels like a data entry job",
+      "text": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies.",
+      "community": "Hacker News Ask HN",
+      "postedAt": "2026-10-27T04:37:18.000Z",
+      "fetchedAt": "2026-10-28T19:18:01.661Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "939a755c20e133b519039302",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "bb41e49c777b7f2a0ce9505b",
+        "status": "active",
+        "postedAt": "2026-10-27T04:37:18.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T19:18:01.661Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "b407a896ba8504e91a52df04",
+      "url": "https://community.make.com/t/118145",
+      "productUrl": "https://community.make.com/t/118145",
+      "title": "How to map invoice rows in HTTP POST module so that multiple rows would be created?",
+      "text": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section.",
+      "community": "Make community",
+      "postedAt": "2026-10-25T11:57:20.663Z",
+      "fetchedAt": "2026-10-28T19:18:02.761Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "9cda068854be7266ca517af9",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "b407a896ba8504e91a52df04",
+        "status": "active",
+        "postedAt": "2026-10-25T11:57:20.663Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.make.com/t/118145",
+        "topicId": 118145,
+        "postId": 278880,
+        "postNumber": 1,
+        "postUrl": "https://community.make.com/t/118145/1",
+        "postCreatedAt": "2026-10-25T11:57:20.734Z",
+        "postUpdatedAt": "2026-10-25T11:57:24.248Z",
+        "fetchedAt": "2026-10-28T19:18:02.761Z",
+        "responseUrl": "https://community.make.com/t/118145.json",
+        "responseSha256": "3c4171e5fbe21ba8f8f200beac255794054a998bd4eb93463fbe069debe56fed",
+        "normalizedSha256": "b43b77773d964d2431ff219528420ff42b6d75f310aeacb54339e4df5bfe5b6f",
+        "normalizedLength": 1043,
+        "retainedCharacters": 1014,
+        "omittedCharacters": 29,
+        "spans": [
+          {
+            "kind": "context",
+            "start": 0,
+            "end": 659,
+            "text": "What is your goal? Creating invoices in an external system with REST API based on CRM data from Airtable. What is the problem & what have you tried? I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section. I have tried without “Map” on, but then I can only see one of the values, and I cannot figure out how to do with “Map” on. I guess a basic question is if I even should be able to map the values directly to the HTTP POST module, or if I would need to some other “re-packaging” module before that? For some reason I cannot upload more than one screenshot, so I chose the mapping view with “Map” enabled.",
+            "sha256": "4077a293d7ff9913f581e260dc76d71e9256904c670a4ccc6fe5a25f2e2fcd13"
+          },
+          {
+            "kind": "context",
+            "start": 688,
+            "end": 1043,
+            "text": "Error messages or input/output bundles Example of Airtable’s “Get Record” output data, where two values exist: { “Bundle 1”: { “Hinta 0% (from Ostettu tuote)”: [ 390.4382470119522, 79.6812749003984 ], “VAT rate (from Ostettu tuote)”: [ 0.255, 0.255 ], “Hinta 25.5% (from Ostettu tuote)”: [ 490, 100 ] } Screenshots (scenario flow, module settings, errors)",
+            "sha256": "791ff0c6e36adede413820209e1c42140a9deda3b033f40171f725194ac9dc93"
+          }
+        ],
+        "packetSha256": "3e67e1e9c14546f69c5bf8a064bd5e03e8d0a0240b0e69695c4ca38d1f9c9f7d"
+      },
+      "verifiedAt": "2026-10-28T19:18:02.761Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "ccc45ed8437595b38bc007ef",
+      "url": "https://news.ycombinator.com/item?id=50278678",
+      "productUrl": "https://news.ycombinator.com/item?id=50278678",
+      "title": "Show HN: A proof-of-concept formalization of the IRS federal tax forms",
+      "text": "The linked repo is 100% vibe coded, but it was built on a handful of principles: - Most tax software derives trust from the party who maintains it (e.g.",
+      "community": "Hacker News Show HN",
+      "postedAt": "2026-10-28T18:30:53.000Z",
+      "fetchedAt": "2026-10-28T19:18:02.880Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "9357203ec00a097f7f2cdfaa",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "The linked repo is 100% vibe coded, but it was built on a handful of principles: - Most tax software derives trust from the party who maintains it (e.g."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "ccc45ed8437595b38bc007ef",
+        "status": "active",
+        "postedAt": "2026-10-28T18:30:53.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T19:18:02.880Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "fb490f8a02d216cea38fd638",
+      "url": "https://news.ycombinator.com/item?id=50274235",
+      "productUrl": "https://news.ycombinator.com/item?id=50274235",
+      "title": "Show HN: Local, Tracked, Versioned, Legal Research Databases",
+      "text": "This is similar in spirit to \"git for Law\" but includes a lot more utilities than diffs to make it an effective tool for research.",
+      "community": "Hacker News Show HN",
+      "postedAt": "2026-10-28T14:29:47.000Z",
+      "fetchedAt": "2026-10-28T19:18:03.071Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "9357203ec00a097f7f2cdfaa",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "This is similar in spirit to \"git for Law\" but includes a lot more utilities than diffs to make it an effective tool for research."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "fb490f8a02d216cea38fd638",
+        "status": "active",
+        "postedAt": "2026-10-28T14:29:47.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T19:18:03.071Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "3a0462f13b2ec26f27b112c8",
+      "url": "https://community.n8n.io/t/325020",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "title": "URGENT - Cloud restore request: all workflows deleted on lareseria.app.n8n.cloud",
+      "text": "Several of them were active production workflows (our customer WhatsApp chatbot), so our business is currently down.",
+      "community": "n8n community",
+      "postedAt": "2026-10-28T01:37:38.675Z",
+      "fetchedAt": "2026-10-28T19:18:03.263Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "e935ee0506560f4175ecd570",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "Several of them were active production workflows (our customer WhatsApp chatbot), so our business is currently down."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "3a0462f13b2ec26f27b112c8",
+        "status": "active",
+        "postedAt": "2026-10-28T01:37:38.675Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.n8n.io/t/325020",
+        "topicId": 325020,
+        "postId": 606819,
+        "postNumber": 1,
+        "postUrl": "https://community.n8n.io/t/325020/1",
+        "postCreatedAt": "2026-10-28T01:37:38.730Z",
+        "postUpdatedAt": "2026-10-28T01:37:52.210Z",
+        "fetchedAt": "2026-10-28T19:18:03.263Z",
+        "responseUrl": "https://community.n8n.io/t/325020.json",
+        "responseSha256": "5d7ce73c91cf19441f8daa7e65431e39b7b02fa88a210a74a5082ee43b65066d",
+        "normalizedSha256": "8026d536f9e12ae34f468b1d15f146ac237cf156fcafdc0258f8ee9f61ee1085",
+        "normalizedLength": 877,
+        "retainedCharacters": 634,
+        "omittedCharacters": 243,
+        "spans": [
+          {
+            "kind": "context",
+            "start": 16,
+            "end": 345,
+            "text": "All workflows in our n8n Cloud instance lareseria.app.n8n.cloud were deleted by mistake by an automated script (REST API archive + delete) on 2026-10-28 between 01:05 and 01:15 UTC. Credentials were not affected. Several of them were active production workflows (our customer WhatsApp chatbot), so our business is currently down.",
+            "sha256": "2253e004aa980ac16c6200ef8dbf88b4834e8ce9612e96b95c0eeb5dcc158922"
+          },
+          {
+            "kind": "context",
+            "start": 545,
+            "end": 850,
+            "text": "Main workflow IDs: Oe5P4ePjs5bvRPjc, nas3DS4FKNzfsHi0, RdfVRruAKi2i8Xnw, C8hJBfal4stKVsLw, ONQgjVkED7cqzecS, Ip04J3ehHGwBP98y, bf9qB7oyhj2ckpAr, 7w1EyyiCg4cuJj6p, tj1fabPKhDu7GdRC, MVUbnZbBJHg9Qruq, lFveLaLXREsNNP6P, X4w5M7IlhU23zeMr, V4bne4EogVDcEBo1. Last execution ID before the deletion: around 53718.",
+            "sha256": "3c60ffe2d92dba4a61b03854aad162d43c3a0881b203712c0a0df51415bf5fc3"
+          }
+        ],
+        "packetSha256": "745aab5e2626331adc67b18f62b13719664fb5de65a43882520b276aacfd4336"
+      },
+      "verifiedAt": "2026-10-28T19:18:03.263Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "b9b4dcc406fe5d78589142f6",
+      "url": "https://news.ycombinator.com/item?id=50253932",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "title": "Invite to build your business on KeilHQ",
+      "text": "you focus on building your startup, we manage your operations.",
+      "community": "Hacker News Ask HN",
+      "postedAt": "2026-10-27T02:14:33.000Z",
+      "fetchedAt": "2026-10-28T19:18:03.688Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "939a755c20e133b519039302",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "you focus on building your startup, we manage your operations."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "b9b4dcc406fe5d78589142f6",
+        "status": "active",
+        "postedAt": "2026-10-27T02:14:33.000Z"
+      },
+      "discussionBodyVersion": 1,
+      "verifiedAt": "2026-10-28T19:18:03.688Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    {
+      "id": "02eb5e542dc08527b0ee2cd8",
+      "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+      "title": "n8n Summarize node documentation · product evidence",
+      "publisher": "docs.n8n.io",
+      "text": "Count : Count the total number of values in your input data. Count Unique : Count the number of unique values in your input data.",
+      "fetchedAt": "2026-10-28T19:18:04.259Z",
+      "productUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+      "originSourceIds": [],
+      "role": "building",
+      "demand": false,
+      "implementationReferenceVersion": 1,
+      "implementationSelectionVersion": 2,
+      "implementationReferenceId": "n8n-summarize-records-v1",
+      "supportsDemandSourceIds": [
+        "84dd42b26c54d12b4f52a07c"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceExtraction": {
+        "version": 1,
+        "normalization": "public-plain-text-v1",
+        "rawSha256": "4bb7b7b5d8b73743e32a9dfc4c0e4c4736b30a93d3976a78849a59edb467b6db",
+        "normalizedSha256": "c77ffb1f9301d5b6f45c3c4dbd457159ea8cea38efe3a630cd503a7114862e29",
+        "start": 2042,
+        "end": 2171,
+        "fullCharacters": 4526,
+        "retainedCharacters": 129,
+        "omittedCharacters": 4397,
+        "totalBlocks": 64,
+        "retainedBlocks": 2,
+        "omittedBlocks": 62,
+        "unsafeBlocks": 0
+      },
+      "evidenceNote": "A literal capability section from first-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://docs.n8n.io",
+            "robotsUrl": "https://docs.n8n.io/robots.txt",
+            "status": 200,
+            "contentType": "text/plain",
+            "fetchedAt": "2026-10-28T19:18:04.109Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 188,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": {
+              "type": "allow",
+              "path": "/",
+              "specificity": 1
+            },
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-28T19:18:04.259Z"
+    },
+    {
+      "id": "e73220ebd327caecbae34a3c",
+      "url": "https://help.make.com/mapping-arrays",
+      "title": "Make array mapping documentation · product evidence",
+      "publisher": "help.make.com",
+      "text": "If you map the array's Recipient name item, it will appear in the field like this: The number between the square brackets is an index that determines which element of the array will be used. Leaving it empty defaults to the first element.",
+      "fetchedAt": "2026-10-28T19:18:05.257Z",
+      "productUrl": "https://help.make.com/mapping-arrays",
+      "originSourceIds": [],
+      "role": "building",
+      "demand": false,
+      "implementationReferenceVersion": 1,
+      "implementationSelectionVersion": 2,
+      "implementationReferenceId": "make-mapping-arrays-v1",
+      "supportsDemandSourceIds": [
+        "b407a896ba8504e91a52df04"
+      ],
+      "evidenceKind": "product-page",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      },
+      "enriched": true,
+      "evidenceExcerpted": true,
+      "evidenceExtraction": {
+        "version": 1,
+        "normalization": "public-plain-text-v1",
+        "rawSha256": "fff1d8e34fc7d9b2382d491bd1e5f4ff9e3fe5c4de5de738f4558cad4df88392",
+        "normalizedSha256": "b2fb63866f0500e6cc2e00dabfca0e6977342380fec182e7d7d5432f6c1aebcc",
+        "start": 2253,
+        "end": 2491,
+        "fullCharacters": 4962,
+        "retainedCharacters": 238,
+        "omittedCharacters": 4724,
+        "totalBlocks": 25,
+        "retainedBlocks": 2,
+        "omittedBlocks": 23,
+        "unsafeBlocks": 0
+      },
+      "evidenceNote": "A literal capability section from first-party documentation was fetched; it does not establish a deployed runtime, customers, revenue or full autonomy.",
+      "evidenceValidation": {
+        "robots": [
+          {
+            "origin": "https://help.make.com",
+            "robotsUrl": "https://help.make.com/robots.txt",
+            "status": 200,
+            "contentType": "text/plain; charset=utf-8",
+            "fetchedAt": "2026-10-28T19:18:04.713Z",
+            "redirects": [],
+            "state": "available",
+            "bytes": 57,
+            "truncated": false,
+            "allowed": true,
+            "matchedRule": null,
+            "selectedUserAgents": [
+              "*"
+            ],
+            "evaluatedUrl": "https://help.make.com/mapping-arrays",
+            "reason": "No matching robots Disallow rule."
+          }
+        ],
+        "redirects": [],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "resolvedUrl": "https://help.make.com/mapping-arrays",
+        "maxBytes": 2000000,
+        "truncated": false
+      },
+      "verifiedAt": "2026-10-28T19:18:05.257Z"
+    }
+  ],
+  "health": [],
+  "deterministicResults": [],
+  "noveltyContractVersion": 1,
+  "noveltyContext": {
+    "version": 1,
+    "windowDays": 14,
+    "asOf": "2026-10-28T19:18:00.281Z",
+    "cutoff": "2026-10-14T19:18:00.281Z",
+    "posts": [],
+    "postsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "demandContractVersion": 1,
+  "demandContext": {
+    "version": 1,
+    "registrySha256": "d4d6810b08d1b3d97879b37de021f160caecbbee6e9a44276c265b1031dbecb6",
+    "registrySources": [
+      {
+        "id": "086772a8008f7255f645d435",
+        "url": "https://api.ted.europa.eu/v3/notices/search",
+        "kind": "ted-service-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "11df15447c6c0e0dfdc06be3",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=document",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "2ae9fd69127e82131f7ec675",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=20&restrictSearchableAttributes=title&query=customer%20support",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "31fb2b3a59fe1a234dfff556",
+        "url": "https://community.shopify.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "3718aeb8e8d67fe152a75278",
+        "url": "https://wordpress.org/support/plugin/wpforms-lite/feed",
+        "kind": "wordpress-request-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "3733c65b9abe07b4b87156f9",
+        "url": "https://simonwillison.net/atom/everything",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "3c18d6f9afb86838768b18fe",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=administrat%C3%B6r&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "470ff63db8da1802b0ccc779",
+        "url": "https://huggingface.co/api/spaces?search=invoice&sort=lastModified&direction=-1&limit=20",
+        "kind": "hf-spaces",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "498a696b45de80618b28713d",
+        "url": "https://betalist.com",
+        "kind": "betalist",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "529fe252f6662aa1472475a1",
+        "url": "https://n8n.io/workflows/categories/document-extraction",
+        "kind": "n8n-workflows",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "54649964a0a05f1bfa2b2d36",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=30&query=automation",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "57b6f5f4945019c919f6d35c",
+        "url": "https://weworkremotely.com/categories/remote-customer-support-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "5c64e7df38b6e81294e26f29",
+        "url": "https://community.activepieces.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "5c7690cd1ac3e604f884cfc2",
+        "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "63dbb54258e730e95fa20298",
+        "url": "https://huggingface.co/api/spaces?sort=trendingScore&direction=-1&limit=20",
+        "kind": "hf-spaces",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "7efc2c70ed9424b76bd7407b",
+        "url": "https://apify.com",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "8ef335213e70b38904e7a504",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=medicinsk%20sekreterare&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "health_admin"
+        ]
+      },
+      {
+        "id": "9357203ec00a097f7f2cdfaa",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40",
+        "kind": "hn-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "939a755c20e133b519039302",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=ask_hn&hitsPerPage=40",
+        "kind": "hn-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "94ff0c81c5bf3c749b6fb828",
+        "url": "https://wordpress.org/support/forum/requests-and-feedback/feed",
+        "kind": "wordpress-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "96fe006ed5f7b38bfc889c7d",
+        "url": "https://www.bensbites.com/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "9786484d3d14e516ae5d6495",
+        "url": "https://discourse.metabase.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "9cda068854be7266ca517af9",
+        "url": "https://community.make.com/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "a5689419c24836e7e0ce37dd",
+        "url": "https://www.latent.space/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "a654756600fbb68b9c75c45b",
+        "url": "https://techcrunch.com/category/artificial-intelligence/feed",
+        "kind": "rss",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "a6747aa35096053cc2fc5f6d",
+        "url": "https://wordpress.org/support/plugin/woo-advanced-shipment-tracking/feed",
+        "kind": "wordpress-request-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "af031577e7a7287449e227af",
+        "url": "https://www.ycombinator.com/companies/industry/artificial-intelligence",
+        "kind": "yc-directory",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "b36040a453674772f62166cb",
+        "url": "https://jobsearch.api.jobtechdev.se/search?q=skoladministrat%C3%B6r&limit=20",
+        "kind": "jobtech-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "education"
+        ]
+      },
+      {
+        "id": "b681f434d554a69a059ccf85",
+        "url": "https://n8n.io/workflows/categories/invoice-processing",
+        "kind": "n8n-workflows",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "bf36022f0a8cd761c338ce53",
+        "url": "https://weworkremotely.com/categories/remote-management-and-finance-jobs.rss",
+        "kind": "wwr-demand",
+        "role": "demand",
+        "demandKind": "paid_job",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "id": "cca981f46ee3fb8981413fee",
+        "url": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?stages=tender&limit=20",
+        "kind": "uk-contracts-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "d554ca3fc8b9fd3548600b86",
+        "url": "https://dify.ai",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "d7d95a60e6009c5d18b5920e",
+        "url": "https://wordpress.org/support/plugin/woocommerce/feed",
+        "kind": "woocommerce-demand",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "ecommerce"
+        ]
+      },
+      {
+        "id": "d7da742b595e7ec512a8ef54",
+        "url": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=20",
+        "kind": "uk-tenders-demand",
+        "role": "demand",
+        "demandKind": "public_tender",
+        "segments": [
+          "public_sector"
+        ]
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "url": "https://n8n.io/ai",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "e935ee0506560f4175ecd570",
+        "url": "https://community.n8n.io/latest.rss",
+        "kind": "discourse-discussion",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "local_services",
+          "professional_services",
+          "ecommerce",
+          "education",
+          "health_admin",
+          "construction_property",
+          "public_sector",
+          "households",
+          "ai_software_builders"
+        ]
+      },
+      {
+        "id": "ec389fe35523e6dbba11e744",
+        "url": "https://news.ycombinator.com/launches",
+        "kind": "hn-launches",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "ef244017b1460269fc687cea",
+        "url": "https://browser-use.com",
+        "kind": "html",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "fb41898e3878114109088fed",
+        "url": "https://github.com/trending",
+        "kind": "github-trending",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      },
+      {
+        "id": "fc96810c8981082bcd1a293c",
+        "url": "https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&hitsPerPage=40&query=AI",
+        "kind": "hn",
+        "role": "building",
+        "demandKind": null,
+        "segments": []
+      }
+    ],
+    "authorizedSources": [
+      {
+        "sourceId": "3a0462f13b2ec26f27b112c8",
+        "registrySourceId": "e935ee0506560f4175ecd570",
+        "url": "https://community.n8n.io/t/325020",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "84dd42b26c54d12b4f52a07c",
+        "registrySourceId": "e935ee0506560f4175ecd570",
+        "url": "https://community.n8n.io/t/325067",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "b407a896ba8504e91a52df04",
+        "registrySourceId": "9cda068854be7266ca517af9",
+        "url": "https://community.make.com/t/118145",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "b9b4dcc406fe5d78589142f6",
+        "registrySourceId": "939a755c20e133b519039302",
+        "url": "https://news.ycombinator.com/item?id=50253932",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "bb41e49c777b7f2a0ce9505b",
+        "registrySourceId": "939a755c20e133b519039302",
+        "url": "https://news.ycombinator.com/item?id=50254751",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "ccc45ed8437595b38bc007ef",
+        "registrySourceId": "9357203ec00a097f7f2cdfaa",
+        "url": "https://news.ycombinator.com/item?id=50278678",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      },
+      {
+        "sourceId": "fb490f8a02d216cea38fd638",
+        "registrySourceId": "9357203ec00a097f7f2cdfaa",
+        "url": "https://news.ycombinator.com/item?id=50274235",
+        "role": "demand",
+        "demandKind": "community_request",
+        "segments": [
+          "professional_services"
+        ]
+      }
+    ],
+    "selectedSegment": null,
+    "mixPolicy": {
+      "aiWindow": 10,
+      "aiMaximum": 1,
+      "segmentWindow": 20,
+      "segmentMaximum": 6,
+      "warmup": "Fixed window capacities apply while fewer posts exist; short-sample percentages are not claimed.",
+      "unknown": "Unknown legacy buyers consume the AI-risk allowance until displaced by newer known segments."
+    },
+    "posts": [
+      {
+        "id": "98b4f6281cc3de4ecdfa95f6",
+        "publishedAt": "2026-10-11T20:31:22.470Z",
+        "segment": "ecommerce",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "e20bcacf021524725d3fc275",
+        "publishedAt": "2026-10-11T17:15:34.229Z",
+        "segment": "ecommerce",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "b89af4e5c65cc81c424c080b",
+        "publishedAt": "2026-10-11T10:20:06.032Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "0d455200b5ff2b5b39d4eac6",
+        "publishedAt": "2026-10-11T07:09:37.410Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "b97635582c646fbff97c7e77",
+        "publishedAt": "2026-10-10T07:13:15.146Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "f8fa768c80d28297a81242e1",
+        "publishedAt": "2026-10-10T06:53:03.064Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      },
+      {
+        "id": "1b30245f8580f86bcc4685c8",
+        "publishedAt": "2026-10-10T06:53:02.596Z",
+        "segment": "ai_software_builders",
+        "classification": "legacy_buyer_hypothesis",
+        "demandVerified": false
+      }
+    ],
+    "discussionBatchPolicy": {
+      "version": 1,
+      "maxLeads": 10,
+      "maxPerDemandSource": 3,
+      "postIsDemand": true,
+      "leadAssignments": [
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50278678",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "ccc45ed8437595b38bc007ef",
+          "registrySourceId": "9357203ec00a097f7f2cdfaa"
+        },
+        {
+          "productUrl": "https://community.n8n.io/t/325067",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "84dd42b26c54d12b4f52a07c",
+          "registrySourceId": "e935ee0506560f4175ecd570"
+        },
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50254751",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "bb41e49c777b7f2a0ce9505b",
+          "registrySourceId": "939a755c20e133b519039302"
+        },
+        {
+          "productUrl": "https://community.make.com/t/118145",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "b407a896ba8504e91a52df04",
+          "registrySourceId": "9cda068854be7266ca517af9"
+        },
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50274235",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "fb490f8a02d216cea38fd638",
+          "registrySourceId": "9357203ec00a097f7f2cdfaa"
+        },
+        {
+          "productUrl": "https://community.n8n.io/t/325020",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "3a0462f13b2ec26f27b112c8",
+          "registrySourceId": "e935ee0506560f4175ecd570"
+        },
+        {
+          "productUrl": "https://news.ycombinator.com/item?id=50253932",
+          "segment": "professional_services",
+          "kind": "discussion",
+          "demandSourceId": "b9b4dcc406fe5d78589142f6",
+          "registrySourceId": "939a755c20e133b519039302"
+        }
+      ],
+      "researchSha256": "cbc95e770dfe6a6922dde5ac18e6b9260d1d616ab499eabe45585b3f866cfdb1"
+    }
+  },
+  "demandContextSha256": "4347af64422cae2928aee0096fb4861fb1005dd703b693ec029877d4d29adebf",
+  "discoveryCarryover": {
+    "version": 1,
+    "records": [
+      {
+        "sourceId": "fb490f8a02d216cea38fd638",
+        "url": "https://news.ycombinator.com/item?id=50274235",
+        "textSha256": "07071e62408e75738f1fbfcb0c83d6c971fcadda89bad2031b983f5ce6afcaa8",
+        "observedAt": "2026-10-28T16:28:36.404Z",
+        "sourceRunId": "research-40726191256-1",
+        "sourceSnapshotSha256": "628bcd1e6d0d72672f545d563e892c17add1d9699b32115a0b0007b89c2a5331",
+        "sourceScanSha256": "99d554695e8c03f0832927753760d2431cf10d21e402c409dff8ba75b7ba20b9",
+        "feedIds": [
+          "9357203ec00a097f7f2cdfaa"
+        ]
+      },
+      {
+        "sourceId": "84dd42b26c54d12b4f52a07c",
+        "url": "https://community.n8n.io/t/325067",
+        "textSha256": "b604d8d002f347fbecb29d27b6fb53ee45e1698c72571f52dd12bf29a8b2b2d5",
+        "observedAt": "2026-10-28T15:31:56.092Z",
+        "sourceRunId": "research-40716761647-1",
+        "sourceSnapshotSha256": "40e2f46ac22e0e123671baca0f01d8ca6df3f83551de3a6873aa9fed9faee0e6",
+        "sourceScanSha256": "373f314eeb744408990077193e1b5b39db97381fd940175d35c6c9509c031bca",
+        "feedIds": [
+          "e935ee0506560f4175ecd570"
+        ]
+      },
+      {
+        "sourceId": "bb41e49c777b7f2a0ce9505b",
+        "url": "https://news.ycombinator.com/item?id=50254751",
+        "textSha256": "aa132fb955d8f5c300bc487866b2d2c0d32b0532a8c250ad68b9b733fede0efb",
+        "observedAt": "2026-10-28T12:30:41.696Z",
+        "sourceRunId": "research-40688272704-1",
+        "sourceSnapshotSha256": "45325b0a68542cb989ee9b07838a12645e38bc087b590e3a7816d9f40a752f77",
+        "sourceScanSha256": "459f72363a6e85e572ba6f055fa52052655b09876db76072b1ce5a896f267f3d",
+        "feedIds": [
+          "939a755c20e133b519039302"
+        ]
+      },
+      {
+        "sourceId": "3a0462f13b2ec26f27b112c8",
+        "url": "https://community.n8n.io/t/325020",
+        "textSha256": "d7f3b5ef5653d199aa614dd79313215e2e0e126408f68dc04473ca468a595fcd",
+        "observedAt": "2026-10-28T10:26:09.275Z",
+        "sourceRunId": "research-40671941471-1",
+        "sourceSnapshotSha256": "93b414fc152e50e64a9fbc754f0875015a84c6c82851fdb0d62d1967df74b4fc",
+        "sourceScanSha256": "c3b43f37796b9b54733edc8d07dc4f6a66c7361d5a978f15e7eb422eca44417a",
+        "feedIds": [
+          "e935ee0506560f4175ecd570"
+        ]
+      },
+      {
+        "sourceId": "b9b4dcc406fe5d78589142f6",
+        "url": "https://news.ycombinator.com/item?id=50253932",
+        "textSha256": "376a0b09014a91e0b32531b31dc1fa9487faa3e7390d8761657108e0bad7f8f7",
+        "observedAt": "2026-10-28T09:29:52.429Z",
+        "sourceRunId": "research-40664576814-1",
+        "sourceSnapshotSha256": "2d9082bc4d76dcf2b6fa5748020bcd2f624b0af5d4fc771c69fb77007e798ab3",
+        "sourceScanSha256": "591205107bd6e1daab1ee0f8123e7a3f76de1506c1d4b6603727163c06a3c0f9",
+        "feedIds": [
+          "939a755c20e133b519039302"
+        ]
+      },
+      {
+        "sourceId": "b407a896ba8504e91a52df04",
+        "url": "https://community.make.com/t/118145",
+        "textSha256": "80aee03b5a8cdf944245081e3c5865bc1d35be8daced84d6b28f37e9e2af8571",
+        "observedAt": "2026-10-27T22:38:16.961Z",
+        "sourceRunId": "research-40596231243-1",
+        "sourceSnapshotSha256": "45ded9e75a228b332ff411f0d0f79882ad9352ef2e60c2c035c9c87b348190b0",
+        "sourceScanSha256": "f0100fc02bf1eefb1a91aee8f13454651ed7afb3f419c9234017f8183d5e0381",
+        "feedIds": [
+          "9cda068854be7266ca517af9"
+        ]
+      }
+    ]
+  },
+  "candidatePlanVersion": 1,
+  "assessmentContractVersion": 1,
+  "primaryFetchDiagnostics": [
+    {
+      "productUrl": "https://community.n8n.io/t/325067",
+      "requestedAt": "2026-10-28T19:18:05.260Z",
+      "status": "fetched",
+      "sourceId": "84dd42b26c54d12b4f52a07c",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "requestedAt": "2026-10-28T19:18:05.260Z",
+      "status": "fetched",
+      "sourceId": "bb41e49c777b7f2a0ce9505b",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://community.make.com/t/118145",
+      "requestedAt": "2026-10-28T19:18:05.260Z",
+      "status": "fetched",
+      "sourceId": "b407a896ba8504e91a52df04",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50278678",
+      "requestedAt": "2026-10-28T19:18:05.260Z",
+      "status": "fetched",
+      "sourceId": "ccc45ed8437595b38bc007ef",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50274235",
+      "requestedAt": "2026-10-28T19:18:05.260Z",
+      "status": "fetched",
+      "sourceId": "fb490f8a02d216cea38fd638",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://community.n8n.io/t/325020",
+      "requestedAt": "2026-10-28T19:18:05.260Z",
+      "status": "fetched",
+      "sourceId": "3a0462f13b2ec26f27b112c8",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    },
+    {
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "requestedAt": "2026-10-28T19:18:05.260Z",
+      "status": "fetched",
+      "sourceId": "b9b4dcc406fe5d78589142f6",
+      "reason": "The candidate product or its exact discovered implementation document was independently re-fetched in this check context."
+    }
+  ],
+  "considerationEvidence": [
+    {
+      "title": "Daily hiring alerts for target companies",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "availableSourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Prepare resume answers for job forms",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "availableSourceIds": [
+        "bb41e49c777b7f2a0ce9505b"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Check invoice rows before an API handoff",
+      "productUrl": "https://community.make.com/t/118145",
+      "sourceIds": [
+        "b407a896ba8504e91a52df04",
+        "e73220ebd327caecbae34a3c"
+      ],
+      "availableSourceIds": [
+        "b407a896ba8504e91a52df04",
+        "e73220ebd327caecbae34a3c"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Tax software trust principles",
+      "productUrl": "https://news.ycombinator.com/item?id=50278678",
+      "sourceIds": [
+        "ccc45ed8437595b38bc007ef"
+      ],
+      "availableSourceIds": [
+        "ccc45ed8437595b38bc007ef"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Research utilities inspired by version control",
+      "productUrl": "https://news.ycombinator.com/item?id=50274235",
+      "sourceIds": [
+        "fb490f8a02d216cea38fd638"
+      ],
+      "availableSourceIds": [
+        "fb490f8a02d216cea38fd638"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Recover deleted production workflows",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "sourceIds": [
+        "3a0462f13b2ec26f27b112c8"
+      ],
+      "availableSourceIds": [
+        "3a0462f13b2ec26f27b112c8"
+      ],
+      "unavailableSourceIds": []
+    },
+    {
+      "title": "Startup operations service",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "sourceIds": [
+        "b9b4dcc406fe5d78589142f6"
+      ],
+      "availableSourceIds": [
+        "b9b4dcc406fe5d78589142f6"
+      ],
+      "unavailableSourceIds": []
+    }
+  ]
+}
