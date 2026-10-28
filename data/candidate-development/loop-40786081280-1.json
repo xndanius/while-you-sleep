@@ -1,0 +1,512 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40786081280-1",
+  "createdAt": "2026-10-28T23:20:56.452Z",
+  "events": [
+    {
+      "id": "6fe683b12e82760abb3836b300f779ebea8531f9cba1764c149eecc8c72793a9",
+      "kind": "origin",
+      "caseId": "bb41e49c777b7f2a0ce9505b",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceRunId": "loop-40752010258-1",
+      "details": {
+        "revisionId": "802c7f261efc9d1f53c7f541e12250261d9ed4ade1b1f7807081473090ef3796",
+        "parentRevisionId": null,
+        "candidateSha256": "dc741b20875625daaae17232385e4eb183db57a979f6349af5be62ee2c207ba4",
+        "sourceSha256": "ea0c76e1dd0317cb1dd436216def4b9a4c594698d23355d6a279c34f25ead358",
+        "capabilitySources": [],
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review sheet that maps supplied resume facts to draft answers for repeated job-application fields.",
+          "inputs": [
+            "Fictional resume facts supplied by the tester",
+            "A small set of manually transcribed sample form field labels",
+            "Operator-approved mapping rules"
+          ],
+          "trigger": "When a tester receives another application form with fields represented in the sample set.",
+          "steps": [
+            "Enter fictional resume facts into a structured table.",
+            "Add the sample form field labels.",
+            "Suggest matching facts for each field.",
+            "Flag fields with no clear match instead of guessing.",
+            "Have a person review and copy approved answers manually."
+          ],
+          "acceptanceCheck": "For each sample field, verify the suggested answer matches the corresponding fictional resume fact and leaves uncertain fields blank.",
+          "humanBoundary": "A person must provide lawful test inputs, check every answer, handle sensitive information safely, and complete the actual application.",
+          "unverified": [
+            "Actual employer form layouts and field variations are unavailable.",
+            "No supplied source supports form reading, browser automation, or automatic submission.",
+            "Whether job seekers or career services would pay is unknown."
+          ]
+        },
+        "limitations": [
+          "Actual employer form layouts and field variations are unavailable.",
+          "No supplied source supports form reading, browser automation, or automatic submission.",
+          "Whether job seekers or career services would pay is unknown."
+        ],
+        "provenance": {
+          "runId": "loop-40752010258-1",
+          "runSha256": "86dd4807913e3f42bc0e791983cff952d7327917993500eb687df850b0487a4c",
+          "draftSha256": "d4a3248918f4b754b0b028fcff935e984bc06238822900e11cdcbf9498d98e67",
+          "contextSha256": "1d26cd4ba1d5b3cb3c7db4a8bc8ecce45da7262a1c1955073b82f04167f5c7a3",
+          "researchSha256": "cbc95e770dfe6a6922dde5ac18e6b9260d1d616ab499eabe45585b3f866cfdb1",
+          "scanSha256": "0e2bd184552a10f45d7b7238adc598a68f92250af1bfe452f20374787b0c68a7",
+          "manifestSha256": "a8124ff37c95d4abc1d212496ec4c3e925df99c64ad708e4fbe0709e3f7a2114",
+          "selectionSha256": "4e63199a8f5b4cc222d5ce2be6ee187d15d463413b75b62d26a657d32c2b678c",
+          "learningSha256": "4953dc9e7cee9ab0362666217e520199fb6e176c86ae6f025be65d396bae4899"
+        }
+      }
+    },
+    {
+      "id": "099183c6def786ad6111f36e6d0aa4d3702468727ff7849df6d9347903544247",
+      "kind": "acquisition",
+      "caseId": "bb41e49c777b7f2a0ce9505b",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceRunId": "loop-40786081280-1",
+      "details": {
+        "revisionId": "802c7f261efc9d1f53c7f541e12250261d9ed4ade1b1f7807081473090ef3796",
+        "intentSha256": "05322d2182a4a97a3c8fc505350bee5f3ca0ea726ba0daa4491fd975aa885f6f",
+        "resultSha256": "75b7c3fc288270c35a01d96eff4d02f92f772649caca14e9240345bb74aaaf0f",
+        "outcome": "completed",
+        "routes": [
+          {
+            "key": "f6bee29bdca30c5c600aad849a2f347b8d1751dbc2b4d176da6296dda083264e",
+            "referenceId": "n8n-resume-schema-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+            "purpose": "new_acquisition",
+            "status": "fetched",
+            "evidenceSha256": "df0faa88d8ffb6a8dcac21ffe3f3961567ad3a4ffa940e53bd69b9dda9203781"
+          }
+        ]
+      }
+    },
+    {
+      "id": "d017cf963a988e215e15170a8027227e8cb8a3c4c3e5be5186e9569f4f13696e",
+      "kind": "assessment",
+      "caseId": "84dd42b26c54d12b4f52a07c",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "sourceRunId": "loop-40786081280-1",
+      "details": {
+        "revisionId": "88e8f56eb5b3b9bb3a854bef2b683364f80fccf63a7a487a941a27645adc17ba",
+        "parentRevisionId": null,
+        "candidateIndex": 0,
+        "candidateSha256": "ff7e19f0599976b062c4f36bc96a354b544c8e2436fca8d431b883939cb4b00b",
+        "sourceSha256": "c8ecf8350fd2892e21b3fa759f9b9702e71c82a24a0bfe4b7b17daa77e7798c9",
+        "capabilitySources": [
+          {
+            "sourceId": "02eb5e542dc08527b0ee2cd8",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+            "textSha256": "b62383a717a66f131063b6e93a0d39cb467bf011bb3e823bba05f564fd3e3556"
+          }
+        ],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A daily digest of newly observed postings for a short operator-supplied company list.",
+          "inputs": [
+            "A short list of company career pages or supported job sources",
+            "A small set of fictional or public sample job records",
+            "An operator-defined target role filter"
+          ],
+          "trigger": "At a daily scheduled run, process the selected sources and prepare a digest only when new matching records appear.",
+          "steps": [
+            "Load the selected company and role filters.",
+            "Retrieve the supported sample or configured source records.",
+            "Compare records with a saved seen-item list.",
+            "Count and group new records for a digest.",
+            "Send the draft digest to an operator for review."
+          ],
+          "acceptanceCheck": "On repeated sample inputs, previously seen records are not shown again, and each new record appears once with its source URL.",
+          "humanBoundary": "An operator must select permitted sources, check listing accuracy, control any paid actor usage, and approve recipients; no automated applications are proposed.",
+          "unverified": [
+            "Supported source coverage beyond the described actors is unknown.",
+            "The supplied Summarize documentation supports counts, not deduplication or scheduling.",
+            "Delivery reliability, operating cost and customer willingness to pay are unverified."
+          ]
+        },
+        "limitations": [
+          "Supported source coverage beyond the described actors is unknown.",
+          "The supplied Summarize documentation supports counts, not deduplication or scheduling.",
+          "Delivery reliability, operating cost and customer willingness to pay are unverified."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "b05dcfd4111afc4307d40b68b8ecbf9d3fedc1640a36b7918d8a8e2a73033171",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "e06e2b3e974c843dfa13f53356b2a877ac846625469c78857ad4ae836aeded52",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Supported source coverage beyond the described actors is unknown.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "331147f562e7ffe524481fecfd5dcc9ba1024ae474b6f492a8678fcdebc04238",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "The supplied Summarize documentation supports counts, not deduplication or scheduling.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied post shows a daily scheduled scraper-to-Slack loop; setup and actor availability still need validation.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recruiting consultants or job-search services might pay for monitored alerts; no buyer or payment is established.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week prototype can track a small supplied company list; source coverage and actor costs vary and need operator checks.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "The post describes daily retrieval and notification; a person must choose targets and verify listings, and the node reference supports only counts.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native spans show a daily job-scraping alert and remembered seen jobs; the reference documents count and unique count only.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "c3aae5f6a6923e45b95bff176f8c72d6b4045d92b9a4f8fa29530a671381fb13",
+          "draftSha256": "862cba8478c389c0ed42bea3c5b595129fb7659854f7e2379b2e79cd7c0c5f94",
+          "contextSha256": "d2a95d785c89ea145b6cb29592d1e2c18e4c7877a9a918a3300e3c05d07e8202",
+          "manifestSha256": "e3aa1a12147d92c5091c3137d77222cc39c6d8a59e13f4ca005d47b5fe2f81e4",
+          "researchSha256": "b78dc96e56df5758c6f5e95fa88ec330af52b0d1693138f17a231d83dc4dfeb9",
+          "learningSha256": "5095b7c0374ec1fee8c801df10bb86a46e920e5da9403997ea36d199b1d66289"
+        }
+      }
+    },
+    {
+      "id": "f476b24d2eb45a7377e4c0f76f8c7281f779ba1e5a0721bf16a1a3683ca3bdb2",
+      "kind": "assessment",
+      "caseId": "bb41e49c777b7f2a0ce9505b",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceRunId": "loop-40786081280-1",
+      "details": {
+        "revisionId": "75ed92d85952a677639d682f136e97b6072d77ec2d5b99da97d26d0fab3ec6d4",
+        "parentRevisionId": "802c7f261efc9d1f53c7f541e12250261d9ed4ade1b1f7807081473090ef3796",
+        "candidateIndex": 1,
+        "candidateSha256": "9d6503929d2c943153065df9be41a40ddb1d958be6adb82c5b85f8bafe9e8093",
+        "sourceSha256": "ea0c76e1dd0317cb1dd436216def4b9a4c594698d23355d6a279c34f25ead358",
+        "capabilitySources": [
+          {
+            "sourceId": "b100f221383c5b74ce29f37b",
+            "url": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+            "textSha256": "8f9db2e112615ae5189e88c41b1ec89a40b25a5be44efc23ab81f2dff57566f0"
+          }
+        ],
+        "progress": "new_capability_evidence",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review sheet that maps supplied resume facts to draft answers for repeated job-application fields.",
+          "inputs": [
+            "Fictional resume facts supplied by the tester",
+            "A small set of manually transcribed sample form field labels",
+            "Operator-approved mapping rules"
+          ],
+          "trigger": "When a tester receives another application form with fields represented in the sample set.",
+          "steps": [
+            "Enter fictional resume facts into a structured table.",
+            "Add the sample form field labels.",
+            "Use the documented Information Extractor with a declared output schema to suggest matching facts.",
+            "Flag fields with no clear match instead of guessing.",
+            "Have a person review and copy approved answers manually."
+          ],
+          "acceptanceCheck": "For each sample field, verify the suggested answer matches the corresponding fictional resume fact and leaves uncertain fields blank.",
+          "humanBoundary": "A person must provide lawful test inputs, check every answer, handle sensitive information safely, and complete the actual application.",
+          "unverified": [
+            "Actual employer form layouts and field variations are unavailable.",
+            "No supplied source supports browser automation or automatic submission.",
+            "Whether job seekers or career services would pay is unknown."
+          ]
+        },
+        "limitations": [
+          "Actual employer form layouts and field variations are unavailable.",
+          "No supplied source supports browser automation or automatic submission.",
+          "Whether job seekers or career services would pay is unknown."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "d21cc3c5232e09788dc4379700d21f25fd893cac24d898de8270ac0ffeefde96",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "f44706c5b6639f8f363cc61f2f54e40b920b321023810ad624af8dfff96ac449",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Actual employer form layouts and field variations are unavailable.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "e98ace14c0dfe1955ef5a743bdf5eda679cca70eedb5181b3c170d68081ea751",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied source supports browser automation or automatic submission.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can test sample resume text against a manually supplied field list; n8n documents structured extraction from text, not employer-form reading.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers or career-support services might pay for answer preparation; this post shows a chore, not purchase intent or payment.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week review-sheet prototype is bounded; the Information Extractor supports schema-based text extraction but not browser automation or form submission.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Structured extraction can suggest fields, but a person must check every answer and manually complete each employer form.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post reports daily resume entry into company-specific forms; n8n documentation supports structured extraction only, with no workflow or buyer corroboration.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "c3aae5f6a6923e45b95bff176f8c72d6b4045d92b9a4f8fa29530a671381fb13",
+          "draftSha256": "862cba8478c389c0ed42bea3c5b595129fb7659854f7e2379b2e79cd7c0c5f94",
+          "contextSha256": "d2a95d785c89ea145b6cb29592d1e2c18e4c7877a9a918a3300e3c05d07e8202",
+          "manifestSha256": "e3aa1a12147d92c5091c3137d77222cc39c6d8a59e13f4ca005d47b5fe2f81e4",
+          "researchSha256": "b78dc96e56df5758c6f5e95fa88ec330af52b0d1693138f17a231d83dc4dfeb9",
+          "learningSha256": "5095b7c0374ec1fee8c801df10bb86a46e920e5da9403997ea36d199b1d66289"
+        }
+      }
+    },
+    {
+      "id": "cefa2add791c38b3ac69de42b25b2aa5e0d64dac16997c65bf2c403d2c6b926d",
+      "kind": "assessment",
+      "caseId": "787f35356b78240055b28a66",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceRunId": "loop-40786081280-1",
+      "details": {
+        "revisionId": "0148ba7f2c0254a45a03eeb9ef4531fda7610e0a3a06e4b6d598815d1b21e00c",
+        "parentRevisionId": null,
+        "candidateIndex": 2,
+        "candidateSha256": "63d7a0b388b20fb1d0159a8130f145581e8f5c908febec839a2e5d2e25f1d131",
+        "sourceSha256": "fb2c3dd1bce1821027eb2c12e996f90ab1f85a190b7d3137b1514af2bce6ddc4",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review checklist for retry and checkpoint decisions in one fictional agent workflow.",
+          "inputs": [
+            "A fictional workflow step list",
+            "A set of synthetic failure and retry scenarios",
+            "Operator-defined side-effect and duplicate-risk notes"
+          ],
+          "trigger": "When a developer supplies a proposed workflow and wants to review its recovery cases.",
+          "steps": [
+            "List each step and any external side effect.",
+            "Mark the proposed checkpoint location for each step.",
+            "Describe synthetic failures before and after each checkpoint.",
+            "Flag retries that could repeat an external side effect.",
+            "Ask an engineer to review and approve any recovery design."
+          ],
+          "acceptanceCheck": "For each synthetic scenario, check that the checklist identifies whether retrying could repeat a side effect and leaves unresolved cases flagged.",
+          "humanBoundary": "An engineer must supply the workflow, define safe idempotency behavior, and approve all production changes; no recovery code execution is proposed.",
+          "unverified": [
+            "No supplied reference supports checkpointing or idempotency mechanics.",
+            "Safe retry rules depend on workflow-specific side effects.",
+            "Buyer willingness to pay and frequency are unknown."
+          ]
+        },
+        "limitations": [
+          "No supplied reference supports checkpointing or idempotency mechanics.",
+          "Safe retry rules depend on workflow-specific side effects.",
+          "Buyer willingness to pay and frequency are unknown."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "11601ac30fc374ba7b71fb51736700514eb08c7dbce798c0f15dabcd708d1eab",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "1800803c318e6d728c1f99fcd78e9aeeedbc372faa9254460337d851fc35197a",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No supplied reference supports checkpointing or idempotency mechanics.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "899d5f08225798c843ecd407d29c48dd6cc50e2435337abfd9a16ff1d2323505",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Safe retry rules depend on workflow-specific side effects.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can draft a checklist from operator-supplied scenarios, but no supplied reference documents checkpoint or idempotency behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agents may pay for recovery setup help; the post states a problem without purchase intent or payment.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic scenario checklist is possible, while safe retry semantics depend on each agent and external side effects.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed output is a human-reviewed design checklist; no automated recovery capability is documented and an engineer must authorize retries.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The excerpt identifies checkpointers, recovery logic and idempotency work, but gives no concrete failure scenario, inputs or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "c3aae5f6a6923e45b95bff176f8c72d6b4045d92b9a4f8fa29530a671381fb13",
+          "draftSha256": "862cba8478c389c0ed42bea3c5b595129fb7659854f7e2379b2e79cd7c0c5f94",
+          "contextSha256": "d2a95d785c89ea145b6cb29592d1e2c18e4c7877a9a918a3300e3c05d07e8202",
+          "manifestSha256": "e3aa1a12147d92c5091c3137d77222cc39c6d8a59e13f4ca005d47b5fe2f81e4",
+          "researchSha256": "b78dc96e56df5758c6f5e95fa88ec330af52b0d1693138f17a231d83dc4dfeb9",
+          "learningSha256": "5095b7c0374ec1fee8c801df10bb86a46e920e5da9403997ea36d199b1d66289"
+        }
+      }
+    }
+  ]
+}
