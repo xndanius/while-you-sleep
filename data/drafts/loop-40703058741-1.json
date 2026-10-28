@@ -1,0 +1,297 @@
+{
+  "runId": "loop-40703058741-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T14:10:21.000Z",
+  "candidates": [
+    {
+      "title": "Prepare a delayed-shipment alert",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Notify a dispatcher when a shipment is delayed.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed"
+      },
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable alert draft identifying a potentially delayed shipment and the supplied reason.",
+        "inputs": [
+          "Synthetic shipment identifier",
+          "Operator-supplied expected delivery time",
+          "Operator-supplied latest status and timestamp",
+          "Operator-defined delay threshold"
+        ],
+        "trigger": "An operator supplies a new status record or starts a test run with a synthetic shipment record.",
+        "steps": [
+          "Accept a synthetic shipment record and its timestamp.",
+          "Compare the supplied status and time with the operator-defined delay rule.",
+          "Mark the record as possibly delayed when the rule matches.",
+          "Prepare an alert draft containing only the supplied identifier and status.",
+          "Have an operator verify the result and decide whether to send it."
+        ],
+        "acceptanceCheck": "For a small labeled set of synthetic status records, verify that records meeting the written delay rule produce an alert draft and other records do not.",
+        "humanBoundary": "An operator must supply and validate status data and the delay rule, review every alert, and authorize any external notification; no live carrier or logistics connection is evidenced.",
+        "unverified": [
+          "No supplied reference documents event ingestion or notification delivery for this task.",
+          "The discussion does not specify status fields, delay rules, volume, recurrence, or access to shipment systems.",
+          "No Make or n8n execution, external endpoint, or deployment is established."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A synthetic rule-and-alert mock is approachable, but no attached source documents an implementation path for the task.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: ecommerce operations teams may value delay alerts; this discussion establishes no buyer intent or payment.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic alert draft is bounded; carrier data access and live delivery are unverified.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A supplied status can be checked repeatedly in a proposal, but no event connector is documented and a person must verify and send alerts.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained task span names a delayed-shipment dispatcher alert; it gives no fields, recurrence, buyer evidence, or implementation support.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "reason": "The retained task span supports a narrow synthetic alert-drafting experiment. Mean 5.0 is below the threshold; no supplied implementation reference supports event intake or delivery."
+    },
+    {
+      "title": "Draft booking status notifications",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Prepare booking confirmations and service-provider assignment notifications.",
+        "evidenceQuote": "automate booking confirmations, provider assignment notifications"
+      },
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewable booking confirmation draft from a supplied fictional booking and provider assignment.",
+        "inputs": [
+          "Synthetic booking identifier",
+          "Operator-supplied service time",
+          "Operator-supplied provider assignment",
+          "Approved confirmation template"
+        ],
+        "trigger": "An operator submits a fictional booking and assignment record for a test run.",
+        "steps": [
+          "Check that required test fields are present.",
+          "Match the booking to the supplied provider assignment.",
+          "Fill an approved template with the supplied booking details.",
+          "Flag missing or conflicting fields instead of guessing.",
+          "Ask an operator to verify and authorize the draft."
+        ],
+        "acceptanceCheck": "Use labeled fictional records, including missing and conflicting assignments, and verify that complete records produce accurate drafts while ambiguous records are flagged for review.",
+        "humanBoundary": "A person must supply and confirm booking data, verify assignments, approve every message, and handle any payment or customer record; the source does not establish access to a live application.",
+        "unverified": [
+          "No supplied implementation reference documents booking-event intake or message delivery.",
+          "The discussion does not provide a schema, booking system, authentication details, or operating volume.",
+          "Payment status correctness, duplicate suppression, retries, and external API execution are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A template-filling mock can use fictional records, but the attached discussion alone does not document its implementation mechanics.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: on-demand service operators may value fewer manual booking messages; this question establishes no payment evidence.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fictional confirmation draft is narrow; live booking access, payment status, and reliable delivery remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Template preparation can repeat on supplied records, while a person must validate assignments and authorize messages; no connector is documented.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained post span explicitly asks about booking confirmations and provider assignment notices, but provides no schema or implementation evidence.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "reason": "The full retained span supports a bounded fictional confirmation-drafting experiment. Mean 4.8 is below threshold; live booking, payment, retry, and notification mechanics are not evidenced."
+    },
+    {
+      "title": "Organize scattered trip details",
+      "productUrl": "https://news.ycombinator.com/item?id=50268115",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "fc05943ed79737713b2291cd"
+        ],
+        "chore": "Gather trip details that are scattered across a spreadsheet, airline apps, inboxes, and a photo library.",
+        "evidenceQuote": "My trips were scattered across a spreadsheet, airline apps, old inboxes and a photo library"
+      },
+      "sourceIds": [
+        "fc05943ed79737713b2291cd"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A single reviewable trip summary assembled from operator-supplied fictional travel snippets.",
+        "inputs": [
+          "Synthetic trip name",
+          "Operator-supplied fictional booking snippets",
+          "Operator-supplied travel dates",
+          "Optional operator-supplied note text"
+        ],
+        "trigger": "An operator manually submits a small set of fictional trip snippets for organization.",
+        "steps": [
+          "Accept only supplied synthetic text snippets.",
+          "Extract proposed date, place, and reservation label fields.",
+          "Group fields under the operator-supplied trip name.",
+          "Mark missing or conflicting details without filling them in.",
+          "Have an operator compare the summary with the original snippets."
+        ],
+        "acceptanceCheck": "Compare each proposed field with labeled synthetic source snippets and confirm that missing or conflicting details are flagged rather than inferred.",
+        "humanBoundary": "A person must supply and verify all details; this experiment does not connect to inboxes, airline apps, spreadsheets, or photo libraries and must not ingest real traveler records.",
+        "unverified": [
+          "No supplied implementation reference documents extraction or integrations for this task.",
+          "The post describes the author's scattered information but gives no recurring frequency, other buyer evidence, or exact fields.",
+          "Accuracy across real booking formats and any external account access remain untested."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A manual synthetic-input summary can be outlined, but no attached source documents extraction or integration capability.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: frequent travelers might value trip organization, but this maker statement does not establish a paying customer or demand from service firms.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic text organizer is possible as a proposal; real inbox, airline, spreadsheet, and photo integrations are outside the evidence.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed version depends on manual input and verification, and no automated source collection is documented.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The public post explicitly describes trip details scattered across four sources, but is one maker's statement with no frequency or corroboration.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          }
+        }
+      },
+      "reason": "A narrow synthetic trip-summary experiment follows the stated organization problem. Mean 4.0 is below threshold; the post provides no evidence of a professional-services buyer or integrations."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Prepare a delayed-shipment alert",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "reason": "Scored bounded experiment is below threshold (mean 5.0); only the task is evidenced, with no supporting implementation reference."
+    },
+    {
+      "title": "Record screen videos for quick notes",
+      "productUrl": "https://news.ycombinator.com/item?id=50269031",
+      "reason": "The only supplied evidence says the author uses Loom for quick video notes; it identifies no concrete chore, request, or business idea to assess."
+    },
+    {
+      "title": "Optimize founder time",
+      "productUrl": "https://news.ycombinator.com/item?id=50246546",
+      "reason": "The statement that product building and customer acquisition consume more time names broad activities, not a specific task; inventing a bounded duty would exceed the evidence."
+    },
+    {
+      "title": "Create AI-generated UGC advertisements",
+      "productUrl": "https://news.ycombinator.com/item?id=50268879",
+      "reason": "The supplied text defines synthetic creator-style review and unboxing videos but supplies no concrete existing chore or request. Fabricated review-style endorsements also risk misleading audiences, so no experiment is proposed."
+    },
+    {
+      "title": "Draft booking status notifications",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "reason": "Scored bounded experiment is below threshold (mean 4.8); booking and payment integrations, delivery, and duplicate prevention are not supported by supplied implementation evidence."
+    },
+    {
+      "title": "Organize scattered trip details",
+      "productUrl": "https://news.ycombinator.com/item?id=50268115",
+      "reason": "Scored bounded experiment is below threshold (mean 4.0); the maker post supports an organization problem but not a professional-services buyer or integrated collection."
+    },
+    {
+      "title": "Troubleshoot an email-sorting workflow",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "reason": "The retained spans describe one user's Code/If-node configuration fault and ask for troubleshooting. RULES excludes one-off bug reports; no repeated operational service chore is established. The supplied Code and If documentation only describes those nodes' functions and cannot establish that this bug can be solved."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all seven assigned discussion identities. Three literal chores received scoped experiments and five-criterion ratings but scored below six; the other four lacked a qualifying chore or were a one-off bug report. No post proposed."
+    }
+  ]
+}
