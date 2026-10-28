@@ -1,0 +1,296 @@
+{
+  "runId": "loop-40606745531-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T00:09:57.130Z",
+  "candidates": [
+    {
+      "title": "Flag missing signatures and invoice mismatches",
+      "productUrl": "https://news.ycombinator.com/item?id=50261285",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "fe42abd6926120382bede5b9"
+        ],
+        "chore": "Review customer documents for missing signatures or invoice totals that differ from order amounts, then prepare a correction request.",
+        "evidenceQuote": "The PDF does not contain your signature"
+      },
+      "sourceIds": [
+        "fe42abd6926120382bede5b9"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable exception note that identifies a missing signature or an invoice total mismatch and drafts a customer follow-up.",
+        "inputs": [
+          "Synthetic invoice total",
+          "Synthetic order amount",
+          "Synthetic document signature-present flag",
+          "Operator-supplied request template"
+        ],
+        "trigger": "An operator submits one synthetic or authorized test document record for review.",
+        "steps": [
+          "Read the supplied test fields.",
+          "Compare the invoice total with the order amount.",
+          "Check the supplied signature-present flag.",
+          "Mark any discrepancy and show the values used.",
+          "Draft a short follow-up from an operator-approved template.",
+          "Require a person to verify and send the request."
+        ],
+        "acceptanceCheck": "On test records containing either named discrepancy, the note flags the correct condition and includes no unsupported customer or invoice facts.",
+        "humanBoundary": "An operator supplies authorized or synthetic inputs, confirms whether a document is actually incomplete, checks every proposed request, and sends it; the prototype must not decide payment or legal validity.",
+        "unverified": [
+          "No supplied implementation reference supports document extraction or comparison.",
+          "Actual document formats, customer data access, repeat frequency, and willingness to pay are unknown.",
+          "No external message sending or invoice persistence is established."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test two explicit exception rules on synthetic fields; document extraction and real shop access are unsupported.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online sellers may pay for preparing exception follow-ups; the post establishes neither purchase intent nor payment.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare supplied totals and a signature flag, but real document formats and extraction accuracy remain unverified.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed rules can flag supplied discrepancies and draft text, but the source documents no automation and a person must verify and send each request.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh post gives two concrete customer-document discrepancy examples, but no frequency, workflow detail, corroboration, or implementation evidence.",
+            "sourceIds": [
+              "fe42abd6926120382bede5b9"
+            ]
+          }
+        }
+      },
+      "reason": "The source supports two concrete exception types and a bounded synthetic-input experiment. The provisional mean is 4.6, below the 6 threshold; no implementation capability or paying customer is established."
+    },
+    {
+      "title": "Prepare a safe workflow repair checklist",
+      "productUrl": "https://community.n8n.io/t/324665",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "d7794a9371530463541655bf"
+        ],
+        "chore": "Plan a bounded repair that restores one missing workflow node and its two connections while protecting the other workflow settings and identity.",
+        "evidenceQuote": "Only the missing node and its two connections should be restored."
+      },
+      "sourceIds": [
+        "d7794a9371530463541655bf"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review checklist comparing a supplied before-state, intended node and connections, and proposed after-state for an inactive test workflow.",
+        "inputs": [
+          "Synthetic workflow node list",
+          "Synthetic intended node and connection description",
+          "Synthetic before-and-after workflow settings",
+          "Operator-provided invariants to preserve"
+        ],
+        "trigger": "An operator submits a fictional or authorized inactive-workflow repair scenario and its stated invariants.",
+        "steps": [
+          "List the expected nodes and connections from the supplied description.",
+          "Compare the proposed state with the supplied before-state.",
+          "Flag changes outside the requested node and connections.",
+          "Check that listed identity and settings invariants are unchanged.",
+          "Produce a checklist of mismatches and unresolved questions.",
+          "Require a workflow owner to inspect backups and approve any real edit."
+        ],
+        "acceptanceCheck": "For synthetic cases, flag any unintended changed node, connection, identity, or setting and never mark a real workflow safe based only on the generated checklist.",
+        "humanBoundary": "A workflow owner supplies authorized exports and verifies backups, concurrency, version behavior, and every change. The proposal does not edit or activate a workflow, and real changes require access and permission.",
+        "unverified": [
+          "No supplied implementation reference supports n8n version locking, node restoration, or safe workflow edits.",
+          "The retained spans do not establish a verified concurrency guard or API behavior.",
+          "Checklist accuracy on real workflows and any buyer willingness to pay are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can compare fictional state descriptions, but the post's version-specific n8n repair mechanics have no supplied implementation support.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: n8n consultants may pay for repair preparation; this request establishes no buyer intent or payment.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week text-only checklist prototype is bounded; actual node restoration, concurrency safety, and version-specific behavior remain unverified.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed tool can compare supplied descriptions, but a qualified person must inspect backups and authorize every real workflow change.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans specify one missing node, two connections, and invariants to preserve, but provide no implementation reference or verified safe repair method.",
+            "sourceIds": [
+              "d7794a9371530463541655bf"
+            ]
+          }
+        }
+      },
+      "reason": "The retained spans support a specific repair-planning chore and a checklist experiment using synthetic descriptions. The provisional mean is 4.2, below threshold; no software capability establishes safe execution."
+    },
+    {
+      "title": "Queue laboratory batch records for review",
+      "productUrl": "https://community.n8n.io/t/324676",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "6c6721a88db5bff50ff81c60"
+        ],
+        "chore": "Automate handling of the high-frequency batch records generated by laboratory testing instruments in industrial chemical manufacturing.",
+        "evidenceQuote": "laboratory testing instruments generate high-frequency batch records that require automated"
+      },
+      "sourceIds": [
+        "6c6721a88db5bff50ff81c60"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A chronological review queue that groups operator-supplied synthetic batch records and flags records missing operator-defined required values.",
+        "inputs": [
+          "Synthetic batch record rows supplied by an operator",
+          "Operator-defined list of fields required for the test",
+          "Synthetic record timestamps",
+          "Operator-defined grouping label"
+        ],
+        "trigger": "An operator submits a set of synthetic batch records and a test-specific list of required fields.",
+        "steps": [
+          "Accept only synthetic or otherwise authorized test records.",
+          "Apply the operator's declared grouping label and required-field list.",
+          "Check each supplied record for missing declared values.",
+          "Arrange records and flagged omissions in chronological order.",
+          "Show the source values and reason for each flag to an operator.",
+          "Require an operator to confirm every flag before any operational use."
+        ],
+        "acceptanceCheck": "On synthetic examples with operator-declared required fields, the queue lists all supplied records in timestamp order and flags only records with a missing declared value.",
+        "humanBoundary": "An operator must define the fields and grouping rules, provide authorized or fictional test inputs, validate every flag against the actual laboratory procedure, and approve any operational use; the prototype makes no quality or release decision.",
+        "unverified": [
+          "The retained excerpt does not specify batch fields, validation rules, instruments, output format, or the requested automation mechanism.",
+          "No supplied building reference supports instrument ingestion, laboratory-system integration, or record persistence.",
+          "Frequency beyond the source's high-frequency description, access permissions, privacy requirements, and willingness to pay are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can prototype checks on supplied synthetic rows, but field rules and instrument ingestion are unspecified and unsupported.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: industrial laboratory service providers may pay for record triage; the post establishes a chore, not buying intent or payment.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week synthetic review queue is bounded, but domain rules, instrument formats, and real data access remain unknown.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed queue can apply declared missing-field checks, while a laboratory operator must define rules and verify every flag; no automation capability is documented.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The fresh excerpt identifies high-frequency instrument-generated batch records requiring automation, but omits the fields, checks, output, and corroboration.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          }
+        }
+      },
+      "reason": "The assigned post supports recurring high-frequency batch-record handling and a narrow synthetic review-queue experiment. Its provisional mean is 3.8, below six; the source omits task details and no implementation reference supports instrument integration."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Catch credential leaks in AI agents",
+      "productUrl": "https://news.ycombinator.com/item?id=50261335",
+      "reason": "The supplied excerpt only states that credentials can cross AI-agent boundaries. It does not identify a concrete existing task or requested workflow, so a specific chore and task quote cannot be supported without inventing one."
+    },
+    {
+      "title": "Close excessive browser tabs",
+      "productUrl": "https://news.ycombinator.com/item?id=50241975",
+      "reason": "The supplied excerpt only points to an extension and provides no literal task description or request. The title's tab count cannot establish the required concrete chore quote."
+    },
+    {
+      "title": "Queue laboratory batch records for review",
+      "productUrl": "https://community.n8n.io/t/324676",
+      "reason": "The named omitted chore was reassessed with a scoped synthetic review-queue plan and five criterion scores. Its mean is 3.8, below threshold; the retained evidence does not specify fields or checks, and instrument integration is unsupported."
+    },
+    {
+      "title": "Generate one Word document per spreadsheet row",
+      "productUrl": "https://news.ycombinator.com/item?id=50261239",
+      "reason": "The excerpt lists workarounds but does not retain a literal request or identify the underlying task beyond the title. It cannot support the required concrete chore quote from source text or a validated span."
+    },
+    {
+      "title": "Flag missing signatures and invoice mismatches",
+      "productUrl": "https://news.ycombinator.com/item?id=50261285",
+      "reason": "Assessed as a bounded proposed experiment, but its provisional mean is 4.6, below the 6 publication threshold; no implementation evidence or paying customer is established."
+    },
+    {
+      "title": "Prepare a safe workflow repair checklist",
+      "productUrl": "https://community.n8n.io/t/324665",
+      "reason": "Assessed as a synthetic-input checklist experiment, but its provisional mean is 4.2, below threshold and no reference supports version-specific safe repair or execution."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all six sealed discussion assignments. Three concrete chores received scoped plans and five-criterion scores; all are below threshold. Three other excerpts do not retain a literal concrete chore sufficient for demand evidence, so no post is proposed."
+    }
+  ],
+  "repairAttempt": 1
+}
