@@ -1,0 +1,394 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40769477977-1",
+  "createdAt": "2026-10-28T21:14:53.519Z",
+  "events": [
+    {
+      "id": "a94303133838ec9bd850156feb447eeb418d50399f72cb6c2c8bb96f26f26402",
+      "kind": "origin",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40734809732-1",
+      "details": {
+        "revisionId": "f686aae39856f901f0a4470a7442bfcaa200d5d7265b5b788a4fefd6f82d5986",
+        "parentRevisionId": null,
+        "candidateSha256": "471c7d6d26848619c2b508eb2b289fdac59fd934e9838f3d09f3903e277392b5",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [],
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A checked table of supplied game-test observations, with suspected duplicate files flagged for review.",
+          "inputs": [
+            "Synthetic device label",
+            "Synthetic battery percentage, temperature, and frame-drop values",
+            "Short synthetic gameplay note",
+            "CSV file name and upload time supplied by an operator"
+          ],
+          "trigger": "An operator provides a sample CSV export or a row of fictional game-test observations.",
+          "steps": [
+            "Read the supplied rows without connecting to a phone or Drive.",
+            "Check required columns and flag missing values.",
+            "Compare file names and row keys to identify possible repeats.",
+            "Prepare a normalized table for a sample sheet.",
+            "Ask a person to verify flagged rows and perform any import."
+          ],
+          "acceptanceCheck": "For a labeled synthetic CSV set, the output preserves each expected observation, flags planted repeated file keys, and reports missing fields without inventing values.",
+          "humanBoundary": "A tester supplies fictional or authorized test data and confirms each flagged duplicate; the proposal does not control a phone, execute n8n, or write to Sheets.",
+          "unverified": [
+            "No supplied implementation reference supports CSV parsing, phone upload, or deduplication.",
+            "Correct duplicate keys and reliable file-trigger behavior remain unverified."
+          ]
+        },
+        "limitations": [
+          "No supplied implementation reference supports CSV parsing, phone upload, or deduplication.",
+          "Correct duplicate keys and reliable file-trigger behavior remain unverified."
+        ],
+        "provenance": {
+          "runId": "loop-40734809732-1",
+          "runSha256": "1ce65954e8d6b738807c6c03d27c6be4a6ff8b8200786fdf4425fff7a33c19a7",
+          "draftSha256": "fbd2f0229ec610c4d6c3ff574ef6f7aacd7d609512ca9b013d5adb150897e17d",
+          "contextSha256": "19738747bdb82f3b1937368af6d060cfce73347564eb95f87894063963e52d6a",
+          "researchSha256": "60872474a92a8ba06d06ca4684b12d9bb2cb7e78a28fef46f8e730baa239cff6",
+          "scanSha256": "acc983c0c98ebc028bb9f6b9d23e8a7fe67d90a38b568e99c2b4c923cd37690e",
+          "manifestSha256": "5d08b9ad527037a0b7b22b0303bd634b9ca753912a5fa9c5ce406772b60cbc98",
+          "selectionSha256": "1ba4cd8505c0f91cbe8fe3acebc3a9f21194417985b477ba953b712a69975ab8",
+          "learningSha256": "361abaf2fc500ca6ada4780389a4529e036c0807824eef05ec34ce5da2ae587c"
+        }
+      }
+    },
+    {
+      "id": "e3028f12e2a9c570fc5193ff970fd29629851af1de9bc5e1e63ca12b5ee92633",
+      "kind": "acquisition",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40769477977-1",
+      "details": {
+        "revisionId": "f686aae39856f901f0a4470a7442bfcaa200d5d7265b5b788a4fefd6f82d5986",
+        "intentSha256": "f1c90e351dff4ed6a610319c0fb6f377b24df60dcf0a25c1245b842414aae43a",
+        "resultSha256": "df50ac368d478adfab39858223065b7d447627f39c4d8b387ed00ca5a38ac7ea",
+        "outcome": "completed",
+        "routes": [
+          {
+            "key": "df319e9aa0b59ffdb2339816164875f4ef91109680f3d073eb22585f60da2057",
+            "referenceId": "n8n-csv-extraction-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "purpose": "new_acquisition",
+            "status": "fetched",
+            "evidenceSha256": "c77131a1401eb908d7355b22027c186ce02d07cac673a15b541d2cb375759351"
+          },
+          {
+            "key": "522171648c52435b5e2ee7eddc356cd15ffce8016b8285d18a7b6ad59b4b0841",
+            "referenceId": "n8n-persistent-deduplication-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "purpose": "new_acquisition",
+            "status": "fetched",
+            "evidenceSha256": "0f21a72173a7e7674961f4912c85b0d975d8c4188e12ae96240884d3a8466bcf"
+          }
+        ]
+      }
+    },
+    {
+      "id": "88075e13150f4e0798d2879045fa5091c76981f548abb863890ea7aad71282fa",
+      "kind": "assessment",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40769477977-1",
+      "details": {
+        "revisionId": "6affb3290dc5bf882495e987d07c07c8155b3a002aa450fd01a12137f466328b",
+        "parentRevisionId": "f686aae39856f901f0a4470a7442bfcaa200d5d7265b5b788a4fefd6f82d5986",
+        "candidateIndex": 0,
+        "candidateSha256": "59a1d4aec562c4e0e259874f177db03541fac6f8dba271d8c0800bbee9614873",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [
+          {
+            "sourceId": "5c2bf4e7df8c3ec325ba2e74",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "textSha256": "2efd6ff6d5242dd765be1f15c0feb75eaa5409a8d7d7f861eedaedc7b85b4e8b"
+          },
+          {
+            "sourceId": "f1662b0ceb942474f83a8108",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "textSha256": "0791764c70627f0ed2e15f1c7ddb2b7f59b8055faa47777e0546281dd6f468b8"
+          }
+        ],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review table of supplied game-test CSV rows with missing fields and repeated keys flagged.",
+          "inputs": [
+            "Synthetic device label and game session time",
+            "Synthetic battery, temperature, and frame-drop values",
+            "Synthetic short gameplay note",
+            "Operator-supplied sample CSV rows"
+          ],
+          "trigger": "An operator supplies a sample CSV export or fictional rows for review.",
+          "steps": [
+            "Read supplied CSV rows without connecting to a phone or cloud drive.",
+            "Check required columns and flag missing values.",
+            "Compare operator-approved row keys and flag possible repeats.",
+            "Prepare a normalized table for a sample sheet.",
+            "Ask a person to verify flags and perform any import."
+          ],
+          "acceptanceCheck": "On a labeled synthetic CSV, preserve expected measurements, flag planted repeated keys, and report missing fields without filling them in.",
+          "humanBoundary": "A person supplies fictional or authorized test data, chooses a safe duplicate key, and confirms flags and imports; the proposal does not control a phone or write to a live sheet.",
+          "unverified": [
+            "Whether phone uploads can be reliably triggered is unsupported.",
+            "The CSV reference documents extraction into row objects, not upload monitoring.",
+            "The duplicate-removal reference documents comparisons, but correct keys for these logs are unknown."
+          ]
+        },
+        "limitations": [
+          "Whether phone uploads can be reliably triggered is unsupported.",
+          "The CSV reference documents extraction into row objects, not upload monitoring.",
+          "The duplicate-removal reference documents comparisons, but correct keys for these logs are unknown."
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The n8n CSV extraction reference (5c2bf4e7df8c3ec325ba2e74) documents turning CSV into row objects, and duplicate removal (f1662b0ceb942474f83a8108) supports comparison; neither covers phone uploads.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent game testers might pay for cleaner log imports; this post gives no purchase or payment evidence.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV check is bounded; 5c2bf4e7df8c3ec325ba2e74 supports extraction and f1662b0ceb942474f83a8108 supports deduplication, while phone triggers remain unresolved.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The references 5c2bf4e7df8c3ec325ba2e74 and f1662b0ceb942474f83a8108 support row extraction and duplicate filtering; a person must choose keys, verify records, and import them.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe measurements entered in a notes app, later CSV export and Sheet paste, plus a trigger firing zero or twice; this is one post.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "9d219fafe6bc529f1c7a3a274a52e49bb3ea5430a6df91c9852681f108fc7027",
+          "draftSha256": "eaed2bf4ca6d772a82024a1273ce4ccc629fec0917b2e3903fee123428a53ee4",
+          "contextSha256": "62b3a64fd4ff0c6802a4e2e9db24eaf07a7da4f80695b79a1d65e2ff3bfe253b",
+          "manifestSha256": "0b2c1978c6634492794938cbc13433c38d77583e8800e89d71b734fcdca27f9f",
+          "researchSha256": "36efd281fd58424ec0596f83f0a4ad5e333434daf18c4b421f8713755c4ebbf6",
+          "learningSha256": "cc9ea1ac617676205899ecceb9385cf790769c1e96fc3b57157abdc9ec0443c8"
+        }
+      }
+    },
+    {
+      "id": "f6e9c324eabe5f4ed3f206dbbe1b16885bf9b8d757bc18e65b3e6e7f6a3b049f",
+      "kind": "assessment",
+      "caseId": "9a2e13385a9d960688bb6c8c",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "sourceRunId": "loop-40769477977-1",
+      "details": {
+        "revisionId": "39f689d9525ce46e03b0844b3963bb914d5e77e74ccb3c9699ca4b1306346885",
+        "parentRevisionId": null,
+        "candidateIndex": 1,
+        "candidateSha256": "3ce6c87042d1a48e82b5660ffe7495b7fdaa37655641fc0fe0ddfb9626714cbe",
+        "sourceSha256": "05f42b87da124224c7380aa33b559384b41d246b6a3826f95ee1b521723b26a0",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A draft dispatcher notice for a shipment row explicitly marked delayed.",
+          "inputs": [
+            "Fictional shipment ID",
+            "Fictional current status and expected date",
+            "Operator-written notice template",
+            "Expected delayed/not-delayed label"
+          ],
+          "trigger": "An operator supplies fictional shipment rows for a manual test run.",
+          "steps": [
+            "Check that required status and date fields are present.",
+            "Apply a simple operator-defined delayed rule to each row.",
+            "Draft a notice for rows marked delayed.",
+            "Show the source row beside the draft.",
+            "Have a person verify status and send or discard the notice."
+          ],
+          "acceptanceCheck": "For labeled test rows, draft a notice only for rows marked delayed and show the matching input values without inventing shipment facts.",
+          "humanBoundary": "A dispatcher must define the delay rule, verify shipment facts, and approve any notice; no live logistics system or message delivery is part of this proposal.",
+          "unverified": [
+            "No supplied implementation reference documents shipment system access or message delivery.",
+            "A real delay rule, required fields, and event timing are not specified in the retained spans."
+          ]
+        },
+        "limitations": [
+          "No supplied implementation reference documents shipment system access or message delivery.",
+          "A real delay rule, required fields, and event timing are not specified in the retained spans."
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test a rule on fictional rows, but no supplied building reference supports the data connection or notification.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small logistics operators might pay for fewer missed delay updates; the post establishes no buying intent or payment.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week offline mock can draft from test rows; shipment feeds, delay rules, and delivery remain unsupported.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed loop can draft from supplied rows, but a dispatcher must verify status and approve messages; no integration capability is documented.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The retained task span lists shipment-delay notices as an example, without a specific operator, frequency, fields, or corroboration.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "9d219fafe6bc529f1c7a3a274a52e49bb3ea5430a6df91c9852681f108fc7027",
+          "draftSha256": "eaed2bf4ca6d772a82024a1273ce4ccc629fec0917b2e3903fee123428a53ee4",
+          "contextSha256": "62b3a64fd4ff0c6802a4e2e9db24eaf07a7da4f80695b79a1d65e2ff3bfe253b",
+          "manifestSha256": "0b2c1978c6634492794938cbc13433c38d77583e8800e89d71b734fcdca27f9f",
+          "researchSha256": "36efd281fd58424ec0596f83f0a4ad5e333434daf18c4b421f8713755c4ebbf6",
+          "learningSha256": "cc9ea1ac617676205899ecceb9385cf790769c1e96fc3b57157abdc9ec0443c8"
+        }
+      }
+    },
+    {
+      "id": "b9505d9136ecfe9119dc749536e38a01a9e001eb42e47d580c9f0c7721aa2fa6",
+      "kind": "assessment",
+      "caseId": "cec38822f97e088e1e5fc5a2",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "sourceRunId": "loop-40769477977-1",
+      "details": {
+        "revisionId": "e2b71aa29d64c1dc308338291b3c4407683f92a9077506a22f2f9f3a0dfecad9",
+        "parentRevisionId": null,
+        "candidateIndex": 2,
+        "candidateSha256": "55497424c427c0aca2b5bcedf5c63229d4d4ce4cf06bb56f1a5f0b2d3db1dc1a",
+        "sourceSha256": "328425f89d36efe4c3d7a9e9cc63a07bce9777659a2ca512c7b82b945b9d3375",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A proposed wireframe draft from an operator-supplied synthetic sketch, with uncertain details marked for review.",
+          "inputs": [
+            "Synthetic rough sketch image",
+            "Operator-provided screen purpose",
+            "Operator-provided labels and layout constraints",
+            "Expected element checklist"
+          ],
+          "trigger": "A designer supplies a fictional sketch and its intended screen purpose.",
+          "steps": [
+            "Record the supplied sketch and constraints.",
+            "Create a draft layout matching only clearly identified elements.",
+            "Mark uncertain labels or relationships for review.",
+            "Compare the draft with the expected element checklist.",
+            "Have a designer revise and approve the result."
+          ],
+          "acceptanceCheck": "For a small set of labeled synthetic sketches, the draft contains the expected named elements and marks ambiguous elements instead of silently guessing.",
+          "humanBoundary": "A designer must supply authorized imagery, clarify ambiguous intent, and approve all visual output; this proposal does not claim real-time iPad conversion.",
+          "unverified": [
+            "No supplied implementation reference supports image-to-wireframe conversion.",
+            "Near-real-time behavior, visual fidelity, and tool availability are unverified."
+          ]
+        },
+        "limitations": [
+          "No supplied implementation reference supports image-to-wireframe conversion.",
+          "Near-real-time behavior, visual fidelity, and tool availability are unverified."
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 3,
+            "reason": "The source describes a desired image conversion, but no supplied building reference supports image interpretation or wireframe generation.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent design professionals might pay to speed rough-sketch conversion; the post establishes no purchase intent or payment.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A four-week synthetic demo could be attempted, but image-to-layout generation and fidelity are unsupported by supplied implementation evidence.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "Drafting may reduce some manual drawing, but a designer must interpret ambiguity and approve the output; no capability is documented.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh post states a specific desired conversion from iPad sketches to higher-fidelity wireframes or illustrations, but no frequency or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "9d219fafe6bc529f1c7a3a274a52e49bb3ea5430a6df91c9852681f108fc7027",
+          "draftSha256": "eaed2bf4ca6d772a82024a1273ce4ccc629fec0917b2e3903fee123428a53ee4",
+          "contextSha256": "62b3a64fd4ff0c6802a4e2e9db24eaf07a7da4f80695b79a1d65e2ff3bfe253b",
+          "manifestSha256": "0b2c1978c6634492794938cbc13433c38d77583e8800e89d71b734fcdca27f9f",
+          "researchSha256": "36efd281fd58424ec0596f83f0a4ad5e333434daf18c4b421f8713755c4ebbf6",
+          "learningSha256": "cc9ea1ac617676205899ecceb9385cf790769c1e96fc3b57157abdc9ec0443c8"
+        }
+      }
+    }
+  ]
+}
