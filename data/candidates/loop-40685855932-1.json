@@ -1,0 +1,435 @@
+{
+  "runId": "loop-40685855932-1",
+  "createdAt": "2026-10-28T12:13:08.440Z",
+  "candidates": [
+    {
+      "title": "Map resume facts into application fields",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Manually re-enter resume facts into forms tailored to individual hiring processes.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b",
+        "b100f221383c5b74ce29f37b"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A schema-based extractor supports mapping supplied text to named fields, but form handling is manual.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: job seekers may value less repetitive entry; this post shows no buying intent or payment.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic test can map supplied resume facts to operator-provided fields; form variation remains untested.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Field suggestions can repeat, but a person must verify and enter every answer.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post directly reports repeated resume entry for one or two companies; no field examples or corroboration are supplied.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Produce a reviewable table matching supplied resume facts to user-entered application fields.",
+        "inputs": [
+          "Fictional resume text",
+          "Operator-supplied field labels",
+          "A small set of fictional application questions"
+        ],
+        "trigger": "A user supplies a resume excerpt and a new set of form labels.",
+        "steps": [
+          "Extract candidate facts from the supplied text.",
+          "Map each requested field to a matching fact or mark it unknown.",
+          "Show the source phrase beside each suggested answer.",
+          "Ask the user to review and copy approved values manually."
+        ],
+        "acceptanceCheck": "Check that every suggested value matches a literal source phrase and that unsupported fields are marked unknown.",
+        "humanBoundary": "The job seeker supplies their own information, verifies every answer, and submits applications themselves.",
+        "unverified": [
+          "Reliable mapping across varied forms",
+          "Privacy and retention requirements",
+          "No browser form filling or live application access is documented"
+        ]
+      },
+      "reason": "Below threshold: a useful synthetic mapping test is scoped, and the supplied Information Extractor schema docs support structured extraction, but buyer evidence and live form capability are absent."
+    },
+    {
+      "title": "Prototype salon booking safeguards",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a53a6bc89a5cdac92d4ab658"
+        ],
+        "chore": "Check each salon booking request against working hours, provider availability, and existing appointments before confirming.",
+        "evidenceQuote": "Every booking request checks salon working hours, master availability, and existing appointments in PostgreSQL at the SQL level before confirmation."
+      },
+      "sourceIds": [
+        "a53a6bc89a5cdac92d4ab658"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The post describes an n8n and PostgreSQL architecture, but no supplied building reference documents its setup.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: beauty salons may pay for booking safeguards; this architecture post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic booking mock is bounded; live calendar integration and concurrency safety remain unverified.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A proposed request-to-check loop can repeat, but a person must validate records and approve confirmations.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe calendar validation and a booking architecture; omitted body context is not assessed.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Return a proposed booking slot as available, unavailable, or needs human review.",
+        "inputs": [
+          "Fictional booking request with date and service",
+          "Fictional salon hours",
+          "Fictional provider availability",
+          "Fictional existing appointment rows"
+        ],
+        "trigger": "An operator submits a fictional booking request for a test salon.",
+        "steps": [
+          "Read the requested date, time, and service from operator-entered fields.",
+          "Compare the requested time with the fictional working-hours table.",
+          "Check provider availability and overlapping fictional appointments.",
+          "Return a status and the specific check that caused it.",
+          "Have an operator review the result before any customer confirmation."
+        ],
+        "acceptanceCheck": "Run cases for an open slot, closed hours, unavailable provider, and overlapping appointment; each result must match the fixture tables.",
+        "humanBoundary": "A salon operator supplies and verifies the test schedule and approves every real booking and customer message.",
+        "unverified": [
+          "No supplied implementation reference supports n8n execution or PostgreSQL persistence",
+          "Concurrency behavior in a real booking system",
+          "Real calendar permissions and customer data safeguards"
+        ]
+      },
+      "reason": "Below threshold: the post documents a concrete booking validation loop, but no supplied reference supports implementation and the source does not establish buyers or demand beyond the maker example."
+    },
+    {
+      "title": "Pass received images into message review",
+      "productUrl": "https://community.make.com/t/118271",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Make a received Messenger image available alongside its text message so a product question can be reviewed without asking for the image again.",
+        "evidenceQuote": "I want the AI agent to recognize that the image has already been received and use the available image to identify the product, rather than asking the customer to resend it."
+      },
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic routing mock can be outlined, but no supplied reference documents image forwarding or Make execution.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online sellers might pay to reduce repeat image requests; the forum question proves no payment.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can pair fictional message text with an image reference; live Messenger and image analysis remain unverified.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Routing can be represented in a mock, but a person must verify image identity and any product answer.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The full retained post describes text and image routes and asks how both reach one agent; broader recurrence is unknown.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Prepare a review card pairing supplied message text with the matching supplied image reference.",
+        "inputs": [
+          "Fictional message text",
+          "Synthetic image file and identifier",
+          "Operator-provided expected product label"
+        ],
+        "trigger": "A test message record contains text and an image identifier.",
+        "steps": [
+          "Read the synthetic text and image identifier from the same test record.",
+          "Check that both fields remain linked through a mock routing step.",
+          "Show the text and image reference in one review card.",
+          "Compare the card with the operator-provided expected pair.",
+          "Leave product identification and any customer reply for human approval."
+        ],
+        "acceptanceCheck": "For each fixture, verify the displayed text and image identifier belong to the same record and no image is claimed when its identifier is absent.",
+        "humanBoundary": "An operator supplies synthetic fixtures, checks image association, and approves any identification or customer response.",
+        "unverified": [
+          "Make route merging and Facebook Messenger access are unsupported by supplied references",
+          "Image interpretation accuracy",
+          "Consent and safe handling of customer images"
+        ]
+      },
+      "reason": "Below threshold: the retained post gives a specific image handoff problem, but no implementation evidence supports the connector mechanics and demand is represented by one question."
+    },
+    {
+      "title": "Review a daily new-job alert loop",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "84dd42b26c54d12b4f52a07c"
+        ],
+        "chore": "Check selected company career pages daily for new job postings and alert an operator when results appear.",
+        "evidenceQuote": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+      },
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained post demonstrates a schedule, actor result check, and Slack alert; the Summarize docs support counts only, not scraping.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recruiters or job seekers might pay for monitored job alerts; this maker post shows no buyer demand.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare fictional daily postings and prepare alerts; live career-site access and freshness remain unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A daily check-and-alert loop is described, but a person must verify relevance and the source sites.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post gives a specific daily workflow and deduplication claim by its author; independent demand evidence is absent.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Produce a daily review list of newly observed postings from a small operator-maintained test set.",
+        "inputs": [
+          "Fictional company identifiers",
+          "Synthetic posting rows with title, location, and URL",
+          "Prior-day synthetic posting list"
+        ],
+        "trigger": "A scheduled mock run receives the latest synthetic posting rows.",
+        "steps": [
+          "Compare each row with the prior-day fixture using its URL.",
+          "Mark unseen rows as new and previously seen rows as existing.",
+          "Count new rows using the documented Summarize node capability.",
+          "Prepare a Slack-style alert draft only when new rows exist.",
+          "Have an operator verify each posting before acting on it."
+        ],
+        "acceptanceCheck": "Check a fixture with one new and one repeated URL; the new count and alert draft must identify only the unseen posting.",
+        "humanBoundary": "An operator supplies company sources, reviews each posting, and decides whether to contact or apply.",
+        "unverified": [
+          "The supplied Summarize reference documents counting only, not scraping or scheduling",
+          "Career-site access, actor reliability, and live Slack delivery",
+          "The post is a maker workflow, not evidence of paying alert customers"
+        ]
+      },
+      "reason": "Below threshold: the example documents a repeatable hiring alert workflow, but it is a maker post and the supplied building reference supports only counting, not the retrieval workflow or buyer demand."
+    },
+    {
+      "title": "Triage recurring Make automation faults",
+      "productUrl": "https://community.make.com/t/118231",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bc3afc6e8c2a63bbd4b7ae01"
+        ],
+        "chore": "Identify duplicate records in a workflow that syncs data between services.",
+        "evidenceQuote": "Duplicate records being created"
+      },
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic duplicate checker can be specified, but no supplied reference documents Make execution or record matching.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small firms may pay for recurring automation troubleshooting; the post offers services but reports no completed customer work.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can compare supplied fictional record keys; real integration-specific causes remain unverified.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must diagnose root cause and approve every production change; no automated fix is supported.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The retained span lists duplicate records among example issues, but does not identify a specific customer or repeated case.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Return a review list of duplicate pairs in a supplied synthetic record export.",
+        "inputs": [
+          "Fictional record rows",
+          "Operator-chosen fields to compare",
+          "Expected duplicate pairs for test fixtures"
+        ],
+        "trigger": "An operator provides a sample export for a one-time review.",
+        "steps": [
+          "Read the operator-selected comparison fields.",
+          "Group rows with identical selected keys.",
+          "List each possible duplicate pair with the matching fields.",
+          "Compare results against a small expected fixture.",
+          "Leave record merging and production changes to the operator."
+        ],
+        "acceptanceCheck": "Run fixtures with exact key matches and nonmatches; confirm all pairs are found and no records are changed.",
+        "humanBoundary": "An operator chooses the matching rule, validates each pair, and authorizes any live correction.",
+        "unverified": [
+          "The forum gives examples, not an identified customer case or frequency",
+          "Make connectors and safe production updates are undocumented",
+          "False matches depend on operator-selected keys"
+        ]
+      },
+      "reason": "Below threshold: one listed example supports a small duplicate review mock, but implementation evidence and a concrete individual demand case are absent."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Ask HN: How to report IP abuse to Cloudflare?",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The only retained excerpt is “which clearly doesn’t apply here.” It does not identify the abuse-reporting task or enough context to design and score a concrete service; the omitted body is not treated as absent evidence."
+    },
+    {
+      "title": "Show HN: Multi-platform remote-control for any harness",
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "reason": "The retained text describes Jep as a gateway and client, but supplies no user chore, request for service, or concrete demand task. A product introduction alone does not support a demand-first experiment."
+    },
+    {
+      "title": "Show HN: NoVul – Open-source Mac app to Find and fix vulnerabilities on your Mac",
+      "productUrl": "https://news.ycombinator.com/item?id=50270271",
+      "reason": "The retained excerpt describes a maker’s vulnerability monitoring tool, not a customer request or existing manual chore. No demand experiment can be grounded in this excerpt."
+    }
+  ]
+}
