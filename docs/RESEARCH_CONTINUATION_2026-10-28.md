@@ -23,9 +23,13 @@ Every started primary/reference operation is recorded before the call, and its
 terminal status, request count and source hash are recorded afterward. Missing
 terminal data is unknown/interrupted; failed calls remain failures. A partial
 budget-limited attempt is not complete acquisition. Any begun or uncertain attempt
-parks that exact gap instead of blindly repeating it. A planned but ineligible
+parks that exact acquisition route instead of blindly repeating it. A planned but ineligible
 intent does not consume an attempt. Unattempted dossiers survive the 24-hour
 writer-history view through their immutable intent records.
+
+The subsequent [candidate development layer](CANDIDATE_DEVELOPMENT.md) records
+revisions and final assessments, retains other unresolved routes, and distinguishes
+new evidence from a wording-only rewrite.
 
 The result is sealed before model access and imported through a separate bounded
 artifact path using the trusted job-output hash, producer, run/attempt/head,

@@ -749,6 +749,12 @@ jobs:
           EXPECTED_DRAFT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.draft_sha256 || needs.checker.outputs.draft_sha256 }}
           EXPECTED_CONTEXT_SHA: ${{ needs.final_check.outputs.context_sha256 != '' && needs.final_check.outputs.context_sha256 || needs.checker.outputs.context_sha256 }}
         run: node scripts/record-learning.mjs "$RUN_ID"
+      - name: Record candidate revisions and independently established outcomes
+        if: always()
+        env:
+          EXPECTED_RESEARCH_INTENT_SHA: ${{ needs.writer.outputs.research_intent_sha256 }}
+          EXPECTED_RESEARCH_RESULT_SHA: ${{ needs.writer.outputs.research_result_sha256 }}
+        run: node scripts/record-candidate-development.mjs "$RUN_ID"
       - name: Commit research, picking, rejection and publication records separately
         if: always()
         run: node scripts/commit-records.mjs loop "$RUN_ID"

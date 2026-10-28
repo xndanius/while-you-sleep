@@ -34,10 +34,15 @@ test('intent is persisted before attempts, and interrupted/missing results park 
 
 test('primary and two reference terminal events retain success hashes, not model approvals',async t=>{
  const f=await setup(t),j=await startContinuation({...f,clock:()=>now});await primary(f,j);
- assert.equal(j.referencePriority(),f.intent.dossier.source.id);
+ assert.equal(j.referencePriority().priorityDemandSourceId,f.intent.dossier.source.id);
  for(const ref of f.intent.dossier.referenceRequests){const lead={productUrl:ref.url};await j.onReferenceEvent({phase:'started',lead});await j.onReferenceEvent(terminal(lead,{...ref,text:'Synthetic capability section.'}));}
  const result=await sealContinuationResult({root:f.root,intent:f.intent,clock:()=>now});assert.equal(result.outcome,'completed');assert.equal(result.events.length,6);assert.equal(result.events.filter(e=>e.status==='fetched').length,3);assert.equal(result.approved,undefined);
- assert.equal(await prepareContinuationIntent({root:f.root,runId:'loop-999900002-1',bundles:[f.bundle],producer:{...f.producer,runId:'999900002'},now}),null);
+ const review=await prepareContinuationIntent({root:f.root,runId:'loop-999900002-1',bundles:[f.bundle],producer:{...f.producer,runId:'999900002'},now});assert.equal(review.purpose,'review_evidence');assert.deepEqual(review.referenceIds,[]);assert.equal(review.refreshReferenceIds.length,2);
+ const scan={...f.scan,id:review.runId,runId:review.runId,producer:review.producer},selection={...f.selection,id:review.runId,runId:review.runId,seed:review.runId,producer:review.producer};
+ const revisit=await startContinuation({...f,intent:review,scan,selection,selectionInput:{...f.selectionInput,learningSelection:selection},clock:()=>now});await primary({...f,intent:review},revisit);
+ for(const ref of review.dossier.referenceRequests){const lead={productUrl:ref.url};await revisit.onReferenceEvent({phase:'started',lead});await revisit.onReferenceEvent(terminal(lead,{...ref,text:'Synthetic refreshed capability.'}));}
+ await sealContinuationResult({root:f.root,intent:review,clock:()=>now});
+ assert.equal(await prepareContinuationIntent({root:f.root,runId:'loop-999900008-1',bundles:[f.bundle],producer:{...f.producer,runId:'999900008'},now}),null,'A missing evaluation cannot cause unbounded repeat refreshes.');
 });
 
 test('reference HTTP failure and mid-request interruption stay traceable and never become success',async t=>{
@@ -68,7 +73,7 @@ test('priority preserves the ten-lead/three-per-feed and two-reference budgets',
  const f=await setup(t),j=await startContinuation({...f,clock:()=>now});
  const leads=selectProductLeads(f.selectionInput.sources,{...f.selectionInput,priorityProductUrl:j.priorityProductUrl});assert.equal(leads[0].productUrl,f.intent.dossier.source.url);assert.ok(leads.length<=10);
  const counts={};for(const lead of leads)counts[lead.demandDefinition.id]=(counts[lead.demandDefinition.id]||0)+1;assert.ok(Object.values(counts).every(n=>n<=3));
- await primary(f,j);const refs=selectDiscussionImplementationReferences(f.selectionInput.sources,{priorityDemandSourceId:j.referencePriority()});assert.equal(refs.length,2);assert.ok(refs.every(x=>x.supportsDemandSourceIds.includes(f.intent.dossier.source.id)));
+ await primary(f,j);const refs=selectDiscussionImplementationReferences(f.selectionInput.sources,{...j.referencePriority()});assert.equal(refs.length,2);assert.ok(refs.every(x=>x.supportsDemandSourceIds.includes(f.intent.dossier.source.id)));
 });
 
 test('dedicated import requires trusted hashes, producer, exact path and current input bindings',async t=>{
@@ -94,4 +99,40 @@ test('an unattempted saved dossier survives the ordinary 24-hour writer-history 
  await startContinuation({...f,selectionInput:input,clock:()=>now});await sealContinuationResult({root:f.root,intent:f.intent,clock:()=>now});
  const saved=await prepareContinuationIntent({root:f.root,runId:'loop-999900005-1',bundles:[],producer:{...f.producer,runId:'999900005'},now:'2026-10-30T20:30:00.000Z'});
  assert.ok(saved);assert.equal(saved.dossier.gapId,f.intent.dossier.gapId);assert.deepEqual(saved.dossier.candidate.experimentPlan,f.intent.dossier.candidate.experimentPlan);
+});
+
+test('partial acquisition parks only the attempted route and keeps the other gap queued',async t=>{
+ const f=await setup(t),j=await startContinuation({...f,clock:()=>now});await primary(f,j);
+ const first=f.intent.dossier.referenceRequests[0],lead={productUrl:first.url};await j.onReferenceEvent({phase:'started',lead});await j.onReferenceEvent(terminal(lead,null,'failed'));
+ assert.equal((await sealContinuationResult({root:f.root,intent:f.intent,clock:()=>now})).outcome,'failed');
+ const next=await prepareContinuationIntent({root:f.root,runId:'loop-999900006-1',bundles:[f.bundle],producer:{...f.producer,runId:'999900006'},now});
+ assert.ok(next);assert.deepEqual(next.referenceIds,[f.intent.dossier.referenceRequests[1].implementationReferenceId]);
+});
+
+test('version1 intent remains readable and unrelated catalog hash changes do not alter its source proof',async t=>{
+ const f=await setup(t),legacy=structuredClone(f.intent);legacy.schema=1;delete legacy.referenceIds;delete legacy.refreshReferenceIds;delete legacy.purpose;await verifyContinuationIntent(f.root,legacy);
+ legacy.dossier.catalogSha256='f'.repeat(64);legacy.dossier.gapId=sha256(stableJSON({productUrl:legacy.dossier.source.url,sourceSha256:legacy.dossier.sourceSha256,catalogSha256:legacy.dossier.catalogSha256,referenceIds:legacy.dossier.referenceRequests.map(r=>r.implementationReferenceId).sort()}));
+ await verifyContinuationIntent(f.root,legacy);
+});
+
+test('a later pending capability is combined with a fresh read of previously successful evidence',async t=>{
+ const f=await setup(t),j=await startContinuation({...f,clock:()=>now});await primary(f,j);
+ const first=f.intent.dossier.referenceRequests[0],lead={productUrl:first.url};await j.onReferenceEvent({phase:'started',lead});await j.onReferenceEvent(terminal(lead,{...first,text:'Synthetic prior capability.'}));
+ assert.equal((await sealContinuationResult({root:f.root,intent:f.intent,clock:()=>now})).outcome,'partial');
+ const intent=await prepareContinuationIntent({root:f.root,runId:'loop-999900007-1',bundles:[f.bundle],producer:{...f.producer,runId:'999900007'},now});
+ assert.deepEqual(intent.referenceIds,[f.intent.dossier.referenceRequests[1].implementationReferenceId]);assert.deepEqual(intent.refreshReferenceIds,[first.implementationReferenceId]);
+ const scan={...f.scan,id:intent.runId,runId:intent.runId,producer:intent.producer},selection={...f.selection,id:intent.runId,runId:intent.runId,seed:intent.runId,producer:intent.producer};
+ const next=await startContinuation({...f,intent,scan,selection,selectionInput:{...f.selectionInput,learningSelection:selection},clock:()=>now});await primary({...f,intent},next);
+ const refs=selectDiscussionImplementationReferences(f.selectionInput.sources,next.referencePriority());assert.equal(refs.length,2);assert.deepEqual(refs.map(r=>r.implementationReferenceId),[...intent.referenceIds,...intent.refreshReferenceIds]);
+ for(const ref of refs){const lead={productUrl:ref.url};await next.onReferenceEvent({phase:'started',lead});await next.onReferenceEvent(terminal(lead,{...ref,text:'Synthetic fresh capability.'}));}
+ const result=await sealContinuationResult({root:f.root,intent,clock:()=>now});assert.equal(result.outcome,'completed');assert.equal(result.events.filter(e=>e.status==='fetched').length,3);
+});
+
+test('retired segments/feeds cannot reserve research and an unavailable case does not monopolize the queue',async t=>{
+ const f=await setup(t),invoice={};
+ for(const [key,dir] of Object.entries(dirs)){invoice[key]=JSON.parse(await readFile(new URL(`../data/${dir}/loop-40549856676-1.json`,import.meta.url)));await writeFile(path.join(f.root,'data',dir,'loop-40549856676-1.json'),JSON.stringify(invoice[key]));}
+ await startContinuation({...f,selectionInput:{...f.selectionInput,sources:[]},clock:()=>now});await sealContinuationResult({root:f.root,intent:f.intent,clock:()=>now});
+ const params={root:f.root,runId:'loop-999900009-1',bundles:[f.bundle,invoice],producer:{...f.producer,runId:'999900009'},now};
+ assert.equal(await prepareContinuationIntent({...params,allowedRegistryIds:[]}),null);assert.equal(await prepareContinuationIntent({...params,allowedSegments:[]}),null);
+ const next=await prepareContinuationIntent(params);assert.ok(next.dossier.source.url.endsWith('/118145'));
 });
