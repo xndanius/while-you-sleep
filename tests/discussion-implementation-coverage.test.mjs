@@ -86,5 +86,5 @@ test('each new reference extracts its own literal capability section and rejects
   assert.equal(extractDiscussionImplementationEvidence({...reference,url:reference.url+'?untrusted=1'},raw,{demandSources:sources}),null);
   assert.equal(extractDiscussionImplementationEvidence(reference,raw,{demandSources:[]}),null);
  }
- assert.equal(DISCUSSION_IMPLEMENTATION_CATALOG.length,8);
+ assert.equal(DISCUSSION_IMPLEMENTATION_CATALOG.length,9);
 });
