@@ -1,0 +1,377 @@
+{
+  "runId": "loop-40662243699-1",
+  "createdAt": "2026-10-28T09:12:27.696Z",
+  "candidates": [
+    {
+      "title": "Map variable invoice rows into a request",
+      "productUrl": "https://community.make.com/t/118145",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b407a896ba8504e91a52df04"
+        ],
+        "chore": "Map variable CRM invoice-row data into an external system request.",
+        "evidenceQuote": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section."
+      },
+      "sourceIds": [
+        "b407a896ba8504e91a52df04",
+        "e73220ebd327caecbae34a3c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A sample array can be mapped by hand; Make docs explain indexed array mapping, but not this external invoice API.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: automation consultants may pay for repeatable invoice mapping help; no buyer or payment is shown.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic test can transform sample rows, but the endpoint contract and successful persistence are unknown.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A transform could repeat, but the supplied docs cover array mapping only; a person must validate totals and authorize sending.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post gives the mapping problem and sample arrays; docs support array indexing, not Make execution, invoice persistence, or tax correctness.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          }
+        }
+      },
+      "reason": "The literal mapping chore supports a narrow synthetic payload experiment. The mean is 4.6, below threshold; documentation supports array mapping only, not execution or correct invoice creation.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable JSON request body with one output row per supplied invoice row.",
+        "inputs": [
+          "Synthetic CRM row arrays",
+          "Operator-supplied expected request shape",
+          "Fictional endpoint field names"
+        ],
+        "trigger": "An operator pastes a sample row array and expected body shape.",
+        "steps": [
+          "Parse each supplied row array.",
+          "Map each row to operator-defined output fields.",
+          "Show the proposed JSON body without sending it.",
+          "Compare row count and selected values with the input.",
+          "Flag missing or mismatched fields for review."
+        ],
+        "acceptanceCheck": "For a fixed synthetic input, confirm output row count and selected values match the operator-provided expected body.",
+        "humanBoundary": "The operator defines the external schema, checks amounts and tax fields, and authorizes any real request; production access and persistence are not tested.",
+        "unverified": [
+          "No reference establishes Make scenario execution.",
+          "The external endpoint schema and response are unknown.",
+          "Invoice persistence and tax correctness are unverified."
+        ]
+      }
+    },
+    {
+      "title": "Summarize long email threads for review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "Create a compact, linked summary of each new email within a long conversation.",
+        "evidenceQuote": "every single new email is resume like : “X person ask X person if there is a possibility to do X in comparaison of original X”"
+      },
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test summaries with fictional threads, but no supplied implementation reference supports email access or stable message IDs.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional service firms handling long email threads may pay for compact context; the post gives no buyer evidence.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can summarize sample threads and preserve source-message labels; live mailbox access and reliable identity remain unknown.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed summarize-and-link cycle can repeat, but a person must confirm references and review sensitive or ambiguous content.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post describes compacting long email conversations and immutable-ID concerns; frequency and demand beyond this post are unknown.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "reason": "The task/context span supports a bounded fictional-thread summary experiment. No supplied implementation reference is available; the mean is 4.6, below threshold.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A compact thread summary with each statement linked to a supplied message ID.",
+        "inputs": [
+          "Fictional email thread text",
+          "Operator-supplied stable message labels",
+          "Operator-provided summary checklist"
+        ],
+        "trigger": "An operator submits a fictional thread for summarization.",
+        "steps": [
+          "Separate messages using supplied labels.",
+          "Draft a short summary of the request and latest status.",
+          "Attach the supplied label to each summary point.",
+          "Compare extracted points with the original sample.",
+          "Flag uncertain or conflicting statements for human review."
+        ],
+        "acceptanceCheck": "Check that each summary point matches the cited sample message and that no unsupported detail appears.",
+        "humanBoundary": "The operator supplies test data and reviews every summary; no live mailbox access, stable Microsoft ID integration, or real email processing is established.",
+        "unverified": [
+          "Email access and immutable ID handling are unsupported.",
+          "Summary accuracy on real threads is unknown.",
+          "A single discussion does not establish recurring buyer demand."
+        ]
+      }
+    },
+    {
+      "title": "Compare AWS scaling options from supplied costs",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a6b1f94743a6b7e17995034c"
+        ],
+        "chore": "Assess affordable AWS scaling options for a bootstrapped startup.",
+        "evidenceQuote": "need to scale on AWS but can't afford it"
+      },
+      "sourceIds": [
+        "a6b1f94743a6b7e17995034c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student could format operator-supplied cost scenarios, but no reference supports AWS cost analysis.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: bootstrapped startups may pay for affordable scaling advice; the post offers help but establishes no buyer payment.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can compare a few supplied scenarios, while current AWS pricing and workload fit remain unverified.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A draft comparison can be generated from supplied inputs, but a qualified person must verify prices and approve infrastructure choices.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post asks for help scaling AWS affordably but includes no concrete cost fields, analysis method, or corroboration.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          }
+        }
+      },
+      "reason": "A narrow cost-options memo can be proposed from operator-supplied data, but the source gives no actual costs or analysis method; the mean is 3.8.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short comparison memo showing operator-supplied infrastructure scenarios and unresolved cost questions.",
+        "inputs": [
+          "Fictional monthly cost rows",
+          "Operator-supplied workload description",
+          "Chosen budget limit"
+        ],
+        "trigger": "An operator provides sample costs and a workload description.",
+        "steps": [
+          "List the supplied options and their stated costs.",
+          "Compare each option with the supplied budget.",
+          "Summarize trade-offs using only provided details.",
+          "Mark missing price or workload assumptions.",
+          "Ask a human reviewer to verify all figures and conclusions."
+        ],
+        "acceptanceCheck": "Confirm each cost and workload statement traces to an input and that unknown prices are clearly marked.",
+        "humanBoundary": "A person supplies and verifies current prices and approves any infrastructure change; no AWS retrieval, optimization, or deployment is supported.",
+        "unverified": [
+          "No implementation reference supports AWS cost analysis.",
+          "Current pricing and workload requirements are unverified.",
+          "The source does not establish recurring demand."
+        ]
+      }
+    },
+    {
+      "title": "Draft order status updates when data is unclear",
+      "productUrl": "https://community.make.com/t/118000",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ed00d8f5e0e82a602a9e317a"
+        ],
+        "chore": "Prepare customer-facing order-status updates when internal order data changes or is incomplete.",
+        "evidenceQuote": "I’d be interested to hear how others handle customer-facing status updates when internal operational data is incomplete or changes frequently."
+      },
+      "sourceIds": [
+        "ed00d8f5e0e82a602a9e317a"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "Synthetic order examples can test a draft-and-hold flow; source describes a Make-based debounce mechanism but not a reusable supported build capability.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: online shops may pay for clearer order updates; this discussion establishes a stated need, not payment.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week sample can draft updates and suppress stale events, but live ClickUp or store access and correctness remain unverified.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed event-to-draft loop can repeat; the source describes debounce and not guessing missing data, while a person must resolve gaps and approve messages.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post asks about customer-facing status messages with incomplete or changing operations data and describes debounce; broader demand is unverified.",
+            "sourceIds": [
+              "ed00d8f5e0e82a602a9e317a"
+            ]
+          }
+        }
+      },
+      "reason": "The retained task span supports a scoped draft-and-hold experiment, but the post is primarily a maker explanation and request for discussion; the mean is 4.6.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft order-status message that pauses when required status fields are missing or stale.",
+        "inputs": [
+          "Synthetic order state rows",
+          "Synthetic event timestamps",
+          "Operator-approved status-to-message rules"
+        ],
+        "trigger": "An operator supplies a test order update or a newer replacement event.",
+        "steps": [
+          "Compare event timestamps for the same test order.",
+          "Ignore a stale event when a newer one is supplied.",
+          "Draft a message only from complete approved fields.",
+          "Hold the draft when fields are missing or unclear.",
+          "Ask a person to approve any customer message."
+        ],
+        "acceptanceCheck": "Use a fixed synthetic event sequence to confirm only the newest complete status is drafted and missing data produces a hold.",
+        "humanBoundary": "The operator defines fields, rules, and test data and approves every message; live integrations, delivery, and customer outcomes are not tested.",
+        "unverified": [
+          "No reference establishes a deployable Make implementation.",
+          "The behavior on real store and operations data is unknown.",
+          "A single post does not establish buyer or payment evidence."
+        ]
+      }
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Invite to build your business on KeilHQ",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "The retained statement only says operations will be managed; it names no concrete chore, so a specific experiment would require inventing duties."
+    },
+    {
+      "title": "FreeApply local job application MCP",
+      "productUrl": "https://news.ycombinator.com/item?id=50270574",
+      "reason": "This is a Show HN description of a product, not a concrete request for a chore or tool/service; the retained text only describes local private information and model workloads."
+    },
+    {
+      "title": "Clippa screen recording for quick notes",
+      "productUrl": "https://news.ycombinator.com/item?id=50269031",
+      "reason": "The retained statement says the poster uses Loom for quick video notes but identifies no unmet task, request, or business chore to assess."
+    },
+    {
+      "title": "Restore deleted production workflows",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "reason": "The retained spans describe one accidental deletion incident and a request for restoration; this is a one-off support incident, not a repeatable business chore to turn into a proposed service."
+    },
+    {
+      "title": "Map variable invoice rows into a request",
+      "productUrl": "https://community.make.com/t/118145",
+      "reason": "Assessed in candidates; the narrow synthetic mapping experiment has an honest mean below six and does not establish successful invoice persistence or tax correctness."
+    },
+    {
+      "title": "Summarize long email threads for review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "reason": "Assessed in candidates; the proposed synthetic summary experiment has an honest mean below six and live email/immutable-ID support is unverified."
+    },
+    {
+      "title": "Compare AWS scaling options from supplied costs",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "reason": "Assessed in candidates; the proposed memo has an honest mean below six and the post supplies no cost inputs or analysis method."
+    },
+    {
+      "title": "Draft order status updates when data is unclear",
+      "productUrl": "https://community.make.com/t/118000",
+      "reason": "Assessed in candidates; the proposed synthetic draft-and-hold experiment has an honest mean below six and source text does not establish broad recurring demand."
+    }
+  ]
+}
