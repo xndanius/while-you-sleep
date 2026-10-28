@@ -1,0 +1,467 @@
+{
+  "runId": "loop-40743503809-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T18:21:59.311Z",
+  "candidates": [
+    {
+      "title": "Draft an agent recovery checklist",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Developers must write checkpointing and recovery logic and handle idempotency for agents.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft recovery checklist for one operator-described agent failure, covering saved state, retry behavior, and duplicate-action risk.",
+        "inputs": [
+          "Synthetic agent task and failure point",
+          "Operator-supplied checkpoint description",
+          "Expected retry and side-effect notes"
+        ],
+        "trigger": "An operator submits one fictional or sanitized agent failure scenario for review.",
+        "steps": [
+          "Collect the failure point and last known saved state.",
+          "Ask the operator which actions may have side effects.",
+          "Draft checkpoint and retry questions from the supplied details.",
+          "Flag where repeated actions could cause duplicates.",
+          "Return a checklist for an engineer to review and edit."
+        ],
+        "acceptanceCheck": "On a small set of fictional scenarios, check that each draft repeats the supplied failure point and flags the operator-marked side effect without inventing a recovery action.",
+        "humanBoundary": "An engineer supplies system details, verifies all suggested checks, writes and tests recovery logic, and authorizes any production change.",
+        "unverified": [
+          "No supplied implementation source documents agent checkpointing or idempotency mechanics.",
+          "The source does not establish how often this chore occurs or who would buy a service.",
+          "The proposed drafting workflow has not been implemented or tested."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can organize a fictional failure scenario, but no supplied source supports the recovery mechanics; an engineer must validate the checklist.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: agent developers or consultants might pay for recovery planning; this single question establishes no buying intent or payment.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week draft-only test is bounded, but correct checkpoints and side-effect handling depend on system details not supplied here.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The tool could structure supplied details, but an engineer must design, test, and approve every real recovery action; mechanics are unsupported.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh post explicitly names checkpointers, recovery logic, and idempotency as developer work, but gives no example, recurrence, or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete developer chores support a narrow checklist experiment, but unsupported implementation mechanics and unverified buyer demand leave the provisional mean below 6."
+    },
+    {
+      "title": "Flag repeat processing after missed triggers",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "sourceIds": [
+        "ec16f5ced732a9d207069cd6"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ec16f5ced732a9d207069cd6"
+        ],
+        "chore": "Review lead records processed again after a missed schedule trigger to identify possible duplicates.",
+        "evidenceQuote": "Missed schedule triggers can duplicate everything."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review file that flags repeated synthetic lead records across two submitted batches for a human to inspect.",
+        "inputs": [
+          "Two synthetic lead batches",
+          "Operator-chosen fields to compare",
+          "Expected duplicate pairs for a small test set"
+        ],
+        "trigger": "An operator submits two sample batches after describing a possible repeat-processing event.",
+        "steps": [
+          "Read only the operator-selected test fields.",
+          "Compare rows using the proposed matching rule.",
+          "Mark likely repeated rows and show which fields matched.",
+          "Produce a review list without deleting or changing records.",
+          "Ask an operator to confirm each match and refine the rule."
+        ],
+        "acceptanceCheck": "For a hand-labeled synthetic set, compare flagged pairs with the supplied expected pairs and record false matches and missed pairs before any live use is considered.",
+        "humanBoundary": "A workflow operator chooses safe fields, checks every flagged pair, and handles schedule configuration or record changes; no live system is connected in this proposal.",
+        "unverified": [
+          "No supplied reference documents n8n schedule triggers or duplicate suppression.",
+          "The selected spans do not specify record fields, matching rules, frequency, or outcomes.",
+          "The proposed mock and customer interest have not been tested."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can compare synthetic batches in a review mock, but the spans give no matching fields and no source supports trigger behavior.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: lead-generation workflow consultants might pay to reduce repeat processing; the post does not establish buyer intent or payment.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic comparison is bounded, while reliable matching and schedule recovery need unprovided fields and workflow access.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed comparison can flag likely repeats, but an operator must confirm matches and manage the trigger; execution is unsupported.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "One retained task span states that missed schedule triggers can duplicate processing; frequency, fields, and corroboration are absent from these spans.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          }
+        }
+      },
+      "reason": "The retained task span supports this specific bounded mock, but no implementation support or recurrence evidence is supplied; provisional mean is below 6."
+    },
+    {
+      "title": "Pass received images into reply review",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Provide an already received customer image together with its message to a reply assistant so it need not be requested again.",
+        "evidenceQuote": "Even though the image has already been received and downloaded, the AI agent asks the customer to send the image again."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft reply-review packet that pairs a fictional customer message with its supplied image description and flags when image context is missing.",
+        "inputs": [
+          "Synthetic customer message",
+          "Operator-written description of a fictional image",
+          "Expected product description or missing-context label"
+        ],
+        "trigger": "An operator submits a synthetic message and its paired image description for a routing review.",
+        "steps": [
+          "Store the message and image description as one test case.",
+          "Check that both fields are present in the same packet.",
+          "Draft a short product-identification question only when the supplied description is insufficient.",
+          "Show the packet and draft to a human reviewer.",
+          "Compare the draft with the expected test label and revise the prompt."
+        ],
+        "acceptanceCheck": "Across fictional paired and unpaired examples, verify the packet preserves the correct pairing and does not claim to inspect an image when only a description was supplied.",
+        "humanBoundary": "A person supplies test descriptions, checks all product interpretations and replies, and authorizes any real Messenger integration or message; no customer images are used in this proposal.",
+        "unverified": [
+          "No supplied reference documents Make routing, Messenger access, image transfer, or image analysis.",
+          "The post describes one troubleshooting request and does not establish how often it occurs or buyer intent.",
+          "The proposed packet workflow has not been executed in Make or tested with images."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A paired synthetic-input mock is manageable, but no supplied source documents Make routing or passing image inputs to an assistant.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: service firms handling product messages might pay to avoid repeated image requests; the question proves no buyer intent or payment.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic packet test is bounded, while actual Messenger access, image handling, and interpretation remain unsupported.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposal can assemble test context, but a person must check image interpretation and approve replies; integration is unverified.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes text and image routes and the repeated-image request problem; recurrence and implementation evidence are absent from the supplied source.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "reason": "The full retained span supports a specific handoff problem and a bounded mock; the key integration is unsupported and the provisional mean is below 6."
+    },
+    {
+      "title": "Review booking requests for conflicts",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "sourceIds": [
+        "a53a6bc89a5cdac92d4ab658"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a53a6bc89a5cdac92d4ab658"
+        ],
+        "chore": "Check salon booking requests against working hours, provider availability, and existing appointments before confirmation.",
+        "evidenceQuote": "Every booking request checks salon working hours, master availability, and existing appointments in PostgreSQL at the SQL level before confirmation."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft conflict-review table for fictional salon booking requests, showing which supplied availability or appointment condition needs a person's check.",
+        "inputs": [
+          "Fictional salon working hours",
+          "Synthetic provider availability",
+          "Synthetic existing appointment list",
+          "One proposed booking request"
+        ],
+        "trigger": "An operator submits a fictional booking request and matching test calendar records.",
+        "steps": [
+          "Extract the proposed date and time from the supplied test request.",
+          "Compare it with the supplied working-hours fixture.",
+          "Check the supplied provider availability fixture.",
+          "Check the supplied appointment fixture for overlap.",
+          "Return a conflict-review table without confirming or writing a booking.",
+          "Have a person compare each result with expected labels."
+        ],
+        "acceptanceCheck": "Use hand-labeled synthetic cases for outside-hours, unavailable-provider, overlapping, and clear slots; compare every flag with the expected label and require human review of errors.",
+        "humanBoundary": "A salon operator must verify the calendar, resolve ambiguous dates, approve any real booking, and review privacy and access before deployment.",
+        "unverified": [
+          "No attached implementation reference supports this booking workflow; the post's described architecture is not independent verification.",
+          "The source is a maker's architecture post and does not establish buyer intent or payment.",
+          "Synthetic checks do not establish database persistence, concurrency safety, or tax correctness."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can lay out fictional conflict cases, but no supplied implementation reference supports calendar checks or safe booking changes.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: salons might pay for fewer booking conflicts; this maker architecture post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic fixture test is bounded, but real calendar access, concurrency handling, and persistence are unverified.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposal only flags test conflicts; a person must validate availability and confirm bookings, and execution is unsupported.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "Retained spans describe salon requests and a maker-reported validation architecture, but do not establish external demand or independent implementation evidence.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          }
+        }
+      },
+      "reason": "A bounded conflict-review mock can be scoped from the described booking checks, but this is maker evidence rather than verified buyer demand and the unsupported implementation keeps the provisional mean below 6."
+    },
+    {
+      "title": "Review duplicate records in a Make workflow",
+      "productUrl": "https://community.make.com/t/118231",
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bc3afc6e8c2a63bbd4b7ae01"
+        ],
+        "chore": "Diagnose and fix duplicate records being created by a business integration.",
+        "evidenceQuote": "Duplicate records being created"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet that flags likely duplicate rows in two operator supplied test batches and shows the fields that matched.",
+        "inputs": [
+          "Two synthetic batches of integration records",
+          "Operator selected fields allowed for comparison",
+          "Hand labeled expected duplicate pairs"
+        ],
+        "trigger": "An operator provides two fictional or sanitized test batches after seeing records appear more than once.",
+        "steps": [
+          "Use only the operator selected comparison fields.",
+          "Compare rows across the two supplied batches with a stated matching rule.",
+          "List possible duplicate pairs and show the matching fields.",
+          "Keep all rows unchanged and produce a review sheet.",
+          "Ask a person to confirm each pair and adjust the rule."
+        ],
+        "acceptanceCheck": "On a hand labeled synthetic set, compare flagged pairs with expected pairs and record false matches and missed pairs; do not change or delete any record.",
+        "humanBoundary": "A workflow operator chooses fields, confirms every flagged pair, diagnoses the live scenario, and authorizes any change; this proposal uses no production data or connection.",
+        "unverified": [
+          "No supplied reference documents duplicate matching or prevention in Make.",
+          "The post gives no fields, specific case details, frequency, or outcome for the duplicate records.",
+          "The Make error handler reference (428eda549e557f199c3af452) documents intercepting module errors, not duplicate detection or repair.",
+          "The proposed test and customer interest have not been validated."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can compare synthetic records in a simple review sheet, but the supplied Make documentation (428eda549e557f199c3af452) covers module errors, not duplicate matching.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small integration service firms might pay for duplicate-record diagnosis; the discussion indicates a stated need, not buying intent or payment.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can compare hand labeled synthetic rows; choosing reliable fields and diagnosing a real integration remain unverified.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed comparison can flag possible repeats, but an operator must confirm matches and implement any fix; the reference (428eda549e557f199c3af452) does not document deduplication.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span explicitly lists duplicate records as an issue and offers fixed-price help for defined integration problems, but gives no specific case or recurrence.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          }
+        }
+      },
+      "reason": "The literal chore supports a bounded synthetic comparison experiment. Its score is below six because matching fields, recurrence, and duplicate-fix mechanics are not evidenced."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Draft an agent recovery checklist",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "reason": "Concrete checkpointing, recovery, and idempotency chores were scored as a bounded checklist experiment; unsupported mechanics and unverified buyer demand leave it below threshold."
+    },
+    {
+      "title": "Gitby git management tool",
+      "productUrl": "https://news.ycombinator.com/item?id=50278264",
+      "reason": "The supplied text says only “A convenient git management tool”; it contains no concrete chore or problem from which to support a demand-first experiment."
+    },
+    {
+      "title": "Flag repeat processing after missed triggers",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "The retained task span supports a synthetic duplicate-review experiment, but no source supports trigger mechanics or recurring buyer demand; the scored candidate is below threshold."
+    },
+    {
+      "title": "Pass received images into reply review",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "The retained post supports an image handoff problem, but supplied evidence does not support the integration and the scored proposal is below threshold."
+    },
+    {
+      "title": "Interview analysts for semantic-layer context",
+      "productUrl": "https://news.ycombinator.com/item?id=50274358",
+      "reason": "The supplied fragment is a general statement that data agents need context; it identifies no concrete existing chore or specific task for a demand-first experiment."
+    },
+    {
+      "title": "Review booking requests for conflicts",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "reason": "The retained spans describe a maker's booking-validation architecture, not external buyer demand; a scoped mock was assessed and remains below threshold without implementation support."
+    },
+    {
+      "title": "Report IP abuse to Cloudflare",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The only supplied text is the fragment “which clearly doesn't apply here.” It does not identify a chore; no duty can be inferred from the title."
+    },
+    {
+      "title": "Review one Make automation issue",
+      "productUrl": "https://community.make.com/t/118231",
+      "reason": "The retained span explicitly identifies duplicate records being created and the repair feedback names this chore. A bounded synthetic comparison was assessed at five provisional criteria; its mean remains below six because fields, recurrence, and duplicate-fix mechanics are unverified."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Reassessed the named omitted chore as a bounded synthetic duplicate-review experiment. No post qualifies; its provisional mean is below the threshold."
+    }
+  ],
+  "repairAttempt": 1
+}
