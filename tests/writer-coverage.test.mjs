@@ -29,7 +29,7 @@ test('the immutable ten-row nine-identity failure reports its missing HN assignm
 });
 
 test('exact canonical union coverage allows candidate/rejection and candidate/post references without implying score approval',async()=>{
- const f=await fixture(),source=f.assignments.find(row=>row.productUrl===overlapURL),candidate={productUrl:source.productUrl,segment:source.segment,demandEvidence:{sourceIds:[source.demandSourceId]}};
+ const f=await fixture(),source=f.assignments.find(row=>row.productUrl===overlapURL),candidate={productUrl:source.productUrl,segment:source.segment,demandEvidence:{kind:f.research.sources.find(row=>row.id===source.demandSourceId).demandKind,sourceIds:[source.demandSourceId]}};
  f.draft.candidates.push(candidate);f.draft.posts.push({...candidate});const before=stableJSON(f),report=sealedWriterCoverage(f.draft,f.options);
  assert.equal(report.valid,true);assert.equal(report.assignedCount,10);assert.equal(report.consideredUniqueCount,10);assert.deepEqual(report.duplicates,[]);assert.deepEqual(report.missing,[]);
  assert.equal(report.coverageOnly,true);for(const field of ['checks','completedAssessment','scoring','reward','approved'])assert.equal(report[field],undefined);

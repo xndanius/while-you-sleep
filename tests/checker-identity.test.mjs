@@ -16,6 +16,8 @@ async function fixture(){
  const [draft,context,logged]=await Promise.all([read(new URL(`../data/drafts/${runId}.json`,import.meta.url)),read(new URL(`../data/check-context/${runId}.json`,import.meta.url)),read(new URL('./fixtures/checker-identity-39821880827.json',import.meta.url))]);
  assert.equal(sha256(stableJSON(draft)),context.draftSha256);assert.equal(sha256(stableJSON(context)),logged.finalEnvelope.repairFeedback.contextSha256);
  const valid=structuredClone(logged.finalEnvelope),source=context.sources.find(row=>row.id===groundhogId);
+ valid.repairFeedback.schema=3;
+ valid.repairFeedback.omission.quoteAnchorSha256=sha256(source.text);
  valid.repairFeedback.omission.evidenceQuote=source.text;
  valid.repairFeedback.omission.chore='Examine local test email and provider API emulation.';
  valid.repairFeedback.omission.reason='Synthetic control: examine this unscored assigned discussion using its own literal excerpt; no score or approval is established.';
@@ -61,19 +63,22 @@ test('the actual HN swap is excluded while the already-scored original remains i
  assert.throws(()=>acceptCheckerOutput(original,f.draft,f.context,pins(f)),/exact original unscored rejected/);
  assert.throws(()=>acceptCheckerOutput(f.finalEnvelope,f.draft,f.context,pins(f)),/literal fresh chore quote/);
  assert.equal(schemaAllows(schema,f.valid),true);const accepted=acceptCheckerOutput(f.valid,f.draft,f.context,pins(f));
+ const wrongLiteral=structuredClone(f.valid);wrongLiteral.repairFeedback.omission.evidenceQuote=f.intermediateFeedback.omission.evidenceQuote;
+ assert.equal(schemaAllows(schema,wrongLiteral),true,'Free text stays parseable; deterministic acceptance enforces the exact anchor.');
+ assert.throws(()=>acceptCheckerOutput(wrongLiteral,f.draft,f.context,pins(f)),/literal fresh chore quote/);
  assert.equal(accepted,f.valid.repairFeedback);assert.equal(accepted.completedAssessment,undefined);assert.equal(accepted.checks,undefined);
  assert.ok(completedAssessmentReasons(f.draft,f.context,accepted).length);assert.deepEqual(checkApproval(f.draft,f.context,accepted),[]);assert.equal(stableJSON(f),before);
 });
 
-test('each eligible schema branch pins its own complete short fresh excerpt',async()=>{
+test('each eligible schema branch pins the hash of its complete short fresh excerpt',async()=>{
  const f=await fixture(),schema=checkerOutputSchema(f.draft,f.context,{allowOmittedCandidateRepair:true}),branches=feedbackBranches(schema);
  assert.ok(branches.length>1);assert.ok(branches.length<=10);
  for(const branch of branches){
   const properties=branch.properties,id=properties.demandSourceId.enum[0],source=f.context.sources.find(row=>row.id===id);
-  assert.ok(source.text.length>=25&&source.text.length<=200);assert.deepEqual(properties.evidenceQuote.enum,[source.text]);
+  assert.ok(source.text.length>=25&&source.text.length<=200);assert.deepEqual(properties.quoteAnchorSha256.enum,[sha256(source.text)]);assert.equal(properties.evidenceQuote.enum,undefined);
   assert.equal(properties.productUrl.enum[0],source.url);assert.equal(properties.registrySourceId.enum[0],source.registrySourceId);assert.equal(properties.segment.enum[0],source.segment);
  }
- assert.ok(branches.some(branch=>branch.properties.evidenceQuote.enum[0].length<100),'Admitted short discussions remain eligible.');
+ assert.ok(branches.some(branch=>f.context.sources.find(source=>source.id===branch.properties.demandSourceId.enum[0]).text.length<100),'Admitted short discussions remain eligible.');
  const sourceBefore=stableJSON(f.context.sources);assert.ok(Buffer.byteLength(JSON.stringify(schema))<30000);assert.equal(stableJSON(f.context.sources),sourceBefore);
 });
 

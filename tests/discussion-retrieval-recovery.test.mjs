@@ -64,7 +64,7 @@ test('actual independently verified discussion fingerprints preserve unchanged c
 
 test('fixed catalog validation rejects URL, identity, role, origins and task binding forgeries',async()=>{
  const fixture=await discussionFixture(),references=selectDiscussionImplementationReferences(fixture.sources);
- assert.equal(references.length,2);assert.equal(DISCUSSION_IMPLEMENTATION_CATALOG.length,6);
+ assert.equal(references.length,2);assert.equal(DISCUSSION_IMPLEMENTATION_CATALOG.length,8);
  for(const source of references){assert.ok(discussionImplementationReference(source,{demandSources:fixture.sources}));assert.equal(hasDiscussionImplementationReference(source),true);}
  const source=references[0];
  for(const mutate of [value=>value.url+='?arbitrary=1',value=>value.productUrl=makeErrorsURL,value=>value.id='f'.repeat(24),value=>value.role='demand',value=>value.demand=true,value=>value.implementationReferenceVersion=2,value=>value.implementationReferenceId='untrusted',value=>value.originSourceIds=['a'.repeat(24)],value=>delete value.originSourceIds,value=>value.supportsDemandSourceIds=[],value=>value.supportsDemandSourceIds=['f'.repeat(24)],value=>value.supportsDemandSourceIds.push(value.supportsDemandSourceIds[0])]){

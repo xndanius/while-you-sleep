@@ -97,7 +97,7 @@ test('a quote cannot join separate native spans or use an example as a demand-ta
 test('schema 1 remains anchor-only and cannot silently gain the native context quote',async()=>{
  const f=await fixture();f.record.schema=1;delete f.record.omission.quoteSpanSha256;
  assert.throws(()=>validateOmittedCandidateRepair(f.record,f.draft,f.context,{allowInitial:true,...pins(f)}),/literal fresh chore quote/);
- f.record.omission.evidenceQuote=f.source.text;assert.equal(schemaAllows(omittedCandidateRepairSchema(f.draft,f.context),f.record),true);assert.equal(validateOmittedCandidateRepair(f.record,f.draft,f.context,{allowInitial:true,...pins(f)}),f.record);
+ f.record.omission.evidenceQuote=f.source.text;assert.equal(schemaAllows(omittedCandidateRepairSchema(f.draft,f.context),f.record),false,'New requests offer schema 3 anchors; old schema 1 receipts remain verifiable.');assert.equal(validateOmittedCandidateRepair(f.record,f.draft,f.context,{allowInitial:true,...pins(f)}),f.record);
  const legacy=structuredClone(f.source);delete legacy.nativeReadingContext;assert.deepEqual(nativeDemandQuoteSpans(legacy),[]);assert.equal(demandQuoteOccurs(legacy,quote),false);assert.equal(demandQuoteOccurs(legacy,legacy.text),true);
 });
 
