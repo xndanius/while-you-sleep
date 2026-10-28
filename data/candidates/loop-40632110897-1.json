@@ -1,0 +1,209 @@
+{
+  "runId": "loop-40632110897-1",
+  "createdAt": "2026-10-28T04:27:51.037Z",
+  "candidates": [
+    {
+      "title": "Draft restaurant order status messages",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "segment": "ecommerce",
+      "sourceIds": [
+        "ea2016bda7c0f26522b8ff64"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ea2016bda7c0f26522b8ff64"
+        ],
+        "chore": "Connect restaurant order systems with customer notifications and delivery updates, including order confirmations, delivery assignments, and failed notifications.",
+        "evidenceQuote": "I want to understand how n8n can help connect restaurant order systems, customer notifications, and delivery updates."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue of concise draft messages for fictional order confirmations, delivery assignments, status updates, and notification failures.",
+        "inputs": [
+          "Fictional order ID and restaurant label",
+          "Fictional order status and delivery assignment",
+          "Operator-written message template",
+          "Fictional notification failure flag"
+        ],
+        "trigger": "An operator submits one fictional order event to a manually started test run.",
+        "steps": [
+          "Accept a fictional order event in a fixed sample format.",
+          "Check that its status and delivery assignment use allowed sample values.",
+          "Select a proposed message template for that event type.",
+          "Draft a short customer update using only supplied fields.",
+          "Flag missing fields or a failure state for human review.",
+          "Show the draft and event side by side for approval."
+        ],
+        "acceptanceCheck": "For a fixed set of fictional events, verify each draft repeats the supplied order status and assignment accurately, flags missing values, and never sends a message.",
+        "humanBoundary": "An operator supplies fictional test records and approved wording, checks every draft and failure flag, and authorizes any later live integration or message sending.",
+        "unverified": [
+          "No supplied implementation reference documents webhook receipt, restaurant system access, messaging integrations, retry behavior, or delivery.",
+          "The post does not establish field schemas, event frequency, commercial demand, or whether automated wording is acceptable."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can mock one status-to-message path with synthetic rows, but no supplied reference supports webhooks or messaging integrations.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: restaurant operators may pay to reduce manual order updates; this request proves neither purchase intent nor payment.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can draft confirmation and status messages from sample events; integrations, delivery and failure handling remain unverified.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed event-to-draft loop is repeatable, but no implementation capability is documented and a person must verify and approve messages.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post span asks about order data, restaurant notifications, customer updates and failures, but supplies no field details or corroboration.",
+            "sourceIds": [
+              "ea2016bda7c0f26522b8ff64"
+            ]
+          }
+        }
+      },
+      "reason": "The retained post span states a concrete order-notification workflow, so I scoped a synthetic draft-only experiment. No matching implementation reference is supplied; the honest mean is below the threshold."
+    },
+    {
+      "title": "Check laboratory batch records against a schema",
+      "productUrl": "https://community.n8n.io/t/324676",
+      "segment": "professional_services",
+      "sourceIds": [
+        "6c6721a88db5bff50ff81c60"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "6c6721a88db5bff50ff81c60"
+        ],
+        "chore": "Automate handling and validation of high-frequency laboratory batch records in chemical manufacturing.",
+        "evidenceQuote": "laboratory testing instruments generate high-frequency batch records that require automated"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue listing fictional laboratory batch records that fail operator-defined required-field or value-range checks.",
+        "inputs": [
+          "Fictional batch identifier",
+          "Fictional measurement values and units",
+          "Operator-supplied required fields",
+          "Operator-supplied allowable ranges"
+        ],
+        "trigger": "An operator submits a small fictional batch-record file to a manually started validation run.",
+        "steps": [
+          "Load fictional records in one fixed table format.",
+          "Check each row for the operator-defined required fields.",
+          "Compare numeric sample values with operator-supplied ranges.",
+          "Mark each row as complete, missing data, or outside the supplied range.",
+          "Produce a review queue with the failed rule and original sample value.",
+          "Ask an operator to verify flags and amend the sample schema."
+        ],
+        "acceptanceCheck": "Run a fixed fictional file containing known missing fields and out-of-range values; verify every seeded issue appears with the correct row and rule, and valid rows are not flagged.",
+        "humanBoundary": "An operator supplies and approves the fictional schema and ranges, reviews every flag, and decides any real batch disposition; this experiment must not process production or patient data.",
+        "unverified": [
+          "No supplied implementation reference supports file ingestion, numeric validation, batch-record storage, instrument connectivity, or n8n execution.",
+          "The retained excerpt does not identify measurement fields, validation rules, review frequency, buyer intent, or payment.",
+          "Synthetic checks do not establish production reliability, regulatory compliance, or tax correctness."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can define a small synthetic table check, but no supplied reference supports file intake or validation automation.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: chemical manufacturers may pay for batch-record checks; this post establishes a chore, not purchase intent or payment.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can check fictional required fields and supplied ranges; actual instrument formats and production rules are unknown.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed repeatable row-checking loop is bounded, but no implementation capability is documented and an operator must review all flags.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The retained text identifies high-frequency laboratory batch records needing automation, but gives no concrete fields, rules, examples, or corroboration.",
+            "sourceIds": [
+              "6c6721a88db5bff50ff81c60"
+            ]
+          }
+        }
+      },
+      "reason": "The fresh literal excerpt supports automating laboratory batch records, so I assessed a narrow fictional schema-checking experiment. No supplied implementation reference supports execution, and task fields and rules are absent; the honest provisional mean is below six."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Show HN: Binary – hiring tool (ATS) for startups that is MCP friendly",
+      "productUrl": "https://news.ycombinator.com/item?id=50269124",
+      "reason": "The supplied text only says some tools require speaking to sales. It does not state a concrete task or request for an AI service; inferring a sales-access workaround would invent the chore."
+    },
+    {
+      "title": "What is the best way founders optimize their time?",
+      "productUrl": "https://news.ycombinator.com/item?id=50246546",
+      "reason": "The supplied text says product building and customer acquisition consume more time, but names no specific task, repeatable workflow, or requested output. A proposed task breakdown would be invented."
+    },
+    {
+      "title": "Show HN: Clippa – Record your screen. Send a link",
+      "productUrl": "https://news.ycombinator.com/item?id=50269031",
+      "reason": "The supplied excerpt says the author uses Loom for quick video notes. It describes an existing use, not a concrete chore or request for a distinct service."
+    },
+    {
+      "title": "Browsers made easy, I built tabie after closing 47th Tab of my browser",
+      "productUrl": "https://news.ycombinator.com/item?id=50241975",
+      "reason": "The supplied body excerpt only identifies an extension and its URL. The title alone does not provide an eligible literal task quote or enough retained evidence to define a chore."
+    },
+    {
+      "title": "Show HN: Instance – a clean-room GameMaker reimplementation in Rust",
+      "productUrl": "https://news.ycombinator.com/item?id=50261794",
+      "reason": "The supplied excerpt describes compatibility quirks in old games, not a concrete requested chore or business workflow. An emulator-testing service would be an invented duty."
+    },
+    {
+      "title": "Draft restaurant order status messages",
+      "productUrl": "https://community.n8n.io/t/324685",
+      "reason": "Assessed the explicit order-notification request as a synthetic draft-only experiment. No supplied implementation reference supports the integrations, and the five provisional scores average 4.4, below the threshold of 6."
+    },
+    {
+      "title": "Check laboratory batch records against a schema",
+      "productUrl": "https://community.n8n.io/t/324676",
+      "reason": "Assessed the literal high-frequency laboratory batch-record chore with a narrow fictional schema-validation experiment. The provisional mean is below six because no implementation capability, record fields, or validation rules are supplied."
+    }
+  ]
+}
