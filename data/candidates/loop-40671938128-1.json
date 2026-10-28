@@ -1,0 +1,205 @@
+{
+  "runId": "loop-40671938128-1",
+  "createdAt": "2026-10-28T10:28:56.134Z",
+  "candidates": [
+    {
+      "title": "Draft booking and status notifications",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Draft booking and status notifications",
+        "evidenceQuote": "booking confirmations, provider assignment notifications, payment status updates, and customer alerts"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A fictional booking can produce a notification draft, but no supplied reference documents webhook or messaging setup.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: on-demand service operators might pay for notification setup; this post shows no buyer intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can draft alerts from sample booking states; API access, retries, and duplicate prevention remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed event-to-alert loop repeats, but execution is unsupported and a person must verify payment state and failures.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span explicitly names confirmations, assignments, payment updates, alerts, retries, and duplicate prevention.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A proposed set of booking status message drafts based on operator-supplied sample events.",
+        "inputs": [
+          "Fictional booking status",
+          "Fictional provider assignment",
+          "Operator-written message template"
+        ],
+        "trigger": "An operator submits a sample booking event for a notification draft.",
+        "steps": [
+          "Read the fictional event fields.",
+          "Select the matching status template.",
+          "Draft one customer or provider message.",
+          "Flag missing or conflicting fields.",
+          "Have an operator review the draft before sending."
+        ],
+        "acceptanceCheck": "For fixed sample events, verify the selected template and recipient role match a manually prepared expected result.",
+        "humanBoundary": "An operator supplies templates and validates booking and payment status; no message is sent without human authorization.",
+        "unverified": [
+          "Webhook reception",
+          "External messaging delivery",
+          "Payment state verification",
+          "Retry and duplicate handling"
+        ]
+      },
+      "reason": "Concrete chore assessed as a proposed sample-data experiment; provisional mean is below 6 because no supplied implementation reference supports its mechanics."
+    },
+    {
+      "title": "Sort sample emails into review folders",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "sourceIds": [
+        "b00708562d0e2aeefbf5e0c1",
+        "113bfbf5643238079ad1295d",
+        "d3c31f318baa92cd9c697d56"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b00708562d0e2aeefbf5e0c1"
+        ],
+        "chore": "Sort sample emails into review folders",
+        "evidenceQuote": "workflow for automatic email sorting"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The Code node documentation supports data transformation and logic, and the If node supports conditional branching; neither establishes mailbox integration.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "113bfbf5643238079ad1295d",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small professional service firms might pay for inbox sorting; this post shows a task, not buyer intent or payment.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week prototype can apply operator-defined rules to fictional messages; live mailbox access and classification quality remain untested.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "113bfbf5643238079ad1295d",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A proposed classify-and-route loop is repeatable; documented Code and If nodes support logic and branching, while a person reviews uncertain matches.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "113bfbf5643238079ad1295d",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe automatic email sorting and text matching and Boolean routing problems; frequency and broader demand are unknown.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A proposed folder label for each sample email plus a review flag when its rule match is unclear.",
+        "inputs": [
+          "Fictional email subject and body",
+          "Operator-defined phrase-to-folder rules",
+          "Expected folder label for each sample"
+        ],
+        "trigger": "An operator submits a sample message batch for sorting.",
+        "steps": [
+          "Apply each operator-defined phrase rule to the sample text.",
+          "Assign the matching folder label.",
+          "Use a conditional branch for matched versus unmatched messages.",
+          "Flag ambiguous or unmatched examples for review.",
+          "Compare labels with expected results and revise rules."
+        ],
+        "acceptanceCheck": "On a fixed fictional test set, compare every proposed label and review flag with operator-prepared expected results.",
+        "humanBoundary": "A person defines rules, checks false matches, and authorizes any live mailbox access or folder changes.",
+        "unverified": [
+          "Mailbox connection and permissions",
+          "Rule quality on real messages",
+          "Production execution and error recovery"
+        ]
+      },
+      "reason": "The literal sorting chore supports a bounded experiment; the n8n Code and If documentation supports transformation and branching only. Honest provisional mean is below 6."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Collect scattered travel information",
+      "productUrl": "https://news.ycombinator.com/item?id=50268115",
+      "reason": "The post says personal trip information is scattered across spreadsheets, airline apps, inboxes, and photos, but the sealed professional_services segment does not fit this personal travel chore; no supported professional-services task is stated."
+    },
+    {
+      "title": "Improve the programming interview process",
+      "productUrl": "https://news.ycombinator.com/item?id=50264623",
+      "reason": "The retained text only says the interview process can feel like a race to the bottom; it supplies no specific task or bounded chore, so a proposed experiment would require inventing duties."
+    },
+    {
+      "title": "Reduce founder time spent on product and acquisition",
+      "productUrl": "https://news.ycombinator.com/item?id=50246546",
+      "reason": "The post states that product building and customer acquisition consume increasing time but gives no specific repeatable task or requested output; selecting a workflow would invent the chore."
+    },
+    {
+      "title": "Organize browser tabs",
+      "productUrl": "https://news.ycombinator.com/item?id=50241975",
+      "reason": "The assigned source text only says “This extension is beest tabie.web.app”; it contains no literal task evidence usable for a demand quote or an assessed chore."
+    },
+    {
+      "title": "Build an ecommerce search and browse API",
+      "productUrl": "https://news.ycombinator.com/item?id=50264240",
+      "reason": "The source describes its maker building an API for ecommerce stores, not an existing chore or request from an ecommerce customer. It does not support demandEvidence for an ecommerce service."
+    }
+  ]
+}
