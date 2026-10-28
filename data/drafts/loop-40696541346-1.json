@@ -1,0 +1,207 @@
+{
+  "runId": "loop-40696541346-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T13:31:41.084Z",
+  "candidates": [
+    {
+      "title": "Map variable invoice rows for review",
+      "productUrl": "https://community.make.com/t/118145",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b407a896ba8504e91a52df04"
+        ],
+        "chore": "Map a variable-length CRM array into multiple invoice rows in an external system request.",
+        "evidenceQuote": "I cannot map array data for dynamic amount of invoice rows to the HTTP POST module’s “invoice rows” section."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable draft list of invoice rows mapped from fictional CRM line items, with source values and unresolved fields flagged.",
+        "inputs": [
+          "Fictional CRM record with a variable-length list of line items",
+          "Fictional invoice endpoint field guide supplied by the operator",
+          "Expected row count and a manually prepared example output"
+        ],
+        "trigger": "An operator supplies one fictional CRM record and asks for a draft payload.",
+        "steps": [
+          "Read the fictional line-item array and the operator supplied field guide.",
+          "Map each selected array value into a proposed invoice-row field.",
+          "Show the indexed source value beside each drafted row.",
+          "Flag missing or ambiguous fields without filling them in.",
+          "Ask a person to compare the draft row count and values with the input before any external use."
+        ],
+        "acceptanceCheck": "On operator supplied fictional records, confirm that every selected input line appears once in the draft, source values match exactly, and ambiguous mappings are flagged.",
+        "humanBoundary": "A person supplies and verifies the endpoint field guide, checks every row, and authorizes any real request. The experiment does not send HTTP requests, persist invoices, or determine tax treatment.",
+        "unverified": [
+          "Whether the target endpoint accepts this payload structure",
+          "Whether Make mapping handles the customer actual variable arrays as proposed",
+          "Invoice persistence, tax correctness, authentication, and live execution"
+        ]
+      },
+      "sourceIds": [
+        "b407a896ba8504e91a52df04",
+        "e73220ebd327caecbae34a3c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test fictional arrays; Make documentation shows indexed array mapping, but not the complete invoice request.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms preparing invoices might pay for row preparation; this single question shows no buyer or payment evidence.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week mock can draft and compare rows; API execution, persistence, and tax behavior remain outside the supported scope.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Array values can be mapped in a proposed draft, but no source supports automatic HTTP execution and a person must approve each row.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04",
+              "e73220ebd327caecbae34a3c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The post states a variable invoice-row mapping problem and supplies array examples; the Make guide documents indexed array mapping only.",
+            "sourceIds": [
+              "b407a896ba8504e91a52df04"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete mapping task assessed as a synthetic draft experiment. Provisional mean 5.0 is below the 6 threshold; the supplied Make guide supports indexed array mapping, not HTTP execution, invoice persistence, or tax correctness."
+    },
+    {
+      "title": "Draft compact email thread summaries",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "Create a compact summary of a long email conversation that preserves relevant context for drafting a response.",
+        "evidenceQuote": "I use it to create draft prefill with the good knowledge + compact history of the conversation with each mail resume"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A compact draft summary of one fictional email thread that lists the latest question, relevant prior context, and unresolved details for a person to check.",
+        "inputs": [
+          "Fictional email thread with sender names removed",
+          "Operator supplied summary template",
+          "A manually written expected summary for comparison"
+        ],
+        "trigger": "An operator provides a fictional multi-message thread for a summary draft.",
+        "steps": [
+          "Read the supplied fictional messages in order.",
+          "Identify the latest question and the earlier context needed to understand it.",
+          "Draft a short summary and mark uncertain references.",
+          "Compare the draft with the operator supplied expected summary.",
+          "Have a person correct the summary before using it in any reply."
+        ],
+        "acceptanceCheck": "For each fictional thread, check that the latest question and required prior context appear, no new facts were added, and uncertain references are visibly marked.",
+        "humanBoundary": "A person supplies synthetic or authorized test messages, checks names and context, and approves any reply. No real mail account access or sending is included.",
+        "unverified": [
+          "No supplied building reference documents email ingestion or summarization",
+          "Whether summaries remain accurate across varied thread formats",
+          "Any access controls, retention rules, or live email integration"
+        ]
+      },
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can compare fictional thread summaries against a manual reference, but no implementation source is supplied.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: consultants handling long client threads may value summaries; this post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can draft summaries from supplied fictional threads, while varied thread formats and accuracy remain untested.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A draft can repeat for supplied threads, but a person must verify context and approve any reply; no email integration is documented.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained post describes compacting long email histories to prefill a draft, but gives no corroborating demand or implementation reference.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "reason": "Fresh retained post spans support a bounded fictional-thread summary experiment. Provisional mean 4.8 is below threshold; no supplied implementation reference documents email ingestion or summarization."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "FreeApply local job application MCP",
+      "productUrl": "https://news.ycombinator.com/item?id=50270574",
+      "reason": "The attached excerpt describes a maker’s local MCP product and privacy design, not a concrete customer chore or request. It does not support demand for a bounded professional-services experiment."
+    },
+    {
+      "title": "Restore deleted n8n Cloud workflows",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "reason": "The retained spans describe one accidental deletion that took a customer chatbot offline and expose operational identifiers. This is a single incident/restore case, not a repeated bounded chore suitable for an autonomous service; the spans do not document a safe restoration procedure."
+    },
+    {
+      "title": "Manage startup operations",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "The excerpt only says an operations service will manage startup operations. It identifies no specific existing chore, so scoring a scoped experiment would require inventing duties."
+    },
+    {
+      "title": "Make ATS access easier",
+      "productUrl": "https://news.ycombinator.com/item?id=50269124",
+      "reason": "The excerpt complains that some hiring tools require sales contact, but specifies no concrete task or requested workflow. A software service and chore cannot be scoped from this fragment."
+    },
+    {
+      "title": "Scale an AWS startup affordably",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "reason": "The excerpt offers help to bootstrapped startups but names no concrete scaling task or supplied cost data. A specific analysis workflow would be invented from this broad offer."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all seven assigned discussion identities. Two concrete chores received scoped provisional assessments and both remained below the 6 threshold; five assignments lacked a repeatable specific chore or described a one-off incident. No post proposed."
+    }
+  ]
+}
