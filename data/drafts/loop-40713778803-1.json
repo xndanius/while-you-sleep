@@ -1,0 +1,294 @@
+{
+  "runId": "loop-40713778803-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T15:17:40.000Z",
+  "candidates": [
+    {
+      "title": "Prepare phone game-test logs for Sheets",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "The post describes logging battery, temperature, frame drops, and session notes during mobile game tests, then transferring exported CSV rows into Google Sheets; it also reports unreliable and duplicate file triggers.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable row for each fictional game-test session, with duplicate files flagged before a person imports it.",
+        "inputs": [
+          "A fictional CSV export with session time and test measurements",
+          "A fictional file name and upload-complete flag",
+          "An operator-provided list of previously processed file names"
+        ],
+        "trigger": "An operator supplies a completed sample export or a new fictional file record.",
+        "steps": [
+          "Read the supplied CSV and preserve its original rows.",
+          "Check the file name against the operator-provided processed-file list.",
+          "Flag repeated names or incomplete uploads without merging them.",
+          "Prepare a proposed spreadsheet-ready row set and an exception note.",
+          "Ask a person to verify measurements, resolve flags, and approve any import."
+        ],
+        "acceptanceCheck": "Use two identical fictional file names and one incomplete upload; confirm both are flagged and all unflagged measurement values match the input exactly.",
+        "humanBoundary": "A person supplies test files, checks measurements and duplicate flags, and authorizes any real phone, Drive, or Sheets access and import.",
+        "unverified": [
+          "Reliable phone upload completion detection",
+          "n8n schedule, Drive watch, or webhook execution",
+          "Google Sheets writes and duplicate prevention in a live workflow"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "Fictional CSV parsing and duplicate flag review are approachable; no supplied reference documents the phone or n8n mechanics.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent game testers may pay to reduce repeated log transfer; this post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can preserve rows and flag duplicate files, while phone uploads and live Sheets writes remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed duplicate check can repeat on sample rows, but a person must verify exceptions and approve imports.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained context and task spans describe the repeated log-transfer chore and trigger failures; wider demand and implementation support are absent.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore assessed as a proposed synthetic-data experiment; the provisional mean is below the threshold, so it is not proposed for publication."
+    },
+    {
+      "title": "Flag repeated lead-generation batches",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ec16f5ced732a9d207069cd6"
+        ],
+        "chore": "The retained task span identifies duplicate processing caused by missed schedule triggers in a lead-generation workflow.",
+        "evidenceQuote": "Missed schedule triggers can duplicate everything."
+      },
+      "sourceIds": [
+        "ec16f5ced732a9d207069cd6"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review list of repeated fictional lead-batch items, with the original rows preserved for operator review.",
+        "inputs": [
+          "A fictional lead-batch CSV",
+          "A fictional batch identifier",
+          "An operator-provided list of previously processed identifiers"
+        ],
+        "trigger": "An operator supplies a completed fictional lead batch for a duplicate review.",
+        "steps": [
+          "Read the supplied batch and retain every original row.",
+          "Compare the operator-provided identifiers with prior fictional identifiers.",
+          "Flag possible repeats without deleting or merging records.",
+          "Produce a review list with the source row references.",
+          "Have a person verify flags and choose any production changes."
+        ],
+        "acceptanceCheck": "Feed one fictional batch twice; confirm the second pass flags repeated identifiers and preserves every row for review.",
+        "humanBoundary": "A person defines identifiers, supplies test batches, verifies match decisions, and approves all production edits.",
+        "unverified": [
+          "Actual lead fields and identifier rules",
+          "n8n scheduling and persistent processed-batch storage",
+          "Lead-source integration and live execution"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A sample batch comparison is approachable, but no attached source documents scheduling or persistent deduplication mechanics.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: lead-generation operators may pay to avoid repeated processing; the retained post does not establish buying intent or payment.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare fictional batches; live lead-source access and persistent state remain unverified.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must supply identifiers, resolve matches, and authorize changes; no execution capability is documented.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained task span names duplicate processing from missed triggers, but fields, recurrence, and corroboration are absent.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          }
+        }
+      },
+      "reason": "A bounded batch-review experiment is assessable, but the provisional mean is below six and there is no supplied implementation reference."
+    },
+    {
+      "title": "Review weekly keyword metrics in Sheets",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "A weekly workflow runs a keyword search-volume actor and adds search volume, cost-per-click, and difficulty values to Google Sheets.",
+        "evidenceQuote": "Runs VNCNT Labs’ Keyword Search Volume Actor on Apify every week and adds each keyword’s Google search volume, CPC and difficulty as rows in Google Sheets."
+      },
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable weekly keyword table that compares operator-supplied search metrics with the prior sample and flags changes.",
+        "inputs": [
+          "A fictional list of target keywords",
+          "A fictional weekly CSV with volume, CPC, and difficulty columns",
+          "A prior fictional weekly metrics CSV"
+        ],
+        "trigger": "An operator supplies the latest fictional weekly keyword metrics export.",
+        "steps": [
+          "Check that each input row has a keyword and the three expected metric values.",
+          "Match current rows to prior rows by the supplied keyword text.",
+          "Calculate proposed differences for matching rows.",
+          "Flag missing or malformed values without filling them in.",
+          "Prepare a spreadsheet-ready comparison for human review."
+        ],
+        "acceptanceCheck": "Use a tiny fictional current and prior CSV with one changed metric and one missing keyword; verify the difference and missing-row flags against hand calculations.",
+        "humanBoundary": "A person chooses keywords, obtains metric data, validates calculations, and approves any upload or business interpretation.",
+        "unverified": [
+          "Live Apify actor or Google keyword endpoint execution",
+          "Whether a particular professional-services buyer needs this report repeatedly",
+          "Accuracy and coverage of supplied keyword metrics"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test comparison logic on fictional CSVs, but no supplied source supports running the actor or writing Sheets.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: search consultants may pay for recurring keyword reports; this example shows a workflow but no buyer intent or payment.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fictional comparison report is bounded; live metrics, endpoint use, and sheet persistence are unverified.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Metric comparison can repeat on supplied files, while a person must obtain data and review its meaning; no live loop is supported.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes a weekly metrics-to-Sheets workflow and a stated per-result price, but not independent demand or actual customer use.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "reason": "The post supplies a concrete weekly reporting workflow, but the proposed mock has no implementation evidence and its provisional mean is below six."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Choose built-in AI or MCP",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "The supplied post asks a general preference question about AI integration versus MCP and names no specific existing chore, tool request, or business workflow to scope."
+    },
+    {
+      "title": "Interview analysts for semantic context",
+      "productUrl": "https://news.ycombinator.com/item?id=50274358",
+      "reason": "The only supplied text says data agents need context; it does not identify an analyst task or a concrete chore. The title alone cannot supply the missing task evidence."
+    },
+    {
+      "title": "Resolve LLM output copyright concerns",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The supplied span expresses a broad legal concern but identifies no bounded task. A proposed rights assessment would also risk unsupported legal conclusions."
+    },
+    {
+      "title": "Automate legal research database work",
+      "productUrl": "https://news.ycombinator.com/item?id=50274235",
+      "reason": "The supplied text describes a product as having more utilities than diffs, without specifying an existing user chore or request. The title is not task evidence."
+    },
+    {
+      "title": "Repair the advertised WhatsApp support flow",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained context advertises FAQ answering and human handoff as an offered service, overlapping the published support-inbox triage and reply-drafting workflow (post e20bcacf021524725d3fc275). This is the same customer-support workflow despite the different channel."
+    },
+    {
+      "title": "Fix a one-off phone-to-Sheets trigger failure",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "The concrete trigger failure is a one-off troubleshooting report, which the discussion rules exclude. Its surrounding context does describe a repeated log-transfer chore; that bounded task is separately assessed in candidates, but the unsupported trigger-repair service is not proposed."
+    },
+    {
+      "title": "Offer general Make automation help",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "This is a general service advertisement listing several unrelated examples and asking readers to provide a workflow; it does not identify one actual customer chore to assess."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all nine sealed discussion identities. Three concrete reporting or duplicate-review tasks received scoped experiments and provisional five-criterion scores; each mean is below six. The remaining posts lack a concrete supported chore, are a one-off trigger bug, or repeat the published support-inbox workflow. No post is proposed."
+    }
+  ]
+}
