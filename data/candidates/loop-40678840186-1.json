@@ -1,0 +1,287 @@
+{
+  "runId": "loop-40678840186-1",
+  "createdAt": "2026-10-28T11:19:25.551Z",
+  "candidates": [
+    {
+      "title": "Prepare phone game-test logs for Sheets",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable CSV row for each supplied game-test log, with duplicate or incomplete files flagged.",
+        "inputs": [
+          "Synthetic CSV row with timestamp, battery, temperature, frame drops, and test note",
+          "Synthetic file name and upload time",
+          "Operator-supplied expected row count"
+        ],
+        "trigger": "An operator supplies a completed sample log file for a test run.",
+        "steps": [
+          "Read the supplied sample file without accessing a phone or real account.",
+          "Check required columns and parse each row into the proposed sheet format.",
+          "Compare file name and row fingerprint with a synthetic processed-file list.",
+          "Flag duplicate, incomplete, or unparseable rows instead of silently adding them.",
+          "Show the proposed rows and exceptions for a person to review."
+        ],
+        "acceptanceCheck": "For a fixed synthetic file, parsed values must match its rows exactly; a second copy must be flagged and no invalid row may be silently accepted.",
+        "humanBoundary": "A person supplies fictional test files, confirms any column mapping, and authorizes any real upload or sheet change.",
+        "unverified": [
+          "Phone shortcut upload behavior and n8n trigger execution are unverified.",
+          "Stable duplicate detection across real uploads is unverified.",
+          "The post says logging is done for a couple of phones, but wider frequency and buyer demand are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test supplied synthetic CSV files, but no supplied reference supports n8n trigger or Sheets mechanics.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent game testers may pay to reduce manual log transfer; this post shows no buying intent.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic file parser and duplicate flagger is bounded; phone uploads and live sheet writes remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Parsing and duplicate checks can repeat in a mock, but no execution reference is supplied and a person reviews exceptions.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained task span names trigger failures and duplicate processing; context describes manual phone logs and later CSV transfer, but broader demand is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed as a proposed bounded experiment. The mean is below 6; retain as an explicit below-threshold decision."
+    },
+    {
+      "title": "Test agent recovery from simulated failures",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A test report showing whether a supplied agent task can resume safely after a simulated failure without repeating a completed step.",
+        "inputs": [
+          "Synthetic sequence of agent steps and expected outputs",
+          "Synthetic checkpoint state before a simulated interruption",
+          "Operator-defined rule for which steps are safe to retry"
+        ],
+        "trigger": "A developer supplies a test sequence and selects a simulated interruption point.",
+        "steps": [
+          "Record the expected result and completion state for each synthetic step.",
+          "Simulate a stop before and after a selected step.",
+          "Compare restart behavior with the supplied checkpoint state.",
+          "Flag repeated completed steps and missing recovery state.",
+          "Produce a proposed recovery checklist for developer review."
+        ],
+        "acceptanceCheck": "Across a fixed set of synthetic interruptions, the report must identify each deliberately repeated completed step and each missing checkpoint without claiming the agent actually recovered.",
+        "humanBoundary": "A developer defines safe retry rules and reviews all recovery recommendations before changing production behavior.",
+        "unverified": [
+          "No supplied implementation reference documents checkpoint storage, recovery execution, or idempotency.",
+          "Production agent behavior, data durability, and safe retry semantics are unverified.",
+          "The post establishes developer effort, not a paying customer or frequency."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A developer can test a synthetic interruption table, but no supplied reference supports recovery implementation.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agents may pay for recovery testing; the post establishes developer effort, not buyer intent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic test report is feasible, while durable checkpoints and safe production retries remain unverified.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed analysis can repeat on test cases, but it does not execute recovery and a developer must define safe retries.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The post explicitly names checkpointing, recovery logic, and idempotency as developer work; frequency and corroboration are absent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed as a proposed bounded experiment. The mean is below 6; retain as an explicit below-threshold decision."
+    },
+    {
+      "title": "Prevent duplicate Shopify lead batches",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "sourceIds": [
+        "ec16f5ced732a9d207069cd6"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ec16f5ced732a9d207069cd6"
+        ],
+        "chore": "Missed schedule triggers can duplicate everything.",
+        "evidenceQuote": "Missed schedule triggers can duplicate everything."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable lead batch with repeated synthetic store records flagged before they are added again.",
+        "inputs": [
+          "Synthetic batch of store identifiers and scoring fields",
+          "Synthetic prior processed-store list",
+          "Operator-supplied batch date and expected input count"
+        ],
+        "trigger": "An operator submits a scheduled lead batch or replays the same sample batch.",
+        "steps": [
+          "Load the supplied synthetic batch and prior processed-store list.",
+          "Check that each row has the operator-defined store key and required score fields.",
+          "Create a proposed batch key from the supplied date and input identifier.",
+          "Compare store keys and the batch key with the synthetic processed list.",
+          "Flag repeats and missing fields for review before producing a clean preview."
+        ],
+        "acceptanceCheck": "Submitting an identical sample batch twice must flag the second copy and preserve all distinct stores; missing keys must be reported rather than silently merged.",
+        "humanBoundary": "A person supplies fictional test rows, chooses the stable store key and scoring rules, and reviews flagged records before any live outreach or system update.",
+        "unverified": [
+          "Actual schedule-trigger behavior and recovery after a missed run are unsupported by supplied implementation evidence.",
+          "The source does not establish stable identifiers, production inputs, lead-generation frequency, or paying customers.",
+          "Any live Shopify, CRM, or outreach connection would need permission and privacy review."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test duplicate suppression with synthetic lead batches, but no supplied reference documents schedule-trigger mechanics.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Shopify-focused lead-generation consultants may pay for reliable batch processing; the post does not establish buying intent.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare repeated synthetic batches and flag duplicate records; live Shopify or schedule execution remains unverified.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed batch-key check can repeat on test data, but no implementation reference supports execution and a person reviews exceptions.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The task span identifies missed schedule triggers duplicating processing in a lead-generation workflow; frequency and buyer demand are unknown.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed the specifically assigned missed-trigger duplicate-processing chore as a proposed synthetic batch experiment. Its provisional mean is below 6, so it is not proposed for publication."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Copyright status of LLM output",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The retained source is a broad concern about rights and licensing, with no specific manual task or bounded recurring chore to support a service experiment."
+    },
+    {
+      "title": "Ballast macOS disk-space app",
+      "productUrl": "https://news.ycombinator.com/item?id=50271417",
+      "reason": "This is a maker statement that a native app was built to free storage on one Mac; it does not identify a customer request or concrete service chore."
+    },
+    {
+      "title": "Cirkit schematic PDF documentation tool",
+      "productUrl": "https://news.ycombinator.com/item?id=50268880",
+      "reason": "The retained text describes a documentation tool and broad goal, but supplies no specific manual task, request, or bounded recurring chore."
+    },
+    {
+      "title": "AI chatbots and booking automation service",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained context is a provider service list with fixed-price/hourly availability and examples, not a customer’s specific existing chore; its broad duplicate-fixing offer cannot support a distinct scoped demand experiment."
+    },
+    {
+      "title": "Make.com automation help offer",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The retained context is a provider advertising availability for small tasks and listing possible services, not a specific customer task or a concrete assigned chore."
+    },
+    {
+      "title": "Weekly keyword search volume workflow",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The post describes an existing scheduled workflow and its configuration, not a customer request for a new chore or service; no distinct demand task is established."
+    },
+    {
+      "title": "Prevent duplicate Shopify lead batches",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "The concrete duplicate-processing chore was assessed with a scoped synthetic batch experiment, but its five provisional ratings average below the threshold; schedule execution and buyer demand remain unverified."
+    }
+  ]
+}
