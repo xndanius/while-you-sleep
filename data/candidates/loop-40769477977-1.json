@@ -1,0 +1,301 @@
+{
+  "runId": "loop-40769477977-1",
+  "createdAt": "2026-10-28T21:11:37.367Z",
+  "candidates": [
+    {
+      "title": "Check game-test CSV rows before importing",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Record mobile game-test measurements, export them as CSV, and move the rows into a Google Sheet while avoiding missed or repeated files.",
+        "evidenceQuote": "I test mobile games on a couple of phones and keep a simple log while I play: battery percentage, device temperature, frame drops, and a short note about what I was doing when it happened."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "5c2bf4e7df8c3ec325ba2e74",
+        "f1662b0ceb942474f83a8108"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table of supplied game-test CSV rows with missing fields and repeated keys flagged.",
+        "inputs": [
+          "Synthetic device label and game session time",
+          "Synthetic battery, temperature, and frame-drop values",
+          "Synthetic short gameplay note",
+          "Operator-supplied sample CSV rows"
+        ],
+        "trigger": "An operator supplies a sample CSV export or fictional rows for review.",
+        "steps": [
+          "Read supplied CSV rows without connecting to a phone or cloud drive.",
+          "Check required columns and flag missing values.",
+          "Compare operator-approved row keys and flag possible repeats.",
+          "Prepare a normalized table for a sample sheet.",
+          "Ask a person to verify flags and perform any import."
+        ],
+        "acceptanceCheck": "On a labeled synthetic CSV, preserve expected measurements, flag planted repeated keys, and report missing fields without filling them in.",
+        "humanBoundary": "A person supplies fictional or authorized test data, chooses a safe duplicate key, and confirms flags and imports; the proposal does not control a phone or write to a live sheet.",
+        "unverified": [
+          "Whether phone uploads can be reliably triggered is unsupported.",
+          "The CSV reference documents extraction into row objects, not upload monitoring.",
+          "The duplicate-removal reference documents comparisons, but correct keys for these logs are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The n8n CSV extraction reference (5c2bf4e7df8c3ec325ba2e74) documents turning CSV into row objects, and duplicate removal (f1662b0ceb942474f83a8108) supports comparison; neither covers phone uploads.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent game testers might pay for cleaner log imports; this post gives no purchase or payment evidence.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV check is bounded; 5c2bf4e7df8c3ec325ba2e74 supports extraction and f1662b0ceb942474f83a8108 supports deduplication, while phone triggers remain unresolved.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The references 5c2bf4e7df8c3ec325ba2e74 and f1662b0ceb942474f83a8108 support row extraction and duplicate filtering; a person must choose keys, verify records, and import them.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe measurements entered in a notes app, later CSV export and Sheet paste, plus a trigger firing zero or twice; this is one post.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete repeated logging and CSV transfer are described, and supplied n8n references support limited row extraction and duplicate checks. Provisional mean is 5.2, below 6; phone triggering and correct deduplication keys are unresolved."
+    },
+    {
+      "title": "Draft shipment delay notices from supplied rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Notify a dispatcher when a shipment is delayed, based on an operator-supplied shipment status.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed"
+      },
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft dispatcher notice for a shipment row explicitly marked delayed.",
+        "inputs": [
+          "Fictional shipment ID",
+          "Fictional current status and expected date",
+          "Operator-written notice template",
+          "Expected delayed/not-delayed label"
+        ],
+        "trigger": "An operator supplies fictional shipment rows for a manual test run.",
+        "steps": [
+          "Check that required status and date fields are present.",
+          "Apply a simple operator-defined delayed rule to each row.",
+          "Draft a notice for rows marked delayed.",
+          "Show the source row beside the draft.",
+          "Have a person verify status and send or discard the notice."
+        ],
+        "acceptanceCheck": "For labeled test rows, draft a notice only for rows marked delayed and show the matching input values without inventing shipment facts.",
+        "humanBoundary": "A dispatcher must define the delay rule, verify shipment facts, and approve any notice; no live logistics system or message delivery is part of this proposal.",
+        "unverified": [
+          "No supplied implementation reference documents shipment system access or message delivery.",
+          "A real delay rule, required fields, and event timing are not specified in the retained spans."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test a rule on fictional rows, but no supplied building reference supports the data connection or notification.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small logistics operators might pay for fewer missed delay updates; the post establishes no buying intent or payment.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week offline mock can draft from test rows; shipment feeds, delay rules, and delivery remain unsupported.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed loop can draft from supplied rows, but a dispatcher must verify status and approve messages; no integration capability is documented.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The retained task span lists shipment-delay notices as an example, without a specific operator, frequency, fields, or corroboration.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "reason": "The retained task span gives a concrete notification chore that can be mocked with fictional rows. No supplied implementation reference supports live shipment access or message delivery; provisional mean is 4.4, below 6."
+    },
+    {
+      "title": "Turn rough sketches into reviewable wireframe drafts",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "cec38822f97e088e1e5fc5a2"
+        ],
+        "chore": "Convert rough iPad sketches into higher-fidelity wireframes or illustrations.",
+        "evidenceQuote": "I’ve been looking for a tool that can translate rough sketches on my iPad to higher fidelity wireframes or illustrations in near real time."
+      },
+      "sourceIds": [
+        "cec38822f97e088e1e5fc5a2"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A proposed wireframe draft from an operator-supplied synthetic sketch, with uncertain details marked for review.",
+        "inputs": [
+          "Synthetic rough sketch image",
+          "Operator-provided screen purpose",
+          "Operator-provided labels and layout constraints",
+          "Expected element checklist"
+        ],
+        "trigger": "A designer supplies a fictional sketch and its intended screen purpose.",
+        "steps": [
+          "Record the supplied sketch and constraints.",
+          "Create a draft layout matching only clearly identified elements.",
+          "Mark uncertain labels or relationships for review.",
+          "Compare the draft with the expected element checklist.",
+          "Have a designer revise and approve the result."
+        ],
+        "acceptanceCheck": "For a small set of labeled synthetic sketches, the draft contains the expected named elements and marks ambiguous elements instead of silently guessing.",
+        "humanBoundary": "A designer must supply authorized imagery, clarify ambiguous intent, and approve all visual output; this proposal does not claim real-time iPad conversion.",
+        "unverified": [
+          "No supplied implementation reference supports image-to-wireframe conversion.",
+          "Near-real-time behavior, visual fidelity, and tool availability are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "The source describes a desired image conversion, but no supplied building reference supports image interpretation or wireframe generation.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent design professionals might pay to speed rough-sketch conversion; the post establishes no purchase intent or payment.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A four-week synthetic demo could be attempted, but image-to-layout generation and fidelity are unsupported by supplied implementation evidence.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "Drafting may reduce some manual drawing, but a designer must interpret ambiguity and approve the output; no capability is documented.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh post states a specific desired conversion from iPad sketches to higher-fidelity wireframes or illustrations, but no frequency or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        }
+      },
+      "reason": "The request states a clear conversion task, so it receives an honest scoped assessment. No supplied implementation reference supports image conversion; provisional mean is 3.4, below 6."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Ask HN: Advise on monetization model for my freemium app wanted",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "reason": "The supplied excerpt asks for conceptual help with a freemium app but does not identify a concrete task, required inputs, or bounded output; do not invent monetization analysis duties."
+    },
+    {
+      "title": "Show HN: Galaxy Movies – Streaming Discovery App",
+      "productUrl": "https://news.ycombinator.com/item?id=50276432",
+      "reason": "The excerpt is a broad consumer question about switching between streaming services, not a concrete professional-services chore; the assigned segment does not support an applicable buyer task."
+    },
+    {
+      "title": "AI chatbots, WhatsApp agents and booking automations for small businesses",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained span is a self-promotional service listing and attributed experience, not a specific customer existing chore or request; its examples do not establish an assigned customer task."
+    },
+    {
+      "title": "Weekly keyword search volume to Google Sheets (Apify)",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The retained span describes an existing weekly keyword-volume workflow and setup costs, but does not establish a customer request or unsolved chore for this assigned professional-services lead."
+    },
+    {
+      "title": "Make.com Automation for Simple Business Tasks",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The retained span offers help with small automation projects but gives no specific customer task or repeated chore; inventing a workflow would exceed the evidence."
+    },
+    {
+      "title": "Check game-test CSV rows before importing",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "Concrete repeated logging and CSV transfer are described, and supplied n8n references support limited row extraction and duplicate checks. Provisional mean is 5.2, below 6; phone triggering and correct deduplication keys are unresolved."
+    },
+    {
+      "title": "Draft shipment delay notices from supplied rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "reason": "The retained task span gives a concrete notification chore that can be mocked with fictional rows. No supplied implementation reference supports live shipment access or message delivery; provisional mean is 4.4, below 6."
+    },
+    {
+      "title": "Turn rough sketches into reviewable wireframe drafts",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "reason": "The request states a clear conversion task, so it receives an honest scoped assessment. No supplied implementation reference supports image conversion; provisional mean is 3.4, below 6."
+    }
+  ]
+}
