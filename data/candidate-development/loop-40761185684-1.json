@@ -1,0 +1,677 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40761185684-1",
+  "createdAt": "2026-10-28T20:17:26.064Z",
+  "events": [
+    {
+      "id": "6fe683b12e82760abb3836b300f779ebea8531f9cba1764c149eecc8c72793a9",
+      "kind": "origin",
+      "caseId": "bb41e49c777b7f2a0ce9505b",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceRunId": "loop-40752010258-1",
+      "details": {
+        "revisionId": "802c7f261efc9d1f53c7f541e12250261d9ed4ade1b1f7807081473090ef3796",
+        "parentRevisionId": null,
+        "candidateSha256": "dc741b20875625daaae17232385e4eb183db57a979f6349af5be62ee2c207ba4",
+        "sourceSha256": "ea0c76e1dd0317cb1dd436216def4b9a4c594698d23355d6a279c34f25ead358",
+        "capabilitySources": [],
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review sheet that maps supplied resume facts to draft answers for repeated job-application fields.",
+          "inputs": [
+            "Fictional resume facts supplied by the tester",
+            "A small set of manually transcribed sample form field labels",
+            "Operator-approved mapping rules"
+          ],
+          "trigger": "When a tester receives another application form with fields represented in the sample set.",
+          "steps": [
+            "Enter fictional resume facts into a structured table.",
+            "Add the sample form field labels.",
+            "Suggest matching facts for each field.",
+            "Flag fields with no clear match instead of guessing.",
+            "Have a person review and copy approved answers manually."
+          ],
+          "acceptanceCheck": "For each sample field, verify the suggested answer matches the corresponding fictional resume fact and leaves uncertain fields blank.",
+          "humanBoundary": "A person must provide lawful test inputs, check every answer, handle sensitive information safely, and complete the actual application.",
+          "unverified": [
+            "Actual employer form layouts and field variations are unavailable.",
+            "No supplied source supports form reading, browser automation, or automatic submission.",
+            "Whether job seekers or career services would pay is unknown."
+          ]
+        },
+        "limitations": [
+          "Actual employer form layouts and field variations are unavailable.",
+          "No supplied source supports form reading, browser automation, or automatic submission.",
+          "Whether job seekers or career services would pay is unknown."
+        ],
+        "provenance": {
+          "runId": "loop-40752010258-1",
+          "runSha256": "86dd4807913e3f42bc0e791983cff952d7327917993500eb687df850b0487a4c",
+          "draftSha256": "d4a3248918f4b754b0b028fcff935e984bc06238822900e11cdcbf9498d98e67",
+          "contextSha256": "1d26cd4ba1d5b3cb3c7db4a8bc8ecce45da7262a1c1955073b82f04167f5c7a3",
+          "researchSha256": "cbc95e770dfe6a6922dde5ac18e6b9260d1d616ab499eabe45585b3f866cfdb1",
+          "scanSha256": "0e2bd184552a10f45d7b7238adc598a68f92250af1bfe452f20374787b0c68a7",
+          "manifestSha256": "a8124ff37c95d4abc1d212496ec4c3e925df99c64ad708e4fbe0709e3f7a2114",
+          "selectionSha256": "4e63199a8f5b4cc222d5ce2be6ee187d15d463413b75b62d26a657d32c2b678c",
+          "learningSha256": "4953dc9e7cee9ab0362666217e520199fb6e176c86ae6f025be65d396bae4899"
+        }
+      }
+    },
+    {
+      "id": "3fcec8278a2e2823fe16f4b11f0705041c2641adcd35028fe54a3f398d832b9c",
+      "kind": "acquisition",
+      "caseId": "bb41e49c777b7f2a0ce9505b",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceRunId": "loop-40761185684-1",
+      "details": {
+        "revisionId": "802c7f261efc9d1f53c7f541e12250261d9ed4ade1b1f7807081473090ef3796",
+        "intentSha256": "3cd5ca9fd94e6583f8e000448da3ddfb6b861bdbeb1ac3d692c16a219a03c18c",
+        "resultSha256": "0196d4163b90c91f0b8b9ecd5928cccc12236fbdfe0fde2b1d416b79a8792aef",
+        "outcome": "not_eligible",
+        "routes": [
+          {
+            "key": "f6bee29bdca30c5c600aad849a2f347b8d1751dbc2b4d176da6296dda083264e",
+            "referenceId": "n8n-resume-schema-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+            "purpose": "new_acquisition",
+            "status": "waiting",
+            "evidenceSha256": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "7501375ae6bbe1330a8b4d7d5b5db9ced3ea0cff271b0bfc36883aaef4f2beb0",
+      "kind": "assessment",
+      "caseId": "150bdf3f56424d1d2307f837",
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "sourceRunId": "loop-40761185684-1",
+      "details": {
+        "revisionId": "94d0a6d537090c67a8c9122ed0715fa7886437310712140021994143e6ec2a2e",
+        "parentRevisionId": null,
+        "candidateIndex": 0,
+        "candidateSha256": "fe95b73d363f7f928bce8c43ffbce5b935b92c0c74c0b015256a453381eaa9c1",
+        "sourceSha256": "01f056b3b5479c610c175aa6a2d52f735fb9df13a41577f9aab4f8deb2c7b815",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A one-page request/response mapping for one chosen front end and gateway.",
+          "inputs": [
+            "A fictional frontend request",
+            "A fictional gateway response",
+            "Operator-supplied field names"
+          ],
+          "trigger": "When an operator chooses one front end and one gateway route.",
+          "steps": [
+            "List required request fields from operator notes.",
+            "Map fictional input fields to a proposed request.",
+            "Record the fictional response shape.",
+            "Flag missing fields for manual review."
+          ],
+          "acceptanceCheck": "Check that every required field in the operator-provided example appears once in the mapped request and that the response fields are labeled.",
+          "humanBoundary": "The operator must supply protocol details, configure credentials and verify any real connection; do not send requests or expose secrets.",
+          "unverified": [
+            "Actual gateway API schema",
+            "Authentication and error behavior",
+            "Buyer willingness to pay"
+          ]
+        },
+        "limitations": [
+          "Actual gateway API schema",
+          "Authentication and error behavior",
+          "Buyer willingness to pay"
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A mock request and response can be mapped, but the post supplies no endpoint details or implementation reference.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: consultants integrating agent front ends may pay for setup; this Show HN excerpt establishes no buyer or payment.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can document one request path; the gateway protocol, authentication and working behavior are unverified.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed map can prepare request data, while a person must configure and verify the actual gateway connection.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          },
+          "evidence": {
+            "value": 3,
+            "reason": "The excerpt describes a gateway and HTTP client connection, but gives no concrete integration steps, usage or demand corroboration.",
+            "sourceIds": [
+              "150bdf3f56424d1d2307f837"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "06bef229750bd978babe102f2e796159f607749ffba64a333fd1e739a82fd145",
+          "draftSha256": "c5420b9f85dd5206a878c0a2a5991c167085b70806f79c341b5ad7d923b8b008",
+          "contextSha256": "840b15c71f87b9ec9b76d83e06bc60d8bb4fa0bb43fdbb2a2ec89e00da77c94e",
+          "manifestSha256": "dc4d5866ae8c235524cb018628ac4b6294b3b68674f0e85a8d71ee9846340524",
+          "researchSha256": "c61def99cbc1d1b685e5055975600b74d132a8774596d4260aad0a9f26d1a54b",
+          "learningSha256": "2052d14b4663df0e5b58dfc950d1f8752919ab9131e154079a6726ff6af4f4d7"
+        }
+      }
+    },
+    {
+      "id": "eb7bb30e3c9f4049d8af9d64314fbefa253c09c81b0ddbcfdb8e9fd667b71230",
+      "kind": "assessment",
+      "caseId": "0cec76f4cbd8b39cd8d44f10",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceRunId": "loop-40761185684-1",
+      "details": {
+        "revisionId": "50d3524d5fecd404734ac0a7282f0bda70ed5efc9162137975ea08c85f23eaca",
+        "parentRevisionId": null,
+        "candidateIndex": 1,
+        "candidateSha256": "ed03cc5018a46815a6bb246e2f37e9b54667e4cd4d7538ad4832c4be8c04eae3",
+        "sourceSha256": "0ed756e4df721fc0a23b581c41d676cb18f3e58652a69af2694af08f48244d06",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A compact conversation summary with source message references and a draft reply outline.",
+          "inputs": [
+            "Fictional email messages",
+            "Operator-supplied stable message labels",
+            "A fictional reply goal"
+          ],
+          "trigger": "When an operator supplies a conversation and asks for a review draft.",
+          "steps": [
+            "Keep each supplied message label beside its text.",
+            "Draft a short chronology of the conversation.",
+            "List unresolved questions and relevant facts.",
+            "Prepare a reply outline using only supplied facts.",
+            "Flag unsupported details for human review."
+          ],
+          "acceptanceCheck": "Compare each factual statement in the summary and outline with the supplied fictional messages and verify its message label.",
+          "humanBoundary": "The operator supplies and checks all content; a person authorizes any mailbox access and sends any reply. No real personal data is needed.",
+          "unverified": [
+            "Mailbox connector and immutable-ID behavior",
+            "Accuracy on real long threads",
+            "Buyer willingness to pay"
+          ]
+        },
+        "limitations": [
+          "Mailbox connector and immutable-ID behavior",
+          "Accuracy on real long threads",
+          "Buyer willingness to pay"
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test summaries on fictional threads, but no supplied reference supports email retrieval or stable identifiers.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: client-facing professionals may pay for thread summaries; the post establishes a workflow need, not purchase intent or payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week offline prototype can summarize synthetic threads and cite supplied message IDs; mailbox integration and ID behavior remain unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A text-only draft loop can summarize supplied material, but a person must provide, verify and approve every thread and reply.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes stable email references and compact conversation context, but gives no measured frequency or independent corroboration.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "06bef229750bd978babe102f2e796159f607749ffba64a333fd1e739a82fd145",
+          "draftSha256": "c5420b9f85dd5206a878c0a2a5991c167085b70806f79c341b5ad7d923b8b008",
+          "contextSha256": "840b15c71f87b9ec9b76d83e06bc60d8bb4fa0bb43fdbb2a2ec89e00da77c94e",
+          "manifestSha256": "dc4d5866ae8c235524cb018628ac4b6294b3b68674f0e85a8d71ee9846340524",
+          "researchSha256": "c61def99cbc1d1b685e5055975600b74d132a8774596d4260aad0a9f26d1a54b",
+          "learningSha256": "2052d14b4663df0e5b58dfc950d1f8752919ab9131e154079a6726ff6af4f4d7"
+        }
+      }
+    },
+    {
+      "id": "9a1cf8068fcb3bcfca691e6ecc06e77ddc230d5c3f3b805611079f995a24a2ea",
+      "kind": "assessment",
+      "caseId": "a6b1f94743a6b7e17995034c",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "sourceRunId": "loop-40761185684-1",
+      "details": {
+        "revisionId": "af61a84b51800b8222953af793fcbec7ca552dc327472fc0e80d8a48034ed907",
+        "parentRevisionId": null,
+        "candidateIndex": 2,
+        "candidateSha256": "836e5098aba55ab33c70138f647f14046e3fd5586dcd058b6f52345d61f677ac",
+        "sourceSha256": "205bab4b9ffab5b9419d5d74e489fe81e8c613bf3d18fad11f3ebcb50195bc49",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A side-by-side memo of operator-provided scaling options, assumptions and unanswered questions.",
+          "inputs": [
+            "Fictional workload description",
+            "Operator-provided candidate options",
+            "Stated budget ceiling",
+            "Operator-provided constraints"
+          ],
+          "trigger": "When an operator asks for a comparison of listed options.",
+          "steps": [
+            "Record each option exactly as supplied.",
+            "Separate stated facts from assumptions.",
+            "Compare options against the stated constraints.",
+            "List missing inputs and questions.",
+            "Draft a recommendation section marked for expert review."
+          ],
+          "acceptanceCheck": "Verify that every comparison row traces to supplied inputs and that the memo makes no unsupported price or performance claim.",
+          "humanBoundary": "An infrastructure professional must confirm costs, security and production suitability; the prototype uses fictional data only.",
+          "unverified": [
+            "AWS pricing and performance accuracy",
+            "Access to current service configuration",
+            "Buyer willingness to pay"
+          ]
+        },
+        "limitations": [
+          "AWS pricing and performance accuracy",
+          "Access to current service configuration",
+          "Buyer willingness to pay"
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can structure operator-supplied options in a memo, but no attached source documents AWS analysis methods.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: bootstrapped startups may pay for affordable scaling advice; the post offers help but proves neither buyer intent nor payment.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare fictional options and stated constraints; AWS-specific correctness and cost estimates remain unverified.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposal can organize inputs into a memo, but a qualified person must validate every infrastructure recommendation.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post mentions startups needing affordable AWS scaling and offers help, but contains no specific workflow, costs or corroboration.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "06bef229750bd978babe102f2e796159f607749ffba64a333fd1e739a82fd145",
+          "draftSha256": "c5420b9f85dd5206a878c0a2a5991c167085b70806f79c341b5ad7d923b8b008",
+          "contextSha256": "840b15c71f87b9ec9b76d83e06bc60d8bb4fa0bb43fdbb2a2ec89e00da77c94e",
+          "manifestSha256": "dc4d5866ae8c235524cb018628ac4b6294b3b68674f0e85a8d71ee9846340524",
+          "researchSha256": "c61def99cbc1d1b685e5055975600b74d132a8774596d4260aad0a9f26d1a54b",
+          "learningSha256": "2052d14b4663df0e5b58dfc950d1f8752919ab9131e154079a6726ff6af4f4d7"
+        }
+      }
+    },
+    {
+      "id": "3a9b6517ffd93110d09eadc4c6a9f33a419f454830359c77017d98ad68051f31",
+      "kind": "assessment",
+      "caseId": "c853ab1f158b31c64ddf2e01",
+      "productUrl": "https://news.ycombinator.com/item?id=50271417",
+      "sourceRunId": "loop-40761185684-1",
+      "details": {
+        "revisionId": "59d322966c074f472f9d854dc99a2495822538599ecb86e4a04975017e5e614e",
+        "parentRevisionId": null,
+        "candidateIndex": 3,
+        "candidateSha256": "3537e8015f6d10cbf2bb106fad0f722b5e2baf6669b3acab1afb1135dca277cc",
+        "sourceSha256": "ced32f70030bd840796965d1de07fd357d6728fd891f4f4395fcd33d3c5600c0",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A sorted review list of operator-supplied file inventory entries that may be candidates for manual cleanup.",
+          "inputs": [
+            "Fictional file names and sizes",
+            "Operator-selected file categories",
+            "A stated keep/remove rule"
+          ],
+          "trigger": "When an operator supplies an inventory and asks to review it.",
+          "steps": [
+            "Group the supplied rows by category.",
+            "Sort rows by supplied size.",
+            "Flag rows that match the operator rule.",
+            "Create a review checklist without changing files."
+          ],
+          "acceptanceCheck": "Check that sorting matches the supplied sizes and every flag matches the stated rule.",
+          "humanBoundary": "A person must inspect all files and perform any deletion; never delete automatically or inspect real device data in the prototype.",
+          "unverified": [
+            "Safe file inventory acquisition",
+            "Reliable category rules",
+            "Buyer demand beyond one self-use example"
+          ]
+        },
+        "limitations": [
+          "Safe file inventory acquisition",
+          "Reliable category rules",
+          "Buyer demand beyond one self-use example"
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A mock review list is simple to draft, but the post supplies no file inventory method or cleanup capability.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent Mac support providers might pay for cleanup assistance; this personal-use post establishes no commercial buyer or payment.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week prototype can sort fictional file inventory rows, but safe discovery and device access are unverified.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposal can rank supplied rows, but a person must inspect each item and perform any deletion.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a need to free storage on a Mac, but gives no specific recurring workflow, user group or corroboration.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "06bef229750bd978babe102f2e796159f607749ffba64a333fd1e739a82fd145",
+          "draftSha256": "c5420b9f85dd5206a878c0a2a5991c167085b70806f79c341b5ad7d923b8b008",
+          "contextSha256": "840b15c71f87b9ec9b76d83e06bc60d8bb4fa0bb43fdbb2a2ec89e00da77c94e",
+          "manifestSha256": "dc4d5866ae8c235524cb018628ac4b6294b3b68674f0e85a8d71ee9846340524",
+          "researchSha256": "c61def99cbc1d1b685e5055975600b74d132a8774596d4260aad0a9f26d1a54b",
+          "learningSha256": "2052d14b4663df0e5b58dfc950d1f8752919ab9131e154079a6726ff6af4f4d7"
+        }
+      }
+    },
+    {
+      "id": "72a1892b237e3187decea1176a91232c1b5b79dd7fdcf8af3342e78024803223",
+      "kind": "assessment",
+      "caseId": "80797dd1ada2bd299d560f07",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "sourceRunId": "loop-40761185684-1",
+      "details": {
+        "revisionId": "94720306608b8a9a9cd953bd801861f5a248625e45d3d4561aaad2ca41152acd",
+        "parentRevisionId": null,
+        "candidateIndex": 4,
+        "candidateSha256": "ac1cdd744e22fe6de2fa3658b4e7449bd0014816153000560f37aaf2d9bb7785",
+        "sourceSha256": "6126b59158546a24c60ef7ee83e0fd8f232ce2a314937b5e2639680a5e811493",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review queue of booking status message drafts with duplicate and failure flags.",
+          "inputs": [
+            "Fictional booking ID",
+            "Fictional booking status",
+            "Fictional provider assignment",
+            "Fictional payment status",
+            "Approved message templates"
+          ],
+          "trigger": "When an operator adds a fictional booking status row to the test sheet.",
+          "steps": [
+            "Check required fields are present.",
+            "Match the status to an approved template.",
+            "Draft the corresponding customer or provider notice.",
+            "Flag repeated booking IDs and unknown statuses.",
+            "Hold every draft for human review."
+          ],
+          "acceptanceCheck": "Use sample rows covering each status, a repeated ID and a missing field; verify the right template or hold flag appears.",
+          "humanBoundary": "An operator supplies rules and verifies payment status; a person approves delivery. No live API, invoice persistence or payment action is established.",
+          "unverified": [
+            "n8n/webhook and external API behavior",
+            "Retry and idempotency mechanics",
+            "Correctness of payment status inputs",
+            "Buyer willingness to pay"
+          ]
+        },
+        "limitations": [
+          "n8n/webhook and external API behavior",
+          "Retry and idempotency mechanics",
+          "Correctness of payment status inputs",
+          "Buyer willingness to pay"
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can draft messages from fictional status rows, but no supplied reference supports booking or notification integrations.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: on-demand service operators may pay to reduce missed updates; this post establishes no buying intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week sample-data test can map statuses to drafts; event handling, payment accuracy and external APIs remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed loop can apply fixed status rules, but a person must verify payment facts and approve every message.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span names booking, assignment, payment updates, customer alerts, retries and duplicate prevention, but gives no frequency or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "06bef229750bd978babe102f2e796159f607749ffba64a333fd1e739a82fd145",
+          "draftSha256": "c5420b9f85dd5206a878c0a2a5991c167085b70806f79c341b5ad7d923b8b008",
+          "contextSha256": "840b15c71f87b9ec9b76d83e06bc60d8bb4fa0bb43fdbb2a2ec89e00da77c94e",
+          "manifestSha256": "dc4d5866ae8c235524cb018628ac4b6294b3b68674f0e85a8d71ee9846340524",
+          "researchSha256": "c61def99cbc1d1b685e5055975600b74d132a8774596d4260aad0a9f26d1a54b",
+          "learningSha256": "2052d14b4663df0e5b58dfc950d1f8752919ab9131e154079a6726ff6af4f4d7"
+        }
+      }
+    },
+    {
+      "id": "4d38336857381bdb6f0be4d9df348ed92425913bf5647b129885565b9729fa00",
+      "kind": "assessment",
+      "caseId": "b00708562d0e2aeefbf5e0c1",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "sourceRunId": "loop-40761185684-1",
+      "details": {
+        "revisionId": "08ed5b2230b9ffeb8c277601d354286b8dad8fe9df73f6c2d0ee2c6d3f11b763",
+        "parentRevisionId": null,
+        "candidateIndex": 5,
+        "candidateSha256": "ad5207bfc0a995ac658689dd61fd409329bdc131e28c2128c16d67ad8a1c688f",
+        "sourceSha256": "49dd07519bf884fcc05b29b5836dc90210e46035af5220ec2783050fc7e8947f",
+        "capabilitySources": [
+          {
+            "sourceId": "d3c31f318baa92cd9c697d56",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.if",
+            "textSha256": "5fabc48cf2c05596d9de29e61ee3fc61977c322dc936a68c0ebde2174ac58c0a"
+          },
+          {
+            "sourceId": "113bfbf5643238079ad1295d",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.code",
+            "textSha256": "e13f92795111aae9d488783473cb322e93bcc040e8b5ed3af8c2428cadd7afac"
+          }
+        ],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A test report showing the proposed category, matched rule and review flag for each sample email.",
+          "inputs": [
+            "Fictional email text",
+            "Operator-defined match terms",
+            "Expected category labels"
+          ],
+          "trigger": "When an operator adds or changes a sorting rule for a test batch.",
+          "steps": [
+            "Transform sample text into a consistent test field.",
+            "Compare each sample with the supplied terms.",
+            "Route matches to the proposed category.",
+            "Flag no-match and multiple-match cases.",
+            "Compare results with operator-provided expected labels."
+          ],
+          "acceptanceCheck": "Run labeled fictional examples including a no-match and ambiguous case; confirm every result and review flag against expected labels.",
+          "humanBoundary": "An operator defines terms and expected labels; a person reviews uncertain cases and authorizes workflow changes. Do not process real email.",
+          "unverified": [
+            "Whether Code-node behavior matches a live workflow",
+            "Email ingestion and connector permissions",
+            "Quality on real-world message variation",
+            "Buyer willingness to pay"
+          ]
+        },
+        "limitations": [
+          "Whether Code-node behavior matches a live workflow",
+          "Email ingestion and connector permissions",
+          "Quality on real-world message variation",
+          "Buyer willingness to pay"
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The If-node reference d3c31f318baa92cd9c697d56 documents conditional comparisons and the Code-node reference 113bfbf5643238079ad1295d documents data transformation; neither fixes the reported workflow.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56",
+              "113bfbf5643238079ad1295d"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: workflow consultants might pay for sorting-rule diagnosis; this single troubleshooting post establishes no buyer intent, recurring need or payment.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic test can transform sample text and branch on operator rules using d3c31f318baa92cd9c697d56 and 113bfbf5643238079ad1295d; matching accuracy remains unverified.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56",
+              "113bfbf5643238079ad1295d"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A test can repeat comparisons and route uncertain samples for review with d3c31f318baa92cd9c697d56; a person must verify labels and change the workflow.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe text recognition and Boolean sorting failures, but this is one troubleshooting request without recurrence or corroboration.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "06bef229750bd978babe102f2e796159f607749ffba64a333fd1e739a82fd145",
+          "draftSha256": "c5420b9f85dd5206a878c0a2a5991c167085b70806f79c341b5ad7d923b8b008",
+          "contextSha256": "840b15c71f87b9ec9b76d83e06bc60d8bb4fa0bb43fdbb2a2ec89e00da77c94e",
+          "manifestSha256": "dc4d5866ae8c235524cb018628ac4b6294b3b68674f0e85a8d71ee9846340524",
+          "researchSha256": "c61def99cbc1d1b685e5055975600b74d132a8774596d4260aad0a9f26d1a54b",
+          "learningSha256": "2052d14b4663df0e5b58dfc950d1f8752919ab9131e154079a6726ff6af4f4d7"
+        }
+      }
+    }
+  ]
+}
