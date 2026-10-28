@@ -1,0 +1,465 @@
+{
+  "runId": "loop-40655630179-1",
+  "createdAt": "2026-10-28T08:17:58.458Z",
+  "candidates": [
+    {
+      "title": "Send daily alerts for new target-company jobs",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "84dd42b26c54d12b4f52a07c"
+        ],
+        "chore": "Track target companies' career pages and send an alert when a new job appears.",
+        "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies. Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+      },
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily review list of newly found jobs from a small set of operator-selected target companies, with a short proposed match note.",
+        "inputs": [
+          "Operator-supplied career page URLs",
+          "Operator-supplied role keywords and location preferences",
+          "Public job listing title, location and URL"
+        ],
+        "trigger": "A scheduled daily check of the operator's selected public career pages.",
+        "steps": [
+          "Read the operator's approved target-company list.",
+          "Check public career pages for new listings using an authorized retrieval method.",
+          "Compare listing URLs with the prior run's saved list.",
+          "Draft a brief match note from operator-supplied role preferences.",
+          "Send only new listing links and notes to a private review channel.",
+          "Ask the operator to verify relevance and access permission before acting."
+        ],
+        "acceptanceCheck": "Given a small fixture of previously seen and new listings, confirm that only new URLs appear and each match note cites the supplied preference it used.",
+        "humanBoundary": "The operator supplies target companies and preferences, confirms retrieval is permitted, reviews every listing and note, and decides whether to apply or contact anyone.",
+        "unverified": [
+          "Generalizing the author's described workflow to other career sites",
+          "Whether the proposed match notes are useful or accurate",
+          "Permission and stability of each career site's public access",
+          "No software execution or student deployment is established by this draft"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The retained workflow describes a daily trigger, new-item check and Slack alert; a test is plausible, but the source does not show unusually easy setup.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recruiting consultancies may pay for monitoring; the author describes personal tracking and shows no buyer intent or payment.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "The described daily flow supports a narrow test; broader site coverage and useful match notes remain unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "The described repeated run returns new listings, while access, relevance and next actions still require a person.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe one author’s target-company tracking loop and alert fields; outside demand and matching usefulness are not established.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          }
+        }
+      },
+      "reason": "Retained the proposed narrow daily alert experiment and its source-supported workflow. The repaired ratings are 6, 4, 6, 6 and 5 (mean 5.4), below the threshold."
+    },
+    {
+      "title": "Prepare resume fields for repeated applications",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Repeatedly enter resume information into company-specific hiring forms.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b",
+        "b100f221383c5b74ce29f37b"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable map from operator-provided resume text to fields in one sample application form.",
+        "inputs": [
+          "Fictional resume text",
+          "Operator-provided sample form field labels",
+          "A proposed mapping schema"
+        ],
+        "trigger": "An operator starts a mapping run after supplying a resume and a sample form's field labels.",
+        "steps": [
+          "Extract candidate facts from the supplied fictional resume text.",
+          "Map each fact to a matching supplied form label.",
+          "Leave unsupported or ambiguous fields blank.",
+          "Show the proposed values beside their source text.",
+          "Have a person verify every value and enter it manually."
+        ],
+        "acceptanceCheck": "For a fixed fictional resume and sample form, verify that every populated field is supported by a matching source phrase and ambiguous fields remain blank.",
+        "humanBoundary": "A person supplies the text, checks sensitive details, verifies every mapping, and manually submits any real application.",
+        "unverified": [
+          "Company-specific form layouts and fields",
+          "Reliable field mapping beyond a small fixed example",
+          "Any browser entry or application submission",
+          "Willingness of job seekers to pay"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied Information Extractor documentation supports structured extraction from text, but does not document form filling or field matching.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers may pay to reduce repeated form entry; this single post shows a chore, not purchase intent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can prepare values for supplied labels; the extractor supports structured text output, while company forms and live entry remain unverified.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Extraction can be tested on supplied text, but no field-mapping or browser capability is documented and a person must verify and submit each form.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a daily two-hour resume-entry chore for forms tailored to one or two companies; frequency beyond this account and buyer demand are unknown.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed a bounded extraction-and-review experiment; the documented extraction reference does not support form mapping or submission, and the provisional mean is below six."
+    },
+    {
+      "title": "Use an already received image in a reply assistant",
+      "productUrl": "https://community.make.com/t/118271",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Pass an already received customer image together with the message to an assistant instead of asking the customer to resend it.",
+        "evidenceQuote": "Even though the image has already been received and downloaded, the AI agent asks the customer to send the image again."
+      },
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft response that uses a supplied message and its associated sample image when both are present.",
+        "inputs": [
+          "Fictional customer text",
+          "A synthetic product image",
+          "A manually paired message and image record"
+        ],
+        "trigger": "An operator starts a test with a sample customer message and its attached image.",
+        "steps": [
+          "Represent the message and image as one test record.",
+          "Check that the record includes both text and image fields.",
+          "Ask a model to describe only visible product attributes.",
+          "Draft a response that references those attributes cautiously.",
+          "Flag missing or uncertain image details for human review."
+        ],
+        "acceptanceCheck": "For paired and image-missing fixtures, confirm the paired case uses the supplied image and the missing case asks for clarification without inventing product details.",
+        "humanBoundary": "A person supplies test media, checks image handling and every draft, and approves any customer-facing response.",
+        "unverified": [
+          "No supplied implementation reference documents message-image pairing",
+          "Vision accuracy and platform image access",
+          "Live Messenger integration and privacy requirements",
+          "Whether the proposed service has paying customers"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post clearly describes the routing problem, but no supplied implementation reference documents combining image and text inputs.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: online shops may pay to reduce repeated image requests; the post shows a troubleshooting need, not purchase intent.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fixture test is bounded, but image access, pairing and model accuracy are unsupported by supplied references.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed paired-input draft loop is repeatable, but no supplied source supports its integration and a person must check every response.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained original-post span states the image-resend failure and desired shared input; it gives no implementation or corroboration.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete troubleshooting chore assessed with a synthetic paired-input experiment; absent integration support keeps the provisional mean below six."
+    },
+    {
+      "title": "Prevent booking conflicts in salon requests",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a53a6bc89a5cdac92d4ab658"
+        ],
+        "chore": "Check incoming salon booking requests against working hours, staff availability and existing appointments before confirmation.",
+        "evidenceQuote": "Every booking request checks salon working hours, master availability, and existing appointments in PostgreSQL at the SQL level before confirmation."
+      },
+      "sourceIds": [
+        "a53a6bc89a5cdac92d4ab658"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft booking decision showing whether a fictional request conflicts with supplied salon hours, staff slots or appointments.",
+        "inputs": [
+          "Fictional booking request with date and time",
+          "Fictional salon working hours",
+          "Fictional staff availability",
+          "Fictional existing appointment list"
+        ],
+        "trigger": "An operator submits one fictional booking request for a test run.",
+        "steps": [
+          "Parse the requested date and time from the supplied fixture.",
+          "Compare it with the supplied working hours.",
+          "Check the selected staff member's fictional availability.",
+          "Check the fixture for an existing appointment in the requested slot.",
+          "Return a conflict explanation or a draft confirmation for human review."
+        ],
+        "acceptanceCheck": "Run fixtures for outside-hours, unavailable-staff, occupied-slot and clear-slot cases; verify each result matches the supplied deterministic rules.",
+        "humanBoundary": "A person supplies and verifies test rules and records, reviews every decision, and confirms any real appointment.",
+        "unverified": [
+          "The post's detailed architecture is absent from the retained task span",
+          "No supplied implementation reference independently supports execution",
+          "Real calendar access, concurrency handling and deployment",
+          "Payment interest from salon operators"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post's retained spans describe a proposed architecture, but no supplied implementation reference supports a student build.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: salons may pay for fewer booking conflicts; the maker's architecture post does not establish a buyer or payment.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional slot-check prototype is scoped for four weeks, but live calendar access and reliable concurrent booking are unverified.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed checks are repeatable, but no implementation capability is supplied here and a person must confirm real bookings.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe salon booking requests, atomic slot validation and a database architecture; they do not establish external demand.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          }
+        }
+      },
+      "reason": "The retained spans describe a working architecture and bounded booking checks, but no separate implementation reference or outside buyer evidence is supplied; below threshold."
+    },
+    {
+      "title": "Monitor vulnerabilities on a Mac",
+      "productUrl": "https://news.ycombinator.com/item?id=50270271",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "476f0eefd59ad6f4972f112b"
+        ],
+        "chore": "Monitor new Mac vulnerabilities and identify what needs fixing.",
+        "evidenceQuote": "Built an open source tool that monitors new vulnerabilities every 15 mins and lets you or your agent know on what to fix."
+      },
+      "sourceIds": [
+        "476f0eefd59ad6f4972f112b"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed daily list of vulnerability notices mapped to an operator-supplied inventory of fictional Mac software.",
+        "inputs": [
+          "Fictional Mac software inventory",
+          "A small public vulnerability notice sample",
+          "Operator-defined version matching rules"
+        ],
+        "trigger": "An operator starts a test after supplying the fictional inventory and notice sample.",
+        "steps": [
+          "Normalize software names and versions in the fixture.",
+          "Compare fixture entries with supplied notices.",
+          "Flag possible matches with the matching text shown.",
+          "Draft a plain-language review note without prescribing remediation.",
+          "Have a qualified operator verify each match and decide any action."
+        ],
+        "acceptanceCheck": "For a fixed fixture with known matching and nonmatching versions, check that every flag cites the matched name and version and no remediation is issued automatically.",
+        "humanBoundary": "A qualified person verifies notices, applicability and any remediation; the prototype does not scan devices or change software.",
+        "unverified": [
+          "No supplied implementation reference supports vulnerability retrieval or matching",
+          "Accuracy and completeness of public notices",
+          "The author describes a tool, not demand from independent buyers",
+          "Security advice and remediation require qualified review"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "The post describes an existing tool but no supplied reference supports vulnerability feeds, version matching or a safe student prototype.",
+            "sourceIds": [
+              "476f0eefd59ad6f4972f112b"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small IT consultancies might pay for vulnerability monitoring; this maker post establishes no buyer interest or payment.",
+            "sourceIds": [
+              "476f0eefd59ad6f4972f112b"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A fictional comparison is possible, but useful matching and security conclusions are unsupported and need qualified review.",
+            "sourceIds": [
+              "476f0eefd59ad6f4972f112b"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The safe version only drafts flags for review; no retrieval or validation capability is supported and remediation must remain human-led.",
+            "sourceIds": [
+              "476f0eefd59ad6f4972f112b"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post says its author's tool monitors vulnerabilities every 15 minutes, but gives no independent user need or corroboration.",
+            "sourceIds": [
+              "476f0eefd59ad6f4972f112b"
+            ]
+          }
+        }
+      },
+      "reason": "Scored a narrow fictional matching experiment, but the source is a maker's product description and supplied evidence does not support safe monitoring or an independent buyer need."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Ask how to report IP abuse to Cloudflare",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "Excluded: the only retained text is ‘which clearly doesn't apply here.’ It does not identify the abuse, a reporting task, or a service chore; inventing one would exceed the supplied evidence."
+    },
+    {
+      "title": "Prepare resume fields for repeated applications",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "reason": "Below threshold: structured extraction is documented, but automated form mapping and submission are not; no buyer willingness to pay is evidenced."
+    },
+    {
+      "title": "Use an already received image in a reply assistant",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Below threshold: the post states the paired image/text problem, but no supplied implementation evidence supports routing or image analysis."
+    },
+    {
+      "title": "Prevent booking conflicts in salon requests",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "reason": "Below threshold: the retained spans describe the maker's architecture and booking checks, while a student implementation and outside buyer need remain unverified."
+    },
+    {
+      "title": "Monitor vulnerabilities on a Mac",
+      "productUrl": "https://news.ycombinator.com/item?id=50270271",
+      "reason": "Below threshold: the source describes its author's tool, while supplied references do not support safe vulnerability matching or independent buyer demand."
+    },
+    {
+      "title": "Access to ATS tools requires sales",
+      "productUrl": "https://news.ycombinator.com/item?id=50269124",
+      "reason": "Excluded: the retained sentence only says some tools require speaking to sales. It does not establish a concrete hiring chore or request for an alternative."
+    },
+    {
+      "title": "Fix Make automation problems",
+      "productUrl": "https://community.make.com/t/118231",
+      "reason": "Excluded: the post is a service provider's broad invitation to describe possible issues; the retained spans give examples but no specific existing task from a requester to scope."
+    },
+    {
+      "title": "Send daily alerts for new target-company jobs",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "reason": "Withdrawn in the single repair: corrected provisional criteria are ease 6, profit 4, feasibility 6, autonomy 6 and evidence 5, giving a 5.4 mean below the threshold of 6. The described target-company workflow supports a narrow proposed experiment, but outside buyer demand and broader site coverage remain unverified."
+    }
+  ]
+}
