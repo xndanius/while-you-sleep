@@ -1,0 +1,558 @@
+{
+  "runId": "loop-40614546433-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-28T01:23:35.926Z",
+  "candidates": [
+    {
+      "title": "Test text rules for email sorting",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b00708562d0e2aeefbf5e0c1"
+        ],
+        "chore": "Sort emails by whether their text contains configured terms, with a conditional route deciding the sorting outcome.",
+        "evidenceQuote": "the emails aren’t being sorted correctly"
+      },
+      "sourceIds": [
+        "b00708562d0e2aeefbf5e0c1",
+        "d3c31f318baa92cd9c697d56"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed test report showing how configured text conditions route each synthetic email and which cases fail the expected category.",
+        "inputs": [
+          "Synthetic email subject and body",
+          "Operator-supplied matching terms",
+          "Expected category label",
+          "Synthetic expected route for each test message"
+        ],
+        "trigger": "An operator supplies a set of labeled synthetic messages and the text conditions intended to sort them.",
+        "steps": [
+          "Record each synthetic message and its expected category.",
+          "Apply the operator's configured text condition to each message.",
+          "Use a conditional route to separate matching and nonmatching examples.",
+          "Compare the route result with the expected category.",
+          "List mismatches and ambiguous terms for a person to revise."
+        ],
+        "acceptanceCheck": "On a labeled synthetic set, confirm every route result matches the expected category or is flagged as a mismatch, and ensure ambiguous examples are not silently assigned a confident category.",
+        "humanBoundary": "An operator must choose useful terms and categories, review mismatches, test with authorized messages, and approve any production change; no actual email account access or sorting deployment is established.",
+        "unverified": [
+          "The n8n If node reference supports conditional comparisons only; it does not establish reliable email text matching or a complete email integration.",
+          "The post reports one current workflow problem, not recurring customer demand or willingness to pay.",
+          "No production examples or verified sorting accuracy are supplied."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test synthetic text conditions; n8n documents conditional comparison routes, but not the email integration or reliable text recognition.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small teams sorting repeated email types might pay for setup help; this troubleshooting post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic rule test is feasible, and the If node supplies conditional comparison routing; actual email access and text matching accuracy remain unverified.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The If node can route based on configured comparisons, but a person must select terms, check mismatches and authorize changes to a live inbox.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native spans describe automatic email sorting and a text-match/conditional-node failure; the supplied n8n reference confirms conditional comparisons only.",
+            "sourceIds": [
+              "b00708562d0e2aeefbf5e0c1",
+              "d3c31f318baa92cd9c697d56"
+            ]
+          }
+        }
+      },
+      "reason": "The fresh spans and assigned If-node documentation support a narrow synthetic sorting test, but this is one troubleshooting request and email matching remains unverified; provisional mean is below threshold."
+    },
+    {
+      "title": "Consolidate scattered trip details",
+      "productUrl": "https://news.ycombinator.com/item?id=50268115",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "fc05943ed79737713b2291cd"
+        ],
+        "chore": "Bring trip details scattered across a spreadsheet, airline apps, old inboxes and a photo library into one place.",
+        "evidenceQuote": "My trips were scattered across a spreadsheet, airline apps, old inboxes and a photo library, so I built Trvlrr to hold all of it."
+      },
+      "sourceIds": [
+        "fc05943ed79737713b2291cd"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A single trip brief that organizes operator-supplied itinerary details and links, with uncertain or missing fields marked for review.",
+        "inputs": [
+          "Synthetic trip name and dates",
+          "Operator-supplied itinerary text",
+          "Operator-supplied booking confirmation excerpts",
+          "Manually supplied source links"
+        ],
+        "trigger": "A traveler or assistant supplies details for one upcoming trip that are currently spread across sample files and links.",
+        "steps": [
+          "Collect only the selected trip's test materials.",
+          "Extract dates, locations, confirmation details and links into proposed fields.",
+          "Group extracted items by trip day and source.",
+          "Flag conflicting dates or missing details without guessing.",
+          "Prepare a compact trip brief for a person to check."
+        ],
+        "acceptanceCheck": "On a synthetic packet with known dates and links, compare every proposed brief field with the input and require all conflicts or missing values to be flagged rather than filled in.",
+        "humanBoundary": "A traveler must provide lawful sample materials, verify each date and booking detail, and decide whether the brief is useful; the tool must not change bookings or access personal accounts.",
+        "unverified": [
+          "No source documents an automated extraction capability.",
+          "The post does not establish recurring frequency, buyer intent or willingness to pay.",
+          "Privacy-safe handling of real travel confirmations is not assessed."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can organize operator-supplied sample itinerary text, but the post documents no extraction tools or workflow capability.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: frequent travelers or travel assistants might pay for trip organization; the post establishes no purchase intent or payment.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can turn one supplied sample packet into a reviewed brief; source variety, accuracy and real account access remain unverified.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed loop groups supplied details, but no automation is documented and a traveler must verify every extracted booking fact.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post explicitly describes trips scattered across four information sources and says its author built a place to hold them; frequency and outcomes are absent.",
+            "sourceIds": [
+              "fc05943ed79737713b2291cd"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete consolidation task, but a proposed student organizer lacks implementation evidence and proven buyer demand; provisional mean is below threshold."
+    },
+    {
+      "title": "Coordinate booking and service alerts",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Send booking confirmations, provider assignment notifications, payment status updates and customer alerts for an on-demand service application.",
+        "evidenceQuote": "How can n8n help automate booking confirmations, provider assignment notifications, payment status updates, and customer alerts?"
+      },
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A proposed notification draft for one synthetic booking event, showing the recipient category, event status and message for human review.",
+        "inputs": [
+          "Synthetic booking identifier",
+          "Synthetic booking status",
+          "Synthetic provider assignment",
+          "Synthetic payment status",
+          "Synthetic customer contact placeholder"
+        ],
+        "trigger": "An operator enters one synthetic booking status change into a test table.",
+        "steps": [
+          "Read one synthetic status row.",
+          "Check whether the event is a booking, assignment or payment update.",
+          "Prepare the matching customer or provider message draft.",
+          "Mark duplicate test event identifiers so a second draft is not created.",
+          "Show the draft and event details to an operator for review."
+        ],
+        "acceptanceCheck": "Replay a small labeled set of synthetic status rows and confirm each produces only the intended draft, with duplicate event identifiers and unknown statuses visibly flagged.",
+        "humanBoundary": "An operator must define event meanings, validate payment and booking facts, approve recipients and messages, and authorize any real notification; no live payment or customer system is connected in this proposal.",
+        "unverified": [
+          "No supplied reference supports booking, payment or notification integrations for this assignment.",
+          "The post does not establish event volume, field schema, failed-request behavior or duplicate controls in a working deployment.",
+          "External API access and real customer data permissions remain unresolved."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic status-to-draft test is scoping work, but no supplied implementation reference supports the requested integrations.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: on-demand service operators might pay for reliable booking updates; this request shows a need, not purchase intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic prototype can draft a few labeled event messages; external APIs, payment status correctness and production delivery are unsupported.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The proposed event-to-draft loop is repeatable, but no integration evidence is supplied and a person must verify facts and approve sends.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native post asks about four concrete notification tasks and mentions retries and duplicate notifications; it supplies no field details or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete notification chores support a small mock, but there is no matching implementation reference and the honest provisional mean is below threshold."
+    },
+    {
+      "title": "Share received images with message handling",
+      "productUrl": "https://community.make.com/t/118271",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Handle customer Messenger messages containing text and images so the agent can use an image already received instead of asking the customer to resend it.",
+        "evidenceQuote": "Even though the image has already been received and downloaded, the AI agent asks the customer to send the image again."
+      },
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed response draft that references an operator-provided message and the already supplied synthetic image description, while flagging missing image context.",
+        "inputs": [
+          "Synthetic customer text",
+          "Operator-written description of a synthetic product image",
+          "Synthetic conversation identifier",
+          "Expected image-available label"
+        ],
+        "trigger": "An operator submits a test message marked as containing an image and includes its synthetic description.",
+        "steps": [
+          "Accept the text and image-available label as one test record.",
+          "Keep the operator description linked to that record.",
+          "Draft a response using only the supplied text and description.",
+          "Flag when the image description is absent instead of asking for an already supplied image again.",
+          "Show the draft and linked inputs for human review."
+        ],
+        "acceptanceCheck": "Run labeled synthetic text-only and text-plus-image-description cases; verify the draft uses the supplied description when present and flags missing descriptions without claiming to inspect an image.",
+        "humanBoundary": "A person must supply the image description, check product identification and reply accuracy, and approve any response; no live Messenger access, image processing or customer data handling is proposed as established capability.",
+        "unverified": [
+          "No supplied implementation reference supports Messenger routing or image handling for this assignment.",
+          "Image interpretation is not tested or documented in supplied evidence.",
+          "The post establishes one reported workflow problem, not its recurrence or willingness to pay."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can test linked synthetic text and descriptions, but no supplied reference supports Messenger or image routing.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: service businesses handling image inquiries might pay for fewer repeated requests; this post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week synthetic draft test is possible, but live Messenger inputs and image interpretation are unsupported and would need separate validation.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposal only links supplied test inputs to a draft; a human describes images, checks the reply and approves sending.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native post describes text and image routes and the specific repeated-image problem, but gives no recurrence or outcome evidence.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "reason": "The post contains a specific workflow problem, but the available evidence cannot support the key Messenger or image capabilities; provisional mean is below threshold."
+    },
+    {
+      "title": "Review repeated Make data-sync failures",
+      "productUrl": "https://community.make.com/t/118231",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bc3afc6e8c2a63bbd4b7ae01"
+        ],
+        "chore": "Investigate recurring workflow problems such as duplicate records or data not syncing correctly between services.",
+        "evidenceQuote": "Duplicate records being created"
+      },
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01",
+        "428eda549e557f199c3af452"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short review report for one operator-supplied sample failure, with the observed symptom, likely next check and unresolved cause separated.",
+        "inputs": [
+          "Synthetic scenario step description",
+          "Synthetic expected result",
+          "Synthetic observed result",
+          "Operator-supplied error text with personal data removed"
+        ],
+        "trigger": "An operator submits one sample Make workflow issue for a bounded review.",
+        "steps": [
+          "Record the expected and observed behavior from the supplied sample.",
+          "Separate the issue into missing, duplicate or failed data movement.",
+          "For a reported module error, list the documented Make error-handler option.",
+          "Draft a checklist of evidence still needed to identify a cause.",
+          "Return the report for a technician to verify and price."
+        ],
+        "acceptanceCheck": "Use labeled synthetic cases and check that each report preserves the stated symptom, does not claim an unverified root cause, and only mentions Make error handling for a module error.",
+        "humanBoundary": "A technician must inspect the actual scenario, confirm the cause, decide any repair and agree scope and price; the supplied Make reference documents error handling only, not deduplication or data-sync diagnosis.",
+        "unverified": [
+          "The post offers paid help for smaller Make issues but does not document a specific client's repeated task or completed payment.",
+          "Make documentation supports handling module errors, not dedupe or data-sync correction.",
+          "No automated diagnosis, customer outcomes or recurring case volume is established."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can format a sample issue report; Make documents error handlers for module errors, but not the listed duplicate or sync causes.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small businesses with broken Make scenarios may pay for review; the post offers fixed-price help but records no purchase or buyer outcome.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week sample report can be scoped, while diagnosing duplicates and sync failures requires workflow details beyond the documented error-handler capability.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The reference supports routing module errors to a configured handler; a technician must inspect the scenario and verify any proposed diagnosis.",
+            "sourceIds": [
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post lists duplicate records and data-sync problems and offers fixed-price remote review, but provides no specific case detail or corroboration.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          }
+        }
+      },
+      "reason": "There are concrete example failure categories and limited Make error-handling documentation, but no single case workflow or verified recurring demand; below threshold."
+    },
+    {
+      "title": "Review affordable AWS scaling options",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a6b1f94743a6b7e17995034c"
+        ],
+        "chore": "Help a bootstrapped startup assess affordable AWS scaling options.",
+        "evidenceQuote": "If you are a bootstrapped startup and need to scale on AWS but can't afford it, reply with your email and I will help you out"
+      },
+      "sourceIds": [
+        "a6b1f94743a6b7e17995034c"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A comparison memo for operator-supplied sample AWS cost scenarios, with assumptions and questions for an infrastructure specialist clearly separated.",
+        "inputs": [
+          "Synthetic monthly cost figures for a few operator-selected services",
+          "Operator-supplied growth goal",
+          "Operator-supplied budget ceiling",
+          "Assumed traffic or capacity notes"
+        ],
+        "trigger": "An operator supplies sample cost scenarios and a stated growth goal for a bootstrapped startup.",
+        "steps": [
+          "Record the supplied cost figures, growth goal, budget ceiling, and assumptions.",
+          "Group costs by the operator-selected service labels without adding missing prices.",
+          "Compare the scenarios against the stated budget and goal.",
+          "Flag missing assumptions and any scenario that cannot be compared fairly.",
+          "Draft a short options memo for infrastructure review."
+        ],
+        "acceptanceCheck": "For synthetic scenarios with known totals and a stated budget, check that the memo reproduces each supplied figure, calculates only transparent comparisons, and flags missing assumptions instead of inventing savings or capacity.",
+        "humanBoundary": "A qualified operator must supply and verify current AWS prices, architecture assumptions, security constraints, and growth needs, then approve any change; this test does not access AWS or establish tax, billing, or production correctness.",
+        "unverified": [
+          "No supplied reference documents AWS pricing analysis, architecture planning, or infrastructure integrations.",
+          "The post describes an offer of help but gives no cost inputs, workflow, recurrence, or outcomes.",
+          "Buyer willingness to pay and the usefulness of a comparison memo remain untested."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner could format a cost-options memo from operator-supplied sample figures; no supplied source supports AWS cost analysis.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: bootstrapped startups seeking affordable AWS scaling might pay for advisory help; the request proves neither purchase intent nor payment.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare supplied cost scenarios and a growth goal, but the post gives no fields, constraints, or way to verify recommendations.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed input-to-options memo is bounded, but no automated analysis is documented and an operator must verify costs and choices.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post requests affordable AWS scaling help, but supplies no task steps, inputs, recurrence, corroboration, or implementation evidence.",
+            "sourceIds": [
+              "a6b1f94743a6b7e17995034c"
+            ]
+          }
+        }
+      },
+      "reason": "Repair assessment of the named concrete AWS scaling request: a limited proposed cost-options memo can be tested with synthetic inputs, but no source supports AWS analysis and the honest provisional mean is below threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Invite to build your business on KeilHQ",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "The supplied excerpt says operations are managed but identifies no concrete task. A specific workflow or buyer duty would have to be invented, so no scored experiment is justified."
+    },
+    {
+      "title": "Show HN: HackerDome, real time PvP programming duels ft. spectating and sabotage",
+      "productUrl": "https://news.ycombinator.com/item?id=50264623",
+      "reason": "The retained excerpt only characterizes the interview process as a race to the bottom; it does not identify a concrete task or requested service from which to scope an experiment."
+    },
+    {
+      "title": "Review affordable AWS scaling options",
+      "productUrl": "https://news.ycombinator.com/item?id=50252246",
+      "reason": "Scored candidate, below the 6 threshold: a proposed comparison memo can organize operator-supplied sample costs, but no source supports AWS analysis and the request gives no cost fields, workflow, recurrence, or buyer-payment evidence."
+    },
+    {
+      "title": "Consolidate scattered trip details",
+      "productUrl": "https://news.ycombinator.com/item?id=50268115",
+      "reason": "Scored candidate, below the 6 threshold: a proposed student organizer is plausible from the literal chore, but implementation support and validated buyer demand are absent."
+    },
+    {
+      "title": "Test text rules for email sorting",
+      "productUrl": "https://community.n8n.io/t/324902",
+      "reason": "Scored candidate, below the 6 threshold: fresh spans identify email sorting and the assigned n8n If-node reference supports conditional comparisons, but matching accuracy, live email integration and recurring demand are unverified."
+    },
+    {
+      "title": "Coordinate booking and service alerts",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "reason": "Scored candidate, below the 6 threshold: the concrete notification chores support a synthetic design, but there is no supplied matching implementation capability or production evidence."
+    },
+    {
+      "title": "Share received images with message handling",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Scored candidate, below the 6 threshold: the proposed synthetic draft cannot establish Messenger routing or image handling, and the evidence is one reported problem."
+    },
+    {
+      "title": "Review repeated Make data-sync failures",
+      "productUrl": "https://community.make.com/t/118231",
+      "reason": "Scored candidate, below the 6 threshold: the source offers paid review and lists failure categories, but no individual case or repeated demand is documented; Make's error-handler reference does not support dedupe or sync diagnosis."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight assigned discussion identities. Four concrete chores received scoped plans and provisional five-criterion ratings; four broad or one-off excerpts were excluded. No candidate met the unrounded 6 threshold, so no post is proposed."
+    }
+  ],
+  "repairAttempt": 1
+}
