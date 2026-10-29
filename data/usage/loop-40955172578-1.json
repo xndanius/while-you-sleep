@@ -1,0 +1,122 @@
+{
+  "id": "loop-40955172578-1",
+  "type": "usage",
+  "runId": "loop-40955172578-1",
+  "workflowKind": "loop",
+  "collectedAt": "2026-10-29T21:15:04.111Z",
+  "localDate": "2026-10-29",
+  "githubRunId": "40955172578",
+  "runAttempt": 1,
+  "githubRunUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40955172578/attempts/1",
+  "model": "gpt-6-luna",
+  "source": "github_actions_logs_codex_exec_jsonl",
+  "status": "recorded",
+  "inputTokens": 1267571,
+  "cachedInputTokens": 1100336,
+  "cacheWriteInputTokens": 167142,
+  "outputTokens": 15644,
+  "reasoningOutputTokens": 4645,
+  "costUsd": 0.03972741,
+  "observedCounts": {
+    "inputTokens": 1267571,
+    "cachedInputTokens": 1100336,
+    "cacheWriteInputTokens": 167142,
+    "outputTokens": 15644,
+    "reasoningOutputTokens": 4645,
+    "costUsd": 0.03972741
+  },
+  "coverage": {
+    "expectedModelJobs": 4,
+    "observedModelJobs": 3,
+    "notRunModelJobs": 1,
+    "unknownModelJobs": 0
+  },
+  "rates": {
+    "inputUsdPerMillion": 0.1,
+    "cachedInputUsdPerMillion": 0.01,
+    "cacheWriteInputUsdPerMillion": 0.125,
+    "outputUsdPerMillion": 0.5,
+    "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+    "verifiedAt": "2026-10-10",
+    "tier": "standard_short_context",
+    "currency": "USD"
+  },
+  "observedModels": [
+    "gpt-6-luna"
+  ],
+  "pricingStatus": "recorded_token_estimate",
+  "caveat": "Token-based standard-rate estimate, not an invoice. Long-context, service-tier, region, paid-tool, and unreported cache-write adjustments are not established by CLI totals. Verified skipped model jobs contribute zero; missing usage without non-execution proof leaves totals unknown. observedCounts sums reported jobs, or zero when all model jobs are proven skipped.",
+  "jobs": [
+    {
+      "name": "writer",
+      "jobId": 123733760634,
+      "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40955172578/job/123733760634",
+      "status": "observed",
+      "reason": null,
+      "inputTokens": 665923,
+      "cachedInputTokens": 603880,
+      "cacheWriteInputTokens": 62001,
+      "outputTokens": 7804,
+      "reasoningOutputTokens": 1999,
+      "costUsd": 0.017695125,
+      "conclusion": "success",
+      "model": "gpt-6-luna",
+      "cacheWriteAccounting": "reported_by_cli",
+      "pricingStatus": "standard_token_estimate"
+    },
+    {
+      "name": "checker",
+      "jobId": 123734954361,
+      "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40955172578/job/123734954361",
+      "status": "observed",
+      "reason": null,
+      "inputTokens": 266829,
+      "cachedInputTokens": 213762,
+      "cacheWriteInputTokens": 53043,
+      "outputTokens": 3067,
+      "reasoningOutputTokens": 1745,
+      "costUsd": 0.010303895,
+      "conclusion": "success",
+      "model": "gpt-6-luna",
+      "cacheWriteAccounting": "reported_by_cli",
+      "pricingStatus": "standard_token_estimate"
+    },
+    {
+      "name": "repair",
+      "jobId": 123735689493,
+      "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40955172578/job/123735689493",
+      "status": "observed",
+      "reason": null,
+      "inputTokens": 334819,
+      "cachedInputTokens": 282694,
+      "cacheWriteInputTokens": 52098,
+      "outputTokens": 4773,
+      "reasoningOutputTokens": 901,
+      "costUsd": 0.01172839,
+      "conclusion": "success",
+      "model": "gpt-6-luna",
+      "cacheWriteAccounting": "reported_by_cli",
+      "pricingStatus": "standard_token_estimate"
+    },
+    {
+      "name": "final_check",
+      "jobId": 123736430453,
+      "githubJobUrl": "https://github.com/xndanius/while-you-sleep/actions/runs/40955172578/job/123736430453",
+      "status": "not_run",
+      "reason": "github_model_step_skipped",
+      "inputTokens": null,
+      "cachedInputTokens": null,
+      "cacheWriteInputTokens": null,
+      "outputTokens": null,
+      "reasoningOutputTokens": null,
+      "costUsd": null,
+      "conclusion": "success",
+      "modelStep": {
+        "name": "Fresh Codex checker after the single repair",
+        "number": 11,
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    }
+  ]
+}
