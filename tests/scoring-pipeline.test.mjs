@@ -64,6 +64,21 @@ test('independent score ceilings and fresh literal evidence are mandatory despit
  }
 });
 
+test('an honestly unbuilt proposal has no execution gate, while unsupported execution claims still fail',()=>{
+ const {draft,context,manifest}=fixtures();
+ draft.posts[0].whatItIs='A proposed receipt review service; no prototype or live integration has been executed.';
+ draft.posts[0].uncertainty='This is an unbuilt proposal. Sales and production accuracy are unverified; a person reviews every result.';
+ context.draftSha256=sha256(stableJSON(draft));manifest.draftSha256=context.draftSha256;
+ assert.equal(checkApproval(draft,context,manifest)[0].pass,true,'synthetic approval control exercises the existing gate, not a real model or publication');
+ const unsupported=structuredClone(manifest);
+ unsupported.checks[0].claimChecks.push({claim:'This proposed service already passed a live integration test.',supported:false,sourceId:source.id,evidenceQuote:'Human approval remains required before records are sent'});
+ assert.equal(checkApproval(draft,context,unsupported)[0].pass,false,'an independent unsupported-claim verdict still blocks the post');
+ const fabricated=structuredClone(manifest);
+ fabricated.checks[0].claimChecks.push({claim:'This proposed service already passed a live integration test.',supported:true,sourceId:source.id,evidenceQuote:'The proposed service passed a live integration test.'});
+ assert.equal(checkApproval(draft,context,fabricated)[0].pass,false,'a raw pass cannot make an absent execution quote valid');
+ assert.equal(weightedOverall(draft.posts[0].scoring.criteria,context.scoringPolicy.weights),6);
+});
+
 test('repair feedback does not retain an inflated score or a fabricated score quote',()=>{
  const {draft,context,manifest}=fixtures();manifest.checks[0].scoreChecks[0].maxSupportedScore=5;manifest.checks[0].scoreChecks[1].evidenceQuote='Invented demand figures from nowhere.';
  const result=repairFeedback(draft,context,manifest);
