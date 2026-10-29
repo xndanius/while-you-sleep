@@ -1,0 +1,373 @@
+{
+  "runId": "loop-40805125785-1",
+  "createdAt": "2026-10-29T02:15:08.858Z",
+  "candidates": [
+    {
+      "title": "Find local news gaps across outlets",
+      "productUrl": "https://news.ycombinator.com/item?id=50281162",
+      "sourceIds": [
+        "887ad565ba2d9b051abb976b"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "887ad565ba2d9b051abb976b"
+        ],
+        "chore": "Compare operator-supplied coverage summaries from selected foreign and local outlets to flag topics not represented locally.",
+        "evidenceQuote": "Building a tool to see what is yet not picked up by the outlets in your own country."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short list of topics present in supplied foreign-outlet summaries but absent from supplied local-outlet summaries.",
+        "inputs": [
+          "Three to ten fictional article headlines with outlet and date.",
+          "A small operator-selected list of local outlets and topic labels."
+        ],
+        "trigger": "An operator supplies one fixed batch of headlines and outlet labels.",
+        "steps": [
+          "Normalize headlines into short topic descriptions.",
+          "Group likely matching topics for human review.",
+          "Compare topic groups with the supplied local outlet list.",
+          "Return only candidate gaps with the source headlines attached."
+        ],
+        "acceptanceCheck": "On a synthetic batch with known overlapping topics, verify every flagged gap is absent from the local list and every known overlap is not flagged.",
+        "humanBoundary": "An editor must select lawful sources and verify coverage; the tool must not present an absence as fact without checking the actual outlet archive.",
+        "unverified": [
+          "Reliable outlet data access and coverage completeness.",
+          "Topic matching quality across different headlines.",
+          "Whether newsroom buyers want or would pay for this output."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner could compare a few operator-supplied article summaries, but no source documents a collection or comparison method.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: local newsrooms or media researchers might pay for a coverage-gap brief; this maker post does not establish buyers or payment.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week manual-input prototype is bounded, but outlet selection, topic matching and reliable coverage remain unverified.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable comparison could flag candidate gaps; a person must choose sources and verify every finding before use.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a tool idea about stories not picked up locally, but gives no workflow detail, examples or corroborated need.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          }
+        }
+      },
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected."
+    },
+    {
+      "title": "Flag repeat processing after missed triggers",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "sourceIds": [
+        "ec16f5ced732a9d207069cd6"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ec16f5ced732a9d207069cd6"
+        ],
+        "chore": "Detect a repeated batch or record after a missed schedule trigger before the operator processes it again.",
+        "evidenceQuote": "Missed schedule triggers can duplicate everything."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review list of synthetic lead records that appear to belong to an already processed batch.",
+        "inputs": [
+          "Fictional lead rows with operator-chosen stable IDs.",
+          "A fictional log of previously processed batch IDs.",
+          "A proposed duplicate rule supplied by the operator."
+        ],
+        "trigger": "An operator submits a new fictional batch alongside its processed-ID log.",
+        "steps": [
+          "Compare each row ID with the supplied processed IDs.",
+          "Group exact matches and preserve the matching IDs.",
+          "Mark nonmatches as unreviewed rather than safe to process.",
+          "Produce a report for an operator to inspect."
+        ],
+        "acceptanceCheck": "Test known repeated and new IDs; the report must flag every known repeat, retain its matching ID, and never claim a nonmatch is safe without the operator’s rule.",
+        "humanBoundary": "A workflow operator supplies stable identifiers and decides whether to skip, investigate or replay any batch; no live trigger or data connection is proposed.",
+        "unverified": [
+          "The actual duplicate key and recovery policy.",
+          "Whether missed triggers recur in the operator’s workflow.",
+          "Any safe integration with the schedule or lead system."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can create a small synthetic duplicate check, but no supplied implementation reference documents scheduler recovery or idempotency.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Shopify lead-generation operators may pay to prevent duplicate processing; this post gives no purchase or payment evidence.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can compare fictional batch identifiers, while safe replay and the workflow’s actual duplicate key are unknown.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed checker can flag matching identifiers, but a person must decide whether to skip or replay work.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained task span explicitly says missed schedule triggers can duplicate everything, but does not specify frequency, records or recovery rules.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          }
+        }
+      },
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected."
+    },
+    {
+      "title": "Review received images with customer messages",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Use an already received customer image together with its text message to prepare a product-identification draft, without asking the customer to resend the image.",
+        "evidenceQuote": "I want the AI agent to recognize that the image has already been received and use the available image to identify the product"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft product-identification question or candidate based on a supplied message and its already attached test image.",
+        "inputs": [
+          "Fictional customer message text.",
+          "A synthetic product image with a known label.",
+          "A proposed catalog excerpt supplied by the operator."
+        ],
+        "trigger": "An operator submits one paired message and image fixture.",
+        "steps": [
+          "Keep the text and image attached to the same test case.",
+          "Compare visible image details with the supplied catalog excerpt.",
+          "Draft a candidate product match with uncertainty noted.",
+          "Hold the result for human review; do not contact the customer."
+        ],
+        "acceptanceCheck": "Run paired-image, text-only and mismatched-image fixtures; confirm the draft references only the attached fixture and flags uncertain or absent matches for review.",
+        "humanBoundary": "An operator must provide authorized test images and catalog data, verify the match and approve any customer response; the prototype sends nothing.",
+        "unverified": [
+          "Whether Make can pass the downloaded image to the same agent input.",
+          "Image-analysis accuracy for the shop’s products.",
+          "Catalog and Messenger access, permissions and retention rules."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A paired text-and-image mock is possible, but no supplied building reference documents Make file transfer or image interpretation.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online shops might pay to reduce repeated image requests; the discussion proves no buyer intent or payment.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can test fictional paired inputs, while connector mapping, image access and product accuracy remain unverified.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A proposed draft can combine supplied text and image descriptions; a person must verify the product and send any reply.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The full retained post describes the message, downloaded image and resend problem, but offers no corroborated demand or implementation reference.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected."
+    },
+    {
+      "title": "Review repeated Make data-sync failures",
+      "productUrl": "https://community.make.com/t/118231",
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01",
+        "428eda549e557f199c3af452"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bc3afc6e8c2a63bbd4b7ae01"
+        ],
+        "chore": "Review a supplied example of duplicate records created during a data sync and prepare an operator-facing failure summary.",
+        "evidenceQuote": "Duplicate records being created"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review card describing a supplied Make scenario error and the operator’s next diagnostic question.",
+        "inputs": [
+          "A fictional module error message.",
+          "A short operator-supplied scenario description.",
+          "An operator-selected expected result."
+        ],
+        "trigger": "An operator submits one synthetic failure example for review.",
+        "steps": [
+          "Capture the supplied module and error text.",
+          "Compare the actual result with the operator’s expected result.",
+          "Draft a concise discrepancy summary and one question for diagnosis.",
+          "If the scenario reports a module error, route it to the configured Make error handler for operator review.",
+          "Hold all suggested changes for an operator."
+        ],
+        "acceptanceCheck": "For synthetic error and non-error examples, verify that the card preserves the supplied message, identifies the expected-versus-actual difference and never asserts an unobserved root cause.",
+        "humanBoundary": "An operator supplies safe test text, reviews the card and configures any Make error route; the reference does not establish prevention of duplicate records or automatic fixes.",
+        "unverified": [
+          "Whether the reported sync issue creates a Make module error that the handler can intercept.",
+          "How duplicate records are identified and repaired.",
+          "Whether operators experience this often or would pay for help."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test a small error summary; the Make reference documents an error route that intercepts module errors, not duplicate detection.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional automation consultants may pay for a repeatable fault-review service; this offer establishes no paying customers.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic failure-summary mock is bounded, but the reference does not cover record matching or the listed integrations.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A supplied error can be turned into a review card; the Make reference supports an error route, while a person must diagnose and fix the cause.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post lists recurring sync examples including duplicate records, but no particular incident, frequency or buyer need is verified.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          }
+        }
+      },
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Find local news gaps across outlets",
+      "productUrl": "https://news.ycombinator.com/item?id=50281162",
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected. Its specific idea also repeats the same product URL in the recent rejection index."
+    },
+    {
+      "title": "Flag repeat processing after missed triggers",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected. Its specific idea also repeats the same product URL in the recent rejection index."
+    },
+    {
+      "title": "Review received images with customer messages",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected. Its specific idea also repeats the same product URL in the recent rejection index."
+    },
+    {
+      "title": "Review repeated Make data-sync failures",
+      "productUrl": "https://community.make.com/t/118231",
+      "reason": "Freshly assessed scoped experiment; provisional mean is below 6 and remains rejected. Its specific idea also repeats the same product URL in the recent rejection index."
+    },
+    {
+      "title": "Choose between built-in AI and MCP",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "The assigned post asks which general integration approach a reader prefers, but the retained text names no concrete customer task, requested service, or workflow to prototype. Selecting a buyer or chore would invent demand."
+    },
+    {
+      "title": "Address licensing uncertainty for LLM output",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The retained text expresses a general copyright concern for proprietary and open-source maintainers; it does not request a concrete task or describe a bounded workflow. A licensing service or automated legal judgment would be invented and unsupported."
+    },
+    {
+      "title": "Formalize federal tax forms",
+      "productUrl": "https://news.ycombinator.com/item?id=50278678",
+      "reason": "The retained excerpt describes a proof-of-concept and general principles, not a requested tax task or user chore. A tax-form processing experiment would infer duties and could imply unsupported tax correctness."
+    },
+    {
+      "title": "Salon Telegram booking architecture",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "reason": "The retained spans describe a maker’s existing booking architecture and safeguards, but no requested task or buyer problem. The post is a project description and discussion question, not evidence of an unmet chore for a new service."
+    }
+  ]
+}
