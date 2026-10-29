@@ -10,19 +10,29 @@ export function preserveRepairConsiderations(first,context,repaired,{expectedDra
   if(!/^[a-f0-9]{64}$/.test(expectedDraftSha256||'')||! /^[a-f0-9]{64}$/.test(expectedContextSha256||'')||
     sha256(stableJSON(first))!==expectedDraftSha256||sha256(stableJSON(context))!==expectedContextSha256||context.draftSha256!==expectedDraftSha256)
     throw new Error('Saved first assessment does not match trusted checker job fingerprints.');
-  if(isOmittedCandidateRepair(firstCheck)||expectedRepairFeedbackSha256)validateOmittedCandidateRepair(firstCheck,first,context,{allowInitial:true,expectedDraftSha256,expectedContextSha256,expectedFeedbackSha256:expectedRepairFeedbackSha256,requireFeedbackSha256:true});
+  const omissionRepair=isOmittedCandidateRepair(firstCheck)||Boolean(expectedRepairFeedbackSha256);
+  if(omissionRepair)validateOmittedCandidateRepair(firstCheck,first,context,{allowInitial:true,expectedDraftSha256,expectedContextSha256,expectedFeedbackSha256:expectedRepairFeedbackSha256,requireFeedbackSha256:true});
   if(!first.runId||first.runId!==context.runId||first.runId!==repaired.runId||first.targetCount!==repaired.targetCount)
     throw new Error('Repair does not match the original assessed reservation.');
   for(const draft of [first,repaired])for(const field of ['posts','candidates','rejected'])
     if(!Array.isArray(draft[field])||draft[field].length>12)throw new Error('Repair considerations must be bounded arrays.');
   const key=item=>{if(typeof item?.title!=='string'||typeof item?.productUrl!=='string')throw new Error('A repair consideration needs its original title and product URL.');return canonicalURL(item.productUrl);};
+  if(omissionRepair&&repaired.posts.some(post=>key(post)!==canonicalURL(firstCheck.omission.productUrl)))
+    throw new Error('An omission repair cannot promote an unrelated candidate.');
   const proposed=new Set(repaired.posts.map(key));
   const merge=(current,original)=>{
     const rows=new Map(current.map(item=>[key(item),item]));
     for(const item of original)if(!rows.has(key(item)))rows.set(key(item),item);
     return [...rows.values()];
   };
-  const candidates=merge(repaired.candidates,[...first.candidates,...first.posts]);
+  let candidates=merge(repaired.candidates,[...first.candidates,...first.posts]);
+  if(omissionRepair){
+    // This feedback requests one missing assessment, not a rewrite of already
+    // scored work. Preserve its exact plan, unresolved gaps, quotes and scores
+    // from the trusted first artifact before the fresh independent check.
+    const originals=new Map(first.candidates.map(item=>[key(item),item]));
+    candidates=candidates.map(item=>originals.get(key(item))||item);
+  }
   const rejected=merge(repaired.rejected,first.rejected).filter(item=>!proposed.has(key(item)));
   const distinct=new Set([...repaired.posts,...candidates,...rejected].map(key));
   if(distinct.size>12)throw new Error('Repair exceeds the twelve distinct product consideration limit.');

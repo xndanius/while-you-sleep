@@ -14,6 +14,7 @@ import {repairFeedback} from '../scripts/save-first-check.mjs';
 import {preserveRepairConsiderations} from '../scripts/preserve-repair-considerations.mjs';
 import {deriveLearningReceipt,validateLearningReceipt} from '../lib/learning.mjs';
 import {SCORING_KEYS} from '../lib/scoring.mjs';
+import {candidateEvidenceTasks} from '../lib/candidate-evidence-tasks.mjs';
 
 const runId='loop-39368251410-1',makeUrl='https://community.make.com/t/117567';
 const load=async(directory)=>JSON.parse(await readFile(new URL(`../data/${directory}/${runId}.json`,import.meta.url),'utf8'));
@@ -123,6 +124,29 @@ test('schema 3 anchor feedback preserves the batch through one repair and a fres
  const accepted=sandbox.invoke('accept-check-output',finalEnv);assert.equal(accepted.status,0,accepted.stderr);assert.deepEqual(await sandbox.read('checks'),completed);assert.match(accepted.stdout,/"completed":true/);assert.equal(sandbox.invoke('preserve-repair-considerations',{},['--verify-only']).status,0);
  assert.deepEqual(assessmentJobReasons(result,{writer:{result:'success'},checker:{result:'success',outputs:{verified:'true'}},repair:{result:'success'},final_check:{result:'success',outputs:{verified:'true'}}},{required:true}),[]);
  assert.ok(assessmentJobReasons(result,{writer:{result:'success'},checker:{result:'success',outputs:{verified:'true'}},repair:{result:'success'},final_check:{result:'skipped'}},{required:true}).length);
+});
+
+test('frozen 40822510539 omission repair preserves the other five complete candidate plans and evidence',async()=>{
+ const id='loop-40822510539-1',read=directory=>readFile(new URL(`../data/${directory}/${id}.json`,import.meta.url),'utf8').then(JSON.parse);
+ const [first,context,firstCheck,repaired]=await Promise.all([
+  readFile(new URL(`../data/drafts/${id}-first.json`,import.meta.url),'utf8').then(JSON.parse),
+  readFile(new URL(`../data/check-context/${id}-first.json`,import.meta.url),'utf8').then(JSON.parse),
+  readFile(new URL(`../data/checks/${id}-first.json`,import.meta.url),'utf8').then(JSON.parse),read('drafts'),
+ ]);
+ const before=stableJSON({first,context,firstCheck,repaired});
+ const options={expectedDraftSha256:sha256(stableJSON(first)),expectedContextSha256:sha256(stableJSON(context)),firstCheck,expectedRepairFeedbackSha256:sha256(stableJSON(firstCheck))};
+ const preserved=preserveRepairConsiderations(first,context,repaired,options);
+ assert.equal(first.candidates.length,5);assert.equal(preserved.candidates.length,6);
+ for(const candidate of first.candidates)assert.deepEqual(preserved.candidates.find(row=>row.productUrl===candidate.productUrl),candidate,'one omitted sketch request must not replace an unrelated concrete plan with generic prose');
+ const csv=preserved.candidates.find(row=>row.productUrl==='https://community.n8n.io/t/325109');
+ const tasks=candidateEvidenceTasks({candidate:csv,source:context.sources.find(row=>row.id===csv.demandEvidence.sourceIds[0]),capabilitySources:context.sources.filter(row=>row.role==='building')});
+ assert.ok(tasks.some(row=>row.kind==='local_fixture'));assert.ok(tasks.some(row=>row.kind==='existing_access'),'specific duplicate-key and phone-trigger gaps must survive into the next evidence tasks');
+ assert.deepEqual(preserved.candidates.find(row=>row.productUrl===firstCheck.omission.productUrl),repaired.candidates.find(row=>row.productUrl===firstCheck.omission.productUrl));
+ assert.equal(preserved.posts.length,0);assert.equal(stableJSON({first,context,firstCheck,repaired}),before);
+ const ordinary=preserveRepairConsiderations(first,context,repaired,{expectedDraftSha256:options.expectedDraftSha256,expectedContextSha256:options.expectedContextSha256});
+ assert.deepEqual(ordinary.candidates,repaired.candidates,'ordinary score/claim repair retains its existing ability to revise a candidate');
+ const promotion=structuredClone(repaired);promotion.posts.push({...first.candidates[0],id:'a'.repeat(24)});
+ assert.throws(()=>preserveRepairConsiderations(first,context,promotion,options),/unrelated|omission/);
 });
 
 async function isolated(t,f){

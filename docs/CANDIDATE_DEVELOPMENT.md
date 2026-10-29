@@ -63,6 +63,13 @@ it does not establish that a solution or demand is absent. Source changes requir
 a new source-bound revision. The original cooldown, privacy, literal evidence,
 source-access and independent publication gates still apply.
 
+When the initial checker requests one omitted-candidate assessment, already scored
+candidates are preserved as exact JSON values from the pinned first draft before
+fresh final checking. That repair cannot replace their concrete plans and gaps
+with generic prose or promote an unrelated candidate. Ordinary claim/score repair
+keeps its existing revision path. This prevents loss of pending evidence tasks;
+it does not grant a score, execution claim or publication approval.
+
 An eligible continuation competes for its research slot through the ordinary
 selector with its priority supplied. It can replace one of that feed's other
 leads; it cannot increase the three-per-feed or ten-total limit. Testing only the
