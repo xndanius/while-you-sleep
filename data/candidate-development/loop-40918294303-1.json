@@ -1,0 +1,450 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40918294303-1",
+  "createdAt": "2026-10-29T17:14:39.552Z",
+  "events": [
+    {
+      "id": "1789dfa93c7e51c8fd0e933fb8819f4d081bfc35bcfe77516d3d98483543f45c",
+      "kind": "assessment",
+      "caseId": "9a2e13385a9d960688bb6c8c",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "sourceRunId": "loop-40918294303-1",
+      "details": {
+        "revisionId": "292bb1bc36d6b2fa0329acb488d6822cccec9002436af0b6d49364fa73404351",
+        "parentRevisionId": "e05b12a19169f57b1ba57122eebe841f2fe7bf6d8b16dd0bc2c46ba3aae33076",
+        "candidateIndex": 0,
+        "candidateSha256": "9f260f574a64fbe106049e13b44ef146537c050d22a7cce26dafa9197f5cbf4b",
+        "sourceSha256": "05f42b87da124224c7380aa33b559384b41d246b6a3826f95ee1b521723b26a0",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A draft dispatcher notice and a short reason when a supplied fictional shipment row meets a manually chosen delay rule.",
+          "inputs": [
+            "Fictional shipment identifier",
+            "Fictional expected and latest status timestamps",
+            "Operator supplied delay threshold",
+            "Dispatcher notice template"
+          ],
+          "trigger": "A student manually submits a fictional shipment row for review.",
+          "steps": [
+            "Enter a fictional shipment row and the operator chosen delay threshold.",
+            "Check whether the row crosses that threshold.",
+            "Draft a dispatcher notice with the shipment identifier and status.",
+            "Show the rule and input values beside the draft.",
+            "Ask a person to verify the status and approve any real message outside the prototype."
+          ],
+          "acceptanceCheck": "For a small set of fictional rows with manually labeled delayed or not delayed outcomes, the displayed flag and notice draft match the labels and expose the values used.",
+          "humanBoundary": "A person chooses the threshold, supplies trustworthy shipment data, confirms whether a delay is real, and approves any communication; no carrier access or message sending is included.",
+          "unverified": [
+            "The source gives an example but no customer specific fields, delay rules, recurrence, or corroboration.",
+            "No supplied implementation reference supports shipment data access or message delivery."
+          ]
+        },
+        "limitations": [
+          "The source gives an example but no customer specific fields, delay rules, recurrence, or corroboration.",
+          "No supplied implementation reference supports shipment data access or message delivery."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "8f51ad9ddf8ca6d883c8022703eae7b7f2479b8ea6ec74a034747bcbcdaac7ba",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "7433693832abfac6a985b27bb003aa4100a9f5b2b3b5b10a3ddfebef398f3179",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied implementation reference supports shipment data access or message delivery.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A fictional row and manually chosen rule make a review mock approachable; the attached discussion provides no implementation support for intake or notices.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small ecommerce or logistics operators might value reviewed delay notices; this example establishes no buyer intent or payment.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fictional-row mock is bounded, but the source supplies no fields, business threshold, live data access, or delivery support.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed rule can draft repeatable notices from supplied rows, but a person must verify shipment status and approve communication; execution is unsupported.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "One retained task span names delayed-shipment notices as an example; frequency, fields, a specific buyer, and corroboration are absent from these spans.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "55416313f5629d07b8794c552406da5cc57266b3536ea3119f728331520bebca",
+          "draftSha256": "aac9002d094ff52a54494f3d1b63e457fb25324bcb6fb1774f428fd513143a60",
+          "contextSha256": "3278afd15be8cecd477c22393a7ccd7a8d34861eedeaf004728a7681ef9ca0d5",
+          "manifestSha256": "100e0d1a4db289c352579eb65cc7da948141924010f3a023ae24a1b184f95e91",
+          "researchSha256": "8178142810d418cc902c1a50ee60b9775bc744d967509f5dcf948a88d1b71ff1",
+          "learningSha256": "cbd208ce672d8cf87c042e8872915e922d6ab7120326d4aa0da6b422eccb2358"
+        }
+      }
+    },
+    {
+      "id": "d0b3b93a599c329a1ad53390ff6881174c774316236149d33739812c31935043",
+      "kind": "assessment",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40918294303-1",
+      "details": {
+        "revisionId": "a064a75ffc8043ddee166c713280802708038c69607d2cd8834cc91da6e43592",
+        "parentRevisionId": "e578b3c4262644141602ad5b0f1fb15b4969439a5823d36bc46d9cc2d1426258",
+        "candidateIndex": 1,
+        "candidateSha256": "4ba891153c3f2a7be6866860e447d70055a4e882bb97092f869af5cafcdec760",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [
+          {
+            "sourceId": "5c2bf4e7df8c3ec325ba2e74",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "textSha256": "2efd6ff6d5242dd765be1f15c0feb75eaa5409a8d7d7f861eedaedc7b85b4e8b"
+          },
+          {
+            "sourceId": "f1662b0ceb942474f83a8108",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "textSha256": "0791764c70627f0ed2e15f1c7ddb2b7f59b8055faa47777e0546281dd6f468b8"
+          }
+        ],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewed table of supplied game test CSV rows with repeated rows marked and the chosen comparison fields shown.",
+          "inputs": [
+            "Synthetic CSV rows with battery percentage, device temperature, frame drops, and a short session note",
+            "Student chosen fields for duplicate comparison",
+            "Expected row labels for a test batch"
+          ],
+          "trigger": "A tester manually selects a CSV export and submits it to a local review prototype.",
+          "steps": [
+            "Load a synthetic CSV fixture.",
+            "Extract CSV data into row objects using the documented n8n extraction node (5c2bf4e7df8c3ec325ba2e74).",
+            "Apply the tester selected comparison fields to mark repeated rows using the documented duplicate removal operations (f1662b0ceb942474f83a8108).",
+            "Display retained and flagged rows with the selected fields.",
+            "Have a tester verify the marks before manually importing any rows into a sheet."
+          ],
+          "acceptanceCheck": "For a synthetic CSV fixture with expected repeated rows labeled in advance, each repeated row is flagged according to the selected fields and the remaining measurement values are preserved for human review.",
+          "humanBoundary": "A tester exports and supplies the file, selects meaningful comparison fields, checks every flagged or retained row, and performs any Sheet import; no phone trigger or live Sheet write is proposed.",
+          "unverified": [
+            "The post describes one person's workflow; demand beyond this post and willingness to pay are unknown.",
+            "The supplied n8n references support CSV row extraction and duplicate operations, but not the phone upload trigger or Google Sheets import in this proposed flow.",
+            "The right comparison fields and CSV variations require tester input and validation."
+          ]
+        },
+        "limitations": [
+          "The post describes one person's workflow; demand beyond this post and willingness to pay are unknown.",
+          "The supplied n8n references support CSV row extraction and duplicate operations, but not the phone upload trigger or Google Sheets import in this proposed flow.",
+          "The right comparison fields and CSV variations require tester input and validation."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "e8a11a4666d091a7dfbc38ae11b7b2d68a48b6af1d595a6017a7ac868979fabb",
+            "kind": "documentation",
+            "status": "pending",
+            "gapIndexes": [],
+            "question": "Read n8n Google Drive trigger activation documentation for the observed task.",
+            "method": "One existing guarded public documentation request.",
+            "acceptanceCheck": "Retain the literal relevant capability section and independently refetch it.",
+            "scopeLimit": "Documentation does not establish a working integration, access, buyer demand or execution.",
+            "referenceId": "n8n-drive-trigger-v1"
+          },
+          {
+            "id": "8ff7ce77b0b2dd9406f048d39e5d124d937540cd35238ddeb71ad2c9f94b38c9",
+            "kind": "local_fixture",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Which explicit key preserves distinct observations while rejecting a repeated file version?",
+            "method": "Use fictional file IDs, revisions and row ordinals in an isolated local CSV fixture.",
+            "acceptanceCheck": "Replay and restart insert no duplicate rows; distinct identical measurements survive; changed bytes under the same file revision fail closed.",
+            "scopeLimit": "A chosen synthetic key tests only that contract. It does not establish the real export schema or n8n runtime behavior.",
+            "referenceId": null
+          },
+          {
+            "id": "cf01fd5a3b38232c95360d57ab2cc65be54a43d0b74d067ab15f63649e2b378e",
+            "kind": "existing_access",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Does the actual phone export produce a stable file ID and revision and trigger one complete-file read?",
+            "method": "Requires an owner-authorized existing device/export and integration environment; no account or credential acquisition is automatic.",
+            "acceptanceCheck": "Observe actual create, update, retry and incomplete-upload events before claiming live reliability.",
+            "scopeLimit": "Public documentation or a local synthetic test cannot close this live-integration gap.",
+            "referenceId": null
+          },
+          {
+            "id": "4db6abe71c388c62fb21bb6ab8bb3c33bf8f60b3363640e0d6bdd9b1f5de88bc",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "c3ba0d778e4f700642686d01c220f90fc3cf2f8b90b8c60ceb70ed0458be1beb",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "The right comparison fields and CSV variations require tester input and validation.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "n8n docs support CSV-to-row extraction (5c2bf4e7df8c3ec325ba2e74) and configurable duplicate comparison (f1662b0ceb942474f83a8108); phone intake remains outside scope.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent game testers might pay to reduce log cleanup; the discussion identifies a manual task but no purchase intent or payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV review fits the documented extraction (5c2bf4e7df8c3ec325ba2e74) and deduplication (f1662b0ceb942474f83a8108) operations; actual file variations need checking.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The references 5c2bf4e7df8c3ec325ba2e74 and f1662b0ceb942474f83a8108 support repeatable extraction and row comparison; a tester chooses fields, submits files, reviews results, and imports manually.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe manual measurement logging, later CSV transfer, and a trigger that misses or repeats files; this is one post with no corroboration.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [
+          {
+            "key": "f26cffb02af54e924c2efaff1e032dfaba5a7511f2e9721c0f82638d102c5426",
+            "referenceId": "n8n-drive-trigger-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.googledrivetrigger"
+          }
+        ],
+        "acquisitionPath": "missing_capability_evidence",
+        "provenance": {
+          "runSha256": "55416313f5629d07b8794c552406da5cc57266b3536ea3119f728331520bebca",
+          "draftSha256": "aac9002d094ff52a54494f3d1b63e457fb25324bcb6fb1774f428fd513143a60",
+          "contextSha256": "3278afd15be8cecd477c22393a7ccd7a8d34861eedeaf004728a7681ef9ca0d5",
+          "manifestSha256": "100e0d1a4db289c352579eb65cc7da948141924010f3a023ae24a1b184f95e91",
+          "researchSha256": "8178142810d418cc902c1a50ee60b9775bc744d967509f5dcf948a88d1b71ff1",
+          "learningSha256": "cbd208ce672d8cf87c042e8872915e922d6ab7120326d4aa0da6b422eccb2358"
+        }
+      }
+    },
+    {
+      "id": "aaa7f14e3f601cbe28ba5929fd659cf4f12cca2b0fc32b98355f8a986eea1ecf",
+      "kind": "assessment",
+      "caseId": "accc79f9c0afdef41b9f38d1",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceRunId": "loop-40918294303-1",
+      "details": {
+        "revisionId": "b9b8c8914c44a85ae13d5bec53604f868101c4c01d47932223466412a585d0c3",
+        "parentRevisionId": "10fd3c52e54370f872dd458a3b30d564fcde6a4f1919600c16e7a6a1183adcab",
+        "candidateIndex": 2,
+        "candidateSha256": "a96172c71f945625e7af9f007c5faac3670c78cfdf740034a575a4217b148526",
+        "sourceSha256": "91c06e80ba9394f0fc855d42a653a23d42724fddbec26adfa2c4a1c238d1afe5",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A date-aligned comparison table of two operator-supplied daily purchase exports that flags differing totals without claiming why they differ.",
+          "inputs": [
+            "Synthetic daily ad purchase counts",
+            "Synthetic daily Shopify Online Store order counts",
+            "A shared 30-day date range",
+            "Operator supplied exclusion labels for test and cancelled orders"
+          ],
+          "trigger": "A shop operator manually supplies two matching-period CSV exports to a prototype.",
+          "steps": [
+            "Enter two synthetic daily count tables for the same date range.",
+            "Check date coverage and mark missing dates.",
+            "Compare the supplied counts by date.",
+            "Flag dates with different totals without assigning a cause.",
+            "Show the inputs and exclusions so a person can inspect and interpret the results."
+          ],
+          "acceptanceCheck": "Given a fixture with known dates, counts, and missing dates, the output aligns dates correctly, flags each count difference and missing date, and never labels the cause as proven.",
+          "humanBoundary": "A person exports and filters the records, confirms date range and channel, interprets attribution differences, and investigates tracking; no account connection, tax analysis, or automatic fix is included.",
+          "unverified": [
+            "The supplied post gives instructions and possible explanations, but demand recurrence and buyer intent are unknown.",
+            "No supplied implementation reference supports exports, account access, or a live integration.",
+            "Correct handling of actual export formats and attribution requires human validation."
+          ]
+        },
+        "limitations": [
+          "The supplied post gives instructions and possible explanations, but demand recurrence and buyer intent are unknown.",
+          "No supplied implementation reference supports exports, account access, or a live integration.",
+          "Correct handling of actual export formats and attribution requires human validation."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "d3647d1eed10ff99335b8311f097713f4329cc2a97f68f12c791907468f7c149",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "7a2ce6b3e0de443b845469a28a81d21b4fe144687c139a207b90ea326eb91ed2",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied implementation reference supports exports, account access, or a live integration.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "c0440777f01c35b6c5f8a2a40c21657450b2e82f02005b0f74d38eef48284013",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Correct handling of actual export formats and attribution requires human validation.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A synthetic date-by-date table is a manageable mock, but the discussion provides no implementation support for exports or live account access.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small shops or ecommerce advisers might pay for clearer comparisons; one instructional post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week supplied-file mock is bounded, but actual export formats and reliable date/channel mapping are not documented in these spans.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed comparison can flag dates from supplied counts, but people must export, filter, interpret causes, and investigate tracking; no automation support is attached.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans specify export filters, explain normal and unusual count gaps, and describe a test event check; recurrence and corroboration are absent.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "55416313f5629d07b8794c552406da5cc57266b3536ea3119f728331520bebca",
+          "draftSha256": "aac9002d094ff52a54494f3d1b63e457fb25324bcb6fb1774f428fd513143a60",
+          "contextSha256": "3278afd15be8cecd477c22393a7ccd7a8d34861eedeaf004728a7681ef9ca0d5",
+          "manifestSha256": "100e0d1a4db289c352579eb65cc7da948141924010f3a023ae24a1b184f95e91",
+          "researchSha256": "8178142810d418cc902c1a50ee60b9775bc744d967509f5dcf948a88d1b71ff1",
+          "learningSha256": "cbd208ce672d8cf87c042e8872915e922d6ab7120326d4aa0da6b422eccb2358"
+        }
+      }
+    }
+  ]
+}
