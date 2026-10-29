@@ -1,0 +1,209 @@
+{
+  "runId": "loop-40835038877-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T07:25:00.100Z",
+  "candidates": [
+    {
+      "title": "Prepare a recovery checklist for failed agent runs",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Developers need to write checkpointers, recovery logic, and handle idempotency for agents.",
+        "evidenceQuote": "write checkpointers, recovery logic, and deal with idempotency"
+      },
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed recovery worksheet for one failed agent run, listing saved state, safe retry point, and duplicate-action risks.",
+        "inputs": [
+          "Synthetic failed-run log",
+          "Operator-supplied expected side effects",
+          "Proposed checkpoint and retry notes"
+        ],
+        "trigger": "An operator supplies a failed-run example for review.",
+        "steps": [
+          "Extract the last known checkpoint from supplied notes.",
+          "List completed and pending actions.",
+          "Flag actions that may repeat if retried.",
+          "Draft a recovery checklist and ask a person to approve each action."
+        ],
+        "acceptanceCheck": "On two synthetic cases, verify every listed action matches the supplied log and that uncertain side effects are flagged for human review.",
+        "humanBoundary": "A developer must define safe checkpoints, idempotency rules, and authorize recovery; the worksheet must never restart an agent or perform side effects.",
+        "unverified": [
+          "No supplied implementation reference documents agent checkpoint recovery or idempotency validation.",
+          "The discussion does not specify agent type, recurrence, fields, or recovery policy."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The comment identifies recovery concepts, but no supplied implementation source supports checkpoint or idempotency handling.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: agent development consultancies may pay for safer recovery reviews; this comment shows a problem, not buyer intent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic worksheet is testable in four weeks, but the needed agent logs and safe retry rules are unspecified.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed worksheet is mainly human review; no source supports automated recovery decisions or execution.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The comment names checkpointers, recovery logic, and idempotency, but gives no example or evidence of repeated demand.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete concepts support a narrow manual-review prototype, but there is no reference for its core recovery mechanics and the experiment remains below threshold."
+    },
+    {
+      "title": "Send daily alerts for new jobs at target companies",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "84dd42b26c54d12b4f52a07c"
+        ],
+        "chore": "Track hiring at target companies and send an alert when new job postings appear.",
+        "evidenceQuote": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+      },
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily test digest of new job listings from a small operator-selected set of target companies.",
+        "inputs": [
+          "Operator-selected company career pages",
+          "Synthetic listing rows with title, location, and URL",
+          "Proposed daily schedule"
+        ],
+        "trigger": "A daily scheduled run checks a configured test listing source.",
+        "steps": [
+          "Collect the available listing rows from an authorized test source.",
+          "Compare rows with the previous test run.",
+          "Use the documented Summarize node to count or count unique values when checking a batch.",
+          "Format new rows as a digest with title, location, and URL.",
+          "Ask a person to review results before any real alert is sent."
+        ],
+        "acceptanceCheck": "Across two supplied test batches, the digest includes each new row once and preserves its title, location, and URL; a person checks missed or repeated items.",
+        "humanBoundary": "A person must authorize source access, choose target companies, confirm listing relevance, and approve live alerts; the supplied reference does not document job scraping or Slack delivery.",
+        "unverified": [
+          "The n8n reference documents count and count-unique aggregation only, not scheduling, scraping, deduplication, or Slack delivery.",
+          "The author discloses building the named Apify actors; their availability, accuracy, and external runtime are not independently established here."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The source lays out a daily trigger, new-item condition, and alert fields; the Summarize reference supports counts only, not source access or delivery.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recruiting consultancies may pay for target-company monitoring; this post describes one maker’s workflow, not buyer intent or payment.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A supplied-row experiment is bounded and the source describes a daily flow; the reference supports aggregation only, leaving live collection and delivery unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "The source describes repeated daily checks and new-item alerts; a person must verify relevance, while the reference does not validate scraping or sending.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The spans describe one author’s daily job tracking flow and alert fields; broader demand and independent use are not established.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          }
+        }
+      },
+      "reason": "A specific daily alert chore and relevant limited aggregation reference support a scoped test, but the provisional mean is 5.4 and below threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Alignment Interview Challenge",
+      "productUrl": "https://news.ycombinator.com/item?id=50285386",
+      "reason": "The retained excerpt asks for feedback on an interview challenge and supplies no concrete recurring chore to automate; inventing an evaluation workflow would exceed the evidence."
+    },
+    {
+      "title": "How do you document a link campaign so others can follow it",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "reason": "The retained spans describe deleting pages without a clear purpose and include unrelated promotional text, not a concrete link-campaign documentation chore; no workflow can be safely inferred."
+    },
+    {
+      "title": "Startica Open-source app for SEO, marketing, accessibility and security",
+      "productUrl": "https://news.ycombinator.com/item?id=50284303",
+      "reason": "The excerpt states the maker wanted more tools on a limited SaaS budget but identifies no specific task, input, or repeated workflow to assess."
+    },
+    {
+      "title": "How to report IP abuse to Cloudflare?",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The supplied fragment, “which clearly doesn’t apply here,” lacks the reportable task and its context, so a proposed workflow would require invented duties."
+    },
+    {
+      "title": "Cloud restore request: all workflows deleted",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "reason": "The spans describe a single accidental deletion incident and business interruption, not a recurring task; automating restoration without specified recovery controls would be unsafe."
+    },
+    {
+      "title": "Gitby",
+      "productUrl": "https://news.ycombinator.com/item?id=50278264",
+      "reason": "The excerpt only calls it a convenient git management tool and supplies no specific chore or request to scope."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight assigned discussions. Two concrete chores received scoped provisional assessments; six were excluded for missing task detail or a one-off incident. Neither scored experiment reaches the threshold, so no post is proposed."
+    }
+  ]
+}
