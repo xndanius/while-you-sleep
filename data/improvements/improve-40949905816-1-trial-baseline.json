@@ -1,0 +1,202 @@
+{
+  "runId": "improve-40949905816-1",
+  "trialId": "d524c21aa3e20a4fad55011b",
+  "posts": [
+    {
+      "id": "e15907765e1ad5a9c6b4fccd",
+      "candidateId": "e15907765e1ad5a9c6b4fccd",
+      "title": "Check your cmux sessions from Android",
+      "promise": "Muxer links an Android app to cmux terminals through a relay on your computer.",
+      "whatItIs": "Muxer is an open source relay and Android app for viewing and controlling cmux terminal sessions over a private network. A beginner could test a narrow setup guide or onboarding aid as a separate project; that adaptation is hypothetical.",
+      "whoPays": "Hypothesis: developers who use cmux and want to check sessions from a phone might pay for setup help or a simpler companion. The source gives no customer or payment evidence.",
+      "loop": [
+        "Install the relay on a Mac with cmux.",
+        "Put the relay behind HTTPS access limited to your own devices.",
+        "Pair the Android app using a one-time code.",
+        "Review sessions and notifications on the phone.",
+        "Revoke a paired device if it is lost."
+      ],
+      "evidence": "The project README describes the relay, Android app, pairing flow, terminal controls, and private-network setup.",
+      "uncertainty": "This is a documented product description, not independent evidence of customer use. Access setup requires care: the phone can read terminals and type into cmux. A human must manage network exposure and decide which devices to pair.",
+      "first24Hours": [
+        "Read the README security and setup sections.",
+        "Write down the steps needed for a private HTTPS setup.",
+        "Ask one cmux user to review a hypothetical beginner setup guide."
+      ],
+      "sourceIds": [
+        "e15907765e1ad5a9c6b4fccd"
+      ],
+      "productUrl": "https://github.com/gantoine/muxer",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The README gives concrete setup steps, but a first test needs cmux, Android, and private HTTPS networking.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: cmux users wanting phone access might pay for setup help; the source establishes no buyers or demand.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A narrow setup guide is plausible in four weeks; validating the workflow requires access to cmux and Android.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Relay streaming and notifications repeat automatically, while device pairing and network access need human oversight.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The README documents a working relay and app workflow, but offers no cited evidence of real use.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "0524a2d3d9f9a0029a70756b",
+      "candidateId": "0524a2d3d9f9a0029a70756b",
+      "title": "A visual home for AI workflows",
+      "promise": "n8n combines workflows and AI agents with testing, logs, and human approval steps.",
+      "whatItIs": "n8n describes a platform where users connect workflow steps and AI agent steps, configure tools, test behavior, and publish. A beginner could prototype one bounded workflow in n8n; the workflow choice and intended customers here are hypothetical.",
+      "whoPays": "Hypothesis: a small team that wants to automate a repeated internal process might pay for workflow setup or support. The source does not establish buyers or demand.",
+      "loop": [
+        "Choose a narrow task with steps you can specify.",
+        "Connect its inputs and actions in n8n.",
+        "Add an AI step only where judgment is needed.",
+        "Set tool limits and human approval points.",
+        "Test a run, inspect its steps, and revise before publishing."
+      ],
+      "evidence": "The n8n page describes deterministic workflows, AI agents, testing, execution logs, scheduling, integrations, and human approval controls.",
+      "uncertainty": "The source is n8n's own product page and does not demonstrate a specific student workflow or customer result. A person must choose safe tools, review model decisions, and approve consequential actions.",
+      "first24Hours": [
+        "Pick one low-risk task you already understand.",
+        "Sketch its inputs, steps, and places needing human approval.",
+        "Use n8n's test option to inspect a small example workflow."
+      ],
+      "sourceIds": [
+        "0524a2d3d9f9a0029a70756b"
+      ],
+      "productUrl": "https://n8n.io/ai-agents",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The page says users can describe an agent or build by hand and test it, though choosing integrations takes learning.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a small team may pay for workflow setup; the product page does not establish demand or customer spending.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A single bounded workflow is a plausible four-week experiment given templates and test runs; task-specific fit is unproven.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "Published workflows can schedule and handle errors, while tool limits and human approval steps still need deliberate setup.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The product page documents workflow and agent features, but its claims are first-party and no specific live demo is attached.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "b8c1e5b21d9b1b69be61ce4d",
+      "candidateId": "b8c1e5b21d9b1b69be61ce4d",
+      "title": "Ask a quick question, then clear the chat",
+      "promise": "Howler puts a model-powered question and answer in a temporary macOS window.",
+      "whatItIs": "Howler is a macOS menu bar app that sends questions to a model service the user configures, streams answers, and clears the conversation when closed. A beginner might explore a separate ephemeral note-taking tool; that adaptation is hypothetical.",
+      "whoPays": "Hypothesis: Mac users who want transient AI answers might pay for a privacy-focused utility. The attached README does not establish customer demand or sales.",
+      "loop": [
+        "Configure a model service and store its API key in Keychain.",
+        "Open the letter and type a question.",
+        "Optionally attach pasted text, an image, or a screen capture.",
+        "Review the streamed answer and ask a follow-up.",
+        "Close the letter to clear the conversation from memory."
+      ],
+      "evidence": "The README describes the menu bar interface, model configuration, streaming replies, attachments, and that messages live in memory and burn when the letter is closed.",
+      "uncertainty": "The privacy and product details come from the project's own README, without independent validation. A person must configure a model, protect API credentials, and judge answer accuracy; attached content goes to the configured service.",
+      "first24Hours": [
+        "Read the README's setup and privacy sections.",
+        "Try the documented demo mode without a key or network.",
+        "List what remains stored and what is sent to the configured model."
+      ],
+      "sourceIds": [
+        "b8c1e5b21d9b1b69be61ce4d"
+      ],
+      "productUrl": "https://github.com/HiAriesZhou/Howler",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The README offers a demo mode without a key or network, while normal use requires macOS and model setup.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: some Mac users may pay for transient AI answers; the README provides no evidence of buyers or revenue.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A narrow demo is accessible, but building a comparable macOS app involves Swift and model-service setup.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Answer streaming and conversation clearing are automatic, but users configure services and review answers themselves.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The first-party README documents a detailed product workflow and demo mode, without independent real-use evidence.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "refusals": []
+}

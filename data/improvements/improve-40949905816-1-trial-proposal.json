@@ -1,0 +1,202 @@
+{
+  "runId": "improve-40949905816-1",
+  "trialId": "c10eb003b44f042febe05516",
+  "posts": [
+    {
+      "id": "e15907765e1ad5a9c6b4fccd",
+      "candidateId": "e15907765e1ad5a9c6b4fccd",
+      "title": "Muxer: check coding sessions from Android",
+      "promise": "A private-network way to view and respond to cmux sessions on your phone.",
+      "whatItIs": "Muxer pairs an Android app with a computer relay. Its README describes viewing cmux workspaces and terminals, replying, and receiving notifications over a private network.",
+      "whoPays": "Hypothesis: an individual developer who uses cmux might pay for convenient phone access; the source establishes no buyers or pricing.",
+      "loop": [
+        "Install cmux and Muxer on compatible devices.",
+        "Set the relay to use cmux’s local control socket.",
+        "Put the relay behind HTTPS access limited to your devices.",
+        "Pair the phone using a one-time code.",
+        "Review a session or notification and send a reply only when intended."
+      ],
+      "evidence": "The GitHub README documents the Android app, relay, pairing flow, notifications, and terminal controls.",
+      "uncertainty": "This is maker documentation, not independent user evidence. Setup requires a computer, compatible cmux, Android, and private HTTPS access. The app can read terminals and type into cmux, so a person must control pairing and review every action; no AI operator is evidenced.",
+      "first24Hours": [
+        "Read the README setup and security sections.",
+        "Sketch a test with a spare computer and phone on a private network.",
+        "Pair and verify a harmless test message; a visible session and correctly delivered reply would show whether the documented task works."
+      ],
+      "sourceIds": [
+        "e15907765e1ad5a9c6b4fccd"
+      ],
+      "productUrl": "https://github.com/gantoine/muxer",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "README gives install and pairing steps, but setup needs cmux, Android, and private HTTPS.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: cmux users may value phone access; the source gives no buyer or pricing evidence.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can pair devices and check sessions, but requires compatible equipment and network setup.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Relay streams terminal updates and notifications; a person must pair devices and choose replies.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The repository README documents app features and a working setup, without independent use evidence.",
+            "sourceIds": [
+              "e15907765e1ad5a9c6b4fccd"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "0524a2d3d9f9a0029a70756b",
+      "candidateId": "0524a2d3d9f9a0029a70756b",
+      "title": "n8n: prototype a bounded AI workflow",
+      "promise": "Test one scheduled workflow with visible steps and human approval for risky actions.",
+      "whatItIs": "n8n describes workflows triggered by schedules, webhooks, or events, and agents using tools within defined limits. It also describes logs, test runs, and human approval steps.",
+      "whoPays": "Hypothesis: a small team already using n8n might pay for setup help; the source provides no customer or pricing evidence.",
+      "loop": [
+        "Choose one low-risk repetitive task and define its input and output.",
+        "Build a workflow from explicit steps and connect only needed tools.",
+        "Add an AI step only where a judgment call is needed.",
+        "Set limits and require human approval before consequential actions.",
+        "Test runs, inspect inputs and outputs, and review execution history."
+      ],
+      "evidence": "The n8n product page describes triggered workflows, test runs, execution logs, tool limits, and human approvals.",
+      "uncertainty": "This is product-page evidence, not proof of customer demand or outcomes. Setup depends on integrations and permissions. Automation can execute configured steps; people must validate outputs and approve consequential actions.",
+      "first24Hours": [
+        "Read n8n’s workflow and human-approval descriptions.",
+        "Write down one task with a harmless sample input and expected output.",
+        "Map the workflow and approval point; a completed test run with a human-confirmed result would show whether the proposed task is handled."
+      ],
+      "sourceIds": [
+        "0524a2d3d9f9a0029a70756b"
+      ],
+      "productUrl": "https://n8n.io/ai-agents",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The page offers a natural-language assistant and templates, while a useful test still needs tool configuration.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams may pay for setup help, but the page establishes no demand or pricing.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A narrow four-week workflow test is plausible, though integration and permission setup depend on the task.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Triggers and workflow steps can run automatically; limits and human approval remain necessary.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The product page documents workflows, agents, testing, logs, and approval controls, but not independent outcomes.",
+            "sourceIds": [
+              "0524a2d3d9f9a0029a70756b"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "b8c1e5b21d9b1b69be61ce4d",
+      "candidateId": "b8c1e5b21d9b1b69be61ce4d",
+      "title": "Howler: quick AI questions that disappear",
+      "promise": "Try a macOS menu-bar chat that keeps conversation in memory and burns it when closed.",
+      "whatItIs": "Howler is a macOS menu-bar app for quick AI questions. Its README says conversation text stays in memory and is removed when the letter is closed; requests go to a model service configured by the user.",
+      "whoPays": "Hypothesis: a Mac user wanting transient AI chats might pay for this kind of app; the source provides no buyer or pricing evidence.",
+      "loop": [
+        "Install Howler on a supported Mac.",
+        "Configure a model service and API key using the app setup.",
+        "Open a letter and enter a non-sensitive question.",
+        "Review the streamed answer and decide whether to follow it.",
+        "Close the letter to burn the conversation."
+      ],
+      "evidence": "The GitHub README documents the macOS app, model configuration, streamed answers, and in-memory conversation behavior.",
+      "uncertainty": "Project documentation does not establish independent use. Model setup requires a provider and credential. Closing removes conversation text according to the README, but setup and API key remain stored. People should avoid secrets and review answers; the app does not search the web.",
+      "first24Hours": [
+        "Read the README privacy and setup sections.",
+        "Try demo mode or configure a model with a non-sensitive question.",
+        "Close the letter and confirm its conversation is gone; this would show whether the documented short-chat flow works."
+      ],
+      "sourceIds": [
+        "b8c1e5b21d9b1b69be61ce4d"
+      ],
+      "productUrl": "https://github.com/HiAriesZhou/Howler",
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "README has setup instructions and demo mode, but model use requires macOS and configuration.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Mac users may value transient chats; the source gives no buyer, demand, or pricing evidence.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test of a basic question-and-close flow is plausible, though provider setup is an obstacle.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Answers stream automatically, but people configure the provider, review responses, and close the chat.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "README documents app behavior and a no-key demo mode, without independent real-use evidence.",
+            "sourceIds": [
+              "b8c1e5b21d9b1b69be61ce4d"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "refusals": []
+}
