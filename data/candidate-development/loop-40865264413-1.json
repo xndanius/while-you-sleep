@@ -1,0 +1,854 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40865264413-1",
+  "createdAt": "2026-10-29T11:32:21.688Z",
+  "events": [
+    {
+      "id": "c46fe716e47deb94f8cc70845663ea3119636b179a2fbd2b614b2bbdf20b6f68",
+      "kind": "assessment",
+      "caseId": "e50b202596b5a8091820fb2f",
+      "productUrl": "https://news.ycombinator.com/item?id=50287258",
+      "sourceRunId": "loop-40865264413-1",
+      "details": {
+        "revisionId": "1f42a35a2a5e39aa294ff47062c5a40ac728148a9f2e2f03591f8ea62fa45370",
+        "parentRevisionId": null,
+        "candidateIndex": 0,
+        "candidateSha256": "479a330c45ed831d9ae4fa50536c017c3f9786aa3a27a98ade7aa94e77b8f490",
+        "sourceSha256": "3443326343676604ca962cda0714b7301b114edd525407f9177f3d53a923440a",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "Return a proposed review date and short reason for a learner-supplied word correction.",
+          "inputs": [
+            "Fictional original word and sentence",
+            "Fictional corrected word and sentence",
+            "Operator-chosen review interval"
+          ],
+          "trigger": "When a learner submits a corrected practice sentence.",
+          "steps": [
+            "Compare original and corrected word forms.",
+            "Ask a language model to identify the changed word.",
+            "Show a suggested review date using the supplied interval.",
+            "Have a tutor confirm the word and date."
+          ],
+          "acceptanceCheck": "On a fixed fictional set, verify the changed token matches the known correction and the date follows the chosen interval.",
+          "humanBoundary": "A tutor supplies and approves corrections; the prototype does not diagnose language errors or send real reminders.",
+          "unverified": [
+            "Reliable identification of inflected forms across languages is unverified.",
+            "No learning app, learner-data input, reminder delivery, or effectiveness evidence is supplied."
+          ]
+        },
+        "limitations": [
+          "Reliable identification of inflected forms across languages is unverified.",
+          "No learning app, learner-data input, reminder delivery, or effectiveness evidence is supplied."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "bb685e4e46009bfd79ea3e7357e2af95f841314840cb9e406cc64733412d5802",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Reliable identification of inflected forms across languages is unverified.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "9ca67aefdeee6394fa2f2c2c194e836daaa6e68191f6d62a10e36c48fd264888",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No learning app, learner-data input, reminder delivery, or effectiveness evidence is supplied.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner could test a supplied word pair and review-date suggestion; the post gives no implementation reference.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: language tutors may value review scheduling; this single post does not establish buyer intent or payment.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prototype can suggest review dates for fictional word pairs; learner-data ingestion and learning effectiveness are unknown.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Suggestions can repeat on supplied examples, but a person must check the correction and manage actual study reminders.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post identifies a specific inflection and review-scheduling gap, but frequency and wider demand are uncorroborated.",
+            "sourceIds": [
+              null
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "359acced0b8ae18de2b584a3568a0f1877fd9281622de56620c36624471ecfd4",
+          "draftSha256": "d4e1735b06c2fbbb45c10074064ec349121690960c023d3e7b609cd9b6cc1c93",
+          "contextSha256": "1a546a511731fd2ff33e550cdfdb2e2fd8653d896c64ffe72da51679c3bd05e0",
+          "manifestSha256": "5575d1792e270092dbacf69041b2263add86d37ca89dea12a98c0ecc22f13ec9",
+          "researchSha256": "1d5e5424d472ff17910cbf5101c72f9506794baaac8119e2abdd5582fcce0e9b",
+          "learningSha256": "6575d86e8b1daa130a5e2468e09f3dc814c9d3003814e02aad048f258491ea79"
+        }
+      }
+    },
+    {
+      "id": "2db6fc9f4da6c3d5dcbcd9559a269865bba06f30f99e069b811d0055f519ea3e",
+      "kind": "assessment",
+      "caseId": "12083ab1ec28d340dfb92444",
+      "productUrl": "https://community.make.com/t/118559",
+      "sourceRunId": "loop-40865264413-1",
+      "details": {
+        "revisionId": "86135d6e185140fe56c00edfd34bbfc108688aca356e8d38a55799b88052c1aa",
+        "parentRevisionId": null,
+        "candidateIndex": 1,
+        "candidateSha256": "6e7dd3229285e107960631ffc2290a3b2cfbb866e0458a951902a1221707e91e",
+        "sourceSha256": "81929329d470ee69bb554aec1b06db83f7b5a2999150cc4e7dc2796ceb2a65ac",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "Draft a factual follow-up note from an operator-entered app review status and date.",
+          "inputs": [
+            "Fictional app label",
+            "Operator-entered review status",
+            "Submission date and last-update date"
+          ],
+          "trigger": "When an app developer records that a review has stalled.",
+          "steps": [
+            "Check that the status and dates are present.",
+            "Calculate elapsed days from the supplied dates.",
+            "Draft a neutral request for status or missing requirements.",
+            "Ask the operator to verify and send it."
+          ],
+          "acceptanceCheck": "For sample dates, compare the calculated elapsed time and draft against a manually written reference.",
+          "humanBoundary": "The developer verifies all details and sends any message; no platform account or reviewer contact is accessed.",
+          "unverified": [
+            "No review-platform status integration or response-time policy is documented.",
+            "The source describes one stalled review, not a recurring paid workflow."
+          ]
+        },
+        "limitations": [
+          "No review-platform status integration or response-time policy is documented.",
+          "The source describes one stalled review, not a recurring paid workflow."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "32e2e27a5d733ec2188ff3db0fe4e9f7323838f957c1419d4bf140851f5c2801",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No review-platform status integration or response-time policy is documented.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "81bdbe1bff27358b84ec1feeca1feeffa29cb2f7d02bb4236c00d6fc0e5c70ff",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "The source describes one stalled review, not a recurring paid workflow.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A supplied status can be turned into a draft manually, but no implementation reference supports platform access.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: app developers might value review follow-up help; one complaint shows no paying demand.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can prepare a status note from operator-entered dates; automated status checking is unsupported.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed output is a one-time draft from manual inputs, not a repeatable autonomous monitoring loop.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context states a specific review status and delay, but gives no corroboration or general frequency.",
+            "sourceIds": [
+              null
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "359acced0b8ae18de2b584a3568a0f1877fd9281622de56620c36624471ecfd4",
+          "draftSha256": "d4e1735b06c2fbbb45c10074064ec349121690960c023d3e7b609cd9b6cc1c93",
+          "contextSha256": "1a546a511731fd2ff33e550cdfdb2e2fd8653d896c64ffe72da51679c3bd05e0",
+          "manifestSha256": "5575d1792e270092dbacf69041b2263add86d37ca89dea12a98c0ecc22f13ec9",
+          "researchSha256": "1d5e5424d472ff17910cbf5101c72f9506794baaac8119e2abdd5582fcce0e9b",
+          "learningSha256": "6575d86e8b1daa130a5e2468e09f3dc814c9d3003814e02aad048f258491ea79"
+        }
+      }
+    },
+    {
+      "id": "76dc714e8ea016fec7ad68c3e754c4ae8919a8804aa1a77cbc60a2732cb5e34a",
+      "kind": "assessment",
+      "caseId": "afe7e1914aaaf443af4e5210",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "sourceRunId": "loop-40865264413-1",
+      "details": {
+        "revisionId": "c0f8c9b1fcfe87581f3b94098203a9ecc0bf23186ffb9a8fdd4f6abdd74ae094",
+        "parentRevisionId": "8a6588f796b51955007304b67506ed20f491f71f45b1fddee0873c24424662e1",
+        "candidateIndex": 2,
+        "candidateSha256": "3d76740da1574cce6b68b6005abc82e76b6eaa6540c087ba58b245cf2cc31300",
+        "sourceSha256": "76bec2ce2bbf366cf4803cdac593db037f203575b2122469ed871fd8b95eb9d2",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "Create a short page review note that states its supplied purpose and flags missing purpose for human review.",
+          "inputs": [
+            "Fictional page title",
+            "Operator-written page purpose",
+            "Operator estimate of upkeep"
+          ],
+          "trigger": "When a site owner considers adding or reviewing a page.",
+          "steps": [
+            "Read the supplied title and purpose.",
+            "Check whether the purpose names a question or problem.",
+            "Draft a keep, clarify, or review recommendation.",
+            "Show the reason and ask a person to decide."
+          ],
+          "acceptanceCheck": "On fictional page records, verify every recommendation cites only supplied purpose text and leaves ambiguous cases for review.",
+          "humanBoundary": "A site owner supplies the data and makes every publish or delete decision; no site crawl is proposed.",
+          "unverified": [
+            "No evidence shows recurring client demand or a standard purpose taxonomy.",
+            "Quality of the recommendation on real sites is unknown."
+          ]
+        },
+        "limitations": [
+          "No evidence shows recurring client demand or a standard purpose taxonomy.",
+          "Quality of the recommendation on real sites is unknown."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "380d9f7e28ae6ecd24615761bc85e20e9d582f31439eaa0fdb73c3070e72070b",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "af42b2c80e7cb8f9117d1711fd844dfb5eb01bd9a35b80aba6b9096621944b84",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Quality of the recommendation on real sites is unknown.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A person can supply a page purpose and receive a draft review note; no implementation reference is attached.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small service firms may pay for site-content cleanup; this tip establishes no buyer or payment.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can review fictional page descriptions; accurate site inventory and traffic data are outside scope.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed tool only drafts a note from supplied text; a person decides and removes pages.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post gives a general page-keep/delete heuristic, but no specific client, repeated burden, or corroboration.",
+            "sourceIds": [
+              null
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "359acced0b8ae18de2b584a3568a0f1877fd9281622de56620c36624471ecfd4",
+          "draftSha256": "d4e1735b06c2fbbb45c10074064ec349121690960c023d3e7b609cd9b6cc1c93",
+          "contextSha256": "1a546a511731fd2ff33e550cdfdb2e2fd8653d896c64ffe72da51679c3bd05e0",
+          "manifestSha256": "5575d1792e270092dbacf69041b2263add86d37ca89dea12a98c0ecc22f13ec9",
+          "researchSha256": "1d5e5424d472ff17910cbf5101c72f9506794baaac8119e2abdd5582fcce0e9b",
+          "learningSha256": "6575d86e8b1daa130a5e2468e09f3dc814c9d3003814e02aad048f258491ea79"
+        }
+      }
+    },
+    {
+      "id": "f7613128e471541504cdc07d76dee3f2c9811ea280f488ca25cb14dff8bb3a78",
+      "kind": "assessment",
+      "caseId": "66865ff0f48baba92ae2167c",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "sourceRunId": "loop-40865264413-1",
+      "details": {
+        "revisionId": "959115eb69c192a071f01e8ddfb82e2efdec45bab0634bfd46addb801cf8e916",
+        "parentRevisionId": "2c8c605a914bf4536439e2ba932b74d404a77d437bd41d7f3669ffd47e27aa6f",
+        "candidateIndex": 3,
+        "candidateSha256": "eb74b6076c12400ccd7ecc9827cf64dd1408a115eb486f10c006dd6fcb6fb9fb",
+        "sourceSha256": "f0c5ebb9605c8bc9c34770ee5c020b556bd046daae8580fab221947c7d87d28d",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "Organize operator-supplied public statements into a source-linked checklist without rating an app as secure.",
+          "inputs": [
+            "Fictional app name",
+            "Operator-supplied public policy excerpts",
+            "URLs for those excerpts"
+          ],
+          "trigger": "When a store operator is considering a listed app.",
+          "steps": [
+            "List each supplied statement and its source URL.",
+            "Group statements under operator-chosen topics.",
+            "Flag topics with no supplied information.",
+            "Ask the operator to verify sources and decide."
+          ],
+          "acceptanceCheck": "Compare each checklist entry with the supplied excerpt and confirm missing topics are marked unknown.",
+          "humanBoundary": "A person retrieves public material and makes the installation decision; the prototype does not certify security.",
+          "unverified": [
+            "No official Shopify security badge criteria or independent security sources are supplied.",
+            "Reliable source freshness and completeness are unverified."
+          ]
+        },
+        "limitations": [
+          "No official Shopify security badge criteria or independent security sources are supplied.",
+          "Reliable source freshness and completeness are unverified."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "4fabb84c5cccbc158c814de039eec0dcd375bc034e60a287b94e4bd470dfa524",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No official Shopify security badge criteria or independent security sources are supplied.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "881bc7a2654aad17a59d029288389f55331dff302acba422aa8d9ef5b61af7fb",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Reliable source freshness and completeness are unverified.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 3,
+            "reason": "A manual checklist mock is possible, but no official criteria or implementation source is supplied.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small store operators may value organized app information; this question does not establish payment.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A four-week prototype can organize operator-supplied public statements, but source verification and security evaluation remain unsupported.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The person must find sources and make the security decision; no automated verification is documented.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post clearly asks how to verify app security before installation, but gives no specific method or corroboration.",
+            "sourceIds": [
+              null
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "359acced0b8ae18de2b584a3568a0f1877fd9281622de56620c36624471ecfd4",
+          "draftSha256": "d4e1735b06c2fbbb45c10074064ec349121690960c023d3e7b609cd9b6cc1c93",
+          "contextSha256": "1a546a511731fd2ff33e550cdfdb2e2fd8653d896c64ffe72da51679c3bd05e0",
+          "manifestSha256": "5575d1792e270092dbacf69041b2263add86d37ca89dea12a98c0ecc22f13ec9",
+          "researchSha256": "1d5e5424d472ff17910cbf5101c72f9506794baaac8119e2abdd5582fcce0e9b",
+          "learningSha256": "6575d86e8b1daa130a5e2468e09f3dc814c9d3003814e02aad048f258491ea79"
+        }
+      }
+    },
+    {
+      "id": "37f02b7ebe3c52aaad0311fbca9bbb5d71d8340ec79678c89c28463c0ebd11ea",
+      "kind": "assessment",
+      "caseId": "787f35356b78240055b28a66",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceRunId": "loop-40865264413-1",
+      "details": {
+        "revisionId": "5d717963200262a19977fa4808b7ade90ea92dd6bf8b8b61542d7179f4bca111",
+        "parentRevisionId": "4903f1fa00e19dcda8a29c3f4f5418143964d594381beb1b8f4efcb447cf2d1b",
+        "candidateIndex": 4,
+        "candidateSha256": "fcd66d996c5a1ce98d8c6265f861d6a68da7dad1b27c3dd5de23052e652daa85",
+        "sourceSha256": "fb2c3dd1bce1821027eb2c12e996f90ab1f85a190b7d3137b1514af2bce6ddc4",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "Produce a review checklist for a supplied agent failure scenario, including checkpoint and duplicate-action questions.",
+          "inputs": [
+            "Fictional run failure description",
+            "Operator-supplied expected side effects",
+            "Operator-supplied restart point"
+          ],
+          "trigger": "When a developer records a failed agent run for review.",
+          "steps": [
+            "Extract the stated restart point and expected side effects.",
+            "List which actions may already have occurred.",
+            "Draft checkpoint and duplicate-action questions.",
+            "Require a developer to decide and implement recovery."
+          ],
+          "acceptanceCheck": "For fictional scenarios, check that every question maps to supplied facts and no action is marked safe without human review.",
+          "humanBoundary": "The developer supplies the scenario and owns all code changes and production recovery.",
+          "unverified": [
+            "No agent framework, persistence, checkpoint, or idempotency capability is documented.",
+            "The excerpt gives no concrete failure example or evidence of repeated demand."
+          ]
+        },
+        "limitations": [
+          "No agent framework, persistence, checkpoint, or idempotency capability is documented.",
+          "The excerpt gives no concrete failure example or evidence of repeated demand."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "b433a0b22dbb008312be9533018763051cae35d9ab5051b5c8b3bf1e3e7deed1",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "85f8f47fc95542da27fb5a4c21529c8b34ef5856fc9832e6a79a1f04213ef33e",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No agent framework, persistence, checkpoint, or idempotency capability is documented.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A checklist can be drafted from a supplied failure description, but no implementation reference supports agent recovery.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: developers building agents may value recovery planning; this discussion does not show purchase intent.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can classify fictional failure cases, while actual checkpoint and retry behavior stays outside scope.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must implement and test every recovery action; the proposed service does not execute recovery.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post names checkpointing, recovery logic, and idempotency as developer work, but frequency and specific cases are absent.",
+            "sourceIds": [
+              null
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "359acced0b8ae18de2b584a3568a0f1877fd9281622de56620c36624471ecfd4",
+          "draftSha256": "d4e1735b06c2fbbb45c10074064ec349121690960c023d3e7b609cd9b6cc1c93",
+          "contextSha256": "1a546a511731fd2ff33e550cdfdb2e2fd8653d896c64ffe72da51679c3bd05e0",
+          "manifestSha256": "5575d1792e270092dbacf69041b2263add86d37ca89dea12a98c0ecc22f13ec9",
+          "researchSha256": "1d5e5424d472ff17910cbf5101c72f9506794baaac8119e2abdd5582fcce0e9b",
+          "learningSha256": "6575d86e8b1daa130a5e2468e09f3dc814c9d3003814e02aad048f258491ea79"
+        }
+      }
+    },
+    {
+      "id": "ae0c85af72cc337bd6b125e64099c38926a05e069e2cc3c157d6a83ab4f56f04",
+      "kind": "assessment",
+      "caseId": "32860087e4090f1828b546d5",
+      "productUrl": "https://community.shopify.com/t/705416",
+      "sourceRunId": "loop-40865264413-1",
+      "details": {
+        "revisionId": "87f50122ea2bdb10cfdba5b8a48435692ed4599accb3e1b6deeff88cb110be02",
+        "parentRevisionId": "e6070a64dd50344846e656014c2abc60e1524be0b10331d866874e6963224c5f",
+        "candidateIndex": 5,
+        "candidateSha256": "8be56cd9524581a76a01a85667fc962327afa3760086bf1af493f8b93ec4948e",
+        "sourceSha256": "358f5facb69c12cfae5ed5d2cd52aad4a253871ca1107d88fc1d3b75e8bd30ba",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "Prepare a review queue identifying product images that an operator says need a full-size replacement.",
+          "inputs": [
+            "Fictional product identifier",
+            "Operator label: cropped or acceptable",
+            "Operator-provided replacement image reference"
+          ],
+          "trigger": "When a seller reviews images prepared for a messaging app.",
+          "steps": [
+            "Read the operator label for each fictional item.",
+            "Group items marked cropped.",
+            "Attach the supplied replacement reference.",
+            "Ask the seller to inspect and make each correction."
+          ],
+          "acceptanceCheck": "On a fixed fictional list, confirm only items labeled cropped appear in the queue and each retains its supplied reference.",
+          "humanBoundary": "The seller supplies labels, inspects image quality, and makes changes in the messaging app.",
+          "unverified": [
+            "No source supports image inspection, messaging-app integration, or changing the default crop.",
+            "The post identifies recurring correction but not scale or other buyers."
+          ]
+        },
+        "limitations": [
+          "No source supports image inspection, messaging-app integration, or changing the default crop.",
+          "The post identifies recurring correction but not scale or other buyers."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "d2ccc8f9887b8a368ad379b4dbd3947fd99742428bcf92e88fc257715411ba15",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "61449e6baf1945336b80e44d4f2fe8bf03ab67f427cad2a09176cf47726a2e2d",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No source supports image inspection, messaging-app integration, or changing the default crop.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A person can test a queue from supplied image notes, but no image or messaging integration is supported.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: online sellers may value fewer image corrections; one complaint does not establish buyer demand.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can sort fictional image records, but cannot change messaging-app defaults.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The person must inspect and correct each image; no automatic image replacement capability is documented.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The post explicitly says the crop must be corrected repeatedly, but supplies no count or corroborating cases.",
+            "sourceIds": [
+              null
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "359acced0b8ae18de2b584a3568a0f1877fd9281622de56620c36624471ecfd4",
+          "draftSha256": "d4e1735b06c2fbbb45c10074064ec349121690960c023d3e7b609cd9b6cc1c93",
+          "contextSha256": "1a546a511731fd2ff33e550cdfdb2e2fd8653d896c64ffe72da51679c3bd05e0",
+          "manifestSha256": "5575d1792e270092dbacf69041b2263add86d37ca89dea12a98c0ecc22f13ec9",
+          "researchSha256": "1d5e5424d472ff17910cbf5101c72f9506794baaac8119e2abdd5582fcce0e9b",
+          "learningSha256": "6575d86e8b1daa130a5e2468e09f3dc814c9d3003814e02aad048f258491ea79"
+        }
+      }
+    },
+    {
+      "id": "2696868dd9f84dd44d102f1b31ccfd2b97c060d3cceab761500882efbeb3e7ca",
+      "kind": "assessment",
+      "caseId": "84dd42b26c54d12b4f52a07c",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "sourceRunId": "loop-40865264413-1",
+      "details": {
+        "revisionId": "e00022d3648ff5d7930d1071ef1f0e561dddd1f855edd082c1dd4b1ac8fd4f24",
+        "parentRevisionId": "672f34d734dd54e5abe29f683cb2247c8cce0fe91f3263a7ae58bda9d051e14d",
+        "candidateIndex": 6,
+        "candidateSha256": "4fd97f1454d1d94f2d79cad06ddfdb263ccb4b2e1797d5caef42437c3a0098ea",
+        "sourceSha256": "c8ecf8350fd2892e21b3fa759f9b9702e71c82a24a0bfe4b7b17daa77e7798c9",
+        "capabilitySources": [
+          {
+            "sourceId": "02eb5e542dc08527b0ee2cd8",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+            "textSha256": "b62383a717a66f131063b6e93a0d39cb467bf011bb3e823bba05f564fd3e3556"
+          }
+        ],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "Prepare a daily summary of new job records from a supplied dataset and mark whether the list is empty.",
+          "inputs": [
+            "Fictional job records with title, company, and URL",
+            "Operator-supplied prior-seen URLs",
+            "Operator-chosen target companies"
+          ],
+          "trigger": "When an operator provides that day’s job records.",
+          "steps": [
+            "Compare supplied URLs with the prior-seen list.",
+            "Keep records matching operator-chosen companies.",
+            "Count new records using the documented n8n Summarize Count capability.",
+            "Draft a compact alert for human review."
+          ],
+          "acceptanceCheck": "For a fixed fictional dataset, verify new-item count and alert contents against a hand-checked list.",
+          "humanBoundary": "The operator supplies records and confirms relevance before sending; live job-site retrieval and Slack delivery are excluded.",
+          "unverified": [
+            "The supplied n8n reference (02eb5e542dc08527b0ee2cd8) documents Count and Count Unique only, not job retrieval or delivery.",
+            "Deduplication correctness on changing job URLs is unverified."
+          ]
+        },
+        "limitations": [
+          "The supplied n8n reference (02eb5e542dc08527b0ee2cd8) documents Count and Count Unique only, not job retrieval or delivery.",
+          "Deduplication correctness on changing job URLs is unverified."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "883a6cd1304c60f979414cb8798531e242ae64dbb8767e2d286dcf0ed9aae938",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "The supplied n8n reference (02eb5e542dc08527b0ee2cd8) documents Count and Count Unique only, not job retrieval or delivery.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "3203f49032c18d819a761057998385fc1d9e4800270b91f22f0394e2a01d89e4",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Deduplication correctness on changing job URLs is unverified.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained post describes a daily scheduled dataset check and Slack alert; n8n docs support counting input values only.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recruiters may pay for concise alerts; this maker workflow is not buyer-demand evidence.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can process supplied fictional postings; live ATS retrieval, actor reliability, and Slack sending are unverified.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A repeatable count-and-alert pattern is described, and the supplied Summarize reference supports counting; source retrieval and alert delivery still need a person.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The maker post documents a concrete daily alert workflow and attributed deduplication behavior, but not independent demand.",
+            "sourceIds": [
+              null
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "359acced0b8ae18de2b584a3568a0f1877fd9281622de56620c36624471ecfd4",
+          "draftSha256": "d4e1735b06c2fbbb45c10074064ec349121690960c023d3e7b609cd9b6cc1c93",
+          "contextSha256": "1a546a511731fd2ff33e550cdfdb2e2fd8653d896c64ffe72da51679c3bd05e0",
+          "manifestSha256": "5575d1792e270092dbacf69041b2263add86d37ca89dea12a98c0ecc22f13ec9",
+          "researchSha256": "1d5e5424d472ff17910cbf5101c72f9506794baaac8119e2abdd5582fcce0e9b",
+          "learningSha256": "6575d86e8b1daa130a5e2468e09f3dc814c9d3003814e02aad048f258491ea79"
+        }
+      }
+    }
+  ]
+}
