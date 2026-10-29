@@ -3,7 +3,7 @@ import { ROOT,dataPath, readJSON, writeJSON, records, candidateIdentity, canonic
 import { deterministicCheck } from '../lib/validation.mjs';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { parseScoringPolicy } from '../lib/scoring.mjs';
+import { parseScoringPolicy,CANDIDATE_SCORING_VERSION } from '../lib/scoring.mjs';
 import { validateLoopScheduling } from '../lib/loop-schedule.mjs';
 import { sourceEvidenceFetchOptions } from '../lib/product-evidence.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
@@ -235,7 +235,7 @@ try{
   const sameBatch=new Set(),earlierProposals=[];
   const deterministicResults=draft.posts.map(post=>{const reasons=deterministicCheck(post,[...research.sources,...sources],[...previous,...earlierProposals],{scoringPolicy,noveltyNow:new Date(noveltyContext.asOf),demandContext:demandContract,demandRequired});if(sameBatch.has(post.id))reasons.push('Duplicate product in this writer batch.');sameBatch.add(post.id);earlierProposals.push({...post,publishedAt:noveltyContext.asOf,...(demandRequired?{demandContractVersion:1,checker:{demandCheck:{supported:true}}}:{})});if(post.sourceIds?.some(sourceId=>!sources.some(s=>s.id===sourceId)))reasons.push('Attached evidence source could not be re-fetched.');return {postId:post.id,pass:reasons.length===0,reasons};});
   await writeJSON(dataPath('drafts',runId),draft);
-  const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...demandContract,...(research.discoveryCarryover?{discoveryCarryover:{...research.discoveryCarryover,records:research.discoveryCarryover.records.filter(record=>sources.some(source=>source.id===record.sourceId))}}:{}),...(research.candidatePlanVersion!==undefined?{candidatePlanVersion:research.candidatePlanVersion}:{}),...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
+  const context={runId,createdAt:new Date().toISOString(),rulesSha256,scoringPolicy,candidateScoringVersion:CANDIDATE_SCORING_VERSION,draftSha256:sha256(stableJSON(draft)),sourceSnapshotSha256:sha256(stableJSON(sources)),sources,health,deterministicResults,noveltyContractVersion:1,noveltyContext,...demandContract,...(research.discoveryCarryover?{discoveryCarryover:{...research.discoveryCarryover,records:research.discoveryCarryover.records.filter(record=>sources.some(source=>source.id===record.sourceId))}}:{}),...(research.candidatePlanVersion!==undefined?{candidatePlanVersion:research.candidatePlanVersion}:{}),...(assessmentContractVersion?{assessmentContractVersion}: {}),...(!draft.posts.length?{primaryFetchDiagnostics,considerationEvidence:considerationEvidence.map(item=>({...item,availableSourceIds:item.sourceIds.filter(id=>sources.some(source=>source.id===id)),unavailableSourceIds:item.sourceIds.filter(id=>!sources.some(source=>source.id===id))}))}: {})};
   const privacyCategories=privateArtifactCategories(context);
   const evidenceFailures=assessmentEvidenceReasons(context);
   if(evidenceFailures.length)throw new Error(evidenceFailures.join(' '));

@@ -3,7 +3,7 @@ import {readJSON,dataPath,sha256,stableJSON,records} from '../lib/storage.mjs';
 import {validateLoopScheduling} from '../lib/loop-schedule.mjs';
 import {candidateHistory,writerResearchView,writerReadiness} from '../lib/candidate-input.mjs';
 import {ROOT} from '../lib/storage.mjs';
-import {parseScoringPolicy} from '../lib/scoring.mjs';
+import {parseScoringPolicy,candidateScoringVersionReasons} from '../lib/scoring.mjs';
 import {checkerOutputSchema} from '../lib/checker-output.mjs';
 import {checkerAssessmentView} from '../lib/checker-assessment.mjs';
 import {createNoveltyContext} from '../lib/novelty.mjs';
@@ -82,6 +82,8 @@ if(['checker','final-checker'].includes(role)){
  context.demandContractVersion=frozen.demandContractVersion||null;context.demandContextSha256=frozen.demandContextSha256||null;
  const planFailures=candidatePlanVersionReasons(frozen.candidatePlanVersion);if(planFailures.length)throw new Error(planFailures.join(' '));
  if(frozen.candidatePlanVersion!==undefined)context.candidatePlanVersion=frozen.candidatePlanVersion;
+ const scoringFailures=candidateScoringVersionReasons(frozen.candidateScoringVersion);if(scoringFailures.length)throw new Error(scoringFailures.join(' '));
+ if(frozen.candidateScoringVersion!==undefined)context.candidateScoringVersion=frozen.candidateScoringVersion;
  const assessmentView=checkerAssessmentView(draft,frozen,{role});
  context.checkerAssessment={path:'.run/checker-assessment.json',sha256:sha256(stableJSON(assessmentView)),counts:assessmentView.counts,command:`node scripts/inspect-check-assessment.mjs ${runId}`};
  // The advertised fingerprint must also be the hash of the exact file bytes.
