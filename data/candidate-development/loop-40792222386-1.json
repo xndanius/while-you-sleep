@@ -1,0 +1,508 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40792222386-1",
+  "createdAt": "2026-10-29T00:14:06.745Z",
+  "events": [
+    {
+      "id": "7a1a96932b93b96f91b8e8a7559666c7a681f9807a962888244b761d3e3ab881",
+      "kind": "origin",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40769477977-1",
+      "details": {
+        "revisionId": "6affb3290dc5bf882495e987d07c07c8155b3a002aa450fd01a12137f466328b",
+        "parentRevisionId": null,
+        "candidateSha256": "59a1d4aec562c4e0e259874f177db03541fac6f8dba271d8c0800bbee9614873",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [
+          {
+            "sourceId": "5c2bf4e7df8c3ec325ba2e74",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "textSha256": "2efd6ff6d5242dd765be1f15c0feb75eaa5409a8d7d7f861eedaedc7b85b4e8b"
+          },
+          {
+            "sourceId": "f1662b0ceb942474f83a8108",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "textSha256": "0791764c70627f0ed2e15f1c7ddb2b7f59b8055faa47777e0546281dd6f468b8"
+          }
+        ],
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review table of supplied game-test CSV rows with missing fields and repeated keys flagged.",
+          "inputs": [
+            "Synthetic device label and game session time",
+            "Synthetic battery, temperature, and frame-drop values",
+            "Synthetic short gameplay note",
+            "Operator-supplied sample CSV rows"
+          ],
+          "trigger": "An operator supplies a sample CSV export or fictional rows for review.",
+          "steps": [
+            "Read supplied CSV rows without connecting to a phone or cloud drive.",
+            "Check required columns and flag missing values.",
+            "Compare operator-approved row keys and flag possible repeats.",
+            "Prepare a normalized table for a sample sheet.",
+            "Ask a person to verify flags and perform any import."
+          ],
+          "acceptanceCheck": "On a labeled synthetic CSV, preserve expected measurements, flag planted repeated keys, and report missing fields without filling them in.",
+          "humanBoundary": "A person supplies fictional or authorized test data, chooses a safe duplicate key, and confirms flags and imports; the proposal does not control a phone or write to a live sheet.",
+          "unverified": [
+            "Whether phone uploads can be reliably triggered is unsupported.",
+            "The CSV reference documents extraction into row objects, not upload monitoring.",
+            "The duplicate-removal reference documents comparisons, but correct keys for these logs are unknown."
+          ]
+        },
+        "limitations": [
+          "Whether phone uploads can be reliably triggered is unsupported.",
+          "The CSV reference documents extraction into row objects, not upload monitoring.",
+          "The duplicate-removal reference documents comparisons, but correct keys for these logs are unknown."
+        ],
+        "provenance": {
+          "runId": "loop-40769477977-1",
+          "runSha256": "9d219fafe6bc529f1c7a3a274a52e49bb3ea5430a6df91c9852681f108fc7027",
+          "draftSha256": "eaed2bf4ca6d772a82024a1273ce4ccc629fec0917b2e3903fee123428a53ee4",
+          "contextSha256": "62b3a64fd4ff0c6802a4e2e9db24eaf07a7da4f80695b79a1d65e2ff3bfe253b",
+          "researchSha256": "36efd281fd58424ec0596f83f0a4ad5e333434daf18c4b421f8713755c4ebbf6",
+          "scanSha256": "65556999cc526ea054681974268f5cca765dcf5740f41d6117262474dfb90d6d",
+          "manifestSha256": "0b2c1978c6634492794938cbc13433c38d77583e8800e89d71b734fcdca27f9f",
+          "selectionSha256": "cb66ee53916736de27747ade320c40fb162f4123654b2df35e3d9db35b762d83",
+          "learningSha256": "cc9ea1ac617676205899ecceb9385cf790769c1e96fc3b57157abdc9ec0443c8"
+        }
+      }
+    },
+    {
+      "id": "dcc9f6bdb16a9cdc495579e2595cb873b4cb8ff708528f0b302c40d4a49230bc",
+      "kind": "acquisition",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40792222386-1",
+      "details": {
+        "revisionId": "6affb3290dc5bf882495e987d07c07c8155b3a002aa450fd01a12137f466328b",
+        "intentSha256": "fa7e5b95e2a3672b73eb5f88827ff2415756385ea6fda3343ee4643c358b6cf1",
+        "resultSha256": "1ae2dde40516448d0bbb0ec851b1500e97526b8ec6ef3cadb975927f32684084",
+        "outcome": "not_eligible",
+        "routes": [
+          {
+            "key": "f26cffb02af54e924c2efaff1e032dfaba5a7511f2e9721c0f82638d102c5426",
+            "referenceId": "n8n-drive-trigger-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.googledrivetrigger",
+            "purpose": "new_acquisition",
+            "status": "waiting",
+            "evidenceSha256": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "3147bde27edea04b76fc48abf0af9b67387659fc78d74784df337ca141d8acf8",
+      "kind": "assessment",
+      "caseId": "0cec76f4cbd8b39cd8d44f10",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceRunId": "loop-40792222386-1",
+      "details": {
+        "revisionId": "edb2bf94576568935d20fb238cd5cfcc0011f1ec469b59644b571ad32ef60ae0",
+        "parentRevisionId": "50d3524d5fecd404734ac0a7282f0bda70ed5efc9162137975ea08c85f23eaca",
+        "candidateIndex": 0,
+        "candidateSha256": "578f06d2299985ff4419b47d6fdb35d752b3fa4363713d799b0f3ca5d30576ca",
+        "sourceSha256": "0ed756e4df721fc0a23b581c41d676cb18f3e58652a69af2694af08f48244d06",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A compact resume-email summary tied to a supplied stable message reference.",
+          "inputs": [
+            "fictional email thread text",
+            "operator-supplied immutable message ID",
+            "operator-defined summary fields"
+          ],
+          "trigger": "An operator pastes one fictional thread and its reference ID.",
+          "steps": [
+            "Check that the supplied reference is present.",
+            "Extract the stated role, request and response status into labeled fields.",
+            "Draft a short summary linked to the supplied reference.",
+            "Flag missing or conflicting facts for review.",
+            "Compare the output with a manually prepared answer key."
+          ],
+          "acceptanceCheck": "On a fixed synthetic set, verify every output field against the answer key and confirm the reference is copied exactly.",
+          "humanBoundary": "An operator supplies sanitized test text and fields, verifies the summary and reference, and authorizes any use with real email.",
+          "unverified": [
+            "Whether any email system exposes a stable immutable ID to a prototype",
+            "Whether summaries preserve context accurately across long threads",
+            "Any email connector or automated drafting capability"
+          ]
+        },
+        "limitations": [
+          "Whether any email system exposes a stable immutable ID to a prototype",
+          "Whether summaries preserve context accurately across long threads",
+          "Any email connector or automated drafting capability"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "2386abdb27da1153e6cb199b93f7e38d93c53b598bd517c3443e95e98148c850",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether any email system exposes a stable immutable ID to a prototype",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "5f2525257039892dd518d147cbb27be44dd8404684ef3e589f2f7be3c6487272",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Whether summaries preserve context accurately across long threads",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "51943b0e2e4227040d5fea0ed2b0c4037e3859b6aee3840970a984c6c694b424",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Any email connector or automated drafting capability",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can test operator-supplied sample email text, but no implementation reference supports email access or immutable IDs.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: recruiting or professional-service operators might pay for faster email review; this request proves no buyer intent or payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can compare a supplied thread and reference ID with a summary, but email integration and identity stability are unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed text-to-summary loop is bounded; a person must verify identity, context and every prefilled detail, and no automation support is documented.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native context describes resume email summarization and immutable-ID need, but gives no repeated volume or corroboration.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "6fa820d2ef59d4560a9dc01b3b0fdf4c97509f1174e0ea05f15e87b67c673b9f",
+          "draftSha256": "df7758dd5a31fd4b85ed2fcfc186d724a8458613f27a9b3d79b0a6f03e3a7a40",
+          "contextSha256": "792e786a3976f59763222bcab1927c11103ba1e2ab13712022036c1fc4b94ebb",
+          "manifestSha256": "a841f9342e0ffd005c763617c6bf420dd4415bf4f7056455542b586c84e03243",
+          "researchSha256": "59645e60267b1b1b658b3063446870e3c802c712e9b7c982e862c1088615fa09",
+          "learningSha256": "9eb2e164a04b2f0d9c4159018577d2002cfa99cdf2f7f1a109282bf704ec591c"
+        }
+      }
+    },
+    {
+      "id": "5b795f048a8519c7ad8346e058274264b93c7e32858696f8944be0ecec055ea3",
+      "kind": "assessment",
+      "caseId": "80797dd1ada2bd299d560f07",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "sourceRunId": "loop-40792222386-1",
+      "details": {
+        "revisionId": "3cceca29112fa135d1af116a4c5b35140c941fa4bc26aec225e6e9f008413665",
+        "parentRevisionId": "94720306608b8a9a9cd953bd801861f5a248625e45d3d4561aaad2ca41152acd",
+        "candidateIndex": 1,
+        "candidateSha256": "61694b9dd3822b9e8958fc820948e525c7ad14aa52628a0033868e345d62a5d8",
+        "sourceSha256": "6126b59158546a24c60ef7ee83e0fd8f232ce2a314937b5e2639680a5e811493",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review queue of proposed status messages for a small set of fictional bookings.",
+          "inputs": [
+            "fictional booking ID and status",
+            "fictional provider assignment",
+            "fictional payment state",
+            "operator-written message templates"
+          ],
+          "trigger": "A labeled synthetic booking event is added to a test sheet.",
+          "steps": [
+            "Validate required test fields and flag missing values.",
+            "Select a draft template for the declared event type.",
+            "Fill only fields supplied in the test record.",
+            "Mark duplicate event IDs and simulated failures.",
+            "Show the draft and flags in a review queue.",
+            "Compare each draft and flag with expected test outputs."
+          ],
+          "acceptanceCheck": "For fixed synthetic events, check correct template, exact field values, duplicate detection and failure flags against a written answer key.",
+          "humanBoundary": "An operator defines allowed statuses and templates, verifies payment facts, and approves every customer or provider message.",
+          "unverified": [
+            "Whether booking or payment APIs can be accessed",
+            "Whether event IDs support reliable deduplication and retries",
+            "Any integration, delivery or persistence capability"
+          ]
+        },
+        "limitations": [
+          "Whether booking or payment APIs can be accessed",
+          "Whether event IDs support reliable deduplication and retries",
+          "Any integration, delivery or persistence capability"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "dda00852d05d1321c6bd9fe2796f755577b78a463816c6e49b721a35ec94dee5",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "477998ecc7018ca5a4c6f9d9ddd624d05063a51a70b8f79eab6ddc0424c4c3ca",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Whether event IDs support reliable deduplication and retries",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "21cd5c5662a3a131767af69d203a76fa0cd38e7a81befba9e9a1d490dabed6c2",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Any integration, delivery or persistence capability",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The request names four alert types, but no supplied implementation reference documents integrations or message delivery.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: on-demand service operators might pay for fewer missed updates; the discussion establishes need, not purchase intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic event-to-draft prototype can cover labeled booking states; APIs, payment correctness and production delivery remain unsupported.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed event-to-draft loop can repeat, but no automation capability is evidenced and a person must verify payment state and approve sends.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native post names booking, assignment, payment-status and customer alerts plus retry and duplicate concerns, but gives no concrete field schema or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "6fa820d2ef59d4560a9dc01b3b0fdf4c97509f1174e0ea05f15e87b67c673b9f",
+          "draftSha256": "df7758dd5a31fd4b85ed2fcfc186d724a8458613f27a9b3d79b0a6f03e3a7a40",
+          "contextSha256": "792e786a3976f59763222bcab1927c11103ba1e2ab13712022036c1fc4b94ebb",
+          "manifestSha256": "a841f9342e0ffd005c763617c6bf420dd4415bf4f7056455542b586c84e03243",
+          "researchSha256": "59645e60267b1b1b658b3063446870e3c802c712e9b7c982e862c1088615fa09",
+          "learningSha256": "9eb2e164a04b2f0d9c4159018577d2002cfa99cdf2f7f1a109282bf704ec591c"
+        }
+      }
+    },
+    {
+      "id": "a6494292eb3848046fefc1a429ccd27ad16b1da0df026d1c44a25f72052f9401",
+      "kind": "assessment",
+      "caseId": "c853ab1f158b31c64ddf2e01",
+      "productUrl": "https://news.ycombinator.com/item?id=50271417",
+      "sourceRunId": "loop-40792222386-1",
+      "details": {
+        "revisionId": "559f723e0ef700e345fb169b2a2f7ce839715d48cd5ffb85000577e74ec18053",
+        "parentRevisionId": "59d322966c074f472f9d854dc99a2495822538599ecb86e4a04975017e5e614e",
+        "candidateIndex": 2,
+        "candidateSha256": "e9bb397ed8f427515d3ef8ab54884f998f4b8089f16863f1d9470a27a80c9ab6",
+        "sourceSha256": "ced32f70030bd840796965d1de07fd357d6728fd891f4f4395fcd33d3c5600c0",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A read-only review list of large or duplicate-looking files from a supplied inventory.",
+          "inputs": [
+            "synthetic file name and size rows",
+            "operator-defined protected folders",
+            "operator-defined review threshold"
+          ],
+          "trigger": "An operator imports a fictional inventory table.",
+          "steps": [
+            "Exclude rows marked protected.",
+            "Sort remaining rows by supplied size.",
+            "Group only rows with identical supplied hashes.",
+            "Show a review reason without changing files.",
+            "Compare the list with a manually checked expected result."
+          ],
+          "acceptanceCheck": "On a synthetic inventory, verify protected rows never appear and sorting/grouping matches the answer key; confirm no file operation occurs.",
+          "humanBoundary": "A person supplies test inventory, checks every listed item and performs any device scan or deletion themselves.",
+          "unverified": [
+            "Whether macOS exposes a safe inventory export",
+            "Whether hashes or duplicate detection are available",
+            "Any app, storage scanning or deletion capability"
+          ]
+        },
+        "limitations": [
+          "Whether macOS exposes a safe inventory export",
+          "Whether hashes or duplicate detection are available",
+          "Any app, storage scanning or deletion capability"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "b90b93db4d6d24cc0c57644def3259a7eba307e3e028b368fefecd1525c2d305",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether macOS exposes a safe inventory export",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "9dc94ad1385c93d2ec90ab331d341bc65c1c7c8570042aee2bae12d50bad03c5",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Whether hashes or duplicate detection are available",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "f98f7aa1e083c4edb3d7f4a4e8461289e018d767cb8ef95336887f30d83ad1e0",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Any app, storage scanning or deletion capability",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can test a manually supplied file inventory, but no reference supports Mac storage scanning or file metadata access.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: people with recurring storage pressure might pay for an inventory assistant; this personal account does not establish repeat demand or payment.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can rank fictional inventory rows without touching files; safe real scanning and size accuracy are unverified.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed report can sort supplied rows, but a person must verify every recommendation and perform any deletion; no autonomous device access is documented.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a personal need to free Mac storage and that an app was built, but supplies no frequency, workflow details or corroboration.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "6fa820d2ef59d4560a9dc01b3b0fdf4c97509f1174e0ea05f15e87b67c673b9f",
+          "draftSha256": "df7758dd5a31fd4b85ed2fcfc186d724a8458613f27a9b3d79b0a6f03e3a7a40",
+          "contextSha256": "792e786a3976f59763222bcab1927c11103ba1e2ab13712022036c1fc4b94ebb",
+          "manifestSha256": "a841f9342e0ffd005c763617c6bf420dd4415bf4f7056455542b586c84e03243",
+          "researchSha256": "59645e60267b1b1b658b3063446870e3c802c712e9b7c982e862c1088615fa09",
+          "learningSha256": "9eb2e164a04b2f0d9c4159018577d2002cfa99cdf2f7f1a109282bf704ec591c"
+        }
+      }
+    }
+  ]
+}
