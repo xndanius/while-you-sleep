@@ -70,6 +70,17 @@ with generic prose or promote an unrelated candidate. Ordinary claim/score repai
 keeps its existing revision path. This prevents loss of pending evidence tasks;
 it does not grant a score, execution claim or publication approval.
 
+Existing historical revisions can already contain a less specific plan. After a
+verified successful continuation, writer preparation also exposes at most one
+older proposed plan for the same primary-evidence fingerprint. It revalidates the
+complete old assessment bundle and candidate hash, checks that it predates the
+active origin, and keeps its provenance separate. Up to three historical matches
+are examined; missing or corrupted bundles cannot restore a plan. The old plan
+is advisory, carries no old ratings or source claims, and never replaces the
+latest record. Its assumptions and gaps must be reconsidered against current
+evidence. This supplies useful context without rewriting history or treating an
+old proposal as an executed test.
+
 An eligible continuation competes for its research slot through the ordinary
 selector with its priority supplied. It can replace one of that feed's other
 leads; it cannot increase the three-per-feed or ten-total limit. Testing only the

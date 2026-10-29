@@ -14,6 +14,7 @@ import {sealedDiscussionAssignmentReasons} from '../lib/check-diagnostics.mjs';
 import {candidatePlanVersionReasons} from '../lib/candidate-plan.mjs';
 import {verifyContinuationIntent,continuationResultReasons} from '../lib/research-continuation.mjs';
 import {candidateEvidenceTasks} from '../lib/candidate-evidence-tasks.mjs';
+import {previousContinuationPlans} from '../lib/candidate-development.mjs';
 const runId=process.env.RUN_ID||`loop-${Date.now()}`;
 if(!/^[a-zA-Z0-9_-]+$/.test(runId))throw new Error('Invalid run ID');
 const role=process.argv[2]||'writer';
@@ -53,7 +54,7 @@ if(['writer','repair'].includes(role)){
   const intent=await readJSON(dataPath('research-intents',runId)),result=await readJSON(dataPath('research-results',runId));
   await verifyContinuationIntent(ROOT,intent,{runId,expectedSha256:process.env.EXPECTED_RESEARCH_INTENT_SHA});
   if(sha256(stableJSON(result))!==process.env.EXPECTED_RESEARCH_RESULT_SHA||continuationResultReasons(result,intent,{sealed:true}).length)throw new Error('Writer continuation receipt failed its trusted pre-model binding.');
-  if(result.outcome==='completed'&&view.sources.some(source=>source.id===intent.dossier.source.id))context.researchContinuation={version:1,productUrl:intent.dossier.source.url,sourceId:intent.dossier.source.id,priorPlan:intent.dossier.candidate.experimentPlan,unresolved:intent.dossier.unresolved,evidenceTasks:candidateEvidenceTasks({candidate:intent.dossier.candidate,source:view.sources.find(source=>source.id===intent.dossier.source.id),capabilitySources:view.sources.filter(source=>source.role==='building')}),intentSha256:sha256(stableJSON(intent)),resultSha256:sha256(stableJSON(result)),notice:'Prior proposed design and pending evidence tasks only. Use the current independently verifiable sources. Pending tasks are not performed tests, facts, scores or approval.'};
+  if(result.outcome==='completed'&&view.sources.some(source=>source.id===intent.dossier.source.id))context.researchContinuation={version:1,productUrl:intent.dossier.source.url,sourceId:intent.dossier.source.id,priorPlan:intent.dossier.candidate.experimentPlan,previousCheckedPlans:await previousContinuationPlans(ROOT,intent),unresolved:intent.dossier.unresolved,evidenceTasks:candidateEvidenceTasks({candidate:intent.dossier.candidate,source:view.sources.find(source=>source.id===intent.dossier.source.id),capabilitySources:view.sources.filter(source=>source.role==='building')}),intentSha256:sha256(stableJSON(intent)),resultSha256:sha256(stableJSON(result)),notice:'Prior proposed design and pending evidence tasks only. Use the current independently verifiable sources. Pending tasks are not performed tests, facts, scores or approval.'};
  }
  if(context.discussionFirst){
   const selection=await readJSON(dataPath('learning-selection',runId));
