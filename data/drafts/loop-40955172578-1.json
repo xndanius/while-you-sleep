@@ -1,0 +1,484 @@
+{
+  "runId": "loop-40955172578-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T21:11:25.248Z",
+  "candidates": [
+    {
+      "title": "Compare product-specific tax cases before checkout",
+      "productUrl": "https://community.shopify.com/t/706515",
+      "sourceIds": [
+        "3cd538c6b130b86a654c28c2"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3cd538c6b130b86a654c28c2"
+        ],
+        "chore": "Calculate product-specific tax amounts before checkout and record GST and PST accurately in order records and reports.",
+        "evidenceQuote": "Calculate the correct tax amounts before payment, without requiring draft orders, manual adjustments or additional invoices."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic case table is possible, but tax rules and correct calculations are not supported by implementation evidence.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: wholesale retailers may pay for fewer manual checkout adjustments; this request proves no buyer intent or payment.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week calculator mock is possible, but correct jurisdiction and exemption rules are unresolved dependencies inside the output.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A draft can flag supplied cases, while a qualified person must verify tax treatment and authorize any use.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained task and context spans identify checkout calculation and record accuracy needs; no implementation or corroboration is supplied.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet comparing operator-entered product, customer exemption and tax inputs with an independently supplied expected amount, flagging mismatches without calculating production tax.",
+        "inputs": [
+          "Synthetic product and customer category",
+          "Operator-supplied tax rule and rate",
+          "Expected tax amount from a qualified reviewer"
+        ],
+        "trigger": "A person submits one synthetic checkout case for review.",
+        "steps": [
+          "Collect the synthetic case and the reviewer-provided expected amount.",
+          "Apply only the operator-entered rule to produce a draft comparison.",
+          "Flag missing fields or a mismatch for human review.",
+          "Save the case and reviewer decision in a local test sheet."
+        ],
+        "acceptanceCheck": "For each test case, verify that the comparison flags a deliberately mismatched entered amount and does not present its own result as authoritative tax advice.",
+        "humanBoundary": "A qualified person supplies rules and expected amounts, reviews every discrepancy, and decides any real tax treatment; no live Shopify write or tax advice is proposed.",
+        "unverified": [
+          "Whether available inputs fully represent product-specific GST/PST rules",
+          "Whether the comparison is useful across real businesses",
+          "No live Shopify integration or tax correctness is established"
+        ]
+      },
+      "reason": "Assessed from the assigned discussion. The proposed student experiment is narrow; provisional mean is below 6, so it is recorded in rejected."
+    },
+    {
+      "title": "Prepare game-test CSV logs for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "5c2bf4e7df8c3ec325ba2e74",
+        "f1662b0ceb942474f83a8108"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Enter mobile game-test measurements in notes, export a CSV, paste it into a Google Sheet, and avoid processing the same file twice.",
+        "evidenceQuote": "Right now I type it into a notes app during the session, then later export a CSV from that app and paste it into a Google Sheet."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied n8n references support CSV row extraction and duplicate comparison (5c2bf4e7df8c3ec325ba2e74; f1662b0ceb942474f83a8108), but not phone intake.",
+            "sourceIds": [
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent game testers may pay for cleaner log imports; the post establishes no buying intent or payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A synthetic CSV flow is bounded and both extraction and deduplication are documented by the cited n8n sources; live trigger setup remains unverified.",
+            "sourceIds": [
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Rows can be extracted and compared, but a person must choose a stable key, verify results and import them; duplicate removal capability is documented by f1662b0ceb942474f83a8108.",
+            "sourceIds": [
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context names four logged measures, notes-to-CSV-to-Sheets handling, and a trigger firing zero or twice; recurrence beyond this user is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable table of parsed game-test rows with repeated rows flagged before a person imports the CSV into a Sheet.",
+        "inputs": [
+          "Synthetic CSV with battery, temperature, frame-drop and note columns",
+          "Operator-selected file identifier",
+          "Operator-selected row matching fields"
+        ],
+        "trigger": "A tester manually supplies an exported CSV for a review run.",
+        "steps": [
+          "Read the supplied CSV into row objects using the documented n8n extraction node.",
+          "Check required columns and mark incomplete rows.",
+          "Compare selected fields against prior test rows using the documented duplicate-removal node.",
+          "Produce a review table of new, repeated and incomplete rows.",
+          "Have a person verify matches and import approved rows into Sheets."
+        ],
+        "acceptanceCheck": "Use a small synthetic CSV containing a repeated row and one missing measurement; confirm the report flags both and preserves the original values for review.",
+        "humanBoundary": "The tester exports and submits files, selects matching fields, checks flagged rows and imports approved data; phone upload triggers and live Sheet writes are outside scope.",
+        "unverified": [
+          "Whether chosen fields identify the same test event reliably",
+          "Whether the free n8n setup can run the desired phone-to-drive trigger",
+          "No actual workflow execution or external endpoint is established"
+        ]
+      },
+      "reason": "Assessed from the assigned discussion. The proposed student experiment is narrow; provisional mean is below 6, so it is recorded in rejected."
+    },
+    {
+      "title": "Review recovery gaps in agent runs",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Write checkpoint and recovery logic and handle idempotency for agent workflows.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A supplied incident table can be reviewed manually, but no supplied implementation reference supports checkpoint or safe retry behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agent workflows may pay for recovery reviews; the post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week synthetic failure review is bounded, but reliable recovery logic and safe side-effect handling are unresolved core capabilities.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposal can organize failure cases, but a developer must design, test and authorize recovery behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post names three engineering burdens but provides no concrete scenario, inputs, recurrence or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed recovery case sheet that maps a supplied agent failure description to missing checkpoint and duplicate-side-effect questions.",
+        "inputs": [
+          "Synthetic agent run description",
+          "Synthetic checkpoint history",
+          "List of external side effects in the test scenario"
+        ],
+        "trigger": "A developer submits one synthetic failed-run case for review.",
+        "steps": [
+          "Record the supplied failure point and checkpoint history.",
+          "List side effects that may already have occurred.",
+          "Flag unanswered questions about replay safety and idempotency.",
+          "Draft questions for a developer to resolve before any retry.",
+          "Have a developer approve or reject a proposed recovery approach."
+        ],
+        "acceptanceCheck": "For a synthetic failure with one completed external side effect and a missing checkpoint, confirm the sheet flags replay risk and does not recommend an automatic retry.",
+        "humanBoundary": "A developer supplies scenario facts, determines correct checkpoint semantics, verifies side effects and authorizes any retry; no agent execution or recovery is proposed.",
+        "unverified": [
+          "Which checkpoint and replay semantics apply to any particular agent",
+          "Whether proposed questions help teams solve their failures",
+          "No recovery implementation, external endpoint, or successful retry is evidenced"
+        ]
+      },
+      "reason": "Assessed from the assigned discussion. The proposed student experiment is narrow; provisional mean is below 6, so it is recorded in rejected."
+    },
+    {
+      "title": "Compare ad and Shopify purchase exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceIds": [
+        "accc79f9c0afdef41b9f38d1"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "accc79f9c0afdef41b9f38d1"
+        ],
+        "chore": "Export daily purchases from Ads Manager and daily Shopify orders for the same 30-day period, then investigate differences including duplicate counting.",
+        "evidenceQuote": "In Shopify, export daily orders for the same 30 days, Online Store channel only, without test and cancelled orders."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A person can supply two exports for a comparison, but no supplied reference supports live account access or attribution analysis.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online shops may pay for a repeatable discrepancy review; the post establishes no purchase intent or payment.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic comparison is feasible, while attribution settings and causes of gaps still require expert interpretation.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The proposed report can align daily totals and flag large changes, but a person must inspect causes and make any tracking changes.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans give aligned 30-day export instructions and examples of expected differences and duplicate events, but only one discussion supports demand.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily comparison table of operator-supplied Ads Manager and Shopify exports, with unusually large gaps flagged for human investigation.",
+        "inputs": [
+          "Synthetic Ads Manager daily purchase export",
+          "Synthetic Shopify Online Store daily order export",
+          "Operator-selected date range and attribution setting"
+        ],
+        "trigger": "A shop operator supplies two exports for the same chosen date range.",
+        "steps": [
+          "Check that both files cover matching dates and the selected channel/settings.",
+          "Align rows by date and preserve each original total.",
+          "Calculate the difference and mark missing dates or unusually large changes.",
+          "Attach a short explanation checklist without assigning a cause.",
+          "Have a person inspect tracking settings and confirm any finding."
+        ],
+        "acceptanceCheck": "On synthetic exports with matching totals, one missing date and one deliberate doubled value, confirm that the table identifies the mismatched dates without claiming why they differ.",
+        "humanBoundary": "The operator exports and reviews data, confirms settings, and investigates causes; the proposal does not access accounts, identify attribution truth, or change tracking.",
+        "unverified": [
+          "Which gap size deserves review for a given shop",
+          "Whether settings and export schemas remain consistent",
+          "No live Meta or Shopify connection, external endpoint, or verified diagnosis is established"
+        ]
+      },
+      "reason": "Assessed from the assigned discussion. The proposed student experiment is narrow; provisional mean is below 6, so it is recorded in rejected."
+    },
+    {
+      "title": "Flag repeat workflow runs after missed triggers",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "sourceIds": [
+        "ec16f5ced732a9d207069cd6",
+        "f1662b0ceb942474f83a8108"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ec16f5ced732a9d207069cd6"
+        ],
+        "chore": "Identify and prevent duplicate processing when a scheduled workflow trigger is missed.",
+        "evidenceQuote": "Missed schedule triggers can duplicate everything."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The supplied deduplication reference supports comparing items across executions, but the post does not specify a stable key or trigger behavior.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: workflow consultants or small service operators may pay to reduce duplicate processing; this post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic replay exercise can compare supplied event keys using documented deduplication, but safe recovery semantics remain unknown.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed check can flag previously processed keys, while a person must choose the key, inspect side effects, and authorize any workflow change.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The task span says missed schedule triggers can duplicate everything; these spans do not give frequency, affected data, or a specific remedy.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table showing whether a synthetic scheduled-workflow event key was already processed, with repeat cases flagged before any retry.",
+        "inputs": [
+          "Synthetic event records with unique operator-supplied keys",
+          "Synthetic prior-execution key history",
+          "Operator-written description of the intended retry rule"
+        ],
+        "trigger": "A developer submits one synthetic missed-trigger scenario for a manual review run.",
+        "steps": [
+          "Load the synthetic event and prior key history.",
+          "Compare the chosen key against prior processed items using the documented deduplication operation.",
+          "Mark new and repeated keys in a review table.",
+          "Show the supplied retry rule beside each result without initiating a retry.",
+          "Have a developer verify possible side effects and approve any later workflow change."
+        ],
+        "acceptanceCheck": "In a synthetic case with one key already processed and one new key, verify the report flags the repeat and leaves both records unchanged for human review.",
+        "humanBoundary": "A developer supplies scenario data and chooses a meaningful key, checks whether prior side effects occurred, and authorizes workflow changes or retries; no live workflow execution is proposed.",
+        "unverified": [
+          "Whether the operator-selected key reliably represents a completed task",
+          "How the actual workflow records execution history",
+          "Whether schedule recovery or safe retry behavior is supported in the real workflow",
+          "No workflow execution, external endpoint, or successful prevention is established"
+        ]
+      },
+      "reason": "Assessed the named omitted assignment as a bounded synthetic duplicate-key review. Its narrow workflow overlaps the separately assessed game-test CSV repeat-processing workflow in this batch, so it is excluded as a duplicate; provisional scores also remain below 6."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Car-free navigation and place discovery",
+      "productUrl": "https://news.ycombinator.com/item?id=50295437",
+      "reason": "The assigned post presents a navigation product idea (“Discover new places and navigate using car free transportation.”), but the retained evidence gives no specific manual business chore or service request to scope as a demand-first student experiment."
+    },
+    {
+      "title": "Product-specific tax handling at checkout",
+      "productUrl": "https://community.shopify.com/t/706515",
+      "reason": "Scored as a bounded synthetic comparison, but no supplied implementation reference supports tax calculations and correctness is a critical unresolved dependency; provisional mean 4.0, below 6."
+    },
+    {
+      "title": "Mobile game test log CSV handling",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "Scored with the supplied n8n CSV extraction and duplicate-removal references; provisional mean 5.2, below 6. Phone triggers, matching keys and payment remain unverified."
+    },
+    {
+      "title": "Copyright status of language-model output",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The assigned excerpt states a broad concern about rights in model output, but it does not identify a bounded repeated task or requested service; no task plan can be grounded in the retained evidence."
+    },
+    {
+      "title": "WhatsApp and booking automation services",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "This is an offer of services and product claims, not a concrete customer request or a specific manual task to automate; the retained spans do not establish a demand-side chore."
+    },
+    {
+      "title": "Eye fatigue from laptop screen time",
+      "productUrl": "https://news.ycombinator.com/item?id=50288342",
+      "reason": "The retained excerpt describes one maker eye tiredness and a tool, not a concrete business chore or requested service; no task-specific experiment is supported."
+    },
+    {
+      "title": "Compare ad and Shopify purchase exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "reason": "Scored as a proposed supplied-export comparison; provisional mean 5.2, below 6. One discussion does not establish repeat demand, and live access and cause diagnosis remain unverified."
+    },
+    {
+      "title": "Agent workflow recovery and idempotency",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "reason": "Scored as a synthetic failure-review sheet; provisional mean 3.8, below 6. The post names recovery burdens but provides no failure case, supported recovery mechanics, or buyer evidence."
+    },
+    {
+      "title": "Flag repeat workflow runs after missed triggers",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "The proposed synthetic repeated-key review overlaps the separately assessed game-test CSV import and duplicate-review workflow in this batch (same workflow and professional-services user); reject as a duplicate. Its provisional mean is 4.6, below 6, and the supplied spans do not establish frequency or safe retry behavior."
+    },
+    {
+      "title": "Fast Git client for reviewing agent work",
+      "productUrl": "https://news.ycombinator.com/item?id=50287819",
+      "reason": "The retained excerpt is a product announcement about Git client performance; it does not state a concrete customer chore or service request suitable for a demand-first experiment."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion assignments. Three concrete chores received scoped plans and five provisional scores; each remains below the threshold or lacks essential task evidence. No post is proposed."
+    },
+    {
+      "stage": "repair",
+      "message": "Reassessed the single omitted assigned discussion about missed-trigger duplication with a scoped plan and five provisional scores; excluded it for overlap with the game-test CSV repeat-processing workflow and a below-threshold mean."
+    }
+  ],
+  "repairAttempt": 1
+}
