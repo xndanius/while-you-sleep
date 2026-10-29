@@ -1,0 +1,619 @@
+{
+  "runId": "loop-40865264413-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T12:00:00.000Z",
+  "candidates": [
+    {
+      "title": "Schedule vocabulary review items",
+      "productUrl": "https://news.ycombinator.com/item?id=50287258",
+      "sourceIds": [
+        "e50b202596b5a8091820fb2f"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "e50b202596b5a8091820fb2f"
+        ],
+        "chore": "Identify when a learner mistakes an inflected word and assign that vocabulary item a later review date.",
+        "evidenceQuote": "But if you make the mistake of using \"play\" instead of \"played\" they're not able to identify that as a component that should have its own schedule for review."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Return a proposed review date and short reason for a learner-supplied word correction.",
+        "inputs": [
+          "Fictional original word and sentence",
+          "Fictional corrected word and sentence",
+          "Operator-chosen review interval"
+        ],
+        "trigger": "When a learner submits a corrected practice sentence.",
+        "steps": [
+          "Compare original and corrected word forms.",
+          "Ask a language model to identify the changed word.",
+          "Show a suggested review date using the supplied interval.",
+          "Have a tutor confirm the word and date."
+        ],
+        "acceptanceCheck": "On a fixed fictional set, verify the changed token matches the known correction and the date follows the chosen interval.",
+        "humanBoundary": "A tutor supplies and approves corrections; the prototype does not diagnose language errors or send real reminders.",
+        "unverified": [
+          "Reliable identification of inflected forms across languages is unverified.",
+          "No learning app, learner-data input, reminder delivery, or effectiveness evidence is supplied."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner could test a supplied word pair and review-date suggestion; the post gives no implementation reference.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: language tutors may value review scheduling; this single post does not establish buyer intent or payment.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prototype can suggest review dates for fictional word pairs; learner-data ingestion and learning effectiveness are unknown.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Suggestions can repeat on supplied examples, but a person must check the correction and manage actual study reminders.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post identifies a specific inflection and review-scheduling gap, but frequency and wider demand are uncorroborated.",
+            "sourceIds": [
+              null
+            ]
+          }
+        }
+      },
+      "reason": "Concrete but single-instance learning issue; provisional mean 4.6 is below threshold."
+    },
+    {
+      "title": "Track an app review follow-up",
+      "productUrl": "https://community.make.com/t/118559",
+      "sourceIds": [
+        "12083ab1ec28d340dfb92444"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "12083ab1ec28d340dfb92444"
+        ],
+        "chore": "Prepare a concise status summary and follow-up draft for an app review that has had no update.",
+        "evidenceQuote": "It has been in “Review process started” status for 55 days, and we haven’t had any updates."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Draft a factual follow-up note from an operator-entered app review status and date.",
+        "inputs": [
+          "Fictional app label",
+          "Operator-entered review status",
+          "Submission date and last-update date"
+        ],
+        "trigger": "When an app developer records that a review has stalled.",
+        "steps": [
+          "Check that the status and dates are present.",
+          "Calculate elapsed days from the supplied dates.",
+          "Draft a neutral request for status or missing requirements.",
+          "Ask the operator to verify and send it."
+        ],
+        "acceptanceCheck": "For sample dates, compare the calculated elapsed time and draft against a manually written reference.",
+        "humanBoundary": "The developer verifies all details and sends any message; no platform account or reviewer contact is accessed.",
+        "unverified": [
+          "No review-platform status integration or response-time policy is documented.",
+          "The source describes one stalled review, not a recurring paid workflow."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A supplied status can be turned into a draft manually, but no implementation reference supports platform access.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: app developers might value review follow-up help; one complaint shows no paying demand.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can prepare a status note from operator-entered dates; automated status checking is unsupported.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed output is a one-time draft from manual inputs, not a repeatable autonomous monitoring loop.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context states a specific review status and delay, but gives no corroboration or general frequency.",
+            "sourceIds": [
+              null
+            ]
+          }
+        }
+      },
+      "reason": "A narrow note-drafting mock is possible, but the source is a single platform-specific delay; provisional mean 3.8 is below threshold."
+    },
+    {
+      "title": "Review pages before adding them",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "sourceIds": [
+        "afe7e1914aaaf443af4e5210"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "afe7e1914aaaf443af4e5210"
+        ],
+        "chore": "Produce a keep-or-remove review note for a page using its stated purpose and upkeep cost.",
+        "evidenceQuote": "Before adding anything new I check whether the page already has a reason to exist. If it does not answer a question or solve something, I delete it."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Create a short page review note that states its supplied purpose and flags missing purpose for human review.",
+        "inputs": [
+          "Fictional page title",
+          "Operator-written page purpose",
+          "Operator estimate of upkeep"
+        ],
+        "trigger": "When a site owner considers adding or reviewing a page.",
+        "steps": [
+          "Read the supplied title and purpose.",
+          "Check whether the purpose names a question or problem.",
+          "Draft a keep, clarify, or review recommendation.",
+          "Show the reason and ask a person to decide."
+        ],
+        "acceptanceCheck": "On fictional page records, verify every recommendation cites only supplied purpose text and leaves ambiguous cases for review.",
+        "humanBoundary": "A site owner supplies the data and makes every publish or delete decision; no site crawl is proposed.",
+        "unverified": [
+          "No evidence shows recurring client demand or a standard purpose taxonomy.",
+          "Quality of the recommendation on real sites is unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A person can supply a page purpose and receive a draft review note; no implementation reference is attached.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small service firms may pay for site-content cleanup; this tip establishes no buyer or payment.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can review fictional page descriptions; accurate site inventory and traffic data are outside scope.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed tool only drafts a note from supplied text; a person decides and removes pages.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post gives a general page-keep/delete heuristic, but no specific client, repeated burden, or corroboration.",
+            "sourceIds": [
+              null
+            ]
+          }
+        }
+      },
+      "reason": "The excerpt is a broad personal heuristic, not a sufficiently evidenced repeated customer chore; provisional mean 3.8 is below threshold."
+    },
+    {
+      "title": "Organize public app security signals",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "sourceIds": [
+        "66865ff0f48baba92ae2167c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "66865ff0f48baba92ae2167c"
+        ],
+        "chore": "Make a source-linked checklist of public security statements for a Shopify app, leaving trust judgments to a human.",
+        "evidenceQuote": "I’d appreciate any guidance on how to verify an app’s security before installing it in my store."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Organize operator-supplied public statements into a source-linked checklist without rating an app as secure.",
+        "inputs": [
+          "Fictional app name",
+          "Operator-supplied public policy excerpts",
+          "URLs for those excerpts"
+        ],
+        "trigger": "When a store operator is considering a listed app.",
+        "steps": [
+          "List each supplied statement and its source URL.",
+          "Group statements under operator-chosen topics.",
+          "Flag topics with no supplied information.",
+          "Ask the operator to verify sources and decide."
+        ],
+        "acceptanceCheck": "Compare each checklist entry with the supplied excerpt and confirm missing topics are marked unknown.",
+        "humanBoundary": "A person retrieves public material and makes the installation decision; the prototype does not certify security.",
+        "unverified": [
+          "No official Shopify security badge criteria or independent security sources are supplied.",
+          "Reliable source freshness and completeness are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "A manual checklist mock is possible, but no official criteria or implementation source is supplied.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small store operators may value organized app information; this question does not establish payment.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A four-week prototype can organize operator-supplied public statements, but source verification and security evaluation remain unsupported.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The person must find sources and make the security decision; no automated verification is documented.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post clearly asks how to verify app security before installation, but gives no specific method or corroboration.",
+            "sourceIds": [
+              null
+            ]
+          }
+        }
+      },
+      "reason": "The task is concrete, but this proposal cannot determine security and lacks supplied criteria; provisional mean 3.6 is below threshold."
+    },
+    {
+      "title": "Draft agent recovery checklists",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Turn an operator-described failed agent run into a checklist of recovery and duplicate-action questions.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Produce a review checklist for a supplied agent failure scenario, including checkpoint and duplicate-action questions.",
+        "inputs": [
+          "Fictional run failure description",
+          "Operator-supplied expected side effects",
+          "Operator-supplied restart point"
+        ],
+        "trigger": "When a developer records a failed agent run for review.",
+        "steps": [
+          "Extract the stated restart point and expected side effects.",
+          "List which actions may already have occurred.",
+          "Draft checkpoint and duplicate-action questions.",
+          "Require a developer to decide and implement recovery."
+        ],
+        "acceptanceCheck": "For fictional scenarios, check that every question maps to supplied facts and no action is marked safe without human review.",
+        "humanBoundary": "The developer supplies the scenario and owns all code changes and production recovery.",
+        "unverified": [
+          "No agent framework, persistence, checkpoint, or idempotency capability is documented.",
+          "The excerpt gives no concrete failure example or evidence of repeated demand."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A checklist can be drafted from a supplied failure description, but no implementation reference supports agent recovery.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: developers building agents may value recovery planning; this discussion does not show purchase intent.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can classify fictional failure cases, while actual checkpoint and retry behavior stays outside scope.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must implement and test every recovery action; the proposed service does not execute recovery.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post names checkpointing, recovery logic, and idempotency as developer work, but frequency and specific cases are absent.",
+            "sourceIds": [
+              null
+            ]
+          }
+        }
+      },
+      "reason": "A checklist is a bounded mock but does not implement recovery; source detail is limited; provisional mean 4.0 is below threshold."
+    },
+    {
+      "title": "Flag product image crop corrections",
+      "productUrl": "https://community.shopify.com/t/705416",
+      "sourceIds": [
+        "32860087e4090f1828b546d5"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "32860087e4090f1828b546d5"
+        ],
+        "chore": "Create a correction queue from supplied product-image notes where a messaging app shows a cropped image.",
+        "evidenceQuote": "I wish the image added for a product on the messaging app would default to the full size image and not a cut off square one, have to go in and correct it all the time."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Prepare a review queue identifying product images that an operator says need a full-size replacement.",
+        "inputs": [
+          "Fictional product identifier",
+          "Operator label: cropped or acceptable",
+          "Operator-provided replacement image reference"
+        ],
+        "trigger": "When a seller reviews images prepared for a messaging app.",
+        "steps": [
+          "Read the operator label for each fictional item.",
+          "Group items marked cropped.",
+          "Attach the supplied replacement reference.",
+          "Ask the seller to inspect and make each correction."
+        ],
+        "acceptanceCheck": "On a fixed fictional list, confirm only items labeled cropped appear in the queue and each retains its supplied reference.",
+        "humanBoundary": "The seller supplies labels, inspects image quality, and makes changes in the messaging app.",
+        "unverified": [
+          "No source supports image inspection, messaging-app integration, or changing the default crop.",
+          "The post identifies recurring correction but not scale or other buyers."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A person can test a queue from supplied image notes, but no image or messaging integration is supported.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: online sellers may value fewer image corrections; one complaint does not establish buyer demand.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can sort fictional image records, but cannot change messaging-app defaults.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The person must inspect and correct each image; no automatic image replacement capability is documented.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The post explicitly says the crop must be corrected repeatedly, but supplies no count or corroborating cases.",
+            "sourceIds": [
+              null
+            ]
+          }
+        }
+      },
+      "reason": "Repeated manual correction is explicit, but only a manually fed queue is supported; provisional mean 4.2 is below threshold."
+    },
+    {
+      "title": "Prepare daily hiring alert summaries",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "84dd42b26c54d12b4f52a07c"
+        ],
+        "chore": "Review a supplied daily job-posting list and prepare a deduplicated alert for a recruiter.",
+        "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies. Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "Prepare a daily summary of new job records from a supplied dataset and mark whether the list is empty.",
+        "inputs": [
+          "Fictional job records with title, company, and URL",
+          "Operator-supplied prior-seen URLs",
+          "Operator-chosen target companies"
+        ],
+        "trigger": "When an operator provides that day’s job records.",
+        "steps": [
+          "Compare supplied URLs with the prior-seen list.",
+          "Keep records matching operator-chosen companies.",
+          "Count new records using the documented n8n Summarize Count capability.",
+          "Draft a compact alert for human review."
+        ],
+        "acceptanceCheck": "For a fixed fictional dataset, verify new-item count and alert contents against a hand-checked list.",
+        "humanBoundary": "The operator supplies records and confirms relevance before sending; live job-site retrieval and Slack delivery are excluded.",
+        "unverified": [
+          "The supplied n8n reference (02eb5e542dc08527b0ee2cd8) documents Count and Count Unique only, not job retrieval or delivery.",
+          "Deduplication correctness on changing job URLs is unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained post describes a daily scheduled dataset check and Slack alert; n8n docs support counting input values only.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: recruiters may pay for concise alerts; this maker workflow is not buyer-demand evidence.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can process supplied fictional postings; live ATS retrieval, actor reliability, and Slack sending are unverified.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A repeatable count-and-alert pattern is described, and the supplied Summarize reference supports counting; source retrieval and alert delivery still need a person.",
+            "sourceIds": [
+              null
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The maker post documents a concrete daily alert workflow and attributed deduplication behavior, but not independent demand.",
+            "sourceIds": [
+              null
+            ]
+          }
+        }
+      },
+      "reason": "The reference supports counting only; the small supplied-data alert is plausible but buyer demand and data retrieval are unproven; provisional mean 4.8 is below threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Verify learner word review scheduling",
+      "productUrl": "https://news.ycombinator.com/item?id=50287258",
+      "reason": "Below threshold: the literal example identifies an inflected-word review gap, but no frequency, buyer evidence, or implementation support is supplied; assessed candidate mean 4.6."
+    },
+    {
+      "title": "Track an app review follow-up",
+      "productUrl": "https://community.make.com/t/118559",
+      "reason": "Below threshold: a single stalled review supports only a manually entered follow-up draft; no recurring buyer evidence or platform capability is shown; assessed candidate mean 3.8."
+    },
+    {
+      "title": "Review pages before adding them",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "reason": "Below threshold: the post offers a general page-removal heuristic and includes unrelated promotional text; it does not establish a specific repeated customer task; assessed candidate mean 3.8."
+    },
+    {
+      "title": "Organize public app security signals",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "reason": "Below threshold: public statements cannot establish app security, and no official criteria or verification method is supplied; the narrow organizer remains human-led; assessed candidate mean 3.6."
+    },
+    {
+      "title": "Draft agent recovery checklists",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "reason": "Below threshold: the excerpt names developer responsibilities but supplies no concrete failed-run example or recovery implementation support; assessed candidate mean 4.0."
+    },
+    {
+      "title": "Flag product image crop corrections",
+      "productUrl": "https://community.shopify.com/t/705416",
+      "reason": "Below threshold: repeated manual corrections are stated, but an operator-fed queue cannot change the app behavior and no image integration is documented; assessed candidate mean 4.2."
+    },
+    {
+      "title": "Prepare daily hiring alert summaries",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "reason": "Below threshold: the maker describes a daily alert workflow, not buyer demand; the supplied n8n reference documents counting only, not retrieval or Slack delivery; assessed candidate mean 4.8."
+    },
+    {
+      "title": "Verify WhatsApp connection authorization",
+      "productUrl": "https://community.make.com/t/118555",
+      "reason": "Excluded as a one-off Make/Meta authorization-flow fault report. A service cannot safely fix or diagnose the external authorization failure from the retained spans; no relevant implementation reference is supplied."
+    },
+    {
+      "title": "Verify proposed product ideas",
+      "productUrl": "https://news.ycombinator.com/item?id=50287244",
+      "reason": "The excerpt is only an imperative to run an office-hours workflow; it does not state what work is needed, what inputs are used, or who has the problem. No chore can be responsibly inferred."
+    },
+    {
+      "title": "Report IP abuse to Cloudflare",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The retained source text is only “which clearly doesn’t apply here.” It does not establish a concrete chore or useful proposed output; the title alone is insufficient."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion assignments against retained evidence and the recent-post index. Six concrete chores received scoped provisional plans and five criterion scores; all scored experiments are below the 6.0 threshold. The remaining four lack a supportable bounded chore or are a one-off authorization fault. No post proposed."
+    }
+  ]
+}
