@@ -78,7 +78,7 @@ The hourly planning target is about $0.03 per loop run, roughly $0.70/day at 24 
 
 | Vilnius date | Cloud runs | Estimated USD | Coverage |
 | --- | ---: | ---: | --- |
-| 2026-10-29 | 22 | $0.58748 | Reported CLI counters |
+| 2026-10-29 | 23 | $0.60839 | Reported CLI counters |
 | 2026-10-28 | 25 | Unknown | Missing or partial counters |
 | 2026-10-27 | 24 | Unknown | Missing or partial counters |
 | 2026-10-26 | 25 | $0.48127 | Reported CLI counters |
