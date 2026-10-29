@@ -1,0 +1,126 @@
+{
+  "runId": "loop-40810428270-1",
+  "draftSha256": "30f272906452388a2860b41a118c6ab9d766a4dfdd57a2b90ee6a3cf28d9c228",
+  "sourceSnapshotSha256": "3d679f4371d9875305397981e552af85eefe8a604f657fb00f5d27224bd4feb5",
+  "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da",
+  "checks": [
+    {
+      "postId": "84dd42b26c54d12b4f52a07c",
+      "pass": false,
+      "reasons": [
+        "The writer’s ease score of 7 exceeds the evidence-supported maximum of 6; the fresh evidence does not establish an unusually straightforward build for a beginner.",
+        "The independently supported maximum scores average 5.8, below the six-point threshold."
+      ],
+      "claimChecks": [
+        {
+          "claim": "The forum author describes a pattern for tracking hiring at target companies.",
+          "supported": true,
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies."
+        },
+        {
+          "claim": "The described workflow runs daily through an Apify node, checks for items, and sends to Slack.",
+          "supported": true,
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+        },
+        {
+          "claim": "The author says the Actor remembers previously seen jobs and returns only new postings.",
+          "supported": true,
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Because the Actor remembers which jobs it has already seen between runs, each run returns only new postings"
+        },
+        {
+          "claim": "The supplied n8n documentation describes counting input values.",
+          "supported": true,
+          "sourceId": "02eb5e542dc08527b0ee2cd8",
+          "evidenceQuote": "Count : Count the total number of values in your input data."
+        }
+      ],
+      "scoreChecks": [
+        {
+          "criterion": "ease",
+          "supported": false,
+          "maxSupportedScore": 6,
+          "reason": "The flow and counting reference make a bounded prototype plausible, but beginner access to permitted listing sources and delivery remains unverified.",
+          "sourceId": "02eb5e542dc08527b0ee2cd8",
+          "evidenceQuote": "Count : Count the total number of values in your input data."
+        },
+        {
+          "criterion": "profit",
+          "supported": true,
+          "maxSupportedScore": 5,
+          "reason": "A customer and business hypothesis is plausible from the documented task; the source does not establish payment, buyers or revenue.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies."
+        },
+        {
+          "criterion": "feasibility",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "A synthetic four-week test with a defined matching check is plausible; live source access and delivery remain unverified.",
+          "sourceId": "02eb5e542dc08527b0ee2cd8",
+          "evidenceQuote": "Count : Count the total number of values in your input data."
+        },
+        {
+          "criterion": "autonomy",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The post describes a repeatable daily listing-to-Slack loop, with target selection and review still assigned to a person.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Because the Actor remembers which jobs it has already seen between runs, each run returns only new postings"
+        },
+        {
+          "criterion": "evidence",
+          "supported": true,
+          "maxSupportedScore": 6,
+          "reason": "The retained post spans give a detailed maker-described workflow, but do not independently corroborate buyer demand or real-world results.",
+          "sourceId": "84dd42b26c54d12b4f52a07c",
+          "evidenceQuote": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack."
+        }
+      ],
+      "noveltyCheck": {
+        "recentPostsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "windowDays": 14,
+        "comparedPostCount": 0,
+        "product": {
+          "distinct": true,
+          "closestPostId": null,
+          "reason": "The frozen 14-day index is empty, so no recent product overlaps were found."
+        },
+        "workflow": {
+          "distinct": true,
+          "closestPostId": null,
+          "reason": "The frozen 14-day index is empty, so no recent workflow overlaps were found."
+        },
+        "customer": {
+          "distinct": true,
+          "closestPostId": null,
+          "reason": "The frozen 14-day index is empty, so no recent customer overlaps were found."
+        }
+      },
+      "demandCheck": {
+        "demandContextSha256": "264dd82bea8fea44b3e96478aec02b1da298ec0b7a71b3880aae0b8d639249a3",
+        "supported": true,
+        "segment": "professional_services",
+        "sourceId": "84dd42b26c54d12b4f52a07c",
+        "kind": "community_request",
+        "chore": "Track hiring at target companies with a daily workflow that checks new job listings and sends matching details to Slack.",
+        "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies. Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack.",
+        "reason": "The assigned fresh discussion source describes the target-company hiring task and daily listing-to-Slack workflow; the proposed consultancy payer remains a hypothesis, not an established customer.",
+        "noPersonalData": true
+      }
+    }
+  ],
+  "completedAssessment": {
+    "schema": 1,
+    "completed": true,
+    "decision": "assessed",
+    "reason": "The proposed daily job-listing digest is grounded in the retained workflow spans, but its ease score exceeds the supported maximum and the independently supported scores average 5.8, below threshold.",
+    "contextSha256": "ed91133abc298f98adf895c701c7311aeb0ccf4d38de3c47d158fe6052dd0f12",
+    "rulesSha256": "dd4d993c93904273f257ac4cda5921cd4e692f17f2c75ef2e499067347149fd8",
+    "draftSha256": "30f272906452388a2860b41a118c6ab9d766a4dfdd57a2b90ee6a3cf28d9c228",
+    "sourceSnapshotSha256": "3d679f4371d9875305397981e552af85eefe8a604f657fb00f5d27224bd4feb5",
+    "policySha256": "60d6ee0ebb625c6e22c9cb89759c55e4060226e1e3f18c8fd9934ab73edda2da"
+  }
+}
