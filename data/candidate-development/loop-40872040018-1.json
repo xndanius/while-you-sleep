@@ -1,0 +1,277 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40872040018-1",
+  "createdAt": "2026-10-29T12:21:51.043Z",
+  "events": [
+    {
+      "id": "552509655701bcd005229b18565874ff758b664ba6e8af3824a90ac7fff8584a",
+      "kind": "assessment",
+      "caseId": "bb41e49c777b7f2a0ce9505b",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceRunId": "loop-40872040018-1",
+      "details": {
+        "revisionId": "890d38a32da765235ae5aea8bab186ce62e9aca1ad82d7bfb9710ba15be68204",
+        "parentRevisionId": "cf36d06214b4ed4bf29a1a2ae6b6c4aba7a55f00ad5ade09f58f48877b39fcb7",
+        "candidateIndex": 0,
+        "candidateSha256": "772597776b18e4187922c9af523a2b85153a7f468c742d6cef0065de199adcbd",
+        "sourceSha256": "ea0c76e1dd0317cb1dd436216def4b9a4c594698d23355d6a279c34f25ead358",
+        "capabilitySources": [
+          {
+            "sourceId": "b100f221383c5b74ce29f37b",
+            "url": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+            "textSha256": "8f9db2e112615ae5189e88c41b1ec89a40b25a5be44efc23ab81f2dff57566f0"
+          }
+        ],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewable field map that extracts selected details from a supplied resume into a supplied company form schema, flagging fields that need applicant confirmation.",
+          "inputs": [
+            "Fictional resume text or an operator-supplied resume with personal details removed",
+            "A manually supplied list of form field names and descriptions",
+            "A desired output schema with required fields marked"
+          ],
+          "trigger": "An applicant or career-services operator supplies a resume and the field list for one application.",
+          "steps": [
+            "Define a fixed output schema for the supplied form fields.",
+            "Extract matching values from the supplied resume into that schema.",
+            "Mark each value with its source phrase or leave it blank when unclear.",
+            "Show unmatched and ambiguous fields in a review list.",
+            "Have the applicant verify every value and enter it into the company form manually."
+          ],
+          "acceptanceCheck": "On fictional resume and field-list pairs, compare each extracted value with a hand-labeled answer key; pass only exact supported matches and leave unsupported fields blank.",
+          "humanBoundary": "The applicant supplies each resume and form field list, reviews every value, decides what to disclose, and enters or submits all information. No company form access or application submission is proposed.",
+          "unverified": [
+            "Different companies may use field names and requirements not represented by the manually supplied schema.",
+            "Extraction accuracy on varied resumes and forms has not been tested.",
+            "The discussion establishes one person’s reported task, not recurring demand across applicants or willingness to pay."
+          ]
+        },
+        "limitations": [
+          "Different companies may use field names and requirements not represented by the manually supplied schema.",
+          "Extraction accuracy on varied resumes and forms has not been tested.",
+          "The discussion establishes one person’s reported task, not recurring demand across applicants or willingness to pay."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "d21cc3c5232e09788dc4379700d21f25fd893cac24d898de8270ac0ffeefde96",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "0c59d6a562e6d9baed47145bc3fb51f6dc5d28349155257fc34bdc96a7d4d6fb",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Different companies may use field names and requirements not represented by the manually supplied schema.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "c26bbb543978d74586e28e13cf076965c1db59ce521d82a81280bfdeb60b0917",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Extraction accuracy on varied resumes and forms has not been tested.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "n8n documents extracting structured fields from incoming text with a chosen schema; applicant form access and tested accuracy are absent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: career-services providers may pay to reduce repetitive application preparation; this post establishes no buyer intent or payment.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week fictional extraction and review test fits the documented text-to-schema capability; varied forms and accuracy remain unverified.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Documented structured extraction could repeat on supplied text, but a person must provide each form schema, verify values and submit manually.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The fresh post explicitly reports daily resume entry into company-specific forms; one report gives limited context and no corroboration.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "f38765f4d74de2abb6cd121a19ece0a135aedc9621abb6752edb1a506668dd64",
+          "draftSha256": "401759bb593e7958b365b2e8906883dabfe4c6d14add0fa5350d3fa34763bcaa",
+          "contextSha256": "85996bba17a1a961abab3f54d8e41588a5e6f48b7413ae93a70dffc89c1553e7",
+          "manifestSha256": "fc486e82f8595e4c323cf5de517247fb116634a88622f110966d5f6cbfdbf64f",
+          "researchSha256": "fcb22a23070a84a48f7f9391afc380c9f2298667c6c81c3a7fb85635633bff3b",
+          "learningSha256": "b728433a1ad3b5ae5c7a55fa248b9ae612eaaf8c224be687ba79862f1e57d8fc"
+        }
+      }
+    },
+    {
+      "id": "5d8865a61c5586dcc7cc7c8cb7c4a59bd96cd65bc3bb99106d59ffa88976e1a2",
+      "kind": "assessment",
+      "caseId": "0d02628315efbce406bdf88b",
+      "productUrl": "https://community.shopify.com/t/705355",
+      "sourceRunId": "loop-40872040018-1",
+      "details": {
+        "revisionId": "e61ac54289fe0843df8629744625bc67015a9a933fd6abd33dec14cbb4a4db74",
+        "parentRevisionId": null,
+        "candidateIndex": 1,
+        "candidateSha256": "f3116a7fc29d1afb07ba7f715541f1f12afd0ae7e57c5f1ebb8763285e3d041d",
+        "sourceSha256": "cc1528728d174292aca58901918af10b54da45ad511d36fae3a7f8a3849eb512",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A private, reviewable timeline of manually supplied payout-status updates and a draft follow-up question when the last known status has not changed.",
+          "inputs": [
+            "Fictional payout case identifier",
+            "Operator-entered dated status notes with sensitive details removed",
+            "A manually entered follow-up interval chosen by the operator"
+          ],
+          "trigger": "A seller enters a new status note or opens the fictional case after the chosen follow-up interval.",
+          "steps": [
+            "Store a dated note supplied by the operator.",
+            "Compare the newest note with the previous note.",
+            "Summarize the known status and elapsed interval from supplied dates.",
+            "Draft a neutral question asking for a status update.",
+            "Have the seller verify the summary and send any message themselves."
+          ],
+          "acceptanceCheck": "For fictional dated notes, compare the displayed latest status, interval and draft question with a hand-checked expected result; do not infer a resolution or cause.",
+          "humanBoundary": "A seller supplies and verifies all notes, chooses whether and where to contact support, and sends any message. The proposal does not access Shopify, route a case, influence payout decisions or process real financial records.",
+          "unverified": [
+            "No source supports Shopify case access, support-team routing or payment-status retrieval.",
+            "The selected follow-up interval and summary usefulness need operator judgment.",
+            "This is a single complaint and does not establish wider demand or a paying customer."
+          ]
+        },
+        "limitations": [
+          "No source supports Shopify case access, support-team routing or payment-status retrieval.",
+          "The selected follow-up interval and summary usefulness need operator judgment.",
+          "This is a single complaint and does not establish wider demand or a paying customer."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "84d173a1065fd7db14d838c382e1ce3c4637e946fee2c0720f118080ccfc71a5",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0,
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "a044afdf2f93ee12a93a89f59773aceb1cc171c385c37999ff3b5465f767da63",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "The selected follow-up interval and summary usefulness need operator judgment.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A manually fed fictional timeline is bounded, but no supplied source documents an implementation capability for status tracking.",
+            "sourceIds": [
+              "0d02628315efbce406bdf88b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: online sellers with unresolved payout cases may value organized follow-up; this complaint establishes no buying intent or payment.",
+            "sourceIds": [
+              "0d02628315efbce406bdf88b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fictional note-and-draft mock is narrow, while reliable reminders and any live support access are unsupported.",
+            "sourceIds": [
+              "0d02628315efbce406bdf88b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A supplied note can produce a repeatable summary draft, but the seller must enter facts, judge timing and send messages.",
+            "sourceIds": [
+              "0d02628315efbce406bdf88b"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained context says the poster asks for updates every few days after waiting over two months; it is one case with no corroboration.",
+            "sourceIds": [
+              "0d02628315efbce406bdf88b"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "f38765f4d74de2abb6cd121a19ece0a135aedc9621abb6752edb1a506668dd64",
+          "draftSha256": "401759bb593e7958b365b2e8906883dabfe4c6d14add0fa5350d3fa34763bcaa",
+          "contextSha256": "85996bba17a1a961abab3f54d8e41588a5e6f48b7413ae93a70dffc89c1553e7",
+          "manifestSha256": "fc486e82f8595e4c323cf5de517247fb116634a88622f110966d5f6cbfdbf64f",
+          "researchSha256": "fcb22a23070a84a48f7f9391afc380c9f2298667c6c81c3a7fb85635633bff3b",
+          "learningSha256": "b728433a1ad3b5ae5c7a55fa248b9ae612eaaf8c224be687ba79862f1e57d8fc"
+        }
+      }
+    }
+  ]
+}
