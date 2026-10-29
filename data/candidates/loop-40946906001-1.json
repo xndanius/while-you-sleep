@@ -1,0 +1,300 @@
+{
+  "runId": "loop-40946906001-1",
+  "createdAt": "2026-10-29T20:15:52.021Z",
+  "candidates": [
+    {
+      "title": "Draft logistics event notices",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Draft a dispatcher notice for a shipment delay from a supplied event row.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed, copy an order update into a CRM, alert a buyer when inventory drops, or send a daily report to a team channel."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can map synthetic event rows to a draft notice; no supplied reference supports a live logistics integration.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small logistics operators may pay to reduce delayed shipment updates; this single example establishes no buying intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week text-only mock can accept a supplied delay row and draft a notice; event detection and CRM access remain outside scope.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Fixed fields can produce repeatable drafts, but an operator must supply and verify each event and approve any notice.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh native task span gives concrete logistics notification examples, but only as one article example without frequency or corroboration.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable dispatcher notice draft from one operator-supplied shipment-delay row.",
+        "inputs": [
+          "Synthetic shipment ID, status, expected date, and recipient role.",
+          "Operator-supplied event row with a delay flag."
+        ],
+        "trigger": "An operator submits one sample row for review.",
+        "steps": [
+          "Check that required fields are present.",
+          "Apply a fixed rule to identify a delay flag.",
+          "Draft a short notice using only supplied fields.",
+          "Show missing fields and the source row beside the draft.",
+          "Ask an operator to approve or discard it."
+        ],
+        "acceptanceCheck": "For a synthetic delayed row, the draft must repeat its shipment ID and date exactly and must not invent missing values.",
+        "humanBoundary": "A person supplies and verifies the event row, confirms recipient and business context, and approves any message; no live shipment system or CRM is connected.",
+        "unverified": [
+          "Whether operators repeat this task often enough to buy a service.",
+          "Whether real event rows have stable fields.",
+          "Whether a safe notification destination and permission can be provided."
+        ]
+      },
+      "reason": "Concrete event-notice example assessed with a bounded mock. The mean is below six; the retained post frames it as an example and supplies no recurrence or buyer validation."
+    },
+    {
+      "title": "Draft an app review follow-up",
+      "productUrl": "https://community.make.com/t/118559",
+      "sourceIds": [
+        "12083ab1ec28d340dfb92444"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "12083ab1ec28d340dfb92444"
+        ],
+        "chore": "Prepare a concise follow-up asking for an estimated app-review timeline or missing materials.",
+        "evidenceQuote": "Could you please share an estimated timeline, or let us know if anything is needed from our side?"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can draft a follow-up from operator-supplied dates and status; no reference supports portal access or response prediction.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: app developers might pay for review tracking, but this is one unresolved case and does not establish a market.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week mock can track submitted date, status and next follow-up date; reviewer response time cannot be predicted.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A draft and reminder can be generated from supplied fields, while a person must verify status and send any message.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh native span states a submission awaiting updates and asks for timeline or required items, but offers no recurrence or corroboration.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A dated, reviewable follow-up draft based on an app submission status record.",
+        "inputs": [
+          "Synthetic submission date.",
+          "Operator-entered current status and last update date.",
+          "Operator-selected follow-up date."
+        ],
+        "trigger": "A person records that an app review remains without an update by the chosen follow-up date.",
+        "steps": [
+          "Check the supplied dates and status for blanks.",
+          "Summarize only the recorded submission and update facts.",
+          "Draft a neutral request for a timeline or missing materials.",
+          "Display the input fields beside the draft.",
+          "Ask the operator to verify and send or discard it."
+        ],
+        "acceptanceCheck": "Given a fictional submission record, the draft must preserve its dates and status and must not claim a cause or likely decision.",
+        "humanBoundary": "A person enters and verifies the status, chooses when to follow up, and sends the message; the proposal has no review-portal access or reviewer data.",
+        "unverified": [
+          "Whether this is a recurring task for a paying customer group.",
+          "Whether manually supplied status remains current.",
+          "Whether a neutral reminder draft improves on a calendar reminder."
+        ]
+      },
+      "reason": "The full retained span supports a follow-up chore, but it is a single case; provisional mean is below six and utility beyond a manual reminder is uncertain."
+    },
+    {
+      "title": "Prepare weekly keyword research rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "Collect weekly keyword search volume, CPC and difficulty values into rows for a spreadsheet.",
+        "evidenceQuote": "adds each keyword’s Google search volume, CPC and difficulty as rows in Google Sheets."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The post describes a weekly spreadsheet workflow, but no implementation reference is attached and external search data is not verified here.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent marketing consultants may pay to prepare keyword research; this showcase does not establish buyer intent.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can validate supplied keyword metrics and format rows; obtaining accurate current metrics and writing to Sheets remain unverified.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable row-formatting step is plausible, while a person must source, verify and upload the metrics.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native span describes a weekly task and named fields, but as one shared-flow example with no independent demand corroboration.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable spreadsheet-ready table of supplied keyword metrics.",
+        "inputs": [
+          "Synthetic keyword list.",
+          "Operator-supplied search volume, CPC and difficulty values."
+        ],
+        "trigger": "An operator provides the weekly keyword list and its sourced metrics.",
+        "steps": [
+          "Check that each row has a keyword and three metric fields.",
+          "Flag blanks and duplicate keywords.",
+          "Format the supplied values into consistent rows.",
+          "Show a preview and row-level validation notes.",
+          "Ask an operator to verify and copy the rows into a sheet."
+        ],
+        "acceptanceCheck": "A fixed synthetic input should produce the same number of rows, preserve each value exactly, and flag missing fields without filling them.",
+        "humanBoundary": "A person obtains and verifies metrics and copies approved rows; no search provider or spreadsheet connection is proposed as working.",
+        "unverified": [
+          "Whether a specific professional customer repeatedly needs this task.",
+          "Whether supplied metrics are accurate and comparable.",
+          "Whether the manual copy step is worth paying to remove."
+        ]
+      },
+      "reason": "The fresh span documents a repeatable weekly workflow, but this is a product showcase rather than validated demand; no builder reference or buyer evidence supports a qualifying proposal."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Avoid agent-summary drift",
+      "productUrl": "https://news.ycombinator.com/item?id=50292324",
+      "reason": "The excerpt asks generally how agent workflows avoid a “chinese whisper game”; it gives no specific repeatable task, inputs, or service request to scope without inventing duties."
+    },
+    {
+      "title": "Video editing product announcement",
+      "productUrl": "https://news.ycombinator.com/item?id=50291424",
+      "reason": "The excerpt only says users can record, edit and publish with one tool; it does not state a concrete unmet chore or request for a proposed service."
+    },
+    {
+      "title": "Shopify app review advice request",
+      "productUrl": "https://community.shopify.com/t/705837",
+      "reason": "The retained source text only asks for advice about the review process and supplies no concrete task, status, or desired output; no chore can be quoted without inferring missing context."
+    },
+    {
+      "title": "One-off WhatsApp connection failure",
+      "productUrl": "https://community.make.com/t/118555",
+      "reason": "The post reports a single Make authorization flow stuck before Meta authorization. It is a specific troubleshooting incident, not a repeatable business chore; a prototype cannot resolve the vendor-side defect."
+    },
+    {
+      "title": "Link campaign documentation discussion",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "reason": "The retained context is a generic tip about removing unnecessary pages plus unrelated promotional text; it does not establish a concrete requested task or paying customer."
+    },
+    {
+      "title": "Apple app review conversation",
+      "productUrl": "https://news.ycombinator.com/item?id=50286034",
+      "reason": "The retained excerpt describes inventing stories for a conversation but does not identify a concrete professional task or requested tool; no buyer workflow is established."
+    },
+    {
+      "title": "App discoverability product announcement",
+      "productUrl": "https://news.ycombinator.com/item?id=50290449",
+      "reason": "The excerpt describes the maker’s motivation for building an ASO tool, not an independently stated chore with task inputs and output suitable for a new proposal."
+    },
+    {
+      "title": "Draft logistics event notices",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "reason": "Concrete event-notice example assessed with a bounded mock. The mean is below six; the retained post frames it as an example and supplies no recurrence or buyer validation."
+    },
+    {
+      "title": "Draft an app review follow-up",
+      "productUrl": "https://community.make.com/t/118559",
+      "reason": "The full retained span supports a follow-up chore, but it is a single case; provisional mean is below six and utility beyond a manual reminder is uncertain."
+    },
+    {
+      "title": "Prepare weekly keyword research rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The fresh span documents a repeatable weekly workflow, but this is a product showcase rather than validated demand; no builder reference or buyer evidence supports a qualifying proposal."
+    }
+  ]
+}
