@@ -1,0 +1,507 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40817039921-1",
+  "createdAt": "2026-10-29T04:23:03.044Z",
+  "events": [
+    {
+      "id": "5b16b2f2d13609d9998daea6dba7eb4bfc2556b2fd79823d71062338c58fec1d",
+      "kind": "origin",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40799759234-1",
+      "details": {
+        "revisionId": "1b0501f56d2a86529991ed9e64d60cb807be9d736b5934306775299f75d52347",
+        "parentRevisionId": null,
+        "candidateSha256": "ac0030f6e8ed6d397c261682a99cc32f0386710f87f0053af565f6391b5570cc",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [
+          {
+            "sourceId": "5c2bf4e7df8c3ec325ba2e74",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "textSha256": "2efd6ff6d5242dd765be1f15c0feb75eaa5409a8d7d7f861eedaedc7b85b4e8b"
+          },
+          {
+            "sourceId": "f1662b0ceb942474f83a8108",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "textSha256": "0791764c70627f0ed2e15f1c7ddb2b7f59b8055faa47777e0546281dd6f468b8"
+          }
+        ],
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review-ready table from a supplied game-test CSV, with duplicate rows flagged before import.",
+          "inputs": [
+            "Synthetic CSV with battery percentage",
+            "Synthetic CSV with device temperature",
+            "Synthetic CSV with frame drops and notes",
+            "Operator-selected duplicate key"
+          ],
+          "trigger": "A tester supplies an exported sample CSV for one session.",
+          "steps": [
+            "Extract CSV rows into structured fields.",
+            "Check required measurement columns.",
+            "Compare rows using the operator-selected key.",
+            "Flag repeated or incomplete rows.",
+            "Have a tester verify and import the reviewed table."
+          ],
+          "acceptanceCheck": "Run a labeled fictional CSV containing known complete, incomplete, and repeated rows; confirm extracted values match and only expected duplicates are flagged.",
+          "humanBoundary": "A tester chooses the deduplication key, reviews every flagged row, and imports approved data; phone triggers and live Google Sheets writes are outside this proposed test.",
+          "unverified": [
+            "Phone upload timing and trigger behavior remain unresolved.",
+            "The right duplicate key and real CSV formats are not supplied."
+          ]
+        },
+        "limitations": [
+          "Phone upload timing and trigger behavior remain unresolved.",
+          "The right duplicate key and real CSV formats are not supplied."
+        ],
+        "provenance": {
+          "runId": "loop-40799759234-1",
+          "runSha256": "0e5bded7f91db449cb9fb1cc44c0a2b515ce2ea92583689ea81e112e01c32d72",
+          "draftSha256": "b240c6d5e50dfc0b2b0854d86b5a00a4795df0f44dd75829235e38611995108f",
+          "contextSha256": "60079b5b2ad086252a1cb1f10cbdd1c48bd26c20f0416592e631b2cccc65794f",
+          "researchSha256": "b83067f1fe834fa8ae04ca13922bbb26168ff1c9a6cd346a71ef2a2fa6b07d14",
+          "scanSha256": "53e1cf1d4b288fd109005aba1d910e1e57db8f65d89f292f05679425ea93dcb2",
+          "manifestSha256": "cbafbf06bf7ad068265fc946107cc5de95ee0a8ca2049b117742eb0c5eb7db32",
+          "selectionSha256": "78f76038658eda9215a6c63f0626b04767ea28e40007b21d0eef2bedfaaf4636",
+          "learningSha256": "9d8698928eb452a80da4f3facb53acb51af73982861ac477c82821daee4274cc"
+        }
+      }
+    },
+    {
+      "id": "154ec14e54a26e676e66e6b5077841c7d6a52f68d39db6e96480a6d6895ef975",
+      "kind": "acquisition",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40817039921-1",
+      "details": {
+        "revisionId": "1b0501f56d2a86529991ed9e64d60cb807be9d736b5934306775299f75d52347",
+        "intentSha256": "025b491e7c92096100e6d448739095708d3316fe1b833d1a78b5a316e174ce48",
+        "resultSha256": "bd6080880a444e5e33887c5c9a4ab7359c9b3f5d378b1dc2cd69907aaf055df6",
+        "outcome": "not_eligible",
+        "routes": [
+          {
+            "key": "f26cffb02af54e924c2efaff1e032dfaba5a7511f2e9721c0f82638d102c5426",
+            "referenceId": "n8n-drive-trigger-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.googledrivetrigger",
+            "purpose": "new_acquisition",
+            "status": "waiting",
+            "evidenceSha256": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "eb40e5d435335ec4c05fd9dc27b21594436346b3bcb39d12f1cbeeca1c8da8e0",
+      "kind": "assessment",
+      "caseId": "afe7e1914aaaf443af4e5210",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "sourceRunId": "loop-40817039921-1",
+      "details": {
+        "revisionId": "8a6588f796b51955007304b67506ed20f491f71f45b1fddee0873c24424662e1",
+        "parentRevisionId": null,
+        "candidateIndex": 0,
+        "candidateSha256": "8f6e5a93a82815484a1cb5f9b1691a31bb92e8af7fc5ab2641d0028a00fec647",
+        "sourceSha256": "76bec2ce2bbf366cf4803cdac593db037f203575b2122469ed871fd8b95eb9d2",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review table marking each supplied page as keep, review, or possible removal with a short reason tied to the supplied page purpose.",
+          "inputs": [
+            "Synthetic page title and URL label",
+            "Operator supplied page purpose",
+            "Operator supplied audience question or task",
+            "Operator supplied current maintenance note"
+          ],
+          "trigger": "An operator supplies a small list of pages for a periodic upkeep review.",
+          "steps": [
+            "Collect page labels and operator supplied purpose notes.",
+            "Compare each purpose note with the stated audience question or task.",
+            "Draft a keep, review, or possible removal label with a reason.",
+            "Flag missing purpose information instead of guessing.",
+            "Ask a person to verify each suggestion before any page is changed."
+          ],
+          "acceptanceCheck": "On a fixed synthetic list, verify every output row maps to one input page, missing purpose notes are flagged, and no page is changed automatically.",
+          "humanBoundary": "The operator supplies context and confirms whether a page should remain; the prototype never accesses or edits a live site.",
+          "unverified": [
+            "Whether page-purpose labels predict useful content",
+            "Whether a repeated upkeep workflow exists among small studios",
+            "Any automated website access or editing capability"
+          ]
+        },
+        "limitations": [
+          "Whether page-purpose labels predict useful content",
+          "Whether a repeated upkeep workflow exists among small studios",
+          "Any automated website access or editing capability"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "17230ff7dff8284a7bbb6590f87aeb5a6f2e0dd45d94d1bd58fa3ad515d15b84",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether page-purpose labels predict useful content",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "206f4986cc4d29a190b6916fd76c446d2ad2beadbcb60d79584a374bbacefd56",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Whether a repeated upkeep workflow exists among small studios",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "38c49f730c17dd59cd8544e3155d51d53772d418496279a6ecded813177484cf",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Any automated website access or editing capability",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The post describes a simple page-purpose review, but no supplied implementation reference documents an automated version.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small web studios may pay to reduce page upkeep; this tip shows no buying intent or payment.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic page-list prototype is bounded; real site access and useful page judgments remain unverified.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable page review can produce suggestions, but no automation capability is documented and a person must decide removals.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained native span gives a concrete keep-or-delete rule, but frequency, fields and corroborated demand are unknown.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "52be6ba5319771e88440e9ec94f8e883f6207ad3cddc1d20f1083642b19bc365",
+          "draftSha256": "1eddd566b9fd356b244d4c54559bd01b126bda493b4c216932d6402eb2961304",
+          "contextSha256": "f2369e646ee2543e2846981ab9a29b445f591962043f6d4896ac2d20f4ca298a",
+          "manifestSha256": "bf3aa3712e09b8fd050311cf4db0be2eaecede176f0331f83675029ada92ffd5",
+          "researchSha256": "6fa0711dc0640a87ef8b520e274c8886cf531739472034804b0edbab0742e051",
+          "learningSha256": "ec78f0be397bdb7ec2d02069f8d442dc13ac04b8a8815edf347196ebd94b41b4"
+        }
+      }
+    },
+    {
+      "id": "c2b650fc5a5dfd373c286da8f908ffe86b07a900e3e916580a5ad8fe215a4e89",
+      "kind": "assessment",
+      "caseId": "0cec76f4cbd8b39cd8d44f10",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceRunId": "loop-40817039921-1",
+      "details": {
+        "revisionId": "33128b591bd59f202551f4be0de381692e8c9e98738ce4e1c4ef04a1ee8602b7",
+        "parentRevisionId": "edb2bf94576568935d20fb238cd5cfcc0011f1ec469b59644b571ad32ef60ae0",
+        "candidateIndex": 1,
+        "candidateSha256": "e14071e7bc25c7b11b5e33e2e315e202f11547326b8223c4ba1e23f1b0eafab1",
+        "sourceSha256": "0ed756e4df721fc0a23b581c41d676cb18f3e58652a69af2694af08f48244d06",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A compact summary of a fictional email thread with the latest request, relevant prior context, and a draft response prefill for human review.",
+          "inputs": [
+            "Fictional multi-message email thread",
+            "Operator supplied summary length preference",
+            "Operator supplied client context notes",
+            "Operator supplied draft response purpose"
+          ],
+          "trigger": "An operator pastes a fictional or otherwise approved thread for a summary draft.",
+          "steps": [
+            "Read the supplied thread in chronological order.",
+            "Identify the latest request and relevant earlier context.",
+            "Draft a compact summary and response prefill.",
+            "Flag ambiguous references or missing context.",
+            "Return the draft for a person to correct and approve."
+          ],
+          "acceptanceCheck": "For a fixed set of fictional threads, check that each output preserves the latest request, does not invent facts, and flags deliberately ambiguous references.",
+          "humanBoundary": "A person supplies approved text, verifies every detail, and decides whether to use any draft; the experiment does not connect to a mailbox or send email.",
+          "unverified": [
+            "Summary accuracy on varied real conversations",
+            "Mailbox access, permissions and privacy controls",
+            "Whether compact history reduces review effort for the proposed buyer"
+          ]
+        },
+        "limitations": [
+          "Summary accuracy on varied real conversations",
+          "Mailbox access, permissions and privacy controls",
+          "Whether compact history reduces review effort for the proposed buyer"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "1260424c190b26b6fe6f2d992f7a7e6416c8e67e6d297b8ff6997c88ffb5085a",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "66316b07d33cf66e00e6bd2cd2e44dcbf3a99c2a423bfa340573a2e9609f2386",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Summary accuracy on varied real conversations",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "e1308923e28d5b12bdba4849833eed358d7636e87a3da4b9cadbace3bad08c13",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Mailbox access, permissions and privacy controls",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post describes the desired summary output, but no supplied implementation reference supports email intake or summarization.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms may pay to reduce thread review time; this request does not establish buying intent or payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can use operator-supplied fictional threads; secure mailbox access and summary accuracy remain unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A draft summary is repeatable, but no implementation capability is documented and a person must review it before use.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span describes long email conversations, compact history and draft prefill, but not frequency or corroborated demand.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "52be6ba5319771e88440e9ec94f8e883f6207ad3cddc1d20f1083642b19bc365",
+          "draftSha256": "1eddd566b9fd356b244d4c54559bd01b126bda493b4c216932d6402eb2961304",
+          "contextSha256": "f2369e646ee2543e2846981ab9a29b445f591962043f6d4896ac2d20f4ca298a",
+          "manifestSha256": "bf3aa3712e09b8fd050311cf4db0be2eaecede176f0331f83675029ada92ffd5",
+          "researchSha256": "6fa0711dc0640a87ef8b520e274c8886cf531739472034804b0edbab0742e051",
+          "learningSha256": "ec78f0be397bdb7ec2d02069f8d442dc13ac04b8a8815edf347196ebd94b41b4"
+        }
+      }
+    },
+    {
+      "id": "d6d19b980816c111c994a81811760c77a384a1fd629e1017ec7049575c471710",
+      "kind": "assessment",
+      "caseId": "80797dd1ada2bd299d560f07",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "sourceRunId": "loop-40817039921-1",
+      "details": {
+        "revisionId": "8e7ac29676709f41a4cab43f10597d5c4ae7641beba56cacf68d06efd0c17e78",
+        "parentRevisionId": "3cceca29112fa135d1af116a4c5b35140c941fa4bc26aec225e6e9f008413665",
+        "candidateIndex": 2,
+        "candidateSha256": "984ac49e94560b92e9e3f1e1012d1587024fda37fbdc11adae9290b4620a3afe",
+        "sourceSha256": "6126b59158546a24c60ef7ee83e0fd8f232ce2a314937b5e2639680a5e811493",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A proposed event review sheet with one draft booking or status notice and a missing-information flag for each synthetic event.",
+          "inputs": [
+            "Synthetic booking event",
+            "Synthetic provider assignment status",
+            "Synthetic payment status label",
+            "Operator supplied approved notice template"
+          ],
+          "trigger": "An operator provides a synthetic booking or status event for a draft notice.",
+          "steps": [
+            "Read the event fields supplied by the operator.",
+            "Check whether required notice details are present.",
+            "Draft the matching confirmation or status message from the approved template.",
+            "Flag missing or conflicting fields without inferring payment or assignment success.",
+            "Return the draft for human review and sending."
+          ],
+          "acceptanceCheck": "For synthetic events with known missing and conflicting fields, verify the prototype flags them and drafts no unsupported success statement.",
+          "humanBoundary": "A person supplies events and templates, confirms payment and assignment facts, and approves and sends every message.",
+          "unverified": [
+            "Access to actual booking or payment systems",
+            "Webhook delivery, retry and duplicate prevention mechanics",
+            "Notice accuracy and business value across real operator workflows"
+          ]
+        },
+        "limitations": [
+          "Access to actual booking or payment systems",
+          "Webhook delivery, retry and duplicate prevention mechanics",
+          "Notice accuracy and business value across real operator workflows"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "dda00852d05d1321c6bd9fe2796f755577b78a463816c6e49b721a35ec94dee5",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "ab0d36336658474ce35f4676e29174c7cef365f3803d598cdf72e777bc62c2a8",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Webhook delivery, retry and duplicate prevention mechanics",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "581bd84397a24794c9fb2a4cf45b2e32fcedf9ceb9a8c80f090dab5e3666bd20",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Notice accuracy and business value across real operator workflows",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post names notification tasks, but no supplied implementation reference supports webhooks, APIs or message delivery.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small on-demand service operators may pay to reduce notice handling; this discussion shows no purchase or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can draft notices from synthetic events; integration, retries and duplicate prevention remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Event-to-draft steps could repeat, but no implementation capability is documented and a person must verify and send notices.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span names booking, assignment, payment-status and customer notices plus failure concerns, but no fields or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "52be6ba5319771e88440e9ec94f8e883f6207ad3cddc1d20f1083642b19bc365",
+          "draftSha256": "1eddd566b9fd356b244d4c54559bd01b126bda493b4c216932d6402eb2961304",
+          "contextSha256": "f2369e646ee2543e2846981ab9a29b445f591962043f6d4896ac2d20f4ca298a",
+          "manifestSha256": "bf3aa3712e09b8fd050311cf4db0be2eaecede176f0331f83675029ada92ffd5",
+          "researchSha256": "6fa0711dc0640a87ef8b520e274c8886cf531739472034804b0edbab0742e051",
+          "learningSha256": "ec78f0be397bdb7ec2d02069f8d442dc13ac04b8a8815edf347196ebd94b41b4"
+        }
+      }
+    }
+  ]
+}
