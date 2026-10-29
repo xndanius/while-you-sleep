@@ -1,0 +1,566 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40810428270-1",
+  "createdAt": "2026-10-29T03:16:43.130Z",
+  "events": [
+    {
+      "id": "5b16b2f2d13609d9998daea6dba7eb4bfc2556b2fd79823d71062338c58fec1d",
+      "kind": "origin",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40799759234-1",
+      "details": {
+        "revisionId": "1b0501f56d2a86529991ed9e64d60cb807be9d736b5934306775299f75d52347",
+        "parentRevisionId": null,
+        "candidateSha256": "ac0030f6e8ed6d397c261682a99cc32f0386710f87f0053af565f6391b5570cc",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [
+          {
+            "sourceId": "5c2bf4e7df8c3ec325ba2e74",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "textSha256": "2efd6ff6d5242dd765be1f15c0feb75eaa5409a8d7d7f861eedaedc7b85b4e8b"
+          },
+          {
+            "sourceId": "f1662b0ceb942474f83a8108",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "textSha256": "0791764c70627f0ed2e15f1c7ddb2b7f59b8055faa47777e0546281dd6f468b8"
+          }
+        ],
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review-ready table from a supplied game-test CSV, with duplicate rows flagged before import.",
+          "inputs": [
+            "Synthetic CSV with battery percentage",
+            "Synthetic CSV with device temperature",
+            "Synthetic CSV with frame drops and notes",
+            "Operator-selected duplicate key"
+          ],
+          "trigger": "A tester supplies an exported sample CSV for one session.",
+          "steps": [
+            "Extract CSV rows into structured fields.",
+            "Check required measurement columns.",
+            "Compare rows using the operator-selected key.",
+            "Flag repeated or incomplete rows.",
+            "Have a tester verify and import the reviewed table."
+          ],
+          "acceptanceCheck": "Run a labeled fictional CSV containing known complete, incomplete, and repeated rows; confirm extracted values match and only expected duplicates are flagged.",
+          "humanBoundary": "A tester chooses the deduplication key, reviews every flagged row, and imports approved data; phone triggers and live Google Sheets writes are outside this proposed test.",
+          "unverified": [
+            "Phone upload timing and trigger behavior remain unresolved.",
+            "The right duplicate key and real CSV formats are not supplied."
+          ]
+        },
+        "limitations": [
+          "Phone upload timing and trigger behavior remain unresolved.",
+          "The right duplicate key and real CSV formats are not supplied."
+        ],
+        "provenance": {
+          "runId": "loop-40799759234-1",
+          "runSha256": "0e5bded7f91db449cb9fb1cc44c0a2b515ce2ea92583689ea81e112e01c32d72",
+          "draftSha256": "b240c6d5e50dfc0b2b0854d86b5a00a4795df0f44dd75829235e38611995108f",
+          "contextSha256": "60079b5b2ad086252a1cb1f10cbdd1c48bd26c20f0416592e631b2cccc65794f",
+          "researchSha256": "b83067f1fe834fa8ae04ca13922bbb26168ff1c9a6cd346a71ef2a2fa6b07d14",
+          "scanSha256": "53e1cf1d4b288fd109005aba1d910e1e57db8f65d89f292f05679425ea93dcb2",
+          "manifestSha256": "cbafbf06bf7ad068265fc946107cc5de95ee0a8ca2049b117742eb0c5eb7db32",
+          "selectionSha256": "78f76038658eda9215a6c63f0626b04767ea28e40007b21d0eef2bedfaaf4636",
+          "learningSha256": "9d8698928eb452a80da4f3facb53acb51af73982861ac477c82821daee4274cc"
+        }
+      }
+    },
+    {
+      "id": "8cb250022c137b8ff0329a17ae85bc8e08863aa810e29d30b652852cb5c4ef45",
+      "kind": "acquisition",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40810428270-1",
+      "details": {
+        "revisionId": "1b0501f56d2a86529991ed9e64d60cb807be9d736b5934306775299f75d52347",
+        "intentSha256": "89da7e2fbea990acb2596bb3007080e6dc9cb80af1995f0f4818343b5bec959a",
+        "resultSha256": "d469b7305a7177be09a08b793a3a5080c48ef28bcbaaf4cc66b7dbebe4ee4d64",
+        "outcome": "not_eligible",
+        "routes": [
+          {
+            "key": "f26cffb02af54e924c2efaff1e032dfaba5a7511f2e9721c0f82638d102c5426",
+            "referenceId": "n8n-drive-trigger-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.googledrivetrigger",
+            "purpose": "new_acquisition",
+            "status": "waiting",
+            "evidenceSha256": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "864130e442bd08cf6a0de2869fb30edcef5619a22fda810a4879d57dd76e877b",
+      "kind": "assessment",
+      "caseId": "84dd42b26c54d12b4f52a07c",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "sourceRunId": "loop-40810428270-1",
+      "details": {
+        "revisionId": "7325c71ab2423e165fc013c95694147288bca9536dbeadfb6fb6e987cb4a58fc",
+        "parentRevisionId": "88e8f56eb5b3b9bb3a854bef2b683364f80fccf63a7a487a941a27645adc17ba",
+        "candidateIndex": 0,
+        "candidateSha256": "d21cfb6f0eacd313ef1935baeaae5fb425a05d170d5ac1be8c1d6d93ce6beb29",
+        "sourceSha256": "c8ecf8350fd2892e21b3fa759f9b9702e71c82a24a0bfe4b7b17daa77e7798c9",
+        "capabilitySources": [
+          {
+            "sourceId": "02eb5e542dc08527b0ee2cd8",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.summarize",
+            "textSha256": "b62383a717a66f131063b6e93a0d39cb467bf011bb3e823bba05f564fd3e3556"
+          }
+        ],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A daily digest of new job listings from a short operator supplied company and role list.",
+          "inputs": [
+            "Synthetic company names and role keywords",
+            "Synthetic job listing records with title, location and URL",
+            "Operator supplied target list"
+          ],
+          "trigger": "At a scheduled daily run or when an operator supplies a sample listing batch.",
+          "steps": [
+            "Read the target company and role list supplied by the operator.",
+            "Collect or accept sample listings from explicitly permitted sources.",
+            "Filter listings against the supplied targets.",
+            "Count matches and format title, location and URL.",
+            "Send a draft digest to a test Slack channel for human review."
+          ],
+          "acceptanceCheck": "Given a fixed synthetic list and listing set, every matching listing appears once with its title, location and URL, and nonmatches are omitted.",
+          "humanBoundary": "An operator supplies target companies, confirms permitted sources and reviews links before acting; do not scrape restricted services or represent listings as verified.",
+          "unverified": [
+            "Live access and permission for each job source",
+            "Actor reliability and deduplication on real listings",
+            "Slack delivery credentials and operating cost",
+            "Buyer willingness to pay"
+          ]
+        },
+        "limitations": [
+          "Live access and permission for each job source",
+          "Actor reliability and deduplication on real listings",
+          "Slack delivery credentials and operating cost",
+          "Buyer willingness to pay"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "6b2b3de00687e545061559d5ac92e11d408e953bf2543b4f675e4b6a6b7f8dd5",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              3
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "1e3e8f7030a961d3ed3e2913e6d07ebc28bd10060c2d2238cf00b688871b63d8",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Live access and permission for each job source",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "7ea7d728a5789f4162e1ce338ba9793ee0ddc2eee9228325fc3b97f014dc64de",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Actor reliability and deduplication on real listings",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "941b02b2f8c97117718f8cf0dd54924b366352b0737c25857b7be958dd33736b",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Slack delivery credentials and operating cost",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The documented daily flow and n8n count operation make a bounded mock plausible; beginner access to permitted listing sources and delivery remains unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: small recruiting consultancies may pay for a daily shortlist; the maker post reports no buyer or payment.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can use operator supplied sample listings and the documented daily flow; reliable site access and alert quality remain unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "The post documents a repeatable daily listing-to-Slack loop; a person must choose target companies and verify listings, while scraper reliability is unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe daily target-company hiring alerts and fields sent to Slack; this is one maker demonstration, not independent evidence of repeated buyer demand.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "3f9db334f7ae57754f32c194958bc65b8f2acb333a79c06b365ad6fb2e625d15",
+          "draftSha256": "2a75edf101e69f6957d951899c2b71f90958c382a96ee5d1bc1245bdd156e8ea",
+          "contextSha256": "44d9afac155c8660091e458cc33c6e436ad89d1a96c6d5c81701557447309ac3",
+          "manifestSha256": "b139c875658efc1c44fb00b6ac4c2d9ca1675ed1655c0f7cc114b98cc4b9be41",
+          "researchSha256": "22e974ae807bdc0f9ee1548bb5bce2df940e4e1c8b3f9b15eb8ad862080010f4",
+          "learningSha256": "47b537ede5a5c7b913877c9c465f644a1b3e5f0ace3a015ab8d7bf9c6acb815b"
+        }
+      }
+    },
+    {
+      "id": "eb011683f0991a004405be32fe4194a647afe021ffb90a2741f83312850940bf",
+      "kind": "assessment",
+      "caseId": "bb41e49c777b7f2a0ce9505b",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceRunId": "loop-40810428270-1",
+      "details": {
+        "revisionId": "9bbb81ab5e9de69e98519aa7ee733b1d1f1ef5db43d5867accbf954aaab4856a",
+        "parentRevisionId": "75ed92d85952a677639d682f136e97b6072d77ec2d5b99da97d26d0fab3ec6d4",
+        "candidateIndex": 1,
+        "candidateSha256": "16e5721bf35a2571a642fe70129ad26ac3db3ba3379d9a7995f6caca95c34806",
+        "sourceSha256": "ea0c76e1dd0317cb1dd436216def4b9a4c594698d23355d6a279c34f25ead358",
+        "capabilitySources": [
+          {
+            "sourceId": "b100f221383c5b74ce29f37b",
+            "url": "https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor",
+            "textSha256": "8f9db2e112615ae5189e88c41b1ec89a40b25a5be44efc23ab81f2dff57566f0"
+          }
+        ],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review sheet mapping supplied resume facts to fields in a manually supplied application form.",
+          "inputs": [
+            "Synthetic resume facts",
+            "Synthetic application questions",
+            "Operator supplied field labels"
+          ],
+          "trigger": "When an operator pastes a new form’s questions and a fictional resume profile.",
+          "steps": [
+            "Extract the stated fields from the form questions.",
+            "Match each field to a supplied resume fact.",
+            "Mark missing or ambiguous values for review.",
+            "Show proposed answers in a review sheet.",
+            "Have a person correct and manually submit approved answers."
+          ],
+          "acceptanceCheck": "On a fixed fictional profile and field list, each proposed answer matches its source fact and every unsupported or ambiguous field is left blank and flagged.",
+          "humanBoundary": "A person supplies fictional or authorized data, checks each mapping and submits forms; never auto-submit or handle real applicant records in the prototype.",
+          "unverified": [
+            "Real form layouts and field wording",
+            "Accuracy across varied forms",
+            "Privacy and consent requirements",
+            "No browser interaction or automatic submission is documented"
+          ]
+        },
+        "limitations": [
+          "Real form layouts and field wording",
+          "Accuracy across varied forms",
+          "Privacy and consent requirements",
+          "No browser interaction or automatic submission is documented"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "621d4a9be3115f7ce450eff23d6cecb52bc04de097754e1b4385a0778462c57e",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Real form layouts and field wording",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "01cfc77bea816d55e783ac4dc63d49439ea6da8a0dca697c660540fe4eb5a97d",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Accuracy across varied forms",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "3fd2630acaff339a2802dfcf21e3207c73967bd1e9855e61a9abcffc6e8be5c4",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Privacy and consent requirements",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "1d073632d124d5dc1cd8bf25a66bf405832b18d5dc5b74159900bae08f0d51b5",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              3
+            ],
+            "question": "No browser interaction or automatic submission is documented",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can map supplied resume facts to operator supplied fields; Information Extractor docs support structured extraction, not browser form filling.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers may pay to reduce repeated entry; the post describes one person’s task and no purchase intent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic prototype can extract values into a review sheet; company forms, sensitive-data handling and live submission remain out of scope.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Structured extraction from supplied text is documented, but there is no form-filling capability; a person must verify every value and submit it.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a daily two-hour resume-entry chore for forms tailored to one or two companies; wider recurrence and demand are uncorroborated.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "catalog_evidence_already_available",
+        "provenance": {
+          "runSha256": "3f9db334f7ae57754f32c194958bc65b8f2acb333a79c06b365ad6fb2e625d15",
+          "draftSha256": "2a75edf101e69f6957d951899c2b71f90958c382a96ee5d1bc1245bdd156e8ea",
+          "contextSha256": "44d9afac155c8660091e458cc33c6e436ad89d1a96c6d5c81701557447309ac3",
+          "manifestSha256": "b139c875658efc1c44fb00b6ac4c2d9ca1675ed1655c0f7cc114b98cc4b9be41",
+          "researchSha256": "22e974ae807bdc0f9ee1548bb5bce2df940e4e1c8b3f9b15eb8ad862080010f4",
+          "learningSha256": "47b537ede5a5c7b913877c9c465f644a1b3e5f0ace3a015ab8d7bf9c6acb815b"
+        }
+      }
+    },
+    {
+      "id": "77d004b9a140aa295db94510c1806b8f156c7b0f70f07162284642fd223539dc",
+      "kind": "assessment",
+      "caseId": "787f35356b78240055b28a66",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceRunId": "loop-40810428270-1",
+      "details": {
+        "revisionId": "85beb6db87e8603d61adf0f69d1bf379755db831f6cd10231f0a9925748df96e",
+        "parentRevisionId": "0148ba7f2c0254a45a03eeb9ef4531fda7610e0a3a06e4b6d598815d1b21e00c",
+        "candidateIndex": 2,
+        "candidateSha256": "796bd989ec8d70a3f61f4bf9f4091a9c796caee21202289136929e203da624ae",
+        "sourceSha256": "fb2c3dd1bce1821027eb2c12e996f90ab1f85a190b7d3137b1514af2bce6ddc4",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A human reviewed checklist of recovery questions for a failed synthetic agent run.",
+          "inputs": [
+            "Synthetic run log",
+            "Operator supplied list of side effects",
+            "Operator supplied recovery policy"
+          ],
+          "trigger": "When a test agent run reports a failure in a synthetic exercise.",
+          "steps": [
+            "Summarize the failure from the supplied test log.",
+            "List completed and possibly repeated actions.",
+            "Flag missing checkpoint or idempotency information.",
+            "Draft questions for an engineer to answer.",
+            "Require engineer approval before any retry or recovery."
+          ],
+          "acceptanceCheck": "For sample logs with known completed actions, the checklist identifies those actions and flags unknown state without recommending an automatic retry.",
+          "humanBoundary": "An engineer defines recovery policy, reviews the checklist and authorizes any retry; the prototype does not execute or resume agents.",
+          "unverified": [
+            "Agent framework and log formats",
+            "Checkpoint semantics and durable state",
+            "Safe handling of side effects",
+            "Any recovery execution capability"
+          ]
+        },
+        "limitations": [
+          "Agent framework and log formats",
+          "Checkpoint semantics and durable state",
+          "Safe handling of side effects",
+          "Any recovery execution capability"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "4d4e57a7591d11aa794e6f73020412d19c8ec34f74b4c6e4290268720c482a5f",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Agent framework and log formats",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "35e58a5dd9924dbbeccf5d4167b8624979d46ff1b0e7c2e639333bf657344a37",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Checkpoint semantics and durable state",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "ce0894ec947234b4096fd0f10c69556dd3e9bcaeacd5a87d6b41106c82bb3324",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Safe handling of side effects",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "b3dffa94aee80966704ab3e2fb7a51bc2a1445b09642119fc81a3d3f5b49af98",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              3
+            ],
+            "question": "Any recovery execution capability",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can turn synthetic run notes into a checklist; no recovery implementation reference is supplied.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: agent-development consultancies may pay for recovery planning; the discussion shows no purchase intent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A checklist mock is bounded, but agent types, retry rules and safe recovery behavior are unspecified.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "Only a human reviewed checklist is supportable; no automated checkpoint, retry or idempotency capability is documented.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post names checkpointers, recovery logic and idempotency, but supplies no examples, constraints or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "3f9db334f7ae57754f32c194958bc65b8f2acb333a79c06b365ad6fb2e625d15",
+          "draftSha256": "2a75edf101e69f6957d951899c2b71f90958c382a96ee5d1bc1245bdd156e8ea",
+          "contextSha256": "44d9afac155c8660091e458cc33c6e436ad89d1a96c6d5c81701557447309ac3",
+          "manifestSha256": "b139c875658efc1c44fb00b6ac4c2d9ca1675ed1655c0f7cc114b98cc4b9be41",
+          "researchSha256": "22e974ae807bdc0f9ee1548bb5bce2df940e4e1c8b3f9b15eb8ad862080010f4",
+          "learningSha256": "47b537ede5a5c7b913877c9c465f644a1b3e5f0ace3a015ab8d7bf9c6acb815b"
+        }
+      }
+    }
+  ]
+}
