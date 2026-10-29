@@ -1,0 +1,443 @@
+{
+  "runId": "loop-40827730261-1",
+  "createdAt": "2026-10-29T06:12:50.657Z",
+  "candidates": [
+    {
+      "title": "Keep received images with customer messages",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Join a customer message with its already received image so a reply assistant does not request the image again.",
+        "evidenceQuote": "I want the AI agent to recognize that the image has already been received and use the available image to identify the product"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review card pairing one message with its supplied image reference and a draft product question.",
+        "inputs": [
+          "fictional message text",
+          "operator-supplied image reference or mock image description",
+          "operator-labeled expected product clue"
+        ],
+        "trigger": "When an operator submits one fictional or consented message and its associated image reference.",
+        "steps": [
+          "Store the message and image reference under one test case.",
+          "Check that both fields are present before drafting.",
+          "Prepare a short product-identification question from the supplied inputs.",
+          "Show the draft and inputs together for review."
+        ],
+        "acceptanceCheck": "On a small labeled fixture set, confirm each card keeps the correct message paired with its image reference and never claims an unsupported product identity.",
+        "humanBoundary": "A person supplies authorized inputs, verifies image interpretation and approves any customer reply.",
+        "unverified": [
+          "Make execution and Messenger connector behavior",
+          "Image transfer and model image interpretation",
+          "Identification accuracy on real product images"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A paired-input mock is manageable, but no supplied implementation reference documents Make routing or image forwarding.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small businesses handling product inquiries might pay to reduce repeated image requests; this post shows no buying intent.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fixture test is bounded; live Messenger access, image handling and identification quality remain unverified.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed draft can package supplied context, but a person must verify the image and product before replying.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post span describes the text and image routes and the resend problem; recurrence and implementation support are not established.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "reason": "Scored a bounded proposed experiment from the assigned chore; provisional mean 4.6 is below 6 and it remains rejected."
+    },
+    {
+      "title": "Explain gaps between ad and store purchase totals",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceIds": [
+        "accc79f9c0afdef41b9f38d1"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "accc79f9c0afdef41b9f38d1"
+        ],
+        "chore": "Compare daily ad-attributed purchases with Shopify online-store orders and flag dates needing a human explanation.",
+        "evidenceQuote": "In Shopify, export daily orders for the same 30 days, Online Store channel only, without test and cancelled orders."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A date-by-date comparison sheet that flags mismatches and offers a cautious explanation checklist.",
+        "inputs": [
+          "fictional daily ad-purchase rows with attribution setting",
+          "fictional Shopify daily order rows",
+          "operator-supplied test and cancellation exclusions"
+        ],
+        "trigger": "When an operator supplies two matching 30-day sample exports.",
+        "steps": [
+          "Check that both tables cover the same dates.",
+          "Apply the chosen channel and exclusion labels supplied by the operator.",
+          "Compare daily totals by date.",
+          "Flag gaps without assigning a cause.",
+          "Show a checklist of possible explanations for human review."
+        ],
+        "acceptanceCheck": "On hand-labeled synthetic tables, verify date alignment, exclusions and arithmetic; confirm the report never states a cause from totals alone.",
+        "humanBoundary": "A person supplies authorized exports, confirms settings and investigates tracking or attribution before taking action.",
+        "unverified": [
+          "Exact export formats and column mapping",
+          "Attribution logic across platforms",
+          "Whether any flagged gap represents duplicate tracking"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can compare two labeled tables, but no supplied reference supports advertising export parsing or attribution logic.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small ecommerce operators may pay for clearer discrepancy review; this post describes a check, not buyer intent.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic-table report is bounded, while live exports and correct attribution interpretation remain unverified.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable date comparison can flag differences, but a person must interpret causes and make any tracking changes.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained task and context spans specify two exports and possible causes, but do not provide corroboration or a verified service.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        }
+      },
+      "reason": "Scored a bounded proposed experiment from the assigned chore; provisional mean 4.8 is below 6 and it remains rejected."
+    },
+    {
+      "title": "Review possible repeats after missed schedule runs",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "sourceIds": [
+        "ec16f5ced732a9d207069cd6"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ec16f5ced732a9d207069cd6"
+        ],
+        "chore": "Review a rerun batch for likely duplicate records before an operator resumes processing.",
+        "evidenceQuote": "Missed schedule triggers can duplicate everything."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review list of exact and possible duplicate rows in a supplied rerun batch.",
+        "inputs": [
+          "fictional original batch rows",
+          "fictional rerun rows",
+          "operator-selected comparison key"
+        ],
+        "trigger": "When an operator submits a suspected rerun for review.",
+        "steps": [
+          "Compare rows on the supplied key.",
+          "Separate exact matches from rows with missing keys.",
+          "Flag possible repeats without deleting or skipping anything.",
+          "Show matched row references for human review."
+        ],
+        "acceptanceCheck": "A labeled synthetic fixture should correctly flag exact duplicate keys and leave ambiguous or missing-key cases unresolved.",
+        "humanBoundary": "A person selects the key, confirms each match and authorizes any skip, replay or data change.",
+        "unverified": [
+          "Which record fields define a duplicate",
+          "How the scheduler recovers missed runs",
+          "Whether a flagged row is safe to skip"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A synthetic duplicate review is approachable, but no supplied reference documents scheduler recovery or idempotency.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: workflow consultants may pay to reduce duplicate processing; this post proves no purchase intent or payment.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare fictional batch keys, while real recovery rules and identifiers are unknown.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed checker can flag matching keys, but an operator must confirm matches and decide whether to resume.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "One retained task span identifies duplicate processing after missed triggers; frequency, fields and recovery rules are missing from these spans.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          }
+        }
+      },
+      "reason": "Scored a bounded proposed experiment from the assigned chore; provisional mean 4.6 is below 6 and it remains rejected."
+    },
+    {
+      "title": "Review salon booking requests against test slots",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "sourceIds": [
+        "a53a6bc89a5cdac92d4ab658"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a53a6bc89a5cdac92d4ab658"
+        ],
+        "chore": "Check a proposed salon booking request against supplied working-hour, staff-availability and existing-appointment test data.",
+        "evidenceQuote": "Atomic Slot Validation: Every booking request checks salon working hours, master availability, and existing appointments in PostgreSQL at the SQL level before confirmation."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A proposed conflict report for fictional booking requests and salon slots.",
+        "inputs": [
+          "fictional request date and time",
+          "fictional working hours",
+          "fictional staff availability",
+          "fictional existing appointment list"
+        ],
+        "trigger": "When an operator submits a sample booking request for review.",
+        "steps": [
+          "Check whether the requested time falls in supplied working hours.",
+          "Compare it with supplied staff availability.",
+          "Compare it with fictional existing appointments.",
+          "Return conflict, no conflict or insufficient data.",
+          "Ask a person to review the result before confirmation."
+        ],
+        "acceptanceCheck": "On labeled synthetic cases, verify known overlaps are flagged and missing availability produces an unresolved result rather than a booking confirmation.",
+        "humanBoundary": "A person supplies and validates the test rules and authorizes all real bookings; the prototype does not reserve or persist slots.",
+        "unverified": [
+          "Live calendar or database access",
+          "Concurrent reservation safety",
+          "Whether the showcased architecture works outside its author report"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post describes SQL slot checks, but no separate supplied building reference supports a beginner implementation.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent salons may pay to reduce booking conflicts; this maker architecture post proves no buyer intent.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic slot review is bounded, while live calendar access and concurrent booking safety remain unverified.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A test checker could flag conflicts, but a person must validate availability and confirm every real booking.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "Retained spans describe a maker-reported booking architecture and checks; external use and independent demand are not established.",
+            "sourceIds": [
+              "a53a6bc89a5cdac92d4ab658"
+            ]
+          }
+        }
+      },
+      "reason": "Scored a bounded proposed experiment from the assigned chore; provisional mean 4.4 is below 6 and it remains rejected."
+    },
+    {
+      "title": "Prepare a review card for automation failures",
+      "productUrl": "https://community.make.com/t/118231",
+      "sourceIds": [
+        "bc3afc6e8c2a63bbd4b7ae01",
+        "428eda549e557f199c3af452"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bc3afc6e8c2a63bbd4b7ae01"
+        ],
+        "chore": "Review an operator-reported automation failure and prepare a concise diagnostic card, with duplicate records as one possible issue.",
+        "evidenceQuote": "Duplicate records being created"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review card summarizing an operator-supplied failure and listing safe next checks.",
+        "inputs": [
+          "operator-written expected result",
+          "operator-written observed result",
+          "fictional or redacted error text",
+          "which integration is involved"
+        ],
+        "trigger": "When an operator submits a single failed automation example.",
+        "steps": [
+          "Capture expected and observed outcomes.",
+          "Attach the supplied error text and integration label.",
+          "Show a short summary and checklist of missing information.",
+          "Route module errors to a configured Make error handler only in a separate operator-managed test.",
+          "Return the card for human diagnosis."
+        ],
+        "acceptanceCheck": "For labeled synthetic cases, confirm each card preserves the supplied facts and does not invent a root cause or corrective action.",
+        "humanBoundary": "A person supplies authorized, redacted information, diagnoses the failure and approves scenario changes; the Make documentation only describes an error route.",
+        "unverified": [
+          "Whether any listed issue recurs in a specific workflow",
+          "The supplied reference does not document matching duplicates",
+          "Live execution, integration-specific causes and repairs"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The supplied Make documentation (428eda549e557f199c3af452) supports routing module errors to a handler, not deduplication or diagnosis.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small automation service firms may pay for organized fault review; the offer reports no completed paid work.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic error-card prototype is bounded, while the listed integrations and actual causes remain unverified.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "An error can be organized for review, but a person must diagnose the cause and authorize any scenario edit.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01",
+              "428eda549e557f199c3af452"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post lists duplicate records among example problems and offers fixed-price help, but no particular incident or recurrence is established.",
+            "sourceIds": [
+              "bc3afc6e8c2a63bbd4b7ae01"
+            ]
+          }
+        }
+      },
+      "reason": "Scored a bounded proposed experiment from the assigned chore; provisional mean 4.6 is below 6 and it remains rejected."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "MCP versus built-in AI in software",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "The assigned post asks for a preference between two AI integration approaches but supplies no concrete existing chore to scope; proposing a buyer or task would invent demand."
+    },
+    {
+      "title": "iCloud Drive client UI help",
+      "productUrl": "https://news.ycombinator.com/item?id=50284998",
+      "reason": "The maker asks for help improving the UI but gives no specific interface task or user workflow in the supplied text; a useful bounded experiment cannot be grounded without inventing one."
+    },
+    {
+      "title": "Shopify app review advice",
+      "productUrl": "https://community.shopify.com/t/705837",
+      "reason": "The supplied text only asks for advice about the app review process and identifies no concrete task or obstacle; assigning an automated output would invent the chore."
+    },
+    {
+      "title": "Copyright status of LLM output",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The supplied post states a general concern about licensing rights but requests no specific audit, review or repeated task; a service workflow would be invented."
+    },
+    {
+      "title": "IRS tax form formalization discussion",
+      "productUrl": "https://news.ycombinator.com/item?id=50278678",
+      "reason": "The supplied excerpt describes principles behind a proof of concept but gives no concrete user chore or request; tax correctness also cannot be inferred from this limited text."
+    }
+  ]
+}
