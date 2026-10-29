@@ -1,0 +1,417 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40938273413-1",
+  "createdAt": "2026-10-29T19:18:34.147Z",
+  "events": [
+    {
+      "id": "21ace399eed773d502bf6994d61c39ccf5e3d720d66010cd9bc96d50b51517b2",
+      "kind": "assessment",
+      "caseId": "8bc43c3f35a0603276238dda",
+      "productUrl": "https://news.ycombinator.com/item?id=50289659",
+      "sourceRunId": "loop-40938273413-1",
+      "details": {
+        "revisionId": "bf6274972f5d3d1f992196afaf24f63c8b157afbc7b798bc6e752da9a0827156",
+        "parentRevisionId": null,
+        "candidateIndex": 0,
+        "candidateSha256": "f9bc54075b5eb956a1024dcdeaac7700befe559ca93e588f1c3fb6727e3ed101",
+        "sourceSha256": "cb3da2bfc0453efe3dc665758de8d3c35cbc56195bd362f9ef54f10d6fcd78db",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewable weekly training streak and points summary from manually supplied session entries.",
+          "inputs": [
+            "Fictional dated workout entries",
+            "A proposed weekly points rule",
+            "An operator-supplied target streak"
+          ],
+          "trigger": "A person enters or pastes a new training session.",
+          "steps": [
+            "Validate each entry has a date and activity label.",
+            "Apply the proposed points rule to the supplied session.",
+            "Update a streak count using the dates in the test log.",
+            "Produce a weekly summary and flag gaps for review.",
+            "Ask a coach or test user to inspect whether the rules are useful."
+          ],
+          "acceptanceCheck": "On a fixed fictional log, compare every awarded point and streak count with a hand-calculated expected summary.",
+          "humanBoundary": "The user supplies and corrects all session records; a person chooses the scoring rule and reviews whether it encourages safe training. No workout advice is produced.",
+          "unverified": [
+            "Whether users sustain training from points",
+            "Whether a coach or other buyer would pay",
+            "Any Bluetooth trainer data access"
+          ]
+        },
+        "limitations": [
+          "Whether users sustain training from points",
+          "Whether a coach or other buyer would pay",
+          "Any Bluetooth trainer data access"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "d8e6737a0da25f29a118e4d57da0e592ff35244c92740d81746d44cbbf9ffef1",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "f4d04eefe3a36e8cb7658a5962ea35ac20d30c81817c937056317635b3b2bfda",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether users sustain training from points",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "d125b15633c5d81e4fff1e0e067078338fee9e45d600eccb37ea3a4fcad3a675",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Any Bluetooth trainer data access",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test a simple manual log, but the post does not specify trainer data access or a repeatable workflow.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent fitness coaches may pay for motivation tracking; the post reports one person's routine, not buyer intent.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can award points from manually entered sessions; data capture and sustained motivation remain unverified.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A rule can update a supplied session log, but a person must enter workouts and decide whether the reward system is useful.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post says streaks and points became part of a daily training routine, but gives no repeated buyer evidence or measured effect.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "dae7fb5e4452c49094faf137b429913217b87bead1f3f0a1690242bca6d11a97",
+          "draftSha256": "458c6d21863a29c4e4d73e519e749d3459ea13f43e2be0a93fedb2342d5c11de",
+          "contextSha256": "997bbb146899a7dc8395ea022ced63e16672aa86828f1070f618d5b788ef4d06",
+          "manifestSha256": "70b653198d4014b7e86eef0c30466ccb8a5452510e554def1a827d04ae8c079b",
+          "researchSha256": "93e6126f5e252b861ae6a92362bc903f471f1f440e44868b9a92a26b43b4c8e8",
+          "learningSha256": "4cd81a004a0eb08b86960a09c6fe6d17368cd1842dbf4b3a46c60a3871588885"
+        }
+      }
+    },
+    {
+      "id": "b80da756592c0ebb127adee2c29d575767bd75accb64b35967296e64e4d232cb",
+      "kind": "assessment",
+      "caseId": "2070543e033ae68e255c58ab",
+      "productUrl": "https://news.ycombinator.com/item?id=50289281",
+      "sourceRunId": "loop-40938273413-1",
+      "details": {
+        "revisionId": "eadfd0ca4da96f30e61b2954a20786c632218a50affba1a35d4799b5b4a51f59",
+        "parentRevisionId": null,
+        "candidateIndex": 1,
+        "candidateSha256": "8847c66d1e88f334153d371c2c610f1e654ea8936f811525a42a9bb4e6372f33",
+        "sourceSha256": "a13c3060e5bf6f218102da01fcb7e1daa67ab5c2b690bdfb6251dd235fcb9202",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A dated Markdown research-session record that a person can reopen and export.",
+          "inputs": [
+            "Operator-supplied session title",
+            "Fictional research notes",
+            "A proposed section order",
+            "A manual next-step note"
+          ],
+          "trigger": "A researcher starts a session or asks to resume a saved one.",
+          "steps": [
+            "Collect the title, notes and next-step note from the operator.",
+            "Format them into a dated Markdown record.",
+            "Save the record under a manually chosen session label.",
+            "Reopen the selected record and display its notes and next step.",
+            "Export the record for a person to inspect and share."
+          ],
+          "acceptanceCheck": "Save a fictional session, reopen it by its label, and verify the exported text contains all supplied notes and the next-step field.",
+          "humanBoundary": "The researcher supplies, names and checks the notes; this test does not crawl sources, establish factual accuracy, or prove shared editing.",
+          "unverified": [
+            "Whether session identity remains reliable across a real research project",
+            "Whether export and sharing work across intended tools",
+            "Whether research professionals have recurring need or willingness to pay"
+          ]
+        },
+        "limitations": [
+          "Whether session identity remains reliable across a real research project",
+          "Whether export and sharing work across intended tools",
+          "Whether research professionals have recurring need or willingness to pay"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "382b8dc3ab60d3de449f46290774204c994752aa04c0dabafc21207fc346c144",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "5583d3e2fb1b2f9f7dcd38ed02aacf75df7d7160240acabef668bc0e09237efd",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether session identity remains reliable across a real research project",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "fcc9331e351a4cd2fcea6e43d531bad942d90926fdbd545f13f1b3645e98f756",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Whether export and sharing work across intended tools",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can prototype a session record using supplied notes, but no implementation reference is attached.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent research consultants may pay for session continuity; this launch excerpt establishes no buyer intent.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prototype can store and export operator-supplied notes, while reliable resume state and collaboration remain unverified.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A tool can format and retrieve supplied session records, but a person must capture notes and verify the resumed context.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The excerpt describes a research-session record that can be resumed, exported and shared, but provides no use frequency or corroboration.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "dae7fb5e4452c49094faf137b429913217b87bead1f3f0a1690242bca6d11a97",
+          "draftSha256": "458c6d21863a29c4e4d73e519e749d3459ea13f43e2be0a93fedb2342d5c11de",
+          "contextSha256": "997bbb146899a7dc8395ea022ced63e16672aa86828f1070f618d5b788ef4d06",
+          "manifestSha256": "70b653198d4014b7e86eef0c30466ccb8a5452510e554def1a827d04ae8c079b",
+          "researchSha256": "93e6126f5e252b861ae6a92362bc903f471f1f440e44868b9a92a26b43b4c8e8",
+          "learningSha256": "4cd81a004a0eb08b86960a09c6fe6d17368cd1842dbf4b3a46c60a3871588885"
+        }
+      }
+    },
+    {
+      "id": "8c83e42e1cf38d07707e43a55f5b238285d36ac4dbde6c3b6c22dc3ed621456b",
+      "kind": "assessment",
+      "caseId": "a30ec9940a1e7f291796da51",
+      "productUrl": "https://news.ycombinator.com/item?id=50287887",
+      "sourceRunId": "loop-40938273413-1",
+      "details": {
+        "revisionId": "833c0a65c8893a7df4d8076366135ae372dc7e6e26152dda309c7c8a0fc6ec99",
+        "parentRevisionId": null,
+        "candidateIndex": 2,
+        "candidateSha256": "0a118a0b7de42134a657a9336a5be3e092ac7aa5649155b6ed7875199fd36d5c",
+        "sourceSha256": "0e4de6da8c32b2041e33cd99a61e9d72ee2e83e7fbef16874431dcb26c6cbc33",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A short review memo listing possible assumptions and alternative questions from supplied conversation text.",
+          "inputs": [
+            "Fictional conversation transcript",
+            "A proposed review question template",
+            "Operator-supplied meeting goal"
+          ],
+          "trigger": "A facilitator pastes a conversation excerpt and its stated goal.",
+          "steps": [
+            "Check that the supplied text and goal are present.",
+            "Draft possible assumptions as questions, not conclusions.",
+            "Suggest small alternative questions tied to exact supplied passages.",
+            "Mark suggestions that lack a clear text basis.",
+            "Return the memo for a facilitator to review or discard."
+          ],
+          "acceptanceCheck": "On fictional transcripts with a hand-written answer key, verify each suggested question points to a supplied passage and unsupported suggestions are marked.",
+          "humanBoundary": "A facilitator supplies the excerpt and goal, reviews every interpretation, and decides what to ask; the tool must not judge participants or infer personal traits.",
+          "unverified": [
+            "Whether prompts reliably surface useful assumptions",
+            "Whether facilitators have a repeated paid need",
+            "Any documented method or validated capability"
+          ]
+        },
+        "limitations": [
+          "Whether prompts reliably surface useful assumptions",
+          "Whether facilitators have a repeated paid need",
+          "Any documented method or validated capability"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "b745f765cbf79d7400b778e00209d5ab87c4192de59e9b145a446b44a37bee28",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether prompts reliably surface useful assumptions",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "7c349d1d3b519b267696186d347ab48ef9762ae528584185c64f24c5951e3bec",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Whether facilitators have a repeated paid need",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "c58e7a4eedf72fb29056e3aa74d3e7d13ea1f8247767909414a885e5f641989b",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Any documented method or validated capability",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test prompts on fictional conversation text, but the source gives no method or implementation support.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent facilitators may pay for reflection aids; this product excerpt does not establish their demand or payment.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week text-only prototype is bounded, but useful alternative moves and assumption detection need human evaluation.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The system could draft prompts from supplied text, while a person must judge context, fairness, and whether suggestions are appropriate.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The excerpt describes reframing conversations to surface assumptions, but gives no evaluation criteria, recurring use, or corroboration.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "dae7fb5e4452c49094faf137b429913217b87bead1f3f0a1690242bca6d11a97",
+          "draftSha256": "458c6d21863a29c4e4d73e519e749d3459ea13f43e2be0a93fedb2342d5c11de",
+          "contextSha256": "997bbb146899a7dc8395ea022ced63e16672aa86828f1070f618d5b788ef4d06",
+          "manifestSha256": "70b653198d4014b7e86eef0c30466ccb8a5452510e554def1a827d04ae8c079b",
+          "researchSha256": "93e6126f5e252b861ae6a92362bc903f471f1f440e44868b9a92a26b43b4c8e8",
+          "learningSha256": "4cd81a004a0eb08b86960a09c6fe6d17368cd1842dbf4b3a46c60a3871588885"
+        }
+      }
+    }
+  ]
+}
