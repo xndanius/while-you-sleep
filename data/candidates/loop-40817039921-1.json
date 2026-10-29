@@ -1,0 +1,293 @@
+{
+  "runId": "loop-40817039921-1",
+  "createdAt": "2026-10-29T04:20:05.126Z",
+  "candidates": [
+    {
+      "title": "Review low-value pages for removal",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "sourceIds": [
+        "afe7e1914aaaf443af4e5210"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "afe7e1914aaaf443af4e5210"
+        ],
+        "chore": "Review existing site pages for whether they answer a question or solve a problem, then remove pages that do neither.",
+        "evidenceQuote": "If it does not answer a question or solve something, I delete it."
+      },
+      "whoPays": "Hypothesis: small freelance web studios maintaining client sites may pay for a page-upkeep review assistant.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table marking each supplied page as keep, review, or possible removal with a short reason tied to the supplied page purpose.",
+        "inputs": [
+          "Synthetic page title and URL label",
+          "Operator supplied page purpose",
+          "Operator supplied audience question or task",
+          "Operator supplied current maintenance note"
+        ],
+        "trigger": "An operator supplies a small list of pages for a periodic upkeep review.",
+        "steps": [
+          "Collect page labels and operator supplied purpose notes.",
+          "Compare each purpose note with the stated audience question or task.",
+          "Draft a keep, review, or possible removal label with a reason.",
+          "Flag missing purpose information instead of guessing.",
+          "Ask a person to verify each suggestion before any page is changed."
+        ],
+        "acceptanceCheck": "On a fixed synthetic list, verify every output row maps to one input page, missing purpose notes are flagged, and no page is changed automatically.",
+        "humanBoundary": "The operator supplies context and confirms whether a page should remain; the prototype never accesses or edits a live site.",
+        "unverified": [
+          "Whether page-purpose labels predict useful content",
+          "Whether a repeated upkeep workflow exists among small studios",
+          "Any automated website access or editing capability"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The post describes a simple page-purpose review, but no supplied implementation reference documents an automated version.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small web studios may pay to reduce page upkeep; this tip shows no buying intent or payment.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic page-list prototype is bounded; real site access and useful page judgments remain unverified.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable page review can produce suggestions, but no automation capability is documented and a person must decide removals.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained native span gives a concrete keep-or-delete rule, but frequency, fields and corroborated demand are unknown.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the span supports a bounded manual page-review chore, but no implementation support is supplied and the buyer and repeat frequency are unverified."
+    },
+    {
+      "title": "Summarize long email threads for review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "Summarize long email conversations into a compact history and draft prefill for a person to review.",
+        "evidenceQuote": "To save email resume properly, i need immutable id to reference original email of the resume."
+      },
+      "whoPays": "Hypothesis: small professional-services firms handling long client email threads may pay for review-ready summaries.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A compact summary of a fictional email thread with the latest request, relevant prior context, and a draft response prefill for human review.",
+        "inputs": [
+          "Fictional multi-message email thread",
+          "Operator supplied summary length preference",
+          "Operator supplied client context notes",
+          "Operator supplied draft response purpose"
+        ],
+        "trigger": "An operator pastes a fictional or otherwise approved thread for a summary draft.",
+        "steps": [
+          "Read the supplied thread in chronological order.",
+          "Identify the latest request and relevant earlier context.",
+          "Draft a compact summary and response prefill.",
+          "Flag ambiguous references or missing context.",
+          "Return the draft for a person to correct and approve."
+        ],
+        "acceptanceCheck": "For a fixed set of fictional threads, check that each output preserves the latest request, does not invent facts, and flags deliberately ambiguous references.",
+        "humanBoundary": "A person supplies approved text, verifies every detail, and decides whether to use any draft; the experiment does not connect to a mailbox or send email.",
+        "unverified": [
+          "Summary accuracy on varied real conversations",
+          "Mailbox access, permissions and privacy controls",
+          "Whether compact history reduces review effort for the proposed buyer"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post describes the desired summary output, but no supplied implementation reference supports email intake or summarization.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms may pay to reduce thread review time; this request does not establish buying intent or payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can use operator-supplied fictional threads; secure mailbox access and summary accuracy remain unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A draft summary is repeatable, but no implementation capability is documented and a person must review it before use.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span describes long email conversations, compact history and draft prefill, but not frequency or corroborated demand.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: a concrete summarization task is stated, but the supplied spans do not support a safe email integration or reliable summaries; buyer demand remains a hypothesis."
+    },
+    {
+      "title": "Draft booking and service status alerts",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Prepare booking confirmations, provider assignment notices, payment-status updates, and customer alerts for an on-demand service workflow.",
+        "evidenceQuote": "booking confirmations, provider assignment notifications, payment status updates, and customer alerts"
+      },
+      "whoPays": "Hypothesis: small on-demand service operators may pay for help preparing booking and status notices.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A proposed event review sheet with one draft booking or status notice and a missing-information flag for each synthetic event.",
+        "inputs": [
+          "Synthetic booking event",
+          "Synthetic provider assignment status",
+          "Synthetic payment status label",
+          "Operator supplied approved notice template"
+        ],
+        "trigger": "An operator provides a synthetic booking or status event for a draft notice.",
+        "steps": [
+          "Read the event fields supplied by the operator.",
+          "Check whether required notice details are present.",
+          "Draft the matching confirmation or status message from the approved template.",
+          "Flag missing or conflicting fields without inferring payment or assignment success.",
+          "Return the draft for human review and sending."
+        ],
+        "acceptanceCheck": "For synthetic events with known missing and conflicting fields, verify the prototype flags them and drafts no unsupported success statement.",
+        "humanBoundary": "A person supplies events and templates, confirms payment and assignment facts, and approves and sends every message.",
+        "unverified": [
+          "Access to actual booking or payment systems",
+          "Webhook delivery, retry and duplicate prevention mechanics",
+          "Notice accuracy and business value across real operator workflows"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post names notification tasks, but no supplied implementation reference supports webhooks, APIs or message delivery.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small on-demand service operators may pay to reduce notice handling; this discussion shows no purchase or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can draft notices from synthetic events; integration, retries and duplicate prevention remain unverified.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Event-to-draft steps could repeat, but no implementation capability is documented and a person must verify and send notices.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained span names booking, assignment, payment-status and customer notices plus failure concerns, but no fields or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the post specifies several notification tasks, but no implementation evidence supports external APIs, retries or delivery; payment and buyer demand are unverified."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Review low-value pages for removal",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "reason": "Below threshold: the span supports a bounded manual page-review chore, but no implementation support is supplied and the buyer and repeat frequency are unverified."
+    },
+    {
+      "title": "Summarize long email threads for review",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "reason": "Below threshold: a concrete summarization task is stated, but the supplied spans do not support a safe email integration or reliable summaries; buyer demand remains a hypothesis."
+    },
+    {
+      "title": "Draft booking and service status alerts",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "reason": "Below threshold: the post specifies several notification tasks, but no implementation evidence supports external APIs, retries or delivery; payment and buyer demand are unverified."
+    },
+    {
+      "title": "Low-budget tools for many projects",
+      "productUrl": "https://news.ycombinator.com/item?id=50284303",
+      "reason": "The retained text says the maker needs low-cost tools while building sites and apps, but it does not specify a concrete repeated task to automate; the named product is a showcase, not a task request."
+    },
+    {
+      "title": "Legal research database utilities",
+      "productUrl": "https://news.ycombinator.com/item?id=50274235",
+      "reason": "The retained text describes a product comparison in broad terms, not a concrete customer chore or requested service; a bounded experiment would require inventing the task."
+    },
+    {
+      "title": "Cloudflare IP-abuse reporting",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The only retained text is the fragment “which clearly doesn’t apply here.” It does not identify a task or problem, so the chore cannot be assessed without inferring omitted context."
+    },
+    {
+      "title": "Startup operations management",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "The retained text broadly promises operations management but names no specific manual duty; choosing one would invent a chore absent from the supplied span."
+    }
+  ]
+}
