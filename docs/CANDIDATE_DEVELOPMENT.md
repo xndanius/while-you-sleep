@@ -74,8 +74,11 @@ Existing historical revisions can already contain a less specific plan. After a
 verified successful continuation, writer preparation also exposes at most one
 older proposed plan for the same primary-evidence fingerprint. It revalidates the
 complete old assessment bundle and candidate hash, checks that it predates the
-active origin, and keeps its provenance separate. Up to three historical matches
-are examined; missing or corrupted bundles cannot restore a plan. The old plan
+active origin, and keeps its provenance separate. Bounded historical run metadata
+orders candidates by actual assessment time and excludes post-origin runs before
+at most three complete bundles are examined. Missing or corrupted bundles cannot
+restore a plan. This selects the latest different verified plan, not a model
+judgment that it is the best or most detailed design. The old plan
 is advisory, carries no old ratings or source claims, and never replaces the
 latest record. Its assumptions and gaps must be reconsidered against current
 evidence. This supplies useful context without rewriting history or treating an
