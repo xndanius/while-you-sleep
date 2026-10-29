@@ -1,0 +1,376 @@
+{
+  "runId": "loop-40841532528-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T08:30:00.000Z",
+  "candidates": [
+    {
+      "title": "Prepare resume facts for repeated application forms",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b",
+        "b100f221383c5b74ce29f37b"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "Prepare resume information repeatedly for forms tailored to one or two companies.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet that maps supplied resume facts to operator-entered application field labels, with uncertain or missing values flagged.",
+        "inputs": [
+          "Fictional resume text",
+          "Operator-entered field labels",
+          "Expected-value answer key"
+        ],
+        "trigger": "An operator starts a new practice application and provides fictional resume text plus its field labels.",
+        "steps": [
+          "Enter fictional resume facts and the target field labels.",
+          "Use a documented schema to extract candidate values from the supplied text.",
+          "Mark unsupported or absent facts as blank.",
+          "Compare each suggestion with a prepared answer key.",
+          "Have a person approve or correct values before any manual form entry."
+        ],
+        "acceptanceCheck": "For a fixed fictional resume and field list, every populated suggestion must match the answer key and every absent fact must remain blank.",
+        "humanBoundary": "A person supplies the form labels, checks all suggested values, protects any real resume data, and manually enters and submits the application.",
+        "unverified": [
+          "Whether company-specific forms expose stable labels",
+          "Whether extraction remains accurate on varied layouts",
+          "Privacy safeguards for real resumes",
+          "No browser form reading or submission capability is documented"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can try structured extraction from supplied resume text; n8n documents schema-based extraction but not form reading.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers or career-support services may value less repeated entry; the post establishes no purchase intent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A synthetic review sheet is bounded for four weeks; company-specific form layouts and live entry are outside the documented reference.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Structured extraction is documented, but no form automation is; a person must verify and enter every response.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post reports a daily two-hour chore for forms tailored to one or two companies; wider recurrence and buyer evidence are absent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete repeated chore and a matching structured-text extraction reference support a scoped review-sheet experiment; conservative mean is below six."
+    },
+    {
+      "title": "Draft compact summaries of long email threads",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "Create a compact summary and prefill a draft from a long email conversation while retaining a reference to the original email.",
+        "evidenceQuote": "I use it to create draft prefill with the good knowledge + compact history of the conversation with each mail resume"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft summary of a supplied fictional email thread with an operator-provided reference label and a compact context block.",
+        "inputs": [
+          "Fictional email thread text",
+          "Operator-provided reference label",
+          "Expected summary checklist"
+        ],
+        "trigger": "An operator pastes a fictional thread and its stable test label into the prototype.",
+        "steps": [
+          "Keep the supplied reference label beside the input.",
+          "Draft a short summary of the thread and its stated question.",
+          "Flag names, dates, or commitments that need checking.",
+          "Compare the summary with a prepared checklist.",
+          "Have a person verify the summary before using it to prefill any draft."
+        ],
+        "acceptanceCheck": "The summary must preserve the thread’s central request and critical decisions from a prepared fictional example, with no invented detail.",
+        "humanBoundary": "A person supplies test text, checks the reference and every summary, and handles any real mailbox access or sending; the current source packet has no implementation reference.",
+        "unverified": [
+          "Mailbox retrieval is undocumented",
+          "Immutable email ID behavior is unverified",
+          "Summary accuracy across varied threads is untested",
+          "Privacy and access controls for real email are unresolved"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A fictional text-only mock is possible, but no supplied implementation reference documents email intake or summarization.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: client-facing professionals might value compact thread review; this request gives no buyer or payment evidence.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week offline mock can use fictional threads, while email access, stable IDs, and summary accuracy remain unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed draft loop is review-heavy and no software capability is documented; a person must supply and verify every thread.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes compacting long email history and referencing messages, but not repeated volume or corroboration.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "reason": "The retained spans describe a concrete email summarization and reference need, but no supplied implementation source supports its mechanics; mean remains below six."
+    },
+    {
+      "title": "Prepare full-size product images for messaging",
+      "productUrl": "https://community.shopify.com/t/705416",
+      "sourceIds": [
+        "32860087e4090f1828b546d5"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "32860087e4090f1828b546d5"
+        ],
+        "chore": "Correct product images that appear as cropped squares in a messaging app, repeatedly selecting the full-size image instead.",
+        "evidenceQuote": "I wish the image added for a product on the messaging app would default to the full size image and not a cut off square one, have to go in and correct it all the time."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed image preparation mock that takes a supplied product image and produces a full-size copy plus a preview for a messaging listing.",
+        "inputs": [
+          "Synthetic product image",
+          "Operator-selected full-size source",
+          "Expected preview dimensions"
+        ],
+        "trigger": "An operator provides a synthetic product image that has appeared cropped in a messaging listing.",
+        "steps": [
+          "Load the supplied image into a simple test page.",
+          "Create a full-size copy without changing the source file.",
+          "Show a preview of the expected messaging display.",
+          "Compare the preview with the operator’s expected result.",
+          "Let a person approve and upload any corrected image manually."
+        ],
+        "acceptanceCheck": "The generated preview must preserve the full source image and match the expected uncropped result for a small synthetic test set.",
+        "humanBoundary": "A person supplies licensed test images, checks visual quality and uploads approved images; no messaging-app integration or image capability is documented in the supplied references.",
+        "unverified": [
+          "Actual messaging-app image rules are unknown",
+          "No supplied implementation reference documents image conversion",
+          "Automated upload and default-setting capability are absent"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can mock a preview using test images, but supplied sources do not document image-processing tools or app rules.",
+            "sourceIds": [
+              "32860087e4090f1828b546d5"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small merchants may value fewer repeated image corrections; this single request shows no willingness to pay.",
+            "sourceIds": [
+              "32860087e4090f1828b546d5"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic preview test is bounded, but correct platform-specific image handling is unknown.",
+            "sourceIds": [
+              "32860087e4090f1828b546d5"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable preview is proposed, but image preparation and upload are unsupported; a person must inspect and apply changes.",
+            "sourceIds": [
+              "32860087e4090f1828b546d5"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post says the image requires repeated correction, but provides no example formats, platform rules, or corroborated demand.",
+            "sourceIds": [
+              "32860087e4090f1828b546d5"
+            ]
+          }
+        }
+      },
+      "reason": "A recurring correction is stated, but no supplied implementation evidence supports image transformation or messaging-app handling; mean is below six."
+    },
+    {
+      "title": "Check whether a Shopify app has security verification",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "sourceIds": [
+        "66865ff0f48baba92ae2167c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "66865ff0f48baba92ae2167c"
+        ],
+        "chore": "Find out whether a Shopify app has an official security review or verification mark before installing it.",
+        "evidenceQuote": "How can we know if a Shopify app is secure and trustworthy? Is there any official badge, certification, or verification mark that indicates an app has been reviewed and approved by Shopify for security?"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A source-linked checklist that records public security signals for one named test app and leaves unsupported checks marked unknown.",
+        "inputs": [
+          "Fictional app listing",
+          "Public official policy pages supplied by an operator",
+          "Checklist of claims to verify"
+        ],
+        "trigger": "An operator asks for a review of a test app before installation.",
+        "steps": [
+          "List the security questions the operator wants answered.",
+          "Gather the official public pages the operator supplies.",
+          "Record only explicit statements and link each to its page.",
+          "Mark missing or ambiguous evidence as unknown.",
+          "Have a person review the checklist and decide whether to install."
+        ],
+        "acceptanceCheck": "Every checklist statement must link to a supplied official source that explicitly supports it; unknowns must not be presented as a security verdict.",
+        "humanBoundary": "A person chooses sources, checks all claims, and makes the installation decision; this is not a security audit or certification.",
+        "unverified": [
+          "No official Shopify security badge or policy is identified in the retained post",
+          "No supplied implementation reference supports web research or security assessment",
+          "Completeness and freshness of official sources are unresolved"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A person can assemble a small checklist, but no supplied implementation source supports automated source retrieval or assessment.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: store operators may value clearer app checks; the request establishes no paid service demand.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A source-linked manual checklist is testable in four weeks, but it cannot establish software security.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The loop depends on human source selection and judgment; no automated verification capability is documented.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post asks about official verification but does not provide policy details, a specific app, or corroboration.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          }
+        }
+      },
+      "reason": "The question identifies a security-verification need but the supplied spans and references do not establish an official testable checklist; mean is below six."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "App review: Elfsight AI Chatbot pending",
+      "productUrl": "https://community.make.com/t/118559",
+      "reason": "The retained span asks for an estimated review timeline for one pending app approval. This is a one-off status inquiry, not a repeatable service chore; no broader duty is supplied."
+    },
+    {
+      "title": "Streaming service discovery",
+      "productUrl": "https://news.ycombinator.com/item?id=50276432",
+      "reason": "The supplied excerpt only asks whether people bounce between streaming services to find something to watch. It does not identify a bounded task or evidence for the assigned professional-services buyer; more context is missing from the supplied excerpt."
+    },
+    {
+      "title": "WhatsApp Business connection troubleshooting",
+      "productUrl": "https://community.make.com/t/118555",
+      "reason": "The retained context describes one account’s Make authorization flow stuck before Meta authorization despite browser retries. This is a one-off integration bug report, not a repeatable chore suitable for an independent service."
+    },
+    {
+      "title": "Browser-based white noise fan",
+      "productUrl": "https://news.ycombinator.com/item?id=50276263",
+      "reason": "The excerpt describes a consumer white-noise app and a personal preference, not a concrete professional-services chore; proposed buyer fit would be invented."
+    },
+    {
+      "title": "General startup operations management",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "The supplied excerpt says only that a provider manages startup operations. It names no specific task to scope, so a duty or experiment cannot be inferred."
+    },
+    {
+      "title": "Shopify Payments payout follow-up",
+      "productUrl": "https://community.shopify.com/t/705355",
+      "reason": "The retained span describes one user repeatedly asking support about a frozen payout. Building a service around payment-risk escalation would be unsafe and cannot affect Shopify’s decision; the excerpt supplies no safe independent resolution task."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion identities. Four concrete chores received five-criterion scoped assessments; each remains below the six-point threshold. The remaining six were excluded for one-off, vague, or buyer-mismatched evidence. No post proposed."
+    }
+  ]
+}
