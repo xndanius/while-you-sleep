@@ -1,0 +1,232 @@
+{
+  "runId": "loop-40971508535-1",
+  "createdAt": "2026-10-29T23:15:59.412Z",
+  "candidates": [
+    {
+      "title": "Prepare game-test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "A mobile game tester records battery, temperature, frame drops and notes, exports a CSV, and pastes it into a Google Sheet; file triggers sometimes fail or duplicate processing.",
+        "evidenceQuote": "Right now I type it into a notes app during the session, then later export a CSV from that app and paste it into a Google Sheet."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "5c2bf4e7df8c3ec325ba2e74",
+        "f1662b0ceb942474f83a8108"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The CSV extraction and duplicate-removal docs support a small file-in, row-out prototype; phone intake is not documented.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent game testers or small QA teams may pay for cleaner log preparation; this post shows no purchase intent or payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week CSV prototype can extract rows and compare chosen keys using the supplied n8n docs; reliable mobile uploads and correct matching fields remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Documented extraction and duplicate checks automate repeatable file handling, but a tester must upload files, select comparison fields, and review records.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans state the measurements, later CSV export and sheet paste, and missed or repeated triggers; this is one post without corroboration.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable table of extracted game-test rows with likely duplicate rows flagged for a tester to inspect.",
+        "inputs": [
+          "A synthetic CSV containing session time, device, battery, temperature, frame-drop count and note",
+          "A tester-selected set of fields to compare when identifying likely repeats"
+        ],
+        "trigger": "An operator manually supplies a completed CSV file for one review run.",
+        "steps": [
+          "Extract the supplied CSV into row records.",
+          "Check that required test columns are present and flag missing values.",
+          "Compare rows using the operator-selected fields.",
+          "Mark matching rows as possible repeats without deleting them.",
+          "Produce a review table and a short count of flagged rows.",
+          "Have the tester verify all flags before using or importing any row."
+        ],
+        "acceptanceCheck": "On a synthetic file with labeled required fields and known repeated rows, verify that extraction preserves each supplied value and that only rows matching the selected comparison fields are flagged.",
+        "humanBoundary": "The tester supplies and checks the CSV, chooses fields that define a duplicate, verifies flagged rows, and handles any live upload or sheet import; the prototype must not silently discard records.",
+        "unverified": [
+          "Whether the real exported CSV has stable headers and identifiers",
+          "Whether chosen comparison fields distinguish repeated measurements from legitimate similar rows",
+          "Whether phone uploads finish before an n8n trigger reads the file",
+          "Whether the proposed service is useful or anyone would pay for it"
+        ]
+      },
+      "reason": "The task is concrete and the attached n8n references support CSV extraction and duplicate comparisons, so it receives a scoped assessment. Its provisional mean is 5.4, below six; live intake, a correct duplicate contract, and buyer demand remain unresolved."
+    },
+    {
+      "title": "Compare daily Shopify purchase exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "accc79f9c0afdef41b9f38d1"
+        ],
+        "chore": "Export daily Shopify online-store orders and Meta purchases for the same 30-day period, then compare the totals to investigate gaps or duplicate tracking.",
+        "evidenceQuote": "In Shopify, export daily orders for the same 30 days, Online Store channel only, without test and cancelled orders."
+      },
+      "sourceIds": [
+        "accc79f9c0afdef41b9f38d1"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A beginner can compare two operator-supplied daily export tables; the attached instructions describe their filters but no software capability supports the comparison.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small ecommerce advertisers may pay for faster discrepancy review; the how-to post does not establish purchase intent or payment.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic comparison of supplied daily totals is bounded, while export automation, attribution interpretation and diagnosing a live pixel remain unsupported.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed table comparison can flag mismatched dates, but a person must export both sources, inspect attribution differences and investigate any tracking cause.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained instructions specify both exports and explain ordinary attribution gaps and one possible duplicate-tracking pattern; no recurring buyer demand is corroborated.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A dated comparison table that flags differing supplied purchase totals and lists possible explanations for human review.",
+        "inputs": [
+          "Synthetic daily Shopify order totals with channel and test/cancelled-order labels",
+          "Synthetic daily Meta purchase totals labeled with the selected attribution window",
+          "An operator-supplied date range and column mapping"
+        ],
+        "trigger": "An operator manually provides two matching date-range tables for a review run.",
+        "steps": [
+          "Check that both tables cover the same dates.",
+          "Apply the supplied channel, test-order and attribution labels.",
+          "Compare totals by date and mark mismatches.",
+          "Show the comparison with a neutral note that attribution methods can differ.",
+          "Flag patterns for investigation without diagnosing their cause.",
+          "Have a merchant verify the exports and inspect tracking settings independently."
+        ],
+        "acceptanceCheck": "For a synthetic pair of tables with known dates and totals, confirm that aligned dates are compared correctly, mismatched totals are marked, and the output does not label a difference as a duplicate sale without human verification.",
+        "humanBoundary": "A merchant exports and maps both tables, confirms filters and attribution settings, investigates any flagged date, and decides whether tracking needs changes; the prototype does not access a store or alter tracking.",
+        "unverified": [
+          "Whether real export headers and date formats are consistent",
+          "Whether manual comparison is a recurring burden for a defined merchant group",
+          "Whether flags help distinguish ordinary attribution differences from tracking errors",
+          "Whether any merchant would pay for this review"
+        ]
+      },
+      "reason": "The source supplies a detailed manual export and comparison task, so a bounded experiment is assessed. Its provisional mean is 5.2, below six: the evidence is one instructional post, with no implementation reference, repeated customer demand, or supported live integration."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Prepare game-test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "The scoped CSV extraction and duplicate-review experiment scores 5.4 provisionally, below the unchanged threshold of 6; live phone intake, matching-field correctness, and buyer demand remain unresolved."
+    },
+    {
+      "title": "Compare daily Shopify purchase exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "reason": "The scoped export-comparison experiment scores 5.2 provisionally, below the unchanged threshold of 6; repeated customer need, buyer intent, and implementation support are not established."
+    },
+    {
+      "title": "Shopify custom-app development alongside Hydrogen",
+      "productUrl": "https://community.shopify.com/t/706376",
+      "reason": "The retained task span says the poster is building several kinds of custom apps, but does not state one specific manual chore or a bounded request to solve; choosing among attribution, B2B flows, and ERP sync would invent scope."
+    },
+    {
+      "title": "Sheetgraph complex-spreadsheet agent showcase",
+      "productUrl": "https://news.ycombinator.com/item?id=50293148",
+      "reason": "The only supplied excerpt says a full workbook is available for an agent to look up data. It does not identify a concrete task, problem, or requested service to assess."
+    },
+    {
+      "title": "Apgar agent-regression testing showcase",
+      "productUrl": "https://news.ycombinator.com/item?id=50292363",
+      "reason": "The post describes the builder's own financial-agent testing product and its purpose, rather than an independently stated buyer chore or request. It also overlaps the previously published Tessary idea in AI-agent operational monitoring and case investigation (post 0d455200b5ff2b5b39d4eac6)."
+    },
+    {
+      "title": "Bike-trainer streaks and points",
+      "productUrl": "https://news.ycombinator.com/item?id=50289659",
+      "reason": "The excerpt describes one person's exercise routine and motivation feature, not a specific manual business chore or professional customer need."
+    },
+    {
+      "title": "MCP versus built-in AI preference",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "The excerpt asks for a technology preference but identifies no concrete task, repeated problem, or request for a tool or service."
+    },
+    {
+      "title": "Copyright status of LLM output",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The excerpt states a general concern about licensing and rights but does not identify a concrete review task, inputs, or requested service; a proposed legal assessment workflow would exceed the evidence."
+    },
+    {
+      "title": "Reuse received images in Messenger replies",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "The native context describes a concrete one-off integration bug: an agent asks for an image that was already received. Recovery rules exclude one-off bug reports, and no implementation references support the required image handoff and analysis."
+    },
+    {
+      "title": "Prevent duplicate Shopify lead workflow runs",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "The task excerpt is a one-line report that missed schedule triggers can duplicate everything, without a concrete customer-facing workflow or specific duplicate fields. It is an operational bug report, not a sufficiently bounded chore."
+    }
+  ]
+}
