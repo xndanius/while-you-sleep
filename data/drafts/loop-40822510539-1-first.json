@@ -1,0 +1,467 @@
+{
+  "runId": "loop-40822510539-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T05:19:45Z",
+  "candidates": [
+    {
+      "title": "Prepare game-test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Exporting mobile game test logs from notes into Sheets without missed or repeated file processing.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "3ca170397cfed47225ad7211",
+        "5c2bf4e7df8c3ec325ba2e74"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied n8n docs describe scheduled Drive event checks and CSV-to-row extraction; phone upload timing and deduplication still need operator testing.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small game QA teams may pay for cleaner session logs; this one post shows a chore, not buying intent.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV review flow fits the documented extraction step; real formats, trigger behavior and duplicate keys remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Documented Drive polling can trigger on matching events and CSV extraction yields rows; a person must validate keys and import output.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe measured fields, a notes-to-CSV-to-Sheets habit and missed or repeated triggers; recurrence beyond this user is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review-ready table from a supplied game-test CSV, with duplicate rows flagged before import.",
+        "inputs": [
+          "Synthetic CSV with battery percentage",
+          "Synthetic CSV with device temperature",
+          "Synthetic CSV with frame drops and notes",
+          "Operator-selected duplicate key"
+        ],
+        "trigger": "A tester supplies an exported sample CSV for one session.",
+        "steps": [
+          "Extract CSV rows into structured fields.",
+          "Check required measurement columns.",
+          "Compare rows using the operator-selected key.",
+          "Flag repeated or incomplete rows.",
+          "Have a tester verify and import the reviewed table."
+        ],
+        "acceptanceCheck": "Run a labeled fictional CSV containing known complete, incomplete, and repeated rows; confirm extracted values match and only expected duplicates are flagged.",
+        "humanBoundary": "A tester chooses the deduplication key, reviews every flagged row, and imports approved data; phone triggers and live Google Sheets writes are outside this proposed test.",
+        "unverified": [
+          "Phone upload timing and trigger behavior remain unresolved.",
+          "The right duplicate key and real CSV formats are not supplied."
+        ]
+      },
+      "reason": "Concrete task with limited n8n implementation support; prior below-threshold decision is reassessed using current supplied references, but the unresolved live trigger and duplicate contract keep it below threshold."
+    },
+    {
+      "title": "Draft shipment delay notices from supplied rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Preparing a dispatcher alert when supplied shipment rows show a delay.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed, copy an order update into a CRM, alert a buyer when inventory drops, or send a daily report to a team channel."
+      },
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained example names a clear notification output, but no supplied building reference documents shipment intake or delivery.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small ecommerce operators may pay for faster delay notices; the post gives examples, not buyer intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional row-to-draft prototype is bounded, but event access, status rules and delivery are unsupported.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A sample rule can flag rows repeatedly, while a person must verify delay status and send the notice; no automation capability is documented.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The task span lists shipment delay notifications as an example, but does not show a specific operator case, frequency or implementation.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue of proposed delay notices from a supplied shipment CSV.",
+        "inputs": [
+          "Fictional shipment rows",
+          "Operator-provided delay threshold",
+          "Approved notice template"
+        ],
+        "trigger": "An operator uploads a sample shipment CSV for review.",
+        "steps": [
+          "Read the supplied fictional rows.",
+          "Flag rows meeting the operator threshold.",
+          "Fill a draft notice with supplied shipment fields.",
+          "Hold rows with missing or conflicting values.",
+          "Ask a person to approve each draft."
+        ],
+        "acceptanceCheck": "For labeled fictional rows, verify only the expected delayed rows are flagged and every draft field matches its input row.",
+        "humanBoundary": "The operator supplies the threshold and wording, reviews every notice, and sends it manually; no shipment system access or delivery is proposed.",
+        "unverified": [
+          "The source gives an example, not a buyer-specific recurring case.",
+          "Shipment data access and event timing are unverified.",
+          "No supplied reference supports message delivery."
+        ]
+      },
+      "reason": "The source gives an example chore but no implementation reference; the proposed CSV mock is assessable and remains below threshold."
+    },
+    {
+      "title": "Check weekly keyword metric rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "Preparing weekly keyword search volume, CPC and difficulty values as rows in Google Sheets.",
+        "evidenceQuote": "The schedule is Monday 9 am UTC and can be changed."
+      },
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained post describes a weekly schedule and row output, but no supplied implementation reference supports the actor or sheet connection.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small marketing consultants may pay for organized keyword metrics; this maker post does not establish buyers.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional row-checking prototype is small, while live Apify access, costs and Google account setup are unverified.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The post describes a weekly schedule in its existing flow, but the proposed student version has no supplied implementation support and needs review.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context describes weekly volume, CPC and difficulty rows and quotes actor pricing; this is one maker post, not independent demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet that checks supplied weekly keyword metric rows for missing values and duplicates.",
+        "inputs": [
+          "Fictional keyword list",
+          "Synthetic volume, CPC and difficulty values",
+          "Operator-selected duplicate key"
+        ],
+        "trigger": "An operator supplies a weekly sample export for review.",
+        "steps": [
+          "Load the supplied sample rows.",
+          "Check that each row has volume, CPC and difficulty fields.",
+          "Flag missing values and repeated keywords.",
+          "Keep source values unchanged in the output.",
+          "Have a person review flags before using the sheet."
+        ],
+        "acceptanceCheck": "On a labeled sample, confirm every missing field and repeated keyword is flagged while complete unique rows remain unchanged.",
+        "humanBoundary": "The operator supplies sample data and selects the duplicate key; they review all flagged rows. Live actor runs, accounts and actual metrics are outside scope.",
+        "unverified": [
+          "No supplied reference supports Apify execution or Google Sheets writes.",
+          "Actual source export shape is not shown in the retained task span."
+        ]
+      },
+      "reason": "A bounded weekly row-checking design follows the described output, but the provided post is maker evidence and implementation references are unavailable; below threshold."
+    },
+    {
+      "title": "Flag duplicate or missing records for review",
+      "productUrl": "https://community.make.com/t/118303",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ccf5a6a14f8320d9f96a4e55"
+        ],
+        "chore": "Reviewing a supplied automation export for duplicate or missing records before a person changes the workflow.",
+        "evidenceQuote": "Fixing scenarios that send duplicates or miss records"
+      },
+      "sourceIds": [
+        "ccf5a6a14f8320d9f96a4e55"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The offer names duplicate and missing records, but supplies no workflow example or implementation reference for a student build.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms may pay to reduce missed records; the post offers consulting but does not show a buyer request or payment.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic record comparison could be scoped, but expected fields and the actual failure mechanism are absent.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed output is a human-reviewed flag list; no detection mechanics are documented and repair remains manual.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post lists fixing duplicate or missed records among services, but no specific case, recurrence or customer evidence is retained.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table flagging repeated or incomplete rows in a supplied sample export.",
+        "inputs": [
+          "Synthetic records with operator-selected fields",
+          "Operator-selected unique key",
+          "Expected complete-row fields"
+        ],
+        "trigger": "A service provider supplies a small sample export and expected key.",
+        "steps": [
+          "Read the supplied sample rows.",
+          "Check required fields chosen by the operator.",
+          "Compare the operator-selected key.",
+          "Flag incomplete and repeated rows with reasons.",
+          "Have a person confirm each flag before editing a workflow."
+        ],
+        "acceptanceCheck": "Use labeled fictional rows with known repeats and omissions; confirm the output flags only those rows and preserves source values.",
+        "humanBoundary": "A person supplies field rules and the sample, confirms each finding, and makes any workflow change; no connector or automatic repair is proposed.",
+        "unverified": [
+          "The actual source workflow and failure cases are not shown.",
+          "Useful field rules and duplicate key require operator input.",
+          "No supplied implementation reference supports Make execution."
+        ]
+      },
+      "reason": "The listing identifies a concrete category of fault, so a limited synthetic review experiment is scored; absent case details and implementation support keep it below threshold."
+    },
+    {
+      "title": "Prepare form responses for a Sheets review",
+      "productUrl": "https://community.make.com/t/118274",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "47619eeb8a75939d683d967f"
+        ],
+        "chore": "Preparing a review table from operator-supplied form responses for a person to check before adding them to a sheet.",
+        "evidenceQuote": "Connecting Google Forms to Google Sheets"
+      },
+      "sourceIds": [
+        "47619eeb8a75939d683d967f"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The post names a familiar form-to-sheet task but supplies no building reference for Make or data transfer mechanics.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service providers may pay for setup help; this post advertises availability rather than documenting a buyer.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic response-to-table mock fits four weeks; field mapping and live connector behavior are unverified.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed table can be prepared repeatably, but a person must check and enter it; no implementation capability is supplied.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post offers help with form-to-sheet connections and lists practice tools, but gives no customer request, frequency or verified use.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table that maps supplied fictional form answers into operator-labeled columns.",
+        "inputs": [
+          "Fictional form responses",
+          "Operator-supplied destination column labels",
+          "Required-field list"
+        ],
+        "trigger": "An operator supplies one labeled sample response and destination labels.",
+        "steps": [
+          "Read the fictional response fields.",
+          "Map only fields with an operator-provided label.",
+          "Flag missing required answers.",
+          "Leave unmatched fields in a separate review column.",
+          "Have a person verify the table before entry."
+        ],
+        "acceptanceCheck": "Check a labeled sample with known missing and unmatched fields; confirm each maps or flags as expected and no values disappear.",
+        "humanBoundary": "The operator supplies labels, reviews every mapping, and enters approved values; no live Forms or Sheets access is proposed.",
+        "unverified": [
+          "No supplied reference documents Make connectors or mapping behavior.",
+          "Actual form schemas and the advertised practice workflow are not retained."
+        ]
+      },
+      "reason": "A concrete offered task supports a mock mapping experiment; implementation and buyer evidence are limited, so it remains below threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Advise on a freemium app monetization model",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "reason": "The retained request asks for conceptual help with monetization but supplies no app behavior, user group, pricing problem or concrete bounded task to design an experiment around; the prior refusal stands."
+    },
+    {
+      "title": "Find local news gaps across outlets",
+      "productUrl": "https://news.ycombinator.com/item?id=50281162",
+      "reason": "The post only says the author is building a tool to find stories not covered locally. It gives no concrete user workflow or examples, and the recent rejection found no new primary detail to change that assessment."
+    },
+    {
+      "title": "Turn rough sketches into wireframes",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "reason": "The request is concrete, but no supplied implementation reference supports image-to-wireframe conversion; the existing refusal already scoped this chore and found its proposed prototype far below threshold, with no new evidence supplied."
+    },
+    {
+      "title": "Prepare game-test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Draft shipment delay notices from supplied rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Check weekly keyword metric rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Flag duplicate or missing records for review",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Prepare form responses for a Sheets review",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight sealed discussion assignments. The scoped proposals remain below the 6-point mean threshold; no post is proposed."
+    }
+  ]
+}

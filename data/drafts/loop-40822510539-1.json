@@ -1,0 +1,546 @@
+{
+  "runId": "loop-40822510539-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T05:24:10.269935Z",
+  "candidates": [
+    {
+      "title": "Prepare game-test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Move phone-recorded game-test notes from CSV into Sheets without missed or duplicate file triggers.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "3ca170397cfed47225ad7211",
+        "5c2bf4e7df8c3ec325ba2e74"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied n8n docs describe scheduled Drive event checks and CSV-to-row extraction; phone upload timing and deduplication still need operator testing.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small game QA teams may pay for cleaner session logs; this one post shows a chore, not buying intent.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV review flow fits the documented extraction step; real formats, trigger behavior and duplicate keys remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Documented Drive polling can trigger on matching events and CSV extraction yields rows; a person must validate keys and import output.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe measured fields, a notes-to-CSV-to-Sheets habit and missed or repeated triggers; recurrence beyond this user is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed output for the specific task described in the post.",
+        "inputs": [
+          "Synthetic example input matching the task",
+          "Operator-approved fields and rules",
+          "Human reference answer for comparison"
+        ],
+        "trigger": "An operator supplies one synthetic example for review.",
+        "steps": [
+          "Read the supplied example.",
+          "Apply only the operator-approved fields and rules.",
+          "Prepare the proposed output.",
+          "Flag missing or ambiguous information.",
+          "Show the output beside its input.",
+          "Ask a person to check it before real use."
+        ],
+        "acceptanceCheck": "Compare a synthetic example with the human reference and verify each expected field and flag.",
+        "humanBoundary": "A person supplies inputs, sets rules and reviews every output before real-world use.",
+        "unverified": [
+          "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+        ]
+      },
+      "reason": "Concrete task with limited n8n implementation support; prior below-threshold decision is reassessed using current supplied references, but the unresolved live trigger and duplicate contract keep it below threshold."
+    },
+    {
+      "title": "Draft shipment delay notices from supplied rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Notify a dispatcher when a shipment is delayed.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed, copy an order update into a CRM, alert a buyer when inventory drops, or send a daily report to a team channel."
+      },
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained example names a clear notification output, but no supplied building reference documents shipment intake or delivery.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small ecommerce operators may pay for faster delay notices; the post gives examples, not buyer intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional row-to-draft prototype is bounded, but event access, status rules and delivery are unsupported.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A sample rule can flag rows repeatedly, while a person must verify delay status and send the notice; no automation capability is documented.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The task span lists shipment delay notifications as an example, but does not show a specific operator case, frequency or implementation.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed output for the specific task described in the post.",
+        "inputs": [
+          "Synthetic example input matching the task",
+          "Operator-approved fields and rules",
+          "Human reference answer for comparison"
+        ],
+        "trigger": "An operator supplies one synthetic example for review.",
+        "steps": [
+          "Read the supplied example.",
+          "Apply only the operator-approved fields and rules.",
+          "Prepare the proposed output.",
+          "Flag missing or ambiguous information.",
+          "Show the output beside its input.",
+          "Ask a person to check it before real use."
+        ],
+        "acceptanceCheck": "Compare a synthetic example with the human reference and verify each expected field and flag.",
+        "humanBoundary": "A person supplies inputs, sets rules and reviews every output before real-world use.",
+        "unverified": [
+          "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+        ]
+      },
+      "reason": "The source gives an example chore but no implementation reference; the proposed CSV mock is assessable and remains below threshold."
+    },
+    {
+      "title": "Check weekly keyword metric rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "Perform the specific manual task described in the attached discussion.",
+        "evidenceQuote": "The schedule is Monday 9 am UTC and can be changed."
+      },
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained post describes a weekly schedule and row output, but no supplied implementation reference supports the actor or sheet connection.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small marketing consultants may pay for organized keyword metrics; this maker post does not establish buyers.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional row-checking prototype is small, while live Apify access, costs and Google account setup are unverified.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The post describes a weekly schedule in its existing flow, but the proposed student version has no supplied implementation support and needs review.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context describes weekly volume, CPC and difficulty rows and quotes actor pricing; this is one maker post, not independent demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed output for the specific task described in the post.",
+        "inputs": [
+          "Synthetic example input matching the task",
+          "Operator-approved fields and rules",
+          "Human reference answer for comparison"
+        ],
+        "trigger": "An operator supplies one synthetic example for review.",
+        "steps": [
+          "Read the supplied example.",
+          "Apply only the operator-approved fields and rules.",
+          "Prepare the proposed output.",
+          "Flag missing or ambiguous information.",
+          "Show the output beside its input.",
+          "Ask a person to check it before real use."
+        ],
+        "acceptanceCheck": "Compare a synthetic example with the human reference and verify each expected field and flag.",
+        "humanBoundary": "A person supplies inputs, sets rules and reviews every output before real-world use.",
+        "unverified": [
+          "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+        ]
+      },
+      "reason": "A bounded weekly row-checking design follows the described output, but the provided post is maker evidence and implementation references are unavailable; below threshold."
+    },
+    {
+      "title": "Flag duplicate or missing records for review",
+      "productUrl": "https://community.make.com/t/118303",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ccf5a6a14f8320d9f96a4e55"
+        ],
+        "chore": "Identify and fix duplicate or missed records in business workflows.",
+        "evidenceQuote": "Before building, I spent 3 years in international live chat support, so I design bots around real customer conversations."
+      },
+      "sourceIds": [
+        "ccf5a6a14f8320d9f96a4e55"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The offer names duplicate and missing records, but supplies no workflow example or implementation reference for a student build.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms may pay to reduce missed records; the post offers consulting but does not show a buyer request or payment.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic record comparison could be scoped, but expected fields and the actual failure mechanism are absent.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed output is a human-reviewed flag list; no detection mechanics are documented and repair remains manual.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post lists fixing duplicate or missed records among services, but no specific case, recurrence or customer evidence is retained.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed output for the specific task described in the post.",
+        "inputs": [
+          "Synthetic example input matching the task",
+          "Operator-approved fields and rules",
+          "Human reference answer for comparison"
+        ],
+        "trigger": "An operator supplies one synthetic example for review.",
+        "steps": [
+          "Read the supplied example.",
+          "Apply only the operator-approved fields and rules.",
+          "Prepare the proposed output.",
+          "Flag missing or ambiguous information.",
+          "Show the output beside its input.",
+          "Ask a person to check it before real use."
+        ],
+        "acceptanceCheck": "Compare a synthetic example with the human reference and verify each expected field and flag.",
+        "humanBoundary": "A person supplies inputs, sets rules and reviews every output before real-world use.",
+        "unverified": [
+          "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+        ]
+      },
+      "reason": "The listing identifies a concrete category of fault, so a limited synthetic review experiment is scored; absent case details and implementation support keep it below threshold."
+    },
+    {
+      "title": "Prepare form responses for a Sheets review",
+      "productUrl": "https://community.make.com/t/118274",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "47619eeb8a75939d683d967f"
+        ],
+        "chore": "Connect Google Forms responses to Google Sheets.",
+        "evidenceQuote": "I’m learning and building practical automations with Make.com , and I’m available to help with small, clearly defined automation tasks."
+      },
+      "sourceIds": [
+        "47619eeb8a75939d683d967f"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The post names a familiar form-to-sheet task but supplies no building reference for Make or data transfer mechanics.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service providers may pay for setup help; this post advertises availability rather than documenting a buyer.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic response-to-table mock fits four weeks; field mapping and live connector behavior are unverified.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed table can be prepared repeatably, but a person must check and enter it; no implementation capability is supplied.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post offers help with form-to-sheet connections and lists practice tools, but gives no customer request, frequency or verified use.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed output for the specific task described in the post.",
+        "inputs": [
+          "Synthetic example input matching the task",
+          "Operator-approved fields and rules",
+          "Human reference answer for comparison"
+        ],
+        "trigger": "An operator supplies one synthetic example for review.",
+        "steps": [
+          "Read the supplied example.",
+          "Apply only the operator-approved fields and rules.",
+          "Prepare the proposed output.",
+          "Flag missing or ambiguous information.",
+          "Show the output beside its input.",
+          "Ask a person to check it before real use."
+        ],
+        "acceptanceCheck": "Compare a synthetic example with the human reference and verify each expected field and flag.",
+        "humanBoundary": "A person supplies inputs, sets rules and reviews every output before real-world use.",
+        "unverified": [
+          "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+        ]
+      },
+      "reason": "A concrete offered task supports a mock mapping experiment; implementation and buyer evidence are limited, so it remains below threshold."
+    },
+    {
+      "title": "Turn rough sketches into wireframes",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "sourceIds": [
+        "cec38822f97e088e1e5fc5a2"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "cec38822f97e088e1e5fc5a2"
+        ],
+        "chore": "Translate rough iPad sketches into higher-fidelity wireframes or illustrations.",
+        "evidenceQuote": "I’ve been looking for a tool that can translate rough sketches on my iPad to higher fidelity wireframes or illustrations in near real time."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet with a proposed wireframe draft beside each supplied rough sketch.",
+        "inputs": [
+          "Operator-supplied synthetic rough sketch",
+          "Short description of intended screen purpose",
+          "Chosen image transformation tool operated by the student",
+          "Human-written checklist of visible elements"
+        ],
+        "trigger": "An operator selects one sketch for a supervised prototype run.",
+        "steps": [
+          "Record the sketch and intended purpose.",
+          "Ask a person to define required visible elements.",
+          "Try one transformation using a chosen tool.",
+          "Place the output beside the input and checklist.",
+          "Have a person mark preserved, changed and missing elements.",
+          "Save the comparison for review, not production use."
+        ],
+        "acceptanceCheck": "On three synthetic sketches, compare output with the checklist and verify changed or missing elements are visible for review.",
+        "humanBoundary": "A person supplies rights-cleared sketches, operates the tool, checks fidelity and approves any output before use.",
+        "unverified": [
+          "No supplied reference documents sketch-to-wireframe generation, integration, fidelity or repeatable image processing; the core capability remains unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A person can compare supplied sketches, but no supplied implementation reference supports image transformation.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent designers or small design studios may pay for faster sketch refinement; this request proves neither buyer interest nor payment.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A supervised comparison prototype is bounded, but its core image transformation and fidelity remain unverified.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Transformation quality, integration and repeatable processing are unsupported; a person must review every result.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh request states a specific sketch transformation need, but gives no frequency, workflow detail or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        }
+      },
+      "reason": "Below the 6-point threshold: no supplied implementation evidence supports the core transformation."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Advise on a freemium app monetization model",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "reason": "The retained request asks for conceptual help with monetization but supplies no app behavior, user group, pricing problem or concrete bounded task to design an experiment around; the prior refusal stands."
+    },
+    {
+      "title": "Find local news gaps across outlets",
+      "productUrl": "https://news.ycombinator.com/item?id=50281162",
+      "reason": "The post only says the author is building a tool to find stories not covered locally. It gives no concrete user workflow or examples, and the recent rejection found no new primary detail to change that assessment."
+    },
+    {
+      "title": "Prepare game-test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Draft shipment delay notices from supplied rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Check weekly keyword metric rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Flag duplicate or missing records for review",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Prepare form responses for a Sheets review",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "Below the 6-point threshold on its five provisional criteria; see the scored candidate and proposed experiment plan. No post proposed."
+    },
+    {
+      "title": "Turn rough sketches into wireframes",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "reason": "Below the 6-point threshold on five provisional scores: no supplied reference supports the core transformation, making this experiment too uncertain to propose."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight sealed discussion assignments. The scoped proposals remain below the 6-point mean threshold; no post is proposed."
+    }
+  ],
+  "repairAttempt": 1
+}
