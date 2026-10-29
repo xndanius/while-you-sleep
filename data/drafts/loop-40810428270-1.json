@@ -1,0 +1,295 @@
+{
+  "runId": "loop-40810428270-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T03:11:13.434Z",
+  "candidates": [
+    {
+      "title": "Map recurring job alerts into a daily Slack list",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "84dd42b26c54d12b4f52a07c"
+        ],
+        "chore": "Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack.",
+        "evidenceQuote": "Sharing a simple pattern I use for tracking hiring at target companies. Workflow: Schedule Trigger (daily) → Apify node (“Run an Actor and get dataset”) → IF item count > 0 → Slack. In the Apify node, run the Actor birch"
+      },
+      "sourceIds": [
+        "84dd42b26c54d12b4f52a07c",
+        "02eb5e542dc08527b0ee2cd8"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A daily digest of new job listings from a short operator supplied company and role list.",
+        "inputs": [
+          "Synthetic company names and role keywords",
+          "Synthetic job listing records with title, location and URL",
+          "Operator supplied target list"
+        ],
+        "trigger": "At a scheduled daily run or when an operator supplies a sample listing batch.",
+        "steps": [
+          "Read the target company and role list supplied by the operator.",
+          "Collect or accept sample listings from explicitly permitted sources.",
+          "Filter listings against the supplied targets.",
+          "Count matches and format title, location and URL.",
+          "Send a draft digest to a test Slack channel for human review."
+        ],
+        "acceptanceCheck": "Given a fixed synthetic list and listing set, every matching listing appears once with its title, location and URL, and nonmatches are omitted.",
+        "humanBoundary": "An operator supplies target companies, confirms permitted sources and reviews links before acting; do not scrape restricted services or represent listings as verified.",
+        "unverified": [
+          "Live access and permission for each job source",
+          "Actor reliability and deduplication on real listings",
+          "Slack delivery credentials and operating cost",
+          "Buyer willingness to pay"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The documented daily flow and n8n count operation make a bounded mock plausible; beginner access to permitted listing sources and delivery remains unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "profit": {
+            "value": 5,
+            "reason": "Hypothesis: small recruiting consultancies may pay for a daily shortlist; the maker post reports no buyer or payment.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can use operator supplied sample listings and the documented daily flow; reliable site access and alert quality remain unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c",
+              "02eb5e542dc08527b0ee2cd8"
+            ]
+          },
+          "autonomy": {
+            "value": 6,
+            "reason": "The post documents a repeatable daily listing-to-Slack loop; a person must choose target companies and verify listings, while scraper reliability is unverified.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe daily target-company hiring alerts and fields sent to Slack; this is one maker demonstration, not independent evidence of repeated buyer demand.",
+            "sourceIds": [
+              "84dd42b26c54d12b4f52a07c"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed the proposed daily listing digest; checker-supported maximum scores average 5.8, below the threshold, so the post is withdrawn."
+    },
+    {
+      "title": "Prepare resume details for repeated application forms",
+      "productUrl": "https://news.ycombinator.com/item?id=50254751",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "bb41e49c777b7f2a0ce9505b"
+        ],
+        "chore": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies.",
+        "evidenceQuote": "I spent two hours every day filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies."
+      },
+      "sourceIds": [
+        "bb41e49c777b7f2a0ce9505b",
+        "b100f221383c5b74ce29f37b"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet mapping supplied resume facts to fields in a manually supplied application form.",
+        "inputs": [
+          "Synthetic resume facts",
+          "Synthetic application questions",
+          "Operator supplied field labels"
+        ],
+        "trigger": "When an operator pastes a new form’s questions and a fictional resume profile.",
+        "steps": [
+          "Extract the stated fields from the form questions.",
+          "Match each field to a supplied resume fact.",
+          "Mark missing or ambiguous values for review.",
+          "Show proposed answers in a review sheet.",
+          "Have a person correct and manually submit approved answers."
+        ],
+        "acceptanceCheck": "On a fixed fictional profile and field list, each proposed answer matches its source fact and every unsupported or ambiguous field is left blank and flagged.",
+        "humanBoundary": "A person supplies fictional or authorized data, checks each mapping and submits forms; never auto-submit or handle real applicant records in the prototype.",
+        "unverified": [
+          "Real form layouts and field wording",
+          "Accuracy across varied forms",
+          "Privacy and consent requirements",
+          "No browser interaction or automatic submission is documented"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can map supplied resume facts to operator supplied fields; Information Extractor docs support structured extraction, not browser form filling.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: job seekers may pay to reduce repeated entry; the post describes one person’s task and no purchase intent.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic prototype can extract values into a review sheet; company forms, sensitive-data handling and live submission remain out of scope.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Structured extraction from supplied text is documented, but there is no form-filling capability; a person must verify every value and submit it.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b",
+              "b100f221383c5b74ce29f37b"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post states a daily two-hour resume-entry chore for forms tailored to one or two companies; wider recurrence and demand are uncorroborated.",
+            "sourceIds": [
+              "bb41e49c777b7f2a0ce9505b"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore scoped as draft-only, but the provisional mean is below six and no user demand or form-filling implementation is established."
+    },
+    {
+      "title": "Draft a recovery checklist for failed agent runs",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human reviewed checklist of recovery questions for a failed synthetic agent run.",
+        "inputs": [
+          "Synthetic run log",
+          "Operator supplied list of side effects",
+          "Operator supplied recovery policy"
+        ],
+        "trigger": "When a test agent run reports a failure in a synthetic exercise.",
+        "steps": [
+          "Summarize the failure from the supplied test log.",
+          "List completed and possibly repeated actions.",
+          "Flag missing checkpoint or idempotency information.",
+          "Draft questions for an engineer to answer.",
+          "Require engineer approval before any retry or recovery."
+        ],
+        "acceptanceCheck": "For sample logs with known completed actions, the checklist identifies those actions and flags unknown state without recommending an automatic retry.",
+        "humanBoundary": "An engineer defines recovery policy, reviews the checklist and authorizes any retry; the prototype does not execute or resume agents.",
+        "unverified": [
+          "Agent framework and log formats",
+          "Checkpoint semantics and durable state",
+          "Safe handling of side effects",
+          "Any recovery execution capability"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can turn synthetic run notes into a checklist; no recovery implementation reference is supplied.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: agent-development consultancies may pay for recovery planning; the discussion shows no purchase intent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A checklist mock is bounded, but agent types, retry rules and safe recovery behavior are unspecified.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "Only a human reviewed checklist is supportable; no automated checkpoint, retry or idempotency capability is documented.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post names checkpointers, recovery logic and idempotency, but supplies no examples, constraints or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Explicitly assessed; under threshold because the post names an unspecific problem and no implementation evidence exists."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Show HN: Gitby",
+      "productUrl": "https://news.ycombinator.com/item?id=50278264",
+      "reason": "The supplied text only calls Gitby “A convenient git management tool”; it identifies no concrete chore, user task or bounded experiment input. Do not infer feature needs from the product label."
+    },
+    {
+      "title": "Show HN: Fan of Sleep – a white noise fan you can play in the browser",
+      "productUrl": "https://news.ycombinator.com/item?id=50276263",
+      "reason": "The source describes a white-noise app and a personal sleep preference, not a business chore or request for a paid service. An AI proposal would require inventing a task."
+    },
+    {
+      "title": "Show HN: Interview your analysts instead of auto-generating a semantic layer",
+      "productUrl": "https://news.ycombinator.com/item?id=50274358",
+      "reason": "The retained excerpt says data agents need context but does not identify a specific repeated task or output. No bounded experiment can be grounded in the supplied text."
+    },
+    {
+      "title": "URGENT - Cloud restore request: all workflows deleted on lareseria.app.n8n.cloud",
+      "productUrl": "https://community.n8n.io/t/325020",
+      "reason": "This is a one-off accidental deletion and service outage. The retained spans document the incident, not a repeated recovery task; proposing a service would invent ongoing demand and could imply unsafe production access."
+    },
+    {
+      "title": "Map recurring job alerts into a daily Slack list",
+      "productUrl": "https://community.n8n.io/t/325067",
+      "reason": "The fresh source supports a proposed daily listing-digest experiment, but the evidence-supported five-criterion mean is 5.8 after lowering ease to the checker-supported maximum of 6; it does not meet the threshold."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all seven sealed forum assignments. On the single repair target, lowered ease from 7 to the checker-supported maximum of 6; the supported mean is 5.8, so withdrew that post and recorded its below-threshold rejection. Preserved the other scored candidate assessments and four explicit exclusions."
+    }
+  ],
+  "repairAttempt": 1
+}
