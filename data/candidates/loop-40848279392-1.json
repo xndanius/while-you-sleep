@@ -1,0 +1,672 @@
+{
+  "runId": "loop-40848279392-1",
+  "createdAt": "2026-10-29T09:17:22.127Z",
+  "candidates": [
+    {
+      "title": "Prepare mobile game test logs for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "5c2bf4e7df8c3ec325ba2e74",
+        "f1662b0ceb942474f83a8108"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Transfer phone-captured game-test notes and CSV rows into a Google Sheet, while preventing missed or duplicate file processing.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed table of game-test measurements with duplicate rows flagged.",
+        "inputs": [
+          "Synthetic game-test CSV rows with battery, temperature, frame-drop and note fields",
+          "Operator-supplied expected row count and duplicate key",
+          "Human reference table for comparison"
+        ],
+        "trigger": "An operator supplies a synthetic CSV file or a sample row set for one test session.",
+        "steps": [
+          "Extract CSV rows into structured records using the documented n8n CSV node.",
+          "Check required fields and flag incomplete rows.",
+          "Compare a chosen operator-defined key to identify repeated records.",
+          "Show the proposed table and flagged rows beside the input.",
+          "Ask a person to verify the result before any sheet entry."
+        ],
+        "acceptanceCheck": "On a fixed synthetic file, confirm each expected row is represented once and every intentionally repeated key is flagged.",
+        "humanBoundary": "A person supplies test data, chooses the row key, verifies flagged records and performs any real upload or sheet write.",
+        "unverified": [
+          "The supplied references document CSV extraction and deduplication capabilities, not phone upload triggers, Google Drive watching, n8n execution or Sheets writes.",
+          "Whether game testers beyond this post repeat this chore or would pay is unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "n8n documentation supports CSV row extraction and duplicate comparison; phone and Sheets connections remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent mobile game testers may pay to reduce log transfer work; this post shows no buying intent.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV review prototype fits the documented extraction and deduplication operations; live file flow is unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Extraction and duplicate checks can repeat on supplied rows, but the docs do not establish triggers or sheet writes and a person reviews exceptions.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe phone notes, later CSV transfer and missed or duplicate triggers; demand beyond this post is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: useful parsing and duplicate checks are documented, but live trigger and sheet behavior and willingness to pay remain unverified."
+    },
+    {
+      "title": "Compare freemium app pricing options",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "sourceIds": [
+        "5199855c5ba743dbb8eb718d"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "5199855c5ba743dbb8eb718d"
+        ],
+        "chore": "Get conceptual help choosing a monetization model for a freemium app.",
+        "evidenceQuote": "looking for some conceptual help with one of my freemium apps."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short comparison of three operator-defined monetization options and their tradeoffs.",
+        "inputs": [
+          "Operator-supplied fictional app description",
+          "Current free and paid feature list",
+          "Operator-selected constraints such as audience and support capacity"
+        ],
+        "trigger": "An app maker supplies a short description and asks for a structured option comparison.",
+        "steps": [
+          "Restate the supplied app and constraints.",
+          "List three possible models using only operator-provided facts.",
+          "Compare each option on complexity, user impact and assumptions.",
+          "Flag missing information and unsupported market claims.",
+          "Have the maker review the options before making a product change."
+        ],
+        "acceptanceCheck": "For a synthetic app brief, verify each option follows the supplied constraints and clearly labels assumptions rather than asserting likely revenue.",
+        "humanBoundary": "The maker supplies accurate context, checks market assumptions and makes all pricing or product decisions.",
+        "unverified": [
+          "The post does not describe the app, its audience, current plan or specific decision.",
+          "No supplied reference documents a suitable implementation or validates any pricing outcome."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A text-only comparison can be sketched from supplied inputs, but the post gives no app details and no implementation reference is supplied.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: app makers may pay for monetization advice, but this single request establishes neither a buyer group nor payment.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prompt-and-review prototype is bounded, while useful recommendations cannot be checked against the unspecified app or market.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A comparison can be drafted repeatedly from supplied briefs, but a person must validate assumptions and decide any changes.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The short post asks for conceptual monetization help but omits the app context and specific model question.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the request is real but too underspecified to test whether model suggestions fit the app or its customers."
+    },
+    {
+      "title": "Turn Linux app feedback into UI review cards",
+      "productUrl": "https://news.ycombinator.com/item?id=50284998",
+      "sourceIds": [
+        "53e34af32b76b55950bb2735"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "53e34af32b76b55950bb2735"
+        ],
+        "chore": "Collect outside help and feedback to improve the early Linux iCloud Drive client interface.",
+        "evidenceQuote": "its super early, and if anyone wants to help improve the UI, please help!"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A prioritized review card listing one interface issue, its observed impact and a proposed question for the maker.",
+        "inputs": [
+          "Operator-supplied fictional UI feedback notes",
+          "A screenshot description written without personal data",
+          "Maker-defined interface goals"
+        ],
+        "trigger": "The maker supplies one batch of feedback notes for a review.",
+        "steps": [
+          "Group notes that describe the same interface friction.",
+          "Separate observed behavior from suggested solutions.",
+          "Draft a concise review card with the evidence and an open question.",
+          "Flag conflicting or unclear feedback.",
+          "Ask the maker to verify the card before changing the interface."
+        ],
+        "acceptanceCheck": "For synthetic notes with known duplicate and conflicting items, verify the output groups only matching issues and preserves the original observations.",
+        "humanBoundary": "A person supplies feedback, confirms whether it reflects actual UI behavior and decides what to change.",
+        "unverified": [
+          "The post does not name a specific UI problem, user group or repeated review workflow.",
+          "No supplied reference documents feedback grouping or image understanding."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A text-only feedback card can be mocked, but no specific interface task or implementation reference is supplied.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small Linux software makers may pay for feedback organization; the post only requests volunteer help and proves no payment.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic text-feedback review is bounded, but usefulness cannot be tested against a named UI problem or verified user observations.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Grouping notes can repeat, but people must validate observations and choose interface changes.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post identifies an early client and asks for UI help, without stating a concrete interface defect or recurring process.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the call for UI help lacks a specific interface problem, so a useful review output would be largely invented."
+    },
+    {
+      "title": "Draft a cross-outlet local news gap list",
+      "productUrl": "https://news.ycombinator.com/item?id=50281162",
+      "sourceIds": [
+        "887ad565ba2d9b051abb976b"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "887ad565ba2d9b051abb976b"
+        ],
+        "chore": "Identify stories covered abroad but not yet picked up by outlets in a target country.",
+        "evidenceQuote": "Building a tool to see what is yet not picked up by the outlets in your own country."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed list of candidate stories present in supplied foreign-source links but absent from a supplied local-source list.",
+        "inputs": [
+          "Operator-supplied sample foreign headlines and URLs",
+          "Operator-supplied local outlet headlines and URLs",
+          "Target country and date window chosen by the operator"
+        ],
+        "trigger": "An operator supplies two small sample headline lists for a defined date window.",
+        "steps": [
+          "Normalize supplied headline text and dates.",
+          "Compare the lists for likely topic matches.",
+          "Draft candidate unmatched items with their supplied links.",
+          "Flag ambiguous matches for manual review.",
+          "Have an editor verify coverage before using the list."
+        ],
+        "acceptanceCheck": "On a synthetic set with known matching and unmatched stories, confirm the comparison flags the expected items and preserves each supplied link.",
+        "humanBoundary": "An editor chooses permitted sources, verifies every match and decides whether an item is actually missing or newsworthy.",
+        "unverified": [
+          "The post does not identify a buyer, target country, source set, accuracy need or repeated editorial workflow.",
+          "No supplied reference documents news acquisition, matching quality or current outlet coverage."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A supplied-headline comparison can be mocked, but no source-selection or matching reference is provided.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: local publishers may pay for coverage-gap research, but the post establishes no customer request or payment.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A small synthetic comparison is possible, while reliable current coverage and cross-language matching are unverified.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A comparison can produce candidates, but an editor must verify coverage and newsworthiness.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a tool goal about stories not picked up locally, but supplies no detailed workflow or buyer evidence.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: a mock comparison is possible, but the sources and editorial need are not specified or corroborated."
+    },
+    {
+      "title": "Draft logistics event alerts from sample rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Notify a dispatcher about delayed shipments and send a daily logistics report from event data.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed, copy an order update into a CRM, alert a buyer when inventory drops, or send a daily report to a team channel."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft delay alert and daily exception summary generated from synthetic shipment rows.",
+        "inputs": [
+          "Synthetic shipment ID, promised time and current status",
+          "Operator-defined delay threshold",
+          "Human reference list of expected exceptions"
+        ],
+        "trigger": "An operator supplies one synthetic shipment update or a batch of sample rows.",
+        "steps": [
+          "Check rows for missing status or promised-time fields.",
+          "Compare supplied times against the operator threshold.",
+          "Draft alerts for candidate delays and summarize the remaining rows.",
+          "Flag ambiguous or inconsistent records.",
+          "Ask a dispatcher to verify before any real notification."
+        ],
+        "acceptanceCheck": "On a synthetic table containing known delayed, on-time and incomplete rows, verify the alert list matches the operator reference exactly.",
+        "humanBoundary": "A person defines business rules, checks shipment state and approves all real alerts; no operational system is connected.",
+        "unverified": [
+          "The post gives examples rather than a confirmed buyer workflow, input schema or frequency.",
+          "No supplied reference documents logistics connectors, live event intake or notification delivery."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A sample-row alert draft is straightforward to outline, but the source provides examples and no implementation reference.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small logistics operators may pay for clearer exception alerts; this example does not establish buying intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic alert mock is bounded, while event access and correct business thresholds remain unverified.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed row-to-alert loop is repeatable, but people must verify shipment state and approve notifications.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained task span lists delayed-shipment alerts and daily reporting as examples; it does not establish frequency or a buyer.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the source gives example tasks, but no concrete customer workflow or supplied implementation reference supports live operation."
+    },
+    {
+      "title": "Reconcile ad and Shopify daily totals",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceIds": [
+        "accc79f9c0afdef41b9f38d1"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "accc79f9c0afdef41b9f38d1"
+        ],
+        "chore": "Export matching 30-day daily purchase and order totals, then inspect discrepancies between ad attribution and store records.",
+        "evidenceQuote": "In Shopify, export daily orders for the same 30 days, Online Store channel only, without test and cancelled orders."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed day-by-day comparison table with large differences flagged for investigation.",
+        "inputs": [
+          "Synthetic daily ad purchase totals",
+          "Synthetic daily Shopify online-store order totals",
+          "Operator-supplied date range and exclusion rules"
+        ],
+        "trigger": "An operator supplies the two aligned daily export tables for a completed period.",
+        "steps": [
+          "Check date alignment and missing days.",
+          "Apply the supplied exclusions to the store rows.",
+          "Compare the two daily totals and calculate differences.",
+          "Flag unusual differences for investigation without assigning a cause.",
+          "Have a store operator verify each flag against tracking settings."
+        ],
+        "acceptanceCheck": "For synthetic tables with known dates, exclusions and differences, verify the comparison retains the specified dates and flags the expected rows.",
+        "humanBoundary": "A person exports data, verifies filters, investigates tracking and decides any configuration changes; the prototype handles fictional inputs only.",
+        "unverified": [
+          "No supplied reference documents Shopify or Ads Manager export access or calculation mechanics.",
+          "The post is an instructional comparison and does not establish a reader asking for paid help."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A spreadsheet mock can compare supplied daily totals, but no implementation reference supports either export or reliable attribution.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: ecommerce operators may pay for reconciliation, but this instructional post does not establish a customer request or payment.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fictional table comparison is bounded; real exports and causal interpretation remain outside the evidence.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Date checks and differences can repeat on supplied tables, but a person must investigate discrepancies and any tracking changes.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained task and context specify aligned exports, exclusions and examples of potential tracking duplication; actual demand is unverified.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the task is detailed enough for a synthetic comparison, but the post is instructional and live export support is absent."
+    },
+    {
+      "title": "Review weekly keyword metric rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "Collect weekly Google keyword search volume, CPC and difficulty into rows in Google Sheets.",
+        "evidenceQuote": "adds each keyword’s Google search volume, CPC and difficulty as rows in Google Sheets."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed weekly table of keyword metrics with missing or duplicate rows flagged.",
+        "inputs": [
+          "Synthetic keyword list",
+          "Synthetic search-volume, CPC and difficulty values",
+          "Operator-defined week label and unique keyword key"
+        ],
+        "trigger": "An operator supplies a weekly batch of keyword metrics for review.",
+        "steps": [
+          "Check every row has a keyword, week and three metric fields.",
+          "Flag missing values and repeated keyword-week keys.",
+          "Arrange valid rows into the proposed sheet columns.",
+          "Summarize exceptions for the operator.",
+          "Ask a person to verify results before any real sheet update."
+        ],
+        "acceptanceCheck": "On a synthetic batch with known missing and duplicate rows, verify only the expected rows are flagged and all other values are preserved.",
+        "humanBoundary": "A person supplies keyword data, validates the provider values and performs any real account or sheet connection.",
+        "unverified": [
+          "The post describes its maker’s existing workflow, not a distinct buyer request or independently repeated customer need.",
+          "No supplied reference documents keyword retrieval or Google Sheets writing."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A row-review mock is bounded, but the post provides no implementation reference for keyword retrieval or Sheets writes.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small marketing consultants may pay for weekly keyword reporting; the maker post establishes no customer demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic row checker is possible, but the proposed service would not reproduce the demonstrated external metric retrieval.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A mock can flag table exceptions, but a person must obtain and validate the actual metrics.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes weekly metric fields and a schedule in an existing maker workflow, not independent customer demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the described output is specific, but the source is a maker’s workflow and supplied evidence does not support metric retrieval or customer demand."
+    },
+    {
+      "title": "Review duplicate or missing workflow records",
+      "productUrl": "https://community.make.com/t/118303",
+      "sourceIds": [
+        "ccf5a6a14f8320d9f96a4e55"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ccf5a6a14f8320d9f96a4e55"
+        ],
+        "chore": "Review automation scenarios that send duplicate records or miss records, then suggest a fix for the supplied case.",
+        "evidenceQuote": "Fixing scenarios that send duplicates or miss records"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table that flags duplicate keys and expected records missing from an operator-supplied sample, with a suggested next check.",
+        "inputs": [
+          "Synthetic expected-record rows with operator-chosen unique keys",
+          "Synthetic records emitted by a sample workflow",
+          "Operator notes describing the intended matching rule"
+        ],
+        "trigger": "An operator submits one expected-versus-actual sample set after noticing duplicate or missing records.",
+        "steps": [
+          "Ask the operator to define the record key and expected row set.",
+          "Compare supplied actual rows with the expected rows using that key.",
+          "List repeated keys and expected keys with no matching actual row.",
+          "Draft a short review note with the rows and a possible next diagnostic check.",
+          "Have the operator verify the comparison and choose any workflow change."
+        ],
+        "acceptanceCheck": "On a small synthetic set with known repeated and omitted keys, verify that every known duplicate and missing key is flagged and no other key is labeled as an error.",
+        "humanBoundary": "A person supplies correct expected rows and matching rules, checks whether a flagged row is truly wrong, investigates the workflow cause and authorizes any production edit.",
+        "unverified": [
+          "No supplied implementation reference supports Make execution, cross-run state, root-cause diagnosis or automatic repair for this assignment.",
+          "The listing does not give record fields, a specific failure case, recurrence or evidence that buyers request this service."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A spreadsheet-style synthetic comparison is definable, but no attached implementation reference supports the workflow mechanics or Make execution.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small professional service firms may pay for record-fault review; this listing does not establish a buyer request or payment.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test on supplied expected and actual rows is bounded; actual scenario fields and failure causes remain unknown.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A comparison can flag synthetic mismatches, but a person must supply rules, diagnose causes and authorize fixes; execution is undocumented.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained span explicitly lists fixing scenarios that send duplicates or miss records, but gives no case detail or recurring need.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the listing names a concrete record-fault service, but no case details or assigned implementation reference supports diagnosis or repair; buyers and recurrence are unverified."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Explore how app reviewers might change outcomes",
+      "productUrl": "https://news.ycombinator.com/item?id=50286034",
+      "reason": "Explicit evidence-based exclusion: the retained excerpt says stories are invented and asks about changing outcomes, but supplies no defined task or business chore to adapt without inventing duty."
+    },
+    {
+      "title": "Get advice on the Shopify app review process",
+      "productUrl": "https://community.shopify.com/t/705837",
+      "reason": "Explicit evidence-based exclusion: the supplied excerpt only asks for advice about the review process and identifies no concrete review task, inputs or desired output."
+    },
+    {
+      "title": "Review duplicate or missing workflow records",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "Below threshold after reassessment: the retained listing names fixing duplicate or missed records, so a synthetic comparison was scored. No case details or implementation reference supports diagnosis or repair, and buying intent and recurrence are unverified."
+    }
+  ]
+}
