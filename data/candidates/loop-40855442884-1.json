@@ -1,0 +1,219 @@
+{
+  "runId": "loop-40855442884-1",
+  "createdAt": "2026-10-29T10:11:59.951Z",
+  "candidates": [
+    {
+      "title": "Use a received product image once",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Pass an already received customer image and its message together to an AI agent so it can identify the product without asking for the image again.",
+        "evidenceQuote": "I want the AI agent to recognize that the image has already been received and use the available image to identify the product, rather than asking the customer to resend it"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable product description and a note saying whether the supplied message and image were both used.",
+        "inputs": [
+          "Fictional customer message",
+          "Synthetic product image",
+          "Expected product category"
+        ],
+        "trigger": "An operator submits one fictional message paired with one synthetic image.",
+        "steps": [
+          "Pair the message with its existing image in one test record.",
+          "Send both inputs to a vision model in a sandbox.",
+          "Ask for a short product description and uncertainty note.",
+          "Compare the output with a hand-written expected category.",
+          "Record whether the test incorrectly asks for the image again."
+        ],
+        "acceptanceCheck": "For each of five fictional message-image pairs, compare the result with the expected category and flag any request to resend an image.",
+        "humanBoundary": "An operator supplies synthetic examples, checks image rights, reviews every output, and handles real customer conversations manually.",
+        "unverified": [
+          "No supplied implementation reference documents image/message routing or Make execution.",
+          "Vision model access, image handling, accuracy and customer willingness to pay are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A small sandbox test can use paired examples, but no implementation reference is supplied.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: ecommerce support providers may pay to avoid repeated image requests; no buying intent is shown.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic paired-input test is bounded, though routing and image analysis support are undocumented here.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Pairing can be repeated in a prototype; a person must review uncertain identifications and manage real conversations.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained span specifies the image-plus-message failure and desired behavior, but shows one workflow and no corroboration.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold (4.8 mean): the post names a concrete image-context failure, but implementation support for image routing and analysis is absent from supplied references; proposed sandbox only."
+    },
+    {
+      "title": "Turn rough sketches into wireframe drafts",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "sourceIds": [
+        "cec38822f97e088e1e5fc5a2"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "cec38822f97e088e1e5fc5a2"
+        ],
+        "chore": "Translate a rough iPad sketch into a higher-fidelity wireframe or illustration quickly.",
+        "evidenceQuote": "I’ve been looking for a tool that can translate rough sketches on my iPad to higher fidelity wireframes or illustrations in near real time."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft wireframe or illustration generated from a supplied rough sketch, with an editable review copy.",
+        "inputs": [
+          "Synthetic rough interface sketch",
+          "Operator-selected output type",
+          "Short style instruction"
+        ],
+        "trigger": "A designer uploads one synthetic sketch and selects wireframe or illustration.",
+        "steps": [
+          "Prepare five fictional rough sketches with expected key elements.",
+          "Submit each sketch and style instruction to a chosen image-generation tool.",
+          "Save the generated draft beside its input.",
+          "Compare whether key elements remain recognizable.",
+          "Have a designer mark corrections before reuse."
+        ],
+        "acceptanceCheck": "Check that each draft retains the expected screen regions and labels, then record whether a designer accepts it after edits.",
+        "humanBoundary": "A designer supplies sketches, checks rights and edits every draft; no generated artwork is delivered without review.",
+        "unverified": [
+          "No supplied implementation reference establishes sketch-to-wireframe conversion.",
+          "Tool access, near-real-time speed, output editability and buyer willingness to pay are unverified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A few manual image-generation trials are imaginable, but no relevant implementation reference is attached.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent interface designers may pay for faster sketch refinement; this request gives no payment evidence.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare generated drafts with synthetic sketches, but useful editable conversion is unverified.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Generating drafts may repeat, but a designer must direct style and correct each result.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh request states a desired sketch-to-wireframe/illustration task, with no detailed workflow or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold (4.4 mean): the requested transformation is clear, but no supplied reference supports conversion quality, editability or speed."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Shopify custom-app work",
+      "productUrl": "https://community.shopify.com/t/706376",
+      "reason": "The retained post spans say the poster builds custom seller-attribution, B2B-order and ERP-sync apps, but identify no specific task needing a tool; proposing one would invent the chore."
+    },
+    {
+      "title": "General Make automation offer",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "This is a generic offer to help with small automation tasks and lists several possible capabilities, not a specific customer chore or request; no bounded demand-backed experiment can be grounded."
+    },
+    {
+      "title": "Prevent duplicate scheduled runs",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "“Missed schedule triggers can duplicate everything” describes a specific failure, but the assignment is a one-off bug report in a lead-generation workflow; RULES.md excludes one-off bug reports from demand proposals."
+    },
+    {
+      "title": "Formalized tax-form project",
+      "productUrl": "https://news.ycombinator.com/item?id=50278678",
+      "reason": "The post is a Show HN project about formalizing tax forms, not a concrete request or repeated chore. Do not infer tax work from the topic; tax correctness would also require expertise absent here."
+    },
+    {
+      "title": "Built-in AI or MCP preference",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "The post asks for a preference between built-in AI and MCP; it does not identify a task, repeated workflow or buyer need."
+    },
+    {
+      "title": "Analyst interviews for semantic context",
+      "productUrl": "https://news.ycombinator.com/item?id=50274358",
+      "reason": "The post presents an approach to interviewing analysts for semantic-layer context, but the supplied excerpt describes principles rather than a concrete chore/request needing a proposed service."
+    },
+    {
+      "title": "Salon booking architecture",
+      "productUrl": "https://community.n8n.io/t/325081",
+      "reason": "The post shares a booking architecture and technical design; its supplied spans do not state a customer request or existing chore to address. A booking service would be invented from a maker demo."
+    },
+    {
+      "title": "Copyright concern about LLM output",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The post raises copyright concerns about LLM output but the supplied text does not request a concrete task or service; do not invent a compliance workflow."
+    },
+    {
+      "title": "Use a received product image once",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Below threshold (4.8 mean): the post names a concrete image-context failure, but implementation support for image routing and analysis is absent from supplied references; proposed sandbox only."
+    },
+    {
+      "title": "Turn rough sketches into wireframe drafts",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "reason": "Below threshold (4.4 mean): the requested transformation is clear, but no supplied reference supports conversion quality, editability or speed."
+    }
+  ]
+}
