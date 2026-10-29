@@ -1,0 +1,236 @@
+{
+  "schema": 2,
+  "type": "candidate-research-intent",
+  "runId": "loop-40835038877-1",
+  "createdAt": "2026-10-29T07:23:57.824Z",
+  "producer": {
+    "repository": "xndanius/while-you-sleep",
+    "runId": "40835038877",
+    "runAttempt": 1,
+    "workflow": "loop.yml",
+    "stage": "pre_model",
+    "headSha": "ea23fd3bedcc7270ce78c0fb1e9193ba7e1f792d"
+  },
+  "dossier": {
+    "version": 1,
+    "id": "3d1373b038ea48b1f2fbcc77",
+    "gapId": "c8351683c47f9a15a059372be4cc2436bb115c60e2ab8bac68e63a0c82c6848c",
+    "status": "proposed_research",
+    "provenance": {
+      "runId": "loop-40822510539-1",
+      "runSha256": "530c2832d2b1c33e4bac66ca2bb672f282ac044ae97c1a809850b647a2d00bda",
+      "draftSha256": "d7565e419d5729bc040ba14ff57c577926f9c5812e3ca70a4fb4502092005914",
+      "contextSha256": "2a77991d1b756233bbead212afbc8749f6bfc382805da1f134ef0a90ed0a3cf0",
+      "researchSha256": "a88d820acf865d3910b36ec08973c4de04e3ec21f9100cce7cf858eb313589c8",
+      "scanSha256": "31777ea50ed314c9b149d1a4c0f70b3bcbc9a6f98964c7e4570a77f6d88924fd",
+      "manifestSha256": "9717ba43d8128aa3a3fd0ea5d2a0f96f4d0f8a299afb802f79c2be3fc4f27343",
+      "selectionSha256": "13f3c802a1460912c8924860a44c9f03fe557dc4ec010b8b5402c695edc756e9",
+      "learningSha256": "1d47c44962dab748bb4dae99e5884536ea720702da73ca729c9f5a74a8f3cf00"
+    },
+    "catalogSha256": "4ef85fd0fe49b5d6ffbbf360797abc8780e241468ef178739166663b57eed354",
+    "candidateIndex": 0,
+    "candidateSha256": "90daf8f867cbab46fc9ad59ca9031f534210280b42a866fec0585f61ac42dfa8",
+    "candidate": {
+      "title": "Prepare game-test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Move phone-recorded game-test notes from CSV into Sheets without missed or duplicate file triggers.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "3ca170397cfed47225ad7211",
+        "5c2bf4e7df8c3ec325ba2e74"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The supplied n8n docs describe scheduled Drive event checks and CSV-to-row extraction; phone upload timing and deduplication still need operator testing.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small game QA teams may pay for cleaner session logs; this one post shows a chore, not buying intent.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV review flow fits the documented extraction step; real formats, trigger behavior and duplicate keys remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Documented Drive polling can trigger on matching events and CSV extraction yields rows; a person must validate keys and import output.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "3ca170397cfed47225ad7211",
+              "5c2bf4e7df8c3ec325ba2e74"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe measured fields, a notes-to-CSV-to-Sheets habit and missed or repeated triggers; recurrence beyond this user is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed output for the specific task described in the post.",
+        "inputs": [
+          "Synthetic example input matching the task",
+          "Operator-approved fields and rules",
+          "Human reference answer for comparison"
+        ],
+        "trigger": "An operator supplies one synthetic example for review.",
+        "steps": [
+          "Read the supplied example.",
+          "Apply only the operator-approved fields and rules.",
+          "Prepare the proposed output.",
+          "Flag missing or ambiguous information.",
+          "Show the output beside its input.",
+          "Ask a person to check it before real use."
+        ],
+        "acceptanceCheck": "Compare a synthetic example with the human reference and verify each expected field and flag.",
+        "humanBoundary": "A person supplies inputs, sets rules and reviews every output before real-world use.",
+        "unverified": [
+          "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+        ]
+      },
+      "reason": "Concrete task with limited n8n implementation support; prior below-threshold decision is reassessed using current supplied references, but the unresolved live trigger and duplicate contract keep it below threshold."
+    },
+    "assignment": {
+      "productUrl": "https://community.n8n.io/t/325109",
+      "segment": "professional_services",
+      "kind": "discussion",
+      "demandSourceId": "3d1373b038ea48b1f2fbcc77",
+      "registrySourceId": "e935ee0506560f4175ecd570"
+    },
+    "source": {
+      "id": "3d1373b038ea48b1f2fbcc77",
+      "url": "https://community.n8n.io/t/325109",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "title": "Syncing manual game-test logs from my phone into Sheets — trigger keeps failing",
+      "text": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file.",
+      "community": "n8n community",
+      "postedAt": "2026-10-28T06:44:15.636Z",
+      "fetchedAt": "2026-10-29T05:24:43.041Z",
+      "role": "demand",
+      "demand": true,
+      "demandMetadataVersion": 1,
+      "discussionMetadataVersion": 1,
+      "registrySourceId": "e935ee0506560f4175ecd570",
+      "segment": "professional_services",
+      "demandKind": "community_request",
+      "taskExcerpts": [
+        "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      ],
+      "taskExcerptVersion": 2,
+      "demandEvidence": {
+        "kind": "community_request",
+        "noticeId": "3d1373b038ea48b1f2fbcc77",
+        "status": "active",
+        "postedAt": "2026-10-28T06:44:15.636Z"
+      },
+      "discussionBodyVersion": 1,
+      "nativeReadingContext": {
+        "version": 2,
+        "normalizationVersion": "discourse-visible-text-v2",
+        "topicUrl": "https://community.n8n.io/t/325109",
+        "topicId": 325109,
+        "postId": 606961,
+        "postNumber": 1,
+        "postUrl": "https://community.n8n.io/t/325109/1",
+        "postCreatedAt": "2026-10-28T06:44:15.691Z",
+        "postUpdatedAt": "2026-10-28T06:44:50.341Z",
+        "fetchedAt": "2026-10-29T05:24:43.041Z",
+        "responseUrl": "https://community.n8n.io/t/325109.json",
+        "responseSha256": "f182d55092947c38d8625035c34b15059f75eedf79cb028c0a05ae4e94b21066",
+        "normalizedSha256": "70d7512e131ca7154b66f62d010a1b80f4d99d2168462f0f0d3fead03a30edea",
+        "normalizedLength": 1278,
+        "retainedCharacters": 922,
+        "omittedCharacters": 356,
+        "spans": [
+          {
+            "kind": "context",
+            "start": 0,
+            "end": 379,
+            "text": "I test mobile games on a couple of phones and keep a simple log while I play: battery percentage, device temperature, frame drops, and a short note about what I was doing when it happened. Right now I type it into a notes app during the session, then later export a CSV from that app and paste it into a Google Sheet. It works, but I only remember to do it at the end of the day.",
+            "sha256": "c65f0d3d0851aa8d22ec5ccc5073139c191df569287e15bcd36a6ff5ba01dfb8"
+          },
+          {
+            "kind": "task",
+            "start": 630,
+            "end": 817,
+            "text": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file.",
+            "sha256": "89e5872569fff996fe61d6e19d07035009e00d8f67889e8346d5e27d457a87aa"
+          },
+          {
+            "kind": "context",
+            "start": 922,
+            "end": 1278,
+            "text": "I’m not sure whether the problem is the trigger watching the wrong folder, the phone not finishing the upload before the workflow reads it, or my CSV parsing. Has anyone automated a similar phone-to-Sheets flow with n8n? I’d like to know what trigger you use and how you stop it from grabbing the same file twice. I’m on the free community edition for now.",
+            "sha256": "09917d642462d768050834cf687bf4797069ce3c3fd027ce657ea68f2016272a"
+          }
+        ],
+        "packetSha256": "c7ce4e7b28625dcf41864096cc24f00fc46fed63d2c83ab8f6a2044d16004233"
+      },
+      "verifiedAt": "2026-10-29T05:24:43.041Z",
+      "enriched": true,
+      "evidenceKind": "discussion-post",
+      "evidenceFetch": {
+        "maxBytes": 2000000,
+        "complete": true
+      }
+    },
+    "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+    "discoverySha256": "89e5872569fff996fe61d6e19d07035009e00d8f67889e8346d5e27d457a87aa",
+    "unresolved": [
+      "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+    ],
+    "referenceRequests": [
+      {
+        "id": "f1662b0ceb942474f83a8108",
+        "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+        "productUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+        "title": "n8n cross-execution duplicate removal documentation",
+        "role": "building",
+        "demand": false,
+        "originSourceIds": [],
+        "implementationReferenceVersion": 1,
+        "implementationSelectionVersion": 2,
+        "implementationReferenceId": "n8n-persistent-deduplication-v1",
+        "supportsDemandSourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ]
+      }
+    ],
+    "provisionalMean": 5.2,
+    "coverage": "missing_capability_evidence",
+    "notice": "The preserved plan and requested documentation are not execution, demand validation, a checked score or publication approval."
+  },
+  "referenceIds": [],
+  "refreshReferenceIds": [
+    "n8n-persistent-deduplication-v1"
+  ],
+  "purpose": "review_evidence"
+}
