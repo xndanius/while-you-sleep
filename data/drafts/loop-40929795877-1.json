@@ -1,0 +1,309 @@
+{
+  "runId": "loop-40929795877-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T18:45:00.000Z",
+  "candidates": [
+    {
+      "title": "Turn monthly review decks into video drafts",
+      "productUrl": "https://community.n8n.io/t/325292",
+      "sourceIds": [
+        "7132d39a81d828b6e8cc8cc5"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "7132d39a81d828b6e8cc8cc5"
+        ],
+        "chore": "Prepare a narrated video draft from a monthly review deck for a team, investor, or client.",
+        "evidenceQuote": "if you send your team, your investors or your clients a review deck every month"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable narrated video draft made from an operator-supplied monthly review deck.",
+        "inputs": [
+          "Synthetic monthly review deck with fictional figures",
+          "Operator-supplied audience and brand color choices",
+          "Operator-supplied narration and video service credentials"
+        ],
+        "trigger": "A consultant starts a test after receiving a monthly review deck.",
+        "steps": [
+          "Read the supplied deck and audience notes.",
+          "Draft a short narration using only the supplied figures.",
+          "Prepare a video render request for a configured test service.",
+          "Render a draft and show it beside the source deck.",
+          "Ask a person to check every figure and approve any sharing."
+        ],
+        "acceptanceCheck": "For a fictional deck, verify every number in the narration against its source slide and confirm the draft video uses the selected audience and branding.",
+        "humanBoundary": "The operator supplies the deck and credentials, checks the rendered video and figures, and authorizes any client or investor sharing.",
+        "unverified": [
+          "Correct extraction from varied deck formats",
+          "Video service access, cost, and render reliability",
+          "Whether review teams would pay for this proposed service"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained context describes an importable workflow but requires configured keys, local files, and manual execution.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: consultants or small firms preparing monthly reviews might pay for video preparation; this post shows no payment intent.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week sample-deck prototype is bounded, but rendering needs a third-party key and the supplied steps do not establish reliable output.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The post describes repeatable generation steps, but the operator supplies files and keys and must check the render.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The task span identifies monthly review decks and the retained context gives setup steps; broader demand and buyer intent are unverified.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          }
+        }
+      },
+      "reason": "Below six: concrete monthly task but buyer intent, output quality, and reliable rendering are not established."
+    },
+    {
+      "title": "Review replies that include a product image",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Prepare a draft product-identification reply using a customer message and an image already supplied to the workflow.",
+        "evidenceQuote": "Customers can send either text messages or images."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable reply draft that acknowledges an already supplied product image and asks only for missing details.",
+        "inputs": [
+          "Fictional customer message",
+          "Fictional product image",
+          "Operator-written list of known product names"
+        ],
+        "trigger": "An operator starts a test when a sample message arrives with an image.",
+        "steps": [
+          "Pair the message with its supplied image in a test record.",
+          "Ask a multimodal model for a cautious product description.",
+          "Compare the description with the operator supplied product list.",
+          "Draft a reply that marks uncertain identification.",
+          "Have a person verify the image and approve or rewrite the reply."
+        ],
+        "acceptanceCheck": "On fictional message-image pairs, check that the draft never asks to resend an image already present and marks any uncertain product match for review.",
+        "humanBoundary": "A person provides the test pair, verifies image interpretation and product identity, and approves every response; no customer message is sent automatically.",
+        "unverified": [
+          "A suitable image-capable model and its handling of supplied images",
+          "Reliable pairing of image and message in the actual Make scenario",
+          "Whether preventing repeat image requests is frequent enough to pay for"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A fictional message-image pair can support a manual mock, but no attached reference documents image handoff or interpretation.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online sellers might pay to reduce repeat image requests; this single question establishes no purchase intent.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A draft-only sample is possible, but using image content correctly depends on unsupported multimodal handling.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must supply the pair, verify product identification, and approve any reply; no routing or execution support is attached.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes text and image routes and the repeated resend issue, but this is one case with no corroboration.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "reason": "Below six: the specific repeat-image problem is stated, but the required image interpretation and Make handoff capabilities are unsupported in supplied references."
+    },
+    {
+      "title": "Turn rough sketches into wireframe drafts",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "sourceIds": [
+        "cec38822f97e088e1e5fc5a2"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "cec38822f97e088e1e5fc5a2"
+        ],
+        "chore": "Convert a rough iPad sketch into a higher-fidelity wireframe or illustration draft.",
+        "evidenceQuote": "translate rough sketches on my iPad to higher fidelity wireframes or illustrations in near real time"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable wireframe draft based on one operator-supplied rough sketch.",
+        "inputs": [
+          "Fictional rough sketch image",
+          "Operator description of intended screen purpose",
+          "Operator-selected list of required interface elements"
+        ],
+        "trigger": "A designer starts a test after choosing a sketch for conversion.",
+        "steps": [
+          "Load the sketch and the designer notes.",
+          "Ask an image-capable model for a structured layout description.",
+          "Convert the description into a simple wireframe draft.",
+          "Show the draft beside the original sketch.",
+          "Have a designer correct structure and confirm it is usable."
+        ],
+        "acceptanceCheck": "For each fictional sketch, compare the draft with the designer supplied required elements and record missing or invented elements before judging usefulness.",
+        "humanBoundary": "A designer supplies the sketch and requirements, reviews the generated layout for omissions and inventions, and decides whether to use it.",
+        "unverified": [
+          "Access to a suitable image-to-layout model",
+          "Reliable conversion from varied sketches into editable wireframes",
+          "Whether near-real-time output is achievable and useful"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "A student could test fictional sketches, but no supplied reference documents sketch ingestion or image transformation.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent designers may pay for faster sketch-to-wireframe drafts; this request does not establish payment intent.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "The central image-to-wireframe transformation is unsupported by supplied implementation evidence, so a useful four-week version is uncertain.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must provide sketches and judge every generated layout; no repeatable supported transformation is documented.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request states a specific sketch-to-wireframe task and near-real-time preference, but gives no workflow details or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        }
+      },
+      "reason": "Below six: the task is explicit, but the core transformation is unsupported and the post gives no input, workflow, or quality criteria."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Turn monthly review decks into video drafts",
+      "productUrl": "https://community.n8n.io/t/325292",
+      "reason": "Below six: concrete monthly task but buyer intent, output quality, and reliable rendering are not established."
+    },
+    {
+      "title": "Review replies that include a product image",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Below six: the specific repeat-image problem is stated, but the required image interpretation and Make handoff capabilities are unsupported in supplied references."
+    },
+    {
+      "title": "Turn rough sketches into wireframe drafts",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "reason": "Below six: the task is explicit, but the core transformation is unsupported and the post gives no input, workflow, or quality criteria."
+    },
+    {
+      "title": "Advise on a freemium app monetization model",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "reason": "The retained post asks for conceptual help but names no concrete chore or task details; a monetization experiment would require inventing the work."
+    },
+    {
+      "title": "Use a workbook for agent lookup",
+      "productUrl": "https://news.ycombinator.com/item?id=50293148",
+      "reason": "The supplied excerpt only says a zipped workbook is available for agent lookup; it does not identify a specific lookup chore or user need."
+    },
+    {
+      "title": "Catch production agent regressions",
+      "productUrl": "https://news.ycombinator.com/item?id=50292363",
+      "reason": "This operational workflow overlaps the recent prior idea “Catch failures in production AI agents” (0d455200b5ff2b5b39d4eac6): both target teams operating production agents and checking failures/regressions."
+    },
+    {
+      "title": "Build custom Shopify apps",
+      "productUrl": "https://community.shopify.com/t/706376",
+      "reason": "The retained task span says the author is building custom apps, but specifies no unresolved chore or requested service to scope."
+    },
+    {
+      "title": "Set up small Make automations",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "The post offers automation services and lists possible tasks but records no specific customer chore; selecting one would invent demand beyond the supplied request."
+    },
+    {
+      "title": "Connect MirrorFly with n8n",
+      "productUrl": "https://community.n8n.io/t/325279",
+      "reason": "The post asks whether integration is possible but supplies no specific business workflow or concrete task to automate; a generic integration feasibility inquiry is insufficient demand."
+    },
+    {
+      "title": "Resolve a frozen Shopify payout",
+      "productUrl": "https://community.shopify.com/t/705355",
+      "reason": "The complaint describes repeated support follow-ups, but an automated service cannot resolve the payout decision; a tracker would not address the stated issue, and financial-account escalation is not a suitable autonomous scope."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion assignments. Three concrete tasks received scoped five-criterion plans but remain below the six-point threshold; the remaining seven are excluded for missing concrete task evidence, unsuitable scope, or a specific workflow/customer duplicate. No post proposed."
+    }
+  ]
+}
