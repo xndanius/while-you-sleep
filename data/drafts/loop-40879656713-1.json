@@ -1,0 +1,369 @@
+{
+  "runId": "loop-40879656713-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-29T13:13:40Z",
+  "candidates": [
+    {
+      "title": "Draft delayed-shipment alerts",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Prepare a draft dispatcher alert from an operator-supplied shipment status marked delayed.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A synthetic status and message template make a first mock approachable; no supplied reference documents alert tooling.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small logistics operators may pay for clearer delay notices; the discussion establishes no buying intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can draft from sample statuses; live carrier access and delivery are unverified.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable draft is possible on supplied status, but a human must verify and send; automation is undocumented.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained task span names a delayed-shipment alert but gives no fields, frequency, or corroboration.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A concise draft alert for a shipment marked delayed, with the status and next check clearly shown.",
+        "inputs": [
+          "Fictional shipment identifier",
+          "Operator-supplied current status",
+          "Approved alert template"
+        ],
+        "trigger": "An operator marks a fictional shipment status as delayed.",
+        "steps": [
+          "Read the supplied status and identifier.",
+          "Check that the status equals the operator-defined delayed value.",
+          "Fill a short alert template with the supplied facts.",
+          "Show the draft and source fields for review."
+        ],
+        "acceptanceCheck": "For labeled fictional delayed and on-time inputs, draft an alert only for delayed cases and copy the identifier and status correctly.",
+        "humanBoundary": "An operator must define the delayed rule, supply status data, verify the draft, and send any real message.",
+        "unverified": [
+          "Real carrier status access",
+          "Useful delay threshold",
+          "Reliable message delivery"
+        ]
+      },
+      "reason": "Below threshold: a proposed mock is narrow, but the source is a single example and no implementation support or buyer validation is supplied."
+    },
+    {
+      "title": "Compare a freemium app pricing idea",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "sourceIds": [
+        "5199855c5ba743dbb8eb718d"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "5199855c5ba743dbb8eb718d"
+        ],
+        "chore": "Review a freemium app concept and compare possible monetization models.",
+        "evidenceQuote": "I'm an indie app dev and looking for some conceptual help with one of my freemium apps"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can make a structured comparison from supplied fictional app details, but the input framework is a proposal.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: indie app developers may pay for monetization advice; one request provides no validated buyer evidence.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week manual prototype can compare a few options; useful evaluation criteria and outcomes remain unverified.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed output is repeatable but depends on human supplied facts and judgment; no automation is documented.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post requests conceptual help for a freemium app but supplies no app details, recurrence, or corroboration.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short comparison of three possible freemium monetization models against operator-supplied app goals and constraints.",
+        "inputs": [
+          "Fictional app description",
+          "Operator-supplied audience and usage assumptions",
+          "Operator-supplied constraints and goals"
+        ],
+        "trigger": "An app developer submits a concept and asks for monetization options.",
+        "steps": [
+          "Extract only the supplied goals and constraints.",
+          "List three plausible model options as hypotheses.",
+          "Compare tradeoffs against each supplied goal.",
+          "Flag missing assumptions and questions.",
+          "Return a human-reviewable comparison."
+        ],
+        "acceptanceCheck": "On a fictional app brief with known goals, produce three options and verify each comparison references a stated goal while labeling assumptions.",
+        "humanBoundary": "A person supplies accurate app context, reviews the options, and makes business decisions; no model recommendation is validated.",
+        "unverified": [
+          "Useful comparison criteria",
+          "Accuracy of operator supplied market assumptions",
+          "Any real buyer willingness to pay"
+        ]
+      },
+      "reason": "Below threshold: the request is concrete but broad and singular; no app context or evidence that this advice can predict outcomes."
+    },
+    {
+      "title": "Organize game-test CSV logs",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Capture mobile game-test measurements in a log and transfer exported CSV rows into a Google Sheet without missed or duplicate files.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A table mock can be tested with fictional CSV rows, but file triggers are not documented in the supplied evidence.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small game-testing teams may pay for cleaner logs; this post shows one stated need, not payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can compare manually supplied rows and expected log entries; parsing and file intake remain unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A person must export, upload, and check rows; no autonomous trigger or deduplication capability is established.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "Retained spans describe the current manual logging and repeated or missed file triggers, without corroborating demand.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet that flags missing or repeated game-test CSV rows before a person pastes approved entries into a log.",
+        "inputs": [
+          "Fictional CSV rows with battery, temperature, frame drops and notes",
+          "Expected row identifiers",
+          "Operator-defined duplicate rule"
+        ],
+        "trigger": "An operator supplies an exported CSV and expected identifiers for review.",
+        "steps": [
+          "Read the supplied rows and identifiers.",
+          "Check required fields against the chosen template.",
+          "Flag repeated identifiers under the operator rule.",
+          "List missing expected identifiers.",
+          "Present a review table for manual correction and import."
+        ],
+        "acceptanceCheck": "For a labeled sample CSV, correctly flag seeded missing fields, repeated identifiers, and absent expected IDs without changing the source rows.",
+        "humanBoundary": "A person exports and supplies the CSV, chooses matching rules, verifies flags, and performs any sheet update.",
+        "unverified": [
+          "Actual CSV format and parser reliability",
+          "Reliable phone upload and file trigger behavior",
+          "Whether identifier deduplication fits the real log"
+        ]
+      },
+      "reason": "Below threshold: the chore and inputs are unusually clear, but the proposed review only addresses supplied files; the described trigger failure and live sheet automation remain outside supported scope."
+    },
+    {
+      "title": "Check Meta and Shopify purchase totals",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceIds": [
+        "accc79f9c0afdef41b9f38d1"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "accc79f9c0afdef41b9f38d1"
+        ],
+        "chore": "Export comparable daily Meta purchase and Shopify order totals for 30 days and investigate unusual differences.",
+        "evidenceQuote": "In Shopify, export daily orders for the same 30 days, Online Store channel only, without test and cancelled orders."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A spreadsheet comparison using operator supplied totals is accessible; no supplied reference supports a live connector.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online shops may pay for clearer ad-sales reconciliation; a single guide does not validate buyers.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can compare fictional daily totals and flag large gaps; attribution interpretation remains human work.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeated comparison can flag dates, but a person must export, interpret causes, and check tracking settings.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans give specific export instructions and possible discrepancy explanations, but no recurrence or corroboration.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A table that aligns daily Meta and Shopify totals and flags dates with unusually large gaps for human investigation.",
+        "inputs": [
+          "Fictional daily Meta purchase totals",
+          "Fictional daily Shopify order totals",
+          "Operator-defined gap threshold"
+        ],
+        "trigger": "An operator supplies aligned daily totals for a selected 30-day period.",
+        "steps": [
+          "Check both tables cover the same dates.",
+          "Align totals by date.",
+          "Calculate the absolute and relative difference using a stated rule.",
+          "Flag dates above the operator threshold.",
+          "List possible checks as questions, not diagnoses."
+        ],
+        "acceptanceCheck": "For a synthetic aligned dataset with seeded gaps, verify date matching and flag exactly the dates that cross the chosen threshold.",
+        "humanBoundary": "A person exports the reports, chooses a threshold, checks flagged dates and investigates pixels or attribution; the tool must not declare a cause.",
+        "unverified": [
+          "Meaningful gap threshold",
+          "Accuracy with real export formats",
+          "Whether the proposed flags reduce useful review effort"
+        ]
+      },
+      "reason": "Below threshold: the task is specific enough for a synthetic comparison, but one how-to post does not establish repeat need, buyer intent, or a supported live integration."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Apple app reviewer idea conversations",
+      "productUrl": "https://news.ycombinator.com/item?id=50286034",
+      "reason": "The retained excerpt says stories were invented and asks how outcomes might change, but does not identify a concrete operational chore or requested service; proposing one would invent demand."
+    },
+    {
+      "title": "Screen-time eye fatigue checker",
+      "productUrl": "https://news.ycombinator.com/item?id=50288342",
+      "reason": "This is a maker explanation for an existing eye-blink fatigue tool and personal motivation, not a distinct unmet chore or request for a service. No health-administration proposal is supported."
+    },
+    {
+      "title": "Shopify app review advice",
+      "productUrl": "https://community.shopify.com/t/705837",
+      "reason": "The only retained text asks for advice about the review process; it supplies no specific task, blocker, or requested output from which to scope an experiment."
+    },
+    {
+      "title": "Weekly keyword-volume workflow",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "The retained span documents a scheduled keyword-volume workflow and setup, not a user chore or unmet request. The schedule sentence alone is not demand for a distinct service."
+    },
+    {
+      "title": "Chatbot and booking services listing",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "The retained span advertises an existing provider’s chatbot and booking services; it does not identify a separate requester’s unmet chore. Repackaging that listing as demand would overstate evidence."
+    },
+    {
+      "title": "Conversation blindspot detector",
+      "productUrl": "https://news.ycombinator.com/item?id=50287887",
+      "reason": "The retained excerpt describes a maker’s existing conversation-analysis tool, not an unmet chore or request for a distinct service. It does not establish demand for a competing proposal."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion assignments. Four concrete bounded chores received proposed plans and five provisional scores; each remains below the six-point mean threshold. Six assignments were excluded because retained evidence did not establish a distinct concrete chore. No post proposed."
+    }
+  ]
+}
