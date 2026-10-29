@@ -1,0 +1,250 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40855442884-1",
+  "createdAt": "2026-10-29T10:15:43.324Z",
+  "events": [
+    {
+      "id": "b6822922f896a32fa3858900178afe2867d41c85834193d5f7ebf761fdd8291b",
+      "kind": "assessment",
+      "caseId": "1ccb6ac28f87d8a3d3a3955c",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceRunId": "loop-40855442884-1",
+      "details": {
+        "revisionId": "487b17719f1e034cbf165aecbf09fe911a965cd28dbe3575a29b45f9578a7813",
+        "parentRevisionId": "ab5de666c9f2762ac9f153e8e19b698bb5f2f33835e1d790a78cbd91b00cf30c",
+        "candidateIndex": 0,
+        "candidateSha256": "174347bfd842090fadda696dd25ad93cb81a64e4d973803bd52d1a69a92ff940",
+        "sourceSha256": "9775b811cfb00f17219639eaea82512831a898f8de4c4992519fed66bc2f0111",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewable product description and a note saying whether the supplied message and image were both used.",
+          "inputs": [
+            "Fictional customer message",
+            "Synthetic product image",
+            "Expected product category"
+          ],
+          "trigger": "An operator submits one fictional message paired with one synthetic image.",
+          "steps": [
+            "Pair the message with its existing image in one test record.",
+            "Send both inputs to a vision model in a sandbox.",
+            "Ask for a short product description and uncertainty note.",
+            "Compare the output with a hand-written expected category.",
+            "Record whether the test incorrectly asks for the image again."
+          ],
+          "acceptanceCheck": "For each of five fictional message-image pairs, compare the result with the expected category and flag any request to resend an image.",
+          "humanBoundary": "An operator supplies synthetic examples, checks image rights, reviews every output, and handles real customer conversations manually.",
+          "unverified": [
+            "No supplied implementation reference documents image/message routing or Make execution.",
+            "Vision model access, image handling, accuracy and customer willingness to pay are unverified."
+          ]
+        },
+        "limitations": [
+          "No supplied implementation reference documents image/message routing or Make execution.",
+          "Vision model access, image handling, accuracy and customer willingness to pay are unverified."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "4f8dfbaee4a782b087b94e80f2a1bb2271a11d8b2bd5d905a830cd929f7574bf",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "e44b89fea64136e973d6d34ca18205ed6af260fa8450033dcde065a6bd439920",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No supplied implementation reference documents image/message routing or Make execution.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A small sandbox test can use paired examples, but no implementation reference is supplied.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: ecommerce support providers may pay to avoid repeated image requests; no buying intent is shown.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic paired-input test is bounded, though routing and image analysis support are undocumented here.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Pairing can be repeated in a prototype; a person must review uncertain identifications and manage real conversations.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained span specifies the image-plus-message failure and desired behavior, but shows one workflow and no corroboration.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "3ab59cef3427bbc8cc345aeba382ad11bdf78034c83e5459c09b6ff2bac5d020",
+          "draftSha256": "ea5ff2cb21ac5b17acc030943b54592f8d6b9f7626f5609b8692eea92f0e3088",
+          "contextSha256": "d26a6a719fe4470e6682051f378ff04a28d0716845ad37001319c401b59b2abf",
+          "manifestSha256": "0c29feeae58df9f7498cbf3a76007439c6eaf126fed486c960fa262ff6a4545a",
+          "researchSha256": "979a53f4e26eafbfe94a5dc911550e7803e230b340f737a07b8bcb002cbd4a9a",
+          "learningSha256": "dbdfafe023d493ab157c8a28a0cc2009b49f5eb7e0a50f86536d4ca684f2ddde"
+        }
+      }
+    },
+    {
+      "id": "4521b19f2ed930fa594df0d6451ebf5d4f91d91f8ce597f5c9362c3410fda0c6",
+      "kind": "assessment",
+      "caseId": "cec38822f97e088e1e5fc5a2",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "sourceRunId": "loop-40855442884-1",
+      "details": {
+        "revisionId": "f3ffa1eefefb2ecc25bb90032a352095adf970e63cd0b814e8ffea0bf876ca4f",
+        "parentRevisionId": "8ccb65962a8730d21c7650259430bff59fbe81a60f630424b514b09937bc61a5",
+        "candidateIndex": 1,
+        "candidateSha256": "72970cb0e6e332c705f9be86df2cacc4f713b52b7a6bcc5e447c54ccdce44f37",
+        "sourceSha256": "328425f89d36efe4c3d7a9e9cc63a07bce9777659a2ca512c7b82b945b9d3375",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A draft wireframe or illustration generated from a supplied rough sketch, with an editable review copy.",
+          "inputs": [
+            "Synthetic rough interface sketch",
+            "Operator-selected output type",
+            "Short style instruction"
+          ],
+          "trigger": "A designer uploads one synthetic sketch and selects wireframe or illustration.",
+          "steps": [
+            "Prepare five fictional rough sketches with expected key elements.",
+            "Submit each sketch and style instruction to a chosen image-generation tool.",
+            "Save the generated draft beside its input.",
+            "Compare whether key elements remain recognizable.",
+            "Have a designer mark corrections before reuse."
+          ],
+          "acceptanceCheck": "Check that each draft retains the expected screen regions and labels, then record whether a designer accepts it after edits.",
+          "humanBoundary": "A designer supplies sketches, checks rights and edits every draft; no generated artwork is delivered without review.",
+          "unverified": [
+            "No supplied implementation reference establishes sketch-to-wireframe conversion.",
+            "Tool access, near-real-time speed, output editability and buyer willingness to pay are unverified."
+          ]
+        },
+        "limitations": [
+          "No supplied implementation reference establishes sketch-to-wireframe conversion.",
+          "Tool access, near-real-time speed, output editability and buyer willingness to pay are unverified."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "b97f68def03c90405d7a713330f289c693693ab7d9378b61e549ae0f3edd635f",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "e42ca81234b37e5f307b140b93da413d3285e80b90fee39eff4a02f36931e23f",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No supplied implementation reference establishes sketch-to-wireframe conversion.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A few manual image-generation trials are imaginable, but no relevant implementation reference is attached.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent interface designers may pay for faster sketch refinement; this request gives no payment evidence.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can compare generated drafts with synthetic sketches, but useful editable conversion is unverified.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Generating drafts may repeat, but a designer must direct style and correct each result.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The fresh request states a desired sketch-to-wireframe/illustration task, with no detailed workflow or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "3ab59cef3427bbc8cc345aeba382ad11bdf78034c83e5459c09b6ff2bac5d020",
+          "draftSha256": "ea5ff2cb21ac5b17acc030943b54592f8d6b9f7626f5609b8692eea92f0e3088",
+          "contextSha256": "d26a6a719fe4470e6682051f378ff04a28d0716845ad37001319c401b59b2abf",
+          "manifestSha256": "0c29feeae58df9f7498cbf3a76007439c6eaf126fed486c960fa262ff6a4545a",
+          "researchSha256": "979a53f4e26eafbfe94a5dc911550e7803e230b340f737a07b8bcb002cbd4a9a",
+          "learningSha256": "dbdfafe023d493ab157c8a28a0cc2009b49f5eb7e0a50f86536d4ca684f2ddde"
+        }
+      }
+    }
+  ]
+}
