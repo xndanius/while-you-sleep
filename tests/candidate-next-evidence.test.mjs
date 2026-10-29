@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {readFile,mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import {researchDossiers} from '../lib/candidate-research.mjs';
+import {researchDossiers,planResearchContinuation,researchSourceFingerprint} from '../lib/candidate-research.mjs';
+import {DISCUSSION_SOURCE_CATALOG} from '../lib/discussion-sources.mjs';
 import {candidateEvidenceTasks,candidateEvidenceTaskReasons} from '../lib/candidate-evidence-tasks.mjs';
 import {deriveCandidateDevelopment} from '../lib/candidate-development.mjs';
 import {prepareContinuationIntent,verifyContinuationIntent} from '../lib/research-continuation.mjs';
@@ -18,6 +19,10 @@ test('exact completed CSV cycle requests the remaining Drive route after excludi
  const b=await load('40769477977'),before=stableJSON(b),d=researchDossiers(b).find(d=>d.source.url.endsWith('/325109'));
  assert.deepEqual(d.referenceRequests.map(r=>r.implementationReferenceId),['n8n-drive-trigger-v1']);
  assert.equal(d.coverage,'missing_capability_evidence');assert.deepEqual(d.unresolved,b.draft.candidates[0].experimentPlan.unverified);
+ const sources=b.context.sources.filter(s=>s.role==='demand'),selectionInput={sources,originMap:sources.map(s=>({sourceId:s.id,url:s.url,productUrl:s.url,feedIds:[s.registrySourceId]})),demandDefinitions:DISCUSSION_SOURCE_CATALOG.filter(row=>b.research.learningSelection.demandSourceIds.includes(row.id)),learningSelection:b.research.learningSelection,previous:[],now:Date.parse(b.run.checkedAssessment.completedAt)+3*3600000+1,cooldownHours:3};
+ const plan=planResearchContinuation(d,b,{selectionInput});
+ assert.equal(plan.status,'ready_for_scheduled_research','The unchanged primary must permit the newly requested third catalog route after the first two were acquired.');
+ assert.deepEqual(plan.referenceRequests.map(r=>r.implementationReferenceId),['n8n-drive-trigger-v1']);
  const old=researchDossiers(await load('40734809732')).find(d=>d.source.url.endsWith('/325109'));
  assert.deepEqual(old.referenceRequests.map(r=>r.implementationReferenceId),['n8n-csv-extraction-v1','n8n-persistent-deduplication-v1']);
  assert.equal(stableJSON(b),before);
@@ -33,6 +38,15 @@ test('next tasks distinguish a public read, synthetic key test, and real integra
  const record=deriveCandidateDevelopment({run:b.run,bundle:b});
  assert.deepEqual(record.events.find(e=>e.productUrl===candidate.productUrl).details.evidenceTasks,tasks);
  assert.deepEqual(b.run.published,[]);assert.equal(candidate.experimentPlan.status,'proposed');
+});
+
+test('the real01UTC changed-source refusal cannot recur when its fresh primary is identical and the requested route still matches',async()=>{
+ const b=await load('40799759234'),prior=await load('40769477977'),d=researchDossiers(prior).find(d=>d.source.url.endsWith('/325109'));
+ const receipt=JSON.parse(await readFile(new URL('../data/research-results/loop-40799759234-1.json',import.meta.url))),intent=JSON.parse(await readFile(new URL('../data/research-intents/loop-40799759234-1.json',import.meta.url)));
+ assert.equal(receipt.outcome,'changed_source');assert.deepEqual(receipt.events,[],'Keep the original incident receipt unchanged.');
+ const source=b.research.sources.find(s=>s.id===d.source.id);assert.equal(source.enriched,true);assert.equal(researchSourceFingerprint(source),d.sourceSha256);
+ const sources=b.research.sources.filter(s=>s.role==='demand'),selectionInput={sources,originMap:sources.map(s=>({sourceId:s.id,url:s.url,productUrl:s.url,feedIds:[s.registrySourceId]})),demandDefinitions:DISCUSSION_SOURCE_CATALOG.filter(row=>b.research.learningSelection.demandSourceIds.includes(row.id)),learningSelection:b.research.learningSelection,previous:[],now:Date.parse(intent.createdAt),cooldownHours:3};
+ const plan=planResearchContinuation(d,prior,{selectionInput});assert.equal(plan.status,'ready_for_scheduled_research');assert.deepEqual(plan.referenceRequests.map(r=>r.implementationReferenceId),['n8n-drive-trigger-v1']);
 });
 
 test('Drive read requires task prose and its exact manual-versus-active semantics',async()=>{

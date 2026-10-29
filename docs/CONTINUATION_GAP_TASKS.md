@@ -12,6 +12,13 @@ only when retained task prose mentions Drive, file activity and a trigger/watch.
 Its literal evidence must describe manual execution and activation behavior.
 It cannot establish successful phone upload, credentials or reliable delivery.
 
+Route revalidation must use the intent's requested references, not the default
+first two catalog matches. The 01:07 UTC incident `40799759234` incorrectly
+returned `changed_source` for the later Drive route although the independently
+fetched primary material was unchanged. Its historical receipt remains
+untouched; a frozen regression now verifies both gap selection and route
+revalidation.
+
 New candidate-development assessments also retain bounded `evidenceTasks`:
 
 - Documentation: a fixed, guarded public read; still pending until its receipt.
@@ -28,10 +35,10 @@ claim a completed experiment or mint a score. Existing historical records keep
 their format and are not rewritten. The source, quote, privacy, freshness,
 cooldown, independent-check and six-point publication gates are unchanged.
 
-For CSV325109, the next eligible continuation can read the Drive activation
-reference. Its current cooldown ends at 00:14:53 UTC on October 29; the first
-ordinary eligible hourly slot is 01:07 UTC, subject to current source and queue
-eligibility. The same normal budget remains authoritative.
+For CSV325109, an eligible continuation can read the Drive activation reference.
+The latest completed assessment determines its ordinary cooldown; no fixed
+date, source priority or repair bypass overrides that eligibility. The same
+normal budget remains authoritative.
 
 ## What the remaining questions actually require
 
