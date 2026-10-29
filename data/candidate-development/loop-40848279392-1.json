@@ -1,0 +1,1109 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40848279392-1",
+  "createdAt": "2026-10-29T09:23:46.174Z",
+  "events": [
+    {
+      "id": "ae091832bd701f2f81c145efd00b7a0725b44a87ab5c28cc50e7d87c069a5697",
+      "kind": "origin",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40822510539-1",
+      "details": {
+        "revisionId": "4123ec94f34c01625bc6560e77608c241b1aa051a40f354a29226d791216e017",
+        "parentRevisionId": null,
+        "candidateSha256": "90daf8f867cbab46fc9ad59ca9031f534210280b42a866fec0585f61ac42dfa8",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [
+          {
+            "sourceId": "3ca170397cfed47225ad7211",
+            "url": "https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.googledrivetrigger",
+            "textSha256": "ec6fc7c6e545931511256cfd2e31fd33fad86f7da3f7acf76832aec9ec7a5098"
+          },
+          {
+            "sourceId": "5c2bf4e7df8c3ec325ba2e74",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "textSha256": "2efd6ff6d5242dd765be1f15c0feb75eaa5409a8d7d7f861eedaedc7b85b4e8b"
+          }
+        ],
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A human-reviewed output for the specific task described in the post.",
+          "inputs": [
+            "Synthetic example input matching the task",
+            "Operator-approved fields and rules",
+            "Human reference answer for comparison"
+          ],
+          "trigger": "An operator supplies one synthetic example for review.",
+          "steps": [
+            "Read the supplied example.",
+            "Apply only the operator-approved fields and rules.",
+            "Prepare the proposed output.",
+            "Flag missing or ambiguous information.",
+            "Show the output beside its input.",
+            "Ask a person to check it before real use."
+          ],
+          "acceptanceCheck": "Compare a synthetic example with the human reference and verify each expected field and flag.",
+          "humanBoundary": "A person supplies inputs, sets rules and reviews every output before real-world use.",
+          "unverified": [
+            "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+          ]
+        },
+        "limitations": [
+          "No supplied reference documents a complete live integration or production behavior for this proposed flow."
+        ],
+        "provenance": {
+          "runId": "loop-40822510539-1",
+          "runSha256": "530c2832d2b1c33e4bac66ca2bb672f282ac044ae97c1a809850b647a2d00bda",
+          "draftSha256": "d7565e419d5729bc040ba14ff57c577926f9c5812e3ca70a4fb4502092005914",
+          "contextSha256": "2a77991d1b756233bbead212afbc8749f6bfc382805da1f134ef0a90ed0a3cf0",
+          "researchSha256": "a88d820acf865d3910b36ec08973c4de04e3ec21f9100cce7cf858eb313589c8",
+          "scanSha256": "31777ea50ed314c9b149d1a4c0f70b3bcbc9a6f98964c7e4570a77f6d88924fd",
+          "manifestSha256": "9717ba43d8128aa3a3fd0ea5d2a0f96f4d0f8a299afb802f79c2be3fc4f27343",
+          "selectionSha256": "13f3c802a1460912c8924860a44c9f03fe557dc4ec010b8b5402c695edc756e9",
+          "learningSha256": "1d47c44962dab748bb4dae99e5884536ea720702da73ca729c9f5a74a8f3cf00"
+        }
+      }
+    },
+    {
+      "id": "8dac47f3b7cd964454da524b5e2c87de3e5cb04d5f4dc64414ed81aefeed8789",
+      "kind": "acquisition",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "4123ec94f34c01625bc6560e77608c241b1aa051a40f354a29226d791216e017",
+        "intentSha256": "a4fed061b8d1702dd694aa94982e3e9e5af6e474e28b9f2aecbfbf6677897dbe",
+        "resultSha256": "64541d9fca5c88f2cc4cdfd913ce7e41ba76ba8cb434a70ff1fc3529e35ebbb2",
+        "outcome": "completed",
+        "routes": [
+          {
+            "key": "522171648c52435b5e2ee7eddc356cd15ffce8016b8285d18a7b6ad59b4b0841",
+            "referenceId": "n8n-persistent-deduplication-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "purpose": "freshness_verification",
+            "status": "fetched",
+            "evidenceSha256": "e6a36aa2423b8bfbe29dd9984438f0fb8a2b0f0fb8dcc8edf380a088cd694fc4"
+          }
+        ]
+      }
+    },
+    {
+      "id": "e6f831671185d5885d84ddaa6110a518bbc7543f79dd83667f9f069aaf0ff313",
+      "kind": "assessment",
+      "caseId": "3d1373b038ea48b1f2fbcc77",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "fed4f2336d33f6e1d042bbbc25f9d46a96d2f52840b63278c243b4196e5307a3",
+        "parentRevisionId": "4123ec94f34c01625bc6560e77608c241b1aa051a40f354a29226d791216e017",
+        "candidateIndex": 0,
+        "candidateSha256": "28cedc41edf17cbfc6c595ed1974c6d61b378774bd6a80cdc5a2234ee8ff63be",
+        "sourceSha256": "5e1d22351daccda89a06dab570dad5f30aeeb1093e634ee5ece340aad953d908",
+        "capabilitySources": [
+          {
+            "sourceId": "f1662b0ceb942474f83a8108",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.removeduplicates",
+            "textSha256": "0791764c70627f0ed2e15f1c7ddb2b7f59b8055faa47777e0546281dd6f468b8"
+          },
+          {
+            "sourceId": "5c2bf4e7df8c3ec325ba2e74",
+            "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.extractfromfile",
+            "textSha256": "2efd6ff6d5242dd765be1f15c0feb75eaa5409a8d7d7f861eedaedc7b85b4e8b"
+          }
+        ],
+        "progress": "new_capability_evidence",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewed table of game-test measurements with duplicate rows flagged.",
+          "inputs": [
+            "Synthetic game-test CSV rows with battery, temperature, frame-drop and note fields",
+            "Operator-supplied expected row count and duplicate key",
+            "Human reference table for comparison"
+          ],
+          "trigger": "An operator supplies a synthetic CSV file or a sample row set for one test session.",
+          "steps": [
+            "Extract CSV rows into structured records using the documented n8n CSV node.",
+            "Check required fields and flag incomplete rows.",
+            "Compare a chosen operator-defined key to identify repeated records.",
+            "Show the proposed table and flagged rows beside the input.",
+            "Ask a person to verify the result before any sheet entry."
+          ],
+          "acceptanceCheck": "On a fixed synthetic file, confirm each expected row is represented once and every intentionally repeated key is flagged.",
+          "humanBoundary": "A person supplies test data, chooses the row key, verifies flagged records and performs any real upload or sheet write.",
+          "unverified": [
+            "The supplied references document CSV extraction and deduplication capabilities, not phone upload triggers, Google Drive watching, n8n execution or Sheets writes.",
+            "Whether game testers beyond this post repeat this chore or would pay is unknown."
+          ]
+        },
+        "limitations": [
+          "The supplied references document CSV extraction and deduplication capabilities, not phone upload triggers, Google Drive watching, n8n execution or Sheets writes.",
+          "Whether game testers beyond this post repeat this chore or would pay is unknown."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "e8a11a4666d091a7dfbc38ae11b7b2d68a48b6af1d595a6017a7ac868979fabb",
+            "kind": "documentation",
+            "status": "pending",
+            "gapIndexes": [],
+            "question": "Read n8n Google Drive trigger activation documentation for the observed task.",
+            "method": "One existing guarded public documentation request.",
+            "acceptanceCheck": "Retain the literal relevant capability section and independently refetch it.",
+            "scopeLimit": "Documentation does not establish a working integration, access, buyer demand or execution.",
+            "referenceId": "n8n-drive-trigger-v1"
+          },
+          {
+            "id": "22b0d64d0284daeddd379f2b8aedbf10c2a6eeaaeaeadfe3264574ad23788155",
+            "kind": "local_fixture",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Which explicit key preserves distinct observations while rejecting a repeated file version?",
+            "method": "Use fictional file IDs, revisions and row ordinals in an isolated local CSV fixture.",
+            "acceptanceCheck": "Replay and restart insert no duplicate rows; distinct identical measurements survive; changed bytes under the same file revision fail closed.",
+            "scopeLimit": "A chosen synthetic key tests only that contract. It does not establish the real export schema or n8n runtime behavior.",
+            "referenceId": null
+          },
+          {
+            "id": "75e8707fba0a3f139c27b3f1f3a62634aa9e0ea136c792d0359473ff1d7726d9",
+            "kind": "existing_access",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Does the actual phone export produce a stable file ID and revision and trigger one complete-file read?",
+            "method": "Requires an owner-authorized existing device/export and integration environment; no account or credential acquisition is automatic.",
+            "acceptanceCheck": "Observe actual create, update, retry and incomplete-upload events before claiming live reliability.",
+            "scopeLimit": "Public documentation or a local synthetic test cannot close this live-integration gap.",
+            "referenceId": null
+          },
+          {
+            "id": "b10c0f0e0a30625beb147916eb875f4a1d21587c30af483ae17e0f1de1833383",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "n8n documentation supports CSV row extraction and duplicate comparison; phone and Sheets connections remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent mobile game testers may pay to reduce log transfer work; this post shows no buying intent.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week synthetic CSV review prototype fits the documented extraction and deduplication operations; live file flow is unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "Extraction and duplicate checks can repeat on supplied rows, but the docs do not establish triggers or sheet writes and a person reviews exceptions.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe phone notes, later CSV transfer and missed or duplicate triggers; demand beyond this post is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [
+          {
+            "key": "f26cffb02af54e924c2efaff1e032dfaba5a7511f2e9721c0f82638d102c5426",
+            "referenceId": "n8n-drive-trigger-v1",
+            "url": "https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.googledrivetrigger"
+          }
+        ],
+        "acquisitionPath": "missing_capability_evidence",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    },
+    {
+      "id": "e561c21bd4a064e81205cc08ca815cd89c6461a4893b44e131d9ffd8bc8b2eac",
+      "kind": "assessment",
+      "caseId": "5199855c5ba743dbb8eb718d",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "6f11b61129bdbb5bc62140ef9331cfac7f936a8c8bdf32c360ad789afb5fc43a",
+        "parentRevisionId": "05dd123449d424a796a886a010f4abf81e86b448385333d393565750516c98c8",
+        "candidateIndex": 1,
+        "candidateSha256": "1c6f0d048c79ffd89ac82cf80af345cc68d6b499074049d988d83ee570ab658b",
+        "sourceSha256": "4056292ffdb16517809fdfefb0a740b5caf5d2793de130710cbcc719c9aeceaa",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A short comparison of three operator-defined monetization options and their tradeoffs.",
+          "inputs": [
+            "Operator-supplied fictional app description",
+            "Current free and paid feature list",
+            "Operator-selected constraints such as audience and support capacity"
+          ],
+          "trigger": "An app maker supplies a short description and asks for a structured option comparison.",
+          "steps": [
+            "Restate the supplied app and constraints.",
+            "List three possible models using only operator-provided facts.",
+            "Compare each option on complexity, user impact and assumptions.",
+            "Flag missing information and unsupported market claims.",
+            "Have the maker review the options before making a product change."
+          ],
+          "acceptanceCheck": "For a synthetic app brief, verify each option follows the supplied constraints and clearly labels assumptions rather than asserting likely revenue.",
+          "humanBoundary": "The maker supplies accurate context, checks market assumptions and makes all pricing or product decisions.",
+          "unverified": [
+            "The post does not describe the app, its audience, current plan or specific decision.",
+            "No supplied reference documents a suitable implementation or validates any pricing outcome."
+          ]
+        },
+        "limitations": [
+          "The post does not describe the app, its audience, current plan or specific decision.",
+          "No supplied reference documents a suitable implementation or validates any pricing outcome."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "faf9b0de3bb2381ccb0ba80f8ed4f777fc722f56254f1a81344bb6c731a9065a",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "The post does not describe the app, its audience, current plan or specific decision.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "57e3ad5ad5544b3cee7e8a904208acc32565110309556be20e8cc1175a2c35a2",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied reference documents a suitable implementation or validates any pricing outcome.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A text-only comparison can be sketched from supplied inputs, but the post gives no app details and no implementation reference is supplied.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: app makers may pay for monetization advice, but this single request establishes neither a buyer group nor payment.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prompt-and-review prototype is bounded, while useful recommendations cannot be checked against the unspecified app or market.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A comparison can be drafted repeatedly from supplied briefs, but a person must validate assumptions and decide any changes.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The short post asks for conceptual monetization help but omits the app context and specific model question.",
+            "sourceIds": [
+              "5199855c5ba743dbb8eb718d"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    },
+    {
+      "id": "d42209dfddcf3a1e010bac84af4c565c0c65bb6a54221af71e27a9bf6328f0c6",
+      "kind": "assessment",
+      "caseId": "53e34af32b76b55950bb2735",
+      "productUrl": "https://news.ycombinator.com/item?id=50284998",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "b735a0ff6413264468ed92eea554fbd4c8571143cd68a86fefc3432ccec1df38",
+        "parentRevisionId": null,
+        "candidateIndex": 2,
+        "candidateSha256": "935e6a47f094d0dab78da700eeb9c31278c03652d6d2c55ae0e68a47262949ae",
+        "sourceSha256": "a4f2645b70d4aaa1d605371f19b46c9eff02ec57e00f8ed305eb19121f92f523",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A prioritized review card listing one interface issue, its observed impact and a proposed question for the maker.",
+          "inputs": [
+            "Operator-supplied fictional UI feedback notes",
+            "A screenshot description written without personal data",
+            "Maker-defined interface goals"
+          ],
+          "trigger": "The maker supplies one batch of feedback notes for a review.",
+          "steps": [
+            "Group notes that describe the same interface friction.",
+            "Separate observed behavior from suggested solutions.",
+            "Draft a concise review card with the evidence and an open question.",
+            "Flag conflicting or unclear feedback.",
+            "Ask the maker to verify the card before changing the interface."
+          ],
+          "acceptanceCheck": "For synthetic notes with known duplicate and conflicting items, verify the output groups only matching issues and preserves the original observations.",
+          "humanBoundary": "A person supplies feedback, confirms whether it reflects actual UI behavior and decides what to change.",
+          "unverified": [
+            "The post does not name a specific UI problem, user group or repeated review workflow.",
+            "No supplied reference documents feedback grouping or image understanding."
+          ]
+        },
+        "limitations": [
+          "The post does not name a specific UI problem, user group or repeated review workflow.",
+          "No supplied reference documents feedback grouping or image understanding."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "aa49d46d36886a9dcef4df79c9c71b13a68a5ddced33061867ecc7fb0dd120ed",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "The post does not name a specific UI problem, user group or repeated review workflow.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "c351efbea1a1632eb398e59009cf734c79923dd8dcc80c359c1bee6c358454d4",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied reference documents feedback grouping or image understanding.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A text-only feedback card can be mocked, but no specific interface task or implementation reference is supplied.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small Linux software makers may pay for feedback organization; the post only requests volunteer help and proves no payment.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic text-feedback review is bounded, but usefulness cannot be tested against a named UI problem or verified user observations.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Grouping notes can repeat, but people must validate observations and choose interface changes.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post identifies an early client and asks for UI help, without stating a concrete interface defect or recurring process.",
+            "sourceIds": [
+              "53e34af32b76b55950bb2735"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    },
+    {
+      "id": "185f23448e047fcde82acd8620660501cb5963e74e0b54a05aaf422d208faf36",
+      "kind": "assessment",
+      "caseId": "887ad565ba2d9b051abb976b",
+      "productUrl": "https://news.ycombinator.com/item?id=50281162",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "f22e5ad8ec1ee58c3c84a588a46ec4320007ba010bbc5ba1e9f84647f80e74d1",
+        "parentRevisionId": "a94177a1d78b152f2c0295fe66e36b7f903012444f68b6ed3fde3dc30673fe65",
+        "candidateIndex": 3,
+        "candidateSha256": "f61aeaa5c35f354cbac1ababe89d74d493ecc734da410e883d57468e43c4e228",
+        "sourceSha256": "556cb64d86ca204006e17fbd000490776abae591f025bae6b0650ddc60a87628",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A human-reviewed list of candidate stories present in supplied foreign-source links but absent from a supplied local-source list.",
+          "inputs": [
+            "Operator-supplied sample foreign headlines and URLs",
+            "Operator-supplied local outlet headlines and URLs",
+            "Target country and date window chosen by the operator"
+          ],
+          "trigger": "An operator supplies two small sample headline lists for a defined date window.",
+          "steps": [
+            "Normalize supplied headline text and dates.",
+            "Compare the lists for likely topic matches.",
+            "Draft candidate unmatched items with their supplied links.",
+            "Flag ambiguous matches for manual review.",
+            "Have an editor verify coverage before using the list."
+          ],
+          "acceptanceCheck": "On a synthetic set with known matching and unmatched stories, confirm the comparison flags the expected items and preserves each supplied link.",
+          "humanBoundary": "An editor chooses permitted sources, verifies every match and decides whether an item is actually missing or newsworthy.",
+          "unverified": [
+            "The post does not identify a buyer, target country, source set, accuracy need or repeated editorial workflow.",
+            "No supplied reference documents news acquisition, matching quality or current outlet coverage."
+          ]
+        },
+        "limitations": [
+          "The post does not identify a buyer, target country, source set, accuracy need or repeated editorial workflow.",
+          "No supplied reference documents news acquisition, matching quality or current outlet coverage."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "f49cb43eea6a14ba1b10143ad6a5e50169c6c8ee188edb76efc09f90937f3eb6",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "63ace31acb846e07d83db86c40e1959c12e8a5d57f6e8243ead2a549f7c1376a",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied reference documents news acquisition, matching quality or current outlet coverage.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A supplied-headline comparison can be mocked, but no source-selection or matching reference is provided.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: local publishers may pay for coverage-gap research, but the post establishes no customer request or payment.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A small synthetic comparison is possible, while reliable current coverage and cross-language matching are unverified.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A comparison can produce candidates, but an editor must verify coverage and newsworthiness.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a tool goal about stories not picked up locally, but supplies no detailed workflow or buyer evidence.",
+            "sourceIds": [
+              "887ad565ba2d9b051abb976b"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    },
+    {
+      "id": "0f050d20d05becc352df6ea13e94ecd9d1c2adb6b13260f6c56cd7f0bbda56c2",
+      "kind": "assessment",
+      "caseId": "9a2e13385a9d960688bb6c8c",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "c86d1236609f3aa061bb4727ac96ee5a58bef2d3835c8ef4a4ccbbc1c7f39ec8",
+        "parentRevisionId": "2b8fec24e7b67f485aba4108b918d5c8395ea2658e432735cdc56096e5b73881",
+        "candidateIndex": 4,
+        "candidateSha256": "4607826e7aa9378ef1527e11019f7b7c6482976288707c7fd12eccc0438ef70a",
+        "sourceSha256": "05f42b87da124224c7380aa33b559384b41d246b6a3826f95ee1b521723b26a0",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A draft delay alert and daily exception summary generated from synthetic shipment rows.",
+          "inputs": [
+            "Synthetic shipment ID, promised time and current status",
+            "Operator-defined delay threshold",
+            "Human reference list of expected exceptions"
+          ],
+          "trigger": "An operator supplies one synthetic shipment update or a batch of sample rows.",
+          "steps": [
+            "Check rows for missing status or promised-time fields.",
+            "Compare supplied times against the operator threshold.",
+            "Draft alerts for candidate delays and summarize the remaining rows.",
+            "Flag ambiguous or inconsistent records.",
+            "Ask a dispatcher to verify before any real notification."
+          ],
+          "acceptanceCheck": "On a synthetic table containing known delayed, on-time and incomplete rows, verify the alert list matches the operator reference exactly.",
+          "humanBoundary": "A person defines business rules, checks shipment state and approves all real alerts; no operational system is connected.",
+          "unverified": [
+            "The post gives examples rather than a confirmed buyer workflow, input schema or frequency.",
+            "No supplied reference documents logistics connectors, live event intake or notification delivery."
+          ]
+        },
+        "limitations": [
+          "The post gives examples rather than a confirmed buyer workflow, input schema or frequency.",
+          "No supplied reference documents logistics connectors, live event intake or notification delivery."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "8f51ad9ddf8ca6d883c8022703eae7b7f2479b8ea6ec74a034747bcbcdaac7ba",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "2d0fe42a85a513170bc9a41b4220bf7affeb78854c71f80dbda562c23e0348c3",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied reference documents logistics connectors, live event intake or notification delivery.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A sample-row alert draft is straightforward to outline, but the source provides examples and no implementation reference.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small logistics operators may pay for clearer exception alerts; this example does not establish buying intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic alert mock is bounded, while event access and correct business thresholds remain unverified.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed row-to-alert loop is repeatable, but people must verify shipment state and approve notifications.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained task span lists delayed-shipment alerts and daily reporting as examples; it does not establish frequency or a buyer.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    },
+    {
+      "id": "5d9f8d2e11598c1dd8d349f584354e2a1b9446f9aec0035a168532a8284e8dc7",
+      "kind": "assessment",
+      "caseId": "accc79f9c0afdef41b9f38d1",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "adeae48d83333c31ffcf76b60f96677b4b9d1784d7cfee88d30b8226d467d8b9",
+        "parentRevisionId": "63ce530a5ef53e4678e4835f26aaca180fa404d3e140c634455cb7d8042cb4ec",
+        "candidateIndex": 5,
+        "candidateSha256": "0632ca16f7bd0b3a817bd468c2d246c8369891aa8a26df51c7285216ff171970",
+        "sourceSha256": "91c06e80ba9394f0fc855d42a653a23d42724fddbec26adfa2c4a1c238d1afe5",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewed day-by-day comparison table with large differences flagged for investigation.",
+          "inputs": [
+            "Synthetic daily ad purchase totals",
+            "Synthetic daily Shopify online-store order totals",
+            "Operator-supplied date range and exclusion rules"
+          ],
+          "trigger": "An operator supplies the two aligned daily export tables for a completed period.",
+          "steps": [
+            "Check date alignment and missing days.",
+            "Apply the supplied exclusions to the store rows.",
+            "Compare the two daily totals and calculate differences.",
+            "Flag unusual differences for investigation without assigning a cause.",
+            "Have a store operator verify each flag against tracking settings."
+          ],
+          "acceptanceCheck": "For synthetic tables with known dates, exclusions and differences, verify the comparison retains the specified dates and flags the expected rows.",
+          "humanBoundary": "A person exports data, verifies filters, investigates tracking and decides any configuration changes; the prototype handles fictional inputs only.",
+          "unverified": [
+            "No supplied reference documents Shopify or Ads Manager export access or calculation mechanics.",
+            "The post is an instructional comparison and does not establish a reader asking for paid help."
+          ]
+        },
+        "limitations": [
+          "No supplied reference documents Shopify or Ads Manager export access or calculation mechanics.",
+          "The post is an instructional comparison and does not establish a reader asking for paid help."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "2f50c7412854317de27fac58f9dcf6f061b572169fd7a7820e36c1e5e6f4c58a",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No supplied reference documents Shopify or Ads Manager export access or calculation mechanics.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "f297101ab6481f2e0469b2488734c77c9d1d21fdce6bbfe7d94f30b8c9c44991",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "The post is an instructional comparison and does not establish a reader asking for paid help.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A spreadsheet mock can compare supplied daily totals, but no implementation reference supports either export or reliable attribution.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: ecommerce operators may pay for reconciliation, but this instructional post does not establish a customer request or payment.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week fictional table comparison is bounded; real exports and causal interpretation remain outside the evidence.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Date checks and differences can repeat on supplied tables, but a person must investigate discrepancies and any tracking changes.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained task and context specify aligned exports, exclusions and examples of potential tracking duplication; actual demand is unverified.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    },
+    {
+      "id": "32ed00fa7354df27a80cc260ac3d4f7824e83fb086a0be1fb4d02bda79671fba",
+      "kind": "assessment",
+      "caseId": "0964af05022d18e661eb95a7",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "d2f012b428bf93f4acb8d3252396f6cb0c3ddea193cdfc70d46aa2edc4d50838",
+        "parentRevisionId": "d01fc2e56c94e4ed1b3d7236a19e6825706f78ac3180e2acc9bd5d9ebfdf8694",
+        "candidateIndex": 6,
+        "candidateSha256": "7ef1ae72b85a4fa6b99c0ad3ab3cc12874afe235dc1612d445408dc656a3178c",
+        "sourceSha256": "520c90e2e945e142b7b68fb7b907a38ccbbbdf2aa2542a635af731fc52f4759a",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewed weekly table of keyword metrics with missing or duplicate rows flagged.",
+          "inputs": [
+            "Synthetic keyword list",
+            "Synthetic search-volume, CPC and difficulty values",
+            "Operator-defined week label and unique keyword key"
+          ],
+          "trigger": "An operator supplies a weekly batch of keyword metrics for review.",
+          "steps": [
+            "Check every row has a keyword, week and three metric fields.",
+            "Flag missing values and repeated keyword-week keys.",
+            "Arrange valid rows into the proposed sheet columns.",
+            "Summarize exceptions for the operator.",
+            "Ask a person to verify results before any real sheet update."
+          ],
+          "acceptanceCheck": "On a synthetic batch with known missing and duplicate rows, verify only the expected rows are flagged and all other values are preserved.",
+          "humanBoundary": "A person supplies keyword data, validates the provider values and performs any real account or sheet connection.",
+          "unverified": [
+            "The post describes its maker’s existing workflow, not a distinct buyer request or independently repeated customer need.",
+            "No supplied reference documents keyword retrieval or Google Sheets writing."
+          ]
+        },
+        "limitations": [
+          "The post describes its maker’s existing workflow, not a distinct buyer request or independently repeated customer need.",
+          "No supplied reference documents keyword retrieval or Google Sheets writing."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "fbf1028150c6f41d501e8fb8d73001bd2c762ab9920ff5adf48559e41f6ce6a6",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "4c18fc2921db65eb6776bbf8318d0bfb1f56ea1bc08a4c1b5b95d16d8a16cc22",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "No supplied reference documents keyword retrieval or Google Sheets writing.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A row-review mock is bounded, but the post provides no implementation reference for keyword retrieval or Sheets writes.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small marketing consultants may pay for weekly keyword reporting; the maker post establishes no customer demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic row checker is possible, but the proposed service would not reproduce the demonstrated external metric retrieval.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A mock can flag table exceptions, but a person must obtain and validate the actual metrics.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post describes weekly metric fields and a schedule in an existing maker workflow, not independent customer demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    },
+    {
+      "id": "23535d90bdd3f1750658b2cf26917717df84c01a4c30191168a18aaacc232463",
+      "kind": "assessment",
+      "caseId": "ccf5a6a14f8320d9f96a4e55",
+      "productUrl": "https://community.make.com/t/118303",
+      "sourceRunId": "loop-40848279392-1",
+      "details": {
+        "revisionId": "3547d122fbcdb2c485ed5f351fe2763fa3ea10ebf01eef9655a90c9187264954",
+        "parentRevisionId": "f88f7be36cf41bfe4b68bb3cb9346a3907c90b641da5a803e49e83002075959c",
+        "candidateIndex": 7,
+        "candidateSha256": "1b5e51f42a17c7c83505658bf4aa77f0475084fe3179429217721d2eb156e2c0",
+        "sourceSha256": "2b3779a877a32484b68dae3ea4fb7e4661c15e33f5ebc7a8bb8cb574355dde66",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review table that flags duplicate keys and expected records missing from an operator-supplied sample, with a suggested next check.",
+          "inputs": [
+            "Synthetic expected-record rows with operator-chosen unique keys",
+            "Synthetic records emitted by a sample workflow",
+            "Operator notes describing the intended matching rule"
+          ],
+          "trigger": "An operator submits one expected-versus-actual sample set after noticing duplicate or missing records.",
+          "steps": [
+            "Ask the operator to define the record key and expected row set.",
+            "Compare supplied actual rows with the expected rows using that key.",
+            "List repeated keys and expected keys with no matching actual row.",
+            "Draft a short review note with the rows and a possible next diagnostic check.",
+            "Have the operator verify the comparison and choose any workflow change."
+          ],
+          "acceptanceCheck": "On a small synthetic set with known repeated and omitted keys, verify that every known duplicate and missing key is flagged and no other key is labeled as an error.",
+          "humanBoundary": "A person supplies correct expected rows and matching rules, checks whether a flagged row is truly wrong, investigates the workflow cause and authorizes any production edit.",
+          "unverified": [
+            "No supplied implementation reference supports Make execution, cross-run state, root-cause diagnosis or automatic repair for this assignment.",
+            "The listing does not give record fields, a specific failure case, recurrence or evidence that buyers request this service."
+          ]
+        },
+        "limitations": [
+          "No supplied implementation reference supports Make execution, cross-run state, root-cause diagnosis or automatic repair for this assignment.",
+          "The listing does not give record fields, a specific failure case, recurrence or evidence that buyers request this service."
+        ],
+        "evidenceTasks": [
+          {
+            "id": "12b35ec65b6c4b2f4b5c19d6f19117c9d9bab2fbc0d19a9903b14c3b605e0e6b",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "5fdc893865acb5841b6a18b363e7615982c412d35f56012ae370bf81914a4061",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "No supplied implementation reference supports Make execution, cross-run state, root-cause diagnosis or automatic repair for this assignment.",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A spreadsheet-style synthetic comparison is definable, but no attached implementation reference supports the workflow mechanics or Make execution.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small professional service firms may pay for record-fault review; this listing does not establish a buyer request or payment.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test on supplied expected and actual rows is bounded; actual scenario fields and failure causes remain unknown.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A comparison can flag synthetic mismatches, but a person must supply rules, diagnose causes and authorize fixes; execution is undocumented.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained span explicitly lists fixing scenarios that send duplicates or miss records, but gives no case detail or recurring need.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "e39d8d99ec26ecb033c58df3e2f954f7ec6456de592f3def8ddb347cfba13302",
+          "draftSha256": "08611e24a3cd61bc1f630e083c8eb0fd9f2e551676db9b50afff1d93c0d5f5d8",
+          "contextSha256": "3b49414a361e5abe410bb0243739336b241d329de9c8becde4253e06881deb10",
+          "manifestSha256": "a8545ae0bdde295361b7b8acdb5276a6dc671576db8999e8cf55e57d8bed6c62",
+          "researchSha256": "bce57b718fcfd547ccc582f0d372e7769f18c170493ee17b65190a337e101a88",
+          "learningSha256": "e8a41b0b17f729ac9a6458946fa30fefa578edde18b6396be2c850c5423eaefe"
+        }
+      }
+    }
+  ]
+}
