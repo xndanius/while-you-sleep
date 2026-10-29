@@ -1,0 +1,274 @@
+{
+  "runId": "loop-40792222386-1",
+  "createdAt": "2026-10-29T00:11:01.412Z",
+  "candidates": [
+    {
+      "title": "Summarize resume email threads",
+      "productUrl": "https://community.n8n.io/t/325005",
+      "segment": "professional_services",
+      "sourceIds": [
+        "0cec76f4cbd8b39cd8d44f10"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0cec76f4cbd8b39cd8d44f10"
+        ],
+        "chore": "Reference an original resume email by immutable ID and prepare a compact summary with a draft prefill.",
+        "evidenceQuote": "To save email resume properly, i need immutable id to reference original email of the resume."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A compact resume-email summary tied to a supplied stable message reference.",
+        "inputs": [
+          "fictional email thread text",
+          "operator-supplied immutable message ID",
+          "operator-defined summary fields"
+        ],
+        "trigger": "An operator pastes one fictional thread and its reference ID.",
+        "steps": [
+          "Check that the supplied reference is present.",
+          "Extract the stated role, request and response status into labeled fields.",
+          "Draft a short summary linked to the supplied reference.",
+          "Flag missing or conflicting facts for review.",
+          "Compare the output with a manually prepared answer key."
+        ],
+        "acceptanceCheck": "On a fixed synthetic set, verify every output field against the answer key and confirm the reference is copied exactly.",
+        "humanBoundary": "An operator supplies sanitized test text and fields, verifies the summary and reference, and authorizes any use with real email.",
+        "unverified": [
+          "Whether any email system exposes a stable immutable ID to a prototype",
+          "Whether summaries preserve context accurately across long threads",
+          "Any email connector or automated drafting capability"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can test operator-supplied sample email text, but no implementation reference supports email access or immutable IDs.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: recruiting or professional-service operators might pay for faster email review; this request proves no buyer intent or payment.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can compare a supplied thread and reference ID with a summary, but email integration and identity stability are unverified.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed text-to-summary loop is bounded; a person must verify identity, context and every prefilled detail, and no automation support is documented.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native context describes resume email summarization and immutable-ID need, but gives no repeated volume or corroboration.",
+            "sourceIds": [
+              "0cec76f4cbd8b39cd8d44f10"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore merits a bounded proposed experiment, but no supplied implementation reference supports the mechanics; conservative provisional mean is below 6."
+    },
+    {
+      "title": "Draft booking and service status alerts",
+      "productUrl": "https://community.n8n.io/t/324925",
+      "segment": "professional_services",
+      "sourceIds": [
+        "80797dd1ada2bd299d560f07"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "80797dd1ada2bd299d560f07"
+        ],
+        "chore": "Prepare booking confirmations, provider assignment notifications, payment status updates and customer alerts.",
+        "evidenceQuote": "How can n8n help automate booking confirmations, provider assignment notifications, payment status updates, and customer alerts?"
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue of proposed status messages for a small set of fictional bookings.",
+        "inputs": [
+          "fictional booking ID and status",
+          "fictional provider assignment",
+          "fictional payment state",
+          "operator-written message templates"
+        ],
+        "trigger": "A labeled synthetic booking event is added to a test sheet.",
+        "steps": [
+          "Validate required test fields and flag missing values.",
+          "Select a draft template for the declared event type.",
+          "Fill only fields supplied in the test record.",
+          "Mark duplicate event IDs and simulated failures.",
+          "Show the draft and flags in a review queue.",
+          "Compare each draft and flag with expected test outputs."
+        ],
+        "acceptanceCheck": "For fixed synthetic events, check correct template, exact field values, duplicate detection and failure flags against a written answer key.",
+        "humanBoundary": "An operator defines allowed statuses and templates, verifies payment facts, and approves every customer or provider message.",
+        "unverified": [
+          "Whether booking or payment APIs can be accessed",
+          "Whether event IDs support reliable deduplication and retries",
+          "Any integration, delivery or persistence capability"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The request names four alert types, but no supplied implementation reference documents integrations or message delivery.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: on-demand service operators might pay for fewer missed updates; the discussion establishes need, not purchase intent or payment.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic event-to-draft prototype can cover labeled booking states; APIs, payment correctness and production delivery remain unsupported.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A proposed event-to-draft loop can repeat, but no automation capability is evidenced and a person must verify payment state and approve sends.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The native post names booking, assignment, payment-status and customer alerts plus retry and duplicate concerns, but gives no concrete field schema or corroboration.",
+            "sourceIds": [
+              "80797dd1ada2bd299d560f07"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore merits a bounded proposed experiment, but no supplied implementation reference supports the mechanics; conservative provisional mean is below 6."
+    },
+    {
+      "title": "Inventory files before freeing disk space",
+      "productUrl": "https://news.ycombinator.com/item?id=50271417",
+      "segment": "professional_services",
+      "sourceIds": [
+        "c853ab1f158b31c64ddf2e01"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "c853ab1f158b31c64ddf2e01"
+        ],
+        "chore": "Identify candidate files or categories for a person to review when freeing disk space.",
+        "evidenceQuote": "Built a little native MacOS app out of necessity to help me free up some storage on my Mac."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A read-only review list of large or duplicate-looking files from a supplied inventory.",
+        "inputs": [
+          "synthetic file name and size rows",
+          "operator-defined protected folders",
+          "operator-defined review threshold"
+        ],
+        "trigger": "An operator imports a fictional inventory table.",
+        "steps": [
+          "Exclude rows marked protected.",
+          "Sort remaining rows by supplied size.",
+          "Group only rows with identical supplied hashes.",
+          "Show a review reason without changing files.",
+          "Compare the list with a manually checked expected result."
+        ],
+        "acceptanceCheck": "On a synthetic inventory, verify protected rows never appear and sorting/grouping matches the answer key; confirm no file operation occurs.",
+        "humanBoundary": "A person supplies test inventory, checks every listed item and performs any device scan or deletion themselves.",
+        "unverified": [
+          "Whether macOS exposes a safe inventory export",
+          "Whether hashes or duplicate detection are available",
+          "Any app, storage scanning or deletion capability"
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A student can test a manually supplied file inventory, but no reference supports Mac storage scanning or file metadata access.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: people with recurring storage pressure might pay for an inventory assistant; this personal account does not establish repeat demand or payment.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week mock can rank fictional inventory rows without touching files; safe real scanning and size accuracy are unverified.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed report can sort supplied rows, but a person must verify every recommendation and perform any deletion; no autonomous device access is documented.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The post states a personal need to free Mac storage and that an app was built, but supplies no frequency, workflow details or corroboration.",
+            "sourceIds": [
+              "c853ab1f158b31c64ddf2e01"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore merits a bounded proposed experiment, but no supplied implementation reference supports the mechanics; conservative provisional mean is below 6."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Local legal research database utilities",
+      "productUrl": "https://news.ycombinator.com/item?id=50274235",
+      "reason": "The retained excerpt describes a product as a research tool but states no concrete user chore or request; proposing one would invent demand."
+    },
+    {
+      "title": "Cloudflare IP abuse reporting context",
+      "productUrl": "https://news.ycombinator.com/item?id=50257159",
+      "reason": "The only retained source text is “which clearly doesn't apply here.” It does not identify an actual task, so no experiment or buyer can be grounded."
+    },
+    {
+      "title": "Jep multi-harness gateway",
+      "productUrl": "https://news.ycombinator.com/item?id=50272329",
+      "reason": "The excerpt is a product description (“This is Jep…”) without a distinct chore requested by a user; product capability alone is not demand."
+    },
+    {
+      "title": "Startup operations management",
+      "productUrl": "https://news.ycombinator.com/item?id=50253932",
+      "reason": "“we manage your operations” is a broad promotional claim, not a specific manual job or repeated chore; duties cannot be inferred."
+    }
+  ]
+}
