@@ -1,0 +1,273 @@
+{
+  "runId": "loop-40938273413-1",
+  "createdAt": "2026-10-29T19:15:43.528Z",
+  "candidates": [
+    {
+      "title": "Keep training streaks visible",
+      "productUrl": "https://news.ycombinator.com/item?id=50289659",
+      "sourceIds": [
+        "8bc43c3f35a0603276238dda"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "8bc43c3f35a0603276238dda"
+        ],
+        "chore": "Maintain a visible training streak and points record to support motivation.",
+        "evidenceQuote": "Added a system of streaks and points to motivate me train and it has become part of my daily routine."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can test a simple manual log, but the post does not specify trainer data access or a repeatable workflow.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent fitness coaches may pay for motivation tracking; the post reports one person's routine, not buyer intent.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week mock can award points from manually entered sessions; data capture and sustained motivation remain unverified.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A rule can update a supplied session log, but a person must enter workouts and decide whether the reward system is useful.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post says streaks and points became part of a daily training routine, but gives no repeated buyer evidence or measured effect.",
+            "sourceIds": [
+              "8bc43c3f35a0603276238dda"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable weekly training streak and points summary from manually supplied session entries.",
+        "inputs": [
+          "Fictional dated workout entries",
+          "A proposed weekly points rule",
+          "An operator-supplied target streak"
+        ],
+        "trigger": "A person enters or pastes a new training session.",
+        "steps": [
+          "Validate each entry has a date and activity label.",
+          "Apply the proposed points rule to the supplied session.",
+          "Update a streak count using the dates in the test log.",
+          "Produce a weekly summary and flag gaps for review.",
+          "Ask a coach or test user to inspect whether the rules are useful."
+        ],
+        "acceptanceCheck": "On a fixed fictional log, compare every awarded point and streak count with a hand-calculated expected summary.",
+        "humanBoundary": "The user supplies and corrects all session records; a person chooses the scoring rule and reviews whether it encourages safe training. No workout advice is produced.",
+        "unverified": [
+          "Whether users sustain training from points",
+          "Whether a coach or other buyer would pay",
+          "Any Bluetooth trainer data access"
+        ]
+      },
+      "reason": "Below six: a proposed manual training log is testable, but the single self-reported routine does not establish a professional buyer or recurring demand."
+    },
+    {
+      "title": "Save and resume research sessions",
+      "productUrl": "https://news.ycombinator.com/item?id=50289281",
+      "sourceIds": [
+        "2070543e033ae68e255c58ab"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "2070543e033ae68e255c58ab"
+        ],
+        "chore": "Save a research session so a person can resume it later or export and share its record.",
+        "evidenceQuote": "Research Trails - An .MD record of a research session you can jump in and out of, export and share."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can prototype a session record using supplied notes, but no implementation reference is attached.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent research consultants may pay for session continuity; this launch excerpt establishes no buyer intent.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week prototype can store and export operator-supplied notes, while reliable resume state and collaboration remain unverified.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A tool can format and retrieve supplied session records, but a person must capture notes and verify the resumed context.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The excerpt describes a research-session record that can be resumed, exported and shared, but provides no use frequency or corroboration.",
+            "sourceIds": [
+              "2070543e033ae68e255c58ab"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A dated Markdown research-session record that a person can reopen and export.",
+        "inputs": [
+          "Operator-supplied session title",
+          "Fictional research notes",
+          "A proposed section order",
+          "A manual next-step note"
+        ],
+        "trigger": "A researcher starts a session or asks to resume a saved one.",
+        "steps": [
+          "Collect the title, notes and next-step note from the operator.",
+          "Format them into a dated Markdown record.",
+          "Save the record under a manually chosen session label.",
+          "Reopen the selected record and display its notes and next step.",
+          "Export the record for a person to inspect and share."
+        ],
+        "acceptanceCheck": "Save a fictional session, reopen it by its label, and verify the exported text contains all supplied notes and the next-step field.",
+        "humanBoundary": "The researcher supplies, names and checks the notes; this test does not crawl sources, establish factual accuracy, or prove shared editing.",
+        "unverified": [
+          "Whether session identity remains reliable across a real research project",
+          "Whether export and sharing work across intended tools",
+          "Whether research professionals have recurring need or willingness to pay"
+        ]
+      },
+      "reason": "Below six: the excerpt names a useful session-record workflow, but this launch description does not establish independent demand, frequency, or implementation capabilities."
+    },
+    {
+      "title": "Draft reflection prompts from a conversation",
+      "productUrl": "https://news.ycombinator.com/item?id=50287887",
+      "sourceIds": [
+        "a30ec9940a1e7f291796da51"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "a30ec9940a1e7f291796da51"
+        ],
+        "chore": "Review a conversation and identify small alternative moves that could surface hidden assumptions.",
+        "evidenceQuote": "Basically, the tool reframes conversations and tries to find the smallest moves the user COULD have made to have surfaced unknown assumptions"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A student can test prompts on fictional conversation text, but the source gives no method or implementation support.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: independent facilitators may pay for reflection aids; this product excerpt does not establish their demand or payment.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week text-only prototype is bounded, but useful alternative moves and assumption detection need human evaluation.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The system could draft prompts from supplied text, while a person must judge context, fairness, and whether suggestions are appropriate.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The excerpt describes reframing conversations to surface assumptions, but gives no evaluation criteria, recurring use, or corroboration.",
+            "sourceIds": [
+              "a30ec9940a1e7f291796da51"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short review memo listing possible assumptions and alternative questions from supplied conversation text.",
+        "inputs": [
+          "Fictional conversation transcript",
+          "A proposed review question template",
+          "Operator-supplied meeting goal"
+        ],
+        "trigger": "A facilitator pastes a conversation excerpt and its stated goal.",
+        "steps": [
+          "Check that the supplied text and goal are present.",
+          "Draft possible assumptions as questions, not conclusions.",
+          "Suggest small alternative questions tied to exact supplied passages.",
+          "Mark suggestions that lack a clear text basis.",
+          "Return the memo for a facilitator to review or discard."
+        ],
+        "acceptanceCheck": "On fictional transcripts with a hand-written answer key, verify each suggested question points to a supplied passage and unsupported suggestions are marked.",
+        "humanBoundary": "A facilitator supplies the excerpt and goal, reviews every interpretation, and decides what to ask; the tool must not judge participants or infer personal traits.",
+        "unverified": [
+          "Whether prompts reliably surface useful assumptions",
+          "Whether facilitators have a repeated paid need",
+          "Any documented method or validated capability"
+        ]
+      },
+      "reason": "Below six: a reflection memo can be tested on synthetic text, but the excerpt does not define a reliable method, recurring professional need, or buyer."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Keep training streaks visible",
+      "productUrl": "https://news.ycombinator.com/item?id=50289659",
+      "reason": "Below threshold: the post reports one maker’s motivation routine and provides no professional buyer evidence, implementation reference, or corroborated need."
+    },
+    {
+      "title": "MCP versus built-in AI preference",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "Excluded: the post asks for a preference between integration approaches but identifies no concrete chore, customer workflow, or requested service to scope without invention."
+    },
+    {
+      "title": "Save and resume research sessions",
+      "productUrl": "https://news.ycombinator.com/item?id=50289281",
+      "reason": "Below threshold: the excerpt names session records, resuming, export, and sharing, but establishes no independent need, repeat frequency, or buyer intent."
+    },
+    {
+      "title": "Draft reflection prompts from a conversation",
+      "productUrl": "https://news.ycombinator.com/item?id=50287887",
+      "reason": "Below threshold: the excerpt describes conversation reframing, but supplies no bounded evaluation method, recurring need, or evidence of a paying professional customer."
+    }
+  ]
+}
