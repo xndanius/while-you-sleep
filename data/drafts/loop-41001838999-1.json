@@ -1,0 +1,401 @@
+{
+  "runId": "loop-41001838999-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-30T04:17:21.000Z",
+  "candidates": [
+    {
+      "title": "Compare Meta and Shopify order exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceIds": [
+        "accc79f9c0afdef41b9f38d1"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "accc79f9c0afdef41b9f38d1"
+        ],
+        "chore": "Compare manually exported daily ad purchases and Shopify orders to flag dates with possible tracking discrepancies.",
+        "evidenceQuote": "In Shopify, export daily orders for the same 30 days, Online Store channel only, without test and cancelled orders."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The retained steps give an operator-supplied export task, but no supplied source documents a comparison tool.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a small professional operator may pay for this narrow review; no buying intent or payment is established.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic table comparison fits a small prototype; correct attribution and live exports remain outside scope.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A supplied-file flag report can repeat, but the person exports, interprets and investigates every discrepancy.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The spans specify two 30-day exports and a possible double-count pattern, but this is one instructional post.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table that flags dates where supplied ad and store purchase totals differ sharply.",
+        "inputs": [
+          "Fictional daily ad purchase totals",
+          "Fictional daily Shopify order totals",
+          "Operator-selected date and channel labels"
+        ],
+        "trigger": "After an operator supplies two matching-period CSV files.",
+        "steps": [
+          "Read the two supplied tables.",
+          "Align rows by date using an explicitly chosen date field.",
+          "Mark missing dates and unusually large differences without guessing causes.",
+          "Produce a review table with both totals and a note for human investigation."
+        ],
+        "acceptanceCheck": "On a small fictional pair with a known injected mismatch, check that only the expected date is flagged and both input totals are preserved.",
+        "humanBoundary": "The operator exports and supplies files, confirms comparable attribution settings, decides whether a gap matters, and investigates tracking before changing anything.",
+        "unverified": [
+          "Actual export column names and matching rules",
+          "A defensible threshold for unusual differences",
+          "Whether operators need this repeatedly",
+          "Live Shopify or ad-platform access"
+        ]
+      },
+      "reason": "Scored as a bounded supplied-file experiment; below threshold because repeated buyer need and useful discrepancy rules are unverified."
+    },
+    {
+      "title": "Prepare game test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "5c2bf4e7df8c3ec325ba2e74",
+        "f1662b0ceb942474f83a8108"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "Move mobile game-test CSV observations into a sheet without missing entries or importing the same file twice.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "n8n documents CSV extraction and duplicate comparison, though phone intake and sheet writing are not documented here.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: a small professional operator may pay for this narrow review; no buying intent or payment is established.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A supplied-file prototype can parse and compare rows; correct identity fields and live trigger behavior remain unverified.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "CSV parsing and duplicate checks can be automated with documented nodes; a person supplies files and verifies matches.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The spans describe the current notes-to-CSV-to-Sheets process and failures, but only one operator case.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet of parsed game-test rows with likely repeat rows marked for a person.",
+        "inputs": [
+          "Fictional CSV rows with battery, temperature, frame-drop and note fields",
+          "A proposed stable observation key supplied by the operator",
+          "A fictional prior-row set for repeat comparison"
+        ],
+        "trigger": "When an operator manually supplies a completed CSV and a prior-row sample.",
+        "steps": [
+          "Extract CSV records into row objects using the documented n8n extraction node.",
+          "Check required sample fields and mark missing values.",
+          "Compare rows on an operator-selected key using the documented duplicate-removal capability.",
+          "Create a review output that retains original values and labels possible repeats.",
+          "Have a person confirm the key and every flagged repeat before sheet entry."
+        ],
+        "acceptanceCheck": "With a synthetic file containing known complete, incomplete and repeated rows, confirm records are retained and expected repeats are marked without silently deleting observations.",
+        "humanBoundary": "The operator records or exports the data, chooses a valid stable key, supplies files and reviews every match. This does not repair or prove phone triggers, cloud upload timing, or data persistence.",
+        "unverified": [
+          "Actual CSV export format",
+          "A stable unique observation key",
+          "Whether the documented duplicate node suits this dataset",
+          "Phone upload and trigger reliability",
+          "Google Sheets write behavior"
+        ]
+      },
+      "reason": "The concrete chore and two attached n8n references support a bounded file-review plan, but the provisional mean is 4.6 and live intake remains unresolved."
+    },
+    {
+      "title": "Keep received images with reply context",
+      "productUrl": "https://community.make.com/t/118271",
+      "sourceIds": [
+        "1ccb6ac28f87d8a3d3a3955c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "1ccb6ac28f87d8a3d3a3955c"
+        ],
+        "chore": "Pass a received customer image and its message together to an AI step so the agent can identify the pictured product without asking for a resend.",
+        "evidenceQuote": "I want the AI agent to recognize that the image has already been received and use the available image to identify the product, rather than asking the customer to resend it."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The request describes two routed inputs, but no supplied reference documents image handoff or image analysis.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small online sellers may pay for fewer repeated image requests; the post proves no buyer intent or payment.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic handoff mock is possible, but the core image recognition and Make route behavior are unsupported.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A draft product guess would need customer-context checks; image delivery and reliable recognition are undocumented.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post gives a specific text-plus-image failure, but no frequency, solution or corroboration.",
+            "sourceIds": [
+              "1ccb6ac28f87d8a3d3a3955c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review card pairing a fictional customer message with its already supplied image reference and a proposed product guess.",
+        "inputs": [
+          "Fictional customer text",
+          "A harmless sample product image",
+          "A manually linked image reference",
+          "A small fictional product catalog"
+        ],
+        "trigger": "When a test message includes a sample image and product-identification request.",
+        "steps": [
+          "Keep the message and supplied image reference in one proposed test record.",
+          "Compare the sample image against a small labeled fictional catalog.",
+          "Draft one possible catalog match with a confidence note.",
+          "Show the text, image reference and draft together for human review."
+        ],
+        "acceptanceCheck": "For labeled sample images, check whether the displayed draft points to the known catalog item and never claims certainty when no match is clear.",
+        "humanBoundary": "A person authorizes image use, verifies the product match and handles the customer reply; this does not establish a Make integration or safe production image processing.",
+        "unverified": [
+          "Make route handoff behavior",
+          "Image input support and recognition quality",
+          "Whether text and image remain paired through the proposed flow",
+          "Customer data and retention requirements"
+        ]
+      },
+      "reason": "The stated failure supports a narrow mock, but the core image handling is unsupported and the provisional mean is 4.0."
+    },
+    {
+      "title": "Review duplicate rows after missed n8n runs",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "sourceIds": [
+        "ec16f5ced732a9d207069cd6"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ec16f5ced732a9d207069cd6"
+        ],
+        "chore": "Review records created after a missed schedule trigger and identify possible duplicate entries before a person acts on them.",
+        "evidenceQuote": "Missed schedule triggers can duplicate everything."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The retained lines mention duplicate risk but give no data format or supplied capability reference for this workflow.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small workflow operators might pay for safer recovery review, but no buyer or purchase evidence appears.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A fictional before-and-after row comparison is possible; the trigger and duplicate contract are not specified.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A report could mark suspected repeats, but recovery and deletion require human judgment; no workflow support is supplied.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "A maker post states a duplicate risk, without a concrete affected record, frequency or customer request.",
+            "sourceIds": [
+              "ec16f5ced732a9d207069cd6"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review list marking possible repeat records in a fictional post-run dataset.",
+        "inputs": [
+          "Fictional records before and after a missed schedule",
+          "Operator-selected record identifier",
+          "Expected repeat examples for a mock check"
+        ],
+        "trigger": "After an operator supplies two fictional record sets from before and after a schedule interruption.",
+        "steps": [
+          "Compare records using an explicitly supplied identifier.",
+          "Mark exact identifier repeats and missing identifiers separately.",
+          "Preserve both original rows with review labels.",
+          "Ask a person to decide whether a row is a legitimate repeat or a distinct event."
+        ],
+        "acceptanceCheck": "Check a small fixture containing known exact repeats and distinct rows, confirming the report flags only the chosen identifier matches and preserves source rows.",
+        "humanBoundary": "A person supplies records, selects the identifier, investigates context and authorizes any correction; the proposal does not prevent missed triggers or repair a live workflow.",
+        "unverified": [
+          "What data the workflow processes",
+          "Whether records have stable identifiers",
+          "Actual trigger and recovery behavior",
+          "A repeated customer need"
+        ]
+      },
+      "reason": "This concrete operational concern is assessed separately, but the proposed review overlaps the game-test duplicate-check workflow in this batch; it is excluded for shared workflow, and its evidence is also too thin for threshold."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "AWS SigV4 signing package",
+      "productUrl": "https://news.ycombinator.com/item?id=50297425",
+      "reason": "The retained excerpt describes a request-signing package, not a user chore, request for service, or concrete business task. No demand-backed experiment can be scoped from these spans."
+    },
+    {
+      "title": "Privacy-first budgeting app",
+      "productUrl": "https://news.ycombinator.com/item?id=50296473",
+      "reason": "The excerpt is a maker statement that the app helped people close to the maker; it does not identify a concrete chore or request for a service."
+    },
+    {
+      "title": "Car-free discovery and navigation app",
+      "productUrl": "https://news.ycombinator.com/item?id=50295437",
+      "reason": "The excerpt describes the app’s purpose but supplies no concrete task, complaint, or request from a prospective user."
+    },
+    {
+      "title": "Advice on Shopify app reviews",
+      "productUrl": "https://community.shopify.com/t/705837",
+      "reason": "The supplied text only asks generally for advice on the review process; it names no concrete task or problem to prototype."
+    },
+    {
+      "title": "Built-in AI versus MCP question",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "This is a broad preference question about software architecture, not a specific customer chore or requested service."
+    },
+    {
+      "title": "Copyright status of LLM output concern",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The excerpt states a general concern about rights but no concrete workflow, task, or requested service."
+    },
+    {
+      "title": "Compare Meta and Shopify order exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "reason": "Below threshold: the bounded comparison is assessable, but this single instructional post does not establish repeated buyer need or a supported live integration; provisional mean 4.4."
+    },
+    {
+      "title": "Prepare game test CSV rows for review",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "Below threshold: the n8n references support CSV extraction and duplicate comparisons, but the live trigger, stable matching key, and recurring buyer need remain unresolved; provisional mean 4.6."
+    },
+    {
+      "title": "Keep received images with reply context",
+      "productUrl": "https://community.make.com/t/118271",
+      "reason": "Below threshold: the specific image handoff chore is clear, but image recognition and Make route capabilities are unsupported; provisional mean 4.0."
+    },
+    {
+      "title": "Review duplicate rows after missed n8n runs",
+      "productUrl": "https://community.n8n.io/t/325086",
+      "reason": "Excluded because it shares the specific duplicate-record review workflow with the proposed game-test CSV experiment; source detail and buyer evidence are also too limited to qualify."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion assignments. Four concrete chores received scoped five-criterion assessments; each is below the unchanged threshold or duplicates another proposed workflow. Six excerpts do not establish a concrete chore. No post proposed."
+    }
+  ]
+}
