@@ -1,0 +1,448 @@
+{
+  "runId": "loop-41006802393-1",
+  "createdAt": "2026-10-30T05:10:15.645Z",
+  "candidates": [
+    {
+      "title": "Prepare answers from a supplied workbook",
+      "productUrl": "https://news.ycombinator.com/item?id=50293148",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "6079e1aa28c566afb75555b0"
+        ],
+        "chore": "Look up requested information in a supplied full spreadsheet workbook.",
+        "evidenceQuote": "There is a zipped full workbook of the spreadsheet as well for the agent to lookup data as needed."
+      },
+      "sourceIds": [
+        "6079e1aa28c566afb75555b0"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post supplies a workbook for lookup, but no implementation reference supports workbook question answering.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional analysts may pay for faster workbook lookup; this single post shows no purchase intent.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A small supplied-workbook mock is bounded, but workbook parsing and answer accuracy are unverified.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must provide the workbook and verify each answer; no autonomous lookup capability is documented.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The excerpt identifies a workbook lookup task, but gives no fields, recurrence, constraints, or corroboration.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed from the exact assigned discussion task and a bounded proposed experiment. The provisional mean is below 6, so this is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A cited answer card pointing to workbook sheets or cells relevant to one operator question.",
+        "inputs": [
+          "Synthetic workbook with a few labeled sheets",
+          "Operator-supplied question",
+          "Expected answer and source cell for checking"
+        ],
+        "trigger": "An operator submits one question with a supplied workbook.",
+        "steps": [
+          "Load a fictional workbook fixture.",
+          "Record one operator question.",
+          "Manually select likely supporting cells for the prototype.",
+          "Draft a concise answer with sheet and cell references.",
+          "Compare it with a prepared expected answer.",
+          "Have a person verify every cited cell before use."
+        ],
+        "acceptanceCheck": "For each fixture question, check whether the draft answer matches the expected answer and points to the correct supporting cells.",
+        "humanBoundary": "The operator supplies the workbook and question; a person validates the answer and references before anyone relies on it.",
+        "unverified": [
+          "Reliable workbook ingestion and cell citation",
+          "Handling formulas, hidden sheets, and large workbooks",
+          "Whether this lookup task recurs for a paying customer"
+        ]
+      }
+    },
+    {
+      "title": "Organize public signals before installing an app",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "66865ff0f48baba92ae2167c"
+        ],
+        "chore": "Check available information about an app’s security before deciding whether to install it.",
+        "evidenceQuote": "I’d appreciate any guidance on how to verify an app’s security before installing it in my store."
+      },
+      "sourceIds": [
+        "66865ff0f48baba92ae2167c"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A source-linked evidence card is approachable, but no implementation source supports automated verification.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Shopify store operators may value a pre-install review aid; no payment intent is shown.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week public-information organizer is bounded, but security criteria and trustworthy verdicts are unsupported.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must choose sources and make the installation decision; no automated security capability is documented.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post asks about security verification before installation, but supplies no method, example app, or corroboration.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed from the exact assigned discussion task and a bounded proposed experiment. The provisional mean is below 6, so this is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A source-linked card separating an app’s public security claims from information the operator could not find.",
+        "inputs": [
+          "Fictional app listing text",
+          "Operator-supplied public security links",
+          "Checklist fields selected for the mock",
+          "Expected present or missing evidence labels"
+        ],
+        "trigger": "An operator enters public listing text and links for one app under consideration.",
+        "steps": [
+          "Create a fictional app listing fixture.",
+          "Enter its public security links.",
+          "Extract statements into a source-linked card.",
+          "Mark checklist fields as found or not found.",
+          "Compare labels with a prepared fixture answer.",
+          "Have a person inspect sources and decide whether to install."
+        ],
+        "acceptanceCheck": "Check that each card statement links to its supplied source and that missing fields are labeled unknown rather than unsafe.",
+        "humanBoundary": "The operator supplies public links; a person judges source quality and makes every security and installation decision.",
+        "unverified": [
+          "Any official complete security-verification checklist",
+          "Reliable source retrieval or app-security assessment",
+          "Whether operators would pay for this aid"
+        ]
+      }
+    },
+    {
+      "title": "Map an agent run’s recovery questions",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Design checkpoint, recovery, and duplicate-safe behavior for an agent run.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A worksheet can structure a supplied failure case, but no source supports implementing agent recovery behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agent workflows may pay for recovery planning; this comment shows no buying intent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic worksheet fits four weeks, while correct checkpoint and safe retry rules depend on each system.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed output is a human-reviewed plan; an engineer must decide and implement every recovery action.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The comment names checkpointing, recovery logic, and idempotency work, but gives no incident details or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed from the exact assigned discussion task and a bounded proposed experiment. The provisional mean is below 6, so this is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review card listing state to preserve, a proposed restart point, and duplicate-action risks for one fictional failed run.",
+        "inputs": [
+          "Synthetic agent task description",
+          "Fictional run-state snapshot",
+          "List of actions already attempted",
+          "Expected safe recovery review points"
+        ],
+        "trigger": "An engineer supplies one fictional interrupted-run case for review.",
+        "steps": [
+          "Create a fictional multi-step agent run.",
+          "Mark the state and actions completed before interruption.",
+          "Draft questions about restart point and repeated side effects.",
+          "Compare questions with a prepared review checklist.",
+          "Flag unknown state as unresolved.",
+          "Have an engineer choose and test any recovery behavior."
+        ],
+        "acceptanceCheck": "For each fixture, verify that the card identifies known completed actions and marks uncertain state without recommending an unapproved retry.",
+        "humanBoundary": "An engineer supplies the case, checks state assumptions, and authorizes all recovery logic; the prototype never retries or changes an agent.",
+        "unverified": [
+          "Actual checkpoint formats and framework behavior",
+          "Safe idempotency rules for a real agent task",
+          "Whether this need is recurring or commercially valuable"
+        ]
+      }
+    },
+    {
+      "title": "Compare agent results after a harness change",
+      "productUrl": "https://news.ycombinator.com/item?id=50292363",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "7a3ccfe795ee63e74f345b5a"
+        ],
+        "chore": "Compare financial-agent behavior before and after a harness change.",
+        "evidenceQuote": "We build financial AI agents, and Apgar is the tool we wrote to see whether a harness change made an agent better or worse in production."
+      },
+      "sourceIds": [
+        "7a3ccfe795ee63e74f345b5a"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A small before-and-after review is possible, but no source documents evaluation implementation or metrics.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: financial-agent teams may pay for regression review; this maker description establishes no buying intent.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic paired-run report is bounded, but meaningful metrics and representative test cases remain unspecified.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A script could organize paired results, but a person must define meaningful measures and approve changes.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post describes evaluating whether a harness change improved or worsened production agents, with no details or corroboration.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed from the exact assigned discussion task and a bounded proposed experiment. The provisional mean is below 6, so this is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A comparison card showing paired fictional agent outputs and differences against operator-selected checks.",
+        "inputs": [
+          "Synthetic task prompt",
+          "Fictional before-change output",
+          "Fictional after-change output",
+          "Operator-selected expected checks"
+        ],
+        "trigger": "An operator submits one paired before-and-after output set for review.",
+        "steps": [
+          "Prepare a fictional financial-agent task fixture.",
+          "Enter the two outputs from the same task.",
+          "Apply operator-written checks to each output.",
+          "List differences and failed checks without inferring causes.",
+          "Compare the report with a prepared expected result.",
+          "Have an engineer judge significance before changing a harness."
+        ],
+        "acceptanceCheck": "For each fixture pair, check that the report identifies planted differences and does not label a change better or worse without operator-defined criteria.",
+        "humanBoundary": "An engineer supplies representative test cases and decides what counts as a regression; no production agent is called or modified.",
+        "unverified": [
+          "Useful evaluation metrics for a specific financial workflow",
+          "Representative test data and safe handling requirements",
+          "Any repeat frequency or willingness to pay"
+        ]
+      }
+    },
+    {
+      "title": "Prepare a video edit and publish checklist",
+      "productUrl": "https://news.ycombinator.com/item?id=50291424",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ecc4d5d4f07d03fc30804d37"
+        ],
+        "chore": "Coordinate recording, editing, and publishing a video.",
+        "evidenceQuote": "You can record, edit and publish with one tool."
+      },
+      "sourceIds": [
+        "ecc4d5d4f07d03fc30804d37"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "The excerpt names a broad video workflow, but no reference supports editing or publishing capabilities.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent video professionals may pay for workflow help; the excerpt establishes no buyer need or purchase intent.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A checklist mock is feasible, but it does not perform editing or publishing and source details are sparse.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "A person would record, edit, and publish; no repeatable automated step is supported by the supplied evidence.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "evidence": {
+            "value": 3,
+            "reason": "The excerpt only lists product functions and provides no particular chore context, frequency, or corroboration.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          }
+        }
+      },
+      "reason": "Assessed from the exact assigned discussion task and a bounded proposed experiment. The provisional mean is below 6, so this is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A human-reviewed checklist card for one proposed video from recording through a manually completed publish step.",
+        "inputs": [
+          "Fictional video brief",
+          "Operator-selected recording status",
+          "Operator-entered edit status",
+          "Operator-entered publish destination"
+        ],
+        "trigger": "An operator starts a checklist for one planned video.",
+        "steps": [
+          "Create a fictional video brief.",
+          "Enter the current status for recording, editing, and publishing.",
+          "Generate a checklist of remaining operator-entered steps.",
+          "Compare the checklist with a prepared fixture.",
+          "Mark missing status as unknown.",
+          "Have a person complete and verify every production action."
+        ],
+        "acceptanceCheck": "Check that the card reflects the supplied status fields and never marks a video published unless the operator entered that status.",
+        "humanBoundary": "A person records, edits, uploads, and confirms publication; the mock only organizes operator-entered status.",
+        "unverified": [
+          "Any supported video editing or publishing integration",
+          "Required production workflow details",
+          "A repeated customer chore or paying customer hypothesis"
+        ]
+      }
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Prepare answers from a supplied workbook",
+      "productUrl": "https://news.ycombinator.com/item?id=50293148",
+      "reason": "Below the 6-point threshold after provisional assessment: the task is bounded but implementation support, recurring demand, or both are insufficiently established."
+    },
+    {
+      "title": "Organize public signals before installing an app",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "reason": "Below the 6-point threshold after provisional assessment: the task is bounded but implementation support, recurring demand, or both are insufficiently established."
+    },
+    {
+      "title": "Map an agent run’s recovery questions",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "reason": "Below the 6-point threshold after provisional assessment: the task is bounded but implementation support, recurring demand, or both are insufficiently established."
+    },
+    {
+      "title": "Compare agent results after a harness change",
+      "productUrl": "https://news.ycombinator.com/item?id=50292363",
+      "reason": "Below the 6-point threshold after provisional assessment: the task is bounded but implementation support, recurring demand, or both are insufficiently established."
+    },
+    {
+      "title": "Prepare a video edit and publish checklist",
+      "productUrl": "https://news.ycombinator.com/item?id=50291424",
+      "reason": "Below the 6-point threshold after provisional assessment: the task is bounded but implementation support, recurring demand, or both are insufficiently established."
+    }
+  ]
+}
