@@ -1,0 +1,721 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-40990234460-1",
+  "createdAt": "2026-10-30T02:15:50.126Z",
+  "events": [
+    {
+      "id": "809609da258c4ce5d72b4e9f7a3693f295fb70886abcc7984bc446a4a5848c10",
+      "kind": "assessment",
+      "caseId": "7132d39a81d828b6e8cc8cc5",
+      "productUrl": "https://community.n8n.io/t/325292",
+      "sourceRunId": "loop-40990234460-1",
+      "details": {
+        "revisionId": "c300aace143f627db620caa237d814ff05b64081986cb76dce58083a30811b51",
+        "parentRevisionId": "6200b57e5ebd44098bc18371d75a35a1011512d9a97797c3f60a5b740a41c428",
+        "candidateIndex": 0,
+        "candidateSha256": "d2f22f90fbd974f1d43f25487e06f3cefaaf3b19f6892ac16e57c8b4e6f79912",
+        "sourceSha256": "1f527acd0d3b74ac5e451b3b72c48b18de83a022ebf6809de1b2b4f81c69a929",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewable narrated video draft based on a supplied monthly review deck.",
+          "inputs": [
+            "Synthetic monthly report file",
+            "Audience and company details supplied by an operator",
+            "Operator-provided brand colors",
+            "Test API keys in a sandbox"
+          ],
+          "trigger": "An operator places a synthetic monthly report in a test folder and starts a run.",
+          "steps": [
+            "Read the supplied report and operator-entered audience details.",
+            "Draft a short narration and scene outline from the report.",
+            "Prepare a video render using a test account and provided credentials.",
+            "Return the render and source report for comparison.",
+            "Flag missing values or failed rendering for human review."
+          ],
+          "acceptanceCheck": "A reviewer checks whether the draft mentions the report’s key figures accurately and whether every scene traces to supplied content.",
+          "humanBoundary": "A person supplies the report, audience, brand details, and authorized test credentials; they verify figures, approve the narration, and decide whether to share the video.",
+          "unverified": [
+            "Reliability of report parsing across layouts",
+            "Actual API costs and account access",
+            "Whether the draft preserves all material figures",
+            "Suitability of the reported runtime for other inputs"
+          ]
+        },
+        "limitations": [
+          "Reliability of report parsing across layouts",
+          "Actual API costs and account access",
+          "Whether the draft preserves all material figures",
+          "Suitability of the reported runtime for other inputs"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "445e457f68beee386091f91bde30b79671221ca8f75daeae03e607fd50b0f442",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Reliability of report parsing across layouts",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "c05b18a710103223f49e867cd297d47381f5ecc98c676dd15c1aa04432c3efe8",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Actual API costs and account access",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "de14e07a9ae9c907b09dfeec1af2e0d851ba6891714332df2502f84fd16f0426",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Whether the draft preserves all material figures",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "06d7fa801dde7bf80db959f8d9a98d6cdefec8740b68cd9bf8c197ab86601bc9",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              3
+            ],
+            "question": "Suitability of the reported runtime for other inputs",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The retained post gives an importable n8n workflow and setup steps, though API keys and file setup are required.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: consultants or small firms may pay for recurring report-to-video preparation; this post only offers a template.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can use synthetic reports and a proposed draft workflow; rendering setup and costs need checking.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The documented workflow runs report-to-video steps, but a person supplies files and keys and checks the render.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe a monthly deck, setup, and reported rendering process; this is one maker's account.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "10136903e82854a6b60ec83a37ce1d569b7f0b58cf0bd3497e5c2e40f480a153",
+          "draftSha256": "f1738706ac85c97cdbe0d3e962c5598330284e6195e29fde364ab4c80aa29cca",
+          "contextSha256": "5ccf34010b37786f3f30bc0e89e4c991c647cc39bbb164ecc3f079053b59f3d4",
+          "manifestSha256": "71ce76a0baccb45bb2df0cb15aae0c8183a1a75644dc1e74a2049afaf2b7c609",
+          "researchSha256": "b2982f05ac65b64e610e31b6b11c3080b9d971935b339404f644543c52445b6b",
+          "learningSha256": "215d1fe9496fd1e0f79f01613dcf8069ef0d5747d492b36412034ed373b5055b"
+        }
+      }
+    },
+    {
+      "id": "234405365074cdb02e048ff887d85d9c219d44a2245b8a4d0f498dd4c99d3179",
+      "kind": "assessment",
+      "caseId": "b32c72b4be805ae63bb36f15",
+      "productUrl": "https://community.shopify.com/t/706526",
+      "sourceRunId": "loop-40990234460-1",
+      "details": {
+        "revisionId": "f57898dd1073007b98ccdfc691d9fb8e509202c1692fe7a15259f1c441c41042",
+        "parentRevisionId": "7a5505eb9ff8ea65b36cc2c361c70edc084292ea7b7e5861af7c0f1fd2ea98cd",
+        "candidateIndex": 1,
+        "candidateSha256": "1c3c4e85ffbe261cc53beb9f4efdb2f8ad8ca94541240b8c874a4cf79efff906",
+        "sourceSha256": "a857f043dcdf530d9bb7633be592ead69e2e7012d6a662285dcc2ce4b903b90c",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A short, reviewable summary of merchant needs from consented interview notes.",
+          "inputs": [
+            "Fictional interview notes",
+            "A list of app questions supplied by the developer",
+            "Operator-provided topic labels"
+          ],
+          "trigger": "After an app developer supplies test interview notes for review.",
+          "steps": [
+            "Remove personal details from the synthetic notes.",
+            "Group comments under the supplied app questions.",
+            "Draft a short summary with supporting note snippets.",
+            "Flag questions with no matching comments.",
+            "Ask a person to review themes before outreach or product decisions."
+          ],
+          "acceptanceCheck": "A reviewer verifies each summary point against a supplied note and confirms unsupported themes are marked as unknown.",
+          "humanBoundary": "A person must recruit and speak with merchants, obtain permission, supply notes, and decide what to do; the experiment does not find participants.",
+          "unverified": [
+            "Whether synthetic notes reflect real merchant language",
+            "Whether developers will pay for research support",
+            "Whether grouping is reliable across interview formats"
+          ]
+        },
+        "limitations": [
+          "Whether synthetic notes reflect real merchant language",
+          "Whether developers will pay for research support",
+          "Whether grouping is reliable across interview formats"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "e7474b233ee9a56320dcc43d8efbd185682d3aee9fc84e603ae5117a2c18dff3",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "f03b785de18d356197543623ce09e49d4c43c4c6964fdbe004ac109e6e25af72",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether synthetic notes reflect real merchant language",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "759227eddc7cea6c8a23fb5acb56d77061817627f6091b5cff37c0c930fca712",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Whether grouping is reliable across interview formats",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can organize operator-supplied merchant feedback, but finding willing store owners remains manual.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Shopify app developers may pay for better merchant research; the post establishes no purchase intent.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can classify fictional interview notes and draft outreach; participant recruitment and response remain uncertain.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A model can group supplied notes, but a person must recruit, conduct interviews, and validate themes.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post directly says developer responses are mostly partners and they want merchant perspectives; frequency is unclear.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "10136903e82854a6b60ec83a37ce1d569b7f0b58cf0bd3497e5c2e40f480a153",
+          "draftSha256": "f1738706ac85c97cdbe0d3e962c5598330284e6195e29fde364ab4c80aa29cca",
+          "contextSha256": "5ccf34010b37786f3f30bc0e89e4c991c647cc39bbb164ecc3f079053b59f3d4",
+          "manifestSha256": "71ce76a0baccb45bb2df0cb15aae0c8183a1a75644dc1e74a2049afaf2b7c609",
+          "researchSha256": "b2982f05ac65b64e610e31b6b11c3080b9d971935b339404f644543c52445b6b",
+          "learningSha256": "215d1fe9496fd1e0f79f01613dcf8069ef0d5747d492b36412034ed373b5055b"
+        }
+      }
+    },
+    {
+      "id": "c575e902c7fc1380bd5ffde8e7be224511903352b67dec22086f76038664ce09",
+      "kind": "assessment",
+      "caseId": "3cd538c6b130b86a654c28c2",
+      "productUrl": "https://community.shopify.com/t/706515",
+      "sourceRunId": "loop-40990234460-1",
+      "details": {
+        "revisionId": "fd6bdae5b7f54b523fdcbc80db951f0be7f645721a742ba6d91b11ecb4a841d3",
+        "parentRevisionId": "8d9afaea5ce972a814ce975b39385150dd910318cd12b33d52860b5bead031a7",
+        "candidateIndex": 2,
+        "candidateSha256": "b15bcd6bcf3e5c4c7e04e3b69b7a1df4707d8b82dde61601a129cb203613c065",
+        "sourceSha256": "2d8a6a9088d710f1227867d7adae6af836954abd79a05eb7e8bb91f8155fd992",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review queue that flags missing tax-rule decisions for a human before checkout.",
+          "inputs": [
+            "Fictional product and customer categories",
+            "Operator-entered exemption rule notes",
+            "Synthetic checkout cases",
+            "A qualified reviewer’s expected flags"
+          ],
+          "trigger": "An operator enters a fictional checkout case for review.",
+          "steps": [
+            "Compare the case with operator-entered rule notes.",
+            "Flag missing or conflicting information without calculating tax.",
+            "Show the relevant note and case fields together.",
+            "Record the reviewer’s decision in a test-only table.",
+            "Return unresolved cases for qualified review."
+          ],
+          "acceptanceCheck": "A qualified reviewer confirms each flag matches the supplied rule note and that no tax amount is calculated or presented as authoritative.",
+          "humanBoundary": "A qualified tax professional supplies and approves rules; a human handles every real transaction. No automated tax advice, calculation, checkout change, or invoice persistence is proposed.",
+          "unverified": [
+            "Whether the operator-provided rule notes are complete",
+            "Shopify data access and record-writing behavior",
+            "Jurisdiction-specific legal and tax correctness"
+          ]
+        },
+        "limitations": [
+          "Whether the operator-provided rule notes are complete",
+          "Shopify data access and record-writing behavior",
+          "Jurisdiction-specific legal and tax correctness"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "c7665dbba446ae5c451a8efdfe7d789a8c3f602af096617b271ad86b3a9dd2f6",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Whether the operator-provided rule notes are complete",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "e92b56fdfb96c2fed57b95d337b08604247767ae14fee51417477c254e899a9b",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Shopify data access and record-writing behavior",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "a7fcc7acfac6626cffb5af949cac9942127af444c40c327c0a268c9480eba394",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Jurisdiction-specific legal and tax correctness",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 3,
+            "reason": "A checklist prototype is possible, but no implementation reference documents Shopify tax rules or exemption behavior.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: merchants may pay to reduce manual exemption handling; this feature request proves no purchase or payment.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A four-week fictional-record checklist is bounded; correct tax treatment and Shopify integration are unsupported and excluded.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed tool only flags cases for review; a qualified person must determine tax treatment and update records.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request explicitly names pre-payment tax calculation, GST/PST records, and manual workarounds, but no corroboration.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "10136903e82854a6b60ec83a37ce1d569b7f0b58cf0bd3497e5c2e40f480a153",
+          "draftSha256": "f1738706ac85c97cdbe0d3e962c5598330284e6195e29fde364ab4c80aa29cca",
+          "contextSha256": "5ccf34010b37786f3f30bc0e89e4c991c647cc39bbb164ecc3f079053b59f3d4",
+          "manifestSha256": "71ce76a0baccb45bb2df0cb15aae0c8183a1a75644dc1e74a2049afaf2b7c609",
+          "researchSha256": "b2982f05ac65b64e610e31b6b11c3080b9d971935b339404f644543c52445b6b",
+          "learningSha256": "215d1fe9496fd1e0f79f01613dcf8069ef0d5747d492b36412034ed373b5055b"
+        }
+      }
+    },
+    {
+      "id": "59bf895481b0e726fb4012374bb60ef7804892a1bd66e1bd8c20b63ecfebbd8a",
+      "kind": "assessment",
+      "caseId": "cec38822f97e088e1e5fc5a2",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "sourceRunId": "loop-40990234460-1",
+      "details": {
+        "revisionId": "b51a6a7a265ed21be43bb2d84e42af50d008a82fc1afdc77736bc76078d32cf9",
+        "parentRevisionId": "5d4670d0c6b56bf5a9cd08cebb83cf197be75b5ed780c9b0c998d88c7887c63b",
+        "candidateIndex": 3,
+        "candidateSha256": "24b66a82f8a8c3ac0170f4cae9b236b3fc1255be5541a9502929c7af4d251fc1",
+        "sourceSha256": "328425f89d36efe4c3d7a9e9cc63a07bce9777659a2ca512c7b82b945b9d3375",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A low-fidelity wireframe draft with uncertain regions marked for designer review.",
+          "inputs": [
+            "Synthetic hand-drawn interface sketch",
+            "Operator-supplied screen purpose",
+            "Operator-supplied labels for visible controls"
+          ],
+          "trigger": "A designer uploads a synthetic sketch and describes its intended screen.",
+          "steps": [
+            "Read the supplied screen purpose and sketch.",
+            "List visible regions and labels with uncertainty markers.",
+            "Create a simple wireframe draft from the operator-confirmed list.",
+            "Compare the draft against the sketch and flag ambiguous regions.",
+            "Return the draft for designer correction."
+          ],
+          "acceptanceCheck": "A designer checks that each draft element corresponds to a visible sketch element or is explicitly marked as an uncertain proposal.",
+          "humanBoundary": "A designer supplies the sketch, confirms interpretation, and approves the output; the experiment does not promise production-ready illustrations.",
+          "unverified": [
+            "Image interpretation quality",
+            "Availability and suitability of a wireframe generation tool",
+            "Whether near-real-time response is achievable"
+          ]
+        },
+        "limitations": [
+          "Image interpretation quality",
+          "Availability and suitability of a wireframe generation tool",
+          "Whether near-real-time response is achievable"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "0219ccc8b598e998be96eb39482702f96219ce1cdcb8bae01cb3787c1578a1b6",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Image interpretation quality",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "7ef35d3eefcfd5c13db23e76a9ff46febe0eefb731605b9e307603b48fa44044",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Availability and suitability of a wireframe generation tool",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "41f6b6ad81568fe62308d407698e03269911ad155ffb12c16f47b4f4e9c4c8f3",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Whether near-real-time response is achievable",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A mock can start from supplied sketches, but no supplied source documents an image-to-wireframe method.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent designers may pay to speed up wireframe drafting; the request does not show a buyer or payment.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week prototype can compare a few synthetic sketches with drafts, but fidelity and tool access are unknown.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "A person must supply sketches, correct layout interpretation, and approve all generated design elements.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The Ask HN post states the specific sketch-to-wireframe task but gives no examples, constraints, or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "10136903e82854a6b60ec83a37ce1d569b7f0b58cf0bd3497e5c2e40f480a153",
+          "draftSha256": "f1738706ac85c97cdbe0d3e962c5598330284e6195e29fde364ab4c80aa29cca",
+          "contextSha256": "5ccf34010b37786f3f30bc0e89e4c991c647cc39bbb164ecc3f079053b59f3d4",
+          "manifestSha256": "71ce76a0baccb45bb2df0cb15aae0c8183a1a75644dc1e74a2049afaf2b7c609",
+          "researchSha256": "b2982f05ac65b64e610e31b6b11c3080b9d971935b339404f644543c52445b6b",
+          "learningSha256": "215d1fe9496fd1e0f79f01613dcf8069ef0d5747d492b36412034ed373b5055b"
+        }
+      }
+    },
+    {
+      "id": "735fdf608f7b294672865334e7b970678303b1dff24e38ce719c52486854e327",
+      "kind": "assessment",
+      "caseId": "b2684bd704048d83c977ec07",
+      "productUrl": "https://community.n8n.io/t/325279",
+      "sourceRunId": "loop-40990234460-1",
+      "details": {
+        "revisionId": "40dc9d3b42b9ce7f6700a910c48328f96ae6b16d0458e52dc406561534eaabb4",
+        "parentRevisionId": "d29a7f38aea8c6b234747c43ffba333449d48e2cbe92abf2175a83bfd6e29bb2",
+        "candidateIndex": 4,
+        "candidateSha256": "8770bf84ce152f8ad48975452b0dc89175784f73b8613209699c5511c3a21848",
+        "sourceSha256": "76ffd0b53f03fbcb62e2696773d36084bbf1f8117677c66623661c1e53437215",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A reviewable feasibility brief mapping one proposed communication event to an n8n workflow.",
+          "inputs": [
+            "Fictional MirrorFly event description",
+            "Operator-supplied desired CRM or notification outcome",
+            "Synthetic example payload",
+            "Operator-provided API documentation if available"
+          ],
+          "trigger": "An operator supplies a fictional event and describes the intended workflow outcome.",
+          "steps": [
+            "List required event fields and the desired result.",
+            "Compare the supplied documentation with each required field.",
+            "Mark unsupported or undocumented steps as unknown.",
+            "Draft a proposed n8n flow using only confirmed fields.",
+            "Return questions and risks for a human integrator."
+          ],
+          "acceptanceCheck": "A reviewer checks every mapped field against the supplied documentation and confirms unknown API behavior is clearly marked.",
+          "humanBoundary": "An integrator supplies authorized documentation and validates the mapping; this plan does not connect accounts, call an endpoint, or prove that either product supports the integration.",
+          "unverified": [
+            "MirrorFly API and webhook availability for the intended event",
+            "Authentication and access requirements",
+            "n8n connector or HTTP configuration needed",
+            "Compatibility of actual payload fields"
+          ]
+        },
+        "limitations": [
+          "MirrorFly API and webhook availability for the intended event",
+          "Authentication and access requirements",
+          "n8n connector or HTTP configuration needed",
+          "Compatibility of actual payload fields"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "e6522b6eac1502ef32929d5dae03e1898d111d18e525829141765da49af7479f",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "MirrorFly API and webhook availability for the intended event",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "32d259271e27e8b1de894ff446d1e69dae61810eafa0a00eb6892d8f7f21d778",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Authentication and access requirements",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "dac61529b256c1992ffe646e98086e6e3c33e0a0830256149de93491272ef288",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "n8n connector or HTTP configuration needed",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "5167a4a263b8b82fa586ac8bfde13c88bef076060c0901ca294af2cb30e72ad1",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              3
+            ],
+            "question": "Compatibility of actual payload fields",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can map a few supplied requirements, but no API or webhook capability reference is attached.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional service operators may pay for integration scoping; this request establishes no purchase or payment.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can produce a feasibility memo from fictional requirements, while actual API access and compatibility remain unknown.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed output is a human-reviewed analysis; no integration execution is documented or proposed.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post explicitly asks about connecting MirrorFly and n8n, but gives examples rather than a chosen event or field map.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "10136903e82854a6b60ec83a37ce1d569b7f0b58cf0bd3497e5c2e40f480a153",
+          "draftSha256": "f1738706ac85c97cdbe0d3e962c5598330284e6195e29fde364ab4c80aa29cca",
+          "contextSha256": "5ccf34010b37786f3f30bc0e89e4c991c647cc39bbb164ecc3f079053b59f3d4",
+          "manifestSha256": "71ce76a0baccb45bb2df0cb15aae0c8183a1a75644dc1e74a2049afaf2b7c609",
+          "researchSha256": "b2982f05ac65b64e610e31b6b11c3080b9d971935b339404f644543c52445b6b",
+          "learningSha256": "215d1fe9496fd1e0f79f01613dcf8069ef0d5747d492b36412034ed373b5055b"
+        }
+      }
+    }
+  ]
+}
