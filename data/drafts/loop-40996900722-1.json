@@ -1,0 +1,450 @@
+{
+  "runId": "loop-40996900722-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-30T03:24:03.684Z",
+  "candidates": [
+    {
+      "title": "Review chained agent answers for added claims",
+      "productUrl": "https://news.ycombinator.com/item?id=50292324",
+      "segment": "professional_services",
+      "sourceIds": [
+        "9f8ccef8556abe73c3bff815"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9f8ccef8556abe73c3bff815"
+        ],
+        "chore": "Check whether later answers in a multi-agent sequence introduce claims not present in the earlier answer.",
+        "evidenceQuote": "How does this not end up in a chinese whisper game, especially considering how much LLMs infer, guess, and find edge cases and whatnot everywhere?"
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A supplied pair of answers can be compared manually, but no implementation reference supports automated claim comparison.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional teams using chained language models may pay for review; this question establishes no purchase intent.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A synthetic side-by-side comparison is bounded, while defining factual equivalence and useful flags remains unresolved.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Comparisons can be repeated on supplied text, but a person must set reference truth and judge flagged differences.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The literal question identifies concern about inferred additions in chained LLM work, without examples or recurrence evidence.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A side-by-side report highlighting statements in a later agent answer that are not clearly supported by the prior answer.",
+        "inputs": [
+          "Two fictional consecutive agent answers on the same task",
+          "A short operator-supplied checklist of claims that must remain intact"
+        ],
+        "trigger": "An operator pastes a pair of consecutive answers for review.",
+        "steps": [
+          "Split each answer into short factual statements.",
+          "Compare later statements with the earlier answer and the supplied checklist.",
+          "Mark additions, contradictions, and uncertain paraphrases separately.",
+          "Show each marked statement beside both source answers.",
+          "Ask a person to decide whether each mark is a real drift issue."
+        ],
+        "acceptanceCheck": "On fictional answer pairs with deliberately added, changed, and preserved statements, check whether the report points to the exact later text and retains both comparison passages.",
+        "humanBoundary": "The operator supplies safe text and the checklist; a person determines truth and decides whether a difference matters. Do not send private work text to an unapproved service.",
+        "unverified": [
+          "No supplied source documents a model or tool that reliably aligns factual claims across answers.",
+          "Useful thresholds for paraphrase versus drift are unknown.",
+          "The discussion gives no frequency, operational context, or buyer evidence."
+        ]
+      },
+      "reason": "Below threshold: this is a concrete concern but a proposed text comparison cannot establish truth or useful drift detection, and buyer demand is unvalidated."
+    },
+    {
+      "title": "Prepare app review follow-up drafts",
+      "productUrl": "https://community.make.com/t/118559",
+      "segment": "professional_services",
+      "sourceIds": [
+        "12083ab1ec28d340dfb92444"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "12083ab1ec28d340dfb92444"
+        ],
+        "chore": "Track a submitted app review and prepare a status inquiry when no update has arrived.",
+        "evidenceQuote": "It has been in “Review process started” status for 55 days, and we haven’t had any updates."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "An operator can enter a submission date and status, but no reference supports reading the review portal.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent app developers may pay for review tracking, but one request does not establish a market.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A reminder and inquiry draft from supplied dates is bounded; useful timing and status accuracy are unknown.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A date can trigger a draft, but a person must verify status and send the inquiry.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The span describes one delayed review and a request for timing, with no recurrence evidence.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A dated reminder and neutral inquiry draft for a submitted app review with no recorded update.",
+        "inputs": [
+          "Fictional app submission date",
+          "Operator-entered current review status",
+          "Operator-entered last update date or “none”"
+        ],
+        "trigger": "An operator adds or updates a review entry and its expected check-in date.",
+        "steps": [
+          "Store the app label and submission date entered by the operator.",
+          "Compare the operator-entered check-in date with today’s date.",
+          "If due, draft a short inquiry using only the entered status and dates.",
+          "Show the source fields beside the draft for verification.",
+          "Require a person to confirm the portal status and send or discard the inquiry."
+        ],
+        "acceptanceCheck": "For fictional entries with past, future, and missing check-in dates, confirm that only due complete entries produce a draft and that no unentered status is asserted.",
+        "humanBoundary": "A person supplies dates, checks the actual review portal, chooses whether the timing warrants contact, and sends any inquiry.",
+        "unverified": [
+          "No review-portal access or status integration is documented.",
+          "The source describes one submission, not a recurring task across customers.",
+          "The useful reminder interval and willingness to pay are unknown."
+        ]
+      },
+      "reason": "Below threshold: the span supports one follow-up need, but no recurrence, portal capability, or payer is established."
+    },
+    {
+      "title": "Check weekly keyword metric rows",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "segment": "professional_services",
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "Review a weekly keyword metrics export for missing or inconsistent volume, CPC, and difficulty fields.",
+        "evidenceQuote": "Runs VNCNT Labs’ Keyword Search Volume Actor on Apify every week and adds each keyword’s Google search volume, CPC and difficulty as rows in Google Sheets."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The source describes a weekly sheet workflow, but no supplied implementation reference supports fetching or writing those metrics.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small marketing consultants may pay for consistent keyword reports; this maker example does not establish buyers.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional-row validation prototype is bounded; accurate metrics and account access are outside supported evidence.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Rows can be checked repeatedly, but a person must obtain data and resolve warnings; no execution capability is documented.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The supplied context names weekly volume, CPC, difficulty and Sheets rows, but is a single maker example.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table that flags missing or malformed weekly keyword metric cells before a person uses the report.",
+        "inputs": [
+          "Fictional keyword label",
+          "Operator-supplied search volume value",
+          "Operator-supplied CPC value",
+          "Operator-supplied difficulty value"
+        ],
+        "trigger": "An operator pastes a weekly keyword table into the prototype.",
+        "steps": [
+          "Read each supplied row without contacting an external actor.",
+          "Check whether the three metric cells are present and parseable.",
+          "Mark missing or malformed cells with a plain reason.",
+          "Group the flagged rows into a review table.",
+          "Let a person correct the source data before using it."
+        ],
+        "acceptanceCheck": "Use fictional rows with one missing value, one nonnumeric value, and one complete row; verify flags identify the exact row and cell without inventing replacement metrics.",
+        "humanBoundary": "The operator supplies and validates all metrics and decides corrections; this design does not run Apify or write to Google Sheets.",
+        "unverified": [
+          "No supplied reference documents parsing, scheduled execution, Apify calls, or Google Sheets writes.",
+          "The post is a maker example, not corroborated buyer demand.",
+          "Metric accuracy and source freshness are not tested by this proposed offline check."
+        ]
+      },
+      "reason": "Below threshold: the described workflow is concrete, but implementation support and independent evidence of demand are absent."
+    },
+    {
+      "title": "Review whether site pages still serve a purpose",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "segment": "professional_services",
+      "sourceIds": [
+        "afe7e1914aaaf443af4e5210"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "afe7e1914aaaf443af4e5210"
+        ],
+        "chore": "Review a list of site pages and flag entries with no stated question answered or task served.",
+        "evidenceQuote": "Before adding anything new I check whether the page already has a reason to exist. If it does not answer a question or solve something, I delete it."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A person can review a supplied page list, but no reference documents reliable page-purpose classification.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small web studios may pay for upkeep review; this tip does not establish buyer intent.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A worksheet over operator-supplied page summaries is bounded, though useful judgments require context.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "The same checklist can flag blank purpose statements, while a person must decide whether to keep or remove pages.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The excerpt states a concrete keep-or-delete rule, but gives no frequency or corroboration.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A page inventory that flags entries whose purpose field is blank for human review.",
+        "inputs": [
+          "Fictional page URL label",
+          "Operator-written page purpose",
+          "Operator-written audience question or task"
+        ],
+        "trigger": "An operator pastes or enters a small page inventory for review.",
+        "steps": [
+          "Read the supplied purpose and audience fields for each row.",
+          "Flag rows where either field is blank.",
+          "Show the supplied text beside each flag.",
+          "Group complete rows separately from rows needing clarification.",
+          "Ask a person to decide whether a page should remain, change, or be removed."
+        ],
+        "acceptanceCheck": "On fictional rows with complete, blank, and contradictory purpose fields, check that blanks and contradictions are surfaced without the tool deciding to delete a page.",
+        "humanBoundary": "A site owner supplies context and makes every keep, edit, or delete decision; the proposed tool gives no SEO or traffic verdict.",
+        "unverified": [
+          "No supplied reference supports crawling or classifying live website pages.",
+          "The source is a tip rather than a request for paid help.",
+          "The frequency and value of this review for a buyer are unknown."
+        ]
+      },
+      "reason": "Below threshold: one concrete review rule is present, but the post is a tip with no repeated need or buyer evidence."
+    },
+    {
+      "title": "Draft shipment delay notices for review",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "segment": "ecommerce",
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Prepare a draft dispatcher alert from an operator-supplied shipment row marked delayed.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed, copy an order update into a CRM, alert a buyer when inventory drops, or send a daily report to a team channel."
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "Synthetic shipment rows make a draft alert approachable, but no reference documents live logistics intake or delivery.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small logistics operators may pay for clearer exception notices; these examples establish no buying intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week row-to-draft prototype is bounded, while correct delay rules and event access remain unverified.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "A supplied row can produce a repeatable draft, but a person must verify delay status and send the notice.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The source names a dispatcher alert for delayed shipments among examples, without frequency or corroboration.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A concise dispatcher alert draft from one supplied shipment row that an operator has already marked delayed.",
+        "inputs": [
+          "Fictional shipment reference",
+          "Operator-entered delivery status",
+          "Operator-entered latest order update",
+          "Operator-entered dispatcher contact label"
+        ],
+        "trigger": "An operator submits a fictional shipment row explicitly marked delayed.",
+        "steps": [
+          "Read only the supplied shipment fields.",
+          "Check that the row is marked delayed by the operator.",
+          "Draft a short alert containing the shipment reference and latest supplied update.",
+          "Show the source fields beside the draft and mark missing fields.",
+          "Require a dispatcher or operator to verify status and send the alert."
+        ],
+        "acceptanceCheck": "For fictional delayed, on-time, and missing-status rows, confirm a draft appears only for the delayed row and repeats no detail absent from its input.",
+        "humanBoundary": "A person supplies and verifies status, confirms the recipient, and sends the alert; the proposal does not query carrier systems or message customers.",
+        "unverified": [
+          "No source documents carrier events, CRM access, messaging, or retries.",
+          "The source gives examples but no actual operating case or task frequency.",
+          "The proposed draft’s usefulness and a buyer’s willingness to pay remain hypotheses."
+        ]
+      },
+      "reason": "Below threshold: this is a narrow plausible experiment, but the source provides only examples and no repeated operator demand or integration support."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Convert novels into multi-voice audiobooks",
+      "productUrl": "https://news.ycombinator.com/item?id=50298905",
+      "reason": "The retained text is a maker’s product description and preference speculation, not a concrete customer chore or request; no demand experiment can be grounded in the assigned post."
+    },
+    {
+      "title": "Build and use a plain-text spreadsheet app",
+      "productUrl": "https://news.ycombinator.com/item?id=50298001",
+      "reason": "The post states that its maker built a format and app, but supplies no user chore, request, or bounded task to assess as demand."
+    },
+    {
+      "title": "Unstick a WhatsApp Business connection",
+      "productUrl": "https://community.make.com/t/118555",
+      "reason": "The retained post describes one integration failure already tested across browsers and connection entry points; this is a one-off bug report, not a repeatable service chore."
+    },
+    {
+      "title": "Build Shopify attribution and ERP workflows",
+      "productUrl": "https://community.shopify.com/t/706376",
+      "reason": "The retained task span lists projects the poster has been building but requests no specific task or help; proposing an order-field service would invent the chore."
+    },
+    {
+      "title": "Assess whether app review stories reveal shared needs",
+      "productUrl": "https://news.ycombinator.com/item?id=50286034",
+      "sourceIds": [
+        "62a6da54afe01897c0a23513"
+      ],
+      "reason": "The retained excerpt describes one person inventing stories during evenings and asking for reactions, but does not state a concrete repeated work task, request for a tool, or business chore; a service proposal would invent the need."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion identities. Concrete chores received scoped provisional assessments; four posts without a grounded repeatable chore were excluded. No candidate has a defensible five-criterion mean of 6, so no post is proposed."
+    }
+  ]
+}
