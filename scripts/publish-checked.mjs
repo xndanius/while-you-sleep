@@ -14,6 +14,7 @@ import {sourceValidationMatchesDefinition} from '../lib/source-registry.mjs';
 import {readProviderEvidence} from '../lib/provider-evidence.mjs';
 import {discussionEvidenceReasons,sourceQuoteOccurs} from '../lib/evidence-contract.mjs';
 import {demandQuoteOccurs} from '../lib/demand-quotes.mjs';
+import {validateAssistantExecution,assistantCheckerId} from '../lib/assistant-provenance.mjs';
 import {unverifiedAssessment} from '../lib/checker-output.mjs';
 import {hasDiscussionImplementationReference as implementationSource,discussionImplementationReference,extractDiscussionImplementationEvidence} from '../lib/discussion-implementation.mjs';
 
@@ -23,6 +24,8 @@ try{
   if(process.env.LOOP_SCHEDULING_SHA)scheduling=validateLoopScheduling(await readJSON(dataPath('scheduling',runId)),{runId,expectedSha256:process.env.LOOP_SCHEDULING_SHA,eventName:process.env.GITHUB_EVENT_NAME});
   if(process.env.GITHUB_ACTIONS==='true'&&!scheduling)throw new Error('Trusted loop reservation is missing.');
   if(scheduling?.decision!=='run'&&scheduling)throw new Error('The scheduling gate did not reserve model publication.');
+  const assistantMode=runId?.startsWith('assistant-')||process.env.ASSISTANT_EXECUTION_SHA256!==undefined;
+  if(assistantMode&&(!scheduling||process.env.GITHUB_ACTIONS==='true'))throw new Error('Assistant publication requires the existing verified reservation and a separate host execution.');
   if(scheduling){const reservation=await readJSON(dataPath('slot-reservations',runId));if(reservation.schedulingSha256!==process.env.LOOP_SCHEDULING_SHA||reservation.slotId!==scheduling.slotId||reservation.runId!==runId)throw new Error('Publication reservation changed.');}
   const draft=await readJSON(dataPath('drafts',runId)),context=await readJSON(dataPath('check-context',runId)),manifest=await readJSON(dataPath('checks',runId)),research=await readJSON(dataPath('research',runId));
   if(process.env.DEMAND_CONTRACT_VERSION==='1'&&context.demandContractVersion!==1)throw new Error('Demand-first publication requires the new independent fixed-registry demand contract.');
@@ -59,6 +62,15 @@ try{
   const dailyCap=scheduling?.dailyCap||DAILY_PUBLICATION_CAP;
   if(scheduling&&draft.targetCount!==targetCount)throw new Error('Writer target count differs from the trusted slot reservation.');
   const previous=await records('posts');
+  let assistantExecution=null;
+  if(assistantMode){
+    assistantExecution=await readJSON(dataPath('assistant-executions',runId));
+    validateAssistantExecution(assistantExecution,{draft,context,manifest,research,rules:await fs.readFile(path.join(ROOT,'RULES.md'),'utf8')},{expectedSha256:process.env.ASSISTANT_EXECUTION_SHA256,previous});
+    if(Date.parse(scheduling.requestedAt)>Date.parse(assistantExecution.writer.startedAt))throw new Error('Assistant reservation must precede the writer execution.');
+    trustedUsage={inputTokens:null,outputTokens:null,costUsd:null,source:'assistant-runtime',status:'not_reported'};
+  }
+  const checkerRunId=assistantExecution?assistantCheckerId(assistantExecution):manifest.checkerRunId||`${runId}-independent-check`;
+  const checkedAt=assistantExecution?.checker.completedAt||manifest.checkedAt||context.createdAt;
   const todayCount=dailyPublicationCount(previous);
   if(scheduling&&localParts(new Date()).day!==scheduling.localDate)throw new Error('Reserved publication date ended; only the current Vilnius day can catch up.');
   const reservedSlots=scheduling?.slots||[scheduling].filter(Boolean);
@@ -118,8 +130,9 @@ try{
     if(reasons.length){rejected.push({postId:post.id,title:post.title,reason:[...new Set(reasons)].join(' ')});continue;}
     const publishedAt=new Date().toISOString();
     if(scheduling&&localParts(publishedAt).day!==scheduling.localDate)throw new Error('Reserved publication date ended while checking sources.');
-    const rulesSha256=process.env.RULES_SHA256||null;
-    const record={...post,publishedAt,version:rulesSha256?`rules-${rulesSha256.slice(0,12)}`:draft.version||'v1',rulesSha256,rulesCommit:process.env.RULES_COMMIT||null,origin:process.env.GITHUB_ACTIONS==='true'?'github-actions-codex-loop':'local-checked-publication',runId,githubRunUrl:research.githubRunUrl||null,sources:context.sources.filter(s=>post.sourceIds.includes(s.id)).map(({id,title,url,publisher,fetchedAt,verifiedAt,discussionMetadataVersion,community})=>({id,title,url,publisher,fetchedAt,verifiedAt,...(discussionMetadataVersion===1&&typeof community==='string'?{community}: {})})),imageUrl:`./cards/${post.id}.jpg`,checker:{passed:true,checkedAt:manifest.checkedAt||context.createdAt,checkerRunId:manifest.checkerRunId||`${runId}-independent-check`,draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,claimChecks:result.check.claimChecks}};
+    const rulesSha256=assistantExecution?.bindings.rulesSha256||process.env.RULES_SHA256||null;
+    const record={...post,publishedAt,version:rulesSha256?`rules-${rulesSha256.slice(0,12)}`:draft.version||'v1',rulesSha256,rulesCommit:process.env.RULES_COMMIT||null,origin:assistantExecution?'assistant-checked-publication':process.env.GITHUB_ACTIONS==='true'?'github-actions-codex-loop':'local-checked-publication',runId,githubRunUrl:research.githubRunUrl||null,sources:context.sources.filter(s=>post.sourceIds.includes(s.id)).map(({id,title,url,publisher,fetchedAt,verifiedAt,discussionMetadataVersion,community})=>({id,title,url,publisher,fetchedAt,verifiedAt,...(discussionMetadataVersion===1&&typeof community==='string'?{community}: {})})),imageUrl:`./cards/${post.id}.jpg`,checker:{passed:true,checkedAt,checkerRunId,...(assistantExecution?{manifestSha256:assistantExecution.bindings.manifestSha256}: {}),draftSha256:context.draftSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,claimChecks:result.check.claimChecks}};
+    if(assistantExecution){record.assistantExecution=assistantExecution;record.distribution=assistantExecution.distribution;record.checker.approval=result.check;}
     record.scoring=publishedScoring(post.scoring.criteria,context.scoringPolicy,{checkedAt:record.checker.checkedAt,checkerRunId:record.checker.checkerRunId});
     record.checker.scoreChecks=result.check.scoreChecks;
     record.checker.scoreSources=context.sources;
@@ -128,8 +141,8 @@ try{
     if(context.demandContractVersion===1){record.demandContractVersion=1;record.checker.demandCheck=result.check.demandCheck;record.checker.demandContextSha256=context.demandContextSha256;}
     delete record.sourceIds;
     delete record.triggerEvent;
-    record.githubRunUrl=scheduling?.githubRunUrl||research.githubRunUrl||null;
-    record.eventName=scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown';
+    record.githubRunUrl=assistantExecution?null:scheduling?.githubRunUrl||research.githubRunUrl||null;
+    record.eventName=assistantExecution?'assistant':scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown';
     record.publicUrl=`${(process.env.PUBLIC_BASE_URL||'https://xndanius.github.io/while-you-sleep').replace(/\/$/,'')}/p/${post.id}/`;
     if(scheduling)record.scheduling=postScheduling(scheduling,published.length);
     record.contentSha256=contentHash(record);
@@ -164,19 +177,19 @@ try{
   }
   for(let i=0;i<rejected.length;i++)await writeJSON(dataPath('rejections',`${runId}-${String(i).padStart(3,'0')}`),{...rejected[i],runId,at:new Date().toISOString()},{immutable:true});
   const completed=contract&&!operationalFailures.length;
-  const run={id:runId,type:'loop',status:operationalFailures.length?(contract?published.length?'completed_with_unverified':'no_post_unverified':published.length?'completed_with_failure':'failed_closed'):published.length>=targetCount?'completed':todayCount>=dailyCap?'skipped_daily_cap':published.length?'completed_with_rejections':completed?'completed_no_post':'rejected',startedAt:research.createdAt,finishedAt:new Date().toISOString(),candidatesFound:draft.candidates?.length||0,picked:draft.posts.length,rejected,published,steps:[{stage:'research',status:'completed',at:research.createdAt,message:`Retained ${research.sources.length} source records with per-source retrieval provenance; ${(research.health||[]).filter(h=>h.status==='failed').length} feeds reported failure.`},{stage:'write',status:'completed',at:context.createdAt,message:`Codex CLI wrote ${draft.posts.length} proposed posts.`},{stage:'check',status:results.every(r=>r.pass)?'passed':'rejected',at:manifest.checkedAt||context.createdAt,message:'Separate Codex checker decisions bound to exact draft and evidence hashes.'},...steps,...operationalFailures.map(failure=>({stage:failure.stage,status:contract?'unverified':'failed',at:new Date().toISOString(),message:failure.reason}))],githubRunUrl:research.githubRunUrl||null,version:process.env.RULES_SHA256?`rules-${process.env.RULES_SHA256.slice(0,12)}`:draft.version||'v1',rulesSha256:process.env.RULES_SHA256||null,rulesCommit:process.env.RULES_COMMIT||null,usage:trustedUsage,engine:'official openai/codex-action',sourceSnapshotSha256:context.sourceSnapshotSha256};
+  const run={id:runId,type:'loop',status:operationalFailures.length?(contract?published.length?'completed_with_unverified':'no_post_unverified':published.length?'completed_with_failure':'failed_closed'):published.length>=targetCount?'completed':todayCount>=dailyCap?'skipped_daily_cap':published.length?'completed_with_rejections':completed?'completed_no_post':'rejected',startedAt:research.createdAt,finishedAt:new Date().toISOString(),candidatesFound:draft.candidates?.length||0,picked:draft.posts.length,rejected,published,steps:[{stage:'research',status:'completed',at:research.createdAt,message:`Retained ${research.sources.length} source records with per-source retrieval provenance; ${(research.health||[]).filter(h=>h.status==='failed').length} feeds reported failure.`},{stage:'write',status:'completed',at:assistantExecution?.writer.completedAt||context.createdAt,message:assistantExecution?`Assistant writer prepared ${draft.posts.length} proposed posts.`:`Codex CLI wrote ${draft.posts.length} proposed posts.`},{stage:'check',status:results.every(r=>r.pass)?'passed':'rejected',at:assistantExecution?.checker.completedAt||manifest.checkedAt||context.createdAt,message:assistantExecution?'Independent assistant decisions bound to exact draft and evidence hashes.':'Separate Codex checker decisions bound to exact draft and evidence hashes.'},...steps,...operationalFailures.map(failure=>({stage:failure.stage,status:contract?'unverified':'failed',at:new Date().toISOString(),message:failure.reason}))],githubRunUrl:research.githubRunUrl||null,version:process.env.RULES_SHA256?`rules-${process.env.RULES_SHA256.slice(0,12)}`:draft.version||'v1',rulesSha256:assistantExecution?.bindings.rulesSha256||process.env.RULES_SHA256||null,rulesCommit:process.env.RULES_COMMIT||null,usage:trustedUsage,engine:assistantExecution?'assistant-orchestrated':'official openai/codex-action',...(assistantExecution?{assistantExecution}: {}),sourceSnapshotSha256:context.sourceSnapshotSha256};
   if(contract){
     run.assessmentOutcome=completed?'completed':'unverified';run.operationalFailures=operationalFailures;
     if(!completed)run.unverifiedAssessment=unverifiedAssessment(scheduling,{...operationalFailures[0],reason:operationalFailures.map(failure=>failure.reason).join(' ')},run.finishedAt);
     if(completed){
       const assessedRefusals=rejected.filter(rejection=>results.some(result=>result.postId===rejection.postId));
       const reason=!draft.posts.length?manifest.completedAssessment.reason:assessedRefusals.length?assessedRefusals.map(rejection=>`${rejection.title}: ${rejection.reason}`).join(' ').slice(0,500):`Assessment completed with ${published.length} checked publications; no further supported candidate was proposed. ${manifest.completedAssessment.reason}`.slice(0,500);
-      run.checkedAssessment={schema:1,completed:true,contractVersion:1,runId,schedulingSha256:process.env.LOOP_SCHEDULING_SHA,slotIds:scheduling.slotIds||[scheduling.slotId],draftSha256:context.draftSha256,contextSha256:sha256(stableJSON(context)),rulesSha256:context.rulesSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,policySha256:context.scoringPolicy.policySha256,checkerRunId:`${runId}-independent-check`,completedAt:run.finishedAt,decision:manifest.completedAssessment.decision,reason,checkedPostIds:results.filter(result=>result.pass).map(result=>result.postId)};
+      run.checkedAssessment={schema:1,completed:true,contractVersion:1,runId,schedulingSha256:process.env.LOOP_SCHEDULING_SHA,slotIds:scheduling.slotIds||[scheduling.slotId],draftSha256:context.draftSha256,contextSha256:sha256(stableJSON(context)),rulesSha256:context.rulesSha256,sourceSnapshotSha256:context.sourceSnapshotSha256,policySha256:context.scoringPolicy.policySha256,checkerRunId:assistantExecution?checkerRunId:`${runId}-independent-check`,completedAt:run.finishedAt,decision:manifest.completedAssessment.decision,reason,checkedPostIds:results.filter(result=>result.pass).map(result=>result.postId)};
     }
   }
-  run.eventName=scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown';run.modelExecuted=true;
+  run.eventName=assistantExecution?'assistant':scheduling?.eventName||process.env.GITHUB_EVENT_NAME||'unknown';run.modelExecuted=true;
   run.startedAt=scheduling?.requestedAt||research.createdAt;
-  run.githubRunUrl=scheduling?.githubRunUrl||research.githubRunUrl||null;
+  run.githubRunUrl=assistantExecution?null:scheduling?.githubRunUrl||research.githubRunUrl||null;
   if(scheduling)run.scheduling=scheduling;
   await writeJSON(dataPath('runs',runId),run,{immutable:true});
   console.log(JSON.stringify({runId,status:run.status,published,rejected:rejected.length}));
