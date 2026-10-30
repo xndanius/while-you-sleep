@@ -1,0 +1,473 @@
+{
+  "runId": "loop-41019103377-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-30T07:25:00.000Z",
+  "candidates": [
+    {
+      "title": "Compare chained agent answers for added claims",
+      "productUrl": "https://news.ycombinator.com/item?id=50292324",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9f8ccef8556abe73c3bff815"
+        ],
+        "chore": "Review whether successive language-model answers introduce unsupported additions or missed edge cases.",
+        "evidenceQuote": "How does this not end up in a chinese whisper game, especially considering how much LLMs infer, guess, and find edge cases and whatnot everywhere?"
+      },
+      "sourceIds": [
+        "9f8ccef8556abe73c3bff815"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A side-by-side review sheet that marks claims added or changed between two supplied agent answers for a human to inspect.",
+        "inputs": [
+          "Operator-supplied original question",
+          "Two synthetic sequential agent answers",
+          "Optional operator-supplied reference facts"
+        ],
+        "trigger": "A professional operator has two sequential model answers that need a consistency review.",
+        "steps": [
+          "Paste the original question and both answers into a local test form.",
+          "Split each answer into short factual claims.",
+          "Compare claim wording and mark possible additions or omissions.",
+          "Show matched text and uncertain pairs in a review sheet.",
+          "Have a person verify every flag against trusted reference facts."
+        ],
+        "acceptanceCheck": "On fictional answer pairs, check whether the sheet shows each deliberately added claim and does not label the proposed flags as verified falsehoods.",
+        "humanBoundary": "A person supplies the text and trusted facts, decides whether a difference is actually wrong, and does not rely on the tool as a truth verifier.",
+        "unverified": [
+          "No implementation reference supports claim extraction or comparison.",
+          "Whether a useful comparison can distinguish paraphrase from changed meaning is unresolved.",
+          "The post states a concern but does not establish repeated frequency or a paying buyer."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A supplied-text mock is definable, but no implementation reference supports claim extraction or comparison.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: teams using chained models may pay for review; this question establishes no buyer intent.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A fictional pair comparison is bounded, but defining useful flags and avoiding false claims remains unresolved.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Text comparison could repeat, but a person must verify truth and judge each flagged difference.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The question states concern about inference and edge cases, without examples, frequency, or corroboration.",
+            "sourceIds": [
+              "9f8ccef8556abe73c3bff815"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: a comparison mock can be scoped to the stated concern, but truth assessment, repeated need, and buyer demand are unsupported."
+    },
+    {
+      "title": "Draft a follow-up for a delayed app review",
+      "productUrl": "https://community.make.com/t/118559",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "12083ab1ec28d340dfb92444"
+        ],
+        "chore": "Prepare a polite status inquiry for an app submission whose review has remained pending.",
+        "evidenceQuote": "Could you please share an estimated timeline, or let us know if anything is needed from our side?"
+      },
+      "sourceIds": [
+        "12083ab1ec28d340dfb92444"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft status inquiry based only on an operator-entered submission date and current review status.",
+        "inputs": [
+          "Operator-entered submission date",
+          "Operator-entered current review status",
+          "Operator-selected recipient role"
+        ],
+        "trigger": "An operator notices that a submitted app remains in the same review status and wants to prepare a follow-up.",
+        "steps": [
+          "Enter the submission date and review status manually.",
+          "Generate a neutral summary of elapsed time without claiming a cause.",
+          "Draft a concise request for an estimated timeline or missing information.",
+          "Show the source fields beside the draft for review.",
+          "Have the operator edit and send it through the approved channel."
+        ],
+        "acceptanceCheck": "For fictional submission dates and statuses, verify that the draft repeats only entered facts and asks for an update without inventing a reason for delay.",
+        "humanBoundary": "A person checks the current portal status, chooses whether and when to contact the platform, verifies the recipient, and sends the message.",
+        "unverified": [
+          "No reference supports reading app-review status or portal data.",
+          "No evidence shows this task recurs across a buyer group.",
+          "The supplied post reports one case and does not establish willingness to pay."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "An operator can supply dates and review status for a draft, but no reference supports portal access.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent app developers may value follow-up help; one case does not establish a paying market.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A manually supplied status-to-draft mock is bounded, while useful timing and recurrence remain unknown.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "It can draft from entered facts, but a person must verify status, choose contact, and send.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained context reports a 55-day pending review and asks for a timeline, but gives no recurrence or corroboration.",
+            "sourceIds": [
+              "12083ab1ec28d340dfb92444"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: a follow-up draft is possible from manual inputs, but this is one platform-specific case with no repeated need or buyer evidence."
+    },
+    {
+      "title": "Check weekly keyword rows before reporting",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "0964af05022d18e661eb95a7"
+        ],
+        "chore": "Collect weekly keyword volume, CPC, and difficulty values and add them as rows in Google Sheets.",
+        "evidenceQuote": "adds each keyword’s Google search volume, CPC and difficulty as rows in Google Sheets."
+      },
+      "sourceIds": [
+        "0964af05022d18e661eb95a7"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review table that checks operator-supplied keyword metric rows for missing values and highlights them before spreadsheet entry.",
+        "inputs": [
+          "Synthetic keyword names",
+          "Operator-supplied volume values",
+          "Operator-supplied CPC values",
+          "Operator-supplied difficulty values"
+        ],
+        "trigger": "An operator has a weekly batch of keyword metrics and wants to review row completeness before adding them to a sheet.",
+        "steps": [
+          "Paste fictional keyword metric rows into a local form.",
+          "Check that each row has the three expected metric fields.",
+          "Flag blank or malformed values without filling them in.",
+          "Display a review table grouped by keyword.",
+          "Have a person verify values and add approved rows to their own sheet."
+        ],
+        "acceptanceCheck": "With fictional rows containing known blanks and malformed values, verify that only those rows are flagged and no metric is guessed or altered.",
+        "humanBoundary": "A person obtains and verifies metrics, supplies them, decides how to resolve flags, and controls any Google Sheets entry.",
+        "unverified": [
+          "The described maker workflow is not independent evidence of customer demand.",
+          "No supplied reference supports metric retrieval or Google Sheets writing.",
+          "Actual data formats and metric validation rules are not documented."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A row completeness mock is approachable, but no reference supports retrieving metrics or writing Sheets rows.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: marketing consultants may value weekly reporting, but this maker workflow establishes no buyer intent.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "Synthetic row checks are bounded; accurate retrieval, validation rules, and sheet access remain unsupported.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "Completeness checks repeat on supplied rows, but a person must obtain metrics and approve sheet changes.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The context describes weekly metric fields and spreadsheet rows in one maker workflow, not independent customer demand.",
+            "sourceIds": [
+              "0964af05022d18e661eb95a7"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: concrete fields support a synthetic completeness check, but the source is a maker workflow and implementation support or buyer demand is absent."
+    },
+    {
+      "title": "Review which site pages still serve a purpose",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "afe7e1914aaaf443af4e5210"
+        ],
+        "chore": "Review whether an existing site page answers a question or solves a problem before keeping it.",
+        "evidenceQuote": "Before adding anything new I check whether the page already has a reason to exist."
+      },
+      "sourceIds": [
+        "afe7e1914aaaf443af4e5210"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review worksheet that flags supplied page descriptions with no stated purpose for a person to inspect.",
+        "inputs": [
+          "Operator-supplied page title",
+          "Operator-supplied page description",
+          "Operator-supplied purpose statement"
+        ],
+        "trigger": "A site editor is reviewing a supplied list of existing or proposed pages.",
+        "steps": [
+          "Paste fictional page descriptions and purpose statements.",
+          "Check whether each purpose field is blank.",
+          "Summarize the stated purpose without asserting page quality.",
+          "Flag blank or unclear entries for editorial review.",
+          "Have a person decide whether to keep, change, or remove a page."
+        ],
+        "acceptanceCheck": "Using fictional page records with known blank purpose fields, confirm those rows are flagged and populated pages are not automatically judged unnecessary.",
+        "humanBoundary": "A person supplies context and decides the page's value; the worksheet cannot determine audience needs or delete pages.",
+        "unverified": [
+          "The source is a personal tip and does not establish a repeated customer burden.",
+          "No implementation reference supports page inventory or purpose classification.",
+          "No buyer or payment evidence is supplied."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A supplied-text worksheet is possible, but reliable page-purpose classification is undocumented.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small web studios may pay for content review; this tip establishes no buyer intent.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional list review is bounded, though judging actual audience value needs human context.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A form can flag missing purpose statements, but a person must judge and change each page.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The excerpt gives a keep-or-delete heuristic, but no specific repeated need or corroboration.",
+            "sourceIds": [
+              "afe7e1914aaaf443af4e5210"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: the stated review rule can be mocked, but the post is a personal tip without evidence of recurring customer demand."
+    },
+    {
+      "title": "Draft shipment delay notices from sample rows",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "9a2e13385a9d960688bb6c8c"
+        ],
+        "chore": "Notify a dispatcher when a shipment is delayed.",
+        "evidenceQuote": "A simple flow can notify a dispatcher when a shipment is delayed"
+      },
+      "sourceIds": [
+        "9a2e13385a9d960688bb6c8c"
+      ],
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft delay notice and exception row based on an operator-supplied fictional shipment status.",
+        "inputs": [
+          "Synthetic shipment identifier",
+          "Operator-supplied expected and current status",
+          "Operator-supplied delay rule",
+          "Operator-supplied intended recipient role"
+        ],
+        "trigger": "An operator supplies a shipment row marked delayed under their own stated rule.",
+        "steps": [
+          "Enter fictional shipment status and the operator's delay rule.",
+          "Compare the supplied status with that rule.",
+          "Draft a short notice using only entered fields.",
+          "Show the triggering fields beside the draft.",
+          "Have a dispatcher verify the status and approve any real notice."
+        ],
+        "acceptanceCheck": "For fictional rows with pre-labeled delay conditions, confirm that only matching rows produce drafts and that no external status is inferred.",
+        "humanBoundary": "A person supplies accurate status and rules, verifies the exception, and authorizes any notice; live carrier and CRM connections are excluded.",
+        "unverified": [
+          "The source gives this as an example, not evidence of an actual operator request or recurrence.",
+          "No supplied reference supports logistics event intake or message delivery.",
+          "Useful delay rules and the buyer's workflow are unspecified."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A sample-row draft is straightforward to outline, but no reference supports logistics intake or delivery.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small logistics operators may pay for clearer notices; this article example establishes no buying intent.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional row-to-draft experiment is bounded, while real event access and correct delay rules remain unverified.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Drafting can repeat on supplied rows, but a person must verify status and approve messages.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The article names a dispatcher alert among examples, without a direct request, frequency, or corroboration.",
+            "sourceIds": [
+              "9a2e13385a9d960688bb6c8c"
+            ]
+          }
+        }
+      },
+      "reason": "Below threshold: an example supports a narrow synthetic test, but the article does not establish an actual repeated customer chore or implementation capability."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Compare chained agent answers for added claims",
+      "productUrl": "https://news.ycombinator.com/item?id=50292324",
+      "reason": "Below threshold: the only retained statement is a general concern about inference and edge cases; a text comparison cannot verify truth, and recurring need and buyers are unproved."
+    },
+    {
+      "title": "Ask HN: Are Apple app reviewers sharing app ideas?",
+      "productUrl": "https://news.ycombinator.com/item?id=50286034",
+      "reason": "The retained text describes invented stories and discussion with an app reviewer, but supplies no concrete recurring task or request for a tool/service; scoring an experiment would require inventing a duty."
+    },
+    {
+      "title": "Show HN: NovelHiveAI – A tool to turn novels into a multi-Voice audiobook",
+      "productUrl": "https://news.ycombinator.com/item?id=50298905",
+      "reason": "This is a product launch description, not a concrete existing customer chore or request for help; the retained text only states the maker's view of audiobook preference."
+    },
+    {
+      "title": "Show HN: I created a spreadsheet in a plain text file",
+      "productUrl": "https://news.ycombinator.com/item?id=50298001",
+      "reason": "The retained text announces a format and app but identifies no customer task or unmet need; a proposed business workflow would be invented."
+    },
+    {
+      "title": "App review: Elfsight AI Chatbot — pending since Sep 3",
+      "productUrl": "https://community.make.com/t/118559",
+      "reason": "Below threshold: one follow-up drafting experiment is score-assessed in candidates, but the retained context establishes only a single platform-specific delay, not recurring demand or a payer."
+    },
+    {
+      "title": "WhatsApp Business Cloud connection stuck on “Creating a connection”",
+      "productUrl": "https://community.make.com/t/118555",
+      "reason": "This is a one-off connector authorization/configuration failure. Automating the troubleshooting or authorization would invent support duties and is outside the documented evidence."
+    },
+    {
+      "title": "The new Hydrogen GA — what actually changes if you're running a custom app alongside it?",
+      "productUrl": "https://community.shopify.com/t/706376",
+      "reason": "The retained spans describe custom app development and implementation observations, not a specific customer chore or request for a tool/service; a buyer workflow is not established."
+    },
+    {
+      "title": "Weekly keyword search volume to Google Sheets (Apify)",
+      "productUrl": "https://community.activepieces.com/t/12459",
+      "reason": "Below threshold: the concrete weekly row task is score-assessed in candidates, but the retained context is a maker's existing workflow and pricing statement, not independent customer demand or implementation support."
+    },
+    {
+      "title": "How do you document a link campaign so others can follow it",
+      "productUrl": "https://discourse.metabase.com/t/343425",
+      "reason": "Below threshold: a general page-purpose heuristic is score-assessed in candidates; the source is a personal tip with no described customer, recurrence, or buyer."
+    },
+    {
+      "title": "From n8n Workflows to a Logistics Software Development Company: When Automation Stops Being Enough",
+      "productUrl": "https://community.n8n.io/t/325169",
+      "reason": "Below threshold: shipment alerts are only article examples and the source does not document an actual request or repeated logistics workflow; live integration support is also absent."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten assigned discussion identities. Five concrete task descriptions received scoped five-criterion assessments and remain below the threshold; the other five lack a concrete customer chore in retained evidence or describe a one-off configuration issue. No post proposed."
+    }
+  ]
+}
