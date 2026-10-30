@@ -1,0 +1,277 @@
+{
+  "runId": "loop-40984040480-1",
+  "createdAt": "2026-10-30T01:09:22.307Z",
+  "candidates": [
+    {
+      "title": "Organize app security signals before install",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "sourceIds": [
+        "66865ff0f48baba92ae2167c"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "66865ff0f48baba92ae2167c"
+        ],
+        "chore": "A store operator wants to check whether a Shopify app has an official security review mark before installing it.",
+        "evidenceQuote": "I’d appreciate any guidance on how to verify an app’s security before installing it in my store."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A one-page evidence checklist that records an app listing’s stated security signals and unanswered verification questions without declaring the app safe.",
+        "inputs": [
+          "Operator-entered app listing URL",
+          "Operator-copied official badge or certification text",
+          "Operator-copied permission summary"
+        ],
+        "trigger": "A store operator is considering a Shopify app and supplies its public listing information.",
+        "steps": [
+          "Record the listing URL and the operator-copied claims.",
+          "Separate claims attributed to the listing from independently verified details.",
+          "Mark each checklist field as present, absent from supplied materials, or unverified.",
+          "Draft questions for the operator to confirm with the vendor or platform.",
+          "Have the operator review the record; do not issue a security verdict."
+        ],
+        "acceptanceCheck": "Given a fictional listing with mixed supplied claims, confirm the checklist preserves attribution and labels unknown fields without converting them into a safety rating.",
+        "humanBoundary": "The operator supplies public materials, independently checks any official status, and makes the install decision; the proposed aid cannot certify security.",
+        "unverified": [
+          "No supplied implementation reference supports official badge lookup or security verification.",
+          "The source does not show how often operators face this decision or whether they would pay for help."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "The proposed worksheet can organize operator-supplied public listing details; no source documents a security-verification method or reliable badge lookup.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Shopify store operators may value a pre-install review aid, but this single question proves no payment or buyer demand.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week evidence organizer is bounded, but no source supports deciding whether an app is actually secure; it must avoid a verdict.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A template can flag missing evidence from entered details; a person must inspect sources and decide whether to install.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post asks about official app-security marks and pre-install verification; frequency and actual risk examples are absent.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          }
+        }
+      },
+      "reason": "Scored as a bounded evidence-organizing experiment, but excluded below threshold because no verified method or buyer corroboration is supplied."
+    },
+    {
+      "title": "Outline agent checkpoint recovery steps",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceIds": [
+        "787f35356b78240055b28a66"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "787f35356b78240055b28a66"
+        ],
+        "chore": "Agent developers need to write checkpointing and recovery logic and handle idempotency for their agents.",
+        "evidenceQuote": "But devs need to write checkpointers, recovery logic, and deal with idempotency by theirselves."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewed recovery-design worksheet for one interrupted synthetic agent run, listing checkpoint state, retry assumptions and idempotency questions.",
+        "inputs": [
+          "Synthetic agent task description",
+          "Synthetic interrupted-run timeline",
+          "Operator-supplied list of side effects",
+          "Operator-supplied expected final state"
+        ],
+        "trigger": "An agent developer provides one fictional or sanitized interrupted run for design review.",
+        "steps": [
+          "Summarize the supplied run and identify the last known completed step.",
+          "List state that the operator says must survive a restart.",
+          "Mark every external side effect and whether it may repeat.",
+          "Draft checkpoint and retry questions without prescribing executable recovery.",
+          "Have an engineer review the assumptions and record unresolved decisions."
+        ],
+        "acceptanceCheck": "For a fictional run with one repeated side effect, check that the worksheet flags the repeat risk and leaves the recovery choice unresolved for engineer review.",
+        "humanBoundary": "An engineer defines state, authorizes retries, and validates idempotency; the worksheet neither runs agents nor changes production systems.",
+        "unverified": [
+          "No implementation reference documents checkpoint storage, recovery execution or idempotent operations.",
+          "Useful state and retry behavior vary by agent and are not supplied in the post.",
+          "Frequency of this work and willingness to pay are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can turn operator-supplied failure notes into a structured design worksheet, but no implementation evidence supports agent recovery behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agent workflows may pay for recovery planning, but this post shows no purchase intent or validated buyer.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week worksheet for one synthetic interrupted run is bounded; correct checkpoint and idempotency rules depend on the agent design.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The proposed worksheet can produce repeatable questions, while an engineer must choose safe state and validate any recovery behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post explicitly names checkpointing, recovery logic and idempotency work, but gives no examples, frequency, constraints or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        }
+      },
+      "reason": "Fresh assessment scores the explicit chores anew; the scoped proposal remains below threshold because implementation behavior, buyer demand and recurrence are unverified."
+    },
+    {
+      "title": "Prepare an app discoverability review brief",
+      "productUrl": "https://news.ycombinator.com/item?id=50290449",
+      "sourceIds": [
+        "7cfdf55d122c5e48801907c2"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "7cfdf55d122c5e48801907c2"
+        ],
+        "chore": "An app maker wants to figure out how to get people to find their apps.",
+        "evidenceQuote": "because I had no idea how to get people to find my own apps."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review brief listing possible app-store listing improvements and unanswered discoverability questions from operator-supplied app details.",
+        "inputs": [
+          "Operator-supplied app name and category",
+          "Operator-supplied listing description and screenshots",
+          "Operator-supplied intended audience"
+        ],
+        "trigger": "An app maker supplies one app listing and asks for ways to improve how people find it.",
+        "steps": [
+          "Record the supplied listing text and intended audience.",
+          "Extract claims and terms already present in the listing.",
+          "Draft a short set of clarity and audience-match questions.",
+          "Suggest wording experiments as hypotheses, not proven ranking factors.",
+          "Have the maker review every suggestion before changing the listing."
+        ],
+        "acceptanceCheck": "With fictional listing details, verify that the brief separates observed listing text from suggestions and does not claim a change will improve downloads.",
+        "humanBoundary": "The maker supplies accurate listing materials, chooses any edits and checks outcomes; the brief cannot establish app-store ranking behavior or guarantee discovery.",
+        "unverified": [
+          "No implementation reference supports keyword research, app-store ranking analysis or download attribution.",
+          "The source gives no app category, listing details, audience, frequency or corroboration.",
+          "Buyer willingness to pay and useful measurable outcome are unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner could organize supplied listing details, but no source supports reliable keyword or ranking analysis.",
+            "sourceIds": [
+              "7cfdf55d122c5e48801907c2"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: app makers may pay for discoverability help, but this single maker statement proves no market or payment.",
+            "sourceIds": [
+              "7cfdf55d122c5e48801907c2"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week review brief is bounded, but useful recommendations and any ranking effect cannot be verified from the supplied source.",
+            "sourceIds": [
+              "7cfdf55d122c5e48801907c2"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "The brief can repeat text review, while the maker must choose edits and assess outcomes; no ranking or attribution capability is documented.",
+            "sourceIds": [
+              "7cfdf55d122c5e48801907c2"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The excerpt states difficulty getting people to find the maker’s apps, but gives no concrete listing task, constraints, frequency or corroboration.",
+            "sourceIds": [
+              "7cfdf55d122c5e48801907c2"
+            ]
+          }
+        }
+      },
+      "reason": "The fresh excerpt supports a limited discoverability task, so it receives a scoped assessment; the plan remains below threshold because the actual app/listing workflow, implementation support and repeat demand are unknown."
+    }
+  ],
+  "picked": [],
+  "rejected": [
+    {
+      "title": "Fast agentic video editing in the browser (Tella)",
+      "productUrl": "https://news.ycombinator.com/item?id=50291424",
+      "reason": "The supplied excerpt says a tool can record, edit and publish; it does not state a concrete manual task or request for a separate service, so a demand-backed experiment would invent the chore."
+    },
+    {
+      "title": "Organize app security signals before install",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "reason": "Scored as a bounded evidence-organizing experiment, but excluded below threshold because no verified method or buyer corroboration is supplied."
+    },
+    {
+      "title": "Outline agent checkpoint recovery steps",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "reason": "Fresh assessment scores the explicit chores anew; the scoped proposal remains below threshold because implementation behavior, buyer demand and recurrence are unverified."
+    },
+    {
+      "title": "Prepare an app discoverability review brief",
+      "productUrl": "https://news.ycombinator.com/item?id=50290449",
+      "reason": "The fresh excerpt supports a limited discoverability task, so it receives a scoped assessment; the plan remains below threshold because the actual app/listing workflow, implementation support and repeat demand are unknown."
+    },
+    {
+      "title": "Research Trails session record",
+      "productUrl": "https://news.ycombinator.com/item?id=50289281",
+      "reason": "The excerpt describes a research-session record that can be resumed, exported and shared; it does not state a manual chore or request for a separate service, so no demand-backed experiment is supported."
+    }
+  ]
+}
