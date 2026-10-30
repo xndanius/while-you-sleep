@@ -1,0 +1,311 @@
+{
+  "runId": "loop-41024716844-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-30T08:13:40.000Z",
+  "candidates": [
+    {
+      "title": "Prepare a freelancer invoice draft",
+      "productUrl": "https://news.ycombinator.com/item?id=50300992",
+      "sourceIds": [
+        "e90c12048dd8798f8b2d673b"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "e90c12048dd8798f8b2d673b"
+        ],
+        "chore": "A freelancer needs to send an invoice.",
+        "evidenceQuote": "A freelancer needs to send an invoice."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A draft invoice checklist and plain-text invoice from details supplied by a freelancer.",
+        "inputs": [
+          "Fictional client name and billing address",
+          "Operator-supplied service description and amount",
+          "Operator-supplied invoice date and due date",
+          "Operator-supplied tax and payment terms"
+        ],
+        "trigger": "A freelancer enters details for one invoice they intend to send.",
+        "steps": [
+          "Collect the operator-supplied details in a fixed form.",
+          "Check that the required fields are present.",
+          "Format a plain-text invoice draft and flag blank fields.",
+          "Have the freelancer verify all amounts, terms and tax treatment.",
+          "The freelancer transfers the approved details to their chosen invoicing method and sends it."
+        ],
+        "acceptanceCheck": "Using fictional input with a deliberately blank due date, confirm the draft preserves supplied values and clearly flags the missing date without inventing one.",
+        "humanBoundary": "The freelancer supplies and confirms client details, amounts, terms and jurisdiction-specific tax treatment, then creates and sends the final invoice.",
+        "unverified": [
+          "The post does not specify invoice fields, frequency or output format.",
+          "No invoicing software, persistence, delivery or tax calculation capability is evidenced.",
+          "Whether any freelancer would pay for this draft aid is unknown."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A form can organize operator-supplied invoice details, but this post gives no format or invoice-tool support.",
+            "sourceIds": [
+              "e90c12048dd8798f8b2d673b"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent freelancers might pay to reduce invoice preparation; the post states a need, not willingness to pay.",
+            "sourceIds": [
+              "e90c12048dd8798f8b2d673b"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional invoice draft is small, but required fields, tax treatment and usable output format are unknown.",
+            "sourceIds": [
+              "e90c12048dd8798f8b2d673b"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed loop drafts text only; a person must verify amounts, tax rules and send the invoice.",
+            "sourceIds": [
+              "e90c12048dd8798f8b2d673b"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The literal source identifies sending an invoice but gives no frequency, fields or context for this need.",
+            "sourceIds": [
+              "e90c12048dd8798f8b2d673b"
+            ]
+          }
+        }
+      },
+      "reason": "Scored as a narrow proposed experiment; the provisional mean is below the frozen 6 threshold, so it is not proposed for publication."
+    },
+    {
+      "title": "Review mobile game test log CSV rows",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "sourceIds": [
+        "3d1373b038ea48b1f2fbcc77",
+        "5c2bf4e7df8c3ec325ba2e74",
+        "f1662b0ceb942474f83a8108"
+      ],
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3d1373b038ea48b1f2fbcc77"
+        ],
+        "chore": "A mobile game tester records battery percentage, device temperature, frame drops and notes, then transfers CSV rows to a Google Sheet; attempted triggers miss or duplicate files.",
+        "evidenceQuote": "I have tried a Schedule Trigger plus Google Drive Watch Files and also a Webhook from a shortcut on the phone, but the workflow either doesn’t fire at all or fires twice on the same file."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review CSV that lists parsed game-test rows and flags repeated rows for a person to check.",
+        "inputs": [
+          "Synthetic CSV rows with battery percentage",
+          "Synthetic CSV rows with device temperature and frame drops",
+          "A short operator-written test note",
+          "An operator-selected field or combination of fields used to identify duplicates"
+        ],
+        "trigger": "A tester supplies an exported CSV after a manual game-testing session.",
+        "steps": [
+          "Read the supplied CSV into structured rows using the documented n8n extraction capability.",
+          "Apply an operator-selected key to flag or remove duplicate rows using documented n8n deduplication capability.",
+          "Preserve the original values and produce a review table with duplicate flags.",
+          "Ask the tester to inspect flagged rows and correct any parsing or identity mistakes.",
+          "The tester manually transfers approved rows to their own sheet."
+        ],
+        "acceptanceCheck": "On a fictional CSV containing one repeated row and one row with a blank measurement, verify that rows are parsed, the chosen duplicate is flagged, and the blank is not silently filled.",
+        "humanBoundary": "A tester exports and supplies the file, chooses meaningful duplicate fields, checks parsed measurements and decides what to enter in a sheet; no phone trigger or live sheet write is proposed.",
+        "unverified": [
+          "The retained spans do not establish a successful phone upload trigger or file readiness check.",
+          "The references document CSV extraction and duplicate operations, not correctness on this tester’s actual CSV or Google Sheets writes.",
+          "The appropriate duplicate key and review rules must be chosen by the tester.",
+          "A paying customer and repeated commercial demand are not established."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "n8n documents CSV extraction to JSON rows and duplicate removal, but these references do not support mobile intake or sheet writing.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small game-testing teams may pay to reduce log cleanup; this post does not establish a team buyer or payment.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week supplied-CSV review is bounded using documented extraction and deduplication; phone upload and Sheets flow are unresolved.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "Repeated row parsing and deduplication can be automated on supplied files, but no trigger or sheet-write capability is established and a person reviews the output.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77",
+              "5c2bf4e7df8c3ec325ba2e74",
+              "f1662b0ceb942474f83a8108"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe the log fields, delayed CSV transfer and missed or duplicate triggers; frequency beyond the post is unknown.",
+            "sourceIds": [
+              "3d1373b038ea48b1f2fbcc77"
+            ]
+          }
+        }
+      },
+      "reason": "Scored as a narrow proposed experiment; the provisional mean is below the frozen 6 threshold, so it is not proposed for publication."
+    },
+    {
+      "title": "Compare ad and Shopify purchase exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "sourceIds": [
+        "accc79f9c0afdef41b9f38d1"
+      ],
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "accc79f9c0afdef41b9f38d1"
+        ],
+        "chore": "Export aligned 30-day Meta purchase and Shopify online order totals, then inspect unexplained differences such as possible duplicate tracking.",
+        "evidenceQuote": "In Shopify, export daily orders for the same 30 days, Online Store channel only, without test and cancelled orders."
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A table aligning supplied daily Meta purchase and Shopify order totals, with dates that differ flagged for review.",
+        "inputs": [
+          "Fictional daily Meta purchase totals with the stated attribution setting",
+          "Fictional Shopify daily Online Store order totals",
+          "Operator confirmation that test and cancelled orders are excluded",
+          "A proposed date-matching rule"
+        ],
+        "trigger": "An ecommerce operator supplies two manually exported daily tables for the same date range.",
+        "steps": [
+          "Check that both tables contain the same date range.",
+          "Compare daily totals using the operator-approved matching rule.",
+          "List missing dates and differing totals without assigning a cause.",
+          "Show the source rows beside each flagged difference.",
+          "Ask the operator to investigate tracking and approve any next action."
+        ],
+        "acceptanceCheck": "With fictional tables containing a missing date and one doubled total, confirm the output flags those differences and does not label their cause as proven.",
+        "humanBoundary": "The operator obtains exports, confirms filters and matching assumptions, investigates tracking and authorizes changes; the proposal does not access ad or Shopify accounts.",
+        "unverified": [
+          "The source is an instructional post and does not establish repeated paid demand.",
+          "No supplied reference supports account access, export automation or attribution diagnosis.",
+          "The matching rule and useful discrepancy threshold require operator review."
+        ]
+      },
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A supplied-table comparison can be mocked, but the retained spans provide no implementation reference for exports or reliable attribution analysis.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: ecommerce operators might pay for export comparison; this instructional post does not establish a buyer request or payment.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A fictional table comparison fits four weeks, but matching rules and interpretation of causes remain uncertain.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A repeatable difference table is possible from supplied files, while a person must validate dates, exclusions and investigate causes.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans specify aligned exports and describe attribution and possible duplicate tracking; repeated customer demand is not established.",
+            "sourceIds": [
+              "accc79f9c0afdef41b9f38d1"
+            ]
+          }
+        }
+      },
+      "reason": "Scored as a narrow proposed experiment; the provisional mean is below the frozen 6 threshold, so it is not proposed for publication."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Prepare a freelancer invoice draft",
+      "productUrl": "https://news.ycombinator.com/item?id=50300992",
+      "reason": "Below threshold: the fresh post only says a freelancer needs to send an invoice; invoice fields, frequency, tax handling and usable format are unspecified, so the narrow fictional draft scores 3/5/2/4 in profit, feasibility, autonomy and evidence respectively."
+    },
+    {
+      "title": "Turn a SigV4 package demo into a service idea",
+      "productUrl": "https://news.ycombinator.com/item?id=50297425",
+      "reason": "The supplied text describes a package that signs AWS requests, not a concrete customer chore or tool request. The Show HN title alone does not support inventing one."
+    },
+    {
+      "title": "Extend a household budgeting app",
+      "productUrl": "https://news.ycombinator.com/item?id=50296473",
+      "reason": "The retained text says the app helped the poster and people around them, but identifies no specific manual chore or requested service to scope."
+    },
+    {
+      "title": "Advise on Shopify app review process",
+      "productUrl": "https://community.shopify.com/t/705837",
+      "reason": "The supplied text asks generally for advice about the app review process and gives no specific review task, obstacle or repeatable output."
+    },
+    {
+      "title": "Choose built-in AI or MCP",
+      "productUrl": "https://news.ycombinator.com/item?id=50274354",
+      "reason": "The post asks for a preference between two software integration approaches; it states no concrete chore or requested service suitable for a bounded experiment."
+    },
+    {
+      "title": "Review mobile game test log CSV rows",
+      "productUrl": "https://community.n8n.io/t/325109",
+      "reason": "Below threshold: the proposed scope uses supplied CSV files with documented n8n extraction and duplicate-removal capabilities, but the actual phone trigger, upload readiness and Sheets flow remain unsupported; commercial demand is unverified."
+    },
+    {
+      "title": "Compare ad and Shopify purchase exports",
+      "productUrl": "https://community.shopify.com/t/705757",
+      "reason": "Below threshold: the retained task supports a supplied-table comparison, but this instructional post does not establish repeated buyer demand, export automation or causal diagnosis; the provisional mean remains below six."
+    },
+    {
+      "title": "Build a copyright review service for LLM output",
+      "productUrl": "https://news.ycombinator.com/item?id=50268658",
+      "reason": "The supplied excerpt expresses a general copyright concern but does not specify a concrete task, requested tool or review workflow; a service duty would be invented."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all eight sealed discussion assignments. Three concrete chores received scoped plans and five criterion ratings; each provisional mean is below the frozen threshold of 6. The remaining five excerpts do not supply a concrete chore. No post is proposed."
+    }
+  ]
+}
