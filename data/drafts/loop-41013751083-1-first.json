@@ -1,0 +1,390 @@
+{
+  "runId": "loop-41013751083-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-30T06:25:13.000Z",
+  "candidates": [
+    {
+      "title": "Business report to video in n8n: your monthly numbers, explained by Claude in 2 minutes (free n8n workflow template)",
+      "productUrl": "https://community.n8n.io/t/325292",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "7132d39a81d828b6e8cc8cc5"
+        ],
+        "chore": "Prepare a narrated video from a monthly business review report for a team, board, or client.",
+        "evidenceQuote": "if you send your team, your investors or your clients a review deck every month"
+      },
+      "sourceIds": [
+        "7132d39a81d828b6e8cc8cc5"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A supplied report and audience fields can support a small sample video draft, but render setup is not trivial.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: client-facing firms may value a faster monthly review video; the post offers a workflow, not buying intent.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A synthetic report-to-script storyboard is bounded; real rendering and reliable figures remain unverified.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A draft can repeat from a supplied report, but a person must verify figures, narration, and final render.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained spans describe monthly review decks and a video workflow; broader demand and recurring use are not established.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable narration script and scene outline from an operator-supplied monthly review report.",
+        "inputs": [
+          "Synthetic monthly report with labeled metrics",
+          "Intended audience and brand notes",
+          "Operator-supplied key messages"
+        ],
+        "trigger": "An operator supplies a completed monthly review report and requests a video draft.",
+        "steps": [
+          "Read the supplied report and audience notes.",
+          "Extract only labeled metrics and stated conclusions.",
+          "Draft a short narration and matching scene outline.",
+          "Compare each numeric statement with the supplied report.",
+          "Return the draft for a person to revise and approve."
+        ],
+        "acceptanceCheck": "For a fixed synthetic report, every metric in the draft must match its source row and each conclusion must be traceable to supplied text.",
+        "humanBoundary": "A person supplies accurate report data, checks interpretation and branding, and approves any render or client delivery.",
+        "unverified": [
+          "Whether a video script can be generated accurately for varied report formats.",
+          "Whether customers want this output or would pay for it.",
+          "Any actual video rendering, workflow execution, or delivery capability."
+        ]
+      },
+      "reason": "Assessed as a bounded proposed experiment; provisional criterion mean is below the frozen 6 threshold, and the source does not establish a paying customer."
+    },
+    {
+      "title": "AI chatbots, WhatsApp agents and booking automations for small businesses",
+      "productUrl": "https://community.make.com/t/118303",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "ccf5a6a14f8320d9f96a4e55"
+        ],
+        "chore": "Review workflow records to find scenarios that send duplicate records or miss records.",
+        "evidenceQuote": "Fixing scenarios that send duplicates or miss records"
+      },
+      "sourceIds": [
+        "ccf5a6a14f8320d9f96a4e55"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A synthetic expected-versus-actual row comparison is easy to sketch, but no matching implementation reference is supplied.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: small service firms may value record-fault review; this service listing does not establish buyer intent.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week synthetic comparison is bounded; real scenario data and reliable diagnosis remain unknown.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A comparison can flag differences, but a person must diagnose causes and approve changes.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained span explicitly offers fixing duplicate or missed records, but gives no case detail or recurrence.",
+            "sourceIds": [
+              "ccf5a6a14f8320d9f96a4e55"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short exception list showing supplied workflow records that are missing or duplicated against an operator-defined expected list.",
+        "inputs": [
+          "Synthetic expected record IDs",
+          "Synthetic observed record IDs",
+          "Operator-defined duplicate and missing-record rules"
+        ],
+        "trigger": "An operator provides an expected list and a captured output list for one workflow run.",
+        "steps": [
+          "Read both supplied lists without connecting to a live workflow.",
+          "Apply the operator’s exact matching and duplicate rules.",
+          "List missing, repeated, and unmatched IDs.",
+          "Show the source rows for each flagged difference.",
+          "Ask a person to diagnose causes and approve any change."
+        ],
+        "acceptanceCheck": "On a hand-built test pair, the output must flag every seeded missing or duplicate ID and leave all other IDs unflagged.",
+        "humanBoundary": "A person defines the matching rules, supplies authorized test records, investigates causes, and approves any live workflow change.",
+        "unverified": [
+          "Whether synthetic comparison generalizes to any particular workflow data format.",
+          "Whether a live Make scenario can be read or changed.",
+          "Whether the listed service reflects recurring customer demand."
+        ]
+      },
+      "reason": "Assessed as a bounded proposed experiment; provisional criterion mean is below the frozen 6 threshold, and the source does not establish a paying customer."
+    },
+    {
+      "title": "Feature request: Product-specific customer tax exemptions for accurate wholesale and retail checkout",
+      "productUrl": "https://community.shopify.com/t/706515",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3cd538c6b130b86a654c28c2"
+        ],
+        "chore": "Calculate tax amounts before payment and record GST and PST amounts accurately in Shopify order records and tax reports.",
+        "evidenceQuote": "Calculate the correct tax amounts before payment, without requiring draft orders, manual adjustments or additional invoices."
+      },
+      "sourceIds": [
+        "3cd538c6b130b86a654c28c2"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "A tax review worksheet can be outlined, but a correct calculation depends on jurisdiction and transaction rules not supplied here.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: wholesale and retail merchants may value fewer manual tax adjustments; this request does not prove willingness to pay.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A fictional case worksheet is bounded, but validating tax rules or producing correct amounts is outside the evidence.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "A person would need to determine tax treatment and verify every result; automation could misstate tax.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained task and context state a specific checkout and recordkeeping problem, but provide no rule details or corroboration.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A manual-review checklist that identifies which operator-supplied exemption fields need review before a tax decision.",
+        "inputs": [
+          "Fictional transaction type",
+          "Fictional customer exemption status",
+          "Operator-supplied applicable tax rule reference"
+        ],
+        "trigger": "An operator submits one fictional wholesale or retail checkout case for review.",
+        "steps": [
+          "Read only fictional case fields supplied by the operator.",
+          "Check whether required fields are present.",
+          "List missing or conflicting fields without calculating tax.",
+          "Link each flag to the supplied rule reference.",
+          "Return the case to a qualified person for decision."
+        ],
+        "acceptanceCheck": "For a small synthetic set, the checklist must flag each intentionally missing required field and make no tax amount or eligibility decision.",
+        "humanBoundary": "A qualified person supplies authoritative rules, determines exemptions and tax amounts, and approves any production handling; no real customer records are used.",
+        "unverified": [
+          "Applicable tax law and jurisdiction-specific rules.",
+          "Whether a field checklist materially reduces the stated manual work.",
+          "Any Shopify integration, tax calculation, or order-record persistence."
+        ]
+      },
+      "reason": "Assessed as a bounded proposed experiment; provisional criterion mean is below the frozen 6 threshold, and the source does not establish a paying customer."
+    },
+    {
+      "title": "Make.com Automation for Simple Business Tasks",
+      "productUrl": "https://community.make.com/t/118274",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "47619eeb8a75939d683d967f"
+        ],
+        "chore": "Connect a supplied Google Form response to a Google Sheet and prepare an automatic Gmail notification for review.",
+        "evidenceQuote": "Connecting Google Forms to Google Sheets"
+      },
+      "sourceIds": [
+        "47619eeb8a75939d683d967f"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "A synthetic form-to-sheet mapping is approachable, though no supplied implementation reference documents the proposed flow.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: small professional firms may pay for setup help; this learner’s service offer does not show an established buyer.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A test using fictional form rows is bounded; permissions, delivery, and error handling are unverified.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "autonomy": {
+            "value": 4,
+            "reason": "A repeatable mapping and notification can be outlined, but a person must authorize access and review messages.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The retained span lists concrete automation examples, but frames them as a builder’s offer rather than demonstrated customer demand.",
+            "sourceIds": [
+              "47619eeb8a75939d683d967f"
+            ]
+          }
+        }
+      },
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review sheet mapping fictional form requests to selected columns and a notification draft for each row.",
+        "inputs": [
+          "Fictional form response rows",
+          "Operator-selected sheet column mapping",
+          "Operator-approved notification template"
+        ],
+        "trigger": "An operator supplies a new fictional form response row for processing.",
+        "steps": [
+          "Read the supplied test row and mapping.",
+          "Check required fields and mark missing values.",
+          "Place mapped values in a proposed sheet row.",
+          "Draft a notification using the approved template.",
+          "Show both outputs to a person before any send."
+        ],
+        "acceptanceCheck": "For seeded fictional rows, mapped values must land in their selected columns and notifications must contain only the approved fields.",
+        "humanBoundary": "A person configures and authorizes real accounts, checks mappings, reviews each message, and approves any send.",
+        "unverified": [
+          "Whether any integration executes successfully in Make.",
+          "Whether permissions, retries, and duplicate handling are available.",
+          "Whether the offered task represents repeated buyer demand."
+        ]
+      },
+      "reason": "Assessed as a bounded proposed experiment; provisional criterion mean is below the frozen 6 threshold, and the source does not establish a paying customer."
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Business report to video in n8n: your monthly numbers, explained by Claude in 2 minutes (free n8n workflow template)",
+      "productUrl": "https://community.n8n.io/t/325292",
+      "reason": "Below threshold: the scored proposed experiment remains below 6, with implementation/customer uncertainties stated in its plan."
+    },
+    {
+      "title": "AI chatbots, WhatsApp agents and booking automations for small businesses",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "Below threshold: the scored proposed experiment remains below 6, with implementation/customer uncertainties stated in its plan."
+    },
+    {
+      "title": "Feature request: Product-specific customer tax exemptions for accurate wholesale and retail checkout",
+      "productUrl": "https://community.shopify.com/t/706515",
+      "reason": "Below threshold: the scored proposed experiment remains below 6, with implementation/customer uncertainties stated in its plan."
+    },
+    {
+      "title": "Make.com Automation for Simple Business Tasks",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "Below threshold: the scored proposed experiment remains below 6, with implementation/customer uncertainties stated in its plan."
+    },
+    {
+      "title": "Show HN: Lasm – Write formally verified webapps in Lean for Node/serverless/edge",
+      "productUrl": "https://news.ycombinator.com/item?id=50299004",
+      "reason": "The retained text is a general belief about formal verification; it identifies no concrete chore or request, so a scoped task would be invented."
+    },
+    {
+      "title": "Store owners: what’s the best way for app developers to learn from you?",
+      "productUrl": "https://community.shopify.com/t/706526",
+      "reason": "The post asks how an app developer can find merchants for research conversations; it does not identify a merchant chore or specific task to automate."
+    },
+    {
+      "title": "Ask HN: Advise on monetization model for my freemium app wanted",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "reason": "The supplied text asks for conceptual monetization help but names no concrete repeated task suitable for a bounded automation experiment."
+    },
+    {
+      "title": "Show HN: MadTracker – Scoring software for track cycling races",
+      "productUrl": "https://news.ycombinator.com/item?id=50298982",
+      "reason": "The retained text describes an existing scoring engine’s outputs, not an unserved task or request for a new service; proposing a replacement would invent demand."
+    },
+    {
+      "title": "Can n8n be integrated with MirrorFly Instant Messaging Software?",
+      "productUrl": "https://community.n8n.io/t/325279",
+      "reason": "The post is a broad integration feasibility question with examples of possible uses, but no specific existing chore, event, or workflow to assess."
+    },
+    {
+      "title": "Ask HN: Alternative to Tldraw Draw Fast?",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "reason": "The text requests a tool to convert rough iPad sketches into polished visuals, but gives no repeatable business/customer chore or bounded operational workflow."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion assignments. Four concrete tasks received scoped plans and five provisional ratings; all remain below the frozen threshold. Six other posts lack a concrete bounded chore or request. No post proposed."
+    }
+  ]
+}
