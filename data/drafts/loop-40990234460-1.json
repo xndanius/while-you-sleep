@@ -1,0 +1,451 @@
+{
+  "runId": "loop-40990234460-1",
+  "targetCount": 1,
+  "createdAt": "2026-10-30T02:12:56.356Z",
+  "candidates": [
+    {
+      "title": "Turn monthly review decks into video drafts",
+      "productUrl": "https://community.n8n.io/t/325292",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "7132d39a81d828b6e8cc8cc5"
+        ],
+        "chore": "Prepare a narrated video draft from a monthly business review deck for its intended audience.",
+        "evidenceQuote": "if you send your team, your investors or your clients a review deck every month"
+      },
+      "sourceIds": [
+        "7132d39a81d828b6e8cc8cc5"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 6,
+            "reason": "The retained post gives an importable n8n workflow and setup steps, though API keys and file setup are required.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: consultants or small firms may pay for recurring report-to-video preparation; this post only offers a template.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "feasibility": {
+            "value": 6,
+            "reason": "A four-week test can use synthetic reports and a proposed draft workflow; rendering setup and costs need checking.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "autonomy": {
+            "value": 5,
+            "reason": "The documented workflow runs report-to-video steps, but a person supplies files and keys and checks the render.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          },
+          "evidence": {
+            "value": 6,
+            "reason": "The retained spans describe a monthly deck, setup, and reported rendering process; this is one maker's account.",
+            "sourceIds": [
+              "7132d39a81d828b6e8cc8cc5"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore assessed as a narrow proposed experiment; its provisional five-criterion mean is below 6, so it is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable narrated video draft based on a supplied monthly review deck.",
+        "inputs": [
+          "Synthetic monthly report file",
+          "Audience and company details supplied by an operator",
+          "Operator-provided brand colors",
+          "Test API keys in a sandbox"
+        ],
+        "trigger": "An operator places a synthetic monthly report in a test folder and starts a run.",
+        "steps": [
+          "Read the supplied report and operator-entered audience details.",
+          "Draft a short narration and scene outline from the report.",
+          "Prepare a video render using a test account and provided credentials.",
+          "Return the render and source report for comparison.",
+          "Flag missing values or failed rendering for human review."
+        ],
+        "acceptanceCheck": "A reviewer checks whether the draft mentions the report’s key figures accurately and whether every scene traces to supplied content.",
+        "humanBoundary": "A person supplies the report, audience, brand details, and authorized test credentials; they verify figures, approve the narration, and decide whether to share the video.",
+        "unverified": [
+          "Reliability of report parsing across layouts",
+          "Actual API costs and account access",
+          "Whether the draft preserves all material figures",
+          "Suitability of the reported runtime for other inputs"
+        ]
+      }
+    },
+    {
+      "title": "Plan merchant interviews from app feedback",
+      "productUrl": "https://community.shopify.com/t/706526",
+      "segment": "ecommerce",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b32c72b4be805ae63bb36f15"
+        ],
+        "chore": "Help an app developer organize outreach and interview notes to learn how merchants work and where they struggle.",
+        "evidenceQuote": "finding store owners to talk to"
+      },
+      "sourceIds": [
+        "b32c72b4be805ae63bb36f15"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 5,
+            "reason": "A beginner can organize operator-supplied merchant feedback, but finding willing store owners remains manual.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Shopify app developers may pay for better merchant research; the post establishes no purchase intent.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can classify fictional interview notes and draft outreach; participant recruitment and response remain uncertain.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A model can group supplied notes, but a person must recruit, conduct interviews, and validate themes.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post directly says developer responses are mostly partners and they want merchant perspectives; frequency is unclear.",
+            "sourceIds": [
+              "b32c72b4be805ae63bb36f15"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore assessed as a narrow proposed experiment; its provisional five-criterion mean is below 6, so it is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A short, reviewable summary of merchant needs from consented interview notes.",
+        "inputs": [
+          "Fictional interview notes",
+          "A list of app questions supplied by the developer",
+          "Operator-provided topic labels"
+        ],
+        "trigger": "After an app developer supplies test interview notes for review.",
+        "steps": [
+          "Remove personal details from the synthetic notes.",
+          "Group comments under the supplied app questions.",
+          "Draft a short summary with supporting note snippets.",
+          "Flag questions with no matching comments.",
+          "Ask a person to review themes before outreach or product decisions."
+        ],
+        "acceptanceCheck": "A reviewer verifies each summary point against a supplied note and confirms unsupported themes are marked as unknown.",
+        "humanBoundary": "A person must recruit and speak with merchants, obtain permission, supply notes, and decide what to do; the experiment does not find participants.",
+        "unverified": [
+          "Whether synthetic notes reflect real merchant language",
+          "Whether developers will pay for research support",
+          "Whether grouping is reliable across interview formats"
+        ]
+      }
+    },
+    {
+      "title": "Review Shopify tax exemption records",
+      "productUrl": "https://community.shopify.com/t/706515",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "3cd538c6b130b86a654c28c2"
+        ],
+        "chore": "Prepare a human-reviewed checklist of product-specific exemption cases that need tax-rule confirmation before checkout.",
+        "evidenceQuote": "Calculate the correct tax amounts before payment, without requiring draft orders, manual adjustments or additional invoices"
+      },
+      "sourceIds": [
+        "3cd538c6b130b86a654c28c2"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 3,
+            "reason": "A checklist prototype is possible, but no implementation reference documents Shopify tax rules or exemption behavior.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: merchants may pay to reduce manual exemption handling; this feature request proves no purchase or payment.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A four-week fictional-record checklist is bounded; correct tax treatment and Shopify integration are unsupported and excluded.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed tool only flags cases for review; a qualified person must determine tax treatment and update records.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The request explicitly names pre-payment tax calculation, GST/PST records, and manual workarounds, but no corroboration.",
+            "sourceIds": [
+              "3cd538c6b130b86a654c28c2"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore assessed as a narrow proposed experiment; its provisional five-criterion mean is below 6, so it is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A review queue that flags missing tax-rule decisions for a human before checkout.",
+        "inputs": [
+          "Fictional product and customer categories",
+          "Operator-entered exemption rule notes",
+          "Synthetic checkout cases",
+          "A qualified reviewer’s expected flags"
+        ],
+        "trigger": "An operator enters a fictional checkout case for review.",
+        "steps": [
+          "Compare the case with operator-entered rule notes.",
+          "Flag missing or conflicting information without calculating tax.",
+          "Show the relevant note and case fields together.",
+          "Record the reviewer’s decision in a test-only table.",
+          "Return unresolved cases for qualified review."
+        ],
+        "acceptanceCheck": "A qualified reviewer confirms each flag matches the supplied rule note and that no tax amount is calculated or presented as authoritative.",
+        "humanBoundary": "A qualified tax professional supplies and approves rules; a human handles every real transaction. No automated tax advice, calculation, checkout change, or invoice persistence is proposed.",
+        "unverified": [
+          "Whether the operator-provided rule notes are complete",
+          "Shopify data access and record-writing behavior",
+          "Jurisdiction-specific legal and tax correctness"
+        ]
+      }
+    },
+    {
+      "title": "Turn rough sketches into wireframe drafts",
+      "productUrl": "https://news.ycombinator.com/item?id=50280452",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "cec38822f97e088e1e5fc5a2"
+        ],
+        "chore": "Create a reviewable digital wireframe draft from an operator-supplied rough sketch.",
+        "evidenceQuote": "translate rough sketches on my iPad to higher fidelity wireframes or illustrations in near real time"
+      },
+      "sourceIds": [
+        "cec38822f97e088e1e5fc5a2"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A mock can start from supplied sketches, but no supplied source documents an image-to-wireframe method.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent designers may pay to speed up wireframe drafting; the request does not show a buyer or payment.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week prototype can compare a few synthetic sketches with drafts, but fidelity and tool access are unknown.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "A person must supply sketches, correct layout interpretation, and approve all generated design elements.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The Ask HN post states the specific sketch-to-wireframe task but gives no examples, constraints, or corroboration.",
+            "sourceIds": [
+              "cec38822f97e088e1e5fc5a2"
+            ]
+          }
+        }
+      },
+      "reason": "Concrete chore assessed as a narrow proposed experiment; its provisional five-criterion mean is below 6, so it is not proposed for publication.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A low-fidelity wireframe draft with uncertain regions marked for designer review.",
+        "inputs": [
+          "Synthetic hand-drawn interface sketch",
+          "Operator-supplied screen purpose",
+          "Operator-supplied labels for visible controls"
+        ],
+        "trigger": "A designer uploads a synthetic sketch and describes its intended screen.",
+        "steps": [
+          "Read the supplied screen purpose and sketch.",
+          "List visible regions and labels with uncertainty markers.",
+          "Create a simple wireframe draft from the operator-confirmed list.",
+          "Compare the draft against the sketch and flag ambiguous regions.",
+          "Return the draft for designer correction."
+        ],
+        "acceptanceCheck": "A designer checks that each draft element corresponds to a visible sketch element or is explicitly marked as an uncertain proposal.",
+        "humanBoundary": "A designer supplies the sketch, confirms interpretation, and approves the output; the experiment does not promise production-ready illustrations.",
+        "unverified": [
+          "Image interpretation quality",
+          "Availability and suitability of a wireframe generation tool",
+          "Whether near-real-time response is achievable"
+        ]
+      }
+    },
+    {
+      "title": "Scope a MirrorFly and n8n integration",
+      "productUrl": "https://community.n8n.io/t/325279",
+      "segment": "professional_services",
+      "demandEvidence": {
+        "kind": "community_request",
+        "sourceIds": [
+          "b2684bd704048d83c977ec07"
+        ],
+        "chore": "Prepare a feasibility brief for a proposed MirrorFly-to-n8n workflow using operator-supplied events and fields.",
+        "evidenceQuote": "I want to check the possibility of integrating MirrorFly with n8n and understand how the platforms could work."
+      },
+      "sourceIds": [
+        "b2684bd704048d83c977ec07"
+      ],
+      "scoring": {
+        "criteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A beginner can map a few supplied requirements, but no API or webhook capability reference is attached.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional service operators may pay for integration scoping; this request establishes no purchase or payment.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "feasibility": {
+            "value": 5,
+            "reason": "A four-week test can produce a feasibility memo from fictional requirements, while actual API access and compatibility remain unknown.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed output is a human-reviewed analysis; no integration execution is documented or proposed.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The retained post explicitly asks about connecting MirrorFly and n8n, but gives examples rather than a chosen event or field map.",
+            "sourceIds": [
+              "b2684bd704048d83c977ec07"
+            ]
+          }
+        }
+      },
+      "reason": "The request supports a bounded feasibility brief, but its provisional five-criterion mean is below 6; no integration is proposed.",
+      "experimentPlan": {
+        "version": 1,
+        "status": "proposed",
+        "output": "A reviewable feasibility brief mapping one proposed communication event to an n8n workflow.",
+        "inputs": [
+          "Fictional MirrorFly event description",
+          "Operator-supplied desired CRM or notification outcome",
+          "Synthetic example payload",
+          "Operator-provided API documentation if available"
+        ],
+        "trigger": "An operator supplies a fictional event and describes the intended workflow outcome.",
+        "steps": [
+          "List required event fields and the desired result.",
+          "Compare the supplied documentation with each required field.",
+          "Mark unsupported or undocumented steps as unknown.",
+          "Draft a proposed n8n flow using only confirmed fields.",
+          "Return questions and risks for a human integrator."
+        ],
+        "acceptanceCheck": "A reviewer checks every mapped field against the supplied documentation and confirms unknown API behavior is clearly marked.",
+        "humanBoundary": "An integrator supplies authorized documentation and validates the mapping; this plan does not connect accounts, call an endpoint, or prove that either product supports the integration.",
+        "unverified": [
+          "MirrorFly API and webhook availability for the intended event",
+          "Authentication and access requirements",
+          "n8n connector or HTTP configuration needed",
+          "Compatibility of actual payload fields"
+        ]
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "title": "Advise on freemium app monetization",
+      "productUrl": "https://news.ycombinator.com/item?id=50280505",
+      "reason": "The retained text asks for conceptual help with a freemium app but gives no monetization task, app context, or decision inputs to ground a useful bounded experiment."
+    },
+    {
+      "title": "Lasm formally verified webapps",
+      "productUrl": "https://news.ycombinator.com/item?id=50299004",
+      "reason": "The supplied post is a general belief about formal verification, with no concrete chore, request, or task to assess."
+    },
+    {
+      "title": "MadTracker race scoring software",
+      "productUrl": "https://news.ycombinator.com/item?id=50298982",
+      "reason": "The excerpt describes an existing scoring product and its exports; it does not identify a buyer’s unmet chore or request for a service."
+    },
+    {
+      "title": "WhatsApp agents and booking automations",
+      "productUrl": "https://community.make.com/t/118303",
+      "reason": "This is a provider’s advertisement of paid automation services, not a buyer’s request. Its described inbox, booking, and lead workflows also overlap the published support-inbox workflow (post e20bcacf021524725d3fc275)."
+    },
+    {
+      "title": "Simple Make.com automation services",
+      "productUrl": "https://community.make.com/t/118274",
+      "reason": "This is an offer of automation services and a practice-workflow description, not evidence of a customer requesting or performing a specific unmet task."
+    }
+  ],
+  "posts": [],
+  "steps": [
+    {
+      "stage": "pick",
+      "message": "Assessed all ten sealed discussion assignments. Five concrete chores received scoped plans and provisional ratings; their means are below the threshold. The remaining assignments lack a supported buyer chore or are provider advertisements. No post is proposed."
+    }
+  ]
+}
