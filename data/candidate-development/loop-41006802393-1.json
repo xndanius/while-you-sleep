@@ -1,0 +1,697 @@
+{
+  "schema": 1,
+  "type": "candidate-development",
+  "runId": "loop-41006802393-1",
+  "createdAt": "2026-10-30T05:13:16.027Z",
+  "events": [
+    {
+      "id": "4336100f3a96a7c031372176ba8eb1811a87de97a6e11958a691e130545731b7",
+      "kind": "assessment",
+      "caseId": "6079e1aa28c566afb75555b0",
+      "productUrl": "https://news.ycombinator.com/item?id=50293148",
+      "sourceRunId": "loop-41006802393-1",
+      "details": {
+        "revisionId": "a51da25d7a67ec1b438ae893fb7dedcc88192595431eb73e679fdf369373181e",
+        "parentRevisionId": null,
+        "candidateIndex": 0,
+        "candidateSha256": "838925a00138d80666445360a72e3352f44fba00da30f84a516a9fae9d4320ad",
+        "sourceSha256": "a8a1594d72c43e313afbc29ad697f28392e9f9ad70d2673b976dcb45a280c695",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A cited answer card pointing to workbook sheets or cells relevant to one operator question.",
+          "inputs": [
+            "Synthetic workbook with a few labeled sheets",
+            "Operator-supplied question",
+            "Expected answer and source cell for checking"
+          ],
+          "trigger": "An operator submits one question with a supplied workbook.",
+          "steps": [
+            "Load a fictional workbook fixture.",
+            "Record one operator question.",
+            "Manually select likely supporting cells for the prototype.",
+            "Draft a concise answer with sheet and cell references.",
+            "Compare it with a prepared expected answer.",
+            "Have a person verify every cited cell before use."
+          ],
+          "acceptanceCheck": "For each fixture question, check whether the draft answer matches the expected answer and points to the correct supporting cells.",
+          "humanBoundary": "The operator supplies the workbook and question; a person validates the answer and references before anyone relies on it.",
+          "unverified": [
+            "Reliable workbook ingestion and cell citation",
+            "Handling formulas, hidden sheets, and large workbooks",
+            "Whether this lookup task recurs for a paying customer"
+          ]
+        },
+        "limitations": [
+          "Reliable workbook ingestion and cell citation",
+          "Handling formulas, hidden sheets, and large workbooks",
+          "Whether this lookup task recurs for a paying customer"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "b66e8d654845ce4b10190619500468d6c1e45ab4a49c3bbdddb59908ea9c7760",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "084e577f465f18887206559122f8088d711886435550c19b8524694e36c04171",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Reliable workbook ingestion and cell citation",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "424dd1d01c31cb3971c104435b754eebb4f2fb06f5734c4fa26c768d6efc5d81",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Handling formulas, hidden sheets, and large workbooks",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "The post supplies a workbook for lookup, but no implementation reference supports workbook question answering.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: professional analysts may pay for faster workbook lookup; this single post shows no purchase intent.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A small supplied-workbook mock is bounded, but workbook parsing and answer accuracy are unverified.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must provide the workbook and verify each answer; no autonomous lookup capability is documented.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          },
+          "evidence": {
+            "value": 4,
+            "reason": "The excerpt identifies a workbook lookup task, but gives no fields, recurrence, constraints, or corroboration.",
+            "sourceIds": [
+              "6079e1aa28c566afb75555b0"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "efe00a2adeacccca7f4ce983383ca57e9af4f1f8cdc7561eef2086bc0eab56d9",
+          "draftSha256": "ac5c1bbfcfa96568bade943cec963739e56f41f1ff879b448f44948aaa511103",
+          "contextSha256": "924f0b721bd0dcb4b31f443eb0dfdf6efd2c8814d757b507e46e59bfe492a4ef",
+          "manifestSha256": "189f0fc92753eefcb693291852cacb430ee3f9e3ec9ad3aecb796f82e644feda",
+          "researchSha256": "d15360bf77f3e8199482bd79a85c884fc3fbcaf376e93f8606bb01d19c84fa2f",
+          "learningSha256": "c1d6b0291cc298eb497261b950479fd20790c92dc508a93d944ce22b9c0d0a2b"
+        }
+      }
+    },
+    {
+      "id": "74536f0cf31822d416c34d51415cd15a7363150ec23f69cb53d71fbd49f3d196",
+      "kind": "assessment",
+      "caseId": "66865ff0f48baba92ae2167c",
+      "productUrl": "https://community.shopify.com/t/705670",
+      "sourceRunId": "loop-41006802393-1",
+      "details": {
+        "revisionId": "28bbe97f229a660ca52a085ea2d36fb404a30b7a1be55993807ca94e34db7f68",
+        "parentRevisionId": "317757580bacf7f752f532beb1967cb77ee108df1a4e35a1f3460a0caa3f9a3f",
+        "candidateIndex": 1,
+        "candidateSha256": "1712cdae88751b0f6667f86affef7ebe4632ed69ab15ec5b69ffdf48b66876f0",
+        "sourceSha256": "f0c5ebb9605c8bc9c34770ee5c020b556bd046daae8580fab221947c7d87d28d",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A source-linked card separating an app’s public security claims from information the operator could not find.",
+          "inputs": [
+            "Fictional app listing text",
+            "Operator-supplied public security links",
+            "Checklist fields selected for the mock",
+            "Expected present or missing evidence labels"
+          ],
+          "trigger": "An operator enters public listing text and links for one app under consideration.",
+          "steps": [
+            "Create a fictional app listing fixture.",
+            "Enter its public security links.",
+            "Extract statements into a source-linked card.",
+            "Mark checklist fields as found or not found.",
+            "Compare labels with a prepared fixture answer.",
+            "Have a person inspect sources and decide whether to install."
+          ],
+          "acceptanceCheck": "Check that each card statement links to its supplied source and that missing fields are labeled unknown rather than unsafe.",
+          "humanBoundary": "The operator supplies public links; a person judges source quality and makes every security and installation decision.",
+          "unverified": [
+            "Any official complete security-verification checklist",
+            "Reliable source retrieval or app-security assessment",
+            "Whether operators would pay for this aid"
+          ]
+        },
+        "limitations": [
+          "Any official complete security-verification checklist",
+          "Reliable source retrieval or app-security assessment",
+          "Whether operators would pay for this aid"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "40be1fc221e95202de728563493b62415efd10478f6eab5bedf4430f4a7ebaeb",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "6091a0d3d36d023fd0d3ec320b0b5c9938ca0262fc8648f0babee844397a7fd0",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Any official complete security-verification checklist",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "9315c43c36cf4b89a4ae1242ca1e2f1bb69bece34b9ac706bd897d0b79d4e991",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Reliable source retrieval or app-security assessment",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A source-linked evidence card is approachable, but no implementation source supports automated verification.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: Shopify store operators may value a pre-install review aid; no payment intent is shown.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A four-week public-information organizer is bounded, but security criteria and trustworthy verdicts are unsupported.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A person must choose sources and make the installation decision; no automated security capability is documented.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post asks about security verification before installation, but supplies no method, example app, or corroboration.",
+            "sourceIds": [
+              "66865ff0f48baba92ae2167c"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "efe00a2adeacccca7f4ce983383ca57e9af4f1f8cdc7561eef2086bc0eab56d9",
+          "draftSha256": "ac5c1bbfcfa96568bade943cec963739e56f41f1ff879b448f44948aaa511103",
+          "contextSha256": "924f0b721bd0dcb4b31f443eb0dfdf6efd2c8814d757b507e46e59bfe492a4ef",
+          "manifestSha256": "189f0fc92753eefcb693291852cacb430ee3f9e3ec9ad3aecb796f82e644feda",
+          "researchSha256": "d15360bf77f3e8199482bd79a85c884fc3fbcaf376e93f8606bb01d19c84fa2f",
+          "learningSha256": "c1d6b0291cc298eb497261b950479fd20790c92dc508a93d944ce22b9c0d0a2b"
+        }
+      }
+    },
+    {
+      "id": "af288089396b67f71a59630ddbe10cf59192fce850a2c304ab01863ec5338d16",
+      "kind": "assessment",
+      "caseId": "787f35356b78240055b28a66",
+      "productUrl": "https://news.ycombinator.com/item?id=50266077",
+      "sourceRunId": "loop-41006802393-1",
+      "details": {
+        "revisionId": "9e91a1f01da97f94edee71194c8daca76a80367643ced839db49a18f15dac46d",
+        "parentRevisionId": "351f240bea238b714650f0ab8a6b1fa9ab0595107d33747a5cf164b4ae3898e3",
+        "candidateIndex": 2,
+        "candidateSha256": "4839f373f3690e3fc9a0d811cee929fb5c908ac00b4f9df1ba31dc710c35a95e",
+        "sourceSha256": "fb2c3dd1bce1821027eb2c12e996f90ab1f85a190b7d3137b1514af2bce6ddc4",
+        "capabilitySources": [],
+        "progress": "plan_only_revision",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A review card listing state to preserve, a proposed restart point, and duplicate-action risks for one fictional failed run.",
+          "inputs": [
+            "Synthetic agent task description",
+            "Fictional run-state snapshot",
+            "List of actions already attempted",
+            "Expected safe recovery review points"
+          ],
+          "trigger": "An engineer supplies one fictional interrupted-run case for review.",
+          "steps": [
+            "Create a fictional multi-step agent run.",
+            "Mark the state and actions completed before interruption.",
+            "Draft questions about restart point and repeated side effects.",
+            "Compare questions with a prepared review checklist.",
+            "Flag unknown state as unresolved.",
+            "Have an engineer choose and test any recovery behavior."
+          ],
+          "acceptanceCheck": "For each fixture, verify that the card identifies known completed actions and marks uncertain state without recommending an unapproved retry.",
+          "humanBoundary": "An engineer supplies the case, checks state assumptions, and authorizes all recovery logic; the prototype never retries or changes an agent.",
+          "unverified": [
+            "Actual checkpoint formats and framework behavior",
+            "Safe idempotency rules for a real agent task",
+            "Whether this need is recurring or commercially valuable"
+          ]
+        },
+        "limitations": [
+          "Actual checkpoint formats and framework behavior",
+          "Safe idempotency rules for a real agent task",
+          "Whether this need is recurring or commercially valuable"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "ace6461d4a3060e7755760679d54e941406435c78574b0db042f024c7324d6b5",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Actual checkpoint formats and framework behavior",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "2781a86c28361a211a13520a79149f41b863b725b8d201b77a883208486e3500",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Safe idempotency rules for a real agent task",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "b75b3b1d25ae51552a2603e7b6e00355692b48704e6f7383576eb3d1598d521e",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "Whether this need is recurring or commercially valuable",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A worksheet can structure a supplied failure case, but no source supports implementing agent recovery behavior.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: teams building agent workflows may pay for recovery planning; this comment shows no buying intent.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic worksheet fits four weeks, while correct checkpoint and safe retry rules depend on each system.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "The proposed output is a human-reviewed plan; an engineer must decide and implement every recovery action.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The comment names checkpointing, recovery logic, and idempotency work, but gives no incident details or corroboration.",
+            "sourceIds": [
+              "787f35356b78240055b28a66"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "efe00a2adeacccca7f4ce983383ca57e9af4f1f8cdc7561eef2086bc0eab56d9",
+          "draftSha256": "ac5c1bbfcfa96568bade943cec963739e56f41f1ff879b448f44948aaa511103",
+          "contextSha256": "924f0b721bd0dcb4b31f443eb0dfdf6efd2c8814d757b507e46e59bfe492a4ef",
+          "manifestSha256": "189f0fc92753eefcb693291852cacb430ee3f9e3ec9ad3aecb796f82e644feda",
+          "researchSha256": "d15360bf77f3e8199482bd79a85c884fc3fbcaf376e93f8606bb01d19c84fa2f",
+          "learningSha256": "c1d6b0291cc298eb497261b950479fd20790c92dc508a93d944ce22b9c0d0a2b"
+        }
+      }
+    },
+    {
+      "id": "0a2b760f38dc48d4356e6716e04d029a8c111e3502c84e1d655478d7d017a14d",
+      "kind": "assessment",
+      "caseId": "7a3ccfe795ee63e74f345b5a",
+      "productUrl": "https://news.ycombinator.com/item?id=50292363",
+      "sourceRunId": "loop-41006802393-1",
+      "details": {
+        "revisionId": "322cc2722392adf2f13092523b14fe9d43932408fb30985e6bb7da74fb53acba",
+        "parentRevisionId": null,
+        "candidateIndex": 3,
+        "candidateSha256": "80a35dc0d72b8576711d683acf34b8a2bc51b442db70337d2f36a6d2a954544f",
+        "sourceSha256": "679ce28b74ff66b20b3855b0d434b28c4578e44a17c5ed7c46d9ead8bddfdf76",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A comparison card showing paired fictional agent outputs and differences against operator-selected checks.",
+          "inputs": [
+            "Synthetic task prompt",
+            "Fictional before-change output",
+            "Fictional after-change output",
+            "Operator-selected expected checks"
+          ],
+          "trigger": "An operator submits one paired before-and-after output set for review.",
+          "steps": [
+            "Prepare a fictional financial-agent task fixture.",
+            "Enter the two outputs from the same task.",
+            "Apply operator-written checks to each output.",
+            "List differences and failed checks without inferring causes.",
+            "Compare the report with a prepared expected result.",
+            "Have an engineer judge significance before changing a harness."
+          ],
+          "acceptanceCheck": "For each fixture pair, check that the report identifies planted differences and does not label a change better or worse without operator-defined criteria.",
+          "humanBoundary": "An engineer supplies representative test cases and decides what counts as a regression; no production agent is called or modified.",
+          "unverified": [
+            "Useful evaluation metrics for a specific financial workflow",
+            "Representative test data and safe handling requirements",
+            "Any repeat frequency or willingness to pay"
+          ]
+        },
+        "limitations": [
+          "Useful evaluation metrics for a specific financial workflow",
+          "Representative test data and safe handling requirements",
+          "Any repeat frequency or willingness to pay"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "c3ec74ca423b3b23e6472b62d2222cf18c14fdfa04b2fd41532907a03caae008",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "9bd3bfd987b8e5be97a8258091968fcfdee7b71c70250f0b7ab8ed1ea0bf8b23",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Useful evaluation metrics for a specific financial workflow",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "6618140c4d8deb5b21a33a0e9bdba9acc631e45412ab8a426a10571a2d900799",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Representative test data and safe handling requirements",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 4,
+            "reason": "A small before-and-after review is possible, but no source documents evaluation implementation or metrics.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "profit": {
+            "value": 4,
+            "reason": "Hypothesis: financial-agent teams may pay for regression review; this maker description establishes no buying intent.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "feasibility": {
+            "value": 4,
+            "reason": "A synthetic paired-run report is bounded, but meaningful metrics and representative test cases remain unspecified.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "autonomy": {
+            "value": 3,
+            "reason": "A script could organize paired results, but a person must define meaningful measures and approve changes.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          },
+          "evidence": {
+            "value": 5,
+            "reason": "The post describes evaluating whether a harness change improved or worsened production agents, with no details or corroboration.",
+            "sourceIds": [
+              "7a3ccfe795ee63e74f345b5a"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "efe00a2adeacccca7f4ce983383ca57e9af4f1f8cdc7561eef2086bc0eab56d9",
+          "draftSha256": "ac5c1bbfcfa96568bade943cec963739e56f41f1ff879b448f44948aaa511103",
+          "contextSha256": "924f0b721bd0dcb4b31f443eb0dfdf6efd2c8814d757b507e46e59bfe492a4ef",
+          "manifestSha256": "189f0fc92753eefcb693291852cacb430ee3f9e3ec9ad3aecb796f82e644feda",
+          "researchSha256": "d15360bf77f3e8199482bd79a85c884fc3fbcaf376e93f8606bb01d19c84fa2f",
+          "learningSha256": "c1d6b0291cc298eb497261b950479fd20790c92dc508a93d944ce22b9c0d0a2b"
+        }
+      }
+    },
+    {
+      "id": "e37747a738431e9875cd6a5529ce526482e257bf18feb38d5b42de39723bad34",
+      "kind": "assessment",
+      "caseId": "ecc4d5d4f07d03fc30804d37",
+      "productUrl": "https://news.ycombinator.com/item?id=50291424",
+      "sourceRunId": "loop-41006802393-1",
+      "details": {
+        "revisionId": "fbe5a1acd9bb9e64abb7aebe69e76372c5f60c1ba67f95f878e83212cb1797ad",
+        "parentRevisionId": null,
+        "candidateIndex": 4,
+        "candidateSha256": "a5a50236061963c1c768ce509dd35aa4c218d20f80409ecb5a9f750aee3c0f5a",
+        "sourceSha256": "d8ae0e7b963d04eccd83ad278ac2fa401a48f1f5a9a27a040e46c09d96f26438",
+        "capabilitySources": [],
+        "progress": "first_recorded_assessment",
+        "plan": {
+          "version": 1,
+          "status": "proposed",
+          "output": "A human-reviewed checklist card for one proposed video from recording through a manually completed publish step.",
+          "inputs": [
+            "Fictional video brief",
+            "Operator-selected recording status",
+            "Operator-entered edit status",
+            "Operator-entered publish destination"
+          ],
+          "trigger": "An operator starts a checklist for one planned video.",
+          "steps": [
+            "Create a fictional video brief.",
+            "Enter the current status for recording, editing, and publishing.",
+            "Generate a checklist of remaining operator-entered steps.",
+            "Compare the checklist with a prepared fixture.",
+            "Mark missing status as unknown.",
+            "Have a person complete and verify every production action."
+          ],
+          "acceptanceCheck": "Check that the card reflects the supplied status fields and never marks a video published unless the operator entered that status.",
+          "humanBoundary": "A person records, edits, uploads, and confirms publication; the mock only organizes operator-entered status.",
+          "unverified": [
+            "Any supported video editing or publishing integration",
+            "Required production workflow details",
+            "A repeated customer chore or paying customer hypothesis"
+          ]
+        },
+        "limitations": [
+          "Any supported video editing or publishing integration",
+          "Required production workflow details",
+          "A repeated customer chore or paying customer hypothesis"
+        ],
+        "evidenceTasks": [
+          {
+            "id": "c696457be24b4a799f02a2f431dba98f85b63d376fdf441edd33a0cf170e330d",
+            "kind": "hypothesis",
+            "status": "pending",
+            "gapIndexes": [
+              2
+            ],
+            "question": "What evidence supports the proposed buyer and recurring need?",
+            "method": "Use already permitted public primary evidence; do not initiate outreach or collect personal data.",
+            "acceptanceCheck": "Separate observed recurrence from buyer and payment hypotheses; retain unknowns when evidence is absent.",
+            "scopeLimit": "No completed experiment or paying customer may be inferred from a proposal or technical test.",
+            "referenceId": null
+          },
+          {
+            "id": "17ab33b805d74ed449da20c016200a33eb13d052a06489f493c8c7ce31a24a36",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              0
+            ],
+            "question": "Any supported video editing or publishing integration",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          },
+          {
+            "id": "35a20982252cdcef8026d398b013b6e1270632858c76b5fdfd1f4b6cca0d8022",
+            "kind": "unrouted",
+            "status": "pending",
+            "gapIndexes": [
+              1
+            ],
+            "question": "Required production workflow details",
+            "method": "No configured automatic evidence route.",
+            "acceptanceCheck": "Resolve this exact question with an authorized, independently verifiable source or explicitly retain it as unknown.",
+            "scopeLimit": "Unrouted is not completed and cannot raise a score.",
+            "referenceId": null
+          }
+        ],
+        "provisionalCriteria": {
+          "ease": {
+            "value": 3,
+            "reason": "The excerpt names a broad video workflow, but no reference supports editing or publishing capabilities.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "profit": {
+            "value": 3,
+            "reason": "Hypothesis: independent video professionals may pay for workflow help; the excerpt establishes no buyer need or purchase intent.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "feasibility": {
+            "value": 3,
+            "reason": "A checklist mock is feasible, but it does not perform editing or publishing and source details are sparse.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "autonomy": {
+            "value": 2,
+            "reason": "A person would record, edit, and publish; no repeatable automated step is supported by the supplied evidence.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          },
+          "evidence": {
+            "value": 3,
+            "reason": "The excerpt only lists product functions and provides no particular chore context, frequency, or corroboration.",
+            "sourceIds": [
+              "ecc4d5d4f07d03fc30804d37"
+            ]
+          }
+        },
+        "criteriaStatus": "writer_provisional_batch_examined",
+        "outcome": "no_supported_candidate",
+        "missingReferences": [],
+        "acquisitionPath": "no_catalog_match",
+        "provenance": {
+          "runSha256": "efe00a2adeacccca7f4ce983383ca57e9af4f1f8cdc7561eef2086bc0eab56d9",
+          "draftSha256": "ac5c1bbfcfa96568bade943cec963739e56f41f1ff879b448f44948aaa511103",
+          "contextSha256": "924f0b721bd0dcb4b31f443eb0dfdf6efd2c8814d757b507e46e59bfe492a4ef",
+          "manifestSha256": "189f0fc92753eefcb693291852cacb430ee3f9e3ec9ad3aecb796f82e644feda",
+          "researchSha256": "d15360bf77f3e8199482bd79a85c884fc3fbcaf376e93f8606bb01d19c84fa2f",
+          "learningSha256": "c1d6b0291cc298eb497261b950479fd20790c92dc508a93d944ce22b9c0d0a2b"
+        }
+      }
+    }
+  ]
+}
